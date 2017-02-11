@@ -1,0 +1,237 @@
+package org.CrossApp.lib;
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.app.Activity;
+import android.database.Cursor;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Nickname;
+
+import android.provider.ContactsContract.Data;
+
+public class CrossAppPersonList
+{
+	private static Activity s_pContext;
+	public static void Init( final Activity context )
+	{
+		s_pContext = context;
+	}
+	
+	public static class FriendData
+	{
+		public String name;
+		public ArrayList<String> phoneNumber = new ArrayList<String>();
+		public String emailValue;
+		public String address_street;  
+        public String address_city;  
+        public String address_region;  
+        public String address_postCode;  
+        public String address_formatAddress;
+		public String nickname;
+	}
+	
+	private static native void getPersonList(String personList);
+	
+	public static void getPersonList()
+	{
+		// �����ゆ�烽����ゆ�烽����ゆ�锋�伴����ゆ�烽��杈�纰���烽��? 
+        Cursor cur = s_pContext.getContentResolver().query(  
+                ContactsContract.Contacts.CONTENT_URI,  
+                null,  
+                null,  
+                null,  
+                ContactsContract.Contacts.DISPLAY_NAME  
+                        + " COLLATE LOCALIZED ASC");  
+        
+        ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
+        
+        // 寰������ゆ�烽����ゆ�烽����ゆ��  
+        if (cur.moveToFirst())
+        {
+            int idColumn = cur.getColumnIndex(ContactsContract.Contacts._ID);  
+  
+            int displayNameColumn = cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);  
+  
+       	    do 
+       	    {
+       	    	try
+				{
+	            	FriendData data = new FriendData();
+	            	
+	                // �����ゆ�烽����ゆ�烽��杈�纰���疯�撮��锟�ID�����ゆ��  
+	                String contactId = cur.getString(idColumn);  
+	                
+	                // �����ゆ�烽����ゆ�烽��杈�纰���烽����ゆ�烽����ゆ�烽��? 
+	                String disPlayName = cur.getString(displayNameColumn);  
+	                
+	                data.name = disPlayName;
+	                
+	                int phoneCount = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));  
+	                
+	                if (phoneCount > 0)
+	                {  
+	                    Cursor phones = s_pContext.getContentResolver().query(  
+	                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  
+	                            null,  
+	                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
+	                                    + " = " + contactId, null, null);
+	                    
+	                    if (phones.moveToFirst())
+	                    {  
+	                        do
+	                        {   
+	                            String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));   
+	                            
+	                            data.phoneNumber.add( phoneNumber );
+	                        }
+	                        while (phones.moveToNext());  
+	                    }
+	                    
+	                    phones.close();
+	                }  
+	  
+	                // �����ゆ�峰�������ゆ�烽����ゆ�风郴�����ゆ�烽����ゆ�烽����ゆ��  
+	                Cursor emails = s_pContext.getContentResolver().query(  
+	                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,  
+	                        null,  
+	                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
+	                                + " = " + contactId, null, null);  
+	                
+	                if (emails.moveToFirst())
+	                {  
+	                    do
+	                    {  
+	                        // �����ゆ�烽����ゆ�烽����ゆ�烽����������佃�������ゆ�烽����ゆ��    
+	                        String emailValue = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));  
+
+	                        data.emailValue = emailValue;
+	                    }
+	                    while (emails.moveToNext());  
+	                }  
+	                
+	                emails.close();
+	                
+	                //�����ゆ�峰�������ゆ�烽����ゆ�风郴�����跨����峰��  
+	                Cursor address = s_pContext.getContentResolver().query(  
+	                                ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,  
+	                                null,  
+	                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
+	                                        + " = " + contactId, null, null);  
+	                if (address.moveToFirst()) 
+	                {  
+	                    do {  
+	                        // �����ゆ�烽����ゆ�烽����ゆ�烽��������纰���峰��  
+	                        String street = address.getString(address  
+	                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));  
+	                        
+	                        String city = address.getString(address  
+	                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CITY));  
+	                        
+	                        String region = address.getString(address  
+	                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.REGION));  
+	                        
+	                        String postCode = address.getString(address  
+	                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE)); 
+	                        
+	                        String formatAddress = address.getString(address  
+	                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS));
+	                        
+	                        data.address_street = street;  
+	                        data.address_city = city;  
+	                        data.address_region = region;  
+	                        data.address_postCode = postCode;  
+	                        data.address_formatAddress = formatAddress;
+	                    } 
+	                    while (address.moveToNext());  
+	                }  
+	                
+	                address.close();
+	                
+	                //�����ゆ�峰��nickname�����ゆ�锋��  
+	                Cursor nicknames = s_pContext.getContentResolver().query(  
+	                        Data.CONTENT_URI,  
+	                        new String[] { Data._ID, Nickname.NAME },  
+	                        Data.CONTACT_ID + "=?" + " AND " + Data.MIMETYPE + "='"+ Nickname.CONTENT_ITEM_TYPE + "'",  
+	                        new String[] { contactId }, null);  
+	                
+	                if (nicknames.moveToFirst()) 
+	                {  
+	                    do 
+	                    {  
+	                        String nickname_ = nicknames.getString(nicknames.getColumnIndex(Nickname.NAME));
+ 
+	                        data.nickname = nickname_;
+	                    } 
+	                    while (nicknames.moveToNext());  
+	                } 
+	                
+	                nicknames.close();
+	                
+	                if ( data.name != null )
+	                	vecFriend.add(data);
+				}
+	            catch( Exception e )
+	            {
+	            	
+	            }
+            }
+        	while (cur.moveToNext());  
+        }
+        
+        try
+        {  
+            // �����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽��锟�{}�����ゆ�烽��瑙�杈炬�烽����ゆ�蜂�������ゆ�烽����ゆ�烽����ゆ��  
+            JSONObject personList = new JSONObject();
+            
+            JSONArray personArray = new JSONArray();
+            
+            for ( int i = 0 ; i < vecFriend.size(); i ++ )
+            {
+            	FriendData data = (FriendData)vecFriend.get(i);
+	            JSONObject person = new JSONObject();
+	            person.put("name", data.name);
+	            person.put("address_street" , data.address_street != null ? data.address_street : "null" );  
+	            person.put("address_city" , data.address_city != null ? data.address_city : "null" );  
+	            person.put("address_region" , data.address_region != null ? data.address_region : "null" );  
+	            person.put("address_postCode" , data.address_postCode != null ? data.address_postCode : "null" );  
+	            person.put("address_formatAddress" , data.address_formatAddress != null ? data.address_formatAddress : "null" );
+	    		person.put("nickname" , data.nickname != null ? data.nickname : "null" );
+	    		
+	            // �����ゆ�蜂�������ゆ�烽����ゆ��phone�����ゆ�峰�奸����ゆ�烽����ゆ�烽��浠�锛������ゆ�烽����ゆ�烽����ゆ�疯�������ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽��? 
+	            JSONArray phone = new JSONArray();
+	            for ( int j = 0 ; j < data.phoneNumber.size(); j ++ )
+	            {
+	            	phone.put((String)data.phoneNumber.get(j));
+	            }
+	            
+	            person.put("phone", phone);  
+	            
+	            if ( data.emailValue != null )
+	            	person.put("email", data.emailValue);      
+	            personArray.put(person);
+            }
+            
+            personList.put("person", personArray);
+            String ret = personList.toString();
+            onReturnPersonList(ret);
+        } 
+        catch (JSONException ex) 
+        {  
+            // �����ゆ�蜂负null�����ゆ�蜂娇�����ゆ��json�����ゆ�锋�����琛�纰���烽����ゆ�烽��琛���╂�峰��(NaN, infinities)  
+            throw new RuntimeException(ex);  
+        }
+	}
+	
+	public static void onReturnPersonList(final String personList)
+	{
+		CrossAppActivity content =  (CrossAppActivity)s_pContext;
+		content.runOnGLThread(new Runnable()  {
+            @Override
+            public void run()
+            {
+            	getPersonList(personList);
+            }
+        });
+	}
+}
