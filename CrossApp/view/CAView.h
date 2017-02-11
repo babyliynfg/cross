@@ -391,15 +391,17 @@ protected:
     
     void updateRotationQuat();
     
-    void drawLeftShadow();
+    void checkInsideBounds(Renderer* renderer, const Mat4 &transform, uint32_t flags);
     
-    void drawRightShadow();
+    void drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
     
-    void drawTopShadow();
+    void drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
     
-    void drawBottomShadow();
+    void drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
     
-    void drawShadow(CAImage* i, const ccV3F_C4B_T2F_Quad& q);
+    void drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
+    
+    void drawShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAImage* image, const ccV3F_C4B_T2F_Quad& quad, const BlendFunc& blendFunc);
     
 protected:
  

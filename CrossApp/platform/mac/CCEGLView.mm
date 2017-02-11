@@ -6,7 +6,9 @@
 #include "CATouch.h"
 #include "CATouchDispatcher.h"
 #include "basics/CAApplication.h"
+#include "basics/CACamera.h"
 #import "EAGLView.h"
+
 NS_CC_BEGIN
 
 CCEGLView* CCEGLView::s_sharedView = NULL;
@@ -85,10 +87,12 @@ void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
     float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
     
-    glViewport((GLint)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
-               (GLint)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
-               (GLsizei)(w * m_fScale * frameZoomFactor),
-               (GLsizei)(h * m_fScale * frameZoomFactor));
+    experimental::Viewport vp((float)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
+                              (float)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
+                              (float)(w * m_fScale * frameZoomFactor),
+                              (float)(h * m_fScale * frameZoomFactor));
+    
+    CACamera::setDefaultViewport(vp);
 }
 
 void CCEGLView::setScissorInPoints(float x , float y , float w , float h)

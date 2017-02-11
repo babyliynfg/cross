@@ -179,8 +179,10 @@ bool CACamera::initDefault()
         case CAApplication::P2D:
         {
             initOrthographic(size.width, size.height, -1024, 1024);
-            this->setZOrder(0);
+            this->setPointZ(0);
             this->setPoint(DPointZero);
+            setRotationX(0);
+            setRotationY(0);
             setRotation(0);
             break;
         }

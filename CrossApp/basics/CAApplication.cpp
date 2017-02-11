@@ -155,8 +155,11 @@ void CAApplication::setGLDefaultValues(void)
     CCAssert(m_pobOpenGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    setDepthTest(true);
+    setDepthTest(false);
     setProjection(m_eProjection);
+    
+    auto vp = CACamera::getDefaultViewport();
+    glViewport(vp._left, vp._bottom, vp._width, vp._height);
 }
 
 void CAApplication::updateDraw()
@@ -567,7 +570,6 @@ DPoint CAApplication::getVisibleOrigin()
 void CAApplication::reshapeProjection(const DSize& newWindowSize)
 {
     m_obWinSizeInPoints = DSize(newWindowSize.width, newWindowSize.height);
-    CACamera::setDefaultViewport(experimental::Viewport(0, 0, s_dip_to_px(m_obWinSizeInPoints.width), s_dip_to_px(m_obWinSizeInPoints.height)));
     setProjection(m_eProjection);
     
     if (m_pRootWindow)

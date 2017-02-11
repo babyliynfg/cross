@@ -1207,50 +1207,31 @@ void CAView::sortAllSubviews()
     }
 }
 
-void CAView::drawShadow(CAImage* i, const ccV3F_C4B_T2F_Quad& q)
+void CAView::drawShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAImage* image, const ccV3F_C4B_T2F_Quad& quad, const BlendFunc& blendFunc)
 {
-//    kmGLPushMatrix();
-//    
-//    CAIMAGE_DRAW_SETUP();
-//    
-//    ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//    ccGLBindTexture2D(i->getName());
-//    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
-//
-//    long offset = (long)&q;
-//    // vertex
-//    int diff = offsetof( ccV3F_C4B_T2F, vertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION,
-//                          3,
-//                          GL_FLOAT,
-//                          GL_FALSE,
-//                          sizeof(q.bl),
-//                          (void*) (offset + diff));
-//    
-//    // texCoods
-//    diff = offsetof( ccV3F_C4B_T2F, texCoords);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD,
-//                          2,
-//                          GL_FLOAT,
-//                          GL_FALSE,
-//                          sizeof(q.bl),
-//                          (void*) (offset + diff));
-//    
-//    // color
-//    diff = offsetof( ccV3F_C4B_T2F, colors);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR,
-//                          4,
-//                          GL_UNSIGNED_BYTE,
-//                          GL_TRUE,
-//                          sizeof(q.bl),
-//                          (void*)(offset + diff));
-//    
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//    
-//    kmGLPopMatrix();
+    if(m_bInsideBounds)
+    {
+        static unsigned short quadIndices[] = {0,1,2, 3,2,1};
+        
+        TrianglesCommand::Triangles triangles;
+        triangles.indices = quadIndices;
+        triangles.vertCount = 4;
+        triangles.indexCount = 6;
+        triangles.verts = (ccV3F_C4B_T2F*)&quad;
+
+        m_obTrianglesCommand.init(0,
+                                  image->getName(),
+                                  getGLProgramState(),
+                                  blendFunc,
+                                  triangles,
+                                  transform,
+                                  flags);
+        
+        renderer->addCommand(&m_obTrianglesCommand);
+    }
 }
 
-void CAView::drawLeftShadow()
+void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     if (m_bLeftShadowed)
     {
@@ -1272,12 +1253,16 @@ void CAView::drawLeftShadow()
 
         quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
         
-        this->drawShadow(CAImage::CC_SHADOW_LEFT_IMAGE(), quad);
+        this->drawShadow(renderer, transform, flags,
+                         CAImage::CC_SHADOW_LEFT_IMAGE(),
+                         quad,
+                         BlendFunc_alpha_non_premultiplied);
+
     }
 
 }
 
-void CAView::drawRightShadow()
+void CAView::drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     if (m_bRightShadowed)
     {
@@ -1299,12 +1284,15 @@ void CAView::drawRightShadow()
         
         quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
         
-        this->drawShadow(CAImage::CC_SHADOW_RIGHT_IMAGE(), quad);
+        this->drawShadow(renderer, transform, flags,
+                         CAImage::CC_SHADOW_RIGHT_IMAGE(),
+                         quad,
+                         BlendFunc_alpha_non_premultiplied);
     }
     
 }
 
-void CAView::drawTopShadow()
+void CAView::drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     if (m_bTopShadowed)
     {
@@ -1326,12 +1314,15 @@ void CAView::drawTopShadow()
         
         quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
         
-        this->drawShadow(CAImage::CC_SHADOW_TOP_IMAGE(), quad);
+        this->drawShadow(renderer, transform, flags,
+                         CAImage::CC_SHADOW_TOP_IMAGE(),
+                         quad,
+                         BlendFunc_alpha_non_premultiplied);
     }
     
 }
 
-void CAView::drawBottomShadow()
+void CAView::drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     if (m_bBottomShadowed)
     {
@@ -1353,7 +1344,10 @@ void CAView::drawBottomShadow()
         
         quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
         
-        this->drawShadow(CAImage::CC_SHADOW_BOTTOM_IMAGE(), quad);
+        this->drawShadow(renderer, transform, flags,
+                         CAImage::CC_SHADOW_BOTTOM_IMAGE(),
+                         quad,
+                         BlendFunc_alpha_non_premultiplied);
     }
     
 }
@@ -1381,19 +1375,6 @@ void CAView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     CC_RETURN_IF(m_pobImage == nullptr);
     
-    // Don't calculate the culling if the transform was not updated
-    auto visitingCamera = CACamera::getVisitingCamera();
-    auto defaultCamera = CACamera::getDefaultCamera();
-    if (visitingCamera == defaultCamera)
-    {
-        m_bInsideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, m_obContentSize) : m_bInsideBounds;
-    }
-    else
-    {
-        // XXX: this always return true since
-        m_bInsideBounds = renderer->checkVisibility(transform, m_obContentSize);
-    }
-    
     if(m_bInsideBounds)
     {
         static unsigned short quadIndices[] = {0,1,2, 3,2,1};
@@ -1412,6 +1393,22 @@ void CAView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
                                flags);
         
         renderer->addCommand(&m_obTrianglesCommand);
+    }
+}
+
+void CAView::checkInsideBounds(Renderer* renderer, const Mat4 &transform, uint32_t flags)
+{
+    // Don't calculate the culling if the transform was not updated
+    auto visitingCamera = CACamera::getVisitingCamera();
+    auto defaultCamera = CACamera::getDefaultCamera();
+    if (visitingCamera == defaultCamera)
+    {
+        m_bInsideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, m_obContentSize) : m_bInsideBounds;
+    }
+    else
+    {
+        // XXX: this always return true since
+        m_bInsideBounds = renderer->checkVisibility(transform, m_obContentSize);
     }
 }
 
@@ -1462,20 +1459,25 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     m_pApplication->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     m_pApplication->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, m_tModelViewTransform);
     
+    m_bInsideBounds = false;
+    bool visibleByCamera = isVisitableByVisitingCamera();
+
+    if (visibleByCamera)
+    {
+        this->checkInsideBounds(renderer, m_tModelViewTransform, flags);
+//        this->drawLeftShadow(renderer, m_tModelViewTransform, flags);
+//        this->drawRightShadow(renderer, m_tModelViewTransform, flags);
+//        this->drawTopShadow(renderer, m_tModelViewTransform, flags);
+//        this->drawBottomShadow(renderer, m_tModelViewTransform, flags);
+    }
+    
+    
     m_bScissorRestored = false;
     
     if (m_bDisplayRange == false)
     {
         m_obBeforeDrawCommand.init(0);
         m_obBeforeDrawCommand.func = [&](){
-
-            m_bScissorRestored = (bool)glIsEnabled(GL_SCISSOR_TEST);
-            if (m_bScissorRestored)
-            {
-                GLfloat params[4];
-                glGetFloatv(GL_SCISSOR_BOX, params);
-                m_obSupviewScissorRect = DRect(params[0], params[1], params[2], params[3]);
-            }
 
             Mat4 tm = Mat4::IDENTITY;
             tm.m[12] = m_obContentSize.width;
@@ -1484,38 +1486,40 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
             Mat4 max;
             Mat4::multiply(m_tModelViewTransform, tm, &max);
         
-            GLint minX = (GLint)s_dip_to_px(m_tModelViewTransform.m[12]);
-            GLint minY = (GLint)s_dip_to_px(m_tModelViewTransform.m[13]);
-            GLint maxX = (GLint)ceilf(s_dip_to_px(ceilf(max.m[12]) + 0.5f));
-            GLint maxY = (GLint)ceilf(s_dip_to_px(ceilf(max.m[13]) + 0.5f));
+            float minX = m_tModelViewTransform.m[12];
+            float minY = m_tModelViewTransform.m[13];
+            float maxX = ceilf(max.m[12]);
+            float maxY = ceilf(max.m[13]);
             
+            auto glview = m_pApplication->getOpenGLView();
+            m_bScissorRestored = glview->isScissorEnabled();
             if (m_bScissorRestored)
             {
-                GLint x1 = MAX(minX, (GLint)m_obSupviewScissorRect.getMinX());
-                GLint y1 = MAX(minY, (GLint)m_obSupviewScissorRect.getMinY());
-                GLint x2 = MIN(maxX, (GLint)m_obSupviewScissorRect.getMaxX());
-                GLint y2 = MIN(maxY, (GLint)m_obSupviewScissorRect.getMaxY());
-                GLsizei width = (GLsizei)MAX(x2-x1, 0);
-                GLsizei height = (GLsizei)MAX(y2-y1, 0);
-                glScissor(x1, y1, width, height);
+                m_obSupviewScissorRect = glview->getScissorRect();
+                
+                float x1 = MAX(minX, m_obSupviewScissorRect.getMinX());
+                float y1 = MAX(minY, m_obSupviewScissorRect.getMinY());
+                float x2 = MIN(maxX, m_obSupviewScissorRect.getMaxX());
+                float y2 = MIN(maxY, m_obSupviewScissorRect.getMaxY());
+                float width = (GLsizei)MAX(x2-x1, 0);
+                float height = (GLsizei)MAX(y2-y1, 0);
+                glview->setScissorInPoints(x1, y1, width, height);
             }
             else
             {
                 glEnable(GL_SCISSOR_TEST);
-                glScissor(minX, minY, (GLsizei)(maxX - minX), (GLsizei)(maxY - minY));
+                glview->setScissorInPoints(minX, minY, (GLsizei)(maxX - minX), (GLsizei)(maxY - minY));
             }
             
         };
         m_pApplication->getRenderer()->addCommand(&m_obBeforeDrawCommand);
     }
     
-    bool visibleByCamera = isVisitableByVisitingCamera();
-    
-    int i = 0;
-    
     if(!m_obSubviews.empty())
     {
+        
         this->sortAllSubviews();
+        int i = 0;
         for( ; i < m_obSubviews.size(); i++ )
         {
             auto view = m_obSubviews.at(i);
@@ -1544,10 +1548,11 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
             
             if (m_bScissorRestored)
             {
-                glScissor((GLint)m_obSupviewScissorRect.origin.x,
-                          (GLint)m_obSupviewScissorRect.origin.y,
-                          (GLsizei)m_obSupviewScissorRect.size.width,
-                          (GLsizei)m_obSupviewScissorRect.size.height);
+                auto glview = m_pApplication->getOpenGLView();
+                glview->setScissorInPoints(m_obSupviewScissorRect.origin.x,
+                                           m_obSupviewScissorRect.origin.y,
+                                           m_obSupviewScissorRect.size.width,
+                                           m_obSupviewScissorRect.size.height);
             }
             else
             {
@@ -2323,14 +2328,12 @@ void CAView::updateBlendFunc(void)
 {
     if (!m_pobImage || !m_pobImage->hasPremultipliedAlpha())
     {
-        m_sBlendFunc.src = GL_SRC_ALPHA;
-        m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        m_sBlendFunc = BlendFunc_alpha_non_premultiplied;
         setOpacityModifyRGB(false);
     }
     else
     {
-        m_sBlendFunc.src = CC_BLEND_SRC;
-        m_sBlendFunc.dst = CC_BLEND_DST;
+        m_sBlendFunc = BlendFunc_alpha_premultiplied;
         setOpacityModifyRGB(true);
     }
 }

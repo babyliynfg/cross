@@ -579,15 +579,6 @@
 		3E2154491B8180340075448E /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
 		3E21544B1B8180340075448E /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		3E21544C1B8180340075448E /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
-		B000AFF71BC76068002FA61C /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libavcodec.a; sourceTree = "<group>"; };
-		B000AFF81BC76068002FA61C /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libavdevice.a; sourceTree = "<group>"; };
-		B000AFF91BC76068002FA61C /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libavfilter.a; sourceTree = "<group>"; };
-		B000AFFA1BC76068002FA61C /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libavformat.a; sourceTree = "<group>"; };
-		B000AFFB1BC76068002FA61C /* libavresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavresample.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libavresample.a; sourceTree = "<group>"; };
-		B000AFFC1BC76068002FA61C /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libavutil.a; sourceTree = "<group>"; };
-		B000AFFD1BC76068002FA61C /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libpostproc.a; sourceTree = "<group>"; };
-		B000AFFE1BC76068002FA61C /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libswresample.a; sourceTree = "<group>"; };
-		B000AFFF1BC76068002FA61C /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/FFmpeg/prebuilt/mac/libswscale.a; sourceTree = "<group>"; };
 		B01A293F1994C95F00D42BA0 /* CACalendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACalendar.cpp; sourceTree = "<group>"; };
 		B01A29401994C95F00D42BA0 /* CACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACalendar.h; sourceTree = "<group>"; };
 		B01D4BF119A5947C0071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
@@ -601,22 +592,10 @@
 		B03407F61991CA27005DB179 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = md5.cpp; sourceTree = "<group>"; };
 		B03407F71991CA27005DB179 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
 		B039AF231BC7A48A002C1FDB /* libbz2.1.0.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.5.tbd; path = usr/lib/libbz2.1.0.5.tbd; sourceTree = SDKROOT; };
-		B039AF251BC7A576002C1FDB /* libbz2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.1.0.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libbz2.1.0.dylib; sourceTree = "<group>"; };
 		B039AF321BC7A67A002C1FDB /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
 		B039AF341BC7A683002C1FDB /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		B039AF361BC7A689002C1FDB /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		B039AF401BC7A9C7002C1FDB /* libavcodec.56.60.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.56.60.100.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libavcodec.56.60.100.dylib; sourceTree = "<group>"; };
-		B039AF411BC7A9C7002C1FDB /* libavdevice.56.4.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavdevice.56.4.100.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libavdevice.56.4.100.dylib; sourceTree = "<group>"; };
-		B039AF421BC7A9C7002C1FDB /* libavfilter.5.40.101.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavfilter.5.40.101.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libavfilter.5.40.101.dylib; sourceTree = "<group>"; };
-		B039AF431BC7A9C7002C1FDB /* libavformat.56.40.101.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavformat.56.40.101.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libavformat.56.40.101.dylib; sourceTree = "<group>"; };
-		B039AF441BC7A9C7002C1FDB /* libavresample.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavresample.2.1.0.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libavresample.2.1.0.dylib; sourceTree = "<group>"; };
-		B039AF451BC7A9C7002C1FDB /* libavutil.54.31.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.54.31.100.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libavutil.54.31.100.dylib; sourceTree = "<group>"; };
-		B039AF461BC7A9C7002C1FDB /* libpostproc.53.3.100.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpostproc.53.3.100.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libpostproc.53.3.100.dylib; sourceTree = "<group>"; };
-		B039AF471BC7A9C7002C1FDB /* libswresample.1.2.101.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.1.2.101.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libswresample.1.2.101.dylib; sourceTree = "<group>"; };
-		B039AF481BC7A9C7002C1FDB /* libswscale.3.1.101.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.3.1.101.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libswscale.3.1.101.dylib; sourceTree = "<group>"; };
-		B039AF521BC7AD81002C1FDB /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libz.1.dylib; sourceTree = "<group>"; };
 		B039AF7E1BC7B81F002C1FDB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		B039AF801BC7B86A002C1FDB /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../the_third_party/FFmpeg/prebuilt/mac/libiconv.2.dylib; sourceTree = "<group>"; };
 		B047B91219E9181800F24BE6 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		B047B91319E9181800F24BE6 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		B047B91419E9181800F24BE6 /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
@@ -648,7 +627,6 @@
 		B09205B819D554A800CB99C1 /* CAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThread.h; sourceTree = "<group>"; };
 		B093DB3F1CBC8ADE00E98AD6 /* CALayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALayout.cpp; sourceTree = "<group>"; };
 		B093DB401CBC8ADE00E98AD6 /* CALayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALayout.h; sourceTree = "<group>"; };
-		B09B73BD1BD1FACE001D82BC /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../the_third_party/SDL/prebuilt/mac/libSDL.a; sourceTree = "<group>"; };
 		B09F302F1C9161510090A5D4 /* CAFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFont.cpp; sourceTree = "<group>"; };
 		B09F30301C9161510090A5D4 /* CAFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFont.h; sourceTree = "<group>"; };
 		B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
@@ -718,16 +696,6 @@
 		B0D890441B9D3A59004A0830 /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
 		B0DAEECE1B256B6D0011E87D /* CAGif.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGif.cpp; sourceTree = "<group>"; };
 		B0DAEECF1B256B6D0011E87D /* CAGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGif.h; sourceTree = "<group>"; };
-		B0E951551BC645E400DBAB6A /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../the_third_party/SDL/prebuilt/mac/libSDL2.a; sourceTree = "<group>"; };
-		B0E951571BC645F900DBAB6A /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavcodec.a; sourceTree = "<group>"; };
-		B0E951581BC645F900DBAB6A /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavdevice.a; sourceTree = "<group>"; };
-		B0E951591BC645F900DBAB6A /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavfilter.a; sourceTree = "<group>"; };
-		B0E9515A1BC645F900DBAB6A /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavformat.a; sourceTree = "<group>"; };
-		B0E9515B1BC645F900DBAB6A /* libavresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavresample.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavresample.a; sourceTree = "<group>"; };
-		B0E9515C1BC645F900DBAB6A /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libavutil.a; sourceTree = "<group>"; };
-		B0E9515D1BC645F900DBAB6A /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libpostproc.a; sourceTree = "<group>"; };
-		B0E9515E1BC645F900DBAB6A /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswresample.a; sourceTree = "<group>"; };
-		B0E9515F1BC645F900DBAB6A /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../the_third_party/ffmpeg/prebuilt/mac/libswscale.a; sourceTree = "<group>"; };
 		B0F9B6671C8E7F2B00BE7B1B /* CAFTRichFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTRichFont.cpp; sourceTree = "<group>"; };
 		B0F9B6681C8E7F2B00BE7B1B /* CAFTRichFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTRichFont.h; sourceTree = "<group>"; };
 		B0F9B66B1C8E7F4F00BE7B1B /* CARichLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CARichLabel.cpp; sourceTree = "<group>"; };
@@ -1308,43 +1276,11 @@
 				D69B766C1E4B05A7007D9771 /* Cocoa.framework */,
 				D69B766A1E4B059B007D9771 /* OpenGL.framework */,
 				D6B12EB51DC9C81500944576 /* libwebsockets.a */,
-				B09B73BD1BD1FACE001D82BC /* libSDL.a */,
-				B039AF801BC7B86A002C1FDB /* libiconv.2.dylib */,
 				B039AF7E1BC7B81F002C1FDB /* VideoToolbox.framework */,
-				B039AF521BC7AD81002C1FDB /* libz.1.dylib */,
-				B039AF401BC7A9C7002C1FDB /* libavcodec.56.60.100.dylib */,
-				B039AF411BC7A9C7002C1FDB /* libavdevice.56.4.100.dylib */,
-				B039AF421BC7A9C7002C1FDB /* libavfilter.5.40.101.dylib */,
-				B039AF431BC7A9C7002C1FDB /* libavformat.56.40.101.dylib */,
-				B039AF441BC7A9C7002C1FDB /* libavresample.2.1.0.dylib */,
-				B039AF451BC7A9C7002C1FDB /* libavutil.54.31.100.dylib */,
-				B039AF461BC7A9C7002C1FDB /* libpostproc.53.3.100.dylib */,
-				B039AF471BC7A9C7002C1FDB /* libswresample.1.2.101.dylib */,
-				B039AF481BC7A9C7002C1FDB /* libswscale.3.1.101.dylib */,
 				B039AF361BC7A689002C1FDB /* CoreFoundation.framework */,
 				B039AF341BC7A683002C1FDB /* CoreVideo.framework */,
 				B039AF321BC7A67A002C1FDB /* VideoDecodeAcceleration.framework */,
-				B039AF251BC7A576002C1FDB /* libbz2.1.0.dylib */,
 				B039AF231BC7A48A002C1FDB /* libbz2.1.0.5.tbd */,
-				B000AFF71BC76068002FA61C /* libavcodec.a */,
-				B000AFF81BC76068002FA61C /* libavdevice.a */,
-				B000AFF91BC76068002FA61C /* libavfilter.a */,
-				B000AFFA1BC76068002FA61C /* libavformat.a */,
-				B000AFFB1BC76068002FA61C /* libavresample.a */,
-				B000AFFC1BC76068002FA61C /* libavutil.a */,
-				B000AFFD1BC76068002FA61C /* libpostproc.a */,
-				B000AFFE1BC76068002FA61C /* libswresample.a */,
-				B000AFFF1BC76068002FA61C /* libswscale.a */,
-				B0E951571BC645F900DBAB6A /* libavcodec.a */,
-				B0E951581BC645F900DBAB6A /* libavdevice.a */,
-				B0E951591BC645F900DBAB6A /* libavfilter.a */,
-				B0E9515A1BC645F900DBAB6A /* libavformat.a */,
-				B0E9515B1BC645F900DBAB6A /* libavresample.a */,
-				B0E9515C1BC645F900DBAB6A /* libavutil.a */,
-				B0E9515D1BC645F900DBAB6A /* libpostproc.a */,
-				B0E9515E1BC645F900DBAB6A /* libswresample.a */,
-				B0E9515F1BC645F900DBAB6A /* libswscale.a */,
-				B0E951551BC645E400DBAB6A /* libSDL2.a */,
 				B0621A541AC3A28D005EBCA7 /* libjpeg.a */,
 				B0621A521AC3A24D005EBCA7 /* libpng.a */,
 				B0621A501AC3A23D005EBCA7 /* libtiff.a */,

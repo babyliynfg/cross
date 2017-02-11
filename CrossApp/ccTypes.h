@@ -260,8 +260,6 @@ typedef struct _ccV2F_C4F_T2F_Quad
 } ccV2F_C4F_T2F_Quad;
 
 
-
-
 struct CC_DLL BlendFunc
 {
     /** source blend function */

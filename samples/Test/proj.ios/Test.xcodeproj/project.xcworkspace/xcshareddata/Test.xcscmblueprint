@@ -1,14 +1,16 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "69C2B51C43FC8F478CDE1593157F30F04B1F7786",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "53B932E4668608ED7A2F118F6A6288329A477F65",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "53B932E4668608ED7A2F118F6A6288329A477F65" : 9223372036854775807,
     "630594A0C3AF0041EB86DE5D805A5B25A32E1B5D" : 0,
     "69C2B51C43FC8F478CDE1593157F30F04B1F7786" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "62B4E802-FA00-41F4-9609-2852C72C0284",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "53B932E4668608ED7A2F118F6A6288329A477F65" : "cross\/",
     "630594A0C3AF0041EB86DE5D805A5B25A32E1B5D" : "CrossApp_beta",
     "69C2B51C43FC8F478CDE1593157F30F04B1F7786" : "nano-CrossApp\/"
   },
@@ -16,6 +18,11 @@
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "samples\/Test\/proj.ios\/Test.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/liyuanfeng\/cross.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "53B932E4668608ED7A2F118F6A6288329A477F65"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/git.oschina.net\/liyuanfeng\/CrossApp.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",

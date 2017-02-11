@@ -5,7 +5,7 @@
 #include "cocoa/CCSet.h"
 #include "platform/CADensityDpi.h"
 #include "support/CANotificationCenter.h"
-
+#include "basics/CACamera.h"
 NS_CC_BEGIN
 
 static CATouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
@@ -96,11 +96,12 @@ void CCEGLViewProtocol::setTouchDelegate(CCEGLTouchDelegate * pDelegate)
 
 void CCEGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
-
-    glViewport((GLint)(x * m_fScale + m_obViewPortRect.origin.x),
-               (GLint)(y * m_fScale + m_obViewPortRect.origin.y),
-               (GLsizei)(w * m_fScale),
-               (GLsizei)(h * m_fScale));
+    experimental::Viewport vp((float)(x * m_fScale + m_obViewPortRect.origin.x),
+                              (float)(y * m_fScale + m_obViewPortRect.origin.y),
+                              (float)(w * m_fScale),
+                              (float)(h * m_fScale));
+    
+    CACamera::setDefaultViewport(vp);
 }
 
 void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
