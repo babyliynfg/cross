@@ -37,7 +37,7 @@ static GLint g_sStencilBits = -1;
 CAClippingView::CAClippingView()
 : m_pStencil(NULL)
 , m_fAlphaThreshold(1.0f)
-, m_bInverted(false)
+, m_bInverted(true)
 , m_bClippingEnabled(true)
 {}
 

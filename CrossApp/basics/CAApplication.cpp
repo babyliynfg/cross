@@ -166,7 +166,7 @@ void CAApplication::updateDraw()
 
 void CAApplication::drawScene(float dt)
 {
-    //if (m_nDrawCount > 0)
+    if (m_nDrawCount > 0)
     {
         --m_nDrawCount;
         
