@@ -52,12 +52,11 @@ CGNode::CGNode(void)
 , m_bNormalizedPositionDirty(false)
 , m_obContentSize(DSizeZero)
 , m_bContentSizeDirty(true)
-, m_tAdditionalTransform(Mat4::IDENTITY)
 , m_bTransformDirty(true)
 , m_bInverseDirty(true)
-, m_bUseAdditionalTransform(false)
+, m_pAdditionalTransform(nullptr)
+, m_bAdditionalTransformDirty(false)
 , m_bTransformUpdated(true)
-, m_pCamera(NULL)
 , m_nZOrder(0)
 , m_pParent(NULL)
 , m_uOrderOfArrival(0)
@@ -70,14 +69,14 @@ CGNode::CGNode(void)
 , _displayedColor(CAColor_white)
 , _realColor(CAColor_white)
 , m_bDisplayRange(true)
-, m_bHasChildren(false)
 , m_pSuperviewCAView(NULL)
 , m_pCAView(NULL)
 , m_iCameraMask(1)
+, m_pApplication(CAApplication::getApplication())
 {
     memset((void*)&m_sQuad, 0, sizeof(m_sQuad));
     
-    m_tTransform = m_tInverse = m_tAdditionalTransform = Mat4::IDENTITY;
+    m_tTransform = m_tInverse = Mat4::IDENTITY;
     
     this->updateRotationQuat();
     
@@ -94,10 +93,17 @@ CGNode::~CGNode(void)
     if(!m_obChildren.empty())
     {
         for (auto& var : m_obChildren)
-            var->setParent(NULL);
+        {
+            var->setParent(nullptr);
+        }
+        m_obChildren.clear();
     }
     
-    m_obChildren.clear();
+    if (m_pAdditionalTransform)
+    {
+        delete [] m_pAdditionalTransform;
+    }
+    
     if (m_pCAView)
     {
         m_pCAView->m_pParentCGNode = NULL;
@@ -355,16 +361,6 @@ unsigned int CGNode::getChildrenCount() const
     return (unsigned int)m_obChildren.size();
 }
 
-CACamera* CGNode::getCamera()
-{
-    if (!m_pCamera)
-    {
-        m_pCamera = new CACamera();
-    }
-    
-    return m_pCamera;
-}
-
 bool CGNode::isVisible()
 {
     return m_bVisible;
@@ -490,8 +486,6 @@ void CGNode::setContentSize(const DSize & contentSize)
         {
             m_pCAView->reViewlayout(m_obContentSize);
         }
-        
-        m_bContentSizeDirty = true;
         this->updateDraw();
     }
 }
@@ -579,12 +573,12 @@ const char* CGNode::description()
 
 void CGNode::updateDraw()
 {
+    m_bContentSizeDirty = m_bTransformUpdated = m_bTransformDirty = m_bInverseDirty = true;
     CGNode* v = this->getParent();
     while (v && v == v->getParent())
     {
-        CC_RETURN_IF(v && v->isVisible());
+        CC_RETURN_IF(v && !v->isVisible());
     }
-    m_bTransformDirty = m_bInverseDirty = m_bInverseDirty = true;
     CAApplication::getApplication()->updateDraw();
 }
 
@@ -701,7 +695,6 @@ void CGNode::removeAllChildren()
         }
         m_obChildren.clear();
     }
-    m_bHasChildren = false;
 }
 
 
@@ -743,22 +736,8 @@ void CGNode::sortAllChildren()
     }
 }
 
-void CGNode::draw()
-{
-    auto renderer = CAApplication::getApplication()->getRenderer();
-    draw(renderer, m_tModelViewTransform, true);
-}
-
 void CGNode::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-}
-
-void CGNode::visit()
-{
-    auto application = CAApplication::getApplication();
-    auto renderer = application->getRenderer();
-    auto& parentTransform = application->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    visit(renderer, parentTransform, true);
 }
 
 uint32_t CGNode::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
@@ -783,7 +762,7 @@ uint32_t CGNode::processParentFlags(const Mat4& parentTransform, uint32_t parent
     flags |= (m_bContentSizeDirty ? FLAGS_CONTENT_SIZE_DIRTY : 0);
     
     
-    if(flags & FLAGS_DIRTY_MASK)
+    //if(flags & FLAGS_DIRTY_MASK)
         m_tModelViewTransform = this->transform(parentTransform);
     
     m_bTransformUpdated = false;
@@ -806,22 +785,62 @@ void CGNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
     
-    auto application = CAApplication::getApplication();
-    
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
-    application->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    application->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, m_tModelViewTransform);
+    m_pApplication->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    m_pApplication->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, m_tModelViewTransform);
     
-    bool visibleByCamera = 1;
+    bool visibleByCamera = isVisitableByVisitingCamera();
     
-    int i = 0;
+    m_bScissorRestored = false;
+    
+    if (m_bDisplayRange == false)
+    {
+        m_obBeforeDrawCommand.init(0);
+        m_obBeforeDrawCommand.func = [&](){
+            
+            Mat4 tm = Mat4::IDENTITY;
+            tm.m[12] = m_obContentSize.width;
+            tm.m[13] = m_obContentSize.height;
+            
+            Mat4 max;
+            Mat4::multiply(m_tModelViewTransform, tm, &max);
+            
+            float minX = m_tModelViewTransform.m[12];
+            float minY = m_tModelViewTransform.m[13];
+            float maxX = ceilf(max.m[12]);
+            float maxY = ceilf(max.m[13]);
+            
+            auto glview = m_pApplication->getOpenGLView();
+            m_bScissorRestored = glview->isScissorEnabled();
+            if (m_bScissorRestored)
+            {
+                m_obSupviewScissorRect = glview->getScissorRect();
+                
+                float x1 = MAX(minX, m_obSupviewScissorRect.getMinX());
+                float y1 = MAX(minY, m_obSupviewScissorRect.getMinY());
+                float x2 = MIN(maxX, m_obSupviewScissorRect.getMaxX());
+                float y2 = MIN(maxY, m_obSupviewScissorRect.getMaxY());
+                float width = (GLsizei)MAX(x2-x1, 0);
+                float height = (GLsizei)MAX(y2-y1, 0);
+                glview->setScissorInPoints(x1, y1, width, height);
+            }
+            else
+            {
+                glEnable(GL_SCISSOR_TEST);
+                glview->setScissorInPoints(minX, minY, (GLsizei)(maxX - minX), (GLsizei)(maxY - minY));
+            }
+            
+        };
+        m_pApplication->getRenderer()->addCommand(&m_obBeforeDrawCommand);
+    }
     
     if(!m_obChildren.empty())
     {
         sortAllChildren();
         // draw children zOrder < 0
+        int i = 0;
         for( ; i < m_obChildren.size(); i++ )
         {
             auto node = m_obChildren.at(i);
@@ -843,7 +862,33 @@ void CGNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
         this->draw(renderer, m_tModelViewTransform, flags);
     }
     
-    application->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    if (m_pCAView)
+    {
+        m_pCAView->visit(renderer, m_tModelViewTransform, flags);
+    }
+    
+    if (m_bDisplayRange == false)
+    {
+        m_obAfterDrawCommand.init(0);
+        m_obAfterDrawCommand.func = [&](){
+            
+            if (m_bScissorRestored)
+            {
+                auto glview = m_pApplication->getOpenGLView();
+                glview->setScissorInPoints(m_obSupviewScissorRect.origin.x,
+                                           m_obSupviewScissorRect.origin.y,
+                                           m_obSupviewScissorRect.size.width,
+                                           m_obSupviewScissorRect.size.height);
+            }
+            else
+            {
+                glDisable(GL_SCISSOR_TEST);
+            }
+        };
+        m_pApplication->getRenderer()->addCommand(&m_obAfterDrawCommand);
+    }
+    
+    m_pApplication->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
 }
 
@@ -1116,14 +1161,21 @@ const Mat4& CGNode::getNodeToParentTransform() const
                 m_tTransform.m[13] += m_tTransform.m[1] * -anchorPoint.x + m_tTransform.m[5] * -anchorPoint.y;
             }
         }
-        
-        if (m_bUseAdditionalTransform)
+    }
+
+    if (m_pAdditionalTransform)
+    {
+        if (m_bTransformDirty)
         {
-            m_tTransform = m_tTransform * m_tAdditionalTransform;
+            m_pAdditionalTransform[1] = m_tTransform;
         }
         
-        m_bTransformDirty = false;
+        if (m_bTransformUpdated)
+        {
+            m_tTransform = m_pAdditionalTransform[1] * m_pAdditionalTransform[0];
+        }
     }
+    m_bTransformDirty = m_bAdditionalTransformDirty = false;
     
     return m_tTransform;
 }
@@ -1146,14 +1198,21 @@ void CGNode::setAdditionalTransform(Mat4* additionalTransform)
 {
     if (additionalTransform == nullptr)
     {
-        m_bUseAdditionalTransform = false;
+        delete [] m_pAdditionalTransform;
+        m_pAdditionalTransform = nullptr;
     }
     else
     {
-        m_tAdditionalTransform = *additionalTransform;
-        m_bUseAdditionalTransform = true;
+        if (!m_pAdditionalTransform)
+        {
+            m_pAdditionalTransform = new Mat4[2];
+            
+            m_pAdditionalTransform[1] = m_tTransform;
+        }
+        
+        m_pAdditionalTransform[0] = *additionalTransform;
     }
-    m_bTransformUpdated = m_bTransformDirty = m_bInverseDirty = true;
+    m_bTransformUpdated = m_bAdditionalTransformDirty = m_bInverseDirty = true;
 }
 
 
@@ -1175,7 +1234,6 @@ const Mat4& CGNode::getParentToNodeTransform() const
     
     return m_tInverse;
 }
-
 
 AffineTransform CGNode::getNodeToWorldAffineTransform() const
 {

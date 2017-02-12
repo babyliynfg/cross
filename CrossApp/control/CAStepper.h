@@ -40,8 +40,6 @@ public:
     virtual void onEnter();
     virtual void onExit();
     
-    virtual void visit();
-    
     CC_SYNTHESIZE(bool, m_bContinuous, Continuous); // if true, value change events are sent any time the value changes during interaction. default = true
     CC_SYNTHESIZE(bool, m_bAutoRepeat, AutoRepeat); // if true, press & hold repeatedly alters value. default = true
     CC_SYNTHESIZE(bool, m_bWraps, Wraps);           // if true, value wraps from min <-> max. default = false

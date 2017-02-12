@@ -32,7 +32,6 @@
 
 NS_CC_BEGIN
 
-class CACamera;
 class DPoint;
 class CATouch;
 class CARGBAProtocol;
@@ -219,13 +218,11 @@ public:
 
     virtual void onExitTransitionDidStart();
 
-    virtual CACamera* getCamera();
-
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
-    virtual void draw();
+    virtual void draw() final;
 
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
-    virtual void visit();
+    virtual void visit() final;
 
     virtual void visitEve(void);
     
@@ -432,8 +429,6 @@ protected:
     
     DLayout                     m_obLayout;
     DRect                       m_obReturn;
-    
-    CACamera*                   m_pCamera;
 
     int                         m_nZOrder;
     

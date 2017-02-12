@@ -44,7 +44,7 @@ public:
 
     virtual ~CGSprite(void);
 
-    virtual bool init();
+    virtual bool init() override;
 
     virtual bool initWithImage(CAImage *image);
 
@@ -60,23 +60,23 @@ public:
 
     virtual bool initWithFile(const std::string& pszFilename, const DRect& rect);
 
-    virtual void setImage(CAImage *image);
+    virtual void setImage(CAImage *image) override;
     
-    virtual CAImage* getImage();
+    virtual CAImage* getImage() override;
   
-    virtual void insertChild(CGNode* child, int z);
+    virtual void insertChild(CGNode* child, int z) override;
     
-    virtual void removeChild(CGNode* child);
+    virtual void removeChild(CGNode* child) override;
     
-    virtual void reorderChild(CGNode *pChild, int zOrder);
+    virtual void reorderChild(CGNode *pChild, int zOrder) override;
     
-    virtual void sortAllChildren();
+    virtual void sortAllChildren() override;
 
     virtual void setOpacityModifyRGB(bool modify);
     
     virtual bool isOpacityModifyRGB(void);
     
-    virtual void updateTransform(void);
+    virtual void updateTransform(void) override;
 
     virtual CGSpriteBatchNode* getBatchNode(void);
 
@@ -140,19 +140,21 @@ protected:
     
     virtual void setDirtyRecursively(bool bValue);
     
-    CAImageAtlas*       m_pobImageAtlas;
-    CAImage*            m_pobImage;
-    unsigned int        m_uAtlasIndex;
-    CGSpriteBatchNode*  m_pobBatchNode;
+    bool                        m_bInsideBounds;
+    CAImageAtlas*               m_pobImageAtlas;
+    CAImage*                    m_pobImage;
+    unsigned int                m_uAtlasIndex;
+    CGSpriteBatchNode*          m_pobBatchNode;
     
-    TrianglesCommand    m_obTrianglesCommand;
+    TrianglesCommand            m_obTrianglesCommand;
+    TrianglesCommand::Triangles m_obTriangles;
     
-    bool                m_bDirty;               /// Whether the sprite needs to be updated
-    bool                m_bRecursiveDirty;      /// Whether all of the sprite's children needs to be updated
-    bool                m_bHasChildren;         /// Whether the sprite contains children
-    bool                m_bShouldBeHidden;      /// should not be drawn because one of the ancestors is not
+    bool                        m_bDirty;               /// Whether the sprite needs to be updated
+    bool                        m_bRecursiveDirty;      /// Whether all of the sprite's children needs to be updated
+    bool                        m_bHasChildren;         /// Whether the sprite contains children
+    bool                        m_bShouldBeHidden;      /// should not be drawn because one of the ancestors is not
     
-    Mat4                m_tTransformToBatch;
+    Mat4                        m_tTransformToBatch;
     //
     // Shared data
     //

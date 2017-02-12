@@ -278,15 +278,15 @@ void CAVideoPlayerView::updateImageRect()
     m_sQuad.tr.vertices = DPoint3D(m_fRight, m_fBottom, 0);
 }
 
-void CAVideoPlayerView::visit()
+void CAVideoPlayerView::visit(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    CAView::visit();
+    CAView::visit(renderer, transform, flags);
     
     updateDraw();
 }
 
 
-void CAVideoPlayerView::draw()
+void CAVideoPlayerView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     long offset = (long)&m_sQuad;
     

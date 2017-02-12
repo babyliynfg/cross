@@ -43,7 +43,13 @@ namespace CADevice
     {
         return 1.0f;
     }
+    
     void setScreenBrightness(float brightness)
+    {
+        
+    }
+    
+    void getAddressBook(CAPersonListDelegate* delegate)
     {
         
     }

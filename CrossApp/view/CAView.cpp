@@ -56,10 +56,9 @@ CAView::CAView(void)
 , m_pAdditionalTransform(nullptr)
 , m_bAdditionalTransformDirty(false)
 , m_bTransformUpdated(true)
-, m_pCamera(NULL)
 , m_nZOrder(0)
-, m_pSuperview(NULL)
-, m_pGlProgramState(NULL)
+, m_pSuperview(nullptr)
+, m_pGlProgramState(nullptr)
 , m_uOrderOfArrival(0)
 , m_bRunning(false)
 , m_bVisible(true)
@@ -71,7 +70,7 @@ CAView::CAView(void)
 , m_bOpacityModifyRGB(true)
 , m_bDisplayRange(true)
 , m_bScissorRestored(false)
-, m_pobImage(NULL)
+, m_pobImage(nullptr)
 , m_bFlipX(false)
 , m_bFlipY(false)
 , m_pContentContainer(NULL)
@@ -80,15 +79,14 @@ CAView::CAView(void)
 , m_bRightShadowed(false)
 , m_bTopShadowed(false)
 , m_bBottomShadowed(false)
-, m_pParentCGNode(NULL)
-, m_pCGNode(NULL)
+, m_pParentCGNode(nullptr)
+, m_pCGNode(nullptr)
 , m_obLayout(DLayoutZero)
 , m_eLayoutType(0)
 , m_iCameraMask(1)
 , m_pApplication(CAApplication::getApplication())
 {
-    m_sBlendFunc.src = CC_BLEND_SRC;
-    m_sBlendFunc.dst = CC_BLEND_DST;
+    m_sBlendFunc = BlendFunc_alpha_non_premultiplied;
     memset(&m_sQuad, 0, sizeof(m_sQuad));
     
     CAColor4B tmpColor = CAColor_white;
@@ -109,14 +107,15 @@ CAView::~CAView(void)
 {
     CC_SAFE_RELEASE_NULL(m_pGlProgramState);
     CAScheduler::getScheduler()->pauseTarget(this);
-    
-    CC_SAFE_RELEASE(m_pCamera);
-    
-    for (auto& subview : m_obSubviews)
+
+    if (!m_obSubviews.empty())
     {
-        subview->setSuperview(NULL);
+        for (auto& subview : m_obSubviews)
+        {
+            subview->setSuperview(nullptr);
+        }
+        m_obSubviews.clear();
     }
-    m_obSubviews.clear();
     
     if (m_pAdditionalTransform)
     {
@@ -126,7 +125,7 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pobImage);
     if (m_pCGNode)
     {
-        m_pCGNode->m_pSuperviewCAView = NULL;
+        m_pCGNode->m_pSuperviewCAView = nullptr;
         m_pCGNode->release();
     }
     CCLog("~CAView = %d\n", --viewCount);
@@ -548,17 +547,6 @@ const CAVector<CAView*>& CAView::getSubviews()
 unsigned int CAView::getSubviewsCount(void) const
 {
     return (unsigned int)m_obSubviews.size();
-}
-
-/// camera getter: lazy alloc
-CACamera* CAView::getCamera()
-{
-    if (!m_pCamera)
-    {
-        m_pCamera = new CACamera();
-    }
-    
-    return m_pCamera;
 }
 
 /// isVisible getter
@@ -1501,14 +1489,14 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
                 float y1 = MAX(minY, m_obSupviewScissorRect.getMinY());
                 float x2 = MIN(maxX, m_obSupviewScissorRect.getMaxX());
                 float y2 = MIN(maxY, m_obSupviewScissorRect.getMaxY());
-                float width = (GLsizei)MAX(x2-x1, 0);
-                float height = (GLsizei)MAX(y2-y1, 0);
+                float width = MAX(x2-x1, 0);
+                float height = MAX(y2-y1, 0);
                 glview->setScissorInPoints(x1, y1, width, height);
             }
             else
             {
                 glEnable(GL_SCISSOR_TEST);
-                glview->setScissorInPoints(minX, minY, (GLsizei)(maxX - minX), (GLsizei)(maxY - minY));
+                glview->setScissorInPoints(minX, minY, maxX - minX, maxY - minY);
             }
             
         };
@@ -1539,6 +1527,11 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     else if (visibleByCamera)
     {
         this->draw(renderer, m_tModelViewTransform, flags);
+    }
+    
+    if (m_pCGNode)
+    {
+        m_pCGNode->visit(renderer, m_tModelViewTransform, flags);
     }
     
     if (m_bDisplayRange == false)

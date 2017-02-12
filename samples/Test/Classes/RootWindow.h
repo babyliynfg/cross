@@ -18,7 +18,6 @@ public:
     virtual ~RootWindow();
     
     virtual bool init();
-    virtual void draw();
     CC_SYNTHESIZE_READONLY(CANavigationController*, m_pRootNavigationController, RootNavigationController);
     CC_SYNTHESIZE_READONLY(CADrawerController*, m_pRootDrawerController, DrawerController);
 

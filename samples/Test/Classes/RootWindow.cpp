@@ -65,11 +65,6 @@ bool RootWindow::init()
     return true;
 }
 
-void RootWindow::draw()
-{
-
-}
-
 void RootWindow::initUIView()
 {
     do

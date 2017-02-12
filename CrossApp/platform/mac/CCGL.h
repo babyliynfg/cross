@@ -13,6 +13,10 @@
 #define glDeleteVertexArrays            glDeleteVertexArraysAPPLE
 #define glGenVertexArrays               glGenVertexArraysAPPLE
 #define glBindVertexArray               glBindVertexArrayAPPLE
+#define glClearDepthf                   glClearDepth
+#define glDepthRangef                   glDepthRange
+#define glReleaseShaderCompiler(xxx)
+
 
 
 #endif // __CCGL_H__

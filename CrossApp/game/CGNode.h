@@ -25,6 +25,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCFrameBuffer.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -195,14 +196,10 @@ public:
     Action* getActionByTag(int tag);
     
     size_t getNumberOfRunningActions() const;
-    
-    virtual CACamera* getCamera();
-    
+
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
-    virtual void draw() final;
     
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
-    virtual void visit() final;
     
     virtual void visitEve(void);
     
@@ -297,9 +294,9 @@ public:
 
     inline ccV3F_C4B_T2F_Quad getQuad(void) { return m_sQuad; }
 
-    virtual CAView* getCAView();
-    
-    virtual void setCAView(CAView* var);
+    virtual void setOpacityModifyRGB(bool value) {CC_UNUSED_PARAM(value);}
+
+    virtual bool isOpacityModifyRGB() const { return false; };
     
     void setOnEnterCallback(const std::function<void()>& callback) { m_obOnEnterCallback = callback; }
 
@@ -320,6 +317,10 @@ public:
     unsigned short getCameraMask() const { return m_iCameraMask; }
 
     virtual void setCameraMask(unsigned short mask, bool applySubview = true);
+    
+    virtual CAView* getCAView();
+    
+    virtual void setCAView(CAView* var);
     
 public:
     
@@ -371,9 +372,7 @@ protected:
     
     DSize                       m_obContentSize;
     bool                        m_bContentSizeDirty;
-    
-    CACamera*                   m_pCamera;
-    
+        
     int                         m_nZOrder;
     
     CAVector<CGNode*>           m_obChildren;
@@ -385,12 +384,11 @@ protected:
     mutable bool                m_bTransformDirty;   ///< transform dirty flag
     mutable Mat4                m_tInverse;        ///< inverse transform
     mutable bool                m_bInverseDirty;     ///< inverse transform dirty flag
-    mutable Mat4                m_tAdditionalTransform; ///< transform
-    bool                        m_bUseAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
+    mutable Mat4*               m_pAdditionalTransform; ///< transform
+    mutable bool                m_bAdditionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     bool                        m_bTransformUpdated;         ///< Whether or not the Transform object was updated since the last
     
     Mat4                        m_tModelViewTransform;       ///< ModelView transform of the Node.
-    Mat4                        m_tTransformToBatch;
     
     unsigned int                m_uOrderOfArrival;
     
@@ -412,11 +410,14 @@ protected:
     std::function<void()>       m_obOnEnterTransitionDidFinishCallback;
     std::function<void()>       m_obOnExitTransitionDidStartCallback;
     
-    bool                        m_bDisplayRange;
-
-    bool                        m_bHasChildren;
-
     bool                        m_bReorderChildDirty;
+    
+    bool                        m_bDisplayRange;
+    bool                        m_bScissorRestored;
+    DRect                       m_obSupviewScissorRect;
+
+    CustomCommand               m_obBeforeDrawCommand;
+    CustomCommand               m_obAfterDrawCommand;
     
     ccV3F_C4B_T2F_Quad          m_sQuad;
     

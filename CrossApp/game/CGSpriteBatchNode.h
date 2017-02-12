@@ -103,13 +103,11 @@ protected:
     
     void swap(ssize_t oldIndex, ssize_t newIndex);
     
-    void updateBlendFunc();
+    virtual void updateBlendFunc() override;
 
 protected:
     
     CAImageAtlas *m_pobImageAtlas;
-    
-    BlendFunc m_blendFunc;
     
     CAVector<CGSprite*> m_obDescendants;
     

@@ -184,9 +184,9 @@ void CAWebView::showNativeWeb()
 	_impl->setVisible(true);
 }
 
-void CAWebView::draw()
+void CAWebView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-	CAView::draw();
+	CAView::draw(renderer, transform, flags);
 
 	if (m_bHideNativeWeCmd)
 	{

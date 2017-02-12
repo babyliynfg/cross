@@ -21,7 +21,7 @@
 #include "math/CAAffineTransform.h"
 #include "math/TransformUtils.h"
 #include "math/CAAffineTransform.h"
-#include "support/CAProfiling.h"
+#include "basics/CACamera.h"
 #include "ccMacros.h"
 #include <string.h>
 #include "view/CAView.h"
@@ -381,7 +381,7 @@ void CGSprite::updateTransform(void)
     {
         if(!m_bVisible || (m_pParent && m_pParent != m_pobBatchNode && ((CGSprite*)m_pParent)->m_bShouldBeHidden))
         {
-            m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = DPoint3D(0,0,0);
+            m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = DPoint3DZero;
             m_bShouldBeHidden = true;
         }
         else
@@ -756,39 +756,36 @@ void CGSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     CC_RETURN_IF(!m_pobImage);
     
-
+    auto visitingCamera = CACamera::getVisitingCamera();
+    auto defaultCamera = CACamera::getDefaultCamera();
+    if (visitingCamera == defaultCamera)
     {
-//        m_obTrianglesCommand.init(m_nZOrder,
-//                               m_pobImage->getName(),
-//                               getGLProgramState(),
-//                               m_sBlendFunc,
-//                               _polyInfo.triangles,
-//                               transform,
-//                               flags);
+        m_bInsideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, m_obContentSize) : m_bInsideBounds;
+    }
+    else
+    {
+        // XXX: this always return true since
+        m_bInsideBounds = renderer->checkVisibility(transform, m_obContentSize);
+    }
+    
+    if(m_bInsideBounds)
+    {
+        static unsigned short quadIndices[] = {0,1,2, 3,2,1};
+        
+        m_obTriangles.indices = quadIndices;
+        m_obTriangles.vertCount = 4;
+        m_obTriangles.indexCount = 6;
+        m_obTriangles.verts = (ccV3F_C4B_T2F*)&m_sQuad;
+        
+        m_obTrianglesCommand.init(0,
+                                  m_pobImage->getName(),
+                                  getGLProgramState(),
+                                  m_sBlendFunc,
+                                  m_obTriangles,
+                                  transform,
+                                  flags);
         
         renderer->addCommand(&m_obTrianglesCommand);
-        
-#if CC_SPRITE_DEBUG_DRAW
-        _debugDrawNode->clear();
-        auto count = _polyInfo.triangles.indexCount/3;
-        auto indices = _polyInfo.triangles.indices;
-        auto verts = _polyInfo.triangles.verts;
-        for(ssize_t i = 0; i < count; i++)
-        {
-            //draw 3 lines
-            Vec3 from =verts[indices[i*3]].vertices;
-            Vec3 to = verts[indices[i*3+1]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
-            from =verts[indices[i*3+1]].vertices;
-            to = verts[indices[i*3+2]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
-            from =verts[indices[i*3+2]].vertices;
-            to = verts[indices[i*3]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-        }
-#endif //CC_SPRITE_DEBUG_DRAW
     }
 }
 

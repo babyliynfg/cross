@@ -155,11 +155,8 @@ void CAApplication::setGLDefaultValues(void)
     CCAssert(m_pobOpenGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    setDepthTest(false);
+    setDepthTest(true);
     setProjection(m_eProjection);
-    
-    auto vp = CACamera::getDefaultViewport();
-    glViewport(vp._left, vp._bottom, vp._width, vp._height);
 }
 
 void CAApplication::updateDraw()
@@ -292,6 +289,10 @@ void CAApplication::setViewport()
     if (m_pobOpenGLView)
     {
         m_pobOpenGLView->setViewPortInPoints(0, 0, m_obWinSizeInPoints.width, m_obWinSizeInPoints.height);
+    }
+    else
+    {
+        CACamera::setDefaultViewport(experimental::Viewport(0, 0, s_dip_to_px(m_obWinSizeInPoints.width), s_dip_to_px(m_obWinSizeInPoints.height)));
     }
 }
 

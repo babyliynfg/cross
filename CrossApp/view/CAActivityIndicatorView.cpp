@@ -111,11 +111,6 @@ void CAActivityIndicatorView::onExit()
     stopAnimating();
 }
 
-void CAActivityIndicatorView::visit()
-{
-    CAView::visit();
-}
-
 void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
 {
     m_style = style;
@@ -210,10 +205,6 @@ void CAActivityIndicatorView::setTargetOnCancel(CAObject* target, SEL_CallFunc c
 {
     m_pTarget = target;
     m_pCallFunc = callBack;
-}
-
-void CAActivityIndicatorView::draw()
-{
 }
 
 void CAActivityIndicatorView::animation(float dt)

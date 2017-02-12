@@ -115,12 +115,12 @@ void CAVideoPlayerView::updateImageRect()
     CAView::updateImageRect();
 }
 
-void CAVideoPlayerView::visit()
+void CAVideoPlayerView::visit(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    CAView::visit();
+    CAView::visit(renderer, transform, flags);
 }
 
-void CAVideoPlayerView::draw()
+void CAVideoPlayerView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
 
 }

@@ -36,7 +36,7 @@ public:
     virtual ~CADrawView();
     
     virtual bool init();
-    virtual void draw();
+    virtual void draw(Renderer* renderer, const Mat4 &transform, uint32_t flags);
     
     /** draw a dot at a position, with a given radius and color */
     void drawDot(const DPoint &pos, float radius, const CAColor4F &color);

@@ -22,7 +22,7 @@
 #include <list>
 #include <stdlib.h>
 #include <pthread.h>
-
+#include "basics/CAConfiguration.h"
 
 NS_CC_BEGIN
 
@@ -456,10 +456,10 @@ void CAImageCache::dumpCachedImageInfo()
 #pragma CAImageAtlas
 
 CAImageAtlas::CAImageAtlas()
-:m_pIndices(NULL)
+:m_pIndices(nullptr)
 ,m_bDirty(false)
-,m_pImage(NULL)
-,m_pQuads(NULL)
+,m_pImage(nullptr)
+,m_pQuads(nullptr)
 {}
 
 CAImageAtlas::~CAImageAtlas()
@@ -475,10 +475,11 @@ CAImageAtlas::~CAImageAtlas()
     
     glDeleteBuffers(2, m_pBuffersVBO);
     
-#if CC_TEXTURE_ATLAS_USE_VAO
-    glDeleteVertexArrays(1, &m_uVAOname);
-    GL::bindVAO(0);
-#endif
+    if (CAConfiguration::getInstance()->supportsShareableVAO())
+    {
+        glDeleteVertexArrays(1, &m_uVAOname);
+        GL::bindVAO(0);
+    }
     CC_SAFE_RELEASE(m_pImage);
     
 }
@@ -570,11 +571,14 @@ bool CAImageAtlas::initWithImage(CAImage *image, unsigned int capacity)
     
     this->setupIndices();
     
-#if CC_TEXTURE_ATLAS_USE_VAO
-    setupVBOandVAO();
-#else
-    setupVBO();
-#endif
+    if (CAConfiguration::getInstance()->supportsShareableVAO())
+    {
+        setupVBOandVAO();
+    }
+    else
+    {
+        setupVBO();
+    }
     
     m_bDirty = true;
     
@@ -583,11 +587,14 @@ bool CAImageAtlas::initWithImage(CAImage *image, unsigned int capacity)
 
 void CAImageAtlas::listenBackToForeground(CAObject *obj)
 {
-#if CC_TEXTURE_ATLAS_USE_VAO
-    setupVBOandVAO();
-#else
-    setupVBO();
-#endif
+    if (CAConfiguration::getInstance()->supportsShareableVAO())
+    {
+        setupVBOandVAO();
+    }
+    else
+    {
+        setupVBO();
+    }
     
     // set m_bDirty to true to force it rebinding buffer
     m_bDirty = true;
@@ -610,14 +617,6 @@ void CAImageAtlas::setupIndices()
     
     for( unsigned int i=0; i < m_uCapacity; i++)
     {
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-        m_pIndices[i*6+0] = i*4+0;
-        m_pIndices[i*6+1] = i*4+0;
-        m_pIndices[i*6+2] = i*4+2;
-        m_pIndices[i*6+3] = i*4+1;
-        m_pIndices[i*6+4] = i*4+3;
-        m_pIndices[i*6+5] = i*4+3;
-#else
         m_pIndices[i*6+0] = i*4+0;
         m_pIndices[i*6+1] = i*4+1;
         m_pIndices[i*6+2] = i*4+2;
@@ -626,13 +625,11 @@ void CAImageAtlas::setupIndices()
         m_pIndices[i*6+3] = i*4+3;
         m_pIndices[i*6+4] = i*4+2;
         m_pIndices[i*6+5] = i*4+1;
-#endif
     }
 }
 
 //ImageAtlas - VAO / VBO specific
 
-#if CC_TEXTURE_ATLAS_USE_VAO
 void CAImageAtlas::setupVBOandVAO()
 {
     glGenVertexArrays(1, &m_uVAOname);
@@ -667,14 +664,13 @@ void CAImageAtlas::setupVBOandVAO()
     
     CHECK_GL_ERROR_DEBUG();
 }
-#else // CC_TEXTURE_ATLAS_USE_VAO
+
 void CAImageAtlas::setupVBO()
 {
     glGenBuffers(2, &m_pBuffersVBO[0]);
     
     mapBuffers();
 }
-#endif // ! // CC_TEXTURE_ATLAS_USE_VAO
 
 void CAImageAtlas::mapBuffers()
 {
@@ -982,86 +978,79 @@ void CAImageAtlas::drawNumberOfQuads(unsigned int n, unsigned int start)
     }
     GL::bindTexture2D(m_pImage->getName());
     
-#if CC_TEXTURE_ATLAS_USE_VAO
-
-    if (m_bDirty)
+    auto conf = CAConfiguration::getInstance();
+    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
-        glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
-
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * (n-start), NULL, GL_DYNAMIC_DRAW);
-		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        if (buf == NULL)
+        if (m_bDirty)
         {
+            
+            glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+            
+            glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0]) * m_uCapacity, nullptr, GL_DYNAMIC_DRAW);
+            void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+            memcpy(buf, m_pQuads, sizeof(m_pQuads[0])* m_uTotalQuads);
             glUnmapBuffer(GL_ARRAY_BUFFER);
+            
             glBindBuffer(GL_ARRAY_BUFFER, 0);
-            return;
+            
+            m_bDirty = false;
         }
-		memcpy(buf, m_pQuads, sizeof(m_pQuads[0])* (n-start));
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-		
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
         
-        m_bDirty = false;
+        GL::bindVAO(m_uVAOname);
+        
+#if CC_REBIND_INDICES_BUFFER
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+#endif
+        
+        glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
+        
+        GL::bindVAO(0);
+        
+#if CC_REBIND_INDICES_BUFFER
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+#endif
+        
+        //    glBindVertexArray(0);
+    
     }
+    else
+    {// ! CC_TEXTURE_ATLAS_USE_VAO
     
-    GL::bindVAO(m_uVAOname);
-    
-#if CC_REBIND_INDICES_BUFFER
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
-#endif
-    
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
-#else
-    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])) );
-#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-    
-#if CC_REBIND_INDICES_BUFFER
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-#endif
-    
-    //    glBindVertexArray(0);
-    
-#else // ! CC_TEXTURE_ATLAS_USE_VAO
-    
-    //
-    // Using VBO without VAO
-    //
-    
+        //
+        // Using VBO without VAO
+        //
+        
 #define kQuadSize sizeof(m_pQuads[0].bl)
-    glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
-    
-    // XXX: update is done in draw... perhaps it should be done in a timer
-    if (m_bDirty)
-    {
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*start, sizeof(m_pQuads[0]) * n , &m_pQuads[start] );
-        m_bDirty = false;
+        glBindBuffer(GL_ARRAY_BUFFER, m_pBuffersVBO[0]);
+        
+        // XXX: update is done in draw... perhaps it should be done in a timer
+        if (m_bDirty)
+        {
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0]) * m_uTotalQuads , &m_pQuads[0] );
+            
+            m_bDirty = false;
+        }
+        
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, vertices));
+        
+        // colors
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, colors));
+        
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, texCoords));
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
+        
+        glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])));
+        
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     
-    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
-    
-    // vertices
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, vertices));
-    
-    // colors
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, colors));
-    
-    // tex coords
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(ccV3F_C4B_T2F, texCoords));
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pBuffersVBO[1]);
-    
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-    glDrawElements(GL_TRIANGLE_STRIP, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])));
-#else
-    glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(m_pIndices[0])));
-#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
-#endif // CC_TEXTURE_ATLAS_USE_VAO
-    
+    INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
     CHECK_GL_ERROR_DEBUG();
 }
 

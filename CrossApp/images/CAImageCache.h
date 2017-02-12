@@ -126,21 +126,20 @@ protected:
     
 private:
     
+    void renderCommand();
+    
     void setupIndices();
     
     void mapBuffers();
-#if CC_TEXTURE_ATLAS_USE_VAO
+    
     void setupVBOandVAO();
-#else
+    
     void setupVBO();
-#endif
     
 protected:
     
     GLushort*           m_pIndices;
-#if CC_TEXTURE_ATLAS_USE_VAO
     GLuint              m_uVAOname;
-#endif
     GLuint              m_pBuffersVBO[2];
     bool                m_bDirty;
 };

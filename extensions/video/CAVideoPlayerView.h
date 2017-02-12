@@ -55,8 +55,8 @@ public:
 
 private:
 	virtual bool init();
-	virtual void visit();
-	virtual void draw();
+	virtual void visit(Renderer* renderer, const Mat4 &transform, uint32_t flags);
+	virtual void draw(Renderer* renderer, const Mat4 &transform, uint32_t flags);
 	virtual void update(float fDelta);
 	virtual void setContentSize(const DSize& size);
 	virtual void setImageCoords(DRect rect);

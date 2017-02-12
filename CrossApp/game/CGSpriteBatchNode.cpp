@@ -40,8 +40,8 @@ CGSpriteBatchNode* CGSpriteBatchNode::create(const std::string& fileImage, unsig
 */
 bool CGSpriteBatchNode::initWithImage(CAImage *image, unsigned int capacity)
 {
-    m_blendFunc.src = CC_BLEND_SRC;
-    m_blendFunc.dst = CC_BLEND_DST;
+    m_sBlendFunc = BlendFunc_alpha_premultiplied;
+
     m_pobImageAtlas = new CAImageAtlas();
 
     if (0 == capacity)
@@ -53,13 +53,17 @@ bool CGSpriteBatchNode::initWithImage(CAImage *image, unsigned int capacity)
 
     updateBlendFunc();
 
+    m_obChildren.reserve(capacity);
+    
+    m_obDescendants.reserve(capacity);
+    
     setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
 bool CGSpriteBatchNode::init()
 {
-    CAImage * image = new CAImage();
+    CAImage * image = new (std::nothrow) CAImage();
     image->autorelease();
     return this->initWithImage(image, 0);
 }
@@ -237,7 +241,7 @@ void CGSpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t
         child->updateTransform();
     }
     
-    m_obBatchCommand.init(m_nZOrder, getShaderProgram(), m_sBlendFunc, m_pobImageAtlas, transform, flags);
+    m_obBatchCommand.init(0, getShaderProgram(), m_sBlendFunc, m_pobImageAtlas, transform, flags);
     renderer->addCommand(&m_obBatchCommand);
 }
 
@@ -454,24 +458,24 @@ void CGSpriteBatchNode::updateBlendFunc(void)
 {
     if (! m_pobImageAtlas->getImage()->hasPremultipliedAlpha())
     {
-        m_blendFunc.src = GL_SRC_ALPHA;
-        m_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        m_sBlendFunc = BlendFunc_alpha_non_premultiplied;
+        this->setOpacityModifyRGB(false);
     }
     else
     {
-        m_blendFunc.src = CC_BLEND_SRC;
-        m_blendFunc.dst = CC_BLEND_DST;
+        m_sBlendFunc = BlendFunc_alpha_premultiplied;
+        this->setOpacityModifyRGB(true);
     }
 }
 
 void CGSpriteBatchNode::setBlendFunc(BlendFunc blendFunc)
 {
-    m_blendFunc = blendFunc;
+    m_sBlendFunc = blendFunc;
 }
 
 BlendFunc CGSpriteBatchNode::getBlendFunc(void)
 {
-    return m_blendFunc;
+    return m_sBlendFunc;
 }
 
 CAImage* CGSpriteBatchNode::getImage(void)

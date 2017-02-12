@@ -215,9 +215,8 @@ void CADrawView::render()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void CADrawView::draw()
+void CADrawView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-
     render();
 }
 

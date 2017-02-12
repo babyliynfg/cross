@@ -181,11 +181,6 @@ void CAPageControl::onExit()
     CAControl::onExit();
 }
 
-void CAPageControl::visit()
-{
-    CAControl::visit();
-}
-
 bool CAPageControl::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     if (getBounds().containsPoint(convertToNodeSpace(pTouch->getLocation()))) {

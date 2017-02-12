@@ -44,9 +44,7 @@ public:
     
     virtual void onEnter();
     virtual void onExit();
-    
-    virtual void visit();
-    
+
     void addTarget(CAObject* target, SEL_CAControl selector);
 
     void removeTarget(CAObject* target, SEL_CAControl selector);

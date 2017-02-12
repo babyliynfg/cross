@@ -42,8 +42,6 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual void visit();
-    virtual void draw();
     
     void setTimesOneCycle(float times);
     void setCycleTime(float time);

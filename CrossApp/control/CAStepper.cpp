@@ -440,11 +440,6 @@ void CAStepper::onExit()
     CAControl::onExit();
 }
 
-void CAStepper::visit()
-{
-    CAControl::visit();
-}
-
 void CAStepper::action()
 {
     bool bValueChange = true;

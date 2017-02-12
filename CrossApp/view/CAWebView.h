@@ -130,7 +130,7 @@ public:
     
     virtual void update(float dt);
     
-	virtual void draw();
+	virtual void draw(Renderer* renderer, const Mat4 &transform, uint32_t flags);
 
 	virtual void setVisible(bool visible);
     
