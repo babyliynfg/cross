@@ -180,7 +180,7 @@ bool CACamera::initDefault()
         {
             initOrthographic(size.width, size.height, -1024, 1024);
             this->setPointZ(0);
-            this->setPoint(DPointZero);
+            this->setPoint(DPoint(0, size.height));
             setRotationX(0);
             setRotationY(0);
             setRotation(0);

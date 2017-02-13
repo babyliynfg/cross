@@ -108,8 +108,8 @@ void CCEGLViewProtocol::setScissorInPoints(float x , float y , float w , float h
 {
     glScissor((GLint)(x * m_fScale + m_obViewPortRect.origin.x),
               (GLint)(y * m_fScale + m_obViewPortRect.origin.y),
-              (GLsizei)(w * m_fScale),
-              (GLsizei)(h * m_fScale));
+              (GLsizei)ceilf(w * m_fScale),
+              (GLsizei)ceilf(h * m_fScale));
 }
 
 bool CCEGLViewProtocol::isScissorEnabled()

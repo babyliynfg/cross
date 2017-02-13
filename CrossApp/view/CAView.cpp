@@ -1461,7 +1461,7 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     
     
     m_bScissorRestored = false;
-    
+
     if (m_bDisplayRange == false)
     {
         m_obBeforeDrawCommand.init(0);
@@ -1476,8 +1476,8 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
         
             float minX = m_tModelViewTransform.m[12];
             float minY = m_tModelViewTransform.m[13];
-            float maxX = ceilf(max.m[12]);
-            float maxY = ceilf(max.m[13]);
+            float maxX = ceilf(max.m[12] + 0.5f);
+            float maxY = ceilf(max.m[13] + 0.5f);
             
             auto glview = m_pApplication->getOpenGLView();
             m_bScissorRestored = glview->isScissorEnabled();
