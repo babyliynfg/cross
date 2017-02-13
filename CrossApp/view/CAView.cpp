@@ -73,8 +73,12 @@ CAView::CAView(void)
 , m_pobImage(nullptr)
 , m_bFlipX(false)
 , m_bFlipY(false)
-, m_pContentContainer(NULL)
+, m_pContentContainer(nullptr)
 , m_bIsAnimation(false)
+, m_pLeftShadowedQuad(nullptr)
+, m_pRightShadowedQuad(nullptr)
+, m_pTopShadowedQuad(nullptr)
+, m_pBottomShadowedQuad(nullptr)
 , m_bLeftShadowed(false)
 , m_bRightShadowed(false)
 , m_bTopShadowed(false)
@@ -105,6 +109,11 @@ CAView::CAView(void)
 
 CAView::~CAView(void)
 {
+    CC_SAFE_DELETE(m_pLeftShadowedQuad);
+    CC_SAFE_DELETE(m_pRightShadowedQuad);
+    CC_SAFE_DELETE(m_pTopShadowedQuad);
+    CC_SAFE_DELETE(m_pBottomShadowedQuad);
+    
     CC_SAFE_RELEASE_NULL(m_pGlProgramState);
     CAScheduler::getScheduler()->pauseTarget(this);
 
@@ -1223,7 +1232,10 @@ void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t 
 {
     if (m_bLeftShadowed)
     {
-        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        CC_SAFE_DELETE(m_pLeftShadowedQuad);
+        m_pLeftShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        
+        ccV3F_C4B_T2F_Quad quad = *m_pLeftShadowedQuad;
         
         GLfloat x1,x2,y1,y2;
         x1 = -12;
@@ -1247,14 +1259,16 @@ void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t 
                          BlendFunc_alpha_non_premultiplied);
 
     }
-
 }
 
 void CAView::drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
     if (m_bRightShadowed)
     {
-        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        CC_SAFE_DELETE(m_pRightShadowedQuad);
+        m_pRightShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        
+        ccV3F_C4B_T2F_Quad quad = *m_pRightShadowedQuad;
         
         GLfloat x1,x2,y1,y2;
         x1 = m_obContentSize.width;
@@ -1284,7 +1298,10 @@ void CAView::drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t f
 {
     if (m_bTopShadowed)
     {
-        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        CC_SAFE_DELETE(m_pTopShadowedQuad);
+        m_pTopShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        
+        ccV3F_C4B_T2F_Quad quad = *m_pTopShadowedQuad;
         
         GLfloat x1,x2,y1,y2;
         x1 = 0;
@@ -1314,7 +1331,10 @@ void CAView::drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_
 {
     if (m_bBottomShadowed)
     {
-        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        CC_SAFE_DELETE(m_pBottomShadowedQuad);
+        m_pBottomShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        
+        ccV3F_C4B_T2F_Quad quad = *m_pBottomShadowedQuad;
         
         GLfloat x1,x2,y1,y2;
         x1 = 0;
@@ -1367,16 +1387,17 @@ void CAView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
     {
         static unsigned short quadIndices[] = {0,1,2, 3,2,1};
         
-        m_obTriangles.indices = quadIndices;
-        m_obTriangles.vertCount = 4;
-        m_obTriangles.indexCount = 6;
-        m_obTriangles.verts = (ccV3F_C4B_T2F*)&m_sQuad;
+        TrianglesCommand::Triangles triangles;
+        triangles.indices = quadIndices;
+        triangles.vertCount = 4;
+        triangles.indexCount = 6;
+        triangles.verts = (ccV3F_C4B_T2F*)&m_sQuad;
         
         m_obTrianglesCommand.init(0,
                                m_pobImage->getName(),
                                getGLProgramState(),
                                m_sBlendFunc,
-                               m_obTriangles,
+                               triangles,
                                transform,
                                flags);
         

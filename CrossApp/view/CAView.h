@@ -479,7 +479,7 @@ protected:
     bool                        m_bIsAnimation;
     
     ccV3F_C4B_T2F_Quad          m_sQuad;
-    
+
     bool                        m_bFlipX;
     bool                        m_bFlipY;
     
@@ -489,10 +489,15 @@ protected:
     bool                        m_bInsideBounds;
     CAImage*                    m_pobImage;
     TrianglesCommand            m_obTrianglesCommand;
-    TrianglesCommand::Triangles m_obTriangles;
     
     CustomCommand               m_obBeforeDrawCommand;
     CustomCommand               m_obAfterDrawCommand;
+    
+    
+    ccV3F_C4B_T2F_Quad*         m_pLeftShadowedQuad;
+    ccV3F_C4B_T2F_Quad*         m_pRightShadowedQuad;
+    ccV3F_C4B_T2F_Quad*         m_pTopShadowedQuad;
+    ccV3F_C4B_T2F_Quad*         m_pBottomShadowedQuad;
     
     bool                        m_bLeftShadowed;
     bool                        m_bRightShadowed;

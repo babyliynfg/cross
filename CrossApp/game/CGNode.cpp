@@ -822,14 +822,14 @@ void CGNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
                 float y1 = MAX(minY, m_obSupviewScissorRect.getMinY());
                 float x2 = MIN(maxX, m_obSupviewScissorRect.getMaxX());
                 float y2 = MIN(maxY, m_obSupviewScissorRect.getMaxY());
-                float width = (GLsizei)MAX(x2-x1, 0);
-                float height = (GLsizei)MAX(y2-y1, 0);
+                float width = MAX(x2-x1, 0);
+                float height = MAX(y2-y1, 0);
                 glview->setScissorInPoints(x1, y1, width, height);
             }
             else
             {
                 glEnable(GL_SCISSOR_TEST);
-                glview->setScissorInPoints(minX, minY, (GLsizei)(maxX - minX), (GLsizei)(maxY - minY));
+                glview->setScissorInPoints(minX, minY, (maxX - minX), (maxY - minY));
             }
             
         };
