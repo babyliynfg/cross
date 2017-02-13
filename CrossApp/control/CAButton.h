@@ -14,13 +14,6 @@
 #include "CAControl.h"
 NS_CC_BEGIN
 
-typedef enum
-{
-    CAButtonTypeCustom = 0,
-    CAButtonTypeSquareRect,
-    CAButtonTypeRoundedRect,
-} CAButtonType;
-
 class CAImageView;
 class CALabel;
 
@@ -28,8 +21,29 @@ class CC_DLL CAButton : public CAControl
 {
     
 public:
+
+    enum class Event
+    {
+        TouchDown,
+        TouchDownRepeat,
+        TouchMoved,
+        TouchMovedOutSide,
+        TouchUpInSide,
+        TouchUpOutSide,
+        TouchLongPress,
+        TouchCancelled
+    };
     
-    CAButton(const CAButtonType& buttonType);
+    enum class Type
+    {
+        Custom = 0,
+        SquareRect,
+        RoundedRect,
+    };
+    
+public:
+    
+    CAButton(const CAButton::Type& buttonType);
     
     virtual ~CAButton(void);
     
@@ -37,33 +51,33 @@ public:
     
     virtual void onEnterTransitionDidFinish();
     
-    static CAButton* create(const CAButtonType& buttonType);
+    static CAButton* create(const CAButton::Type& buttonType);
     
-    static CAButton* createWithFrame(const DRect& rect, const CAButtonType& buttonType);
+    static CAButton* createWithFrame(const DRect& rect, const CAButton::Type& buttonType);
     
-    static CAButton* createWithCenter(const DRect& rect, const CAButtonType& buttonType);
+    static CAButton* createWithCenter(const DRect& rect, const CAButton::Type& buttonType);
     
-    static CAButton* createWithLayout(const DLayout& layout, const CAButtonType& buttonType);
+    static CAButton* createWithLayout(const DLayout& layout, const CAButton::Type& buttonType);
     
 public:
     
     virtual bool init();
     
-    void setBackgroundViewForState(const CAControlState& controlState, CAView *var);
+    void setBackgroundViewForState(CAControl::State state, CAView *var);
     
-    CAView* getBackgroundViewForState(const CAControlState& controlState);
+    CAView* getBackgroundViewForState(CAControl::State state);
     
-    void setImageForState(const CAControlState& controlState, CAImage* var);
+    void setImageForState(CAControl::State state, CAImage* var);
     
-    CAImage* getImageForState(const CAControlState& controlState);
+    CAImage* getImageForState(CAControl::State state);
     
-    void setTitleForState(const CAControlState& controlState, const std::string& var);
+    void setTitleForState(CAControl::State state, const std::string& var);
     
-    const std::string& getTitleForState(const CAControlState& controlState);
+    const std::string& getTitleForState(CAControl::State state);
     
-    void setImageColorForState(const CAControlState& controlState, const CAColor4B& var);
+    void setImageColorForState(CAControl::State state, const CAColor4B& var);
     
-    void setTitleColorForState(const CAControlState& controlState, const CAColor4B& var);
+    void setTitleColorForState(CAControl::State state, const CAColor4B& var);
     
     void setTitleFontName(const std::string& var);
     
@@ -80,23 +94,13 @@ public:
     void setTitleBold(bool bold);
     
     void setTitleTextAlignment(const CATextAlignment& var);
-    
-    virtual void setControlState(const CAControlState& var);
-    
-    using CAControl::addTarget;
-    
-    using CAControl::removeTarget;
-    
-    using CAControl::removeAllTargets;
+ 
+    void addTarget(const std::function<void(CAButton*, const DPoint&)>& function, CAButton::Event event);
+
+    void setControlState(CAControl::State state);
     
 public:
     
-    CC_SYNTHESIZE_IS(bool, m_bAllowsSelected, AllowsSelected);
-
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bSelected, Selected);
-    
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
-
 	void interruptTouchState();
 
 public:
@@ -111,23 +115,23 @@ public:
     
 protected:
 
-    CAButtonType m_eButtonType;
+    CAButton::Type m_eButtonType;
     
-    CAColor4B m_color;
+    CAControl::State m_eState;
     
-    CAImage* m_pImage[CAControlStateAll];
-
-    std::string m_sTitle[CAControlStateAll];
-
-    CAColor4B m_sImageColor[CAControlStateAll];
+    CAMap<CAControl::State, CAImage*> m_mImages;
     
-    CAColor4B m_sTitleColor[CAControlStateAll];
+    std::map<CAControl::State, CAColor4B> m_mImageColors;
+    
+    std::map<CAControl::State, std::string> m_mTitles;
+    
+    std::map<CAControl::State, CAColor4B> m_mTitleColors;
 
+    CAMap<CAControl::State, CAView*> m_mBackgroundViews;
+    
     CAImageView* m_pImageView;
     
     CALabel* m_pLabel;
-    
-    CAView* m_pBackgroundView[CAControlStateAll];
     
     std::string m_sTitleFontName;
     
@@ -151,21 +155,13 @@ protected:
     
     bool m_bDefineImageOffset;
     
-    bool m_bBeforeTouchSelected;
+    std::map<CAButton::Event, std::function<void(CAButton*, const DPoint&)>> m_mFunctions;
+    
+    bool m_bTouchClick;
     
 protected:
     
     void updateWithPreferredSize();
-    
-    void setTouchMoved(const DPoint& point);
-    
-    void setTouchMovedOutSide(const DPoint& point);
-    
-    void setTouchUpOutSide(const DPoint& point);
-    
-    void setTouchUpInSide(const DPoint& point);
-    
-    bool setTouchBegin(const DPoint& point);
 
     void setTouchLongPress();
     
@@ -174,10 +170,12 @@ protected:
     void setBackgroundViewSquareRect();
     
     void setBackgroundViewRoundedRect();
+    
+    void callBackFunction(CAButton::Event event, const DPoint& point);
 };
 
-#define setBackGroundViewForState(controlState, var) setBackgroundViewForState(controlState, var)
-#define getBackGroundViewForState(controlState, var) getBackgroundViewForState(controlState, var)
+#define setBackGroundViewForState(state, var) setBackgroundViewForState(state, var)
+#define getBackGroundViewForState(state, var) getBackgroundViewForState(state, var)
 NS_CC_END
 
 #endif /* defined(__CAButton__) */

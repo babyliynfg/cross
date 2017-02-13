@@ -30,8 +30,6 @@ CABarItem::~CABarItem()
 
 CABarButtonItem::CABarButtonItem()
 :m_pHighlightedImage(NULL)
-,m_pTarget(NULL)
-,m_selCallFunc(NULL)
 ,m_pCustomView(NULL)
 ,m_uItemWidth(80)
 ,m_uImageWidth(44)
@@ -79,22 +77,6 @@ bool CABarButtonItem::initWithCustomView(CAView* customView)
     CC_SAFE_RETAIN(customView);
     m_pCustomView = customView;
     return true;
-}
-
-void CABarButtonItem::setTarget(CAObject* target, SEL_CAControl callfunc)
-{
-    m_pTarget = target;
-    m_selCallFunc = callfunc;
-}
-
-CAObject* CABarButtonItem::getTarget()
-{
-    return m_pTarget;
-}
-
-SEL_CAControl CABarButtonItem::getSel()
-{
-    return m_selCallFunc;
 }
 
 #pragma CANavigationBarItem

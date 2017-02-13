@@ -197,7 +197,7 @@ void CATableView::setAllowsSelection(bool var)
     {
         if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
         {
-            cell->setControlState(CAControlStateNormal);
+            cell->setControlState(CAControl::State::Normal);
         }
     }
     m_pSelectedTableCells.clear();
@@ -212,7 +212,7 @@ void CATableView::setAllowsMultipleSelection(bool var)
     {
         if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
         {
-            cell->setControlState(CAControlStateNormal);
+            cell->setControlState(CAControl::State::Normal);
         }
     }
     m_pSelectedTableCells.clear();
@@ -229,7 +229,7 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
         {
             if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
             {
-                cell->setControlState(CAControlStateNormal);
+                cell->setControlState(CAControl::State::Normal);
             }
         }
         m_pSelectedTableCells.clear();
@@ -238,7 +238,7 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
     CAIndexPath2E indexPath = CAIndexPath2E(section, row);
     if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
     {
-        cell->setControlState(CAControlStateSelected);
+        cell->setControlState(CAControl::State::Selected);
     }
     
     m_pSelectedTableCells.insert(indexPath);
@@ -252,7 +252,7 @@ void CATableView::setUnSelectRowAtIndexPath(unsigned int section, unsigned int r
     CC_RETURN_IF(m_pSelectedTableCells.find(indexPath) == m_pSelectedTableCells.end());
     if (CATableViewCell* cell = m_mpUsedTableCells.at(indexPath))
     {
-        cell->setControlState(CAControlStateNormal);
+        cell->setControlState(CAControl::State::Normal);
     }
     m_pSelectedTableCells.erase(indexPath);
 }
@@ -495,7 +495,7 @@ void CATableView::loadTableCell()
             m_vpUsedTableCells.pushBack(cell);
             if (m_pSelectedTableCells.count(indexPath))
             {
-                cell->setControlState(CAControlStateSelected);
+                cell->setControlState(CAControl::State::Selected);
             }
             if (m_pTableViewDataSource)
             {
@@ -691,14 +691,14 @@ CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
     CC_SAFE_DELETE(cell);
     return NULL;
 }
-void CATableViewCell::normalTableViewCell()
+void CATableViewCell::normalCell()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_normal"))));
 }
 
-void CATableViewCell::highlightedTableViewCell()
+void CATableViewCell::highlightedCell()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
@@ -706,7 +706,7 @@ void CATableViewCell::highlightedTableViewCell()
 }
 
 
-void CATableViewCell::selectedTableViewCell()
+void CATableViewCell::selectedCell()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
@@ -714,7 +714,7 @@ void CATableViewCell::selectedTableViewCell()
 }
 
 
-void CATableViewCell::disabledTableViewCell()
+void CATableViewCell::disabledCell()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
@@ -731,18 +731,18 @@ bool CATableViewCell::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     bool isInertia = m_pTarget->m_tInertia.getLength() < 1.0f;
     
-    if (this->getControlState() != CAControlStateDisabled
+    if (this->getControlState() != CAControl::State::Disabled
         && m_pTarget->isAllowsSelection()
         && m_pTarget->isScrollWindowNotOutSide() == false
         && isInertia)
     {
         if (m_pTarget->isAllowsMultipleSelection())
         {
-            this->setControlState(CAControlStateHighlighted);
+            this->setControlState(CAControl::State::Highlighted);
         }
         else if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
         {
-            this->setControlState(CAControlStateHighlighted);
+            this->setControlState(CAControl::State::Highlighted);
         }
     }
     
@@ -772,28 +772,28 @@ void CATableViewCell::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         
         this->setDragging((bool) (layout.horizontal.left < 0));
         
-        if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControlStateHighlighted)
+        if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControl::State::Highlighted)
         {
             if (m_pTarget->isAllowsMultipleSelection())
             {
                 if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
                 {
-                    this->setControlState(CAControlStateNormal);
+                    this->setControlState(CAControl::State::Normal);
                 }
                 else
                 {
-                    this->setControlState(CAControlStateSelected);
+                    this->setControlState(CAControl::State::Selected);
                 }
             }
             else
             {
                 if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
                 {
-                    this->setControlState(CAControlStateNormal);
+                    this->setControlState(CAControl::State::Normal);
                 }
                 else
                 {
-                    this->setControlState(CAControlStateSelected);
+                    this->setControlState(CAControl::State::Selected);
                 }
             }
         }
@@ -803,7 +803,7 @@ void CATableViewCell::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     if (m_pTarget->isAllowsSelection()
-        && (this->getControlState() == CAControlStateHighlighted || this->getControlState() == CAControlStateSelected))
+        && (this->getControlState() == CAControl::State::Highlighted || this->getControlState() == CAControl::State::Selected))
     {
         CAIndexPath2E indexPath = CAIndexPath2E(m_nSection, m_nRow);
         
@@ -839,7 +839,7 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                     {
                         if (CATableViewCell* cell = m_pTarget->m_mpUsedTableCells.at(indexPath2))
                         {
-                            cell->setControlState(CAControlStateNormal);
+                            cell->setControlState(CAControl::State::Normal);
                         }
                     }
                     m_pTarget->m_pSelectedTableCells.clear();
@@ -887,7 +887,7 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CATableViewCell::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControlStateHighlighted)
+    if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControl::State::Highlighted)
     {
         if (m_pTarget->isAllowsMultipleSelection())
         {
@@ -954,31 +954,6 @@ void CATableViewCell::setDragging(bool var)
             this->dragInAtCell();
         }
     }
-}
-
-void CATableViewCell::normalCell()
-{
-    this->normalTableViewCell();
-}
-
-void CATableViewCell::highlightedCell()
-{
-    this->highlightedTableViewCell();
-}
-
-void CATableViewCell::selectedCell()
-{
-    this->selectedTableViewCell();
-}
-
-void CATableViewCell::disabledCell()
-{
-    this->disabledTableViewCell();
-}
-
-void CATableViewCell::recoveryCell()
-{
-    this->recoveryTableViewCell();
 }
 
 NS_CC_END

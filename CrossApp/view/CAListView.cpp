@@ -126,7 +126,7 @@ void CAListView::setAllowsSelection(bool var)
     {
 		if (CAListViewCell* cell = m_mpUsedListCells[(*itr)])
 		{
-			cell->setControlState(CAControlStateNormal);
+			cell->setControlState(CAControl::State::Normal);
 		}
     }
 	m_pSelectedListCells.clear();
@@ -141,7 +141,7 @@ void CAListView::setAllowsMultipleSelection(bool var)
     {
 		if (CAListViewCell* cell = m_mpUsedListCells[(*itr)])
 		{
-			cell->setControlState(CAControlStateNormal);
+			cell->setControlState(CAControl::State::Normal);
 		}
     }
 	m_pSelectedListCells.clear();
@@ -156,7 +156,7 @@ void CAListView::setSelectAtIndex(unsigned int index)
 		{
 			if (CAListViewCell* cell = m_mpUsedListCells[(*itr)])
 			{
-				cell->setControlState(CAControlStateNormal);
+				cell->setControlState(CAControl::State::Normal);
 			}
 		}
 		m_pSelectedListCells.clear();
@@ -164,7 +164,7 @@ void CAListView::setSelectAtIndex(unsigned int index)
 
 	if (CAListViewCell* cell = m_mpUsedListCells[index])
 	{
-		cell->setControlState(CAControlStateSelected);
+		cell->setControlState(CAControl::State::Selected);
 	}
 	m_pSelectedListCells.insert(index);
 }
@@ -176,7 +176,7 @@ void CAListView::setUnSelectAtIndex(unsigned int index)
     CC_RETURN_IF(m_pSelectedListCells.find(index) == m_pSelectedListCells.end());
     if (CAListViewCell* cell = m_mpUsedListCells.at(index))
     {
-        cell->setControlState(CAControlStateNormal);
+        cell->setControlState(CAControl::State::Normal);
     }
     m_pSelectedListCells.erase(index);
 }
@@ -244,18 +244,18 @@ bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 			if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
 			{
-				CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
+				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Disabled);
 
                 if (m_pHighlightedListCells != pCell)
                 {
                     if (m_pHighlightedListCells)
                     {
-                        m_pHighlightedListCells->setControlState(CAControlStateNormal);
+                        m_pHighlightedListCells->setControlState(CAControl::State::Normal);
                     }
                     m_pHighlightedListCells = pCell;
                 }
 
-				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
+				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
 
                 CAViewAnimation::beginAnimations(m_s__StrID, NULL);
                 CAViewAnimation::setAnimationDuration(0.05f);
@@ -277,9 +277,9 @@ void CAListView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 	{
 		CAViewAnimation::removeAnimations(m_s__StrID);
 
-		if (m_pHighlightedListCells->getControlState() == CAControlStateHighlighted)
+		if (m_pHighlightedListCells->getControlState() == CAControl::State::Highlighted)
 		{
-			m_pHighlightedListCells->setControlState(CAControlStateNormal);
+			m_pHighlightedListCells->setControlState(CAControl::State::Normal);
 		}
 
 		m_pHighlightedListCells = NULL;
@@ -321,7 +321,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CAListViewCell* cell = m_mpUsedListCells[iDeSelectIndex])
 			{
-				cell->setControlState(CAControlStateNormal);
+				cell->setControlState(CAControl::State::Normal);
 			}
 			if (m_pListViewDelegate)
 			{
@@ -333,7 +333,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CAListViewCell* cell = m_mpUsedListCells[iSelectIndex])
 			{
-				cell->setControlState(CAControlStateSelected);
+				cell->setControlState(CAControl::State::Selected);
 			}
 			if (m_pListViewDelegate)
 			{
@@ -352,9 +352,9 @@ void CAListView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 	{
         CAViewAnimation::removeAnimations(m_s__StrID);
         
-        if (m_pHighlightedListCells->getControlState() == CAControlStateHighlighted)
+        if (m_pHighlightedListCells->getControlState() == CAControl::State::Highlighted)
         {
-            m_pHighlightedListCells->setControlState(CAControlStateNormal);
+            m_pHighlightedListCells->setControlState(CAControl::State::Normal);
         }
 		m_pHighlightedListCells = NULL;
 	}
@@ -374,24 +374,24 @@ void CAListView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
             
             if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
             {
-                CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
+                CC_BREAK_IF(pCell->getControlState() == CAControl::State::Disabled);
                 
                 if (m_pHighlightedListCells)
                 {
                     unsigned int index = m_pHighlightedListCells->getIndex();
                     if (m_pSelectedListCells.count(index))
                     {
-                        m_pHighlightedListCells->setControlState(CAControlStateHighlighted);
+                        m_pHighlightedListCells->setControlState(CAControl::State::Highlighted);
                     }
                     else
                     {
-                        m_pHighlightedListCells->setControlState(CAControlStateNormal);
+                        m_pHighlightedListCells->setControlState(CAControl::State::Normal);
                     }
                     
                 }
                 
                 m_pHighlightedListCells = pCell;
-                pCell->setControlState(CAControlStateHighlighted);
+                pCell->setControlState(CAControl::State::Highlighted);
 
                 break;
             }
@@ -406,11 +406,11 @@ void CAListView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
         unsigned int index = m_pHighlightedListCells->getIndex();
         if (m_pSelectedListCells.count(index))
         {
-            m_pHighlightedListCells->setControlState(CAControlStateSelected);
+            m_pHighlightedListCells->setControlState(CAControl::State::Selected);
         }
         else
         {
-            m_pHighlightedListCells->setControlState(CAControlStateNormal);
+            m_pHighlightedListCells->setControlState(CAControl::State::Normal);
         }
         m_pHighlightedListCells = NULL;
     }
@@ -627,7 +627,7 @@ void CAListView::loadCell()
 
 		if (m_pSelectedListCells.count(index))
 		{
-			cell->setControlState(CAControlStateSelected);
+			cell->setControlState(CAControl::State::Selected);
 		}
         
         if (m_pListViewDataSource)
@@ -718,59 +718,32 @@ CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)
 	return NULL;
 }
 
-void CAListViewCell::normalListViewCell()
+void CAListViewCell::normalCell()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_normal"))));
 }
 
-void CAListViewCell::highlightedListViewCell()
+void CAListViewCell::highlightedCell()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_highlighted"))));
 }
 
-
-void CAListViewCell::selectedListViewCell()
+void CAListViewCell::selectedCell()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_selected"))));
 }
 
-
-void CAListViewCell::disabledListViewCell()
+void CAListViewCell::disabledCell()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_disabled"))));
-}
-
-void CAListViewCell::normalCell()
-{
-    this->normalListViewCell();
-}
-
-void CAListViewCell::highlightedCell()
-{
-    this->highlightedListViewCell();
-}
-
-void CAListViewCell::selectedCell()
-{
-    this->selectedListViewCell();
-}
-
-void CAListViewCell::disabledCell()
-{
-    this->disabledListViewCell();
-}
-
-void CAListViewCell::recoveryCell()
-{
-    this->recoveryListViewCell();
 }
 
 NS_CC_END

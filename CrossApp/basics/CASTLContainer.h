@@ -1113,7 +1113,7 @@ public:
 		return false;
 	}
 
-	T getValue(K key)
+	T at(K key)
 	{
 		iterator it = _data.find(key);
 		if (it != _data.end())

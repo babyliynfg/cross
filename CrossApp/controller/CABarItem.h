@@ -13,7 +13,7 @@
 
 #include "images/CAImage.h"
 #include <string>
-#include "control/CAControl.h"
+#include "control/CAButton.h"
 
 NS_CC_BEGIN
 
@@ -71,17 +71,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(CAView*, m_pCustomView, CustomView);
     
-    void setTarget(CAObject* target, SEL_CAControl callfunc);
-    
-    CAObject* getTarget();
-    
-    SEL_CAControl getSel();
-    
-protected:
-    
-    CAObject* m_pTarget;
-    
-    SEL_CAControl m_selCallFunc;
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CAButton*, const DPoint&)>, m_function, CallbackFunction);
     
 };
 

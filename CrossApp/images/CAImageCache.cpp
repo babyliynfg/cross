@@ -191,7 +191,7 @@ void CAImageCache::addImageAsync(const std::string& path, CAObject *target, SEL_
 
 void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector)
 {
-    CAImage* image = m_mImages.getValue(path);
+    CAImage* image = m_mImages.at(path);
 
     if (image != NULL)
     {
@@ -293,7 +293,7 @@ CAImage* CAImageCache::addImage(const std::string& path)
     
     //pthread_mutex_lock(m_pDictLock);
 
-    image = m_mImages.getValue(path);
+    image = m_mImages.at(path);
 
     if (!image)
     {
@@ -331,7 +331,7 @@ bool CAImageCache::reloadImage(const std::string& fileName)
         return false;
     }
     
-    CAImage*  image = m_mImages.getValue(fileName);
+    CAImage*  image = m_mImages.at(fileName);
     
     bool ret = false;
     if (! image)
@@ -401,7 +401,7 @@ void CAImageCache::removeImageForKey(const std::string& imageKeyName)
 
 CAImage* CAImageCache::imageForKey(const std::string& key)
 {
-    return m_mImages.getValue(key);
+    return m_mImages.at(key);
 }
 
 const std::string& CAImageCache::getImageFilePath(CAImage* image)

@@ -62,7 +62,7 @@ bool CAViewController::init()
 
 CAView* CAViewController::getViewWithID(const std::string &tag)
 {
-    return m_pParser->m_mViews.getValue(tag);
+    return m_pParser->m_mViews.at(tag);
 }
 
 void CAViewController::parser()

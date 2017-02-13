@@ -23,7 +23,7 @@ CASwitch::CASwitch()
     , m_onImage(NULL)
     , m_offImage(NULL)
     , m_thumbTintImage(NULL)
-    , m_isOn(false)
+    , m_bIsOn(false)
     , m_pOnImageView(NULL)
     , m_pOffImageView(NULL)
     , m_pThumbTintImageView(NULL)
@@ -130,9 +130,9 @@ void CASwitch::onEnterTransitionDidFinish()
 
 void CASwitch::setIsOn(bool on, bool animated)
 {
-    if (m_isOn != on)
+    if (m_bIsOn != on)
     {
-        m_isOn = on;
+        m_bIsOn = on;
         CC_RETURN_IF(!m_bRunning);
         this->updateSwitchState(animated, false);
     }
@@ -189,7 +189,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
     {
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.2f);
-        if (m_isOn)
+        if (m_bIsOn)
         {
             CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
             m_pOffImageView->setAlpha(0.0f);
@@ -205,7 +205,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
         if (m_pThumbTintImageView)
         {
             DPoint point = DPointZero;
-            point.x = m_isOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
+            point.x = m_bIsOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
             
             if (callfunced)
             {
@@ -220,12 +220,12 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
     }
     else
     {
-        m_pOffImageView->setAlpha(m_isOn ? 0.0f : 1.0f);
-        m_pOnImageView->setAlpha(m_isOn? 1.0f : 0.0f);
+        m_pOffImageView->setAlpha(m_bIsOn ? 0.0f : 1.0f);
+        m_pOnImageView->setAlpha(m_bIsOn? 1.0f : 0.0f);
         if (m_pThumbTintImageView)
         {
             DPoint point = DPointZero;
-            point.x = m_isOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
+            point.x = m_bIsOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
             m_pThumbTintImageView->setFrameOrigin(point);
             if (callfunced)
             {
@@ -237,10 +237,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
 
 void CASwitch::updateValueChanged()
 {
-    if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, DPointZero);
-    }
+    m_function(this, m_bIsOn);
 }
 
 bool CASwitch::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -264,21 +261,17 @@ void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     if (getBounds().containsPoint(point))
     {
-        this->setControlState(CAControlStateNormal);
-        m_isOn = !m_isOn;
+        this->setControlState(CAControl::State::Normal);
+        m_bIsOn = !m_bIsOn;
         this->updateSwitchState(true, true);
     }
 }
 
-void CASwitch::addTarget(CAObject* target, SEL_CAControl selector)
+void CASwitch::setTarget(const std::function<void (CASwitch*, bool on)>& function)
 {
-    this->addTarget(target, selector, CAControlEventTouchValueChanged);
+    m_function = function;
 }
 
-void CASwitch::removeTarget(CAObject* target, SEL_CAControl selector)
-{
-    this->removeTarget(target, selector, CAControlEventTouchValueChanged);
-}
 
 void CASwitch::setContentSize(const DSize & var)
 {

@@ -183,10 +183,7 @@ void CAPageControl::onExit()
 
 bool CAPageControl::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (getBounds().containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
-        return true;
-    }
-    return false;
+    return true;
 }
 
 void CAPageControl::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
@@ -196,41 +193,31 @@ void CAPageControl::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CAPageControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (getBounds().containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
-
-//        m_currentPage++;
-//        if (m_currentPage == m_numberOfPages) {
-//            m_currentPage = 0;
-//        }
-//        if (!m_bDefersCurrentPageDisplay) {
-//            updateCurrentPageDisplay();
-//        }
-//        
-//        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
-//            (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, DPointZero);
-//        }
-
-        // find touched dot
-        float width = getBounds().size.width/m_numberOfPages;
-        DRect rect = getBounds();
-        for (int i=0; i<m_numberOfPages; i++) {
-            rect.size.width = width * i + width;
-            if (rect.containsPoint(convertToNodeSpace(pTouch->getLocation()))) {
-                if (m_currentPage != i) {
-                    m_currentPage = i;
-
-                    if (!m_bDefersCurrentPageDisplay) {
-                        updateCurrentPageDisplay();
-                    }
-                    
-                    if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged]) {
-                        (m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, DPointZero);
-                    }
+    DPoint point = pTouch->getLocation();
+    point = this->convertToNodeSpace(point);
+    
+    float width = m_obContentSize.width/m_numberOfPages;
+    DRect rect = this->getBounds();
+    for (int i=0; i<m_numberOfPages; i++)
+    {
+        rect.size.width = width * i + width;
+        if (rect.containsPoint(point))
+        {
+            if (m_currentPage != i)
+            {
+                m_currentPage = i;
+                
+                if (!m_bDefersCurrentPageDisplay)
+                {
+                    updateCurrentPageDisplay();
                 }
-                break;
+                
+                m_function(this, m_currentPage);
             }
+            break;
         }
     }
+
 }
 
 void CAPageControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
@@ -241,13 +228,12 @@ void CAPageControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 void CAPageControl::setTouchEnabled(bool enable)
 {
     CAControl::setTouchEnabled(enable);
-    
-    
 }
 
 void CAPageControl::setStyle(const CAPageControlStyle &var)
 {
-    if (m_style != var) {
+    if (m_style != var)
+    {
         m_style = var;
         const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPageControl");
         switch (m_style) {
@@ -275,13 +261,9 @@ const CAPageControlStyle& CAPageControl::getStyle()
     return m_style;
 }
 
-void CAPageControl::addTarget(CAObject* target, SEL_CAControl selector)
+void CAPageControl::setTarget(const std::function<void(CAPageControl*, int)>& function)
 {
-    CAControl::addTarget(target, selector, CAControlEventTouchValueChanged);
+    m_function = function;
 }
 
-void CAPageControl::removeTarget(CAObject* target, SEL_CAControl selector)
-{
-    CAControl::removeTarget(target, selector, CAControlEventTouchValueChanged);
-}
 NS_CC_END

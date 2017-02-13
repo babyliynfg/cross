@@ -14,36 +14,18 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CAControlEventTouchDown = 0,
-    CAControlEventTouchDownRepeat,
-    CAControlEventTouchMoved,
-    CAControlEventTouchMovedOutSide,
-    CAControlEventTouchUpInSide,
-    CAControlEventTouchUpOutSide,
-    CAControlEventTouchValueChanged,
-    CAControlEventTouchLongPress,
-    CAControlEventTouchCancelled,
-    CAControlEventMax
-}CAControlEvents;
-
-typedef enum
-{
-    CAControlStateNormal = 0,
-    CAControlStateHighlighted,
-    CAControlStateSelected,
-    CAControlStateDisabled,
-    CAControlStateAll
-}CAControlState;
-
-class CAControl;
-
-typedef void (CAObject::*SEL_CAControl)(CAControl*, DPoint);
-#define CAControl_selector(_SELECTOR) (SEL_CAControl)(&_SELECTOR)
-
 class CC_DLL CAControl: public CAView
 {
+
+public:
+    
+    enum class State
+    {
+        Normal,
+        Highlighted,
+        Selected,
+        Disabled
+    };
     
 public:
     
@@ -52,42 +34,28 @@ public:
     virtual ~CAControl();
     
     bool init();
-    
-    void setControlStateNormal();
-    
-    void setControlStateHighlighted();
-    
-    void setControlStateDisabled();
-    
-    void setControlStateSelected();
-    
-    CC_SYNTHESIZE_PASS_BY_REF(CAControlState, m_eControlState, ControlState);
-    
-    CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
-    
+
     CC_PROPERTY_IS(bool, m_bRecSpe, RecSpe);
     
+    CC_SYNTHESIZE(CAControl::State, m_eState, ControlState);
+    
+    void setControlStateNormal() { this->setControlState(CAControl::State::Normal); }
+    
+    void setControlStateHighlighted() { this->setControlState(CAControl::State::Highlighted); }
+    
+    void setControlStateDisabled() { this->setControlState(CAControl::State::Selected); }
+    
+    void setControlStateSelected() { this->setControlState(CAControl::State::Disabled); }
+    
 protected:
-    
-    virtual void addTarget(CAObject* target, SEL_CAControl selector, CAControlEvents event);
-    
-    virtual void removeTarget(CAObject* target, SEL_CAControl selector, CAControlEvents event);
-    
-    virtual void removeAllTargets();
-    
+
     using CAView::initWithColor;
-    
-protected:
-    
-    CAObject* m_pTarget[CAControlEventMax];
-    
-    SEL_CAControl m_selTouch[CAControlEventMax];
 };
 
 #define CAControlTouchDown (CAControlEventTouchDown)
 #define CAControlTouchMoved (CAControlEventTouchMoved)
 #define CAControlTouchMovedOutSide (CAControlEventTouchMovedOutSide)
-#define CAControlTouchUpInSide (CAControlEventTouchUpInSide)
+#define CAControlTouchUpInSide (CAButton::Event::TouchUpInSide)
 #define CAControlTouchUpSide (CAControlEventTouchUpSide)
 
 

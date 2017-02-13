@@ -15,9 +15,9 @@
 NS_CC_BEGIN
 
 class CAUIEditorParser;
-class CC_DLL CACell: public CAView
+class CC_DLL CACell: public CAControl
 {
-    
+
 public:
     
     CACell();
@@ -40,18 +40,17 @@ public:
 
     CAView* getViewWithID(const std::string &tag);
     
-    void setControlState(const CAControlState& var);
+    void setControlState(CAControl::State var);
     
-    const CAControlState& getControlState();
+    CAControl::State getControlState();
     
     void setControlStateNormal();
     
     void setControlStateHighlighted();
     
-    void setControlStateDisabled();
-    
     void setControlStateSelected();
-
+    
+    void setControlStateDisabled();
 public:
     
     virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
@@ -84,9 +83,9 @@ private:
     
     using CAView::initWithLayout;
     
-    CAControlState m_eControlState;
-    
     CAUIEditorParser* m_pParser;
+    
+    CAControl::State m_eState;
 };
 
 NS_CC_END;

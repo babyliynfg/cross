@@ -34,9 +34,7 @@ public:
     
     static CASwitch* createWithLayout(const DLayout& layout);
     
-    void addTarget(CAObject* target, SEL_CAControl selector);
-    
-    void removeTarget(CAObject* target, SEL_CAControl selector);
+    void setTarget(const std::function<void (CASwitch*, bool on)>& function);
 
     bool init();
     
@@ -49,7 +47,7 @@ public:
 	CC_SYNTHESIZE_READONLY(CAImage*, m_offImage, OffImage);
 	CC_SYNTHESIZE_READONLY(CAImage*, m_thumbTintImage, ThumbTintImage);
     
-    CC_SYNTHESIZE_IS_READONLY(bool, m_isOn, On);
+    CC_SYNTHESIZE_IS_READONLY(bool, m_bIsOn, On);
 	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
     
     void setIsOn(bool on, bool animated);
@@ -61,14 +59,14 @@ protected:
     void updateSwitchState(bool animated, bool callfunced);
     void updateValueChanged();
     void setContentSize(const DSize & var);
-    using CAControl::addTarget;
-    using CAControl::removeTarget;
     
 protected:
     
     CAImageView *m_pOnImageView;
     CAImageView *m_pOffImageView;
     CAImageView *m_pThumbTintImageView;
+    
+    std::function<void (CASwitch*, bool on)> m_function;
 };
 
 NS_CC_END

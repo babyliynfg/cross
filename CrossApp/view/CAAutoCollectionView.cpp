@@ -126,7 +126,7 @@ void CAAutoCollectionView::setAllowsSelection(bool var)
 	{
 		if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 		{
-			cell->setControlState(CAControlStateNormal);
+			cell->setControlState(CAControl::State::Normal);
 		}
 	}
 	m_pSelectedCollectionCells.clear();
@@ -141,7 +141,7 @@ void CAAutoCollectionView::setAllowsMultipleSelection(bool var)
 	{
 		if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 		{
-			cell->setControlState(CAControlStateNormal);
+			cell->setControlState(CAControl::State::Normal);
 		}
 	}
 	m_pSelectedCollectionCells.clear();
@@ -158,7 +158,7 @@ void CAAutoCollectionView::setSelectRowAtIndexPath(unsigned int section, unsigne
 		{
 			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 			{
-				cell->setControlState(CAControlStateNormal);
+				cell->setControlState(CAControl::State::Normal);
 			}
 		}
 		m_pSelectedCollectionCells.clear();
@@ -167,7 +167,7 @@ void CAAutoCollectionView::setSelectRowAtIndexPath(unsigned int section, unsigne
 	CAIndexPath3E indexPath = CAIndexPath3E(section, 0, item);
 	if (CACollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
 	{
-		cell->setControlState(CAControlStateSelected);
+		cell->setControlState(CAControl::State::Selected);
 	}
 	m_pSelectedCollectionCells.insert(indexPath);
 }
@@ -180,7 +180,7 @@ void CAAutoCollectionView::setUnSelectRowAtIndexPath(unsigned int section, unsig
 	CC_RETURN_IF(m_pSelectedCollectionCells.find(indexPath) == m_pSelectedCollectionCells.end());
 	if (CACollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
 	{
-		cell->setControlState(CAControlStateNormal);
+		cell->setControlState(CAControl::State::Normal);
 	}
 	m_pSelectedCollectionCells.erase(indexPath);
 }
@@ -248,19 +248,19 @@ bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 			if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
 			{
-				CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
+				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Disabled);
 
                 if (m_pHighlightedCollectionCells != pCell)
                 {
                     if (m_pHighlightedCollectionCells)
                     {
-                        m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+                        m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
                     }
                     
                     m_pHighlightedCollectionCells = pCell;
                 }
 
-				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
+				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
 
                 CAViewAnimation::beginAnimations(m_s__StrID, NULL);
                 CAViewAnimation::setAnimationDuration(0.05f);
@@ -282,9 +282,9 @@ void CAAutoCollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 	{
 		CAViewAnimation::removeAnimations(m_s__StrID);
 
-		if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
+		if (m_pHighlightedCollectionCells->getControlState() == CAControl::State::Highlighted)
 		{
-			m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+			m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
 		}
 
 		m_pHighlightedCollectionCells = NULL;
@@ -324,7 +324,7 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[deselectedIndexPath])
 			{
-				cell->setControlState(CAControlStateNormal);
+				cell->setControlState(CAControl::State::Normal);
 			}
 			if (m_pCollectionViewDelegate)
 			{
@@ -336,7 +336,7 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[selectedIndexPath])
 			{
-				cell->setControlState(CAControlStateSelected);
+				cell->setControlState(CAControl::State::Selected);
 			}
 			if (m_pCollectionViewDelegate)
 			{
@@ -357,9 +357,9 @@ void CAAutoCollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 	{
 		CAViewAnimation::removeAnimations(m_s__StrID);
 
-        if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
+        if (m_pHighlightedCollectionCells->getControlState() == CAControl::State::Highlighted)
         {
-            m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+            m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
         }
 		m_pHighlightedCollectionCells = NULL;
 	}
@@ -378,7 +378,7 @@ void CAAutoCollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
             CC_CONTINUE_IF(cell == NULL);
             if (cell->getFrame().containsPoint(point) && cell->isVisible())
             {
-                CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
+                CC_BREAK_IF(cell->getControlState() == CAControl::State::Disabled);
                 
                 if (m_pHighlightedCollectionCells)
                 {
@@ -387,17 +387,17 @@ void CAAutoCollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
                                                         m_pHighlightedCollectionCells->getItem());
                     if (m_pSelectedCollectionCells.count(index))
                     {
-                        m_pHighlightedCollectionCells->setControlState(CAControlStateHighlighted);
+                        m_pHighlightedCollectionCells->setControlState(CAControl::State::Highlighted);
                     }
                     else
                     {
-                        m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+                        m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
                     }
                     
                 }
                 
                 m_pHighlightedCollectionCells = cell;
-                cell->setControlState(CAControlStateHighlighted);
+                cell->setControlState(CAControl::State::Highlighted);
                 
                 break;
             }
@@ -414,11 +414,11 @@ void CAAutoCollectionView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
                                             m_pHighlightedCollectionCells->getItem());
         if (m_pSelectedCollectionCells.count(index))
         {
-            m_pHighlightedCollectionCells->setControlState(CAControlStateSelected);
+            m_pHighlightedCollectionCells->setControlState(CAControl::State::Selected);
         }
         else
         {
-            m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+            m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
         }
         m_pHighlightedCollectionCells = NULL;
     }
@@ -861,7 +861,7 @@ void CAAutoCollectionView::loadCollectionCell()
             
 			if (m_pSelectedCollectionCells.count(r))
 			{
-				cell->setControlState(CAControlStateSelected);
+				cell->setControlState(CAControl::State::Selected);
 			}
             
             if (m_pCollectionViewDataSource)

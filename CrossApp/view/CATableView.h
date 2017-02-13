@@ -308,17 +308,7 @@ protected:
     
     virtual void dragOutAtCell(){};
     
-    virtual void recoveryCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void normalTableViewCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void highlightedTableViewCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void selectedTableViewCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void disabledTableViewCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void recoveryTableViewCell(){};
+    virtual void recoveryCell(){};
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     

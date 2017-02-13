@@ -247,17 +247,7 @@ protected:
     
     virtual void disabledCell();
     
-    virtual void recoveryCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void normalListViewCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void highlightedListViewCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void selectedListViewCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void disabledListViewCell();
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void recoveryListViewCell(){};
+    virtual void recoveryCell(){};
     
     friend class CAListView;
 };

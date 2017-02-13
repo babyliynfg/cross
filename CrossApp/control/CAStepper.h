@@ -22,8 +22,9 @@ typedef enum
 
 class CAImageView;
 class CAScale9ImageView;
-class CC_DLL CAStepper : public CAControl {
-    
+class CC_DLL CAStepper : public CAControl
+{
+
 public:
     CAStepper(const CAStepperOrientation& type = CAStepperOrientationHorizontal);
     virtual ~CAStepper();
@@ -44,25 +45,22 @@ public:
     CC_SYNTHESIZE(bool, m_bAutoRepeat, AutoRepeat); // if true, press & hold repeatedly alters value. default = true
     CC_SYNTHESIZE(bool, m_bWraps, Wraps);           // if true, value wraps from min <-> max. default = false
     
-    CC_SYNTHESIZE(double, m_value, Value);              // default is 0. sends UIControlEventValueChanged. clamped to min/max
-    CC_SYNTHESIZE(double, m_minimumValue, MinValue);    // default 0. must be less than maximumValue
-    CC_SYNTHESIZE(double, m_maximumValue, MaxValue);    // default 100. must be greater than minimumValue
-    CC_SYNTHESIZE(double, m_stepValue, StepValue);      // default 1. must be greater than 0
+    CC_SYNTHESIZE(float, m_value, Value);              // default is 0. sends UIControlEventValueChanged. clamped to min/max
+    CC_SYNTHESIZE(float, m_minimumValue, MinValue);    // default 0. must be less than maximumValue
+    CC_SYNTHESIZE(float, m_maximumValue, MaxValue);    // default 100. must be greater than minimumValue
+    CC_SYNTHESIZE(float, m_stepValue, StepValue);      // default 1. must be greater than 0
     
 //    CC_SYNTHESIZE(CAColor4B, m_tintColor, TintColor);
     
 public:
     // a Background image which will be 3-way stretched over the whole of the control. Each half of the stepper will paint the image appropriate for its state      
-    void setBackgroundImage(CAImage* image, CAControlState state);
-    CAImage* getBackgroundImageForState(CAControlState state);
+    void setBackgroundImage(CAStepper::State state, CAImage* image);
 
     // the glyph image for the plus/increase button
-    void setIncrementImage(CAImage* image, CAControlState state);
-    CAImage* getIncrementImageForState(CAControlState state);
+    void setIncrementImage(CAStepper::State state, CAImage* image);
 
     // the glyph image for the minus/decrease button
-    void setDecrementImage(CAImage* image, CAControlState state);
-    CAImage* getDecrementImageForState(CAControlState state);
+    void setDecrementImage(CAStepper::State state, CAImage* image);
     
     // an image which will be painted in between the two stepper segments. The image is selected depending both segments' state
     void setDividerColor(CAColor4B color);
@@ -73,13 +71,9 @@ public:
 
     CC_SYNTHESIZE(bool, m_bTouchEffect, TouchEffect); // default is false, alpha
 
+    void setTarget(const std::function<void(CAStepper*, float)>& function);
+    
 public:
-
-	virtual void addTarget(CAObject* target, SEL_CAControl selector);
-
-	virtual void removeTarget(CAObject* target, SEL_CAControl selector);
-
-	virtual void removeAllTargets();
 
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
@@ -95,12 +89,15 @@ protected:
     
 private:
     
-    CAImage* m_pBackgroundImage[CAControlStateAll];
-    CAImage* m_pIncrementImage[CAControlStateAll];
-    CAImage* m_pDecrementImage[CAControlStateAll];
+    std::function<void(CAStepper*, float)> m_function;
     
+    CAMap<CAStepper::State, CAImage*> m_mBackgroundImages;
+    CAMap<CAStepper::State, CAImage*> m_mIncrementImages;
+    CAMap<CAStepper::State, CAImage*> m_mDecrementImages;
+    
+
     CAScale9ImageView* m_pBackgroundImageView;
-    CAImageView* m_pBackgroundSelectedImageView;
+    CAImageView* m_pBackgroundHighlightedmageView;
     CAImageView* m_pIncrementImageView;
     CAImageView* m_pDecrementImageView;
     CAView* m_pDividerImageView;

@@ -54,7 +54,7 @@ void AnimationCache::removeAnimation(const std::string& name)
 
 Animation* AnimationCache::getAnimation(const std::string& name)
 {
-    return _animations.getValue(name);
+    return _animations.at(name);
 }
 
 void AnimationCache::parseVersion1(const CAValueMap& animations)

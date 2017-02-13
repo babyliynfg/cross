@@ -21,13 +21,8 @@
 #include "support/ccUtils.h"
 NS_CC_BEGIN
 
-CAButton::CAButton(const CAButtonType& buttonType)
-:m_bAllowsSelected(false)
-,m_bSelected(false)
-,m_bBeforeTouchSelected(false)
-,m_bTouchClick(false)
-,m_color(CAColor_white)
-,m_eButtonType(buttonType)
+CAButton::CAButton(const CAButton::Type& buttonType)
+:m_eButtonType(buttonType)
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
 ,m_sTitleFontName("")
@@ -41,19 +36,15 @@ CAButton::CAButton(const CAButtonType& buttonType)
 ,m_bDefineTitleOffset(false)
 ,m_pImageOffset(DSizeZero)
 ,m_bDefineImageOffset(false)
+,m_bTouchClick(true)
 {
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        m_pBackgroundView[i] = NULL;
-    }
+    m_mImageColors[CAControl::State::Normal] = CAColor_white;
+    m_mImageColors[CAControl::State::Highlighted] = CAColor_white;
+    m_mImageColors[CAControl::State::Disabled] = CAColor_white;
     
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        m_pImage[i] = NULL;
-        m_sTitle[i] = "";
-        m_sImageColor[i] = CAColor_white;
-        m_sTitleColor[i] = CAColor_black;
-    }
+    m_mTitleColors[CAControl::State::Normal] = CAColor_black;
+    m_mTitleColors[CAControl::State::Highlighted] = CAColor_black;
+    m_mTitleColors[CAControl::State::Disabled] = CAColor_black;
     
     m_pImageView = new CAImageView();
     m_pImageView->init();
@@ -69,10 +60,6 @@ CAButton::CAButton(const CAButtonType& buttonType)
 
 CAButton::~CAButton(void)
 {
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        CC_SAFE_RELEASE_NULL(m_pBackgroundView[i]);
-    }
     CC_SAFE_RELEASE_NULL(m_pImageView);
     CC_SAFE_RELEASE_NULL(m_pLabel);
 }
@@ -86,10 +73,10 @@ void CAButton::onEnterTransitionDidFinish()
 {
     CAControl::onEnterTransitionDidFinish();
 
-    this->setControlState(m_eControlState);
+    this->setControlState(m_eState);
 }
 
-CAButton* CAButton::create(const CAButtonType& buttonType)
+CAButton* CAButton::create(const CAButton::Type& buttonType)
 {
     
     CAButton* btn = new CAButton(buttonType);
@@ -104,9 +91,8 @@ CAButton* CAButton::create(const CAButtonType& buttonType)
     return NULL;
 }
 
-CAButton* CAButton::createWithFrame(const DRect& rect, const CAButtonType& buttonType)
+CAButton* CAButton::createWithFrame(const DRect& rect, const CAButton::Type& buttonType)
 {
-
     CAButton* btn = new CAButton(buttonType);
     
     if (btn && btn->initWithFrame(rect))
@@ -119,9 +105,8 @@ CAButton* CAButton::createWithFrame(const DRect& rect, const CAButtonType& butto
     return NULL;
 }
 
-CAButton* CAButton::createWithCenter(const DRect& rect, const CAButtonType& buttonType)
+CAButton* CAButton::createWithCenter(const DRect& rect, const CAButton::Type& buttonType)
 {
-    
     CAButton* btn = new CAButton(buttonType);
     
     if (btn && btn->initWithCenter(rect))
@@ -134,9 +119,8 @@ CAButton* CAButton::createWithCenter(const DRect& rect, const CAButtonType& butt
     return NULL;
 }
 
-CAButton* CAButton::createWithLayout(const CrossApp::DLayout &layout, const CAButtonType &buttonType)
+CAButton* CAButton::createWithLayout(const CrossApp::DLayout &layout, const CAButton::Type &buttonType)
 {
-    
     CAButton* btn = new CAButton(buttonType);
     
     if (btn && btn->initWithLayout(layout))
@@ -160,10 +144,10 @@ bool CAButton::init()
     
     switch (m_eButtonType)
     {
-        case CAButtonTypeSquareRect:
+        case CAButton::Type::SquareRect:
             this->setBackgroundViewSquareRect();
             break;
-        case CAButtonTypeRoundedRect:
+        case CAButton::Type::RoundedRect:
             this->setBackgroundViewRoundedRect();
             break;
         default:
@@ -176,181 +160,109 @@ bool CAButton::init()
 void CAButton::setBackgroundViewSquareRect()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
-    std::string fileName[CAControlStateAll] =
-    {
-        map.at("backgroundView_normal"),
-        map.at("backgroundView_highlighted"),
-        map.at("backgroundView_selected"),
-        map.at("backgroundView_disabled")
-    };
-    CAColor4B color[CAControlStateAll] =
-    {
-        ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))),
-        ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlighted"))),
-        ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))),
-        ccc4Int(CrossApp::hex2Int(map.at("titleColor_disabled")))
-    };
     
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        CAImage* image = CAImage::create(fileName[i]);
-        CAScale9ImageView* bg = CAScale9ImageView::createWithImage(image);
-        this->setBackgroundViewForState((CAControlState)i, bg);
-        m_sTitleColor[i] = color[i];
-    }
+    this->setBackgroundViewForState(CAControl::State::Normal,
+                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_normal"))));
+    this->setBackgroundViewForState(CAControl::State::Highlighted,
+                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_highlighted"))));
+    this->setBackgroundViewForState(CAControl::State::Disabled,
+                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_disabled"))));
+    
+    m_mTitleColors[CAControl::State::Normal] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
+    m_mTitleColors[CAControl::State::Highlighted] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlghted")));
+    m_mTitleColors[CAControl::State::Disabled] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_disabled")));
 }
 
 void CAButton::setBackgroundViewRoundedRect()
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
-    std::string fileName[CAControlStateAll] =
-    {
-        map.at("backgroundView_normal"),
-        map.at("backgroundView_highlighted"),
-        map.at("backgroundView_selected"),
-        map.at("backgroundView_disabled")
-    };
     
-    CAColor4B color[CAControlStateAll] =
-    {
-        ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))),
-        ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlighted"))),
-        ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))),
-        ccc4Int(CrossApp::hex2Int(map.at("titleColor_disabled")))
-    };
+    this->setBackgroundViewForState(CAControl::State::Normal,
+                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_normal"))));
+    this->setBackgroundViewForState(CAControl::State::Highlighted,
+                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_highlighted"))));
+    this->setBackgroundViewForState(CAControl::State::Disabled,
+                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_disabled"))));
     
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        CAImage* image = CAImage::create(fileName[i]);
-        CAScale9ImageView* bg = CAScale9ImageView::createWithImage(image);
-        this->setBackgroundViewForState((CAControlState)i, bg);
-        m_sTitleColor[i] = color[i];
-    }
+    m_mTitleColors[CAControl::State::Normal] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
+    m_mTitleColors[CAControl::State::Highlighted] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlghted")));
+    m_mTitleColors[CAControl::State::Disabled] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_disabled")));
 }
 
-void CAButton::setBackgroundViewForState(const CAControlState& controlState, CAView *var)
+void CAButton::setBackgroundViewForState(CAControl::State state, CAView *var)
 {
-    if (controlState == CAControlStateAll)
+    if (m_mBackgroundViews.contains(state))
     {
-        for (int i=0; i<CAControlStateAll; i++)
-        {
-            this->setBackgroundViewForState((CAControlState)i, var);
-        }
-        return;
+        this->removeSubview(m_mBackgroundViews.at(state));
+        m_mBackgroundViews.erase(state);
     }
     
-    if (m_pBackgroundView[controlState] != var)
+    if (var)
     {
-        CC_SAFE_RETAIN(var);
-        this->removeSubview(m_pBackgroundView[controlState]);
-        CC_SAFE_RELEASE(m_pBackgroundView[controlState]);
-        if (var)
-        {
-            var->setLayout(DLayoutFill);
-        }
-        m_pBackgroundView[controlState] = var;
-        this->setControlState(m_eControlState);
+        var->setLayout(DLayoutFill);
     }
+    m_mBackgroundViews.insert(state, var);
 
+    this->setControlState(m_eState);
     this->updateWithPreferredSize();
 }
 
-CAView* CAButton::getBackgroundViewForState(const CAControlState& controlState)
+CAView* CAButton::getBackgroundViewForState(CAControl::State state)
 {
-    if (controlState == CAControlStateAll)
-    {
-        return NULL;
-    }
-    return m_pBackgroundView[controlState];
+    return m_mBackgroundViews.at(state);
 }
 
-void CAButton::setImageForState(const CAControlState& controlState, CAImage* var)
+void CAButton::setImageForState(CAControl::State state, CAImage* var)
 {
-    if (controlState == CAControlStateAll)
+    m_mImages.erase(state);
+    if (var)
     {
-        for (int i=0; i<CAControlStateAll; i++)
-            this->setImageForState((CAControlState)i, var);
+        m_mImages.insert(state, var);
+    }
 
-        return;
-    }
-    
-    if (m_pImage[controlState] != var)
+    if (m_bRunning)
     {
-        CC_SAFE_RETAIN(var);
-        CC_SAFE_RELEASE(m_pImage[controlState]);
-        m_pImage[controlState] = var;
+        this->setControlState(m_eState);
     }
+}
+
+CAImage* CAButton::getImageForState(CAControl::State state)
+{
+    return m_mImages.at(state);
+}
+
+void CAButton::setTitleForState(CAControl::State state, const std::string& var)
+{
+    m_mTitles[state] = var;
     
     if (m_bRunning)
     {
-        this->setControlState(m_eControlState);
+        this->setControlState(m_eState);
     }
 }
 
-CAImage* CAButton::getImageForState(const CAControlState& controlState)
+const std::string& CAButton::getTitleForState(CAControl::State state)
 {
-    return m_pImage[controlState];
+    return m_mTitles[state];
 }
 
-void CAButton::setTitleForState(const CAControlState& controlState, const std::string& var)
+void CAButton::setImageColorForState(CAControl::State state, const CAColor4B& var)
 {
-    if (controlState == CAControlStateAll)
-    {
-        for (int i=0; i<CAControlStateAll; i++)
-            this->setTitleForState((CAControlState)i, var);
-        
-        return;
-    }
-    
-    if (m_sTitle[controlState] != var)
-    {
-        m_sTitle[controlState] = var;
-    }
+    m_mImageColors[state] = var;
     
     if (m_bRunning)
     {
-        this->setControlState(m_eControlState);
+        this->setControlState(m_eState);
     }
 }
 
-const std::string& CAButton::getTitleForState(const CAControlState& controlState)
+void CAButton::setTitleColorForState(CAControl::State state, const CAColor4B& var)
 {
-    return m_sTitle[controlState];
-}
-
-void CAButton::setImageColorForState(const CAControlState& controlState, const CAColor4B& var)
-{
-    if (controlState == CAControlStateAll)
-    {
-        for (int i=0; i<CAControlStateAll; i++)
-            this->setImageColorForState((CAControlState)i, var);
-    }
-    else
-    {
-        m_sImageColor[controlState] = var;
-    }
+    m_mTitleColors[state] = var;
     
     if (m_bRunning)
     {
-        this->setControlState(m_eControlState);
-    }
-}
-
-void CAButton::setTitleColorForState(const CAControlState& controlState, const CAColor4B& var)
-{
-    if (controlState == CAControlStateAll)
-    {
-        for (int i=0; i<CAControlStateAll; i++)
-            this->setTitleColorForState((CAControlState)i, var);
-    }
-    else
-    {
-        m_sTitleColor[controlState] = var;
-    }
-    
-    if (m_bRunning)
-    {
-        this->setControlState(m_eControlState);
+        this->setControlState(m_eState);
     }
 }
 
@@ -364,7 +276,7 @@ void CAButton::setTitleFontName(const std::string& var)
     
     if (m_bRunning)
     {
-        this->setControlState(m_eControlState);
+        this->setControlState(m_eState);
     }
 }
 
@@ -378,22 +290,30 @@ void CAButton::updateWithPreferredSize()
 
 bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
+    if (m_eState != CAControl::State::Normal)
+    {
+        return false;
+    }
+    
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
 
     do
     {
-        CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
+        CC_BREAK_IF(m_eState != CAControl::State::Normal);
         
-        if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+        if (m_mFunctions.count(CAButton::Event::TouchLongPress) > 0)
         {
             CAViewAnimation::beginAnimations(m_s__StrID + "TouchLongPress", NULL);
             CAViewAnimation::setAnimationDuration(0.5f);
             CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAButton::setTouchLongPress));
             CAViewAnimation::commitAnimations();
         }
+        
+        this->setControlState(CAControl::State::Highlighted);
+        this->callBackFunction(CAButton::Event::TouchDown, point);
 
-        return this->setTouchBegin(point);
+        return true;
     }
     while (0);
     
@@ -402,97 +322,58 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+    if (m_mFunctions.count(CAButton::Event::TouchLongPress) > 0)
     {
         CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
     }
     
-    CC_RETURN_IF(!this->isTouchClick());
+    CC_RETURN_IF(!m_bTouchClick);
     
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
     if (getBounds().containsPoint(point))
     {
-        m_bSelected = !m_bBeforeTouchSelected;
-        
-        this->setTouchMoved(point);
-        
-        if (m_bAllowsSelected && m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
-        {
-            if (m_bSelected)
-            {
-                this->setControlState(CAControlStateSelected);
-            }
-            else
-            {
-                this->setControlState(CAControlStateNormal);
-            }
-        }
-        else
-        {
-            this->setControlState(CAControlStateHighlighted);
-        }
+        this->setControlState(CAControl::State::Highlighted);
+        this->callBackFunction(CAButton::Event::TouchMoved, point);
     }
     else
     {
-        m_bSelected = m_bBeforeTouchSelected;
-        
-        this->setTouchMovedOutSide(point);
-        
-        if (m_bAllowsSelected && m_bSelected)
-        {
-            this->setControlState(CAControlStateSelected);
-        }
-        else
-        {
-            this->setControlState(CAControlStateNormal);
-        }
+        this->setControlState(CAControl::State::Normal);
+        this->callBackFunction(CAButton::Event::TouchMovedOutSide, point);
     }
 }
 
 void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+    if (m_mFunctions.count(CAButton::Event::TouchLongPress) > 0)
     {
         CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
     }
     
-    CC_RETURN_IF(!this->isTouchClick());
+    CC_RETURN_IF(!m_bTouchClick);
     
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-        
-    do
+
+    if (m_eState == CAControl::State::Highlighted)
     {
-        CC_BREAK_IF(this->getControlState() != CAControlStateHighlighted);
-        
-        if (m_bAllowsSelected && m_bSelected)
-        {
-            this->setControlStateSelected();
-            //this->performSelector(callfunc_selector(CAButton::setControlStateSelected), 0.05f);
-        }
-        else
-        {
-            this->setControlStateNormal();
-            //this->performSelector(callfunc_selector(CAButton::setControlStateNormal), 0.05f);
-        }
+        this->setControlState(CAControl::State::Normal);
     }
-    while (0);
     
     if (getBounds().containsPoint(point))
     {
-        this->setTouchUpInSide(point);
+        this->callBackFunction(CAButton::Event::TouchUpInSide, point);
     }
     else
     {
-        this->setTouchUpOutSide(point);
+        this->callBackFunction(CAButton::Event::TouchUpOutSide, point);
     }
 }
 
 void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+    if (m_mFunctions.count(CAButton::Event::TouchLongPress) > 0)
     {
         CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
     }
@@ -500,78 +381,53 @@ void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pE
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
         
-    if (m_bAllowsSelected && m_bSelected)
+    if (m_eState == CAControl::State::Highlighted)
     {
-        this->setControlStateSelected();
-        //this->performSelector(callfunc_selector(CAButton::setControlStateSelected), 0.05f);
+        this->setControlState(CAControl::State::Normal);
+    }
+    
+    this->callBackFunction(CAButton::Event::TouchCancelled, point);
+}
+
+void CAButton::setControlState(CAControl::State var)
+{
+    m_eState = var;
+
+    for (auto& it : m_mBackgroundViews)
+    {
+        this->removeSubview(it.second);
+    }
+
+    if (m_mBackgroundViews.contains(m_eState))
+    {
+        this->insertSubview(m_mBackgroundViews.at(m_eState), -1);
     }
     else
     {
-        this->setControlStateNormal();
-        //this->performSelector(callfunc_selector(CAButton::setControlStateNormal), 0.05f);
+        this->insertSubview(m_mBackgroundViews.at(CAControl::State::Normal), -1);
     }
-    
-    if (m_pTarget[CAControlEventTouchCancelled] && m_selTouch[CAControlEventTouchCancelled])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchCancelled]->*m_selTouch[CAControlEventTouchCancelled])(this, point);
-    }
-}
 
-void CAButton::setControlState(const CAControlState& var)
-{
-    CAControl::setControlState(var);
-
-    CC_RETURN_IF(var == CAControlStateAll);
-    
-//    this->cancelPreviousPerformRequests(callfunc_selector(CAButton::setControlStateSelected));
-//    this->cancelPreviousPerformRequests(callfunc_selector(CAButton::setControlStateNormal));
-    
-    for (int i=0; i<CAControlStateAll; i++)
-    {
-        this->removeSubview(m_pBackgroundView[i]);
-    }
-    
-    m_eControlState = var;
-    
-    if (m_bControlStateLocked)
-    {
-        m_eControlState = CAControlStateNormal;
-    }
-    
-    if (m_eControlState == CAControlStateSelected)
-    {
-        m_bSelected = true;
-    }
-    else if (m_eControlState == CAControlStateNormal)
-    {
-        m_bSelected = false;
-    }
-    
-    if (m_pBackgroundView[m_eControlState])
-    {
-        this->insertSubview(m_pBackgroundView[m_eControlState], -1);
-    }
-    else if (m_pBackgroundView[CAControlStateNormal])
-    {
-        this->insertSubview(m_pBackgroundView[CAControlStateNormal], -1);
-    }
-    
-    CAImage* image = NULL;
+    CAImage* image = nullptr;
     std::string title = "";
     DRect imageViewCenter = DRectZero;
     DRect rect = DRectZero;
     DRect labelCenter = this->getBounds();
     float labelSize = 0;
     
-    image = m_pImage[m_eControlState];
-    title = m_sTitle[m_eControlState];
-    
-    if (strcmp(title.c_str(), "") == 0)
+    image = m_mImages.at(m_eState);
+    title = m_mTitles[m_eState];
+
+    if (image == nullptr)
     {
-        title = this->isSelected() ? m_sTitle[CAControlStateSelected] : m_sTitle[CAControlStateNormal];
+        image = m_mImages.at(CAControl::State::Normal);
     }
     
-    if (image && title.compare("") == 0)
+    if (title.empty())
+    {
+        title = m_mTitles[CAControl::State::Normal];
+    }
+    
+    if (image && title.length() == 0)
     {
         DSize size = this->getBounds().size;
         DSize iSize = image->getContentSize();
@@ -583,12 +439,12 @@ void CAButton::setControlState(const CAControlState& var)
         imageViewCenter.origin = size / 2;
         imageViewCenter.size = iSize;
     }
-    else if (image == NULL && title.compare("") != 0)
+    else if (!image && title.length() > 0)
     {
         labelSize = this->getBounds().size.height * 0.4f;
         labelCenter.origin = this->getBounds().size / 2 ;
     }
-    else if (image && title.compare("") != 0)
+    else if (image && title.length() > 0)
     {
         DSize size = m_obContentSize;
         DSize iSize = image->getContentSize();
@@ -606,7 +462,7 @@ void CAButton::setControlState(const CAControlState& var)
         labelCenter.origin.y = size.height * 0.81f;
     }
 
-    m_pImageView->setColor(m_sImageColor[m_eControlState]);
+    m_pImageView->setColor(m_mImageColors[m_eState]);
 
     if (m_bDefineImageSize)
     {
@@ -624,7 +480,7 @@ void CAButton::setControlState(const CAControlState& var)
     {
         m_pImageView->setImage(image);
     }
-    m_pLabel->setColor(m_sTitleColor[m_eControlState]);
+    m_pLabel->setColor(m_mTitleColors[m_eState]);
 
     
     if (m_bDefineTitleLabelSize)
@@ -658,108 +514,28 @@ void CAButton::interruptTouchState()
 {
     CC_RETURN_IF(m_bTouchClick == false);
     m_bTouchClick = false;
-    CC_RETURN_IF(m_eControlState != CAControlStateHighlighted);
+    CC_RETURN_IF(m_eState != CAControl::State::Highlighted);
 
     this->ccTouchCancelled(NULL, NULL);
 }
 
-bool CAButton::setTouchBegin(const DPoint& point)
-{
-	m_bTouchClick = true;
-
-    if (m_bAllowsSelected)
-    {
-        m_bBeforeTouchSelected = m_bSelected;
-        m_bSelected = !m_bBeforeTouchSelected;
-
-        if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
-        {
-            if (m_bSelected)
-            {
-                this->setControlState(CAControlStateSelected);
-            }
-            else
-            {
-                this->setControlState(CAControlStateNormal);
-            }
-            
-            ((CAObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
-        }
-        else
-        {
-            if (m_bTouchClick)
-            {
-                this->setControlState(CAControlStateHighlighted);
-            }
-        }
-    }
-    else
-    {
-        if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
-        {
-            ((CAObject *)m_pTarget[CAControlEventTouchDown]->*m_selTouch[CAControlEventTouchDown])(this, point);
-        }
-        
-        if (m_bTouchClick)
-        {
-            this->setControlState(CAControlStateHighlighted);
-        }
-    }
-	return m_bTouchClick;
-}
-
-void CAButton::setTouchUpInSide(const DPoint& point)
-{
-    if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, point);
-    }
-}
-
-void CAButton::setTouchUpOutSide(const DPoint& point)
-{
-    if (m_pTarget[CAControlEventTouchUpOutSide] && m_selTouch[CAControlEventTouchUpOutSide])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpOutSide]->*m_selTouch[CAControlEventTouchUpOutSide])(this, point);
-    }
-}
-
-void CAButton::setTouchMoved(const DPoint& point)
-{
-    if (m_pTarget[CAControlEventTouchMoved] && m_selTouch[CAControlEventTouchMoved])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchMoved]->*m_selTouch[CAControlEventTouchMoved])(this, point);
-    }
-}
-
-void CAButton::setTouchMovedOutSide(const DPoint& point)
-{
-    if (m_pTarget[CAControlEventTouchMovedOutSide] && m_selTouch[CAControlEventTouchMovedOutSide])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchMovedOutSide]->*m_selTouch[CAControlEventTouchMovedOutSide])(this, point);
-    }
-}
-
 void CAButton::setTouchLongPress()
 {
-    if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchLongPress]->*m_selTouch[CAControlEventTouchLongPress])(this, DPointZero);
-    }
+    this->callBackFunction(CAButton::Event::TouchLongPress, DPointZero);
 }
 
 void CAButton::setContentSize(const DSize & var)
 {
     DSize size = var;
-    if (m_bRecSpe && m_eButtonType != CAButtonTypeCustom)
+    if (m_bRecSpe && m_eButtonType != CAButton::Type::Custom)
     {
-        if (m_eButtonType==CAButtonTypeSquareRect)
+        if (m_eButtonType == CAButton::Type::SquareRect)
         {
             const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
             int h = atoi(map.at("height").c_str());
             size.height = (h == 0) ? size.height : h;
         }
-        else if(m_eButtonType==CAButtonTypeRoundedRect)
+        else if(m_eButtonType == CAButton::Type::RoundedRect)
         {
             const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
             int h = atoi(map.at("height").c_str());
@@ -769,7 +545,7 @@ void CAButton::setContentSize(const DSize & var)
     CAView::setContentSize(size);
     
     this->updateWithPreferredSize();
-    this->setControlState(m_eControlState);
+    this->setControlState(m_eState);
 }
 
 void CAButton::setImageOffset(const DSize& offset)
@@ -827,6 +603,20 @@ void CAButton::setTitleBold(bool bold)
 void CAButton::setTitleTextAlignment(const CATextAlignment& var)
 {
     m_pLabel->setTextAlignment(var);
+}
+
+void CAButton::addTarget(const std::function<void(CAButton*, const DPoint&)>& function, CAButton::Event event)
+{
+    m_mFunctions[event] = function;
+}
+
+void CAButton::callBackFunction(CAButton::Event event, const DPoint& point)
+{
+    auto it = m_mFunctions.find(event);
+    if (it != m_mFunctions.end())
+    {
+        (it->second)(this, point);
+    }
 }
 
 NS_CC_END

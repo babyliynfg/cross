@@ -847,7 +847,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
 
     if (rightMarginView == NULL)
     {
-        rightMarginView = CAButton::create(CAButtonTypeCustom);
+        rightMarginView = CAButton::create(CAButton::Type::Custom);
         rightMarginView->setTag(1011);
         this->addSubview(rightMarginView);
     }
@@ -858,7 +858,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
     layout.vertical.center = 0.5f;
     rightMarginView->setLayout(layout);
     rightMarginView->setImageSize(imgSize);
-    rightMarginView->setImageForState(CAControlStateAll, CAImage::create(filePath));
+    rightMarginView->setImageForState(CAControl::State::Normal, CAImage::create(filePath));
 }
 
 void CATextField::setClearButtonMode(const ClearButtonMode &var)
@@ -868,9 +868,20 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
         this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
         const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
-        rightMarginView->setImageForState(CAControlStateAll, CAImage::create(map.at("clearImage")));
-        rightMarginView->setImageColorForState(CAControlStateHighlighted, ccc4Int(0xff666666));
-        rightMarginView->addTarget(this, CAControl_selector(CATextField::clearBtnCallBack), CAControlEventTouchUpInSide);
+        rightMarginView->setImageForState(CAControl::State::Normal, CAImage::create(map.at("clearImage")));
+        rightMarginView->setImageColorForState(CAControl::State::Highlighted, ccc4Int(0xff666666));
+        rightMarginView->addTarget([=](CAButton* btn, const DPoint& point){
+        
+            if (getText().length() > 0)
+            {
+                this->setText("");
+                if (this->isFirstResponder() == false)
+                {
+                    this->delayShowImage();
+                }
+            }
+            
+        }, CAButton::Event::TouchUpInSide);
 
         DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
         
@@ -943,17 +954,6 @@ int CATextField::getMaxLenght()
     return m_iMaxLenght;
 }
 
-void CATextField::clearBtnCallBack(CAControl* con, DPoint point)
-{
-    if (getText().length() > 0)
-    {
-        this->setText("");
-        if (this->isFirstResponder() == false)
-        {
-            this->delayShowImage();
-        }
-    }
-}
 
 NS_CC_END
 

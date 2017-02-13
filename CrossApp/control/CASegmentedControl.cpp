@@ -34,7 +34,6 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_cImageSelectedColor(CAColor_white)
     , m_cTintColor(ccc4(54, 195, 240, 255))
     , m_pTarget(NULL)
-    , m_pCallFunc(NULL)
     , m_sTitleFontName("")
     , m_fTitleFontSize(24)
 {
@@ -425,7 +424,7 @@ std::string CASegmentedControl::getTitleForSegmentAtIndex(int index)
     return text;
 }
 
-void CASegmentedControl::setImageForSegmentAtIndex(CAImage* image, int index, CAControlState controlState)
+void CASegmentedControl::setImageForSegmentAtIndex(CAImage* image, int index, CAControl::State state)
 {
     CC_RETURN_IF(index >= (int)m_nItemsCount);
     CC_RETURN_IF(index < 0);
@@ -439,9 +438,9 @@ void CASegmentedControl::setImageForSegmentAtIndex(CAImage* image, int index, CA
     m_vSegmentItems.at(index)->addSubview(imageView);
     m_vSegmentItemsTitles.replace(index, imageView);
 
-    switch (controlState)
+    switch (state)
     {
-        case CAControlStateNormal:
+        case CAControl::State::Normal:
         {
             m_vNormalImages.replace(index, image);
             if (m_iSelectedIndex != index)
@@ -450,7 +449,7 @@ void CASegmentedControl::setImageForSegmentAtIndex(CAImage* image, int index, CA
             }
         }
             break;
-        case CAControlStateSelected:
+        case CAControl::State::Selected:
         {
             m_vSelectedImages.replace(index, image);
             if (m_iSelectedIndex == index)
@@ -557,26 +556,6 @@ bool CASegmentedControl::isEnabledForSegmentAtIndex(int index)
         isEnable = m_vItemTouchEnableds.at(index);
     }
     return isEnable;
-}
-
-void CASegmentedControl::addTarget(CAObject* target, SEL_CASegmentedControl selector)
-{
-    m_pTarget = target;
-    m_pCallFunc = selector;
-}
-
-void CASegmentedControl::removeTarget(CAObject* target, SEL_CASegmentedControl selector)
-{
-    m_pTarget = NULL;
-    m_pCallFunc = NULL;
-}
-
-void CASegmentedControl::callFunc(CAObject* object, int index)
-{
-    if(m_pTarget && m_pCallFunc)
-    {
-        ((CAObject *)m_pTarget->*m_pCallFunc)(this, index);
-    }
 }
 
 void CASegmentedControl::printWithSegmentItemBackground()
@@ -689,19 +668,24 @@ void CASegmentedControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    bool bCallFunc = (m_iTouchIndex != m_iSelectedIndex);
+    bool changed = (m_iTouchIndex != m_iSelectedIndex);
     
     this->setSelectedAtIndex(m_iTouchIndex);
     
-    if (bCallFunc && m_pTarget && m_pCallFunc)
+    if (changed)
     {
-        ((CAObject *)m_pTarget->*m_pCallFunc)(this, m_iSelectedIndex);
+        m_function(this, m_iSelectedIndex);
     }
 }
 
 void CASegmentedControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
     this->setSelectedAtIndex(m_iSelectedIndex);
+}
+
+void CASegmentedControl::setTarget(const std::function<void(CASegmentedControl*, int)>& function)
+{
+    m_function = function;
 }
 
 NS_CC_END

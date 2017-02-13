@@ -281,10 +281,7 @@ void CASlider::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     DRect bounds = getBounds();
     float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
     this->setValue(value);
-    if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, point);
-    }
+    m_function(this, value);
 }
 
 void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
@@ -301,31 +298,20 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     {
         float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
         this->setValue(value);
-        if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
-        {
-            ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, point);
-        }
+        m_function(this, value);
     }
     
-    if (m_pTarget[CAControlEventTouchUpInSide] && m_selTouch[CAControlEventTouchUpInSide])
-    {
-        ((CAObject *)m_pTarget[CAControlEventTouchUpInSide]->*m_selTouch[CAControlEventTouchUpInSide])(this, point);
-    }
+    m_functionTouchUpSide(this, m_fValue);
 }
 
-void CASlider::addTarget(CAObject* target, SEL_CAControl selector)
+void CASlider::setTarget(const std::function<void (CASlider*, float)>& function)
 {
-    this->addTarget(target, selector, CAControlEventTouchValueChanged);
+    m_function = function;
 }
 
-void CASlider::addTargetForTouchUpSide(CAObject* target, SEL_CAControl selector)
+void CASlider::setTargetForTouchUpSide(const std::function<void (CASlider*, float)>& function)
 {
-    this->addTarget(target, selector, CAControlEventTouchUpInSide);
-}
-
-void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
-{
-    this->removeTarget(target, selector, CAControlEventTouchValueChanged);
+    m_functionTouchUpSide = function;
 }
 
 void CASlider::setContentSize(const DSize & var)

@@ -656,7 +656,7 @@ void CAViewAnimation::update(float dt)
 void CAViewAnimation::setPoint(const DPoint& point, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bPoint = true;
     model->endPoint = point;
 }
@@ -664,7 +664,7 @@ void CAViewAnimation::setPoint(const DPoint& point, CAView* view)
 void CAViewAnimation::setContentSize(const DSize& size, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bContentSize = true;
     model->endContentSize = size;
 }
@@ -672,7 +672,7 @@ void CAViewAnimation::setContentSize(const DSize& size, CAView* view)
 void CAViewAnimation::setScaleX(float scaleX, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bScaleX = true;
     model->endScaleX = scaleX;
 }
@@ -680,7 +680,7 @@ void CAViewAnimation::setScaleX(float scaleX, CAView* view)
 void CAViewAnimation::setScaleY(float scaleY, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bScaleY = true;
     model->endScaleY = scaleY;
 }
@@ -688,7 +688,7 @@ void CAViewAnimation::setScaleY(float scaleY, CAView* view)
 void CAViewAnimation::setZOrder(int zOrder, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bZOrder = true;
     model->endZOrder = zOrder;
 }
@@ -696,7 +696,7 @@ void CAViewAnimation::setZOrder(int zOrder, CAView* view)
 void CAViewAnimation::setPointZ(float PointZ, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bPointZ = true;
     model->endPointZ = PointZ;
 }
@@ -704,7 +704,7 @@ void CAViewAnimation::setPointZ(float PointZ, CAView* view)
 void CAViewAnimation::setSkewX(float skewX, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bSkewX = true;
     model->endSkewX = skewX;
 }
@@ -712,7 +712,7 @@ void CAViewAnimation::setSkewX(float skewX, CAView* view)
 void CAViewAnimation::setSkewY(float skewY, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bSkewY = true;
     model->endSkewY = skewY;
 }
@@ -720,7 +720,7 @@ void CAViewAnimation::setSkewY(float skewY, CAView* view)
 void CAViewAnimation::setRotation(float rotation, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bRotation = true;
     model->endRotationZ = model->endRotationZ = rotation;
 }
@@ -728,7 +728,7 @@ void CAViewAnimation::setRotation(float rotation, CAView* view)
 void CAViewAnimation::setRotationX(float rotationX, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bRotationX = true;
     model->endRotationX = rotationX;
 }
@@ -736,7 +736,7 @@ void CAViewAnimation::setRotationX(float rotationX, CAView* view)
 void CAViewAnimation::setRotationY(float rotationY, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bRotationY = true;
     model->endRotationY = rotationY;
 }
@@ -744,7 +744,7 @@ void CAViewAnimation::setRotationY(float rotationY, CAView* view)
 void CAViewAnimation::setColor(const CAColor4B& color, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bColor = true;
     model->endColor = color;
 }
@@ -752,7 +752,7 @@ void CAViewAnimation::setColor(const CAColor4B& color, CAView* view)
 void CAViewAnimation::setAlpha(float alpha, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bAlpha = true;
     model->endAlpha = alpha;
 }
@@ -760,7 +760,7 @@ void CAViewAnimation::setAlpha(float alpha, CAView* view)
 void CAViewAnimation::setImageRect(const DRect& imageRect, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bImageRect = true;
     model->endImageRect = imageRect;
 }
@@ -768,7 +768,7 @@ void CAViewAnimation::setImageRect(const DRect& imageRect, CAView* view)
 void CAViewAnimation::setFlipX(bool flipX, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bFlipX = true;
     model->endFlipX = flipX;
 }
@@ -776,7 +776,7 @@ void CAViewAnimation::setFlipX(bool flipX, CAView* view)
 void CAViewAnimation::setFlipY(bool flipY, CAView* view)
 {
     CAViewAnimation::allocCAViewModel(view);
-    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
+    CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.at(view);
     model->bFlipY = true;
     model->endFlipY = flipY;
 }
@@ -784,7 +784,7 @@ void CAViewAnimation::setFlipY(bool flipY, CAView* view)
 void CAViewAnimation::allocCAViewModel(CAView* view)
 {
     CAViewAnimationModule* module = m_vWillModules.back();
-    if (module->animations.getValue(view) == NULL)
+    if (module->animations.at(view) == NULL)
     {
         module->animations.insert(view, CAViewModel::create(view));
     }

@@ -21,9 +21,6 @@ class CAScale9ImageView;
 class CALabel;
 class CASegmentedControl;
 
-typedef void (CAObject::*SEL_CASegmentedControl)(CASegmentedControl*, int index);
-#define CASegmentedControl_selector(_SELECTOR) (SEL_CASegmentedControl)(&_SELECTOR)
-
 class CC_DLL CASegmentedControl : public CAControl
 {
 public:
@@ -76,13 +73,12 @@ public:
     
     void setTitleFontSize(float titleSize);
     
-    void addTarget(CAObject* target, SEL_CASegmentedControl selector);
-    void removeTarget(CAObject* target, SEL_CASegmentedControl selector);
+    void setTarget(const std::function<void(CASegmentedControl*, int)>& function);
     
     void setTitleForSegmentAtIndex(const std::string& title, int index);
     std::string getTitleForSegmentAtIndex(int index);
     
-    void setImageForSegmentAtIndex(CAImage* image, int index, CAControlState controlState);
+    void setImageForSegmentAtIndex(CAImage* image, int index, CAControl::State state);
     CAImage* getImageForSegmentAtIndex(int index);
     
     void setContentOffsetForSegmentAtIndex(DSize offset, int index);
@@ -90,7 +86,6 @@ public:
     
     void setEnabledForSegmentAtIndex(bool isEnable, int index);
     bool isEnabledForSegmentAtIndex(int index);
-
 
 protected:
 
@@ -170,7 +165,7 @@ protected:
     
     CAObject*                       m_pTarget;
     
-    SEL_CASegmentedControl          m_pCallFunc;
+    std::function<void(CASegmentedControl*, int)>  m_function;
 
 };
 

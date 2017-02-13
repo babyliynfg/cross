@@ -83,8 +83,6 @@ protected:
     
 	virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
     
-	void onClickButton(CAControl* btn, DPoint point);
-
 	void setLabel(CALabel*& pLabel, const char* szTitle, const char* fontName, const CAColor4B& col);
 
     virtual void setContentSize(const DSize& var);

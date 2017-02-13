@@ -40,11 +40,9 @@ public:
     
     bool initWithCenter(const DRect& rect);
     
-    void addTarget(CAObject* target, SEL_CAControl selector);
+    void setTarget(const std::function<void (CASlider*, float)>& function);
     
-    void addTargetForTouchUpSide(CAObject* target, SEL_CAControl selector);
-    
-    void removeTarget(CAObject* target, SEL_CAControl selector);
+    void setTargetForTouchUpSide(const std::function<void (CASlider*, float)>& function);
     
     virtual void setValue(float value);
     
@@ -92,10 +90,6 @@ protected:
     
     void setContentSize(const DSize & var);
     
-    using CAControl::addTarget;
-    
-    using CAControl::removeTarget;
-    
 protected:
     
     CAScale9ImageView *m_pMinTrackTintImageView;
@@ -103,6 +97,10 @@ protected:
     CAScale9ImageView *m_pMaxTrackTintImageView;
     
     CAImageView *m_pThumbTintImageView;
+    
+    std::function<void (CASlider*, float)> m_function;
+    
+    std::function<void (CASlider*, float)> m_functionTouchUpSide;
 };
 
 NS_CC_END

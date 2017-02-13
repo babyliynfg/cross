@@ -122,7 +122,7 @@ void CAWaterfallView::setAllowsSelection(bool var)
 	{
 		if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[(*itr)])
 		{
-			cell->setControlState(CAControlStateNormal);
+			cell->setControlState(CAControl::State::Normal);
 		}
 	}
 	m_pSelectedWaterfallCells.clear();
@@ -137,7 +137,7 @@ void CAWaterfallView::setAllowsMultipleSelection(bool var)
 	{
 		if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[(*itr)])
 		{
-			cell->setControlState(CAControlStateNormal);
+			cell->setControlState(CAControl::State::Normal);
 		}
 	}
 	m_pSelectedWaterfallCells.clear();
@@ -152,7 +152,7 @@ void CAWaterfallView::setSelectRowAtIndexPath(unsigned int itemIndex)
 		{
 			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[(*itr)])
 			{
-				cell->setControlState(CAControlStateNormal);
+				cell->setControlState(CAControl::State::Normal);
 			}
 		}
 		m_pSelectedWaterfallCells.clear();
@@ -160,7 +160,7 @@ void CAWaterfallView::setSelectRowAtIndexPath(unsigned int itemIndex)
 
 	if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells.at(itemIndex))
 	{
-		cell->setControlState(CAControlStateSelected);
+		cell->setControlState(CAControl::State::Selected);
 	}
 	m_pSelectedWaterfallCells.insert(itemIndex);
 }
@@ -170,7 +170,7 @@ void CAWaterfallView::setUnSelectRowAtIndexPath(unsigned int itemIndex)
 	CC_RETURN_IF(m_pSelectedWaterfallCells.find(itemIndex) == m_pSelectedWaterfallCells.end());
 	if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells.at(itemIndex))
 	{
-		cell->setControlState(CAControlStateNormal);
+		cell->setControlState(CAControl::State::Normal);
 	}
 	m_pSelectedWaterfallCells.erase(itemIndex);
 }
@@ -213,19 +213,19 @@ bool CAWaterfallView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 			if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
 			{
-				CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
+				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Disabled);
 
 				if (m_pHighlightedWaterfallCells != pCell)
 				{
 					if (m_pHighlightedWaterfallCells)
 					{
-						m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
+						m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 					}
 
 					m_pHighlightedWaterfallCells = pCell;
 				}
 
-				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
+				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
 
 				CAViewAnimation::beginAnimations(m_s__StrID, NULL);
 				CAViewAnimation::setAnimationDuration(0.05f);
@@ -247,9 +247,9 @@ void CAWaterfallView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 	{
 		CAViewAnimation::removeAnimations(m_s__StrID);
 
-		if (m_pHighlightedWaterfallCells->getControlState() == CAControlStateHighlighted)
+		if (m_pHighlightedWaterfallCells->getControlState() == CAControl::State::Highlighted)
 		{
-			m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
+			m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 		}
 
 		m_pHighlightedWaterfallCells = NULL;
@@ -289,7 +289,7 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[deselectedIndex])
 			{
-				cell->setControlState(CAControlStateNormal);
+				cell->setControlState(CAControl::State::Normal);
 			}
 			if (m_pWaterfallViewDelegate)
 			{
@@ -301,7 +301,7 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CAWaterfallViewCell* cell = m_mpUsedWaterfallCells[selectedIndex])
 			{
-				cell->setControlState(CAControlStateSelected);
+				cell->setControlState(CAControl::State::Selected);
 			}
 			if (m_pWaterfallViewDelegate)
 			{
@@ -322,9 +322,9 @@ void CAWaterfallView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 	{
 		CAViewAnimation::removeAnimations(m_s__StrID);
 
-		if (m_pHighlightedWaterfallCells->getControlState() == CAControlStateHighlighted)
+		if (m_pHighlightedWaterfallCells->getControlState() == CAControl::State::Highlighted)
 		{
-			m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
+			m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 		}
 		m_pHighlightedWaterfallCells = NULL;
 	}
@@ -343,23 +343,23 @@ void CAWaterfallView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 			CC_CONTINUE_IF(cell == NULL);
 			if (cell->getFrame().containsPoint(point) && cell->isVisible())
 			{
-				CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
+				CC_BREAK_IF(cell->getControlState() == CAControl::State::Disabled);
 
 				if (m_pHighlightedWaterfallCells)
 				{
 					int index = m_pHighlightedWaterfallCells->getItem();
 					if (m_pSelectedWaterfallCells.count(index))
 					{
-						m_pHighlightedWaterfallCells->setControlState(CAControlStateHighlighted);
+						m_pHighlightedWaterfallCells->setControlState(CAControl::State::Highlighted);
 					}
 					else
 					{
-						m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
+						m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 					}
 				}
 
 				m_pHighlightedWaterfallCells = cell;
-				cell->setControlState(CAControlStateHighlighted);
+				cell->setControlState(CAControl::State::Highlighted);
 
 				break;
 			}
@@ -374,11 +374,11 @@ void CAWaterfallView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
 		int index = m_pHighlightedWaterfallCells->getItem();
 		if (m_pSelectedWaterfallCells.count(index))
 		{
-			m_pHighlightedWaterfallCells->setControlState(CAControlStateSelected);
+			m_pHighlightedWaterfallCells->setControlState(CAControl::State::Selected);
 		}
 		else
 		{
-			m_pHighlightedWaterfallCells->setControlState(CAControlStateNormal);
+			m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 		}
 		m_pHighlightedWaterfallCells = NULL;
 	}
@@ -592,7 +592,7 @@ void CAWaterfallView::loadWaterfallCell()
 
 			if (m_pSelectedWaterfallCells.count(index))
 			{
-				cell->setControlState(CAControlStateSelected);
+				cell->setControlState(CAControl::State::Selected);
 			}
 
 			if (m_pWaterfallViewDataSource)
@@ -701,55 +701,30 @@ CAWaterfallViewCell* CAWaterfallViewCell::create(const std::string& reuseIdentif
 	return NULL;
 }
 
-void CAWaterfallViewCell::normalWaterfallViewCell()
+void CAWaterfallViewCell::normalCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
 	m_pBackgroundView->setColor(ccc4(255, 255, 255, 255));
 }
 
-void CAWaterfallViewCell::highlightedWaterfallViewCell()
+void CAWaterfallViewCell::highlightedCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
 	m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
 }
 
 
-void CAWaterfallViewCell::selectedWaterfallViewCell()
+void CAWaterfallViewCell::selectedCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
 	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
 }
 
 
-void CAWaterfallViewCell::disabledWaterfallViewCell()
+void CAWaterfallViewCell::disabledCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
 	m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
-}
-
-void CAWaterfallViewCell::normalCell()
-{
-    this->normalWaterfallViewCell();
-}
-
-void CAWaterfallViewCell::highlightedCell()
-{
-    this->highlightedWaterfallViewCell();
-}
-
-void CAWaterfallViewCell::selectedCell()
-{
-    this->selectedWaterfallViewCell();
-}
-
-void CAWaterfallViewCell::disabledCell()
-{
-    this->disabledWaterfallViewCell();
-}
-
-void CAWaterfallViewCell::recoveryCell()
-{
-    this->recoveryWaterfallViewCell();
 }
 
 NS_CC_END

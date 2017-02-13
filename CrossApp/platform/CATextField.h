@@ -169,8 +169,6 @@ public:
     
 protected:
     
-	void clearBtnCallBack(CAControl* con,DPoint point);
-    
     void delayShowImage();
 
     void showImage();

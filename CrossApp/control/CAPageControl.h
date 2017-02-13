@@ -45,9 +45,7 @@ public:
     virtual void onEnter();
     virtual void onExit();
 
-    void addTarget(CAObject* target, SEL_CAControl selector);
-
-    void removeTarget(CAObject* target, SEL_CAControl selector);
+    void setTarget(const std::function<void(CAPageControl*, int)>& function);
     
     CC_SYNTHESIZE(int, m_numberOfPages, NumberOfPages); // default is 0
     CC_SYNTHESIZE(int, m_currentPage, CurrentPage);     // default is 0. value pinned to 0..numberOfPages-1
@@ -77,6 +75,8 @@ protected:
 
 private:
     CAVector<CAImageView*> m_pIndicators;
+    
+    std::function<void(CAPageControl*, int)> m_function;
 };
 
 NS_CC_END

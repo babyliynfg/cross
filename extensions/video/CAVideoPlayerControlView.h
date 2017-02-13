@@ -44,10 +44,7 @@ public:
 
 protected:
 	virtual bool init();
-    void onSlideDragging(CAControl* control, DPoint point);
-	void onSlideChanged(CAControl* control, DPoint point);
-	void onButtonPause(CAControl* control, DPoint point);
-	void onButtonBack(CAControl* control, DPoint point);
+
 	void updatePlayUI(float t);
 	void buildCtrlViews();
 	void updatePlayButton();

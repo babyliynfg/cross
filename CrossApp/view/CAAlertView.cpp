@@ -149,26 +149,26 @@ void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
 
 void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* pNormalImage, CAImage* pHighlightedImage)
 {
-    CAButton* btn = CAButton::create(CAButtonTypeCustom);
+    CAButton* btn = CAButton::create(CAButton::Type::Custom);
     CCAssert(btn, "");
-    btn->setTitleForState(CAControlStateAll, btnText.c_str());
-    btn->setTitleColorForState(CAControlStateAll, col);
+    btn->setTitleForState(CAControl::State::Normal, btnText.c_str());
+    btn->setTitleColorForState(CAControl::State::Normal, col);
     if (pNormalImage == NULL)
     {
-        btn->setBackgroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
+        btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
         
     } else {
         
-        btn->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(pNormalImage));
+        btn->setBackgroundViewForState(CAControl::State::Normal, CAScale9ImageView::createWithImage(pNormalImage));
     }
     
     if (pHighlightedImage == NULL)
     {
-        btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(206, 206, 211, 255)));
+        btn->setBackgroundViewForState(CAControl::State::Highlighted, CAView::createWithColor(ccc4(206, 206, 211, 255)));
         
     } else {
         
-        btn->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(pHighlightedImage));
+        btn->setBackgroundViewForState(CAControl::State::Highlighted, CAScale9ImageView::createWithImage(pHighlightedImage));
     }
     
     addButton(btn);
@@ -180,7 +180,17 @@ void CAAlertView::addButton(CAButton* pBtn)
     m_vAllBtn.pushBack(pBtn);
     pBtn->setTextTag("btn");
     pBtn->setTag((int)m_vAllBtn.size() - 1);
-    pBtn->addTarget(this, CAControl_selector(CAAlertView::onClickButton), CAControlEventTouchUpInSide);
+    pBtn->addTarget([=](CAButton* btn, const DPoint& point){
+    
+        CC_RETURN_IF(m_bRunning == false);
+        if (m_pCAlertBtnEvent && m_pCAlertTarget)
+        {
+            ((CAObject*)m_pCAlertTarget->*m_pCAlertBtnEvent)(btn->getTag());
+        }
+        
+        this->hide();
+        
+    }, CAButton::Event::TouchUpInSide);
 }
 
 
@@ -388,17 +398,6 @@ void CAAlertView::setTarget(CAObject* target, SEL_CAAlertBtnEvent selector)
 {
     m_pCAlertTarget = target;
     m_pCAlertBtnEvent = selector;
-}
-
-void CAAlertView::onClickButton(CAControl* btn, DPoint point)
-{
-    CC_RETURN_IF(m_bRunning == false);
-    if (m_pCAlertBtnEvent && m_pCAlertTarget)
-    {
-        ((CAObject*)m_pCAlertTarget->*m_pCAlertBtnEvent)(btn->getTag());
-    }
-    
-    this->hide();
 }
 
 void CAAlertView::show()

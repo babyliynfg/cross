@@ -58,7 +58,7 @@ bool CACell::initWithReuseIdentifier(const std::string& reuseIdentifier)
 
 CAView* CACell::getViewWithID(const std::string &tag)
 {
-    return m_pParser->m_mViews.getValue(tag);
+    return m_pParser->m_mViews.at(tag);
 }
 
 void CACell::parser()
@@ -88,30 +88,30 @@ CAView* CACell::getBackgroundView()
     return m_pBackgroundView;
 }
 
-void CACell::setControlState(const CAControlState& var)
+void CACell::setControlState(CAControl::State var)
 {
-    if (m_bAllowsSelected == false && var == CAControlStateSelected)
+    if (m_bAllowsSelected == false && var == CAControl::State::Selected)
     {
-        m_eControlState = CAControlStateNormal;
+        m_eState = CAControl::State::Normal;
     }
     else
     {
-        m_eControlState = var;
+        m_eState = var;
     }
     
     CC_RETURN_IF(m_bControlStateEffect == false);
-    switch (m_eControlState)
+    switch (m_eState)
     {
-        case CAControlStateNormal:
+        case CAControl::State::Normal:
             this->normalCell();
             break;
-        case CAControlStateHighlighted:
+        case CAControl::State::Highlighted:
             this->highlightedCell();
             break;
-        case CAControlStateSelected:
+        case CAControl::State::Selected:
             this->selectedCell();
             break;
-        case CAControlStateDisabled:
+        case CAControl::State::Disabled:
             this->disabledCell();
             break;
         default:
@@ -119,29 +119,29 @@ void CACell::setControlState(const CAControlState& var)
     }
 }
 
-const CAControlState& CACell::getControlState()
+CAControl::State CACell::getControlState()
 {
-    return m_eControlState;
+    return m_eState;
 }
 
 void CACell::setControlStateNormal()
 {
-    this->setControlState(CAControlStateNormal);
+    this->setControlState(CAControl::State::Normal);
 }
 
 void CACell::setControlStateHighlighted()
 {
-    this->setControlState(CAControlStateHighlighted);
+    this->setControlState(CAControl::State::Highlighted);
 }
 
 void CACell::setControlStateDisabled()
 {
-    this->setControlState(CAControlStateDisabled);
+    this->setControlState(CAControl::State::Disabled);
 }
 
 void CACell::setControlStateSelected()
 {
-    this->setControlState(CAControlStateSelected);
+    this->setControlState(CAControl::State::Selected);
 }
 
 void CACell::normalCell()
@@ -182,7 +182,7 @@ void CACell::resetCell()
 
 void CACell::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
-    CC_RETURN_IF(m_eControlState == CAControlStateDisabled);
+    CC_RETURN_IF(m_eState == CAControl::State::Disabled);
     if (m_bAllowsSelected == false)
     {
         this->setControlStateHighlighted();
@@ -191,10 +191,10 @@ void CACell::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 
 void CACell::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
 {
-    CC_RETURN_IF(m_eControlState == CAControlStateDisabled);
+    CC_RETURN_IF(m_eState == CAControl::State::Disabled);
     if (m_bAllowsSelected == false)
     {
-        this->setControlStateNormal();
+        setControlStateNormal();
     }
 }
 

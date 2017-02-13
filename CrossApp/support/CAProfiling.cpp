@@ -109,7 +109,7 @@ void CAProfilingTimer::reset()
 void ProfilingBeginTimingBlock(const char *timerName)
 {
     CAProfiler* p = CAProfiler::getInstance();
-    CAProfilingTimer* timer = p->_activeTimers.getValue(timerName);
+    CAProfilingTimer* timer = p->_activeTimers.at(timerName);
     if( ! timer )
     {
         timer = p->createAndAddTimerWithName(timerName);
@@ -127,7 +127,7 @@ void ProfilingEndTimingBlock(const char *timerName)
     auto now = chrono::high_resolution_clock::now();
     
     CAProfiler* p = CAProfiler::getInstance();
-    CAProfilingTimer* timer = p->_activeTimers.getValue(timerName);
+    CAProfilingTimer* timer = p->_activeTimers.at(timerName);
     
     CCASSERT(timer, "CCCAProfilingTimer  not found");
     
@@ -144,7 +144,7 @@ void ProfilingEndTimingBlock(const char *timerName)
 void ProfilingResetTimingBlock(const char *timerName)
 {
     CAProfiler* p = CAProfiler::getInstance();
-    CAProfilingTimer *timer = p->_activeTimers.getValue(timerName);
+    CAProfilingTimer *timer = p->_activeTimers.at(timerName);
     
     CCASSERT(timer, "CCCAProfilingTimer not found");
     

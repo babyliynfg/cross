@@ -101,13 +101,22 @@ void CATextToolBarView::show(CAView* pView)
 
 	for (int i = 0; i < btnCount; i++) 
 	{
-		CAButton* btn = CAButton::create(CAButtonTypeCustom);
-		btn->setTitleForState(CAControlStateAll, m_CallbackTargets[i].cszButtonText.c_str());
-		btn->setTitleColorForState(CAControlStateAll, ccc4(3, 100, 255, 255));
-		btn->setBackgroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
-		btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
+        CAButton* btn = CAButton::create(CAButton::Type::Custom);
+		btn->setTitleForState(CAControl::State::Normal, m_CallbackTargets[i].cszButtonText.c_str());
+        btn->setTitleColorForState(CAControl::State::Normal, ccc4(3, 100, 255, 255));
+        btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
+        btn->setBackgroundViewForState(CAControl::State::Highlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
 		btn->setTag(i);
-		btn->addTarget(this, CAControl_selector(CATextToolBarView::alertViewCallback), CAControlEventTouchUpInSide);
+        btn->addTarget([=](CAButton* btn, const DPoint& point){
+        
+            int btnIndex = btn->getTag();
+            if (btnIndex>=0 && btnIndex<m_CallbackTargets.size())
+            {
+                ((CAObject*)m_CallbackTargets[btnIndex].target->*m_CallbackTargets[btnIndex].selector)();
+            }
+            CATextToolBarView::hideTextToolBar();
+            
+        }, CAButton::Event::TouchUpInSide);
 		btn->setFrame(DRect(i*alertViewWidth / btnCount, 0, alertViewWidth / btnCount, alertViewButtonHeight));
 		m_pBackView->addSubview(btn);
 
@@ -195,17 +204,6 @@ void CATextToolBarView::addGrayLine(int x)
 	line->setColor(ccc4(206, 206, 211, 255));
 	m_pBackView->addSubview(line);
 }
-
-void CATextToolBarView::alertViewCallback(CAControl* btn, DPoint point)
-{
-	int btnIndex = btn->getTag();
-	if (btnIndex>=0 && btnIndex<m_CallbackTargets.size())
-	{
-		((CAObject*)m_CallbackTargets[btnIndex].target->*m_CallbackTargets[btnIndex].selector)();
-	}
-    CATextToolBarView::hideTextToolBar();
-}
-
 
 std::vector<CATextResponder*> CATextResponder::s_AllTextResponder;
 

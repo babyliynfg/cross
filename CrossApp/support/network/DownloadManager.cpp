@@ -360,7 +360,7 @@ void CADownloadManager::enqueueDownload(CADownloadResponse* request)
 
 void CADownloadManager::resumeDownload(unsigned long download_id)
 {
-	CADownloadResponse* pDownloadReq = m_mCADownloadResponses.getValue(download_id);
+	CADownloadResponse* pDownloadReq = m_mCADownloadResponses.at(download_id);
 	if (pDownloadReq && m_vPauseCADownloadResponses.contains(pDownloadReq))
 	{
         if (m_vDownloadingRequests.size() < (size_t)m_nDownloadMaxCount)
@@ -395,7 +395,7 @@ void CADownloadManager::resumeDownload(unsigned long download_id)
 
 void CADownloadManager::pauseDownload(unsigned long download_id)
 {
-    CADownloadResponse* pDownloadReq = m_mCADownloadResponses.getValue(download_id);
+    CADownloadResponse* pDownloadReq = m_mCADownloadResponses.at(download_id);
     if (pDownloadReq)
     {
         m_vDownloadingRequests.eraseObject(pDownloadReq);
@@ -412,7 +412,7 @@ void CADownloadManager::pauseDownload(unsigned long download_id)
 
 void CADownloadManager::eraseDownload(unsigned long download_id)
 {
-    CADownloadResponse* pDownloadReq = m_mCADownloadResponses.getValue(download_id);
+    CADownloadResponse* pDownloadReq = m_mCADownloadResponses.at(download_id);
     if (pDownloadReq)
     {
 		pDownloadReq->setDownloadCmd(DownloadCmd_Delete);
@@ -461,7 +461,7 @@ unsigned long CADownloadManager::getLocalFileSize(unsigned long download_id)
 {
     if (m_mCADownloadResponses.contains(download_id))
     {
-        return (unsigned long)m_mCADownloadResponses.getValue(download_id)->getLocalFileSize();
+        return (unsigned long)m_mCADownloadResponses.at(download_id)->getLocalFileSize();
     }
     else
     {
@@ -483,7 +483,7 @@ bool CADownloadManager::isFinished(unsigned long download_id)
 
 bool CADownloadManager::isDownloading(unsigned long download_id)
 {
-    CADownloadResponse* quest = m_mCADownloadResponses.getValue(download_id);
+    CADownloadResponse* quest = m_mCADownloadResponses.at(download_id);
     if (quest)
     {
         return (m_vDownloadingRequests.contains(quest) || m_dWaitCADownloadResponses.contains(quest));
@@ -590,7 +590,7 @@ void CADownloadManager::onSuccess(CADownloadResponse* request)
 	unsigned long download_id = request->getDownloadID();
 	if (request->isDownloadAbort())
 	{
-		CADownloadResponse* pDownloadReq = m_mCADownloadResponses.getValue(download_id);
+		CADownloadResponse* pDownloadReq = m_mCADownloadResponses.at(download_id);
 		if (pDownloadReq)
 		{
 			pDownloadReq->setDownloadCmd(DownloadCmd_Pause);

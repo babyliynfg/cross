@@ -87,7 +87,7 @@ protected:
     
     void showRightButton();
     
-    void goBack(CAControl* btn, DPoint point);
+    void goBack(CAButton* btn, const DPoint& point);
     
     void updateNavigationBar();
     
@@ -207,8 +207,6 @@ protected:
     
     void showSelectedIndicatorView();
     
-    void setTouchSelected(CAControl* control, DPoint point);
-
     virtual void setContentSize(const DSize & var);
     
 protected:

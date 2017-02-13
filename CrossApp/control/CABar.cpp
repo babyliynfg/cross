@@ -269,7 +269,7 @@ void CANavigationBar::showLeftButton()
             layout.horizontal.width = item->getItemWidth();
         }
         
-        CAButton* button = CAButton::createWithLayout(layout, CAButtonTypeCustom);
+        CAButton* button = CAButton::createWithLayout(layout, CAButton::Type::Custom);
         m_pContentView->addSubview(button);
         button->setTitleFontSize(32);
         
@@ -282,29 +282,28 @@ void CANavigationBar::showLeftButton()
                 float ratio = image->getAspectRatio();
                 button->setImageSize(DSize(m_pGoBackBarButtonItem->getImageWidth(), m_pGoBackBarButtonItem->getImageWidth() / ratio));
                 button->setImageOffset(DSize(m_pGoBackBarButtonItem->getImageOffsetX(), 0));
-                button->setImageForState(CAControlStateAll, image);
+                button->setImageForState(CAControl::State::Normal, image);
                 
                 if (m_pGoBackBarButtonItem->getHighlightedImage())
                 {
-                    button->setImageForState(CAControlStateHighlighted, m_pGoBackBarButtonItem->getHighlightedImage());
+                    button->setImageForState(CAControl::State::Highlighted, m_pGoBackBarButtonItem->getHighlightedImage());
                 }
                 else
                 {
-                    button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
+                    button->setImageColorForState(CAControl::State::Highlighted, ccc4(127, 127, 127, 255));
                 }            }
             
             std::string title = m_pGoBackBarButtonItem->getTitle();
             if (!title.empty())
             {
-                button->setTitleForState(CAControlStateAll, title);
+                button->setTitleForState(CAControl::State::Normal, title);
                 button->setTitleLabelSize(DSize(m_pGoBackBarButtonItem->getLabelWidth(), 44));
                 button->setTitleOffset(DSize(m_pGoBackBarButtonItem->getLabelOffsetX(), 0));
-                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
-                button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
+                button->setTitleColorForState(CAControl::State::Normal, m_cButtonColor);
+                button->setTitleColorForState(CAControl::State::Highlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
-            
-            button->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlEventTouchUpInSide);
+            button->addTarget(std::bind(&CANavigationBar::goBack, this, std::placeholders::_1, std::placeholders::_2), CAButton::Event::TouchUpInSide);
         }
         else if (item)
         {
@@ -315,31 +314,31 @@ void CANavigationBar::showLeftButton()
                 float ratio = image->getAspectRatio();
                 button->setImageSize(DSize(item->getImageWidth(), item->getImageWidth() / ratio));
                 button->setImageOffset(DSize(item->getImageOffsetX(), 0));
-                button->setImageForState(CAControlStateAll, image);
+                button->setImageForState(CAControl::State::Normal, image);
                 
                 if (item->getHighlightedImage())
                 {
-                    button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
+                    button->setImageForState(CAControl::State::Highlighted, item->getHighlightedImage());
                 }
                 else
                 {
-                    button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
+                    button->setImageColorForState(CAControl::State::Highlighted, ccc4(127, 127, 127, 255));
                 }
             }
             
             std::string title = item->getTitle();
             if (!title.empty())
             {
-                button->setTitleForState(CAControlStateAll, title);
+                button->setTitleForState(CAControl::State::Normal, title);
                 button->setTitleLabelSize(DSize(item->getLabelWidth(), 44));
                 button->setTitleOffset(DSize(item->getLabelOffsetX(), 0));
-                button->setTitleForState(CAControlStateNormal, item->getTitle());
-                button->setTitleForState(CAControlStateHighlighted, item->getTitle());
-                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
-                button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
+                button->setTitleForState(CAControl::State::Normal, item->getTitle());
+                button->setTitleForState(CAControl::State::Highlighted, item->getTitle());
+                button->setTitleColorForState(CAControl::State::Normal, m_cButtonColor);
+                button->setTitleColorForState(CAControl::State::Highlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
-            button->addTarget(item->getTarget(), item->getSel(), CAControlEventTouchUpInSide);
+            button->addTarget(item->getCallbackFunction(), CAButton::Event::TouchUpInSide);
         }
         m_pLeftButtons.push_back(button);
         
@@ -371,7 +370,7 @@ void CANavigationBar::showRightButton()
             layout.horizontal.right = 3;
         }
         
-        CAButton* button = CAButton::createWithLayout(layout, CAButtonTypeCustom);
+        CAButton* button = CAButton::createWithLayout(layout, CAButton::Type::Custom);
         m_pContentView->addSubview(button);
         button->setTitleFontSize(32);
         
@@ -384,31 +383,31 @@ void CANavigationBar::showRightButton()
                 float ratio = image->getAspectRatio();
                 button->setImageSize(DSize(item->getImageWidth(), item->getImageWidth() / ratio));
                 button->setImageOffset(DSize(item->getImageOffsetX(), 0));
-                button->setImageForState(CAControlStateAll, image);
+                button->setImageForState(CAControl::State::Normal, image);
                 
                 if (item->getHighlightedImage())
                 {
-                    button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
+                    button->setImageForState(CAControl::State::Highlighted, item->getHighlightedImage());
                 }
                 else
                 {
-                    button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
+                    button->setImageColorForState(CAControl::State::Highlighted, ccc4(127, 127, 127, 255));
                 }
             }
             
             std::string title = item->getTitle();
             if (!title.empty())
             {
-                button->setTitleForState(CAControlStateAll, title);
+                button->setTitleForState(CAControl::State::Normal, title);
                 button->setTitleLabelSize(DSize(item->getLabelWidth(), 44));
                 button->setTitleOffset(DSize(item->getLabelOffsetX(), 0));
-                button->setTitleForState(CAControlStateNormal, item->getTitle());
-                button->setTitleForState(CAControlStateHighlighted, item->getTitle());
-                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
-                button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
+                button->setTitleForState(CAControl::State::Normal, item->getTitle());
+                button->setTitleForState(CAControl::State::Highlighted, item->getTitle());
+                button->setTitleColorForState(CAControl::State::Normal, m_cButtonColor);
+                button->setTitleColorForState(CAControl::State::Highlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
-            button->addTarget(item->getTarget(), item->getSel(), CAControlEventTouchUpInSide);
+            button->addTarget(item->getCallbackFunction(), CAButton::Event::TouchUpInSide);
         }
         m_pRightButtons.push_back(button);
         
@@ -416,7 +415,7 @@ void CANavigationBar::showRightButton()
     }
 }
 
-void CANavigationBar::goBack(CAControl* btn, DPoint point)
+void CANavigationBar::goBack(CAButton* btn, const DPoint& point)
 {
     if (m_pDelegate)
     {
@@ -590,38 +589,59 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
             rect.size = m_cItemSize;
             rect.origin.x = m_cItemSize.width * i;
             
-            CAButton* btn = CAButton::createWithFrame(rect, CAButtonTypeCustom);
+            CAButton* btn = CAButton::createWithFrame(rect, CAButton::Type::Custom);
             m_pContentView->addSubview(btn);
             btn->setTouchEventScrollHandOverToSuperview(false);
             btn->setTag(i);
-            btn->addTarget(this, CAControl_selector(CATabBar::setTouchSelected), CAControlEventTouchUpInSide);
             m_pButtons.pushBack(btn);
-            btn->setTitleForState(CAControlStateAll, m_pItems.at(i)->getTitle());
-            btn->setTitleColorForState(CAControlStateAll, m_sTitleColor);
-            btn->setTitleColorForState(CAControlStateHighlighted, m_sSelectedTitleColor);
-            btn->setTitleColorForState(CAControlStateSelected, m_sSelectedTitleColor);
-            btn->setImageForState(CAControlStateNormal, m_pItems.at(i)->getImage());
+            
+            btn->addTarget([=](CAButton* btn, const DPoint& point)
+            {
+                int index = i;
+                if (!m_sForbidSelectedIndexs.count(index))
+                {
+                    this->setSelectedAtIndex(index);
+                    
+                    if (m_pDelegate)
+                    {
+                        m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
+                    }
+                }
+                else
+                {
+                    if (m_pDelegate)
+                    {
+                        m_pDelegate->tabBarClickToForbidSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
+                    }
+                }
+                
+            }, CAButton::Event::TouchUpInSide);
+            
+            btn->setTitleForState(CAControl::State::Normal, m_pItems.at(i)->getTitle());
+            btn->setTitleColorForState(CAControl::State::Normal, m_sTitleColor);
+            btn->setTitleColorForState(CAControl::State::Highlighted, m_sSelectedTitleColor);
+            btn->setTitleColorForState(CAControl::State::Disabled, m_sSelectedTitleColor);
+            btn->setImageForState(CAControl::State::Normal, m_pItems.at(i)->getImage());
             CAImage* selectedImage = m_pItems.at(i)->getSelectedImage()
             ? m_pItems.at(i)->getSelectedImage()
             : m_pItems.at(i)->getImage();
-            btn->setImageForState(CAControlStateHighlighted, selectedImage);
-            btn->setImageForState(CAControlStateSelected, selectedImage);
-            btn->setBackgroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
+            btn->setImageForState(CAControl::State::Highlighted, selectedImage);
+            btn->setImageForState(CAControl::State::Disabled, selectedImage);
+            btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
             if (m_pSelectedBackgroundImage)
             {
-                btn->setBackgroundViewForState(CAControlStateHighlighted,
+                btn->setBackgroundViewForState(CAControl::State::Highlighted,
                                                CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
-                btn->setBackgroundViewForState(CAControlStateSelected,
+                btn->setBackgroundViewForState(CAControl::State::Disabled,
                                                CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
             }
             else
             {
-                btn->setBackgroundViewForState(CAControlStateHighlighted,
+                btn->setBackgroundViewForState(CAControl::State::Highlighted,
                                                CAView::createWithColor(m_sSelectedBackgroundColor));
-                btn->setBackgroundViewForState(CAControlStateSelected,
+                btn->setBackgroundViewForState(CAControl::State::Disabled,
                                                CAView::createWithColor(m_sSelectedBackgroundColor));
             }
-            btn->setAllowsSelected(true);
             
             DRect badgeRect;
             badgeRect.origin = rect.origin + DPoint(rect.size.width - 55, 25);
@@ -700,13 +720,13 @@ void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)
         if (!m_pButtons.empty())
         {
             CAButton* btn = m_pButtons.at(index);
-            btn->setTitleForState(CAControlStateAll, item->getTitle());
-            btn->setImageForState(CAControlStateNormal, item->getImage());
+            btn->setTitleForState(CAControl::State::Normal, item->getTitle());
+            btn->setImageForState(CAControl::State::Normal, item->getImage());
             CAImage* selectedImage = item->getSelectedImage()
             ? item->getSelectedImage()
             : item->getImage();
-            btn->setImageForState(CAControlStateHighlighted, selectedImage);
-            btn->setImageForState(CAControlStateSelected, selectedImage);
+            btn->setImageForState(CAControl::State::Highlighted, selectedImage);
+            btn->setImageForState(CAControl::State::Disabled, selectedImage);
 
             CABadgeView* badgeView = m_pBadgeViews.at(index);
             badgeView->setBadgeText(item->getBadgeValue());
@@ -810,7 +830,7 @@ void CATabBar::setTitleColorForNormal(const CAColor4B &var)
         for (size_t i=0; i<m_pButtons.size(); i++)
         {
             CAButton* btn = m_pButtons.at(i);
-            btn->setTitleColorForState(CAControlStateNormal, m_sTitleColor);
+            btn->setTitleColorForState(CAControl::State::Normal, m_sTitleColor);
         }
     }
 }
@@ -828,8 +848,8 @@ void CATabBar::setTitleColorForSelected(const CAColor4B &var)
         for (size_t i=0; i<m_pButtons.size(); i++)
         {
             CAButton* btn = m_pButtons.at(i);
-            btn->setTitleColorForState(CAControlStateHighlighted, m_sSelectedTitleColor);
-            btn->setTitleColorForState(CAControlStateSelected, m_sSelectedTitleColor);
+            btn->setTitleColorForState(CAControl::State::Highlighted, m_sSelectedTitleColor);
+            btn->setTitleColorForState(CAControl::State::Disabled, m_sSelectedTitleColor);
         }
     }
 }
@@ -885,32 +905,31 @@ void CATabBar::showSelectedBackground()
     for (size_t i=0; i<m_pButtons.size(); i++)
     {
         CAButton* btn = m_pButtons.at(i);
-        btn->setTitleForState(CAControlStateAll, m_pItems.at(i)->getTitle());
-        btn->setTitleColorForState(CAControlStateAll, m_sTitleColor);
-        btn->setTitleColorForState(CAControlStateHighlighted, m_sSelectedTitleColor);
-        btn->setTitleColorForState(CAControlStateSelected, m_sSelectedTitleColor);
-        btn->setImageForState(CAControlStateNormal, m_pItems.at(i)->getImage());
+        btn->setTitleForState(CAControl::State::Normal, m_pItems.at(i)->getTitle());
+        btn->setTitleColorForState(CAControl::State::Normal, m_sTitleColor);
+        btn->setTitleColorForState(CAControl::State::Highlighted, m_sSelectedTitleColor);
+        btn->setTitleColorForState(CAControl::State::Disabled, m_sSelectedTitleColor);
+        btn->setImageForState(CAControl::State::Normal, m_pItems.at(i)->getImage());
         CAImage* selectedImage = m_pItems.at(i)->getSelectedImage()
         ? m_pItems.at(i)->getSelectedImage()
         : m_pItems.at(i)->getImage();
-        btn->setImageForState(CAControlStateHighlighted, selectedImage);
-        btn->setImageForState(CAControlStateSelected, selectedImage);
-        btn->setBackgroundViewForState(CAControlStateNormal, CAView::createWithColor(CAColor_clear));
+        btn->setImageForState(CAControl::State::Highlighted, selectedImage);
+        btn->setImageForState(CAControl::State::Disabled, selectedImage);
+        btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
         if (m_pSelectedBackgroundImage)
         {
-            btn->setBackgroundViewForState(CAControlStateHighlighted,
+            btn->setBackgroundViewForState(CAControl::State::Highlighted,
                                            CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
-            btn->setBackgroundViewForState(CAControlStateSelected,
+            btn->setBackgroundViewForState(CAControl::State::Disabled,
                                            CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
         }
         else
         {
-            btn->setBackgroundViewForState(CAControlStateHighlighted,
+            btn->setBackgroundViewForState(CAControl::State::Highlighted,
                                            CAView::createWithColor(m_sSelectedBackgroundColor));
-            btn->setBackgroundViewForState(CAControlStateSelected,
+            btn->setBackgroundViewForState(CAControl::State::Disabled,
                                            CAView::createWithColor(m_sSelectedBackgroundColor));
         }
-        btn->setAllowsSelected(true);
         
         CABadgeView* badgeView = m_pBadgeViews.at(i);
         badgeView->setBadgeText(m_pItems.at(i)->getBadgeValue());
@@ -966,7 +985,7 @@ void CATabBar::setSelectedAtIndex(int index)
     
     if (index != -1)
     {
-        m_pButtons.at(index)->setControlStateSelected();
+        m_pButtons.at(index)->setControlStateDisabled();
         for (size_t i=0; i<m_pButtons.size(); i++)
         {
             CAButton* btn = m_pButtons.at(i);
@@ -1007,28 +1026,6 @@ void CATabBar::setSelectedAtIndex(int index)
 void CATabBar::addForbidSelectedAtIndex(int index)
 {
     m_sForbidSelectedIndexs.insert(index);
-}
-
-void CATabBar::setTouchSelected(CrossApp::CAControl *control, CrossApp::DPoint point)
-{
-    int index = control->getTag();
-    if (!m_sForbidSelectedIndexs.count(index))
-    {
-        this->setSelectedAtIndex(control->getTag());
-        
-        if (m_pDelegate)
-        {
-            m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
-        }
-    }
-    else
-    {
-        if (m_pDelegate)
-        {
-            m_pDelegate->tabBarClickToForbidSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
-        }
-    }
-    
 }
 
 

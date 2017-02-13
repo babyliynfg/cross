@@ -67,7 +67,7 @@ void CGSpriteFrameCache::addSpriteFramesWithDictionary(CAValueMap& dictionary, C
     {
         CAValueMap& frameDict = iter->second.asValueMap();
         std::string spriteFrameName = iter->first;
-        CGSpriteFrame* spriteFrame = m_obSpriteFrames.getValue(spriteFrameName);
+        CGSpriteFrame* spriteFrame = m_obSpriteFrames.at(spriteFrameName);
         if (spriteFrame)
         {
             continue;
@@ -312,7 +312,7 @@ void CGSpriteFrameCache::removeSpriteFramesFromDictionary(CAValueMap& dictionary
     
     for (auto iter = framesDict.cbegin(); iter != framesDict.cend(); ++iter)
     {
-        if (m_obSpriteFrames.getValue(iter->first))
+        if (m_obSpriteFrames.at(iter->first))
         {
             keysToRemove.push_back(iter->first);
         }
@@ -328,7 +328,7 @@ void CGSpriteFrameCache::removeSpriteFramesFromImage(CAImage* image)
     for (auto iter = m_obSpriteFrames.begin(); iter != m_obSpriteFrames.end(); ++iter)
     {
         std::string key = iter->first;
-        CGSpriteFrame* frame = m_obSpriteFrames.getValue(key);
+        CGSpriteFrame* frame = m_obSpriteFrames.at(key);
         if (frame && (frame->getImage() == image))
         {
             keysToRemove.push_back(key);
@@ -340,13 +340,13 @@ void CGSpriteFrameCache::removeSpriteFramesFromImage(CAImage* image)
 
 CGSpriteFrame* CGSpriteFrameCache::getSpriteFrameByName(const std::string& pszName)
 {
-    CGSpriteFrame* frame = m_obSpriteFrames.getValue(pszName);
+    CGSpriteFrame* frame = m_obSpriteFrames.at(pszName);
     if (!frame)
     {
         std::string key = m_obSpriteFramesAliases[pszName].asString();
         if (!key.empty())
         {
-            frame = m_obSpriteFrames.getValue(key);
+            frame = m_obSpriteFrames.at(key);
         }
     }
     return frame;

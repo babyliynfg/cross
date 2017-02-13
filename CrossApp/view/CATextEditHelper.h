@@ -76,7 +76,6 @@ protected:
 	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
 
 	void addGrayLine(int x);
-	void alertViewCallback(CAControl* btn, DPoint point);
 
 private:
 	std::vector<CallbackTarget> m_CallbackTargets;

@@ -120,7 +120,7 @@ void CACollectionView::setAllowsSelection(bool var)
 	{
 		if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 		{
-			cell->setControlState(CAControlStateNormal);
+			cell->setControlState(CAControl::State::Normal);
 		}
 	}
 	m_pSelectedCollectionCells.clear();
@@ -135,7 +135,7 @@ void CACollectionView::setAllowsMultipleSelection(bool var)
 	{
 		if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 		{
-			cell->setControlState(CAControlStateNormal);
+			cell->setControlState(CAControl::State::Normal);
 		}
 	}
 	m_pSelectedCollectionCells.clear();
@@ -152,7 +152,7 @@ void CACollectionView::setSelectRowAtIndexPath(unsigned int section, unsigned in
 		{
 			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[(*itr)])
 			{
-				cell->setControlState(CAControlStateNormal);
+				cell->setControlState(CAControl::State::Normal);
 			}
 		}
 		m_pSelectedCollectionCells.clear();
@@ -161,7 +161,7 @@ void CACollectionView::setSelectRowAtIndexPath(unsigned int section, unsigned in
 	CAIndexPath3E indexPath = CAIndexPath3E(section, row, item);
 	if (CACollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
 	{
-		cell->setControlState(CAControlStateSelected);
+		cell->setControlState(CAControl::State::Selected);
 	}
 	m_pSelectedCollectionCells.insert(indexPath);
 }
@@ -174,7 +174,7 @@ void CACollectionView::setUnSelectRowAtIndexPath(unsigned int section, unsigned 
     CC_RETURN_IF(m_pSelectedCollectionCells.find(indexPath) == m_pSelectedCollectionCells.end());
 	if (CACollectionViewCell* cell = m_mpUsedCollectionCells.at(indexPath))
 	{
-		cell->setControlState(CAControlStateNormal);
+		cell->setControlState(CAControl::State::Normal);
 	}
 	m_pSelectedCollectionCells.erase(indexPath);
 }
@@ -218,19 +218,19 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 			if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
 			{
-				CC_BREAK_IF(pCell->getControlState() == CAControlStateDisabled);
+				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Disabled);
 
                 if (m_pHighlightedCollectionCells != pCell)
                 {
                     if (m_pHighlightedCollectionCells)
                     {
-                        m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+                        m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
                     }
                     
                     m_pHighlightedCollectionCells = pCell;
                 }
 
-				CC_BREAK_IF(pCell->getControlState() == CAControlStateSelected);
+				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
 
                 CAViewAnimation::beginAnimations(m_s__StrID, NULL);
                 CAViewAnimation::setAnimationDuration(0.05f);
@@ -252,9 +252,9 @@ void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 	{
         CAViewAnimation::removeAnimations(m_s__StrID);
 
-		if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
+		if (m_pHighlightedCollectionCells->getControlState() == CAControl::State::Highlighted)
 		{
-			m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+			m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
 		}
 
 		m_pHighlightedCollectionCells = NULL;
@@ -294,7 +294,7 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[deselectedIndexPath])
 			{
-				cell->setControlState(CAControlStateNormal);
+				cell->setControlState(CAControl::State::Normal);
 			}
 			if (m_pCollectionViewDelegate)
 			{
@@ -307,7 +307,7 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (CACollectionViewCell* cell = m_mpUsedCollectionCells[selectedIndexPath])
 			{
-				cell->setControlState(CAControlStateSelected);
+				cell->setControlState(CAControl::State::Selected);
 			}
 			if (m_pCollectionViewDelegate)
 			{
@@ -329,9 +329,9 @@ void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 	{
         CAViewAnimation::removeAnimations(m_s__StrID);
 
-        if (m_pHighlightedCollectionCells->getControlState() == CAControlStateHighlighted)
+        if (m_pHighlightedCollectionCells->getControlState() == CAControl::State::Highlighted)
         {
-            m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+            m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
         }
 		m_pHighlightedCollectionCells = NULL;
 	}
@@ -350,7 +350,7 @@ void CACollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
             CC_CONTINUE_IF(cell == NULL);
             if (cell->getFrame().containsPoint(point) && cell->isVisible())
             {
-                CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
+                CC_BREAK_IF(cell->getControlState() == CAControl::State::Disabled);
                 
                 if (m_pHighlightedCollectionCells)
                 {
@@ -359,17 +359,17 @@ void CACollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
                                                         m_pHighlightedCollectionCells->getItem());
                     if (m_pSelectedCollectionCells.count(index))
                     {
-                        m_pHighlightedCollectionCells->setControlState(CAControlStateHighlighted);
+                        m_pHighlightedCollectionCells->setControlState(CAControl::State::Highlighted);
                     }
                     else
                     {
-                        m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+                        m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
                     }
                     
                 }
                 
                 m_pHighlightedCollectionCells = cell;
-                cell->setControlState(CAControlStateHighlighted);
+                cell->setControlState(CAControl::State::Highlighted);
                 
                 break;
             }
@@ -386,11 +386,11 @@ void CACollectionView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
                                             m_pHighlightedCollectionCells->getItem());
         if (m_pSelectedCollectionCells.count(index))
         {
-            m_pHighlightedCollectionCells->setControlState(CAControlStateSelected);
+            m_pHighlightedCollectionCells->setControlState(CAControl::State::Selected);
         }
         else
         {
-            m_pHighlightedCollectionCells->setControlState(CAControlStateNormal);
+            m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
         }
         m_pHighlightedCollectionCells = NULL;
     }
@@ -673,7 +673,7 @@ void CACollectionView::loadCollectionCell()
             
 			if (m_pSelectedCollectionCells.count(r))
 			{
-				cell->setControlState(CAControlStateSelected);
+				cell->setControlState(CAControl::State::Selected);
 			}
             
             if (m_pCollectionViewDataSource)
@@ -795,55 +795,30 @@ CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdent
 	return NULL;
 }
 
-void CACollectionViewCell::normalCollectionViewCell()
+void CACollectionViewCell::normalCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
 	m_pBackgroundView->setColor(ccc4(255, 255, 255, 255));
 }
 
-void CACollectionViewCell::highlightedCollectionViewCell()
+void CACollectionViewCell::highlightedCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
 	m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
 }
 
 
-void CACollectionViewCell::selectedCollectionViewCell()
+void CACollectionViewCell::selectedCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
 	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
 }
 
 
-void CACollectionViewCell::disabledCollectionViewCell()
+void CACollectionViewCell::disabledCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
 	m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
-}
-
-void CACollectionViewCell::normalCell()
-{
-    this->normalCollectionViewCell();
-}
-
-void CACollectionViewCell::highlightedCell()
-{
-    this->highlightedCollectionViewCell();
-}
-
-void CACollectionViewCell::selectedCell()
-{
-    this->selectedCollectionViewCell();
-}
-
-void CACollectionViewCell::disabledCell()
-{
-    this->disabledCollectionViewCell();
-}
-
-void CACollectionViewCell::recoveryCell()
-{
-    this->recoveryCollectionViewCell();
 }
 
 NS_CC_END

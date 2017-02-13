@@ -35,7 +35,7 @@ GLProgramState* GLProgramStateCache::getGLProgramState(GLProgram* glprogram)
 {
     if (_glProgramStates.contains(glprogram))
     {
-        return _glProgramStates.getValue(glprogram);
+        return _glProgramStates.at(glprogram);
     }
     
     auto ret = new (std::nothrow) GLProgramState;
