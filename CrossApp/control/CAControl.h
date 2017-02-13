@@ -19,9 +19,9 @@ class CC_DLL CAControl: public CAView
 
 public:
     
-    enum class State
+    enum class State : int
     {
-        Normal,
+        Normal = 0,
         Highlighted,
         Selected,
         Disabled

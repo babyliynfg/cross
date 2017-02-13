@@ -870,7 +870,7 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
         rightMarginView->setImageForState(CAControl::State::Normal, CAImage::create(map.at("clearImage")));
         rightMarginView->setImageColorForState(CAControl::State::Highlighted, ccc4Int(0xff666666));
-        rightMarginView->addTarget([=](CAButton* btn, const DPoint& point){
+        rightMarginView->addTarget([=](CAButton* btn){
         
             if (getText().length() > 0)
             {

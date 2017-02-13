@@ -87,7 +87,7 @@ protected:
     
     void showRightButton();
     
-    void goBack(CAButton* btn, const DPoint& point);
+    void goBack(CAButton* btn);
     
     void updateNavigationBar();
     

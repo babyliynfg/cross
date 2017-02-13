@@ -191,6 +191,7 @@ void CAButton::setBackgroundViewRoundedRect()
 
 void CAButton::setBackgroundViewForState(CAControl::State state, CAView *var)
 {
+    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     if (m_mBackgroundViews.contains(state))
     {
         this->removeSubview(m_mBackgroundViews.at(state));
@@ -214,6 +215,7 @@ CAView* CAButton::getBackgroundViewForState(CAControl::State state)
 
 void CAButton::setImageForState(CAControl::State state, CAImage* var)
 {
+    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     m_mImages.erase(state);
     if (var)
     {
@@ -233,6 +235,7 @@ CAImage* CAButton::getImageForState(CAControl::State state)
 
 void CAButton::setTitleForState(CAControl::State state, const std::string& var)
 {
+    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     m_mTitles[state] = var;
     
     if (m_bRunning)
@@ -248,6 +251,7 @@ const std::string& CAButton::getTitleForState(CAControl::State state)
 
 void CAButton::setImageColorForState(CAControl::State state, const CAColor4B& var)
 {
+    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     m_mImageColors[state] = var;
     
     if (m_bRunning)
@@ -258,6 +262,7 @@ void CAButton::setImageColorForState(CAControl::State state, const CAColor4B& va
 
 void CAButton::setTitleColorForState(CAControl::State state, const CAColor4B& var)
 {
+    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     m_mTitleColors[state] = var;
     
     if (m_bRunning)
@@ -311,7 +316,7 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         }
         
         this->setControlState(CAControl::State::Highlighted);
-        this->callBackFunction(CAButton::Event::TouchDown, point);
+        this->callBackFunction(CAButton::Event::TouchDown);
 
         return true;
     }
@@ -335,12 +340,12 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     if (getBounds().containsPoint(point))
     {
         this->setControlState(CAControl::State::Highlighted);
-        this->callBackFunction(CAButton::Event::TouchMoved, point);
+        this->callBackFunction(CAButton::Event::TouchMoved);
     }
     else
     {
         this->setControlState(CAControl::State::Normal);
-        this->callBackFunction(CAButton::Event::TouchMovedOutSide, point);
+        this->callBackFunction(CAButton::Event::TouchMovedOutSide);
     }
 }
 
@@ -363,11 +368,11 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     if (getBounds().containsPoint(point))
     {
-        this->callBackFunction(CAButton::Event::TouchUpInSide, point);
+        this->callBackFunction(CAButton::Event::TouchUpInSide);
     }
     else
     {
-        this->callBackFunction(CAButton::Event::TouchUpOutSide, point);
+        this->callBackFunction(CAButton::Event::TouchUpOutSide);
     }
 }
 
@@ -378,19 +383,17 @@ void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pE
         CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
     }
     
-    DPoint point = pTouch->getLocation();
-    point = this->convertToNodeSpace(point);
-        
     if (m_eState == CAControl::State::Highlighted)
     {
         this->setControlState(CAControl::State::Normal);
     }
     
-    this->callBackFunction(CAButton::Event::TouchCancelled, point);
+    this->callBackFunction(CAButton::Event::TouchCancelled);
 }
 
 void CAButton::setControlState(CAControl::State var)
 {
+    CC_RETURN_IF(var == CAControl::State::Selected);
     m_eState = var;
 
     for (auto& it : m_mBackgroundViews)
@@ -521,7 +524,7 @@ void CAButton::interruptTouchState()
 
 void CAButton::setTouchLongPress()
 {
-    this->callBackFunction(CAButton::Event::TouchLongPress, DPointZero);
+    this->callBackFunction(CAButton::Event::TouchLongPress);
 }
 
 void CAButton::setContentSize(const DSize & var)
@@ -605,17 +608,17 @@ void CAButton::setTitleTextAlignment(const CATextAlignment& var)
     m_pLabel->setTextAlignment(var);
 }
 
-void CAButton::addTarget(const std::function<void(CAButton*, const DPoint&)>& function, CAButton::Event event)
+void CAButton::addTarget(const std::function<void(CAButton*)>& function, CAButton::Event event)
 {
     m_mFunctions[event] = function;
 }
 
-void CAButton::callBackFunction(CAButton::Event event, const DPoint& point)
+void CAButton::callBackFunction(CAButton::Event event)
 {
     auto it = m_mFunctions.find(event);
     if (it != m_mFunctions.end())
     {
-        (it->second)(this, point);
+        (it->second)(this);
     }
 }
 

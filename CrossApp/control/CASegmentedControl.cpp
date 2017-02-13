@@ -672,7 +672,7 @@ void CASegmentedControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     this->setSelectedAtIndex(m_iTouchIndex);
     
-    if (changed)
+    if (changed && m_function)
     {
         m_function(this, m_iSelectedIndex);
     }

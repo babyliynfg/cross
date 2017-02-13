@@ -180,7 +180,7 @@ void CAAlertView::addButton(CAButton* pBtn)
     m_vAllBtn.pushBack(pBtn);
     pBtn->setTextTag("btn");
     pBtn->setTag((int)m_vAllBtn.size() - 1);
-    pBtn->addTarget([=](CAButton* btn, const DPoint& point){
+    pBtn->addTarget([=](CAButton* btn){
     
         CC_RETURN_IF(m_bRunning == false);
         if (m_pCAlertBtnEvent && m_pCAlertTarget)

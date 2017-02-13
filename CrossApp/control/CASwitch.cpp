@@ -237,7 +237,8 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
 
 void CASwitch::updateValueChanged()
 {
-    m_function(this, m_bIsOn);
+    if (m_function)
+        m_function(this, m_bIsOn);
 }
 
 bool CASwitch::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

@@ -165,7 +165,7 @@ protected:
     
     CAObject*                       m_pTarget;
     
-    std::function<void(CASegmentedControl*, int)>  m_function;
+    std::function<void(CASegmentedControl*, int)>  m_function{nullptr};
 
 };
 

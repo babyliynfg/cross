@@ -158,7 +158,9 @@ void CAPageControl::onEnter()
                 view = CAImageView::createWithImage(m_pSelectPageImage);
                 view->setColor(m_currentPageIndicatorTintColor);
                 view->setFrame(DRect(0,0,w,14));
-            } else {
+            }
+            else
+            {
                 view = CAImageView::createWithImage(m_pPageImage);        
                 view->setColor(m_pageIndicatorTintColor);
                 view->setFrame(DRect(0,0,w,14));
@@ -208,11 +210,10 @@ void CAPageControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 m_currentPage = i;
                 
                 if (!m_bDefersCurrentPageDisplay)
-                {
                     updateCurrentPageDisplay();
-                }
                 
-                m_function(this, m_currentPage);
+                if (m_function)
+                    m_function(this, m_currentPage);
             }
             break;
         }

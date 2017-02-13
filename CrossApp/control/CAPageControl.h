@@ -76,7 +76,7 @@ protected:
 private:
     CAVector<CAImageView*> m_pIndicators;
     
-    std::function<void(CAPageControl*, int)> m_function;
+    std::function<void(CAPageControl*, int)> m_function{nullptr};
 };
 
 NS_CC_END

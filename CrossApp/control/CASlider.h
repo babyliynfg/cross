@@ -98,9 +98,9 @@ protected:
     
     CAImageView *m_pThumbTintImageView;
     
-    std::function<void (CASlider*, float)> m_function;
+    std::function<void (CASlider*, float)> m_function{nullptr};
     
-    std::function<void (CASlider*, float)> m_functionTouchUpSide;
+    std::function<void (CASlider*, float)> m_functionTouchUpSide{nullptr};
 };
 
 NS_CC_END

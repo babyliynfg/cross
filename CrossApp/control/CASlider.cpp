@@ -281,7 +281,9 @@ void CASlider::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     DRect bounds = getBounds();
     float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
     this->setValue(value);
-    m_function(this, value);
+    
+    if (m_function)
+        m_function(this, m_fValue);
 }
 
 void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
@@ -298,10 +300,13 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     {
         float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
         this->setValue(value);
-        m_function(this, value);
+        
+        if (m_function)
+            m_function(this, m_fValue);
     }
     
-    m_functionTouchUpSide(this, m_fValue);
+    if (m_functionTouchUpSide)
+        m_functionTouchUpSide(this, m_fValue);
 }
 
 void CASlider::setTarget(const std::function<void (CASlider*, float)>& function)

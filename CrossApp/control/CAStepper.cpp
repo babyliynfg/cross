@@ -26,7 +26,7 @@ CAStepper::CAStepper(const CAStepperOrientation& type)
 , m_value(0)
 , m_minimumValue(0)
 , m_maximumValue(100)
-, m_stepValue(0)
+, m_stepValue(1.0f)
 , m_pDecrementImageView(nullptr)
 , m_pIncrementImageView(nullptr)
 , m_pBackgroundImageView(nullptr)
@@ -420,9 +420,8 @@ void CAStepper::action()
                 break;
             }
             m_value += m_stepValue;
-            if (m_value > m_maximumValue) {
-                m_value = m_maximumValue;
-            }
+            m_value = MAX(m_value, m_minimumValue);
+            m_value = MIN(m_value, m_maximumValue);
             break;
             
         case ActionDecrease: // decrease
@@ -435,9 +434,8 @@ void CAStepper::action()
                 break;
             }
             m_value -= m_stepValue;
-            if (m_value < m_minimumValue) {
-                m_value = m_minimumValue;
-            }
+            m_value = MAX(m_value, m_minimumValue);
+            m_value = MIN(m_value, m_maximumValue);
             break;
             
         case 0:
@@ -447,7 +445,7 @@ void CAStepper::action()
     }
     
     // send value change event
-    if (bValueChange && m_bContinuous)
+    if (bValueChange && m_bContinuous && m_function)
     {
         m_function(this, m_value);
     }

@@ -14,7 +14,7 @@ NS_CC_BEGIN
 #pragma CABarItem
 
 CABarItem::CABarItem()
-:m_pImage(NULL)
+:m_pImage(nullptr)
 ,m_sTitle("")
 {
 
@@ -29,13 +29,14 @@ CABarItem::~CABarItem()
 #pragma CABarButtonItem
 
 CABarButtonItem::CABarButtonItem()
-:m_pHighlightedImage(NULL)
-,m_pCustomView(NULL)
+:m_pHighlightedImage(nullptr)
+,m_pCustomView(nullptr)
 ,m_uItemWidth(80)
 ,m_uImageWidth(44)
 ,m_uLabelWidth(80)
 ,m_iImageOffsetX(0)
 ,m_iLabelOffsetX(0)
+,m_function(nullptr)
 {
 
 }
@@ -82,9 +83,9 @@ bool CABarButtonItem::initWithCustomView(CAView* customView)
 #pragma CANavigationBarItem
 
 CANavigationBarItem::CANavigationBarItem()
-:m_pTitleViewImage(NULL)
+:m_pTitleViewImage(nullptr)
 ,m_bShowGoBackButton(true)
-,m_pTitleView(NULL)
+,m_pTitleView(nullptr)
 ,m_bNagigationBarHidden(false)
 {
     m_vLeftButtonItems.pushBack(CAView::create());
@@ -150,7 +151,7 @@ bool CANavigationBarItem::isShowGoBackButton()
 
 
 CATabBarItem::CATabBarItem()
-:m_pSelectedImage(NULL)
+:m_pSelectedImage(nullptr)
 {
 
 }

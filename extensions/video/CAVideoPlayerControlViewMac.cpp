@@ -122,7 +122,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
     m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButton::Type::Custom);
     m_playButton->setImageForState(CAControl::State::Normal, backImage);
     m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
-    m_playButton->addTarget([=](CAButton* btn, const DPoint& point){
+    m_playButton->addTarget([=](CAButton* btn){
     
         if (m_glView == NULL)
             return;

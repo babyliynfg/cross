@@ -89,7 +89,7 @@ protected:
     
 private:
     
-    std::function<void(CAStepper*, float)> m_function;
+    std::function<void(CAStepper*, float)> m_function{nullptr};
     
     CAMap<CAStepper::State, CAImage*> m_mBackgroundImages;
     CAMap<CAStepper::State, CAImage*> m_mIncrementImages;

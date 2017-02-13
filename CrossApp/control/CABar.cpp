@@ -303,7 +303,7 @@ void CANavigationBar::showLeftButton()
                 button->setTitleColorForState(CAControl::State::Highlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
-            button->addTarget(std::bind(&CANavigationBar::goBack, this, std::placeholders::_1, std::placeholders::_2), CAButton::Event::TouchUpInSide);
+            button->addTarget(std::bind(&CANavigationBar::goBack, this, std::placeholders::_1), CAButton::Event::TouchUpInSide);
         }
         else if (item)
         {
@@ -415,7 +415,7 @@ void CANavigationBar::showRightButton()
     }
 }
 
-void CANavigationBar::goBack(CAButton* btn, const DPoint& point)
+void CANavigationBar::goBack(CAButton* btn)
 {
     if (m_pDelegate)
     {
@@ -595,7 +595,7 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
             btn->setTag(i);
             m_pButtons.pushBack(btn);
             
-            btn->addTarget([=](CAButton* btn, const DPoint& point)
+            btn->addTarget([=](CAButton* btn)
             {
                 int index = i;
                 if (!m_sForbidSelectedIndexs.count(index))

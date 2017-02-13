@@ -36,7 +36,7 @@ public:
     
     enum class Type
     {
-        Custom = 0,
+        Custom,
         SquareRect,
         RoundedRect,
     };
@@ -95,7 +95,7 @@ public:
     
     void setTitleTextAlignment(const CATextAlignment& var);
  
-    void addTarget(const std::function<void(CAButton*, const DPoint&)>& function, CAButton::Event event);
+    void addTarget(const std::function<void(CAButton*)>& function, CAButton::Event event);
 
     void setControlState(CAControl::State state);
     
@@ -155,7 +155,7 @@ protected:
     
     bool m_bDefineImageOffset;
     
-    std::map<CAButton::Event, std::function<void(CAButton*, const DPoint&)>> m_mFunctions;
+    std::map<CAButton::Event, std::function<void(CAButton*)>> m_mFunctions;
     
     bool m_bTouchClick;
     
@@ -171,7 +171,7 @@ protected:
     
     void setBackgroundViewRoundedRect();
     
-    void callBackFunction(CAButton::Event event, const DPoint& point);
+    void callBackFunction(CAButton::Event event);
 };
 
 #define setBackGroundViewForState(state, var) setBackgroundViewForState(state, var)
