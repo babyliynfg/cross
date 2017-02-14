@@ -170,7 +170,7 @@ void CAButton::setBackgroundViewSquareRect()
                                     CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_disabled"))));
     
     m_mTitleColors[CAControl::State::Normal] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
-    m_mTitleColors[CAControl::State::Highlighted] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlghted")));
+    m_mTitleColors[CAControl::State::Highlighted] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlighted")));
     m_mTitleColors[CAControl::State::Disabled] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_disabled")));
 }
 
@@ -186,8 +186,10 @@ void CAButton::setBackgroundViewRoundedRect()
                                     CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_disabled"))));
     
     m_mTitleColors[CAControl::State::Normal] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
-    m_mTitleColors[CAControl::State::Highlighted] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlghted")));
+    m_mTitleColors[CAControl::State::Highlighted] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlighted")));
     m_mTitleColors[CAControl::State::Disabled] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_disabled")));
+    
+    
 }
 
 void CAButton::setBackgroundViewForState(CAControl::State state, CAView *var)
@@ -202,11 +204,13 @@ void CAButton::setBackgroundViewForState(CAControl::State state, CAView *var)
     if (var)
     {
         var->setLayout(DLayoutFill);
+        m_mBackgroundViews.insert(state, var);
+        
+        if (m_bRunning)
+        {
+            this->setControlState(m_eState);
+        }
     }
-    m_mBackgroundViews.insert(state, var);
-
-    this->setControlState(m_eState);
-    this->updateWithPreferredSize();
 }
 
 CAView* CAButton::getBackgroundViewForState(CAControl::State state)
@@ -411,21 +415,19 @@ void CAButton::setControlState(CAControl::State var)
         this->insertSubview(m_mBackgroundViews.at(CAControl::State::Normal), -1);
     }
 
-    CAImage* image = nullptr;
     std::string title = "";
     DRect imageViewCenter = DRectZero;
     DRect rect = DRectZero;
     DRect labelCenter = this->getBounds();
     float labelSize = 0;
     
-    image = m_mImages.at(m_eState);
-    title = m_mTitles[m_eState];
-
+    CAImage* image = m_mImages.at(m_eState);
     if (image == nullptr)
     {
         image = m_mImages.at(CAControl::State::Normal);
     }
     
+    title = m_mTitles[m_eState];
     if (title.empty())
     {
         title = m_mTitles[CAControl::State::Normal];
@@ -466,51 +468,54 @@ void CAButton::setControlState(CAControl::State var)
         labelCenter.origin.y = size.height * 0.81f;
     }
 
-    m_pImageView->setColor(m_mImageColors[m_eState]);
-
-    if (m_bDefineImageSize)
+    if (image)
     {
-        imageViewCenter.size = m_pImageSize;
-    }
-    if (m_bDefineImageOffset)
-    {
-        imageViewCenter.origin = ccpMult(m_obContentSize, 0.5f);
-        imageViewCenter.origin = ccpAdd(imageViewCenter.origin, m_pImageOffset);
-    }
-    m_pImageView->setCenter(imageViewCenter);
-    
-    
-    if (image != m_pImageView->getImage())
-    {
-        m_pImageView->setImage(image);
-    }
-    m_pLabel->setColor(m_mTitleColors[m_eState]);
-
-    
-    if (m_bDefineTitleLabelSize)
-    {
-        labelCenter.size = m_pTitleLabelSize;
+        m_pImageView->setColor(m_mImageColors[m_eState]);
+        
+        if (m_bDefineImageSize)
+        {
+            imageViewCenter.size = m_pImageSize;
+        }
+        if (m_bDefineImageOffset)
+        {
+            imageViewCenter.origin = ccpMult(m_obContentSize, 0.5f);
+            imageViewCenter.origin = ccpAdd(imageViewCenter.origin, m_pImageOffset);
+        }
+        m_pImageView->setCenter(imageViewCenter);
     }
     
-    if(m_bDefineTitleOffset)
-    {
-        labelCenter.origin = ccpMult(m_obContentSize, 0.5f);
-        labelCenter.origin = ccpAdd(labelCenter.origin, m_pTitleOffset);
-    }
-    m_pLabel->setCenter(labelCenter);
     
     if (!title.empty())
     {
+        if (image != m_pImageView->getImage())
+        {
+            m_pImageView->setImage(image);
+        }
+        m_pLabel->setColor(m_mTitleColors[m_eState]);
+        
+        
+        if (m_bDefineTitleLabelSize)
+        {
+            labelCenter.size = m_pTitleLabelSize;
+        }
+        
+        if(m_bDefineTitleOffset)
+        {
+            labelCenter.origin = ccpMult(m_obContentSize, 0.5f);
+            labelCenter.origin = ccpAdd(labelCenter.origin, m_pTitleOffset);
+        }
+        m_pLabel->setCenter(labelCenter);
+        
         if(m_fTitleFontSize == 0)
         {
             m_fTitleFontSize = labelSize;
         }
         m_pLabel->setFontSize(m_fTitleFontSize);
-    }
-    
-    if (strcmp(title.c_str(), m_pLabel->getText().c_str()))
-    {
-        m_pLabel->setText(title.c_str());
+        
+        if (strcmp(title.c_str(), m_pLabel->getText().c_str()))
+        {
+            m_pLabel->setText(title.c_str());
+        }
     }
 }
 
