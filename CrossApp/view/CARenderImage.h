@@ -65,8 +65,6 @@ public:
 
     bool isAutoDraw() const;
     void setAutoDraw(bool bAutoDraw);
-
-    void setKeepMatrix(bool keepMatrix);
     
     CC_PROPERTY(CAImageView*, m_pImageView, ImageView)
     
@@ -87,8 +85,6 @@ protected:
     virtual void setContentSize(const DSize& contentSize) override;
     
 protected:
-    
-    bool         m_bKeepMatrix;
 
     GroupCommand  m_obGroupCommand;
     CustomCommand m_obBeginWithClearCommand;

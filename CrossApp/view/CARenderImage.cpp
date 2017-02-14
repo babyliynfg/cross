@@ -151,11 +151,6 @@ void CARenderImage::setAutoDraw(bool bAutoDraw)
     m_bAutoDraw = bAutoDraw;
 }
 
-void CARenderImage::setKeepMatrix(bool keepMatrix)
-{
-    m_bKeepMatrix = keepMatrix;
-}
-
 CARenderImage * CARenderImage::create(int w, int h, CAImage::PixelFormat eFormat)
 {
     CARenderImage *pRet = new CARenderImage();
@@ -401,7 +396,6 @@ void CARenderImage::begin()
     application->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     m_tTransformMatrix = application->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    if(!m_bKeepMatrix)
     {
         application->setProjection(application->getProjection());
         
@@ -525,7 +519,6 @@ void CARenderImage::onBegin()
     m_tOldProjMatrix = application->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     application->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, m_tTransformMatrix);
     
-    if(!m_bKeepMatrix)
     {
         application->setProjection(application->getProjection());
         const DSize texSize = DSize((float)m_uPixelsWide, (float)m_uPixelsHigh);

@@ -470,6 +470,10 @@ void CAButton::setControlState(CAControl::State var)
 
     if (image)
     {
+        if (image != m_pImageView->getImage())
+        {
+            m_pImageView->setImage(image);
+        }
         m_pImageView->setColor(m_mImageColors[m_eState]);
         
         if (m_bDefineImageSize)
@@ -484,16 +488,8 @@ void CAButton::setControlState(CAControl::State var)
         m_pImageView->setCenter(imageViewCenter);
     }
     
-    
     if (!title.empty())
     {
-        if (image != m_pImageView->getImage())
-        {
-            m_pImageView->setImage(image);
-        }
-        m_pLabel->setColor(m_mTitleColors[m_eState]);
-        
-        
         if (m_bDefineTitleLabelSize)
         {
             labelCenter.size = m_pTitleLabelSize;
@@ -511,6 +507,8 @@ void CAButton::setControlState(CAControl::State var)
             m_fTitleFontSize = labelSize;
         }
         m_pLabel->setFontSize(m_fTitleFontSize);
+
+        m_pLabel->setColor(m_mTitleColors[m_eState]);
         
         if (strcmp(title.c_str(), m_pLabel->getText().c_str()))
         {
