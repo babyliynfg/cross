@@ -177,7 +177,7 @@ void CDNewsViewController::showAlert()
     btn5->setTitleColorForState(CAControl::State::Normal,CAColor_white);
     btn5->setBackgroundViewForState(CAControl::State::Normal, bg);
     btn5->setBackgroundViewForState(CAControl::State::Highlighted, bg);
-    btn5->addTarget([=](CAButton* button)
+    btn5->addTarget([=](CAButton* btn)
     {
         this->getView()->removeSubview(p_alertView);
         p_alertView = NULL;
@@ -389,7 +389,7 @@ void CDNewsViewController::initNewsPageView()
     pageControl->setCurrIndicatorImage(CAImage::create("image/pagecontrol_bg.png"));
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     //pageControl->setCurrentPageIndicatorTintColor(CAColor_clear);
-    pageControl->setTarget([=](CAPageControl* pageControl, int)
+    pageControl->setTarget([=](CAPageControl* pageControl, int index)
     {
         CAPageControl* button = pageControl;
         p_PageView->setCurrPage(button->getCurrentPage()+1, true);

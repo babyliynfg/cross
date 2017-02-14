@@ -32,7 +32,7 @@ void PageViewTest::viewDidLoad()
     pageControl->setNumberOfPages((int)_view.size());
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
-    pageControl->setTarget([=](CAPageControl* pageControl, int)
+    pageControl->setTarget([=](CAPageControl* pageControl, int index)
     {
         CAPageControl* button = pageControl;
         CCLog("btn_tag===%d",button->getCurrentPage());

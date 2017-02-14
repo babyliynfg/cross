@@ -79,7 +79,7 @@ void RootWindow::initUIView()
         
         CANavigationBarItem* temp_nav = CANavigationBarItem::create(UTF8("控件展示"));
         CABarButtonItem* item = CABarButtonItem::create("", CAImage::create("image/ic_category_list.png"), NULL);
-        item->setCallbackFunction([=](CAButton* button)
+        item->setCallbackFunction([=](CAButton* btn)
         {
             this->getDrawerController()->showLeftViewController(true);
         });

@@ -51,7 +51,7 @@ void SliderTest::viewDidLoad()
         view1->addSubview(sliderValue1);
     
         CASlider* slider1 = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(120, 120), DVerticalLayout_T_H(500, 56)));
-        slider1->setTarget([=](CASlider* slider, int)
+        slider1->setTarget([=](CASlider* slider, int index)
         {
             char value[20] = "";
             CASlider* p_Slider = slider;
@@ -85,7 +85,7 @@ void SliderTest::viewDidLoad()
         slider2->setMaxTrackTintImage(CAImage::create("source_material/ex1.png"));
         slider2->setMinTrackTintImage(CAImage::create("source_material/ex3.png"));
         slider2->setThumbTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
-        slider2->setTarget([=](CASlider* slider, int)
+        slider2->setTarget([=](CASlider* slider, int index)
         {
             char value[20] = "";
             CASlider* p_Slider = slider;
