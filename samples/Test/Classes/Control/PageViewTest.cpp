@@ -32,7 +32,12 @@ void PageViewTest::viewDidLoad()
     pageControl->setNumberOfPages((int)_view.size());
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
-    pageControl->addTarget(this, CAControl_selector(PageViewTest::pageControlCallBack));
+    pageControl->setTarget([=](CAPageControl* pageControl, int index)
+    {
+        CAPageControl* button = pageControl;
+        CCLog("btn_tag===%d",button->getCurrentPage());
+        p_pageView->setCurrPage(button->getCurrentPage(), true);
+    });
     this->getView()->addSubview(pageControl);
 }
 
@@ -58,13 +63,6 @@ void PageViewTest::pageViewDidEndTurning(CAPageView* pageView)
     {
         
     }
-}
-
-void PageViewTest::pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point)
-{
-    CAPageControl* button = (CAPageControl*)btn;
-    CCLog("btn_tag===%d",button->getCurrentPage());
-    p_pageView->setCurrPage(button->getCurrentPage(), true);
 }
 
 void PageViewTest::pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point)

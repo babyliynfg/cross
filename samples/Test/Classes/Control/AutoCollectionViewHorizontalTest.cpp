@@ -201,7 +201,7 @@ AutoCollectionViewHorizontalTest::~AutoCollectionViewHorizontalTest()
     AutoCollectionViewHorizontalNum = 0;
 }
 
-void CDUIShowAutoCollectionView::AutoCollectionHorizontalRightBtnRightcallback(CAControl* control, DPoint point)
+void CDUIShowAutoCollectionView::AutoCollectionHorizontalRightBtnRightcallback(CAButton* btn)
 {
     if (showAutoCollectionHorizontalNavigationBar >= 1)
     {

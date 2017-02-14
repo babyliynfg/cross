@@ -22,9 +22,6 @@ protected:
     
     void viewDidUnload();
     
-public:
-    
-    void segmentCallback(CASegmentedControl* btn, int index);
     
 };
 

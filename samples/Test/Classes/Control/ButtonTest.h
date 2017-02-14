@@ -21,10 +21,6 @@ protected:
     
     void viewDidUnload();
     
-public:
-    
-    void Buttoncallback(CAControl* btn, DPoint point);
-    
 };
 
 

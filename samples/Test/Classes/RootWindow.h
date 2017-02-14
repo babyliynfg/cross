@@ -25,7 +25,6 @@ public:
     void intNewsView();
     
     virtual void keyBackClicked();
-    void buttonCallBack(CAControl* btn,DPoint point);
 };
 
 

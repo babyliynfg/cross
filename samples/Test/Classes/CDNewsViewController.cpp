@@ -171,13 +171,36 @@ void CDNewsViewController::showAlert()
     bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
     bg->setImage(CAImage::create("image/HelloWorld.png"));
     
-    CAButton* btn5 = CAButton::create(CAButtonTypeSquareRect);
+    CAButton* btn5 = CAButton::create(CAButton::Type::SquareRect);
     btn5->setTag(100);
     btn5->setLayout(DLayoutFill);
-    btn5->setTitleColorForState(CAControlStateNormal,CAColor_white);
-    btn5->setBackgroundViewForState(CAControlStateNormal, bg);
-    btn5->setBackgroundViewForState(CAControlStateHighlighted, bg);
-    btn5->addTarget(this, CAControl_selector(CDNewsViewController::buttonCallBack), CAControlEventTouchUpInSide);
+    btn5->setTitleColorForState(CAControl::State::Normal,CAColor_white);
+    btn5->setBackgroundViewForState(CAControl::State::Normal, bg);
+    btn5->setBackgroundViewForState(CAControl::State::Highlighted, bg);
+    btn5->addTarget([=](CAButton* btn)
+    {
+        this->getView()->removeSubview(p_alertView);
+        p_alertView = NULL;
+        std::map<std::string,
+        std::string> key_value;
+        key_value["tag"] = menuTag[urlID];
+        key_value["page"]= "1";
+        key_value["limit"]= "20";
+        key_value["appid"]="10000";
+        key_value["sign_method"]="md5";
+        string tempSign = getSign(key_value);
+        CCLog("sign===%s",tempSign.c_str());
+        key_value["sign"] = tempSign;
+        string tempUrl = "http://api.9miao.com/news/";
+        CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
+                                                    CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
+        {
+            p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
+            this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
+            p_pLoading->setLoadingMinTime(0.5f);
+            p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
+        }
+    }, CAButton::Event::TouchUpInSide);
     p_alertView->addSubview(btn5);
     
     CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(100, 40)));
@@ -192,27 +215,27 @@ void CDNewsViewController::showAlert()
 
 void CDNewsViewController::buttonCallBack(CAControl* btn,DPoint point)
 {
-    this->getView()->removeSubview(p_alertView);
-    p_alertView = NULL;
-    std::map<std::string,
-    std::string> key_value;
-    key_value["tag"] = menuTag[urlID];
-    key_value["page"]= "1";
-    key_value["limit"]= "20";
-    key_value["appid"]="10000";
-    key_value["sign_method"]="md5";
-    string tempSign = getSign(key_value);
-    CCLog("sign===%s",tempSign.c_str());
-    key_value["sign"] = tempSign;
-    string tempUrl = "http://api.9miao.com/news/";
-    CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
-                                               CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
-    {
-        p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
-        p_pLoading->setLoadingMinTime(0.5f);
-        p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
-    }
+//    this->getView()->removeSubview(p_alertView);
+//    p_alertView = NULL;
+//    std::map<std::string,
+//    std::string> key_value;
+//    key_value["tag"] = menuTag[urlID];
+//    key_value["page"]= "1";
+//    key_value["limit"]= "20";
+//    key_value["appid"]="10000";
+//    key_value["sign_method"]="md5";
+//    string tempSign = getSign(key_value);
+//    CCLog("sign===%s",tempSign.c_str());
+//    key_value["sign"] = tempSign;
+//    string tempUrl = "http://api.9miao.com/news/";
+//    CommonHttpManager::getInstance()->send_post(tempUrl, key_value, this,
+//                                               CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
+//    {
+//        p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
+//        this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
+//        p_pLoading->setLoadingMinTime(0.5f);
+//        p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
+//    }
 }
 
 void CDNewsViewController::onRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json)
@@ -366,7 +389,14 @@ void CDNewsViewController::initNewsPageView()
     pageControl->setCurrIndicatorImage(CAImage::create("image/pagecontrol_bg.png"));
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     //pageControl->setCurrentPageIndicatorTintColor(CAColor_clear);
-    pageControl->addTarget(this, CAControl_selector(CDNewsViewController::pageControlCallBack));
+    pageControl->setTarget([=](CAPageControl* pageControl, int index)
+    {
+        CAPageControl* button = pageControl;
+        p_PageView->setCurrPage(button->getCurrentPage()+1, true);
+        if (m_page.size()>0) {
+            pageViewTitle->setText(m_page[button->getCurrentPage()].m_title);
+        }
+    });
     bg->addSubview(pageControl);
     
     
@@ -537,10 +567,3 @@ void CDNewsViewController::pageViewDidEndTurning(CAPageView* pageView)
     }
 }
 
-void CDNewsViewController::pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point){
-    CAPageControl* button = (CAPageControl*)btn;
-    p_PageView->setCurrPage(button->getCurrentPage()+1, true);
-    if (m_page.size()>0) {
-        pageViewTitle->setText(m_page[button->getCurrentPage()].m_title);
-    }
-}

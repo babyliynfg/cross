@@ -17,7 +17,7 @@ ImageViewTest::~ImageViewTest()
     ImageViewNum = 0;
 }
 
-void CDUIShowAutoCollectionView::ImageViewRightBtnRightcallback(CAControl* control, DPoint point)
+void CDUIShowAutoCollectionView::ImageViewRightBtnRightcallback(CAButton* btn)
 {
     if (showImageViewNavigationBar >= 4)
     {

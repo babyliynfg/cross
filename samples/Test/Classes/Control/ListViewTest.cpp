@@ -172,8 +172,8 @@ CAListViewCell* ListViewTest::listViewCellAtIndex(CAListView *listView, const DS
         test->setTag(100);
         cell->addSubview(test);
         
-        CAButton* btn = CAButton::createWithLayout(DLayout(DHorizontalLayout_W_C(100, 0.85), DVerticalLayout_H_C(50, 0.5)), CAButtonTypeSquareRect);
-        btn->setTitleForState(CAControlStateNormal, "btn");
+        CAButton* btn = CAButton::createWithLayout(DLayout(DHorizontalLayout_W_C(100, 0.85), DVerticalLayout_H_C(50, 0.5)), CAButton::Type::SquareRect);
+        btn->setTitleForState(CAControl::State::Normal, "btn");
         btn->setTag(200);
         cell->addSubview(btn);
         btn->setTouchEventScrollHandOverToSuperview(false);

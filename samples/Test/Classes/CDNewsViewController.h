@@ -60,7 +60,6 @@ public:
     void onRefreshRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json);
     void initNewsTableView();
     void initNewsPageView();
-    void pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point);
     void showAlert();
     void buttonCallBack(CAControl* btn,DPoint point);
     void tempCallBack();

@@ -51,23 +51,23 @@ public:
     
 public:
     
-    void SliderRightBtnRightcallback(CAControl* control, DPoint point);
+    void SliderRightBtnRightcallback(CAButton* btn);
     
-    void LabelRightBtnRightcallback(CAControl* control, DPoint point);
+    void LabelRightBtnRightcallback(CAButton* btn);
     
-    void ImageViewRightBtnRightcallback(CAControl* control, DPoint point);
+    void ImageViewRightBtnRightcallback(CAButton* btn);
     
-    void ActivityIndicatorRightBtnRightcallback(CAControl* control, DPoint point);
+    void ActivityIndicatorRightBtnRightcallback(CAButton* btn);
     
-    void TabBarRightBtnRightcallback(CAControl* control, DPoint point);
+    void TabBarRightBtnRightcallback(CAButton* btn);
     
-    void PickerViewRightBtnRightcallback(CAControl* control, DPoint point);
+    void PickerViewRightBtnRightcallback(CAButton* btn);
     
-    void ViewAnimationRightBtnRightcallback(CAControl* control, DPoint point);
+    void ViewAnimationRightBtnRightcallback(CAButton* btn);
     
-    void AutoCollectionVerticalRightBtnRightcallback(CAControl* control, DPoint point);
+    void AutoCollectionVerticalRightBtnRightcallback(CAButton* btn);
     
-    void AutoCollectionHorizontalRightBtnRightcallback(CAControl* control, DPoint point);
+    void AutoCollectionHorizontalRightBtnRightcallback(CAButton* btn);
     
     void refreshData(float interval);
     

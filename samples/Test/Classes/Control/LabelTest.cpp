@@ -17,7 +17,7 @@ LabelTest::~LabelTest()
     LabelNum = 0;
 }
 
-void CDUIShowAutoCollectionView::LabelRightBtnRightcallback(CAControl* control, DPoint point)
+void CDUIShowAutoCollectionView::LabelRightBtnRightcallback(CAButton* btn)
 {
     if (showLabelNavigationBar >= 2)
     {

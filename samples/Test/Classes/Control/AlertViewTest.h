@@ -24,8 +24,6 @@ protected:
     
 public:
     
-    void alertButtonCallBack(CAControl* btn,DPoint point);
-    
     void alertCallBack(int btnIndex);
     
 };

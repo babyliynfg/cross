@@ -79,7 +79,10 @@ void RootWindow::initUIView()
         
         CANavigationBarItem* temp_nav = CANavigationBarItem::create(UTF8("控件展示"));
         CABarButtonItem* item = CABarButtonItem::create("", CAImage::create("image/ic_category_list.png"), NULL);
-        item->setTarget(this, CAControl_selector(RootWindow::buttonCallBack));
+        item->setCallbackFunction([=](CAButton* btn)
+        {
+            this->getDrawerController()->showLeftViewController(true);
+        });
         temp_nav->addLeftButtonItem(item);
         tabBarController->setNavigationBarItem(temp_nav);
         
@@ -103,11 +106,6 @@ void RootWindow::initUIView()
     }
     
     CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyleLightContent);
-}
-
-void RootWindow::buttonCallBack(CAControl* btn,DPoint point)
-{
-    this->getDrawerController()->showLeftViewController(true);
 }
 
 void RootWindow::intNewsView()

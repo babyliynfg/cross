@@ -33,8 +33,6 @@ public:
     int dle_ren_index;
     
 public:
-    
-    void renderCallBack(CAControl* control, DPoint point);
 
     void scheduleFuck(float dt);
     

@@ -27,11 +27,6 @@ public:
     CAStepper* step;
     CALabel* step_value;
     
-public:
-    
-    //监听函数
-    void stepperCallBack(CAControl* btn,DPoint point);
-    
 };
 
 
