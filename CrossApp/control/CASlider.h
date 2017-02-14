@@ -42,7 +42,7 @@ public:
     
     void setTarget(const std::function<void (CASlider*, float)>& function);
     
-    void setTargetForTouchUpSide(const std::function<void (CASlider*, float)>& function);
+    void setTargetForTouchUpSide(const std::function<void(CASlider*, float)>& function);
     
     virtual void setValue(float value);
     
@@ -98,9 +98,9 @@ protected:
     
     CAImageView *m_pThumbTintImageView;
     
-    std::function<void (CASlider*, float)> m_function{nullptr};
+    std::function<void(CASlider*, float)> m_function{nullptr};
     
-    std::function<void (CASlider*, float)> m_functionTouchUpSide{nullptr};
+    std::function<void(CASlider*, float)> m_functionTouchUpSide{nullptr};
 };
 
 NS_CC_END

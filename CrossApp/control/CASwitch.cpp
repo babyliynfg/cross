@@ -268,7 +268,7 @@ void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     }
 }
 
-void CASwitch::setTarget(const std::function<void (CASwitch*, bool on)>& function)
+void CASwitch::setTarget(const std::function<void(CASwitch*, bool)>& function)
 {
     m_function = function;
 }

@@ -34,7 +34,7 @@ public:
     
     static CASwitch* createWithLayout(const DLayout& layout);
     
-    void setTarget(const std::function<void (CASwitch*, bool on)>& function);
+    void setTarget(const std::function<void(CASwitch*, bool on)>& function);
 
     bool init();
     
@@ -66,7 +66,7 @@ protected:
     CAImageView *m_pOffImageView;
     CAImageView *m_pThumbTintImageView;
     
-    std::function<void (CASwitch*, bool on)> m_function{nullptr};
+    std::function<void(CASwitch*, bool on)> m_function{nullptr};
 };
 
 NS_CC_END
