@@ -113,7 +113,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     rect.size = scrollView->getViewSize();
     CAImageView* imv = CAImageView::createWithLayout(DLayoutFill);
     imv->setImage(image);
-    imv->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+    imv->setScaleType(CAImageView::ScaleType::FitImageInside);
     scrollView->addSubview(imv);
     
     m_clv = CAClippingView::create();

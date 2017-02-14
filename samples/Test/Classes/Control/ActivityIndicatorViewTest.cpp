@@ -42,7 +42,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
     if (ActivityIndicatorNum == 0)
     {
         CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
+        idc1->setStyle(CAActivityIndicatorView::Style::WhiteLarge);
         idc1->startAnimating();
         
         CAView* view1 = CAView::createWithLayout(DLayoutFill);
@@ -53,7 +53,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
     else if (ActivityIndicatorNum == 1)
     {
         CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        idc2->setStyle(CAActivityIndicatorViewStyleGrayLarge);
+        idc2->setStyle(CAActivityIndicatorView::Style::GrayLarge);
         idc2->startAnimating();
     
         CAView* view2 = CAView::createWithLayout(DLayoutFill);
@@ -64,7 +64,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
     else if (ActivityIndicatorNum == 2)
     {
         CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        idc3->setStyle(CAActivityIndicatorViewStyleWhite);
+        idc3->setStyle(CAActivityIndicatorView::Style::White);
         idc3->setCycleTime(1.0f);
         idc3->setTimesOneCycle(12);
         idc3->startAnimating();
@@ -77,7 +77,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
     else if (ActivityIndicatorNum == 3)
     {
         CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        idc4->setStyle(CAActivityIndicatorViewStyleGray);
+        idc4->setStyle(CAActivityIndicatorView::Style::Gray);
         idc4->setCycleTime(1.0f);
         idc4->setTimesOneCycle(12);
         idc4->startAnimating();
@@ -95,7 +95,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
         imageView->setImage(image);
 
         CAActivityIndicatorView* idc5 = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100,100)));
-        idc5->setStyle(CAActivityIndicatorViewStyleImage);
+        idc5->setStyle(CAActivityIndicatorView::Style::Image);
         idc5->setActivityIndicatorView(imageView);
         idc5->startAnimating();
     

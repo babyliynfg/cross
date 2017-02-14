@@ -30,8 +30,8 @@ void ECollectionViewHorizontalCell::initWithCell()
 {
     CALabel* test = CALabel::createWithLayout(DLayoutFill);
     test->setColor(ccc4(34, 151, 254, 255));
-    test->setTextAlignment(CATextAlignmentCenter);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    test->setTextAlignment(CATextAlignment::Center);
+    test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     test->setFontSize(28);
     test->setTag(100);
     this->addSubview(test);
@@ -64,8 +64,8 @@ bool EAutoCollectionViewHorizontal::init()
     p_AutoCollection->setAllowsMultipleSelection(true);
     p_AutoCollection->setCollectionViewDelegate(this);
     p_AutoCollection->setCollectionViewDataSource(this);
-    p_AutoCollection->setOrientation(CAAutoCollectionView::Horizontal);
-    p_AutoCollection->setCellHoriAlign(CAAutoCollectionView::HoriAlignCenter);
+    p_AutoCollection->setOrientation(CAAutoCollectionView::Orientation::Horizontal);
+    p_AutoCollection->setCellHoriAlign(CAAutoCollectionView::CellHoriAlign::Center);
     p_AutoCollection->setHoriCellInterval(20);
     p_AutoCollection->setVertCellInterval(20);
     this->addSubview(p_AutoCollection);
@@ -129,8 +129,8 @@ CACollectionViewCell* EAutoCollectionViewHorizontal::collectionCellAtIndex(CAAut
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(29);
-        itemText->setTextAlignment(CATextAlignmentCenter);
-        itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        itemText->setTextAlignment(CATextAlignment::Center);
+        itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         Cell->getContentView()->addSubview(itemText);
     }
     
@@ -238,7 +238,7 @@ void AutoCollectionViewHorizontalTest::viewDidLoad()
         p_AutoCollection->setAllowsMultipleSelection(true);
         p_AutoCollection->setCollectionViewDelegate(this);
         p_AutoCollection->setCollectionViewDataSource(this);
-        p_AutoCollection->setOrientation(CAAutoCollectionView::Horizontal);
+        p_AutoCollection->setOrientation(CAAutoCollectionView::Orientation::Horizontal);
         p_AutoCollection->setScrollViewDelegate(this);
         p_AutoCollection->setHoriCellInterval(20);
         p_AutoCollection->setVertCellInterval(20);
@@ -289,8 +289,8 @@ CACollectionViewCell* AutoCollectionViewHorizontalTest::collectionCellAtIndex(CA
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(29);
-        itemText->setTextAlignment(CATextAlignmentCenter);
-        itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        itemText->setTextAlignment(CATextAlignment::Center);
+        itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         p_Cell->getContentView()->addSubview(itemText);
     }
 

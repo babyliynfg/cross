@@ -85,7 +85,7 @@ void ViewAnimationTest::viewDidLoad()
     
         animation_2_textfield = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setFontSize(40);
-        animation_2_textfield->setKeyboardType(CATextField::Default);
+        animation_2_textfield->setKeyboardType(CATextField::KeyboardType::Default);
         animation_2_textfield->setVisible(false);
         
         animation_2_btn_search = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(25, 56), DVerticalLayout_H_C(48, 0.5)), CAButton::Type::Custom);

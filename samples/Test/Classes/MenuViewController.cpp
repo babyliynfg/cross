@@ -27,7 +27,7 @@ void MenuViewController::viewDidLoad()
     DLayout tableViewLayout;
     DLayout logoLayout;
     const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
-    if (orientation == CAInterfaceOrientationLandscape)
+    if (orientation == CAInterfaceOrientation::Landscape)
     {
         tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400));
         logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
@@ -67,7 +67,7 @@ void MenuViewController::changeStatusBarOrientation(CAObject* obj)
     
     DLayout tableViewLayout;
     DLayout logoLayout;
-    if (orientation == CAInterfaceOrientationLandscape)
+    if (orientation == CAInterfaceOrientation::Landscape)
     {
         tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 400));
         logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
@@ -126,8 +126,8 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         cell = CATableViewCell::create("CrossApp");
         cell->setBackgroundView(NULL);
         CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 0), DVerticalLayoutFill));
-        test->setTextAlignment(CATextAlignmentLeft);
-        test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        test->setTextAlignment(CATextAlignment::Left);
+        test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         test->setFontSize(32);
 		test->setColor(CAColor_white);
         test->setTag(100);

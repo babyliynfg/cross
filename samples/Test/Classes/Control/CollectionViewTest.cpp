@@ -23,8 +23,8 @@ void CollectionViewTest::viewDidLoad()
         colorArr.push_back(ccc4(r, g, b, 255));
     }
     
-    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
-    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
+    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Header);
+    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer);
     
     p_Conllection = CACollectionView::createWithLayout(DLayoutFill);
     p_Conllection->setAllowsSelection(true);
@@ -121,8 +121,8 @@ CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView
         CALabel* itemText = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(50, 50)));
         itemText->setTag(100);
         itemText->setFontSize(29);
-        itemText->setTextAlignment(CATextAlignmentCenter);
-        itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        itemText->setTextAlignment(CATextAlignment::Center);
+        itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         p_Cell->getContentView()->addSubview(itemText);
     }
     

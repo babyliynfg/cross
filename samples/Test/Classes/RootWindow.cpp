@@ -105,7 +105,7 @@ void RootWindow::initUIView()
         m_pRootDrawerController->hideLeftViewController(true);
     }
     
-    CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyleLightContent);
+    CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyle::LightContent);
 }
 
 void RootWindow::intNewsView()
@@ -147,7 +147,7 @@ void RootWindow::intNewsView()
         
         
         CATabBarController * newsTabBarController = new CATabBarController();
-        newsTabBarController->initWithViewControllers(vec_news,CABarVerticalAlignmentTop);
+        newsTabBarController->initWithViewControllers(vec_news,CABarVerticalAlignment::Top);
         newsTabBarController->setScrollEnabled(true);
         newsTabBarController->setTabBarItem(CATabBarItem::create("", CAImage::create("image/tab_news_btn_up.png"),CAImage::create("image/tab_news_btn_down.png")));
         newsTabBarController->setTabBarBackgroundImage(CAImage::create("source_material/tabbar_background.png"));
@@ -187,7 +187,7 @@ void RootWindow::intNewsView()
         vec_image.pushBack(controller4);
         
         CATabBarController * imageTabBarController = new CATabBarController();
-        imageTabBarController->initWithViewControllers(vec_image,CABarVerticalAlignmentTop);
+        imageTabBarController->initWithViewControllers(vec_image,CABarVerticalAlignment::Top);
         imageTabBarController->setScrollEnabled(true);
         imageTabBarController->setTabBarItem(CATabBarItem::create("", CAImage::create("image/tab_image_btn_up.png"),CAImage::create("image/tab_image_btn_down.png")));
         imageTabBarController->setTabBarBackgroundImage(CAImage::create("source_material/tabbar_background.png"));
@@ -224,7 +224,7 @@ void RootWindow::intNewsView()
     while (0);
     
     m_pRootDrawerController->hideLeftViewController(true);
-    CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyleDefault);
+    CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyle::Default);
 }
 
 void RootWindow::keyBackClicked()

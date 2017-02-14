@@ -30,8 +30,8 @@ void ECollectionViewVerticalCell::initWithCell()
 {
     CALabel* test = CALabel::createWithLayout(DLayoutFill);
     test->setColor(ccc4(34, 151, 254, 255));
-    test->setTextAlignment(CATextAlignmentCenter);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    test->setTextAlignment(CATextAlignment::Center);
+    test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     test->setFontSize(28);
     test->setTag(100);
     this->addSubview(test);
@@ -64,8 +64,8 @@ bool EAutoCollectionViewVertical::init()
     p_AutoCollection->setAllowsMultipleSelection(true);
     p_AutoCollection->setCollectionViewDelegate(this);
     p_AutoCollection->setCollectionViewDataSource(this);
-    p_AutoCollection->setOrientation(CAAutoCollectionView::Vertical);
-    p_AutoCollection->setCellVertAlign(CAAutoCollectionView::VertAlignCenter);
+    p_AutoCollection->setOrientation(CAAutoCollectionView::Orientation::Vertical);
+    p_AutoCollection->setCellVertAlign(CAAutoCollectionView::CellVertAlign::Center);
     p_AutoCollection->setHoriCellInterval(20);
     p_AutoCollection->setVertCellInterval(20);
     this->addSubview(p_AutoCollection);
@@ -129,8 +129,8 @@ CACollectionViewCell* EAutoCollectionViewVertical::collectionCellAtIndex(CAAutoC
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(29);
-        itemText->setTextAlignment(CATextAlignmentCenter);
-        itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        itemText->setTextAlignment(CATextAlignment::Center);
+        itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         Cell->getContentView()->addSubview(itemText);
     }
     
@@ -231,8 +231,8 @@ void AutoCollectionViewVerticalTest::viewDidLoad()
         VerticalcolorArr.push_back(ccc4(r, g, b, 255));
     }
     
-    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
-    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
+    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Header);
+    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer);
     
     if (AutoCollectionViewVerticalNum == 0)
     {
@@ -241,7 +241,7 @@ void AutoCollectionViewVerticalTest::viewDidLoad()
         p_AutoCollection->setAllowsMultipleSelection(true);
         p_AutoCollection->setCollectionViewDelegate(this);
         p_AutoCollection->setCollectionViewDataSource(this);
-        p_AutoCollection->setOrientation(CAAutoCollectionView::Vertical);
+        p_AutoCollection->setOrientation(CAAutoCollectionView::Orientation::Vertical);
         p_AutoCollection->setHeaderRefreshView(headerRefreshView);
         p_AutoCollection->setFooterRefreshView(footerRefreshView);
         p_AutoCollection->setScrollViewDelegate(this);
@@ -330,8 +330,8 @@ CACollectionViewCell* AutoCollectionViewVerticalTest::collectionCellAtIndex(CAAu
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(29);
-        itemText->setTextAlignment(CATextAlignmentCenter);
-        itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        itemText->setTextAlignment(CATextAlignment::Center);
+        itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         p_Cell->getContentView()->addSubview(itemText);
     }
     

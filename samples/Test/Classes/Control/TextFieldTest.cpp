@@ -22,19 +22,19 @@ void TextFieldTest::viewDidLoad()
     //PlaceHolder文本内容
     textField1->setPlaceHolderText("Input");
     //键盘类型
-    textField1->setKeyboardType(CATextField::Default);
+    textField1->setKeyboardType(CATextField::KeyboardType::Default);
     //TextField的对齐方式
-    textField1->setTextFieldAlign(CATextField::Left);
+    textField1->setAlign(CATextField::Align::Left);
     textField1->setDelegate(this);
     this->getView()->addSubview(textField1);
     
     CATextField* textField2 = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(450, 100)));
     textField2->setTag(101);
     textField2->setPlaceHolderText("Input");
-    textField2->setKeyboardType(CATextField::Default);
+    textField2->setKeyboardType(CATextField::KeyboardType::Default);
     textField2->setMarginImageLeft(DSize(60,60),"source_material/search.png");
-    textField2->setClearButtonMode(CATextField::WhileEditing);
-    textField2->setTextFieldAlign(CATextField::Left);
+    textField2->setClearButtonMode(CATextField::ClearButtonMode::WhileEditing);
+    textField2->setAlign(CATextField::Align::Left);
     textField2->setSecureTextEntry(true);
     textField2->setDelegate(this);
     this->getView()->addSubview(textField2);

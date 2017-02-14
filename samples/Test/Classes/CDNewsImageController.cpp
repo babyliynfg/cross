@@ -46,8 +46,8 @@ void CDNewsImagecollectionCell::initWithCell(int num)
     cell_tag = CCRANDOM_0_1()*4+1;
     CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(40, 90), DVerticalLayout_B_H(100, 40)));
 	test->setColor(CAColor_black);
-    test->setTextAlignment(CATextAlignmentLeft);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    test->setTextAlignment(CATextAlignment::Left);
+    test->setVerticalTextAlignmet(CAVerticalTextAlignment::Top);
     test->setFontSize(32);
     test->setBold(true);
     test->setTag(100);
@@ -55,8 +55,8 @@ void CDNewsImagecollectionCell::initWithCell(int num)
     
     CALabel* dsc = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(40, 40), DVerticalLayout_B_H(15, 80)));
 	dsc->setColor(CAColor_black);
-    dsc->setTextAlignment(CATextAlignmentLeft);
-    dsc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    dsc->setTextAlignment(CATextAlignment::Left);
+    dsc->setVerticalTextAlignmet(CAVerticalTextAlignment::Top);
     dsc->setFontSize(26);
 
     dsc->setTag(101);
@@ -64,16 +64,16 @@ void CDNewsImagecollectionCell::initWithCell(int num)
     this->getContentView()->addSubview(dsc);
     
     m_pImage1 = CommonUrlImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(5, 150)));
-    m_pImage1->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    m_pImage1->setScaleType(CAImageView::ScaleType::FitImageCrop);
     
     m_pImage2 = CommonUrlImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(5, 150)));
-    m_pImage2->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    m_pImage2->setScaleType(CAImageView::ScaleType::FitImageCrop);
     
     m_pImage3 = CommonUrlImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(5, 150)));
-    m_pImage3->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    m_pImage3->setScaleType(CAImageView::ScaleType::FitImageCrop);
     
     m_pImage4 = CommonUrlImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(5, 150)));
-    m_pImage4->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    m_pImage4->setScaleType(CAImageView::ScaleType::FitImageCrop);
     
     CAView* view = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(3, 148)), CAColor_clear);
     view->addSubview(m_pImage1);
@@ -161,9 +161,9 @@ void CDNewsImageController::initImageCollectionView()
         this->getView()->removeSubview(p_AutoCollectionView);
         p_AutoCollectionView = NULL;
     }
-    CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
+    CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer);
     refreshDiscount->setLabelColor(CAColor_black);
-    CAPullToRefreshView *refreshDiscount1 = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
+    CAPullToRefreshView *refreshDiscount1 = CAPullToRefreshView::create(CAPullToRefreshView::Type::Header);
     refreshDiscount1->setLabelColor(CAColor_black);
     
     p_AutoCollectionView = CAAutoCollectionView::createWithLayout(DLayoutFill);
@@ -186,7 +186,7 @@ void CDNewsImageController::showAlert()
     this->getView()->addSubview(p_alertView);
     
     CAImageView* bg = CAImageView::createWithLayout(DLayoutFill);
-    bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    bg->setScaleType(CAImageView::ScaleType::FitImageCrop);
     bg->setImage(CAImage::create("image/HelloWorld.png"));
     
     CAButton* btn5 = CAButton::create(CAButton::Type::SquareRect);
@@ -226,8 +226,8 @@ void CDNewsImageController::showAlert()
     
     CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(40, 0.1)));
 	test->setColor(CAColor_gray);
-    test->setTextAlignment(CATextAlignmentCenter);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    test->setTextAlignment(CATextAlignment::Center);
+    test->setVerticalTextAlignmet(CAVerticalTextAlignment::Top);
     test->setFontSize(24);
     test->setText("网络不给力，请点击屏幕重新加载～");
     p_alertView->addSubview(test);

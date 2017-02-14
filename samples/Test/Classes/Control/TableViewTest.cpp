@@ -44,8 +44,8 @@ void ETableViewCell::initWithCell()
 {
     CALabel* test = CALabel::createWithLayout(DLayoutFill);
     test->setColor(ccc4(34, 151, 254, 255));
-    test->setTextAlignment(CATextAlignmentCenter);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    test->setTextAlignment(CATextAlignment::Center);
+    test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     test->setFontSize(28);
     test->setTag(100);
     this->addSubview(test);
@@ -242,8 +242,8 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const DSize
         CALabel* cellText = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(150, 10), DVerticalLayout_T_B(10, 10)));
         cellText->setTag(100);
         cellText->setFontSize(30);
-        cellText->setTextAlignment(CATextAlignmentLeft);
-        cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        cellText->setTextAlignment(CATextAlignment::Left);
+        cellText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         cell->addSubview(cellText);
     }
     char order[20] = "";
@@ -264,8 +264,8 @@ CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table
     header->setText(head);
     header->setFontSize(30);
     header->setColor(CAColor_white);
-    header->setTextAlignment(CATextAlignmentLeft);
-    header->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    header->setTextAlignment(CATextAlignment::Left);
+    header->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     view->addSubview(header);
     
     return view;

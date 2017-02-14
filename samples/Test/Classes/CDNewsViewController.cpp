@@ -57,22 +57,22 @@ bool CDNewsTableCell::initWithReuseIdentifier(const std::string& reuseIdentifier
     
     theImage = CommonUrlImageView::createWithLayout(DLayout(DHorizontalLayout_L_W(20, 200), DVerticalLayout_T_B(20, 20)));
     theImage->setTag(101);
-    theImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    theImage->setScaleType(CAImageView::ScaleType::FitImageCrop);
     theImage->setImage(CAImage::create("image/HelloWorld.png"));
     this->getContentView()->addSubview(theImage);
     
     theTitle = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(240, 150), DVerticalLayout_T_H(20, 40)));
 	theTitle->setColor(CAColor_black);
-    theTitle->setTextAlignment(CATextAlignmentLeft);
-    theTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    theTitle->setTextAlignment(CATextAlignment::Left);
+    theTitle->setVerticalTextAlignmet(CAVerticalTextAlignment::Top);
     theTitle->setFontSize(32);
     theTitle->setTag(100);
     this->getContentView()->addSubview(theTitle);
     
     theDesc = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(240, 150), DVerticalLayout_T_H(65, 40)));
 	theDesc->setColor(CAColor_black);
-    theDesc->setTextAlignment(CATextAlignmentLeft);
-    theDesc->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    theDesc->setTextAlignment(CATextAlignment::Left);
+    theDesc->setVerticalTextAlignmet(CAVerticalTextAlignment::Top);
     theDesc->setFontSize(24);
     theDesc->setTag(102);
 	theDesc->setColor(CAColor_gray);
@@ -168,7 +168,7 @@ void CDNewsViewController::showAlert()
     this->getView()->addSubview(p_alertView);
     
     CAImageView* bg = CAImageView::createWithLayout(DLayoutFill);
-    bg->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    bg->setScaleType(CAImageView::ScaleType::FitImageCrop);
     bg->setImage(CAImage::create("image/HelloWorld.png"));
     
     CAButton* btn5 = CAButton::create(CAButton::Type::SquareRect);
@@ -205,8 +205,8 @@ void CDNewsViewController::showAlert()
     
     CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(100, 40)));
 	test->setColor(CAColor_gray);
-    test->setTextAlignment(CATextAlignmentCenter);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+    test->setTextAlignment(CATextAlignment::Center);
+    test->setVerticalTextAlignmet(CAVerticalTextAlignment::Top);
     test->setFontSize(24);
     test->setText("网络不给力，请点击屏幕重新加载～");
     p_alertView->addSubview(test);
@@ -334,9 +334,9 @@ void CDNewsViewController::initNewsTableView()
     p_TableView->setScrollViewDelegate(this);
     p_TableView->setAllowsSelection(true);
     this->getView()->addSubview(p_TableView);
-    CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
+    CAPullToRefreshView *refreshDiscount = CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer);
     refreshDiscount->setLabelColor(CAColor_black);
-    CAPullToRefreshView *refreshDiscount1 = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
+    CAPullToRefreshView *refreshDiscount1 = CAPullToRefreshView::create(CAPullToRefreshView::Type::Header);
     refreshDiscount1->setLabelColor(CAColor_black);
     p_TableView->setFooterRefreshView(refreshDiscount);
     p_TableView->setHeaderRefreshView(refreshDiscount1);
@@ -354,7 +354,7 @@ void CDNewsViewController::initNewsPageView()
     
     CAVector<CAView* > viewList;
     CommonUrlImageView* temImage0 = CommonUrlImageView::createWithImage(CAImage::create("image/HelloWorld.png"));
-    temImage0->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    temImage0->setScaleType(CAImageView::ScaleType::FitImageCrop);
     temImage0->setUrl(m_page[m_page.size()-1].m_pic);
     viewList.pushBack(temImage0);
     
@@ -362,17 +362,17 @@ void CDNewsViewController::initNewsPageView()
     {
         //初始化viewList
         CommonUrlImageView* temImage = CommonUrlImageView::createWithImage(CAImage::create("image/HelloWorld.png"));
-        temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+        temImage->setScaleType(CAImageView::ScaleType::FitImageCrop);
         temImage->setUrl(m_page[i].m_pic);
         viewList.pushBack(temImage);
     }
     
     CommonUrlImageView* temImage1 = CommonUrlImageView::createWithImage(CAImage::create("image/HelloWorld.png"));
-    temImage1->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    temImage1->setScaleType(CAImageView::ScaleType::FitImageCrop);
     temImage1->setUrl(m_page[0].m_pic);
     viewList.pushBack(temImage1);
     
-    p_PageView = CAPageView::createWithLayout(DLayoutFill, CAPageViewDirectionHorizontal);
+    p_PageView = CAPageView::createWithLayout(DLayoutFill, CAPageView::Orientation::Horizontal);
     p_PageView->setViews(viewList);
     p_PageView->setPageViewDelegate(this);
     p_PageView->setTouchEnabled(true);
@@ -403,7 +403,7 @@ void CDNewsViewController::initNewsPageView()
     if (m_page.size()>0)
     {
         pageViewTitle = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(20, 160), DVerticalLayoutFill));
-        pageViewTitle->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        pageViewTitle->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         pageViewTitle->setText(m_page[0].m_title);
 		pageViewTitle->setColor(CAColor_white);
         pageViewTitle->setFontSize(28);
