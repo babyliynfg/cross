@@ -224,13 +224,13 @@ CADeviceIdiom CADensityDpi::getIdiom()
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        return CADeviceIdiomPad;
+        return CADeviceIdiom::iPad;
     }
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-        return CADeviceIdiomPhone;
+        return CADeviceIdiom::iPhone;
     }
-    return CADeviceIdiomPhone;
+    return CADeviceIdiom::iPhone;
 }
 
 

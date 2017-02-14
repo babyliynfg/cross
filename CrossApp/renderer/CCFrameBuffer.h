@@ -61,7 +61,7 @@ class CC_DLL RenderTarget : public RenderTargetBase
 {
 public:
     
-    static RenderTarget* create(unsigned int width, unsigned int height, CAImage::PixelFormat format = CAImage::PixelFormat_RGBA8888);
+    static RenderTarget* create(unsigned int width, unsigned int height, CAImage::PixelFormat format = CAImage::PixelFormat::RGBA8888);
     
     bool init(unsigned int width, unsigned int height, CAImage::PixelFormat format);
     

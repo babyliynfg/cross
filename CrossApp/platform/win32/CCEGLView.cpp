@@ -905,11 +905,11 @@ void CCEGLView::setFrameSize(float width, float height)
 
 	if (width / height > 1.25f)
 	{
-		this->setStatusBarOrientation(CAInterfaceOrientationLandscape);
+		this->setStatusBarOrientation(CAInterfaceOrientation::Landscape);
 	}
 	else
 	{
-		this->setStatusBarOrientation(CAInterfaceOrientationPortrait);
+		this->setStatusBarOrientation(CAInterfaceOrientation::Portrait);
 	}
     resize(width, height); // adjust window size for menubar
     centerWindow();

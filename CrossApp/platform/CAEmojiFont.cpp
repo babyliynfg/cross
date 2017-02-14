@@ -136,7 +136,7 @@ CAImage* CAEmojiFont::getEmojiImage(unsigned int codepoint, unsigned long nFontS
 	}
 
 	CAImage* image = new CAImage();
-	if (!image->initWithRawData(&bitmap[0], CAImage::PixelFormat_RGBA8888, w, h))
+	if (!image->initWithRawData(&bitmap[0], CAImage::PixelFormat::RGBA8888, w, h))
 	{
 		delete image;
 		return NULL;

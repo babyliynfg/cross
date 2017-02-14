@@ -61,7 +61,7 @@ bool CAImageCube::init(const std::string& positive_x, const std::string& negativ
 
         CAImage::PixelFormat    ePixelFmt   = img->getPixelFormat();
         unsigned char*          pData       = img->getData();
-        if (ePixelFmt == CAImage::PixelFormat_RGBA8888 || ePixelFmt == CAImage::PixelFormat_DEFAULT)
+        if (ePixelFmt == CAImage::PixelFormat::RGBA8888 || ePixelFmt == CAImage::PixelFormat::DEFAULT)
         {
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                          0,                  // level
@@ -73,7 +73,7 @@ bool CAImageCube::init(const std::string& positive_x, const std::string& negativ
                          GL_UNSIGNED_BYTE,   // type
                          pData);             // pixel data
         }
-        else if (ePixelFmt == CAImage::PixelFormat_RGB888)
+        else if (ePixelFmt == CAImage::PixelFormat::RGB888)
         {
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                          0,                  // level

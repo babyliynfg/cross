@@ -407,8 +407,8 @@ void CASegmentedControl::setTitleForSegmentAtIndex(const std::string& title, int
     label->setFontName(m_sTitleFontName);
     label->setFontSize(m_fTitleFontSize);
     label->setColor(m_iSelectedIndex == index ? m_cTextSelectedColor : m_cTextColor);
-    label->setTextAlignment(CATextAlignmentCenter);
-    label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    label->setTextAlignment(CATextAlignment::Center);
+    label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     label->setText(title);
     m_vSegmentItems.at(index)->addSubview(label);
     m_vSegmentItemsTitles.replace(index, label);

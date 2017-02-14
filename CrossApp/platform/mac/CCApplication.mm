@@ -53,63 +53,37 @@ CCApplication* CCApplication::sharedApplication()
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+LanguageType CCApplication::getCurrentLanguage()
 {
     // get the current language and country config
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
     NSString *currentLanguage = [languages objectAtIndex:0];
-
+    
     // get the current language code.(such as English is "en", Chinese is "zh" and so on)
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
-
-    ccLanguageType ret = kLanguageEnglish;
-    if ([languageCode isEqualToString:@"zh"])
-    {
-        ret = kLanguageChinese;
-    }
-    else if ([languageCode isEqualToString:@"en"])
-    {
-        ret = kLanguageEnglish;
-    }
-    else if ([languageCode isEqualToString:@"fr"]){
-        ret = kLanguageFrench;
-    }
-    else if ([languageCode isEqualToString:@"it"]){
-        ret = kLanguageItalian;
-    }
-    else if ([languageCode isEqualToString:@"de"]){
-        ret = kLanguageGerman;
-    }
-    else if ([languageCode isEqualToString:@"es"]){
-        ret = kLanguageSpanish;
-    }
-    else if ([languageCode isEqualToString:@"nl"]){
-        ret = kLanguageDutch;
-    }
-    else if ([languageCode isEqualToString:@"ru"]){
-        ret = kLanguageRussian;
-    }
-    else if ([languageCode isEqualToString:@"ko"]){
-        ret = kLanguageKorean;
-    }
-    else if ([languageCode isEqualToString:@"ja"]){
-        ret = kLanguageJapanese;
-    }
-    else if ([languageCode isEqualToString:@"hu"]){
-        ret = kLanguageHungarian;
-    }
-    else if ([languageCode isEqualToString:@"pt"])
-    {
-        ret = kLanguagePortuguese;
-    }
-    else if ([languageCode isEqualToString:@"ar"])
-    {
-        ret = kLanguageArabic;
-    }
     
-    return ret;
+    if ([languageCode isEqualToString:@"zh"]) return LanguageType::CHINESE;
+    if ([languageCode isEqualToString:@"en"]) return LanguageType::ENGLISH;
+    if ([languageCode isEqualToString:@"fr"]) return LanguageType::FRENCH;
+    if ([languageCode isEqualToString:@"it"]) return LanguageType::ITALIAN;
+    if ([languageCode isEqualToString:@"de"]) return LanguageType::GERMAN;
+    if ([languageCode isEqualToString:@"es"]) return LanguageType::SPANISH;
+    if ([languageCode isEqualToString:@"nl"]) return LanguageType::DUTCH;
+    if ([languageCode isEqualToString:@"ru"]) return LanguageType::RUSSIAN;
+    if ([languageCode isEqualToString:@"ko"]) return LanguageType::KOREAN;
+    if ([languageCode isEqualToString:@"ja"]) return LanguageType::JAPANESE;
+    if ([languageCode isEqualToString:@"hu"]) return LanguageType::HUNGARIAN;
+    if ([languageCode isEqualToString:@"pt"]) return LanguageType::PORTUGUESE;
+    if ([languageCode isEqualToString:@"ar"]) return LanguageType::ARABIC;
+    if ([languageCode isEqualToString:@"nb"]) return LanguageType::NORWEGIAN;
+    if ([languageCode isEqualToString:@"pl"]) return LanguageType::POLISH;
+    if ([languageCode isEqualToString:@"tr"]) return LanguageType::TURKISH;
+    if ([languageCode isEqualToString:@"uk"]) return LanguageType::UKRAINIAN;
+    if ([languageCode isEqualToString:@"ro"]) return LanguageType::ROMANIAN;
+    if ([languageCode isEqualToString:@"bg"]) return LanguageType::BULGARIAN;
+    return LanguageType::ENGLISH;
 }
 
 void CCApplication::setResourceRootPath(const std::string& rootResDir)

@@ -120,7 +120,7 @@ CAImage* generateMipmapsWithImageRGB(CAImage* image)
             }
         }
         
-        newImage->initWithRawData(data, CAImage::PixelFormat_RGB888, new_w, new_h);
+        newImage->initWithRawData(data, CAImage::PixelFormat::RGB888, new_w, new_h);
         newImage->autorelease();
         delete[] data;
         
@@ -167,7 +167,7 @@ CAImage* generateMipmapsWithImageRGBA(CAImage* image)
                 in += 8;
             }
         }
-        newImage->initWithRawData(data, CAImage::PixelFormat_RGBA8888, new_w, new_h);
+        newImage->initWithRawData(data, CAImage::PixelFormat::RGBA8888, new_w, new_h);
         newImage->autorelease();
         delete[] data;
         
@@ -188,11 +188,11 @@ CAImage* CAImage::generateMipmapsWithImage(CAImage* image)
         return newImage;
     }
     
-    if (image->getPixelFormat() == CAImage::PixelFormat_RGB888)
+    if (image->getPixelFormat() == CAImage::PixelFormat::RGB888)
     {
         return generateMipmapsWithImageRGB(image);
     }
-    else if (image->getPixelFormat() == CAImage::PixelFormat_RGBA8888)
+    else if (image->getPixelFormat() == CAImage::PixelFormat::RGBA8888)
     {
         return generateMipmapsWithImageRGBA(image);
     }
@@ -712,46 +712,46 @@ CAImage::PixelFormat CAImage::convertI8ToFormat(const unsigned char* data, unsig
 {
     switch (format)
     {
-        case CAImage::PixelFormat_RGBA8888:
+        case CAImage::PixelFormat::RGBA8888:
             *outDataLen = dataLen*4;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertI8ToRGBA8888(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB888:
+        case CAImage::PixelFormat::RGB888:
             *outDataLen = dataLen*3;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertI8ToRGB888(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB565:
+        case CAImage::PixelFormat::RGB565:
             *outDataLen = dataLen*2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertI8ToRGB565(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_AI88:
+        case CAImage::PixelFormat::AI88:
             *outDataLen = dataLen*2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertI8ToAI88(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGBA4444:
+        case CAImage::PixelFormat::RGBA4444:
             *outDataLen = dataLen*2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertI8ToRGBA4444(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB5A1:
+        case CAImage::PixelFormat::RGB5A1:
             *outDataLen = dataLen*2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertI8ToRGB5A1(data, dataLen, *outData);
             break;
         default:
             // unsupport convertion or don't need to convert
-            if (format != CAImage::PixelFormat_DEFAULT && format != CAImage::PixelFormat_I8)
+            if (format != CAImage::PixelFormat::DEFAULT && format != CAImage::PixelFormat::I8)
             {
-                CCLOG("Can not convert image format CAImage::PixelFormat_I8 to format ID:%d, we will use it's origin format CAImage::PixelFormat_I8", format);
+                CCLOG("Can not convert image format CAImage::PixelFormat::I8 to format ID:%d, we will use it's origin format CAImage::PixelFormat::I8", format);
             }
             
             *outData = (unsigned char*)data;
             *outDataLen = dataLen;
-            return CAImage::PixelFormat_I8;
+            return CAImage::PixelFormat::I8;
     }
     
     return format;
@@ -761,51 +761,51 @@ CAImage::PixelFormat CAImage::convertAI88ToFormat(const unsigned char* data, uns
 {
     switch (format)
     {
-        case CAImage::PixelFormat_RGBA8888:
+        case CAImage::PixelFormat::RGBA8888:
             *outDataLen = dataLen*2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertAI88ToRGBA8888(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB888:
+        case CAImage::PixelFormat::RGB888:
             *outDataLen = dataLen/2*3;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertAI88ToRGB888(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB565:
+        case CAImage::PixelFormat::RGB565:
             *outDataLen = dataLen;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertAI88ToRGB565(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_A8:
+        case CAImage::PixelFormat::A8:
             *outDataLen = dataLen/2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertAI88ToA8(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_I8:
+        case CAImage::PixelFormat::I8:
             *outDataLen = dataLen/2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertAI88ToI8(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGBA4444:
+        case CAImage::PixelFormat::RGBA4444:
             *outDataLen = dataLen;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertAI88ToRGBA4444(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB5A1:
+        case CAImage::PixelFormat::RGB5A1:
             *outDataLen = dataLen;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertAI88ToRGB5A1(data, dataLen, *outData);
             break;
         default:
             // unsupport convertion or don't need to convert
-            if (format != CAImage::PixelFormat_DEFAULT && format != CAImage::PixelFormat_AI88)
+            if (format != CAImage::PixelFormat::DEFAULT && format != CAImage::PixelFormat::AI88)
             {
-                CCLOG("Can not convert image format CAImage::PixelFormat_AI88 to format ID:%d, we will use it's origin format CAImage::PixelFormat_AI88", format);
+                CCLOG("Can not convert image format CAImage::PixelFormat::AI88 to format ID:%d, we will use it's origin format CAImage::PixelFormat::AI88", format);
             }
             
             *outData = (unsigned char*)data;
             *outDataLen = dataLen;
-            return CAImage::PixelFormat_AI88;
+            return CAImage::PixelFormat::AI88;
             break;
     }
     
@@ -816,46 +816,46 @@ CAImage::PixelFormat CAImage::convertRGB888ToFormat(const unsigned char* data, u
 {
     switch (format)
     {
-        case CAImage::PixelFormat_RGBA8888:
+        case CAImage::PixelFormat::RGBA8888:
             *outDataLen = dataLen/3*4;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGB888ToRGBA8888(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB565:
+        case CAImage::PixelFormat::RGB565:
             *outDataLen = dataLen/3*2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGB888ToRGB565(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_I8:
+        case CAImage::PixelFormat::I8:
             *outDataLen = dataLen/3;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGB888ToI8(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_AI88:
+        case CAImage::PixelFormat::AI88:
             *outDataLen = dataLen/3*2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGB888ToAI88(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGBA4444:
+        case CAImage::PixelFormat::RGBA4444:
             *outDataLen = dataLen/3*2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGB888ToRGBA4444(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB5A1:
+        case CAImage::PixelFormat::RGB5A1:
             *outDataLen = dataLen;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGB888ToRGB5A1(data, dataLen, *outData);
             break;
         default:
             // unsupport convertion or don't need to convert
-            if (format != CAImage::PixelFormat_DEFAULT && format != CAImage::PixelFormat_RGB888)
+            if (format != CAImage::PixelFormat::DEFAULT && format != CAImage::PixelFormat::RGB888)
             {
-                CCLOG("Can not convert image format CAImage::PixelFormat_RGB888 to format ID:%d, we will use it's origin format CAImage::PixelFormat_RGB888", format);
+                CCLOG("Can not convert image format CAImage::PixelFormat::RGB888 to format ID:%d, we will use it's origin format CAImage::PixelFormat::RGB888", format);
             }
             
             *outData = (unsigned char*)data;
             *outDataLen = dataLen;
-            return CAImage::PixelFormat_RGB888;
+            return CAImage::PixelFormat::RGB888;
     }
     return format;
 }
@@ -865,51 +865,51 @@ CAImage::PixelFormat CAImage::convertRGBA8888ToFormat(const unsigned char* data,
     
     switch (format)
     {
-        case CAImage::PixelFormat_RGB888:
+        case CAImage::PixelFormat::RGB888:
             *outDataLen = dataLen/4*3;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGBA8888ToRGB888(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB565:
+        case CAImage::PixelFormat::RGB565:
             *outDataLen = dataLen/2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGBA8888ToRGB565(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_A8:
+        case CAImage::PixelFormat::A8:
             *outDataLen = dataLen/4;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGBA8888ToA8(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_I8:
+        case CAImage::PixelFormat::I8:
             *outDataLen = dataLen/4;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGBA8888ToI8(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_AI88:
+        case CAImage::PixelFormat::AI88:
             *outDataLen = dataLen/2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGBA8888ToAI88(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGBA4444:
+        case CAImage::PixelFormat::RGBA4444:
             *outDataLen = dataLen/2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGBA8888ToRGBA4444(data, dataLen, *outData);
             break;
-        case CAImage::PixelFormat_RGB5A1:
+        case CAImage::PixelFormat::RGB5A1:
             *outDataLen = dataLen/2;
             *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
             convertRGBA8888ToRGB5A1(data, dataLen, *outData);
             break;
         default:
             // unsupport convertion or don't need to convert
-            if (format != CAImage::PixelFormat_DEFAULT && format != CAImage::PixelFormat_RGBA8888)
+            if (format != CAImage::PixelFormat::DEFAULT && format != CAImage::PixelFormat::RGBA8888)
             {
-                CCLOG("Can not convert image format CAImage::PixelFormat_RGBA8888 to format ID:%d, we will use it's origin format CAImage::PixelFormat_RGBA8888", format);
+                CCLOG("Can not convert image format CAImage::PixelFormat::RGBA8888 to format ID:%d, we will use it's origin format CAImage::PixelFormat::RGBA8888", format);
             }
             
             *outData = (unsigned char*)data;
             *outDataLen = dataLen;
-            return CAImage::PixelFormat_RGBA8888;
+            return CAImage::PixelFormat::RGBA8888;
     }
     
     return format;
@@ -917,14 +917,14 @@ CAImage::PixelFormat CAImage::convertRGBA8888ToFormat(const unsigned char* data,
 
 /*
  convert map:
- 1.CAImage::PixelFormat_RGBA8888
- 2.CAImage::PixelFormat_RGB888
- 3.CAImage::PixelFormat_RGB565
- 4.CAImage::PixelFormat_A8
- 5.CAImage::PixelFormat_I8
- 6.CAImage::PixelFormat_AI88
- 7.CAImage::PixelFormat_RGBA4444
- 8.CAImage::PixelFormat_RGB5A1
+ 1.CAImage::PixelFormat::RGBA8888
+ 2.CAImage::PixelFormat::RGB888
+ 3.CAImage::PixelFormat::RGB565
+ 4.CAImage::PixelFormat::A8
+ 5.CAImage::PixelFormat::I8
+ 6.CAImage::PixelFormat::AI88
+ 7.CAImage::PixelFormat::RGBA4444
+ 8.CAImage::PixelFormat::RGB5A1
  
  gray(5) -> 1235678
  gray alpha(6) -> 12345678
@@ -935,7 +935,7 @@ CAImage::PixelFormat CAImage::convertRGBA8888ToFormat(const unsigned char* data,
 CAImage::PixelFormat CAImage::convertDataToFormat(const unsigned char* data, unsigned long dataLen, CAImage::PixelFormat originFormat, CAImage::PixelFormat format, unsigned char** outData, unsigned long* outDataLen)
 {
     // don't need to convert
-    if (format == originFormat || format == CAImage::PixelFormat_DEFAULT)
+    if (format == originFormat || format == CAImage::PixelFormat::DEFAULT)
     {
         *outData = (unsigned char*)data;
         *outDataLen = dataLen;
@@ -944,13 +944,13 @@ CAImage::PixelFormat CAImage::convertDataToFormat(const unsigned char* data, uns
     
     switch (originFormat)
     {
-        case CAImage::PixelFormat_I8:
+        case CAImage::PixelFormat::I8:
             return convertI8ToFormat(data, dataLen, format, outData, outDataLen);
-        case CAImage::PixelFormat_AI88:
+        case CAImage::PixelFormat::AI88:
             return convertAI88ToFormat(data, dataLen, format, outData, outDataLen);
-        case CAImage::PixelFormat_RGB888:
+        case CAImage::PixelFormat::RGB888:
             return convertRGB888ToFormat(data, dataLen, format, outData, outDataLen);
-        case CAImage::PixelFormat_RGBA8888:
+        case CAImage::PixelFormat::RGBA8888:
             return convertRGBA8888ToFormat(data, dataLen, format, outData, outDataLen);
         default:
             *outData = (unsigned char*)data;
@@ -1319,22 +1319,22 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
         
         switch (type)
         {
-            case JPG:
+            case CAImage::Format::JPG:
                 ret = this->initWithJpgData(unpackedData, unpackedLen);
                 break;
-            case PNG:
+            case CAImage::Format::PNG:
                 ret = this->initWithPngData(unpackedData, unpackedLen);
                 break;
-            case GIF:
+            case CAImage::Format::GIF:
                 ret = this->initWithGifData(unpackedData, unpackedLen);
                 break;
-            case TIFF:
+            case CAImage::Format::TIFF:
                 ret = this->initWithTiffData(unpackedData, unpackedLen);
                 break;
-            case WEBP:
+            case CAImage::Format::WEBP:
                 ret = this->initWithWebpData(unpackedData, unpackedLen);
                 break;
-            case ETC:
+            case CAImage::Format::ETC:
             default:
             {
                 // load and detect image format
@@ -1419,12 +1419,12 @@ bool CAImage::initWithJpgData(const unsigned char *  data, unsigned long dataLen
         // we only support RGB or grayscale
         if (cinfo.jpeg_color_space == JCS_GRAYSCALE)
         {
-            m_ePixelFormat = CAImage::PixelFormat_I8;
+            m_ePixelFormat = CAImage::PixelFormat::I8;
         }
         else
         {
             cinfo.out_color_space = JCS_RGB;
-            m_ePixelFormat = CAImage::PixelFormat_RGB888;
+            m_ePixelFormat = CAImage::PixelFormat::RGB888;
         }
         
         /* Start decompression jpeg here */
@@ -1548,16 +1548,16 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         switch (color_type)
         {
             case PNG_COLOR_TYPE_GRAY:
-                m_ePixelFormat = CAImage::PixelFormat_I8;
+                m_ePixelFormat = CAImage::PixelFormat::I8;
                 break;
             case PNG_COLOR_TYPE_GRAY_ALPHA:
-                m_ePixelFormat = CAImage::PixelFormat_AI88;
+                m_ePixelFormat = CAImage::PixelFormat::AI88;
                 break;
             case PNG_COLOR_TYPE_RGB:
-                m_ePixelFormat = CAImage::PixelFormat_RGB888;
+                m_ePixelFormat = CAImage::PixelFormat::RGB888;
                 break;
             case PNG_COLOR_TYPE_RGB_ALPHA:
-                m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
+                m_ePixelFormat = CAImage::PixelFormat::RGBA8888;
                 break;
             default:
                 break;
@@ -1637,7 +1637,7 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
         return false;
     }
     
-    m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
+    m_ePixelFormat = CAImage::PixelFormat::RGBA8888;
     m_uPixelsWide = m_pGIF->SWidth;
     m_uPixelsHigh = m_pGIF->SHeight;
     m_uImageDataLenght = m_uPixelsWide * m_uPixelsHigh * 4;
@@ -1683,7 +1683,7 @@ bool CAImage::initWithTiffData(const unsigned char * data, unsigned long dataLen
         
         npixels = w * h;
         
-        m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
+        m_ePixelFormat = CAImage::PixelFormat::RGBA8888;
         m_uPixelsWide = w;
         m_uPixelsHigh = h;
         m_nBitsPerComponent = 8;
@@ -1725,7 +1725,7 @@ bool CAImage::initWithWebpData(const unsigned char * data, unsigned long dataLen
         if (config.input.width == 0 || config.input.height == 0) break;
         
         config.output.colorspace = MODE_RGBA;
-        m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
+        m_ePixelFormat = CAImage::PixelFormat::RGBA8888;
         m_uPixelsWide    = config.input.width;
         m_uPixelsHigh   = config.input.height;
         m_nBitsPerComponent = 8;
@@ -1764,15 +1764,15 @@ bool CAImage::initWithTGAData(tImageTGA* tgaData)
             // unsupported RGB555
             if (tgaData->pixelDepth == 16)
             {
-                m_ePixelFormat = PixelFormat_RGB5A1;
+                m_ePixelFormat = CAImage::PixelFormat::RGB5A1;
             }
             else if(tgaData->pixelDepth == 24)
             {
-                m_ePixelFormat = PixelFormat_RGB888;
+                m_ePixelFormat = CAImage::PixelFormat::RGB888;
             }
             else if(tgaData->pixelDepth == 32)
             {
-                m_ePixelFormat = PixelFormat_RGBA8888;
+                m_ePixelFormat = CAImage::PixelFormat::RGBA8888;
             }
             else
             {
@@ -1784,7 +1784,7 @@ bool CAImage::initWithTGAData(tImageTGA* tgaData)
             // gray
             if (8 == tgaData->pixelDepth)
             {
-                m_ePixelFormat = PixelFormat_I8;
+                m_ePixelFormat = CAImage::PixelFormat::I8;
             }
             else
             {
@@ -1815,7 +1815,7 @@ bool CAImage::initWithRawData(const unsigned char * data,
     
     unsigned int bitsPerPixel;
     //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
-    if(pixelFormat == PixelFormat_RGB888)
+    if(pixelFormat == CAImage::PixelFormat::RGB888)
     {
         bitsPerPixel = 24;
     }
@@ -1841,18 +1841,18 @@ bool CAImage::initWithRawData(const unsigned char * data,
     
     switch (pixelFormat)
     {
-        case PixelFormat_RGBA8888:
-        case PixelFormat_RGBA4444:
-        case PixelFormat_RGB5A1:
-        case PixelFormat_AI88:
+        case CAImage::PixelFormat::RGBA8888:
+        case CAImage::PixelFormat::RGBA4444:
+        case CAImage::PixelFormat::RGB5A1:
+        case CAImage::PixelFormat::AI88:
         {
             m_bHasPremultipliedAlpha = true;
         }
             break;
-        case PixelFormat_RGB888:
-        case PixelFormat_RGB565:
-        case PixelFormat_I8:
-        case PixelFormat_A8:
+        case CAImage::PixelFormat::RGB888:
+        case CAImage::PixelFormat::RGB565:
+        case CAImage::PixelFormat::I8:
+        case CAImage::PixelFormat::A8:
         default:
         {
             m_bHasPremultipliedAlpha = false;
@@ -1899,7 +1899,7 @@ void CAImage::premultipliedImageData()
     m_bPremultiplied = true;
     
     unsigned int bitsPerPixel;
-    if(m_ePixelFormat == PixelFormat_RGB888)
+    if(m_ePixelFormat == CAImage::PixelFormat::RGB888)
     {
         bitsPerPixel = 24;
     }
@@ -1941,7 +1941,7 @@ void CAImage::premultipliedImageData()
     
     switch(m_ePixelFormat)
     {
-        case PixelFormat_RGBA8888:
+        case CAImage::PixelFormat::RGBA8888:
             glTexImage2D(GL_TEXTURE_2D,
                          0,
                          GL_RGBA,
@@ -1952,7 +1952,7 @@ void CAImage::premultipliedImageData()
                          GL_UNSIGNED_BYTE,
                          (const GLvoid *)m_pData);
             break;
-        case PixelFormat_RGB888:
+        case CAImage::PixelFormat::RGB888:
             glTexImage2D(GL_TEXTURE_2D,
                          0,
                          GL_RGB,
@@ -1963,7 +1963,7 @@ void CAImage::premultipliedImageData()
                          GL_UNSIGNED_BYTE,
                          (const GLvoid *)m_pData);
             break;
-        case PixelFormat_RGBA4444:
+        case CAImage::PixelFormat::RGBA4444:
             glTexImage2D(GL_TEXTURE_2D,
                          0,
                          GL_RGBA,
@@ -1974,7 +1974,7 @@ void CAImage::premultipliedImageData()
                          GL_UNSIGNED_SHORT_4_4_4_4,
                          (const GLvoid *)m_pData);
             break;
-        case CAImage::PixelFormat_RGB5A1:
+        case CAImage::PixelFormat::RGB5A1:
             glTexImage2D(GL_TEXTURE_2D,
                          0,
                          GL_RGBA,
@@ -1985,7 +1985,7 @@ void CAImage::premultipliedImageData()
                          GL_UNSIGNED_SHORT_5_5_5_1,
                          (const GLvoid *)m_pData);
             break;
-        case PixelFormat_RGB565:
+        case CAImage::PixelFormat::RGB565:
             glTexImage2D(GL_TEXTURE_2D,
                          0,
                          GL_RGB,
@@ -1996,7 +1996,7 @@ void CAImage::premultipliedImageData()
                          GL_UNSIGNED_SHORT_5_6_5,
                          (const GLvoid *)m_pData);
             break;
-        case PixelFormat_AI88:
+        case CAImage::PixelFormat::AI88:
             glTexImage2D(GL_TEXTURE_2D,
                          0,
                          GL_LUMINANCE_ALPHA,
@@ -2007,7 +2007,7 @@ void CAImage::premultipliedImageData()
                          GL_UNSIGNED_BYTE,
                          (const GLvoid *)m_pData);
             break;
-        case PixelFormat_A8:
+        case CAImage::PixelFormat::A8:
             glTexImage2D(GL_TEXTURE_2D,
                          0,
                          GL_ALPHA,
@@ -2018,7 +2018,7 @@ void CAImage::premultipliedImageData()
                          GL_UNSIGNED_BYTE,
                          (const GLvoid *)m_pData);
             break;
-        case PixelFormat_I8:
+        case CAImage::PixelFormat::I8:
             glTexImage2D(GL_TEXTURE_2D,
                          0,
                          GL_LUMINANCE,
@@ -2258,28 +2258,28 @@ const char* CAImage::stringForFormat()
 {
     switch (m_ePixelFormat)
     {
-        case PixelFormat_RGBA8888:
+        case CAImage::PixelFormat::RGBA8888:
             return  "RGBA8888";
             
-        case PixelFormat_RGB888:
+        case CAImage::PixelFormat::RGB888:
             return  "RGB888";
             
-        case PixelFormat_RGB565:
+        case CAImage::PixelFormat::RGB565:
             return  "RGB565";
             
-        case PixelFormat_RGBA4444:
+        case CAImage::PixelFormat::RGBA4444:
             return  "RGBA4444";
             
-        case PixelFormat_RGB5A1:
+        case CAImage::PixelFormat::RGB5A1:
             return  "RGB5A1";
             
-        case PixelFormat_AI88:
+        case CAImage::PixelFormat::AI88:
             return  "AI88";
             
-        case PixelFormat_A8:
+        case CAImage::PixelFormat::A8:
             return  "A8";
             
-        case PixelFormat_I8:
+        case CAImage::PixelFormat::I8:
             return  "I8";
             
         default:
@@ -2296,29 +2296,29 @@ unsigned int CAImage::bitsPerPixelForFormat(CAImage::PixelFormat format)
     unsigned int ret = 0;
     
     switch (format) {
-        case PixelFormat_RGBA8888:
+        case CAImage::PixelFormat::RGBA8888:
             ret = 32;
             break;
-        case PixelFormat_RGB888:
+        case CAImage::PixelFormat::RGB888:
             // It is 32 and not 24, since its internal representation uses 32 bits.
             ret = 32;
             break;
-        case PixelFormat_RGB565:
+        case CAImage::PixelFormat::RGB565:
             ret = 16;
             break;
-        case PixelFormat_RGBA4444:
+        case CAImage::PixelFormat::RGBA4444:
             ret = 16;
             break;
-        case PixelFormat_RGB5A1:
+        case CAImage::PixelFormat::RGB5A1:
             ret = 16;
             break;
-        case PixelFormat_AI88:
+        case CAImage::PixelFormat::AI88:
             ret = 16;
             break;
-        case PixelFormat_A8:
+        case CAImage::PixelFormat::A8:
             ret = 8;
             break;
-        case PixelFormat_I8:
+        case CAImage::PixelFormat::I8:
             ret = 8;
             break;
         default:
@@ -2567,8 +2567,8 @@ bool CAImage::saveImageToJPG(const std::string& filePath)
 
 bool CAImage::saveToFile(const std::string& fullPath, bool bIsToRGB)
 {
-    if (m_ePixelFormat != CAImage::PixelFormat_RGBA8888
-        && m_ePixelFormat != CAImage::PixelFormat_RGB888)
+    if (m_ePixelFormat != CAImage::PixelFormat::RGBA8888
+        && m_ePixelFormat != CAImage::PixelFormat::RGB888)
     {
         return false;
     }
@@ -2670,7 +2670,7 @@ CAImage* CAImage::CC_WHITE_IMAGE()
         unsigned int pixels = 0xffffffff;
 
         s_white_image = new CAImage();
-        s_white_image->initWithRawData((const unsigned char *)&pixels, CAImage::PixelFormat_RGBA8888, 1, 1);
+        s_white_image->initWithRawData((const unsigned char *)&pixels, CAImage::PixelFormat::RGBA8888, 1, 1);
         s_white_image->m_bMonochrome = true;
     }
     return s_white_image;
@@ -2697,7 +2697,7 @@ CAImage* CAImage::CC_SHADOW_LEFT_IMAGE()
         };
         
         s_shadow_left_image = new CAImage();
-        s_shadow_left_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 12, 1);
+        s_shadow_left_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat::RGBA8888, 12, 1);
         s_shadow_left_image->m_bMonochrome = true;
     }
     return s_shadow_left_image;
@@ -2724,7 +2724,7 @@ CAImage* CAImage::CC_SHADOW_RIGHT_IMAGE()
         };
         
         s_shadow_right_image = new CAImage();
-        s_shadow_right_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 12, 1);
+        s_shadow_right_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat::RGBA8888, 12, 1);
         s_shadow_right_image->m_bMonochrome = true;
     }
     return s_shadow_right_image;
@@ -2751,7 +2751,7 @@ CAImage* CAImage::CC_SHADOW_TOP_IMAGE()
         };
         
         s_shadow_top_image = new CAImage();
-        s_shadow_top_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 1, 12);
+        s_shadow_top_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat::RGBA8888, 1, 12);
         s_shadow_top_image->m_bMonochrome = true;
     }
     return s_shadow_top_image;
@@ -2778,7 +2778,7 @@ CAImage* CAImage::CC_SHADOW_BOTTOM_IMAGE()
         };
         
         s_shadow_bottom_image = new CAImage();
-        s_shadow_bottom_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 1, 12);
+        s_shadow_bottom_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat::RGBA8888, 1, 12);
         s_shadow_bottom_image->m_bMonochrome = true;
     }
     return s_shadow_bottom_image;
@@ -2789,31 +2789,31 @@ CAImage::Format CAImage::detectFormat(const unsigned char * data, unsigned long 
 {
     if (isPng(data, dataLen))
     {
-        return CAImage::PNG;
+        return CAImage::Format::PNG;
     }
     else if (isJpg(data, dataLen))
     {
-        return CAImage::JPG;
+        return CAImage::Format::JPG;
     }
     else if (isGif(data, dataLen))
     {
-        return CAImage::GIF;
+        return CAImage::Format::GIF;
     }
     else if (isTiff(data, dataLen))
     {
-        return CAImage::TIFF;
+        return CAImage::Format::TIFF;
     }
     else if (isWebp(data, dataLen))
     {
-        return CAImage::WEBP;
+        return CAImage::Format::WEBP;
     }
     else if (isEtc(data, dataLen))
     {
-        return CAImage::ETC;
+        return CAImage::Format::ETC;
     }
     else
     {
-        return CAImage::UNKOWN;
+        return CAImage::Format::UNKOWN;
     }
 }
 
@@ -2905,15 +2905,15 @@ namespace
     typedef CAImage::PixelFormatInfoMap::value_type PixelFormatInfoMapValue;
     static const PixelFormatInfoMapValue CAImagePixelFormatInfoTablesValue[] =
     {
-        PixelFormatInfoMapValue(CAImage::PixelFormat_RGBA8888, CAImage::PixelFormatInfo(GL_BGRA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
-        PixelFormatInfoMapValue(CAImage::PixelFormat_RGBA8888, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
-        PixelFormatInfoMapValue(CAImage::PixelFormat_RGBA4444, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
-        PixelFormatInfoMapValue(CAImage::PixelFormat_RGB5A1, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true)),
-        PixelFormatInfoMapValue(CAImage::PixelFormat_RGB565, CAImage::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false)),
-        PixelFormatInfoMapValue(CAImage::PixelFormat_RGB888, CAImage::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false)),
-        PixelFormatInfoMapValue(CAImage::PixelFormat_A8, CAImage::PixelFormatInfo(GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false)),
-        PixelFormatInfoMapValue(CAImage::PixelFormat_I8, CAImage::PixelFormatInfo(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false)),
-        PixelFormatInfoMapValue(CAImage::PixelFormat_AI88, CAImage::PixelFormatInfo(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::RGBA8888, CAImage::PixelFormatInfo(GL_BGRA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::RGBA8888, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::RGBA4444, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::RGB5A1, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::RGB565, CAImage::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::RGB888, CAImage::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::A8, CAImage::PixelFormatInfo(GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::I8, CAImage::PixelFormatInfo(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat::AI88, CAImage::PixelFormatInfo(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true)),
     };
 }
 

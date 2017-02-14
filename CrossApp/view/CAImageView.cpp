@@ -95,8 +95,8 @@ bool CAImageView::initWithImage(CAImage* image)
 }
 
 CAImageView::CAImageView(void)
-:m_eImageViewScaleType(CAImageViewScaleTypeFitImageXY)
-,m_bUpdateByImageViewScaleType(false)
+:m_eScaleType(CAImageView::ScaleType::FitImageXY)
+,m_bUpdateByScaleType(false)
 ,m_bAnimating(false)
 ,m_iAnimationRepeatCount(0)
 ,m_fAnimationDuration(1/30.0f)
@@ -110,11 +110,11 @@ CAImageView::~CAImageView(void)
     m_vAnimationImages.clear();
 }
 
-void CAImageView::updateByImageViewScaleType()
+void CAImageView::updateByScaleType()
 {
     CC_RETURN_IF(m_pobImage == NULL);
-    CC_RETURN_IF(m_bUpdateByImageViewScaleType);
-    m_bUpdateByImageViewScaleType = true;
+    CC_RETURN_IF(m_bUpdateByScaleType);
+    m_bUpdateByScaleType = true;
     
     DSize viewSize = m_obContentSize;
     DSize imageSize = m_pobImage->getContentSize();
@@ -122,14 +122,14 @@ void CAImageView::updateByImageViewScaleType()
     float viewRatio = viewSize.width / viewSize.height;
     float imageRatio = imageSize.width / imageSize.height;
     
-    switch (m_eImageViewScaleType)
+    switch (m_eScaleType)
     {
-        case CAImageViewScaleTypeFitViewByHorizontal:
+        case CAImageView::ScaleType::FitViewByHorizontal:
         {
             viewSize.width = viewSize.height * imageRatio;
         }
             break;
-        case CAImageViewScaleTypeFitViewByVertical:
+        case CAImageView::ScaleType::FitViewByVertical:
         {
             viewSize.height = viewSize.width / imageRatio;
         }
@@ -143,9 +143,9 @@ void CAImageView::updateByImageViewScaleType()
     m_fRight = viewSize.width;
     m_fBottom = viewSize.height;
     
-    switch (m_eImageViewScaleType)
+    switch (m_eScaleType)
     {
-        case CAImageViewScaleTypeFitImageCrop:
+        case CAImageView::ScaleType::FitImageCrop:
         {
             if (imageRatio > viewRatio)
             {
@@ -163,7 +163,7 @@ void CAImageView::updateByImageViewScaleType()
             }
         }
             break;
-        case CAImageViewScaleTypeFitImageInside:
+        case CAImageView::ScaleType::FitImageInside:
         {
             if (imageRatio > viewRatio)
             {
@@ -196,7 +196,7 @@ void CAImageView::updateByImageViewScaleType()
             this->setCenter(rect);
         }
     }
-    m_bUpdateByImageViewScaleType = false;
+    m_bUpdateByScaleType = false;
 }
 
 void CAImageView::setContentSize(const DSize & contentSize)
@@ -218,7 +218,7 @@ void CAImageView::setContentSize(const DSize & contentSize)
             (*itr)->reViewlayout(m_obContentSize);
         }
         
-        this->updateByImageViewScaleType();
+        this->updateByScaleType();
         this->updateDraw();
     }
 }
@@ -231,7 +231,7 @@ void CAImageView::setImage(CAImage* image)
         DRect rect = DRectZero;
         rect.size = image->getContentSize();
         this->setVertexRect(rect);
-        this->updateByImageViewScaleType();
+        this->updateByScaleType();
     }
 }
 
@@ -249,16 +249,16 @@ void CAImageView::updateImageRect()
     m_sQuad.tr.vertices = DPoint3D( m_fRight, m_fBottom, m_fPointZ);
 }
 
-void CAImageView::setImageViewScaleType(const CAImageViewScaleType &var)
+void CAImageView::setScaleType(CAImageView::ScaleType var)
 {
-    CC_RETURN_IF(m_eImageViewScaleType == var);
-    m_eImageViewScaleType = var;
-    this->updateByImageViewScaleType();
+    CC_RETURN_IF(m_eScaleType == var);
+    m_eScaleType = var;
+    this->updateByScaleType();
 }
 
-const CAImageViewScaleType& CAImageView::getImageViewScaleType()
+CAImageView::ScaleType CAImageView::getScaleType()
 {
-    return m_eImageViewScaleType;
+    return m_eScaleType;
 }
 
 void CAImageView::startAnimating()
@@ -323,7 +323,7 @@ CAView* CAImageView::copy()
     {
         pReturn->setCenter(this->getCenter());
     }
-    pReturn->setImageViewScaleType(this->getImageViewScaleType());
+    pReturn->setScaleType(this->getScaleType());
     pReturn->setImage(this->getImage());
     pReturn->setColor(this->getColor());
     return pReturn;

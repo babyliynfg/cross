@@ -39,7 +39,7 @@ bool RenderTargetBase::init(unsigned int width, unsigned int height)
     return true;
 }
 
-RenderTarget* RenderTarget::create(unsigned int width, unsigned int height, CAImage::PixelFormat format/* = CAImage::PixelFormat_RGBA8888*/)
+RenderTarget* RenderTarget::create(unsigned int width, unsigned int height, CAImage::PixelFormat format/* = CAImage::PixelFormat::RGBA8888*/)
 {
     auto result = new (std::nothrow) RenderTarget();
     if(result && result->init(width, height,format))

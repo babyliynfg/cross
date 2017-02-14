@@ -448,7 +448,7 @@ public:
 		int iStr_d_length = 0;
 		if (m_iString_l_length + m_iString_r_length < m_iLabelWidth)
 		{
-			const CATextField::TextFieldAlign& align = m_pTextFieldX->getTextFieldAlign();
+			CATextField::Align align = m_pTextFieldX->getAlign();
 			switch (align)
 			{
 			case CATextField::Left:
@@ -549,7 +549,7 @@ public:
 	{
 		GLfloat x1, x2, y1, y2;
 
-		const CATextField::TextFieldAlign& align = m_pTextFieldX->getTextFieldAlign();
+		CATextField::Align align = m_pTextFieldX->getAlign();
 		if (align == CATextField::Right)
 		{
 			x1 = m_iLabelWidth - m_obRect.size.width;
@@ -624,21 +624,22 @@ private:
 
 
 CATextField::CATextField()
-: m_pImgeView(NULL)
-, m_pTextField(NULL)
-, m_pBackgroundView(NULL)
-, m_pDelegate(NULL)
+: m_pBackgroundView(nullptr)
+, m_pImgeView(nullptr)
+, m_pTextField(nullptr)
+, m_pDelegate(nullptr)
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
 , m_bAllowkeyBoardHide(true)
 , m_cTextColor(CAColor_black)
 , m_cPlaceHdolderColor(CAColor_gray)
-, m_iFontSize(40)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
-, m_eClearBtn(None)
-, m_eAlign(Left)
-, m_eReturnType(Done)
+, m_iFontSize(40)
+, m_iMaxLenght(0)
+, m_eClearBtn(CATextField::ClearButtonMode::None)
+, m_eAlign(CATextField::Align::Left)
+, m_eReturnType(CATextField::ReturnType::Done)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -675,7 +676,7 @@ bool CATextField::resignFirstResponder()
 
     bool result = CAControl::resignFirstResponder();
 
-	if (m_eClearBtn == WhileEditing)
+	if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
 	{
 		setMarginImageRight(DSize(10,0), "");
 	}
@@ -691,7 +692,7 @@ bool CATextField::becomeFirstResponder()
 
 	bool result = CAControl::becomeFirstResponder();
 	const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
-	if (m_eClearBtn == WhileEditing)
+	if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
 	{
 		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), map.at("clearImage"));
 	}
@@ -788,13 +789,13 @@ bool CATextField::init()
     return true;
 }
 
-void CATextField::setTextFieldAlign(const TextFieldAlign& e)
+void CATextField::setAlign(CATextField::Align e)
 {
 	m_eAlign = e;
 	((CATextFieldWin32*)m_pTextField)->updateImage();
 }
 
-const CATextField::TextFieldAlign& CATextField::getTextFieldAlign()
+CATextField::Align CATextField::getAlign()
 {
 	return m_eAlign;
 }
@@ -852,7 +853,7 @@ void CATextField::setClearButtonMode(const ClearButtonMode& var)
 	m_eClearBtn = var;
 }
 
-const CATextField::ClearButtonMode& CATextField::getClearButtonMode()
+CATextField::ClearButtonMode CATextField::getClearButtonMode()
 {
 	return m_eClearBtn;
 }
@@ -994,22 +995,22 @@ const CAColor4B& CATextField::getTextColor()
 }
 
 
-void CATextField::setKeyboardType(const KeyboardType& var)
+void CATextField::setKeyboardType(KeyboardType type)
 {
 	m_eKeyBoardType = var;
 }
 
-const CATextField::KeyboardType& CATextField::getKeyboardType()
+CATextField::KeyboardType CATextField::getKeyboardType()
 {
 	return m_eKeyBoardType;
 }
 
-void CATextField::setReturnType(const ReturnType& var)
+void CATextField::setReturnType(CATextField::ReturnType var)
 {
 	m_eReturnType = var;
 }
 
-const CATextField::ReturnType& CATextField::getReturnType()
+CATextField::ReturnType CATextField::getReturnType()
 {
 	return m_eReturnType;
 }

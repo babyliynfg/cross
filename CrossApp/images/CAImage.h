@@ -31,21 +31,21 @@ class CC_DLL CAImage : public CAObject
 {
 public:
     
-    typedef enum
+    enum class PixelFormat
     {
-        PixelFormat_RGBA8888 = 0,
-        PixelFormat_RGB888,
-        PixelFormat_RGB565,
-        PixelFormat_A8,
-        PixelFormat_I8,
-        PixelFormat_AI88,
-        PixelFormat_RGBA4444,
-        PixelFormat_RGB5A1,
-        PixelFormat_DEFAULT
-    } PixelFormat;
+        RGBA8888 = 0,
+        RGB888,
+        RGB565,
+        A8,
+        I8,
+        AI88,
+        RGBA4444,
+        RGB5A1,
+        DEFAULT
+    };
     
     /** Supported formats for Image */
-    typedef enum
+    enum class Format
     {
         JPG,//! JPEG
         PNG,//! PNG
@@ -56,10 +56,10 @@ public:
         TGA,//! TGA
         RAW_DATA,//! Raw Data
         UNKOWN//! Unknown format
-    }
-    Format;
+    };
     
-    struct PixelFormatInfo {
+    struct PixelFormatInfo
+    {
         
         PixelFormatInfo(GLenum anInternalFormat, GLenum aFormat, GLenum aType, int aBpp, bool aCompressed, bool anAlpha)
         : internalFormat(anInternalFormat)

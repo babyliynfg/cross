@@ -154,7 +154,7 @@ void CADrawerController::viewDidDisappear()
 void CADrawerController::achieveLayout()
 {
     const CAInterfaceOrientation& orientation = CAApplication::getApplication()->getStatusBarOrientation();
-    if (orientation == CAInterfaceOrientationLandscape)
+    if (orientation == CAInterfaceOrientation::Landscape)
     {
         m_fDivision = this->getView()->getBounds().size.width - 120;
         

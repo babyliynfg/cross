@@ -615,7 +615,7 @@ void beginPushAnimation(float width, CAView* last, CAView* new_, CAObject* targe
     CAViewAnimation::setAnimationDelay(0.05f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationDelay(1/30.0f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     last->setFrameOrigin(DPoint(-width/3.0f, 0));
     CAViewAnimation::commitAnimations();
     
@@ -623,7 +623,7 @@ void beginPushAnimation(float width, CAView* last, CAView* new_, CAObject* targe
     CAViewAnimation::setAnimationDelay(0.05f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationDelay(1/30.0f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     CAViewAnimation::setAnimationDidStopSelector(target, selector);
     new_->setFrameOrigin(DPointZero);
     CAViewAnimation::commitAnimations();
@@ -638,14 +638,14 @@ void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, CAObject
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDelay(0.05f);
     CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     show->setFrameOrigin(DPointZero);
     CAViewAnimation::commitAnimations();
     
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDelay(0.05f);
     CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     CAViewAnimation::setAnimationDidStopSelector(target, selector);
     back->setFrameOrigin(DPoint(bounds.size.width + 10, 0));
     CAViewAnimation::commitAnimations();
@@ -1122,14 +1122,14 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         CAViewAnimation::beginAnimations("navigation_animation", NULL);
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.02f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         lastContainer->setFrameOrigin(DPointZero);
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("navigation_animation2", NULL);
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.03f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::popViewControllerFinish));
         backContainer->setFrameOrigin(DPoint(x, 0));
         CAViewAnimation::commitAnimations();
@@ -1139,14 +1139,14 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         CAViewAnimation::beginAnimations("navigation_animation", NULL);
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.03f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         lastContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("navigation_animation2", NULL);
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.02f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::homingViewControllerFinish));
         backContainer->setFrameOrigin(DPointZero);
         CAViewAnimation::commitAnimations();
@@ -1423,7 +1423,7 @@ void CATabBarController::viewDidLoad()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     if (atof(CADevice::getSystemVersionWithIOS()) >= 7.0f
         && m_iTabBarHeight == 0
-        && m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+        && m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
     {
         clearance = true;
     }
@@ -1434,7 +1434,7 @@ void CATabBarController::viewDidLoad()
     
     if (m_iTabBarHeight == 0)
     {
-        if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+        if (m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
         {
             m_iTabBarHeight = clearance ? 138 : 98;
         }
@@ -1444,7 +1444,7 @@ void CATabBarController::viewDidLoad()
         }
     }
     
-    if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+    if (m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
     {
         tabBarLayout.vertical.top = m_bTabBarHidden ? -m_iTabBarHeight : 0;
         tabBarLayout.vertical.height = m_iTabBarHeight;
@@ -1458,7 +1458,7 @@ void CATabBarController::viewDidLoad()
     DLayout containerLayout;
     containerLayout.horizontal = DHorizontalLayoutFill;
     
-    if (m_eTabBarVerticalAlignment == CABarVerticalAlignmentTop)
+    if (m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
     {
         containerLayout.vertical = DVerticalLayout_T_B(tabBarLayout.vertical.top + tabBarLayout.vertical.height, 0);
     }
@@ -1467,7 +1467,7 @@ void CATabBarController::viewDidLoad()
         containerLayout.vertical = DVerticalLayout_T_B(0, tabBarLayout.vertical.bottom + tabBarLayout.vertical.height);
     }
     
-    m_pContainer = CAPageView::createWithLayout(containerLayout, CAPageViewDirectionHorizontal);
+    m_pContainer = CAPageView::createWithLayout(containerLayout, CAPageView::Orientation::Horizontal);
     m_pContainer->setBackgroundColor(CAColor_clear);
     m_pContainer->setPageViewDelegate(this);
     m_pContainer->setScrollViewDelegate(this);
@@ -1730,12 +1730,12 @@ void CATabBarController::update(float dt)
     
     switch (m_eTabBarVerticalAlignment)
     {
-        case CABarVerticalAlignmentTop:
+        case CABarVerticalAlignment::Top:
         {
             tabBarLayout.vertical.top = y;
         }
             break;
-        case CABarVerticalAlignmentBottom:
+        case CABarVerticalAlignment::Bottom:
         {
             tabBarLayout.vertical.bottom = y;
         }

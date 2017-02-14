@@ -219,14 +219,14 @@ void CANavigationBar::showTitle()
     {
         m_pTitle = CAImageView::createWithImage(image);
         m_pTitle->setLayout(DLayout(DHorizontalLayout_L_R(180, 180), DVerticalLayout_T_B(12, 12)));
-        ((CAImageView*)m_pTitle)->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+        ((CAImageView*)m_pTitle)->setScaleType(CAImageView::ScaleType::FitImageInside);
         m_pContentView->addSubview(m_pTitle);
     }
     else
     {
         CALabel* title = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(180, 180), DVerticalLayoutFill));
-        title->setTextAlignment(CATextAlignmentCenter);
-        title->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        title->setTextAlignment(CATextAlignment::Center);
+        title->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         title->setNumberOfLine(1);
 		title->setColor(m_cTitleColor);
         title->setFontSize(36);
@@ -446,8 +446,8 @@ bool CABadgeView::init()
     this->addSubview(m_pBackground);
     
     m_pTextView = CALabel::createWithLayout(DLayout(DHorizontalLayout_W_C(180, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
-    m_pTextView->setTextAlignment(CATextAlignmentCenter);
-    m_pTextView->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    m_pTextView->setTextAlignment(CATextAlignment::Center);
+    m_pTextView->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     m_pTextView->setFontSize(30);
     m_pTextView->setColor(CAColor_white);
     m_pTextView->setBold(true);
@@ -1012,7 +1012,7 @@ void CATabBar::setSelectedAtIndex(int index)
             
             CAViewAnimation::beginAnimations("", NULL);
             CAViewAnimation::setAnimationDuration(0.3f);
-            CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
             m_pSelectedIndicatorView->setFrame(rect);
             CAViewAnimation::commitAnimations();
         }

@@ -90,7 +90,7 @@ static void* networkThread(void *data)
 
         switch (request->getRequestType())
         {
-            case CAHttpRequest::kHttpGet: // HTTP GET
+            case CAHttpRequest::Type::Get: // HTTP GET
                 retValue = processGetTask(request,
                                           writeData, 
                                           response->getResponseData(), 
@@ -99,7 +99,7 @@ static void* networkThread(void *data)
                                           response->getResponseHeader());
                 break;
             
-            case CAHttpRequest::kHttpPost: // HTTP POST
+            case CAHttpRequest::Type::Post: // HTTP POST
                 retValue = processPostTask(request,
                                            writeData, 
                                            response->getResponseData(), 
@@ -108,7 +108,7 @@ static void* networkThread(void *data)
                                            response->getResponseHeader());
                 break;
 
-            case CAHttpRequest::kHttpPut:
+            case CAHttpRequest::Type::Put:
                 retValue = processPutTask(request,
                                           writeData,
                                           response->getResponseData(),
@@ -117,7 +117,7 @@ static void* networkThread(void *data)
                                           response->getResponseHeader());
                 break;
 
-            case CAHttpRequest::kHttpDelete:
+            case CAHttpRequest::Type::Delete:
                 retValue = processDeleteTask(request,
                                              writeData,
                                              response->getResponseData(),
@@ -126,7 +126,7 @@ static void* networkThread(void *data)
                                              response->getResponseHeader());
                 break;
 
-			case CAHttpRequest::kHttpPostFile:
+			case CAHttpRequest::Type::PostFile:
 				retValue = processPostFileTask(request,
 											writeData,
 											response->getResponseData(),

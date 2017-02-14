@@ -55,21 +55,21 @@ public:
 class CC_DLL CATextView : public CAControl
 {
 public:
-    typedef enum
+    enum class Align : int
     {
         Left = 0,
         Center,
         Right
-    }TextViewAlign;
+    };
     
     //return type
-    typedef enum
+    enum class ReturnType : int
     {
-        Default=0,
+        Default = 0,
         Done,
         Send,
         Next
-    }ReturnType;
+    };
     
 public:
     CATextView();
@@ -100,11 +100,11 @@ public:
     //fontSize
     CC_PROPERTY_PASS_BY_REF(int, m_iFontSize, FontSize);
     
-    //TextViewAlign
-    CC_PROPERTY_PASS_BY_REF(TextViewAlign,m_eAlign,TextViewAlign);
+    //Align
+    CC_PROPERTY(CATextView::Align, m_eAlign, Align);
     
     //returnType       default:ReturnTypeDefault
-    CC_PROPERTY_PASS_BY_REF(ReturnType, m_eReturnType, ReturnType);
+    CC_PROPERTY(CATextView::ReturnType, m_eReturnType, ReturnType);
     
     //BackgroundImage
     void setBackgroundImage(CAImage* image);

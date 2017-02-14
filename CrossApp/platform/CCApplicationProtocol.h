@@ -38,7 +38,7 @@ public:
 
     virtual void setAnimationInterval(double interval) = 0;
 
-    virtual ccLanguageType getCurrentLanguage() = 0;
+    virtual LanguageType getCurrentLanguage() = 0;
 
     virtual TargetPlatform getTargetPlatform() = 0;
 };

@@ -14,13 +14,12 @@
 
 NS_CC_BEGIN
 
-typedef enum
+enum class CADeviceIdiom : int
 {
-    CADeviceIdiomUnknown = -1,
-    CADeviceIdiomPad = 0,
-    CADeviceIdiomPhone = 1
-}
-CADeviceIdiom;
+    Unknown = -1,
+    iPad = 0,
+    iPhone = 1
+};
 
 
 class CC_DLL CADensityDpi

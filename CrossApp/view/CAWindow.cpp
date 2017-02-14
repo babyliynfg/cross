@@ -100,7 +100,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.1f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWindow::presentEnd));
         view->setLayout(DLayoutFill);
         CAViewAnimation::commitAnimations();
@@ -137,7 +137,7 @@ void CAWindow::dismissModalViewController(bool animated)
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.1f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveLinear);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWindow::dismissEnd));
         DLayout layout = view->getLayout();
         float y = m_obContentSize.height;

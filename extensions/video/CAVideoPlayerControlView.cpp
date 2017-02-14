@@ -125,23 +125,59 @@ void CAVideoPlayerControlView::buildCtrlViews()
     CAImage* barImage = CAImage::create("source_material/grayvdo_progress_bar.png");
     m_playSlider = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(32, 32), DVerticalLayout_T_H(25, 56)));
     m_playSlider->setThumbTintImage(barImage);
-    m_playSlider->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onSlideDragging));
-    m_playSlider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerControlView::onSlideChanged));
     bottomPanel->addSubview(m_playSlider);
+    
+    m_playSlider->setTarget([=](CASlider* slider, float value){
+        
+        m_playTimeLabel->setText(formatTimeInterval(m_glView->getDuration() * m_playSlider->getValue(), false).append(" / ").append(formatTimeInterval(m_glView->getDuration() - 1, false)));
+        
+    });
+    
+    m_playSlider->setTargetForTouchUpSide([=](CASlider* slider, float value){
+        
+        float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
+        m_glView->setPosition(moviePosition);
+        
+        if (m_glView)
+        {
+            m_glView->play();
+        }
+        
+    });
+    
     
     // Play Pause Button
     CAImage* backImage = CAImage::create("source_material/vdo_play.png");
     CAImage* backImage_h = CAImage::create("source_material/vdo_play_down.png");
-    m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButtonTypeCustom);
-    m_playButton->setImageForState(CAControlStateNormal, backImage);
-    m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
-    m_playButton->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onButtonPause), CAControlEventTouchUpInSide);
+    m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButton::Type::Custom);
+    m_playButton->setImageForState(CAControl::State::Normal, backImage);
+    m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
+    m_playButton->addTarget([=](CAButton* btn){
+        if (m_glView == NULL)
+            return;
+        
+        m_bChanged = true;
+        
+        if (m_glView->isPlaying())
+        {
+            m_glView->pause();
+            m_bPlaying = false;
+        }
+        else
+        {
+            m_glView->play();
+            m_bPlaying = true;
+        }
+        updatePlayButton();
+    }, CAButton::Event::TouchUpInSide);
+    
+    
     bottomPanel->addSubview(m_playButton);
     
     // play time
     m_playTimeLabel = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_W(120, 200), DVerticalLayout_T_H(96, 56)));
     m_playTimeLabel->setFontSize(32);
-    m_playTimeLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    m_playTimeLabel->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     m_playTimeLabel->setColor(ccc4(255, 255, 255, 255));
     m_playTimeLabel->setText("00:00 / 00:00");
     bottomPanel->addSubview(m_playTimeLabel);
@@ -158,15 +194,15 @@ void CAVideoPlayerControlView::updatePlayButton()
 	{
 		CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
 		CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
-		m_playButton->setImageForState(CAControlStateNormal, backImage);
-		m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
+        m_playButton->setImageForState(CAControl::State::Normal, backImage);
+        m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
 	} 
 	else 
 	{
 		CAImage* backImage = CAImage::create("source_material/vdo_play.png");
 		CAImage* backImage_h = CAImage::create("source_material/vdo_play_down.png");
-		m_playButton->setImageForState(CAControlStateNormal, backImage);
-		m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
+        m_playButton->setImageForState(CAControl::State::Normal, backImage);
+        m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
 	}
 }
 
@@ -193,51 +229,6 @@ std::string CAVideoPlayerControlView::formatTimeInterval(float seconds, bool isL
 	}
 
 	return std::string(output);
-}
-
-void CAVideoPlayerControlView::onSlideDragging(CAControl* control, DPoint point)
-{
-    m_playTimeLabel->setText(formatTimeInterval(m_glView->getDuration() * m_playSlider->getValue(), false).append(" / ").append(formatTimeInterval(m_glView->getDuration() - 1, false)));
-}
-
-void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
-{
-	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
-	m_glView->setPosition(moviePosition);
-	
-	if (m_glView)
-	{
-		m_glView->play();
-	}
-}
-
-void CAVideoPlayerControlView::onButtonPause(CAControl* control, DPoint point)
-{
-	if (m_glView == NULL)
-		return;
-
-    m_bChanged = true;
-    
-	if (m_glView->isPlaying())
-	{
-		m_glView->pause();
-        m_bPlaying = false;
-	}
-	else
-	{
-		m_glView->play();
-        m_bPlaying = true;
-	}
-	updatePlayButton();
-}
-
-void CAVideoPlayerControlView::onButtonBack(CAControl* control, DPoint point)
-{
-	if (m_pPlayerControlViewDelegate)
-	{
-		m_pPlayerControlViewDelegate->onBackButtonClicked(this);
-	}
-	this->removeFromSuperview();
 }
 
 void CAVideoPlayerControlView::updatePlayUI(float t)

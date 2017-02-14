@@ -9,20 +9,20 @@
 NS_CC_BEGIN
 
 DRect::DRect(void)
-:m_eType(Frame)
+:m_eType(DRect::Type::Frame)
 {
     setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 DRect::DRect(const DPoint& orgin, const DSize& size)
-:m_eType(Frame)
+:m_eType(DRect::Type::Frame)
 {
     setRect(orgin.x, orgin.y, size.width, size.height);
 }
 
 
 DRect::DRect(float x, float y, float width, float height)
-:m_eType(Frame)
+:m_eType(DRect::Type::Frame)
 {
     setRect(x, y, width, height);
 }
@@ -89,32 +89,32 @@ bool DRect::equals(const DRect& rect) const
 
 float DRect::getMaxX() const
 {
-    return m_eType == Center ? (float)(origin.x + size.width / 2) : (float)(origin.x + size.width);
+    return m_eType == DRect::Type::Center ? (float)(origin.x + size.width / 2) : (float)(origin.x + size.width);
 }
 
 float DRect::getMidX() const
 {
-    return m_eType == Center ? (float)origin.x : (float)(origin.x + size.width / 2);
+    return m_eType == DRect::Type::Center ? (float)origin.x : (float)(origin.x + size.width / 2);
 }
 
 float DRect::getMinX() const
 {
-    return m_eType == Center ? (float)(origin.x - size.width / 2) : (float)origin.x;
+    return m_eType == DRect::Type::Center ? (float)(origin.x - size.width / 2) : (float)origin.x;
 }
 
 float DRect::getMaxY() const
 {
-    return m_eType == Center ? (float)(origin.y + size.height / 2) : (float)(origin.y + size.height);
+    return m_eType == DRect::Type::Center ? (float)(origin.y + size.height / 2) : (float)(origin.y + size.height);
 }
 
 float DRect::getMidY() const
 {
-    return m_eType == Center ? (float)origin.y : (float)(origin.y + size.height / 2);
+    return m_eType == DRect::Type::Center ? (float)origin.y : (float)(origin.y + size.height / 2);
 }
 
 float DRect::getMinY() const
 {
-    return m_eType == Center ? (float)(origin.y - size.height / 2) : (float)origin.y;
+    return m_eType == DRect::Type::Center ? (float)(origin.y - size.height / 2) : (float)origin.y;
 }
 
 bool DRect::containsPoint(const DPoint& point) const
@@ -146,7 +146,7 @@ void DRect::InflateRect(float v)
 	size.width += 2 * v;
 	size.height += 2 * v;
 
-	if (m_eType == Frame)
+	if (m_eType == DRect::Type::Frame)
 	{
 		origin.x -= v;
 		origin.y -= v;
@@ -157,7 +157,7 @@ void DRect::InflateRect(float hor, float ver)
 {
     size.width += hor;
     size.height += ver;
-    if (m_eType == Frame)
+    if (m_eType == DRect::Type::Frame)
     {
         origin.x -= hor/2;
         origin.y -= ver/2;
@@ -168,7 +168,7 @@ void DRect::InflateRect(float l, float t, float r, float b)
 {
 	size.width += (l+r);
 	size.height += (t+b);
-	if (m_eType == Frame)
+	if (m_eType == DRect::Type::Frame)
 	{
 		origin.x -= l;
 		origin.y -= t;

@@ -118,28 +118,25 @@ class CC_DLL CAAutoCollectionView : public CAScrollView
 
 public:
     
-    typedef enum
+    enum class Orientation
     {
         Horizontal,
         Vertical
-    }
-    Orientation;
+    };
     
-    typedef enum
+    enum class CellHoriAlign
     {
-        HoriAlignLeft,
-        HoriAlignCenter,
-        HoriAlignRight
-    }
-    CellHoriAlign;
+        Left,
+        Center,
+        Right
+    };
     
-    typedef enum
+    enum class CellVertAlign
     {
-        VertAlignTop,
-        VertAlignCenter,
-        VertAlignBottom
-    }
-    CellVertAlign;
+        Top,
+        Center,
+        Bottom
+    };
     
 public:
     
@@ -189,10 +186,10 @@ public:
     
     CC_SYNTHESIZE(unsigned int, m_nCollectionFooterHeight, CollectionFooterHeight);
 
-	CC_PROPERTY_PASS_BY_REF(Orientation, m_eOrientation, Orientation);
+    CC_PROPERTY(CAAutoCollectionView::Orientation, m_eOrientation, Orientation);
     
-	CC_SYNTHESIZE_PASS_BY_REF(CellHoriAlign, m_eCellHoriAlign, CellHoriAlign);
-	CC_SYNTHESIZE_PASS_BY_REF(CellVertAlign, m_eCellVertAlign, CellVertAlign);
+    CC_SYNTHESIZE(CAAutoCollectionView::CellHoriAlign, m_eCellHoriAlign, CellHoriAlign);
+	CC_SYNTHESIZE(CAAutoCollectionView::CellVertAlign, m_eCellVertAlign, CellVertAlign);
 
 	CC_SYNTHESIZE(unsigned int, m_nHoriCellInterval, HoriCellInterval);
 	CC_SYNTHESIZE(unsigned int, m_nVertCellInterval, VertCellInterval);

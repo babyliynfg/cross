@@ -28,22 +28,28 @@ void CC_DLL CAMessageBox(const char * pszTitle, const char * pszMsg);
 /**
 @brief Enum the language type supported now
 */
-typedef enum LanguageType
+enum class LanguageType
 {
-    kLanguageEnglish = 0,
-    kLanguageChinese,
-    kLanguageFrench,
-    kLanguageItalian,
-    kLanguageGerman,
-    kLanguageSpanish,
-    kLanguageDutch,
-    kLanguageRussian,
-    kLanguageKorean,
-    kLanguageJapanese,
-    kLanguageHungarian,
-    kLanguagePortuguese,
-    kLanguageArabic
-} ccLanguageType;
+    ENGLISH = 0,
+    CHINESE,
+    FRENCH,
+    ITALIAN,
+    GERMAN,
+    SPANISH,
+    DUTCH,
+    RUSSIAN,
+    KOREAN,
+    JAPANESE,
+    HUNGARIAN,
+    PORTUGUESE,
+    ARABIC,
+    NORWEGIAN,
+    POLISH,
+    TURKISH,
+    UKRAINIAN,
+    ROMANIAN,
+    BULGARIAN
+};
 
 // end of platform group
 /// @}

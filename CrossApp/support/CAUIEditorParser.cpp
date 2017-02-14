@@ -127,7 +127,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("scaleType"))
         {
-            imageView->setImageViewScaleType((CAImageViewScaleType)atoi(value));
+            imageView->setScaleType((CAImageView::ScaleType)atoi(value));
         }
     }
     else if (contrlType.compare("CAScale9ImageView") == 0)
@@ -611,7 +611,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 		if (const char* value = viewXml->Attribute("textFieldAlign"))
 		{
-			textField->setTextFieldAlign(CATextField::TextFieldAlign(atoi(value)));
+			textField->setAlign((CATextField::Align)(atoi(value)));
 		}
 
 		if (const char* value = viewXml->Attribute("fontSize"))
@@ -943,7 +943,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 		if (const char* value = viewXml->Attribute("textViewAlign"))
 		{
-			textView->setTextViewAlign(CATextView::TextViewAlign(atoi(value)));
+			textView->setAlign(CATextView::Align(atoi(value)));
 		}
 
 		if (const char* value = viewXml->Attribute("fontSize"))
@@ -1027,7 +1027,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
     }
     else if (contrlType.compare("CAStepper") == 0)
     {
-        CAStepper* stepper = CAStepper::create((CAStepperOrientation)(atoi(viewXml->Attribute("orientation"))));
+        CAStepper* stepper = CAStepper::create((CAStepper::Orientation)(atoi(viewXml->Attribute("orientation"))));
         superview->addSubview(stepper);
         
         const char* key = viewXml->Attribute("textTag");
@@ -1110,7 +1110,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("style"))
         {
-            activity->setStyle((CAActivityIndicatorViewStyle)(atoi(value)));
+            activity->setStyle((CAActivityIndicatorView::Style)(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("imageNormal"))
@@ -1232,7 +1232,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
                                           atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
 
-		CADatePickerView* datePicker = CADatePickerView::createWithLayout(layout, (CADatePickerMode)atoi(viewXml->Attribute("mode")));
+        CADatePickerView* datePicker = CADatePickerView::createWithLayout(layout, (CADatePickerView::Mode)atoi(viewXml->Attribute("mode")));
 		superview->addSubview(datePicker);
 		
         const char* key = viewXml->Attribute("textTag");
@@ -1525,7 +1525,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if(bool(atoi(value)))
             {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Header);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Header);
                 listView->setHeaderRefreshView(pullview);
             }
         }
@@ -1534,7 +1534,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if(bool(atoi(value)))
             {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Footer);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Footer);
                 listView->setFooterRefreshView(pullview);
             }
         }
@@ -1605,7 +1605,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if(bool(atoi(value)))
             {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Header);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Header);
                 tableView->setHeaderRefreshView(pullview);
             }
         }
@@ -1614,7 +1614,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if(bool(atoi(value)))
             {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Footer);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Footer);
                 tableView->setFooterRefreshView(pullview);
             }
         }
@@ -1721,7 +1721,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if(bool(atoi(value)))
             {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Header);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Header);
                 collectionView->setHeaderRefreshView(pullview);
             }
         }
@@ -1730,7 +1730,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if(bool(atoi(value)))
             {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Footer);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Footer);
                 collectionView->setFooterRefreshView(pullview);
             }
         }
@@ -1826,7 +1826,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if(bool(atoi(value)))
             {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Header);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Header);
                 waterfallView->setHeaderRefreshView(pullview);
             }
         }
@@ -1835,7 +1835,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if(bool(atoi(value)))
             {
-                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Footer);
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Footer);
                 waterfallView->setFooterRefreshView(pullview);
             }
         }

@@ -51,12 +51,11 @@ class CC_DLL CAListView : public CAScrollView
 {
 public:
     
-    typedef enum
+    enum class Orientation : int
     {
         Horizontal = 0,
         Vertical
-    }
-    Orientation;
+    };
     
 public:
     
@@ -94,7 +93,7 @@ public:
     
     const CAVector<CAListViewCell*>& displayingListCell();
     
-	CC_PROPERTY_PASS_BY_REF(Orientation, m_eOrientation, Orientation);
+	CC_PROPERTY(CAListView::Orientation, m_eOrientation, Orientation);
 
     CC_SYNTHESIZE(CAListViewDataSource*, m_pListViewDataSource, ListViewDataSource);
     

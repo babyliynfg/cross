@@ -19,9 +19,9 @@ NS_CC_BEGIN
 
 CALabel::CALabel()
 :m_nNumberOfLine(0)
-,m_nTextAlignment(CATextAlignmentLeft)
+,m_nTextAlignment(CATextAlignment::Left)
 ,m_nText("")
-,m_nVerticalTextAlignmet(CAVerticalTextAlignmentTop)
+,m_nVerticalTextAlignmet(CAVerticalTextAlignment::Top)
 ,m_nDimensions(DSizeZero)
 ,m_cLabelSize(DSizeZero)
 ,pTextHeight(0)
@@ -177,15 +177,15 @@ void CALabel::updateImage()
 
     switch (m_nVerticalTextAlignmet)
     {
-        case CAVerticalTextAlignmentTop:
+        case CAVerticalTextAlignment::Top:
             pTextHeight = 0;
             break;
             
-        case CAVerticalTextAlignmentCenter:
+        case CAVerticalTextAlignment::Center:
             pTextHeight = (m_obContentSize.height - rect.size.height) / 2;
             break;
             
-        case CAVerticalTextAlignmentBottom:
+        case CAVerticalTextAlignment::Bottom:
             pTextHeight = m_obContentSize.height - rect.size.height;
             break;
             

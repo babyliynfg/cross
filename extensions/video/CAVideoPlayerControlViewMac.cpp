@@ -143,7 +143,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
     // play time
     m_playTimeLabel = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_W(120, 200), DVerticalLayout_T_H(96, 56)));
     m_playTimeLabel->setFontSize(32);
-    m_playTimeLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    m_playTimeLabel->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     m_playTimeLabel->setColor(ccc4(255, 255, 255, 255));
     m_playTimeLabel->setText("00:00 / 00:00");
     bottomPanel->addSubview(m_playTimeLabel);

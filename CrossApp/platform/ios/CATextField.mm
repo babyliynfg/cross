@@ -208,20 +208,22 @@
 
 NS_CC_BEGIN
 CATextField::CATextField()
-: m_pBackgroundView(NULL)
-, m_pImgeView(NULL)
-, m_pTextField(NULL)
-, m_pDelegate(NULL)
+: m_pBackgroundView(nullptr)
+, m_pImgeView(nullptr)
+, m_pTextField(nullptr)
+, m_pDelegate(nullptr)
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
 , m_bAllowkeyBoardHide(true)
+, m_cTextColor(CAColor_black)
+, m_cPlaceHdolderColor(CAColor_gray)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)
 , m_iMaxLenght(0)
-, m_eClearBtn(None)
-, m_eAlign(Left)
-, m_eReturnType(Done)
+, m_eClearBtn(CATextField::ClearButtonMode::None)
+, m_eAlign(CATextField::Align::Left)
+, m_eReturnType(CATextField::ReturnType::Done)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -471,7 +473,7 @@ void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     this->ccTouchEnded(pTouch, pEvent);
 }
 
-void CATextField::setKeyboardType(const KeyboardType& type)
+void CATextField::setKeyboardType(KeyboardType type)
 {
     m_eKeyBoardType = type;
     
@@ -503,27 +505,27 @@ void CATextField::setKeyboardType(const KeyboardType& type)
     textField_iOS.keyboardType = keyBoardType;
 }
 
-const CATextField::KeyboardType& CATextField::getKeyboardType()
+CATextField::KeyboardType CATextField::getKeyboardType()
 {
     return m_eKeyBoardType;
 }
 
-void CATextField::setReturnType(const ReturnType &var)
+void CATextField::setReturnType(CATextField::ReturnType var)
 {
     m_eReturnType = var;
     
     UIReturnKeyType keyBoardReturnType = UIReturnKeyDone;
     switch (var) {
-        case Go:
+        case CATextField::ReturnType::Go:
             keyBoardReturnType = UIReturnKeyGo;
             break;
-        case Next:
+        case CATextField::ReturnType::Next:
             keyBoardReturnType = UIReturnKeyNext;
             break;
-        case Search:
+        case CATextField::ReturnType::Search:
             keyBoardReturnType = UIReturnKeySearch;
             break;
-        case Send:
+        case CATextField::ReturnType::Send:
             keyBoardReturnType = UIReturnKeySend;
             break;
         default:
@@ -534,7 +536,7 @@ void CATextField::setReturnType(const ReturnType &var)
     textField_iOS.returnKeyType = keyBoardReturnType;
 }
 
-const CATextField::ReturnType& CATextField::getReturnType()
+CATextField::ReturnType CATextField::getReturnType()
 {
     return m_eReturnType;
 }
@@ -653,7 +655,7 @@ int CATextField::getMarginLeft()
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_eClearBtn == None)
+    if (m_eClearBtn == CATextField::ClearButtonMode::None)
     {
         m_iMarginRight = var;
         
@@ -714,14 +716,14 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
     this->delayShowImage();
 }
 
-void CATextField::setClearButtonMode(const ClearButtonMode &var)
+void CATextField::setClearButtonMode(CATextField::ClearButtonMode var)
 {
     m_eClearBtn = var;
     
     UITextFieldViewMode mode= UITextFieldViewModeNever;
     switch (var)
     {
-        case WhileEditing:
+        case CATextField::ClearButtonMode::WhileEditing:
             mode = UITextFieldViewModeWhileEditing;
             textField_iOS.rightViewMode = UITextFieldViewModeNever;
             break;
@@ -735,24 +737,24 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
     this->delayShowImage();
 }
 
-const CATextField::ClearButtonMode& CATextField::getClearButtonMode()
+CATextField::ClearButtonMode CATextField::getClearButtonMode()
 {
     return m_eClearBtn;
 }
 
-void CATextField::setTextFieldAlign(const TextFieldAlign &var)
+void CATextField::setAlign(CATextField::Align var)
 {
     m_eAlign = var;
     
     switch (var)
     {
-        case Center:
+        case CATextField::Align::Center:
             textField_iOS.textAlignment = NSTextAlignmentCenter;
             break;
-        case Left:
+        case CATextField::Align::Left:
             textField_iOS.textAlignment = NSTextAlignmentLeft;
             break;
-        case Right:
+        case CATextField::Align::Right:
             textField_iOS.textAlignment = NSTextAlignmentRight;
             break;
         default:
@@ -762,7 +764,7 @@ void CATextField::setTextFieldAlign(const TextFieldAlign &var)
     this->delayShowImage();
 }
 
-const CATextField::TextFieldAlign& CATextField::getTextFieldAlign()
+CATextField::Align CATextField::getAlign()
 {
     return m_eAlign;
 }

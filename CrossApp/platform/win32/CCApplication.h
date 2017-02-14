@@ -29,7 +29,7 @@ public:
 
     /* override functions */
     virtual void setAnimationInterval(double interval);
-    virtual ccLanguageType getCurrentLanguage();
+    virtual LanguageType getCurrentLanguage();
     
     /**
      @brief Get target platform

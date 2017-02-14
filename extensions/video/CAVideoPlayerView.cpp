@@ -377,7 +377,7 @@ void CAVideoPlayerView::showLoadingView(bool on)
 	if (m_pLoadingView == NULL && on)
 	{
 		m_pLoadingView = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-		m_pLoadingView->setStyle(CAActivityIndicatorViewStyleWhite);
+        m_pLoadingView->setStyle(CAActivityIndicatorView::Style::White);
 		this->addSubview(m_pLoadingView);
 	}
     

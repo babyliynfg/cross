@@ -47,13 +47,13 @@ public:
     void InflateRect(float hor, float ver);
     void InflateRect(float l, float t, float r, float b);
     
-    typedef enum
+    enum class Type
     {
         Frame,
         Center
-    }Type;
+    };
     
-    CC_SYNTHESIZE_IS(Type, m_eType, Type);
+    CC_SYNTHESIZE_IS(DRect::Type, m_eType, Type);
 };
 
 const DRect DRectZero = DRect();

@@ -23,7 +23,7 @@ CAPageControl::CAPageControl()
 , m_currentPageIndicatorTintColor(ccc4(255, 255, 255, 255))
 , m_pPageImage(NULL)
 , m_pSelectPageImage(NULL)
-, m_style(CAPageControlStyleDot)
+, m_style(CAPageControl::Style::Dot)
 {
     
 }
@@ -152,7 +152,7 @@ void CAPageControl::onEnter()
         {
             CAImageView* view;
             float w = getFrame().size.width/m_numberOfPages;
-            w = (m_style == CAPageControlStyleDot) ? 14 : (w-10);
+            w = (m_style == CAPageControl::Style::Dot) ? 14 : (w-10);
             if (i == m_currentPage)
             {
                 view = CAImageView::createWithImage(m_pSelectPageImage);
@@ -231,22 +231,22 @@ void CAPageControl::setTouchEnabled(bool enable)
     CAControl::setTouchEnabled(enable);
 }
 
-void CAPageControl::setStyle(const CAPageControlStyle &var)
+void CAPageControl::setStyle(CAPageControl::Style var)
 {
     if (m_style != var)
     {
         m_style = var;
         const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPageControl");
         switch (m_style) {
-            case CAPageControlStyleDot:
+            case CAPageControl::Style::Dot:
                 setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_custom")));
                 setCurrIndicatorImage(CAImage::create(map.at("backgroundView_selected_custom")));
                 break;
-            case CAPageControlStyleRound:
+            case CAPageControl::Style::Round:
                 setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_round")));
                 setCurrIndicatorImage(CAImage::create(map.at("backgroundView_selected_round")));
                 break;
-            case CAPageControlStyleRectangle:
+            case CAPageControl::Style::Rectangle:
                 setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_rect")));
                 setCurrIndicatorImage(CAImage::create(map.at("backgroundView_selected_rect")));
                 break;
@@ -257,7 +257,7 @@ void CAPageControl::setStyle(const CAPageControlStyle &var)
     }
 }
 
-const CAPageControlStyle& CAPageControl::getStyle()
+CAPageControl::Style CAPageControl::getStyle()
 {
     return m_style;
 }

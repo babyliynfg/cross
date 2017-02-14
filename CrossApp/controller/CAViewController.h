@@ -266,7 +266,7 @@ public:
     virtual ~CATabBarController();
     
     virtual bool initWithViewControllers(const CAVector<CAViewController*>& viewControllers,
-                                         CABarVerticalAlignment var = CABarVerticalAlignmentBottom);
+                                         CABarVerticalAlignment var = CABarVerticalAlignment::Bottom);
     
     bool showSelectedViewController(CAViewController* viewController);
     

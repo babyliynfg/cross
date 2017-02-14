@@ -54,7 +54,7 @@ class CC_DLL CATextField : public CAControl
 public:
 
     //keyBoard type
-    typedef enum
+    enum class KeyboardType : int
     {
         Default = 0,
         NumbersAndPunctuation,
@@ -63,31 +63,31 @@ public:
         PhonePad,
         NamePhonePad,
         EmailAddress,
-    }KeyboardType;
+    };
     
     //return type
-    typedef enum
+    enum class ReturnType : int
     {
-		Done=0,
+		Done = 0,
         Go,
         Next,
         Search,
         Send
-    }ReturnType;
+    };
     
     //clear button Mode
-    typedef enum
+    enum class ClearButtonMode : int
     {
         None = 0,
         WhileEditing
-    }ClearButtonMode;
+    };
 
-	typedef enum 
+	enum class Align : int
 	{
-        Left,
+        Left = 0,
 		Center,
 		Right
-	}TextFieldAlign;
+	};
     
 public:
     
@@ -116,7 +116,7 @@ public:
 
     //edit clearButton default:ClearButtonNone
     //MarginsRight set,clearbutton will be clear
-    CC_PROPERTY_PASS_BY_REF(ClearButtonMode, m_eClearBtn, ClearButtonMode);
+    CC_PROPERTY(CATextField::ClearButtonMode, m_eClearBtn, ClearButtonMode);
     
     //textfield Margins    default:left 16,right 16
     CC_PROPERTY(int, m_iMarginLeft, MarginLeft);
@@ -138,13 +138,13 @@ public:
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_cTextColor, TextColor);
     
     //keyBoardType     default:KeyboardTypeDefault
-    CC_PROPERTY_PASS_BY_REF(KeyboardType, m_eKeyBoardType, KeyboardType);
+    CC_PROPERTY(CATextField::KeyboardType, m_eKeyBoardType, KeyboardType);
     
     //returnType       default:ReturnTypeDone
-    CC_PROPERTY_PASS_BY_REF(ReturnType, m_eReturnType, ReturnType);
+    CC_PROPERTY(CATextField::ReturnType, m_eReturnType, ReturnType);
     
-	//textFieldAlign  default:left
-	CC_PROPERTY_PASS_BY_REF(TextFieldAlign, m_eAlign, TextFieldAlign);
+	//Align  default:left
+    CC_PROPERTY(CATextField::Align, m_eAlign, Align);
     
     //Password, the default is false
     CC_PROPERTY_IS(bool, m_bSecureTextEntry, SecureTextEntry);

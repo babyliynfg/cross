@@ -16,15 +16,15 @@ class CC_DLL CAHttpRequest : public CAObject
 {
 public:
     /** Use this enum type as param in setReqeustType(param) */
-    typedef enum
+    enum class Type : int
     {
-		kHttpGet = 0,
-		kHttpPost,
-        kHttpPostFile,
-		kHttpPut,
-		kHttpDelete,
-        kHttpUnkown,
-    } HttpRequestType;
+		Get = 0,
+		Post,
+        PostFile,
+		Put,
+		Delete,
+        Unkown,
+    };
     
     /** Constructor 
         Because HttpRequest object will be used between UI thead and network thread,
@@ -34,7 +34,7 @@ public:
      */
     CAHttpRequest()
     {
-        _requestType = kHttpUnkown;
+        _requestType = Type::Unkown;
         _url.clear();
         _requestData.clear();
         _tag.clear();
@@ -69,12 +69,12 @@ public:
     /** Required field for HttpRequest object before being sent.
         kHttpGet & kHttpPost is currently supported
      */
-    inline void setRequestType(HttpRequestType type)
+    inline void setRequestType(CAHttpRequest::Type type)
     {
         _requestType = type;
     };
     /** Get back the kHttpGet/Post/... enum value */
-    inline HttpRequestType getRequestType()
+    inline CAHttpRequest::Type getRequestType()
     {
         return _requestType;
     };
@@ -169,16 +169,16 @@ public:
     
 protected:
     // properties
-    HttpRequestType             _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
-    std::string                 _url;            /// target url that this request is sent to
-    std::string		            _requestData;    /// used for POST
-    std::string                 _tag;            /// user defined tag, to identify different requests in response callback
-    CAObject*          _pTarget;        /// callback target of pSelector function
-    SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCHttpClient *sender, CCHttpResponse * response)
-    std::vector<std::string>    _headers;		      /// custom http headers
-	std::string					_fileNameToPost;
-    ssize_t                     _threadID;
-};
+    CAHttpRequest::Type  _requestType;  /// kHttpRequestGet, kHttpRequestPost or other enums
+    std::string                     _url;          /// target url that this request is sent to
+    std::string                     _requestData;  /// used for POST
+    std::string                     _tag;          /// user defined tag, to identify different requests in response callback
+    CAObject*                       _pTarget;      /// callback target of pSelector function
+    SEL_HttpResponse                _pSelector;    /// callback function, e.g. MyLayer::onHttpResponse(CAHttpClient *sender, CAHttpResponse * response)
+    std::vector<std::string>        _headers;      /// custom http headers
+	std::string                     _fileNameToPost;
+
+    ssize_t                         _threadID;};
 
 NS_CC_END
 

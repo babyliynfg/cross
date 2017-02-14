@@ -18,7 +18,7 @@ NS_CC_BEGIN
 CAActivityIndicatorView::CAActivityIndicatorView()
 : m_bStopAnimation(false)
 , m_hidesWhenStopped(true)
-, m_style(CAActivityIndicatorViewStyleGrayLarge)
+, m_style(CAActivityIndicatorView::Style::GrayLarge)
 , m_color(ccc4(255, 255, 255, 255))
 , m_duration(0.1f)
 , m_pImageView(NULL)
@@ -92,7 +92,7 @@ bool CAActivityIndicatorView::init()
         return false;
     }
     this->CAView::setColor(CAColor_clear);
-    m_style = CAActivityIndicatorViewStyleGrayLarge;
+    m_style = CAActivityIndicatorView::Style::GrayLarge;
     
     return true;
 }
@@ -111,11 +111,11 @@ void CAActivityIndicatorView::onExit()
     stopAnimating();
 }
 
-void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
+void CAActivityIndicatorView::setStyle(CAActivityIndicatorView::Style style)
 {
     m_style = style;
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAActivityIndicatorView");
-    if (m_style != CAActivityIndicatorViewStyleImage)
+    if (m_style != CAActivityIndicatorView::Style::Image)
     {
         DRect center = this->getBounds();
         center.origin = center.size/2;
@@ -123,24 +123,24 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
         
         switch (m_style)
         {
-            case CAActivityIndicatorViewStyleGray:
+            case CAActivityIndicatorView::Style::Gray:
             {
                 image = CAImage::create(map.at("image_gray"));
                 center.size = DSize(40, 40);
             }
                 break;
-            case CAActivityIndicatorViewStyleWhite:
+            case CAActivityIndicatorView::Style::White:
             {
                 image = CAImage::create(map.at("image_white"));
                 center.size = DSize(40, 40);
             }                break;
-            case CAActivityIndicatorViewStyleGrayLarge:
+            case CAActivityIndicatorView::Style::GrayLarge:
             {
                 image = CAImage::create(map.at("image_gray"));
                 center.size = DSize(68, 68);
             }
                 break;
-            case CAActivityIndicatorViewStyleWhiteLarge:
+            case CAActivityIndicatorView::Style::WhiteLarge:
             {
                 image = CAImage::create(map.at("image_white"));
                 center.size = DSize(68, 68);

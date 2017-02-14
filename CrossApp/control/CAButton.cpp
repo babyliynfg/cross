@@ -52,8 +52,8 @@ CAButton::CAButton(const CAButton::Type& buttonType)
     
     m_pLabel = new CALabel();
     m_pLabel->init();
-    m_pLabel->setTextAlignment(CATextAlignmentCenter);
-    m_pLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    m_pLabel->setTextAlignment(CATextAlignment::Center);
+    m_pLabel->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     m_pLabel->setNumberOfLine(1);
     this->insertSubview(m_pLabel, 1);
 }
@@ -191,7 +191,7 @@ void CAButton::setBackgroundViewRoundedRect()
 
 void CAButton::setBackgroundViewForState(CAControl::State state, CAView *var)
 {
-    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
+    CCAssert(state != CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     if (m_mBackgroundViews.contains(state))
     {
         this->removeSubview(m_mBackgroundViews.at(state));
@@ -215,7 +215,7 @@ CAView* CAButton::getBackgroundViewForState(CAControl::State state)
 
 void CAButton::setImageForState(CAControl::State state, CAImage* var)
 {
-    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
+    CCAssert(state != CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     m_mImages.erase(state);
     if (var)
     {
@@ -235,7 +235,7 @@ CAImage* CAButton::getImageForState(CAControl::State state)
 
 void CAButton::setTitleForState(CAControl::State state, const std::string& var)
 {
-    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
+    CCAssert(state != CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     m_mTitles[state] = var;
     
     if (m_bRunning)
@@ -251,7 +251,7 @@ const std::string& CAButton::getTitleForState(CAControl::State state)
 
 void CAButton::setImageColorForState(CAControl::State state, const CAColor4B& var)
 {
-    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
+    CCAssert(state != CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     m_mImageColors[state] = var;
     
     if (m_bRunning)
@@ -262,7 +262,7 @@ void CAButton::setImageColorForState(CAControl::State state, const CAColor4B& va
 
 void CAButton::setTitleColorForState(CAControl::State state, const CAColor4B& var)
 {
-    CCAssert(state == CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
+    CCAssert(state != CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
     m_mTitleColors[state] = var;
     
     if (m_bRunning)

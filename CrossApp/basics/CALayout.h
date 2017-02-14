@@ -13,15 +13,14 @@ class CC_DLL DHorizontalLayout
 {
 public:
     
-    typedef enum
+    enum class Type
     {
         L_R = 0,
         L_W,
         R_W,
         W_C,
         NW_C = 4
-    }
-    Type;
+    };
     
 public:
     
@@ -41,7 +40,7 @@ public:
     
     DHorizontalLayout(const DHorizontalLayout& other);
     
-    DHorizontalLayout(float var1, float var2, const Type& type);
+    DHorizontalLayout(float var1, float var2, DHorizontalLayout::Type type);
     
     DHorizontalLayout& operator= (const DHorizontalLayout& other);
     
@@ -55,15 +54,14 @@ class CC_DLL DVerticalLayout
 {
 public:
     
-    typedef enum
+    enum class Type
     {
         T_B = 0,
         T_H,
         B_H,
         H_C,
         NH_C = 4
-    }
-    Type;
+    };
     
 public:
     
@@ -83,7 +81,7 @@ public:
     
     DVerticalLayout(const DVerticalLayout& other);
     
-    DVerticalLayout(float var1, float var2, const Type& type);
+    DVerticalLayout(float var1, float var2, DVerticalLayout::Type type);
     
     DVerticalLayout& operator= (const DVerticalLayout& other);
     
@@ -116,54 +114,54 @@ public:
 
 static inline DHorizontalLayout DHorizontalLayout_L_R(float left, float right)
 {
-    return DHorizontalLayout(left, right, DHorizontalLayout::L_R);
+    return DHorizontalLayout(left, right, DHorizontalLayout::Type::L_R);
 }
 
 static inline DHorizontalLayout DHorizontalLayout_L_W(float left, float width)
 {
-    return DHorizontalLayout(left, width, DHorizontalLayout::L_W);
+    return DHorizontalLayout(left, width, DHorizontalLayout::Type::L_W);
 }
 
 static inline DHorizontalLayout DHorizontalLayout_R_W(float right, float width)
 {
-    return DHorizontalLayout(right, width, DHorizontalLayout::R_W);
+    return DHorizontalLayout(right, width, DHorizontalLayout::Type::R_W);
 }
 
 static inline DHorizontalLayout DHorizontalLayout_W_C(float width, float center)
 {
-    return DHorizontalLayout(width, center, DHorizontalLayout::W_C);
+    return DHorizontalLayout(width, center, DHorizontalLayout::Type::W_C);
 }
 
 static inline DHorizontalLayout DHorizontalLayout_NW_C(float normalizedWidth, float center)
 {
-    return DHorizontalLayout(normalizedWidth, center, DHorizontalLayout::NW_C);
+    return DHorizontalLayout(normalizedWidth, center, DHorizontalLayout::Type::NW_C);
 }
 
 
 
 static inline DVerticalLayout DVerticalLayout_T_B(float top, float bottom)
 {
-    return DVerticalLayout(top, bottom, DVerticalLayout::T_B);
+    return DVerticalLayout(top, bottom, DVerticalLayout::Type::T_B);
 }
 
 static inline DVerticalLayout DVerticalLayout_T_H(float top, float height)
 {
-    return DVerticalLayout(top, height, DVerticalLayout::T_H);
+    return DVerticalLayout(top, height, DVerticalLayout::Type::T_H);
 }
 
 static inline DVerticalLayout DVerticalLayout_B_H(float bottom, float height)
 {
-    return DVerticalLayout(bottom, height, DVerticalLayout::B_H);
+    return DVerticalLayout(bottom, height, DVerticalLayout::Type::B_H);
 }
 
 static inline DVerticalLayout DVerticalLayout_H_C(float height, float center)
 {
-    return DVerticalLayout(height, center, DVerticalLayout::H_C);
+    return DVerticalLayout(height, center, DVerticalLayout::Type::H_C);
 }
 
 static inline DVerticalLayout DVerticalLayout_NH_C(float normalizedHeight, float center)
 {
-    return DVerticalLayout(normalizedHeight, center, DVerticalLayout::NH_C);
+    return DVerticalLayout(normalizedHeight, center, DVerticalLayout::Type::NH_C);
 }
 
 const DHorizontalLayout DHorizontalLayouttZero  = DHorizontalLayout();

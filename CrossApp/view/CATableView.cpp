@@ -919,7 +919,7 @@ void CATableViewCell::dragInAnimation()
     CAViewAnimation::removeAnimations("dragging" + m_s__StrID);
     CAViewAnimation::beginAnimations("dragging" + m_s__StrID, NULL);
     CAViewAnimation::setAnimationDuration(0.15f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATableViewCell::dragInAnimationEnd));
     m_pContentView->setLayout(DLayoutFill);
     CAViewAnimation::commitAnimations();
@@ -930,7 +930,7 @@ void CATableViewCell::dragOutAnimation()
     CAViewAnimation::removeAnimations("dragging" + m_s__StrID);
     CAViewAnimation::beginAnimations("dragging" + m_s__StrID, NULL);
     CAViewAnimation::setAnimationDuration(0.15f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(-(int)m_nDraggingLength, (int)m_nDraggingLength), DVerticalLayoutFill));
     CAViewAnimation::commitAnimations();
 }

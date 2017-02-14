@@ -292,21 +292,21 @@ static const BlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 
 // XXX: If any of these enums are edited and/or reordered, update CAImage.m
 //! Vertical text alignment type
-typedef enum
+enum class CAVerticalTextAlignment
 {
-    CAVerticalTextAlignmentTop,
-    CAVerticalTextAlignmentCenter,
-    CAVerticalTextAlignmentBottom,
-} CAVerticalTextAlignment;
+    Top,
+    Center,
+    Bottom,
+};
 
 // XXX: If any of these enums are edited and/or reordered, update CAImage.m
 //! Horizontal text alignment type
-typedef enum
+enum class CATextAlignment
 {
-    CATextAlignmentLeft,
-    CATextAlignmentCenter,
-    CATextAlignmentRight,
-} CATextAlignment;
+    Left,
+    Center,
+    Right,
+};
 
 // types for animation in particle systems
 
@@ -331,25 +331,18 @@ typedef struct
     DSize size; 
 } CAAnimationFrameData;
 
-typedef enum
+enum class CAStatusBarStyle
 {
-    CAStatusBarStyleDefault          = 0, // Dark content, for use on light backgrounds
-    CAStatusBarStyleLightContent     = 1, // Light content, for use on dark backgrounds
-}CAStatusBarStyle;
+    Default          = 0, // Dark content, for use on light backgrounds
+    LightContent     = 1, // Light content, for use on dark backgrounds
+};
 
-typedef enum
+enum class CAInterfaceOrientation
 {
-    CAInterfaceOrientationUnknown        = 0,
-    CAInterfaceOrientationPortrait       = 1,
-    CAInterfaceOrientationLandscape      = 2,
-}CAInterfaceOrientation;
-
-typedef enum
-{
-    CALayoutLinearHorizontal = 0,
-    CALayoutLinearVertical
-}
-CALayoutLinearType;
+    Unknown        = 0,
+    Portrait       = 1,
+    Landscape      = 2,
+};
 
 enum
 {

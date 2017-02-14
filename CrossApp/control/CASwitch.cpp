@@ -191,13 +191,13 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
         CAViewAnimation::setAnimationDuration(0.2f);
         if (m_bIsOn)
         {
-            CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
+            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseIn);
             m_pOffImageView->setAlpha(0.0f);
             m_pOnImageView->setAlpha(1.0f);
         }
         else
         {
-            CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
             m_pOffImageView->setAlpha(1.0f);
             m_pOnImageView->setAlpha(0.0f);
         }
@@ -211,7 +211,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
             {
                 CAViewAnimation::beginAnimations("", NULL);
                 CAViewAnimation::setAnimationDuration(0.2f);
-                CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+                CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
                 CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CASwitch::updateValueChanged));
                 m_pThumbTintImageView->setFrameOrigin(point);
                 CAViewAnimation::commitAnimations();

@@ -46,7 +46,7 @@ static void removeUsedIndexBit(int index)
 CCEGLViewProtocol::CCEGLViewProtocol()
 : m_pDelegate(NULL)
 , m_fScale(1.0f)
-, m_eOrientation(CAInterfaceOrientationUnknown)
+, m_eOrientation(CAInterfaceOrientation::Unknown)
 {
 }
 
@@ -347,7 +347,7 @@ float CCEGLViewProtocol::getScale() const
 void CCEGLViewProtocol::setStatusBarOrientation(const CAInterfaceOrientation& var)
 {
     CC_RETURN_IF(m_eOrientation == var);
-    if (m_eOrientation == CAInterfaceOrientationUnknown)
+    if (m_eOrientation == CAInterfaceOrientation::Unknown)
     {
         m_eOrientation = var;
     }

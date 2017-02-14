@@ -666,7 +666,7 @@ void CAView::setContentSize(const DSize & contentSize)
 
 const DRect& CAView::getFrame()
 {
-    m_obReturn.setType(DRect::Frame);
+    m_obReturn.setType(DRect::Type::Frame);
     m_obReturn.origin = ccpSub(m_obPoint, m_obAnchorPointInPoints);
     m_obReturn.size = m_obContentSize;
     return m_obReturn;
@@ -728,7 +728,7 @@ void CAView::setFrameOrigin(const DPoint& point)
 
 const DRect& CAView::getCenter()
 {
-    m_obReturn.setType(DRect::Center);
+    m_obReturn.setType(DRect::Type::Center);
     m_obReturn.origin = ccpAdd(ccpSub(m_obPoint, m_obAnchorPointInPoints),
                            ccpMult(m_obContentSize, 0.5f));
     m_obReturn.size = m_obContentSize;
@@ -793,7 +793,7 @@ void CAView::setCenterOrigin(const DPoint& point)
 
 const DRect& CAView::getBounds()
 {
-    m_obReturn.setType(DRect::Frame);
+    m_obReturn.setType(DRect::Type::Frame);
     m_obReturn.origin = DPointZero;
     m_obReturn.size = m_obContentSize;
     return m_obReturn;

@@ -176,7 +176,7 @@ bool CACamera::initDefault()
     auto projection = CAApplication::getApplication()->getProjection();
     switch (projection)
     {
-        case CAApplication::P2D:
+        case CAApplication::Projection::P2D:
         {
             initOrthographic(size.width, size.height, -1024, 1024);
             this->setPointZ(0);
@@ -186,7 +186,7 @@ bool CACamera::initDefault()
             setRotation(0);
             break;
         }
-        case CAApplication::P3D:
+        case CAApplication::Projection::P3D:
         {
             float zeye = CAApplication::getApplication()->getZEye();
             initPerspective(60, (GLfloat)size.width / size.height, 10, zeye + size.height / 2.0f);

@@ -75,7 +75,7 @@ CAWebView *CAWebView::createWithLayout(const CrossApp::DLayout &layout)
 bool CAWebView::init()
 {
     m_pLoadingView = CAActivityIndicatorView::create();
-    m_pLoadingView->setStyle(CAActivityIndicatorViewStyleGrayLarge);
+    m_pLoadingView->setStyle(CAActivityIndicatorView::Style::GrayLarge);
     m_pLoadingView->setLayout(DLayoutFill);
 	m_pLoadingView->setVisible(false);
 	this->addSubview(m_pLoadingView);

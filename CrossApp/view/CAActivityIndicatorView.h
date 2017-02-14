@@ -14,22 +14,24 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CAActivityIndicatorViewStyleWhiteLarge,
-    CAActivityIndicatorViewStyleGrayLarge,
-    CAActivityIndicatorViewStyleWhite,
-    CAActivityIndicatorViewStyleGray,
-    CAActivityIndicatorViewStyleImage,
-}
-CAActivityIndicatorViewStyle;
-
 class CAScale9ImageView;
 class CAImageView;
 class CC_DLL CAActivityIndicatorView : public CAView
 {
     
 public:
+    
+    enum class Style : int
+    {
+        WhiteLarge = 0,
+        GrayLarge,
+        White,
+        Gray,
+        Image
+    };
+    
+public:
+    
     CAActivityIndicatorView();
     virtual ~CAActivityIndicatorView();
     
@@ -46,11 +48,11 @@ public:
     void setTimesOneCycle(float times);
     void setCycleTime(float time);
     // sizes the view according to the style
-    void setStyle(CAActivityIndicatorViewStyle style);
+    void setStyle(CAActivityIndicatorView::Style style);
     
     void setActivityIndicatorOffset(const DSize& offset);
     
-    // will set CAActivityIndicatorViewStyleImage when call this func
+    // will set CAActivityIndicatorView::Style::Image when call this func
     CC_PROPERTY(CAView*, m_pImageView, ActivityIndicatorView);
     
     CC_PROPERTY(CAView*, m_pBackView, ActivityBackView);
@@ -73,7 +75,7 @@ private:
     float m_duration;
     bool m_bStopAnimation;
     bool m_hidesWhenStopped; // default is true. calls -setHidden when animating gets set to false
-    CAActivityIndicatorViewStyle m_style; // default is CAActivityIndicatorViewStyleWhite
+    CAActivityIndicatorView::Style m_style; // default is CAActivityIndicatorView::Style::White
     
     CAObject* m_pTarget;
     SEL_CallFunc m_pCallFunc;

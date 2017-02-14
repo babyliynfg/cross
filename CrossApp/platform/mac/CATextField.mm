@@ -388,21 +388,6 @@
 
 NS_CC_BEGIN
 CATextField::CATextField()
-: m_pBackgroundView(NULL)
-, m_pImgeView(NULL)
-, m_pTextField(NULL)
-, m_pDelegate(NULL)
-, m_bUpdateImage(true)
-, m_bSecureTextEntry(false)
-, m_bAllowkeyBoardHide(true)
-, m_iMarginLeft(10)
-, m_iMarginRight(10)
-, m_iFontSize(40)
-, m_iMaxLenght(0)
-, m_eClearBtn(None)
-, m_eAlign(Left)
-, m_eReturnType(Done)
-, m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
     this->setPoint(DPoint(-5000, -5000));
@@ -621,13 +606,13 @@ void CATextField::setContentSize(const DSize& contentSize)
     nssize.height =  s_dip_to_px(worldContentSize.height) / scale;
     [textField_MAC setContentSize:nssize];
 
-    if (m_eClearBtn == WhileEditing)
+    if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
     {
-        m_eClearBtn = None;
+        m_eClearBtn = CATextField::ClearButtonMode::None;
         this->setMarginImageRight(DSize(contentSize.height, contentSize.height), map.at("clearImage"));
         DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
         [textField_MAC setMarginRight:worldContentSize.width];
-        m_eClearBtn = WhileEditing;
+        m_eClearBtn = CATextField::ClearButtonMode::WhileEditing;
     }
     
     m_pImgeView->setFrame([textField_MAC getDRect]);
@@ -665,22 +650,22 @@ void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     this->ccTouchEnded(pTouch, pEvent);
 }
 
-void CATextField::setKeyboardType(const KeyboardType& type)
+void CATextField::setKeyboardType(CATextField::KeyboardType type)
 {
     m_eKeyBoardType = type;
 }
 
-const CATextField::KeyboardType& CATextField::getKeyboardType()
+CATextField::KeyboardType CATextField::getKeyboardType()
 {
     return m_eKeyBoardType;
 }
 
-void CATextField::setReturnType(const ReturnType &var)
+void CATextField::setReturnType(CATextField::ReturnType var)
 {
     m_eReturnType = var;
 }
 
-const CATextField::ReturnType& CATextField::getReturnType()
+CATextField::ReturnType CATextField::getReturnType()
 {
     return m_eReturnType;
 }
@@ -796,7 +781,7 @@ int CATextField::getMarginLeft()
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_eClearBtn == None)
+    if (m_eClearBtn == CATextField::ClearButtonMode::None)
     {
         m_iMarginRight = var;
         
@@ -861,9 +846,9 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
     rightMarginView->setImageForState(CAControl::State::Normal, CAImage::create(filePath));
 }
 
-void CATextField::setClearButtonMode(const ClearButtonMode &var)
+void CATextField::setClearButtonMode(CATextField::ClearButtonMode var)
 {
-    if (var == WhileEditing)
+    if (var == CATextField::ClearButtonMode::WhileEditing)
     {
         this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
         const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
@@ -902,24 +887,24 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
     m_eClearBtn = var;
 }
 
-const CATextField::ClearButtonMode& CATextField::getClearButtonMode()
+CATextField::ClearButtonMode CATextField::getClearButtonMode()
 {
     return m_eClearBtn;
 }
 
-void CATextField::setTextFieldAlign(const TextFieldAlign &var)
+void CATextField::setAlign(CATextField::Align var)
 {
     m_eAlign = var;
     
     switch (var)
     {
-        case Left:
+        case CATextField::Align::Left:
             [[textField_MAC cell] setAlignment:NSTextAlignmentLeft];
             break;
-        case Center:
+        case CATextField::Align::Center:
             [[textField_MAC cell] setAlignment:NSTextAlignmentCenter];
             break;
-        case Right:
+        case CATextField::Align::Right:
             [[textField_MAC cell] setAlignment:NSTextAlignmentRight];
             break;
         default:
@@ -929,7 +914,7 @@ void CATextField::setTextFieldAlign(const TextFieldAlign &var)
     this->delayShowImage();
 }
 
-const CATextField::TextFieldAlign& CATextField::getTextFieldAlign()
+CATextField::Align CATextField::getAlign()
 {
     return m_eAlign;
 }

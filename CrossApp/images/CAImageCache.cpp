@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 #pragma CAImageCache
 
-typedef enum _AsyncType
+enum class _AsyncType
 {
     AsyncImageType=0,
     AsyncStringType
@@ -65,23 +65,23 @@ static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
 
 static CAImage::Format computeImageFormatType(string& filename)
 {
-    CAImage::Format ret = CAImage::UNKOWN;
+    CAImage::Format ret = CAImage::Format::UNKOWN;
 
     if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
     {
-        ret = CAImage::JPG;
+        ret = CAImage::Format::JPG;
     }
     else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
     {
-        ret = CAImage::PNG;
+        ret = CAImage::Format::PNG;
     }
     else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
     {
-        ret = CAImage::TIFF;
+        ret = CAImage::Format::TIFF;
     }
     else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
     {
-        ret = CAImage::WEBP;
+        ret = CAImage::Format::WEBP;
     }
    
     return ret;
@@ -93,7 +93,7 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
 
     // compute image type
     CAImage::Format imageType = computeImageFormatType(pAsyncStruct->filename);
-    if (imageType == CAImage::UNKOWN)
+    if (imageType == CAImage::Format::UNKOWN)
     {
         //CCLOG("unsupported format %s",filename);
         //delete pAsyncStruct;

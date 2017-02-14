@@ -16,12 +16,6 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CAProgressStyleDefault = 0,
-    CAProgressStyleBar
-}CAProgressStyle;
-
 class CC_DLL CAProgress : public CAControl
 {
 public:

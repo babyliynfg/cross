@@ -14,14 +14,6 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CADatePickerModeTime,           // Displays hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. 6 | 53 | PM)
-    CADatePickerModeDate,           // Displays month, day, and year depending on the locale setting (e.g. November | 15 | 2007)
-    CADatePickerModeDateAndTime,    // Displays date, hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. Wed Nov 15 | 6 | 53 | PM)
-    CADatePickerModeCountDownTimer, // Displays hour and minute (e.g. 1 | 53)
-}CADatePickerMode;
-
 class CADatePickerViewDelegate {
     
 public:
@@ -34,12 +26,22 @@ public:
 class CC_DLL CADatePickerView : public CAControl, public CAPickerViewDataSource, public CAPickerViewDelegate {
     
 public:
-    static CADatePickerView* create(const CADatePickerMode& m_mode);
-    static CADatePickerView* createWithFrame(const DRect& rect,const CADatePickerMode& m_mode);
-    static CADatePickerView* createWithCenter(const DRect& rect,const CADatePickerMode& m_mode);
-    static CADatePickerView* createWithLayout(const DLayout& layout,const CADatePickerMode& m_mode);
     
-    CADatePickerView(const CADatePickerMode& m_mode);
+    enum class Mode : int
+    {
+        Time = 0,           // Displays hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. 6 | 53 | PM)
+        Date,           // Displays month, day, and year depending on the locale setting (e.g. November | 15 | 2007)
+        DateAndTime,    // Displays date, hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. Wed Nov 15 | 6 | 53 | PM)
+        CountDownTimer, // Displays hour and minute (e.g. 1 | 53)
+    };
+    
+public:
+    static CADatePickerView* create(CADatePickerView::Mode m_mode);
+    static CADatePickerView* createWithFrame(const DRect& rect, CADatePickerView::Mode m_mode);
+    static CADatePickerView* createWithCenter(const DRect& rect, CADatePickerView::Mode m_mode);
+    static CADatePickerView* createWithLayout(const DLayout& layout, CADatePickerView::Mode m_mode);
+    
+    CADatePickerView(CADatePickerView::Mode m_mode);
     virtual ~CADatePickerView();
     
     virtual bool init();
@@ -59,12 +61,12 @@ protected:
     virtual const char* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
-    void setMode(CADatePickerMode mode);
+    void setMode(CADatePickerView::Mode mode);
     
 private:
     CAPickerView* m_pPickerView;
     struct tm m_tTM;
-    CADatePickerMode m_eMode;
+    CADatePickerView::Mode m_eMode;
     bool isSetDate;
 };
 

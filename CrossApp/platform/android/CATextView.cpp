@@ -183,7 +183,7 @@ void textViewSetReturnTypeJNI(int key, int type)
     }
 }
 
-void textViewSetTextViewAlignJNI(int key, int type)
+void textViewsetAlignJNI(int key, int type)
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, CLASS_TEXTVIEW, "getTextView", GET_CLASS))
@@ -293,13 +293,13 @@ extern "C"
 
 
 CATextView::CATextView()
-: m_pBackgroundView(NULL)
-, m_pShowImageView(NULL)
-, m_pTextView(NULL)
+: m_pBackgroundView(nullptr)
+, m_pShowImageView(nullptr)
+, m_pTextView(nullptr)
+, m_pDelegate(nullptr)
 , m_iFontSize(40)
-, m_pDelegate(NULL)
-, m_eAlign(Left)
-, m_eReturnType(Default)
+, m_eAlign(CATextView::Align::Left)
+, m_eReturnType(CATextView::ReturnType::Default)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -446,7 +446,7 @@ CATextView* CATextView::createWithLayout(const DLayout& layout)
 
 bool CATextView::init()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextView");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
@@ -563,13 +563,13 @@ const CAColor4B& CATextView::getTextColor()
 	return m_sTextColor; 
 }
 
-void CATextView::setReturnType(const ReturnType& var)
+void CATextView::setReturnType(CATextView::ReturnType var)
 {
     m_eReturnType = var;
     textViewSetReturnTypeJNI(m_u__ID, (int)var);
 }
 
-const CATextView::ReturnType& CATextView::getReturnType()
+CATextView::ReturnType CATextView::getReturnType()
 {
     return m_eReturnType;
 }
@@ -584,16 +584,16 @@ void CATextView::setBackgroundImage(CAImage* image)
     m_pBackgroundView->setImage(image);
 }
 
-void CATextView::setTextViewAlign(const TextViewAlign& var)
+void CATextView::setAlign(const TextViewAlign& var)
 {
     m_eAlign = var;
     
-    textViewSetTextViewAlignJNI(m_u__ID, (int)var);
+    textViewsetAlignJNI(m_u__ID, (int)var);
     
     this->delayShowImage();
 }
 
-const CATextView::TextViewAlign& CATextView::getTextViewAlign()
+CATextView::Align CATextView::getAlign()
 {
     return m_eAlign;
 }

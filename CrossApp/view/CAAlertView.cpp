@@ -144,7 +144,7 @@ void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
 {
     CC_RETURN_IF(var.compare("") == 0);
     setLabel(m_pContentLabel, var.c_str(), m_sMsgFontName.c_str(), col);
-    m_pContentLabel->setTextAlignment(CATextAlignmentCenter);
+    m_pContentLabel->setTextAlignment(CATextAlignment::Center);
 }
 
 void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* pNormalImage, CAImage* pHighlightedImage)
@@ -201,8 +201,8 @@ void CAAlertView::setLabel(CALabel*& pLabel, const char* szTitle, const char* fo
         pLabel = new CALabel();
         CC_RETURN_IF(pLabel == NULL);
         pLabel->init();
-        pLabel->setTextAlignment(CATextAlignmentCenter);
-        pLabel->setVerticalTextAlignmet(CAVerticalTextAlignmentTop);
+        pLabel->setTextAlignment(CATextAlignment::Center);
+        pLabel->setVerticalTextAlignmet(CAVerticalTextAlignment::Top);
         pLabel->setFontName(fontName);
         pLabel->setFontSize(ALERT_VIEW_MESG_FONT);
     }
@@ -416,7 +416,7 @@ void CAAlertView::show()
     m_pScale9BackView->setScale(0.5f);
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     this->setAlpha(1.0f);
     m_pScale9BackView->setScale(1.0f);
     CAViewAnimation::commitAnimations();
@@ -428,7 +428,7 @@ void CAAlertView::hide()
     
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseIn);
     CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAAlertView::removeFromSuperview));
     this->setAlpha(0.0f);
     m_pScale9BackView->setScale(0.5f);

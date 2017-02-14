@@ -13,20 +13,21 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CAImageViewScaleTypeFitImageXY = 0,         //塞满
-    CAImageViewScaleTypeFitImageCrop,           //塞满裁剪，不变形, 居中
-    CAImageViewScaleTypeFitImageInside,         //显示全部，不变形, 居中
-    CAImageViewScaleTypeFitViewByHorizontal,    //显示全部，不变形，横向适应图片
-    CAImageViewScaleTypeFitViewByVertical       //显示全部，不变形，纵横适应图片
-}
-CAImageViewScaleType;
-
 class CC_DLL CAImageView : public CAView
 {
 public:
 
+    enum class ScaleType
+    {
+        FitImageXY = 0,         //塞满
+        FitImageCrop,           //塞满裁剪，不变形, 居中
+        FitImageInside,         //显示全部，不变形, 居中
+        FitViewByHorizontal,    //显示全部，不变形，横向适应图片
+        FitViewByVertical       //显示全部，不变形，纵横适应图片
+    };
+    
+public:
+    
     static CAImageView* create();
 
     static CAImageView* createWithImage(CAImage* image);
@@ -53,7 +54,7 @@ public:
     
     virtual void setImageRect(const DRect& rect);
     
-    CC_PROPERTY_PASS_BY_REF(CAImageViewScaleType, m_eImageViewScaleType, ImageViewScaleType);
+    CC_PROPERTY(CAImageView::ScaleType, m_eScaleType, ScaleType);
     
     CC_SYNTHESIZE(CAVector<CAImage*>, m_vAnimationImages, AnimationImages);
     
@@ -75,13 +76,13 @@ protected:
     
     virtual void setContentSize(const DSize& contentSize);
     
-    virtual void updateByImageViewScaleType();
+    virtual void updateByScaleType();
     
     virtual void updateImageRect();
     
     using CAView::initWithColor;
     
-    bool m_bUpdateByImageViewScaleType;
+    bool m_bUpdateByScaleType;
     
     float m_fLeft;
     

@@ -28,22 +28,19 @@ public:
     virtual void pageViewDidEndTurning(CAPageView* pageView){};
     
     virtual void pageViewDidSelectedPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point){};
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point){};
 };
 
 class CC_DLL CAPageView: public CAScrollView
 {
 public:
     
-    typedef enum
+    enum class Orientation : int
     {
         Horizontal = 0,
         Vertical
-    }
-    Orientation;
+    };
     
-    CAPageView(const Orientation& type);
+    CAPageView(CAPageView::Orientation type);
     
     virtual ~CAPageView();
     
@@ -55,7 +52,7 @@ public:
     
     bool init();
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(Orientation, m_eOrientation, Orientation);
+    CC_SYNTHESIZE_READONLY(Orientation, m_eOrientation, Orientation);
     
     CC_SYNTHESIZE(CAPageViewDelegate* , m_pPageViewDelegate, PageViewDelegate);
     
@@ -137,14 +134,14 @@ private:
     
 private:
     
-    typedef enum
+    enum class State
     {
         Last,
         Next,
         None
-    }State;
+    };
     
-    State m_ePageViewState;
+    CAPageView::State m_ePageViewState;
     
     CADeque<CAView*> m_pViews;
     

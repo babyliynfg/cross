@@ -66,7 +66,7 @@ public:
 		m_pContainerView->addSubview(m_pImageView);
 		return true;
 	}
-
+    
 	void setContentSize(const DSize& var)
 	{
 		CAView::setContentSize(var);
@@ -82,7 +82,7 @@ public:
 	{
 		if (!strcmp(text, "\n"))
 		{
-			if (m_pCATextView->getReturnType() != CrossApp::CATextView::Default)
+			if (m_pCATextView->getReturnType() != CrossApp::CATextView::ReturnType::Default)
 			{
 				m_pCATextView->resignFirstResponder();
 				if (m_pCATextView->getDelegate())
@@ -594,12 +594,13 @@ private:
 
 
 CATextView::CATextView()
-: m_pBackgroundView(NULL)
-, m_pShowImageView(NULL)
-, m_pTextView(NULL)
+: m_pBackgroundView(nullptr)
+, m_pShowImageView(nullptr)
+, m_pTextView(nullptr)
+, m_pDelegate(nullptr)
 , m_iFontSize(40)
-, m_pDelegate(NULL)
-, m_sTextColor(CAColor_black)
+, m_eAlign(CATextView::Align::Left)
+, m_eReturnType(CATextView::ReturnType::Default)
 , m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
@@ -736,7 +737,7 @@ bool CATextView::init()
 		return false;
 	}
 	this->setColor(CAColor_clear);
-	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextView");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
@@ -844,12 +845,12 @@ const CAColor4B& CATextView::getTextColor()
 	return m_sTextColor; 
 }
 
-void CATextView::setReturnType(const ReturnType& var)
+void CATextView::setReturnType(CATextView::ReturnType var)
 {
     m_eReturnType = var;
 }
 
-const CATextView::ReturnType& CATextView::getReturnType()
+CATextView::ReturnType CATextView::getReturnType()
 {
     return m_eReturnType;
 }
@@ -864,14 +865,14 @@ void CATextView::setBackgroundImage(CAImage* image)
     m_pBackgroundView->setImage(image);
 }
 
-void CATextView::setTextViewAlign(const TextViewAlign& var)
+void CATextView::setAlign(const TextViewAlign& var)
 {
     m_eAlign = var;
     
     this->delayShowImage();
 }
 
-const CATextView::TextViewAlign& CATextView::getTextViewAlign()
+CATextView::Align CATextView::getAlign()
 {
     return m_eAlign;
 }

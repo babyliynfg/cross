@@ -8,14 +8,17 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    kTypeBackClicked = 1,
-    kTypeMenuClicked,
-} ccKeypadMSGType;
 
 class CC_DLL CAKeypadDispatcher : public CAObject
 {
+public:
+    
+    enum class KeypadMSGType
+    {
+        BackClicked = 1,
+        MenuClicked,
+    };
+    
 public:
     
     CAKeypadDispatcher();
@@ -30,7 +33,7 @@ public:
 
     void forceRemoveDelegate(CAKeypadDelegate* pDelegate);
 
-    bool dispatchKeypadMSG(ccKeypadMSGType nMsgType);
+    bool dispatchKeypadMSG(KeypadMSGType nMsgType);
 
 protected:
 

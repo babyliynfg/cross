@@ -327,8 +327,8 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, DSize size)
             label->setText(title);
 			label->setColor(m_fontColorNormal);
             label->setFontSize(m_fontSizeNormal);
-            label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
-            label->setTextAlignment(CATextAlignmentCenter);
+            label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
+            label->setTextAlignment(CATextAlignment::Center);
             
             return label;
         }

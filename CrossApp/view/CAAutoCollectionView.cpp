@@ -26,9 +26,9 @@ CAAutoCollectionView::CAAutoCollectionView()
 , m_iVertMargins(0)
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
-, m_eOrientation(Vertical)
-, m_eCellHoriAlign(HoriAlignCenter)
-, m_eCellVertAlign(VertAlignCenter)
+, m_eOrientation(Orientation::Vertical)
+, m_eCellHoriAlign(CellHoriAlign::Center)
+, m_eCellVertAlign(CellVertAlign::Center)
 {
     
 }
@@ -207,10 +207,10 @@ const CAVector<CACollectionViewCell*>& CAAutoCollectionView::displayingCollectio
 }
 
 
-void CAAutoCollectionView::setOrientation(const CAAutoCollectionView::Orientation &var)
+void CAAutoCollectionView::setOrientation(CAAutoCollectionView::Orientation var)
 {
 	m_eOrientation = var;
-	bool bVertScroll = m_eOrientation == Vertical;
+    bool bVertScroll = m_eOrientation == CAAutoCollectionView::Orientation::Vertical;
 
 	setShowsVerticalScrollIndicator(bVertScroll);
 	setBounceVertical(bVertScroll);
@@ -225,7 +225,7 @@ void CAAutoCollectionView::setOrientation(const CAAutoCollectionView::Orientatio
     }
 }
 
-const CAAutoCollectionView::Orientation& CAAutoCollectionView::getOrientation()
+CAAutoCollectionView::Orientation CAAutoCollectionView::getOrientation()
 {
 	return m_eOrientation;
 }
@@ -432,7 +432,7 @@ void CAAutoCollectionView::switchPCMode(bool var)
 
 bool CAAutoCollectionView::fillSectionRowData(CollectionViewRow& r, DSize rSize)
 {
-	if (m_eOrientation == Vertical)
+    if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 	{
 		int dw = m_obContentSize.width - 2 * m_iHoriMargins;
 
@@ -505,8 +505,8 @@ void CAAutoCollectionView::reloadViewSizeData()
 		}
     }
     
-	unsigned int cellXValue = (m_eOrientation == Vertical) ? m_nVertCellInterval : m_nHoriCellInterval;
-	unsigned int viewHeight = (m_eOrientation == Vertical) ? (2 * m_iVertMargins) : (2 * m_iHoriMargins);
+	unsigned int cellXValue = (m_eOrientation == CAAutoCollectionView::Orientation::Vertical) ? m_nVertCellInterval : m_nHoriCellInterval;
+	unsigned int viewHeight = (m_eOrientation == CAAutoCollectionView::Orientation::Vertical) ? (2 * m_iVertMargins) : (2 * m_iHoriMargins);
 
 	for (int i = 0; i < nSections; i++)
 	{
@@ -538,7 +538,7 @@ void CAAutoCollectionView::reloadViewSizeData()
 	viewHeight += m_nCollectionFooterHeight;
 
 	DSize size = m_obContentSize;
-	if (m_eOrientation == Vertical)
+	if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 	{
 		size.height = viewHeight;
 	}
@@ -602,25 +602,25 @@ int CAAutoCollectionView::calculateAllCells(CollectionViewSection& cvs, int inde
 
 			DRect& cellRect = r.rItemRects[k];
 
-			if (m_eOrientation == Vertical)
+            if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 			{
 				cellRect.origin.y = dd;
-				if (m_eCellVertAlign == VertAlignCenter)
+				if (m_eCellVertAlign == CAAutoCollectionView::CellVertAlign::Center)
 				{
 					int d = (r.iMaxValue - r.rItemRects[k].size.height) / 2;
 					cellRect.origin.y += d;
 				}
-				if (m_eCellVertAlign == VertAlignBottom)
+				if (m_eCellVertAlign == CAAutoCollectionView::CellVertAlign::Bottom)
 				{
 					int d = r.iMaxValue - r.rItemRects[k].size.height;
 					cellRect.origin.y += d;
 				}
-				if (m_eCellHoriAlign == HoriAlignCenter)
+				if (m_eCellHoriAlign == CAAutoCollectionView::CellHoriAlign::Center)
 				{
 					int d = (dw - iMaxLengthValue) / 2;
 					cellRect.origin.x += d;
 				}
-				if (m_eCellHoriAlign == HoriAlignRight)
+				if (m_eCellHoriAlign == CAAutoCollectionView::CellHoriAlign::Right)
 				{
 					int d = dw - iMaxLengthValue;
 					cellRect.origin.x += d;
@@ -628,24 +628,24 @@ int CAAutoCollectionView::calculateAllCells(CollectionViewSection& cvs, int inde
 			}
 			else
 			{
-				if (m_eCellVertAlign == VertAlignCenter)
+				if (m_eCellVertAlign == CAAutoCollectionView::CellVertAlign::Center)
 				{
 					int d = (dw - iMaxLengthValue) / 2;
 					cellRect.origin.y += d;
 				}
-				if (m_eCellVertAlign == VertAlignBottom)
+				if (m_eCellVertAlign == CAAutoCollectionView::CellVertAlign::Bottom)
 				{
 					int d = dw - iMaxLengthValue;
 					cellRect.origin.y += d;
 				}
 
 				cellRect.origin.x = dd;
-				if (m_eCellHoriAlign == HoriAlignCenter)
+				if (m_eCellHoriAlign == CAAutoCollectionView::CellHoriAlign::Center)
 				{
 					int d = (r.iMaxValue - r.rItemRects[k].size.width) / 2;
 					cellRect.origin.x += d;
 				}
-				if (m_eCellHoriAlign == HoriAlignRight)
+				if (m_eCellHoriAlign == CAAutoCollectionView::CellHoriAlign::Right)
 				{
 					int d = r.iMaxValue - r.rItemRects[k].size.width;
 					cellRect.origin.x += d;
@@ -664,7 +664,7 @@ int CAAutoCollectionView::calculateAllCells(CollectionViewSection& cvs, int inde
 int CAAutoCollectionView::calculateAllRects()
 {
 	int dw = 0, dd = 0, dv = 0;
-	if (m_eOrientation == Vertical)
+    if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 	{
 		dw = m_obContentSize.width - 2 * m_iHoriMargins;
 		dd = m_iVertMargins + m_nCollectionHeaderHeight;
@@ -684,7 +684,7 @@ int CAAutoCollectionView::calculateAllRects()
 		unsigned int iSectionHeaderHeight = cvs.nSectionHeaderHeight;
 
 		DRect sectionHeaderRect;
-		if (m_eOrientation == Vertical)
+		if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 		{
 			sectionHeaderRect = DRect(m_iHoriMargins, dd, dw, iSectionHeaderHeight);
 		}
@@ -711,7 +711,7 @@ int CAAutoCollectionView::calculateAllRects()
 		unsigned int iSectionFooterHeight = cvs.nSectionFooterHeight;
 
 		DRect sectionFooterRect;
-		if (m_eOrientation == Vertical)
+		if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 		{
 			sectionFooterRect = DRect(m_iHoriMargins, dd, dw, iSectionFooterHeight);
 		}
@@ -735,7 +735,7 @@ int CAAutoCollectionView::calculateAllRects()
 		dd += dv;
 
 		DRect sectionRect = sectionHeaderRect;
-		if (m_eOrientation == Vertical)
+		if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 		{
 			sectionRect.size.height = sectionFooterRect.origin.y + sectionFooterRect.size.height - sectionHeaderRect.origin.y;
 		}
@@ -760,12 +760,12 @@ void CAAutoCollectionView::reloadData()
 	DRect winRect = this->getBounds();
 	winRect.origin = getContentOffset();
 	
-	int dw = winRect.size.width - 2 * ((m_eOrientation == Vertical) ? m_iHoriMargins : m_iVertMargins);
+	int dw = winRect.size.width - 2 * ((m_eOrientation == CAAutoCollectionView::Orientation::Vertical) ? m_iHoriMargins : m_iVertMargins);
 
 	if (m_nCollectionHeaderHeight > 0 && m_pCollectionHeaderView)
 	{
 		m_pCollectionHeaderView->setDisplayRange(true);
-		if (m_eOrientation == Vertical)
+		if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 		{
 			m_pCollectionHeaderView->setFrame(DRect(m_iHoriMargins, m_iVertMargins, dw, m_nCollectionHeaderHeight));
 		}
@@ -780,7 +780,7 @@ void CAAutoCollectionView::reloadData()
 
 	if (m_nCollectionFooterHeight > 0 && m_pCollectionFooterView)
 	{
-		if (m_eOrientation == Vertical)
+		if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 		{
 			m_pCollectionFooterView->setFrame(DRect(m_iHoriMargins, dwValue, dw, m_nCollectionFooterHeight));
 		}
@@ -877,7 +877,7 @@ void CAAutoCollectionView::updateSectionHeaderAndFooterRects()
 	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
 
-	if (m_eOrientation == Vertical)
+	if (m_eOrientation == CAAutoCollectionView::Orientation::Vertical)
 	{
 		rect.origin.x = m_iHoriMargins;
 	}

@@ -59,12 +59,12 @@ public:
     static const char* EVENT_AFTER_VISIT;
     static const char* EVENT_AFTER_DRAW;
     
-    typedef enum
+    enum class Projection
     {
         P2D,
         P3D,
         Default = P3D,
-    } Projection;
+    };
 
     CAApplication(void);
 

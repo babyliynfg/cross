@@ -1070,10 +1070,10 @@ void CAConsole::commandProjection(int fd, const std::string& args)
     char buf[20];
     auto proj = CAApplication->getProjection();
     switch (proj) {
-        case CAApplication::P2D:
+        case CAApplication::Projection::P2D:
             sprintf(buf,"2d");
             break;
-        case CAApplication::P3D:
+        case CAApplication::Projection::P3D:
             sprintf(buf,"3d");
             break;
         default:
@@ -1086,14 +1086,14 @@ void CAConsole::commandProjection(int fd, const std::string& args)
 void CAConsole::commandProjectionSubCommand2d(int fd, const std::string& args)
 {
      CAScheduler::getScheduler()->performFunctionInUIThread( [=](){
-        CAApplication::getApplication()->setProjection(CAApplication::P2D);
+        CAApplication::getApplication()->setProjection(CAApplication::Projection::P2D);
     } );
 }
 
 void CAConsole::commandProjectionSubCommand3d(int fd, const std::string& args)
 {
      CAScheduler::getScheduler()->performFunctionInUIThread( [=](){
-        CAApplication::getApplication()->setProjection(CAApplication::P3D);
+        CAApplication::getApplication()->setProjection(CAApplication::Projection::P3D);
     } );
 }
 

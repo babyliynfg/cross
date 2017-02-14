@@ -18,11 +18,11 @@
 
 NS_CC_BEGIN
 
-typedef enum
+enum class CABarVerticalAlignment
 {
-    CABarVerticalAlignmentTop = 0,
-    CABarVerticalAlignmentBottom
-}CABarVerticalAlignment;
+    Top = 0,
+    Bottom
+};
 
 class CANavigationBar;
 class CC_DLL CANavigationBarDelegate

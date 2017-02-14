@@ -81,7 +81,7 @@ void CAKeypadDispatcher::forceRemoveDelegate(CAKeypadDelegate* pDelegate)
     
 }
 
-bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
+bool CAKeypadDispatcher::dispatchKeypadMSG(KeypadMSGType nMsgType)
 {
     if (!CAApplication::getApplication()->getTouchDispatcher()->isDispatchEvents())
     {
@@ -101,10 +101,10 @@ bool CAKeypadDispatcher::dispatchKeypadMSG(ccKeypadMSGType nMsgType)
         CC_BREAK_IF(!pHandler);
         switch (nMsgType)
         {
-            case kTypeBackClicked:
+            case KeypadMSGType::BackClicked:
                 pDelegate->keyBackClicked();
                 break;
-            case kTypeMenuClicked:
+            case KeypadMSGType::MenuClicked:
                 pDelegate->keyMenuClicked();
                 break;
             default:

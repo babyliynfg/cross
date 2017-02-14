@@ -299,7 +299,7 @@ void CAViewAnimation::setAnimationDelay(float delay)
     animation->m_vWillModules.back()->delay = delay;
 }
 
-void CAViewAnimation::setAnimationCurve(const CAViewAnimationCurve& curve)
+void CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve curve)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
@@ -517,17 +517,17 @@ void CAViewAnimation::update(float dt)
 
             switch (module->curve)
             {
-                case CAViewAnimationCurveEaseOut:
+                case CAViewAnimation::Curve::EaseOut:
                 {
                     s = (s + sqrtf(1 - powf(1 - s, 2))) / 2;
                 }
                     break;
-                case CAViewAnimationCurveEaseIn:
+                case CAViewAnimation::Curve::EaseIn:
                 {
                     s = (s + 1 - sqrtf(1 - powf(s, 2))) / 2;
                 }
                     break;
-                case CAViewAnimationCurveEaseInOut:
+                case CAViewAnimation::Curve::EaseInOut:
                 {
                     s = (s < 0.5f)
                         ? (s + 0.5f - sqrtf(0.25f - powf(s, 2))) / 2

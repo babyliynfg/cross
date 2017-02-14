@@ -106,56 +106,74 @@ CCApplication* CCApplication::sharedApplication()
     return sm_pSharedApplication;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+LanguageType CCApplication::getCurrentLanguage()
 {
-    ccLanguageType ret = kLanguageEnglish;
-
+    LanguageType ret = LanguageType::ENGLISH;
+    
     LCID localeID = GetUserDefaultLCID();
     unsigned short primaryLanguageID = localeID & 0xFF;
     
     switch (primaryLanguageID)
     {
         case LANG_CHINESE:
-            ret = kLanguageChinese;
+            ret = LanguageType::CHINESE;
             break;
         case LANG_ENGLISH:
-            ret = kLanguageEnglish;
+            ret = LanguageType::ENGLISH;
             break;
         case LANG_FRENCH:
-            ret = kLanguageFrench;
+            ret = LanguageType::FRENCH;
             break;
         case LANG_ITALIAN:
-            ret = kLanguageItalian;
+            ret = LanguageType::ITALIAN;
             break;
         case LANG_GERMAN:
-            ret = kLanguageGerman;
+            ret = LanguageType::GERMAN;
             break;
         case LANG_SPANISH:
-            ret = kLanguageSpanish;
+            ret = LanguageType::SPANISH;
             break;
         case LANG_DUTCH:
-            ret = kLanguageDutch;
+            ret = LanguageType::DUTCH;
             break;
         case LANG_RUSSIAN:
-            ret = kLanguageRussian;
+            ret = LanguageType::RUSSIAN;
             break;
         case LANG_KOREAN:
-            ret = kLanguageKorean;
+            ret = LanguageType::KOREAN;
             break;
         case LANG_JAPANESE:
-            ret = kLanguageJapanese;
+            ret = LanguageType::JAPANESE;
             break;
         case LANG_HUNGARIAN:
-            ret = kLanguageHungarian;
+            ret = LanguageType::HUNGARIAN;
             break;
         case LANG_PORTUGUESE:
-            ret = kLanguagePortuguese;
+            ret = LanguageType::PORTUGUESE;
             break;
         case LANG_ARABIC:
-            ret = kLanguageArabic;
+            ret = LanguageType::ARABIC;
+            break;
+        case LANG_NORWEGIAN:
+            ret = LanguageType::NORWEGIAN;
+            break;
+        case LANG_POLISH:
+            ret = LanguageType::POLISH;
+            break;
+        case LANG_TURKISH:
+            ret = LanguageType::TURKISH;
+            break;
+        case LANG_UKRAINIAN:
+            ret = LanguageType::UKRAINIAN;
+            break;
+        case LANG_ROMANIAN:
+            ret = LanguageType::ROMANIAN;
+            break;
+        case LANG_BULGARIAN:
+            ret = LanguageType::BULGARIAN;
             break;
     }
-
+    
     return ret;
 }
 

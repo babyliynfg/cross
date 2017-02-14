@@ -54,7 +54,7 @@ CAImage* CAFTRichFont::initWithString(std::vector<LabelElement>& labels, const D
 	}
 
 	CAImage* image = new CAImage();
-	if (!image->initWithRawData(pData, CAImage::PixelFormat_RGBA8888, width, height))
+	if (!image->initWithRawData(pData, CAImage::PixelFormat::RGBA8888, width, height))
 	{
 		CC_SAFE_RELEASE_NULL(image);
 	}

@@ -146,7 +146,7 @@ CAApplication::~CAApplication(void)
 void CAApplication::setDefaultValues(void)
 {
 	m_dOldAnimationInterval = m_dAnimationInterval = 1.0 / 60;
-    m_eProjection = CAApplication::Default;
+    m_eProjection = CAApplication::Projection::Default;
 }
 
 void CAApplication::setGLDefaultValues(void)
@@ -461,7 +461,7 @@ void CAApplication::setProjection(CAApplication::Projection kProjection)
 
     switch (kProjection)
     {
-    case CAApplication::P2D:
+        case CAApplication::Projection::P2D:
         {
             Mat4 orthoMatrix;
             Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
@@ -470,7 +470,7 @@ void CAApplication::setProjection(CAApplication::Projection kProjection)
         }
         break;
 
-    case CAApplication::P3D:
+        case CAApplication::Projection::P3D:
         {
             float zeye = this->getZEye();
             

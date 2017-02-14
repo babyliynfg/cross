@@ -48,14 +48,13 @@ class CC_DLL CAScrollView : public CAView
 {
 public:
     
-    typedef enum
+    enum class MultitouchGesture
     {
         Zoom,
         Rotate,
         ZoomAndRotate,
         None
-    }
-    MultitouchGesture;
+    };
     
 public:
 
@@ -279,17 +278,15 @@ class CC_DLL CAIndicator : public CAView
 {
 public:
     
-    typedef enum
+    enum class Orientation : int
     {
-        CAIndicatorTypeHorizontal = 0,
-        CAIndicatorTypeVertical
-    }
-    CAIndicatorType;
-    
+        Horizontal = 0,
+        Vertical
+    };
     
 public:
     
-    CAIndicator(const CAIndicatorType& type, CAScrollView* var);
+        CAIndicator(CAIndicator::Orientation type, CAScrollView* var);
     
     virtual ~CAIndicator();
     
@@ -297,7 +294,7 @@ public:
     
     virtual void onExitTransitionDidStart();
     
-    static CAIndicator* create(const CAIndicatorType& type, CAScrollView* var);
+    static CAIndicator* create(CAIndicator::Orientation type, CAScrollView* var);
     
     virtual bool init();
     
@@ -325,7 +322,7 @@ private:
 
     CAView* m_pIndicator;
     
-    CAIndicatorType m_eType;
+    CAIndicator::Orientation m_eType;
     
     bool m_bPCMode;
     

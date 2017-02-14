@@ -19,7 +19,7 @@
 #include "support/ccUtils.h"
 NS_CC_BEGIN
 
-CAStepper::CAStepper(const CAStepperOrientation& type)
+CAStepper::CAStepper(CAStepper::Orientation type)
 : m_bAutoRepeat(true)
 , m_bContinuous(true)
 , m_bWraps(false)
@@ -34,7 +34,7 @@ CAStepper::CAStepper(const CAStepperOrientation& type)
 , m_actionType(ActionNone)
 , m_bTouchEffect(false)
 , m_pDividerImageView(nullptr)
-, m_pCAStepperOrientation(type)
+, m_pOrientation(type)
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAStepper");
     this->setBackgroundImage(CAStepper::State::Normal, CAImage::create(map.at("backgroundView_normal")));
@@ -56,7 +56,7 @@ CAStepper::~CAStepper()
     CC_SAFE_RELEASE(m_pDividerImageView);
 }
 
-CAStepper* CAStepper::create(const CAStepperOrientation& type)
+CAStepper* CAStepper::create(CAStepper::Orientation type)
 {
     CAStepper* page = new CAStepper(type);
     
@@ -70,7 +70,7 @@ CAStepper* CAStepper::create(const CAStepperOrientation& type)
     return NULL;
 }
 
-CAStepper* CAStepper::createWithFrame(const DRect& rect, const CAStepperOrientation& type)
+CAStepper* CAStepper::createWithFrame(const DRect& rect, CAStepper::Orientation type)
 {
     CAStepper* page = new CAStepper(type);
     
@@ -84,7 +84,7 @@ CAStepper* CAStepper::createWithFrame(const DRect& rect, const CAStepperOrientat
     return NULL;
 }
 
-CAStepper* CAStepper::createWithCenter(const DRect& rect, const CAStepperOrientation& type)
+CAStepper* CAStepper::createWithCenter(const DRect& rect, CAStepper::Orientation type)
 {
     CAStepper* page = new CAStepper(type);
     
@@ -98,7 +98,7 @@ CAStepper* CAStepper::createWithCenter(const DRect& rect, const CAStepperOrienta
     return NULL;
 }
 
-CAStepper* CAStepper::createWithLayout(const CrossApp::DLayout &layout, const CAStepperOrientation& type)
+CAStepper* CAStepper::createWithLayout(const CrossApp::DLayout &layout, CAStepper::Orientation type)
 {
     CAStepper* page = new CAStepper(type);
     
@@ -189,7 +189,7 @@ CAView* CAStepper::getTailorImageAtIndex(int i)
     render->printscreenWithView(clipNode);
     
     DRect rect;
-    if (m_pCAStepperOrientation==CAStepperOrientationHorizontal)
+    if (m_pOrientation==CAStepper::Orientation::Horizontal)
     {
         rect.origin = DPoint(i*m_pBackgroundImageView->getBounds().size.width/2,0);
         rect.size   = DSize(m_pBackgroundImageView->getBounds().size.width/2,m_pBackgroundImageView->getBounds().size.height);
@@ -209,7 +209,7 @@ CAView* CAStepper::getTailorImageAtIndex(int i)
 bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     m_actionType = ActionNone; // lazy init;
-    m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
+    m_pIncrementImageView->setScaleType(CAImageView::ScaleType::FitViewByHorizontal);
     
     click(pTouch);
     action();
@@ -218,7 +218,7 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         case ActionDecrease:
             m_pDecrementImageView->setImage(m_mDecrementImages.at(CAStepper::State::Highlighted));
             m_pIncrementImageView->setImage(m_mIncrementImages.at(CAStepper::State::Normal));
-            if (m_pCAStepperOrientation==CAStepperOrientationHorizontal)
+            if (m_pOrientation==CAStepper::Orientation::Horizontal)
             {
                 setTailorImageAtIndex(0);
             }
@@ -235,7 +235,7 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         case ActionIncrease:
             m_pDecrementImageView->setImage(m_mDecrementImages.at(CAStepper::State::Normal));
             m_pIncrementImageView->setImage(m_mIncrementImages.at(CAStepper::State::Highlighted));
-            if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            if (m_pOrientation==CAStepper::Orientation::Horizontal) {
                 setTailorImageAtIndex(1);
             }else{
                 setTailorImageAtIndex(0);
@@ -333,7 +333,7 @@ void CAStepper::onEnter()
     {
         m_pDividerImageView = CAImageView::createWithColor(m_cTintColor);
         m_pDividerImageView->retain();
-        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal)
+        if (m_pOrientation==CAStepper::Orientation::Horizontal)
         {
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
@@ -360,15 +360,15 @@ void CAStepper::onEnter()
     {
         m_pIncrementImageView = CAImageView::createWithImage(m_mIncrementImages.at(CAStepper::State::Normal));
         m_pIncrementImageView->retain();
-        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+        if (m_pOrientation==CAStepper::Orientation::Horizontal) {
             int tempw = MIN(getBounds().size.width, getBounds().size.height);
-            m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
+            m_pIncrementImageView->setScaleType(CAImageView::ScaleType::FitViewByHorizontal);
             m_pIncrementImageView->setCenter(DRect(getBounds().size.width/4*3, getBounds().size.height/2,
                                                    tempw,
                                                    tempw));
         }else{
             int tempw = MIN(getBounds().size.width, getBounds().size.height);
-            m_pIncrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByVertical);
+            m_pIncrementImageView->setScaleType(CAImageView::ScaleType::FitViewByVertical);
             m_pIncrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4,
                                                    tempw,
                                                    tempw));
@@ -382,15 +382,15 @@ void CAStepper::onEnter()
     {
         m_pDecrementImageView = CAImageView::createWithImage(m_mDecrementImages.at(CAStepper::State::Normal));
         m_pDecrementImageView->retain();
-        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+        if (m_pOrientation==CAStepper::Orientation::Horizontal) {
             int tempw = MIN(getBounds().size.width, getBounds().size.height);
-            m_pDecrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByHorizontal);
+            m_pDecrementImageView->setScaleType(CAImageView::ScaleType::FitViewByHorizontal);
             m_pDecrementImageView->setCenter(DRect(getBounds().size.width/4, getBounds().size.height/2,
                                                    tempw,
                                                    tempw));
         }else{
             int tempw = MIN(getBounds().size.width, getBounds().size.height);
-            m_pDecrementImageView->setImageViewScaleType(CAImageViewScaleTypeFitViewByVertical);
+            m_pDecrementImageView->setScaleType(CAImageView::ScaleType::FitViewByVertical);
             m_pDecrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4*3,
                                                    tempw,
                                                    tempw));
@@ -459,7 +459,7 @@ void CAStepper::repeat(float dt)
 void CAStepper::click(CATouch* pTouch)
 {
     DRect increseRect, decreaseRect;
-    if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+    if (m_pOrientation==CAStepper::Orientation::Horizontal) {
         increseRect = getBounds();
         increseRect.origin.x = getBounds().size.width/2;
         increseRect.size.width = getBounds().size.width/2;
@@ -497,7 +497,7 @@ void CAStepper::setContentSize(const DSize & var)
     
     if (m_pDividerImageView) {
 
-        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal)
+        if (m_pOrientation==CAStepper::Orientation::Horizontal)
         {
             m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
                                                   getBounds().size.height/2,
@@ -515,7 +515,7 @@ void CAStepper::setContentSize(const DSize & var)
     
     // init increment
     if (m_pIncrementImageView) {
-        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+        if (m_pOrientation==CAStepper::Orientation::Horizontal) {
             int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pIncrementImageView->setCenter(DRect(getBounds().size.width/4*3, getBounds().size.height/2,
                                                     tempw,
@@ -530,7 +530,7 @@ void CAStepper::setContentSize(const DSize & var)
     
     // init decrement
     if (m_pDecrementImageView) {
-        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+        if (m_pOrientation==CAStepper::Orientation::Horizontal) {
             int tempw = MIN(getBounds().size.width, getBounds().size.height);
             m_pDecrementImageView->setCenter(DRect(getBounds().size.width/4, getBounds().size.height/2,
                                                     tempw,

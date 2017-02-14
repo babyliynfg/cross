@@ -48,7 +48,7 @@ CAScrollView::CAScrollView()
 ,m_pIndicatorVertical(NULL)
 ,m_bShowsHorizontalScrollIndicator(true)
 ,m_bShowsVerticalScrollIndicator(true)
-,m_eMultitouchGesture(None)
+,m_eMultitouchGesture(MultitouchGesture::None)
 ,m_pHeaderRefreshView(NULL)
 ,m_pFooterRefreshView(NULL)
 ,m_bPCMode(false)
@@ -503,12 +503,12 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             CATouch* touch0 = dynamic_cast<CATouch*>(m_vTouches.at(0));
             CATouch* touch1 = dynamic_cast<CATouch*>(m_vTouches.at(1));
             
-            if (m_eMultitouchGesture == Rotate)
+            if (m_eMultitouchGesture == MultitouchGesture::Rotate)
             {
                 m_pContainer->setAnchorPoint(DPoint(0.5f, 0.5f));
             }
             
-            if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == ZoomAndRotate)
+            if (m_eMultitouchGesture == MultitouchGesture::Zoom || m_eMultitouchGesture == MultitouchGesture::ZoomAndRotate)
             {
                 m_fBeganZoomScale = m_fZoomScale;
                 m_fBeganTouchLength = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
@@ -524,7 +524,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
                 m_bZooming = true;
             }
 
-            if (m_eMultitouchGesture == Rotate || m_eMultitouchGesture == ZoomAndRotate)
+            if (m_eMultitouchGesture == MultitouchGesture::Rotate || m_eMultitouchGesture == MultitouchGesture::ZoomAndRotate)
             {
                 DPoint beganRotationVector = ccpSub(this->convertToNodeSpace(touch0->getLocation()),
                                                     this->convertToNodeSpace(touch1->getLocation()));
@@ -569,7 +569,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         CATouch* touch0 = dynamic_cast<CATouch*>(m_vTouches.at(0));
         CATouch* touch1 = dynamic_cast<CATouch*>(m_vTouches.at(1));
         
-        if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == ZoomAndRotate)
+        if (m_eMultitouchGesture == MultitouchGesture::Zoom || m_eMultitouchGesture == MultitouchGesture::ZoomAndRotate)
         {
             float touch_lenght = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
                                              this->convertToNodeSpace(touch1->getLocation()));
@@ -589,7 +589,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
             
         }
         
-        if (m_eMultitouchGesture == Rotate || m_eMultitouchGesture == ZoomAndRotate)
+        if (m_eMultitouchGesture == MultitouchGesture::Rotate || m_eMultitouchGesture == MultitouchGesture::ZoomAndRotate)
         {
             DPoint currRotationVector = ccpSub(this->convertToNodeSpace(touch0->getLocation()),
                                                this->convertToNodeSpace(touch1->getLocation()));
@@ -598,7 +598,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
             m_pContainer->setRotation(m_fBeganAngle - (currGestureAngle - m_fBeganGestureAngle));
         }
         
-        if (m_eMultitouchGesture == Zoom || m_eMultitouchGesture == None)
+        if (m_eMultitouchGesture == MultitouchGesture::Zoom || m_eMultitouchGesture == MultitouchGesture::None)
         {
             DPoint midPoint = ccpMidpoint(this->convertToNodeSpace(touch0->getLocation()),
                                     this->convertToNodeSpace(touch1->getLocation()));
@@ -953,14 +953,14 @@ void CAScrollView::initIndicator()
 {
     if (m_pIndicatorHorizontal == NULL)
     {
-        m_pIndicatorHorizontal = CAIndicator::create(CAIndicator::CAIndicatorTypeHorizontal, this);
+        m_pIndicatorHorizontal = CAIndicator::create(CAIndicator::Orientation::Horizontal, this);
         m_vChildInThis.pushBack(m_pIndicatorHorizontal);
         this->insertSubview(m_pIndicatorHorizontal, 1);
     }
     
     if (m_pIndicatorVertical == NULL)
     {
-        m_pIndicatorVertical = CAIndicator::create(CAIndicator::CAIndicatorTypeVertical, this);
+        m_pIndicatorVertical = CAIndicator::create(CAIndicator::Orientation::Vertical, this);
         m_vChildInThis.pushBack(m_pIndicatorVertical);
         this->insertSubview(m_pIndicatorVertical, 1);
     }
@@ -1149,7 +1149,7 @@ void CAScrollView::endHeaderRefresh()
 {
     if (m_pHeaderRefreshView)
     {
-        m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::None);
+        m_pHeaderRefreshView->setState(CAPullToRefreshView::State::None);
     }
 }
 
@@ -1157,7 +1157,7 @@ void CAScrollView::endFooterRefresh()
 {
     if (m_pFooterRefreshView)
     {
-        m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::None);
+        m_pFooterRefreshView->setState(CAPullToRefreshView::State::None);
     }
 }
 
@@ -1191,11 +1191,11 @@ void CAScrollView::changedFromPullToRefreshView()
         }
         if (layout.vertical.top < y)
         {
-            m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Normal);
+            m_pHeaderRefreshView->setState(CAPullToRefreshView::State::Normal);
         }
         else
         {
-            m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Pulling);
+            m_pHeaderRefreshView->setState(CAPullToRefreshView::State::Pulling);
         }
     }
     if (m_pFooterRefreshView)
@@ -1208,11 +1208,11 @@ void CAScrollView::changedFromPullToRefreshView()
         }
         if (size.height - m_obContentSize.height - layout.vertical.bottom > y)
         {
-            m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Normal);
+            m_pFooterRefreshView->setState(CAPullToRefreshView::State::Normal);
         }
         else
         {
-            m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Pulling);
+            m_pFooterRefreshView->setState(CAPullToRefreshView::State::Pulling);
         }
     } 
 }
@@ -1223,7 +1223,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     {
         this->stopDeaccelerateScroll();
         this->setContentOffset(DPoint(0, -128), true);
-        m_pHeaderRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Refreshing);
+        m_pHeaderRefreshView->setState(CAPullToRefreshView::State::Refreshing);
         if (m_pScrollViewDelegate)
         {
             this->performSelector(callfunc_selector(CAScrollView::headerWillBeginRefreshing), 0.1f);
@@ -1234,7 +1234,7 @@ void CAScrollView::detectionFromPullToRefreshView()
     {
         this->stopDeaccelerateScroll();
         this->setContentOffset(DPoint(0, this->getViewSize().height - this->getBounds().size.height + 128), true);
-        m_pFooterRefreshView->setPullToRefreshStateType(CAPullToRefreshView::Refreshing);
+        m_pFooterRefreshView->setState(CAPullToRefreshView::State::Refreshing);
         if (m_pScrollViewDelegate)
         {
             this->performSelector(callfunc_selector(CAScrollView::footerWillBeginRefreshing), 0.1f);
@@ -1275,7 +1275,7 @@ bool CAScrollView::isFooterRefreshing()
 
 #pragma CAIndicator
 
-CAIndicator::CAIndicator(const CAIndicatorType& type, CAScrollView* var)
+CAIndicator::CAIndicator(CAIndicator::Orientation type, CAScrollView* var)
 :m_pIndicator(NULL)
 ,m_eType(type)
 ,m_bPCMode(false)
@@ -1302,7 +1302,7 @@ void CAIndicator::onExitTransitionDidStart()
     this->setAlpha(0.0f);
 }
 
-CAIndicator* CAIndicator::create(const CAIndicatorType& type, CAScrollView* var)
+CAIndicator* CAIndicator::create(CAIndicator::Orientation type, CAScrollView* var)
 {
     CAIndicator* indicator = new CAIndicator(type, var);
     if (indicator && indicator->init())
@@ -1347,7 +1347,7 @@ void CAIndicator::setIndicator(const DSize& parentSize, const DRect& childrenFra
     
     CAScale9ImageView* indicator = dynamic_cast<CAScale9ImageView*>(m_pIndicator);
     
-    if (m_eType == CAIndicatorTypeHorizontal)
+    if (m_eType == CAIndicator::Orientation::Horizontal)
     {
         float size_scale_x = parentSize.width / childrenFrame.size.width;
         size_scale_x = MIN(size_scale_x, 1.0f);
@@ -1377,7 +1377,7 @@ void CAIndicator::setIndicator(const DSize& parentSize, const DRect& childrenFra
         
         indicator->setCenter(rect);
     }
-    else if (m_eType == CAIndicatorTypeVertical)
+    else if (m_eType == CAIndicator::Orientation::Vertical)
     {
         float size_scale_y = parentSize.height / childrenFrame.size.height;
         size_scale_y = MIN(size_scale_y, 1.0f);
@@ -1445,7 +1445,7 @@ void CAIndicator::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     
     DSize size = m_pIndicator->getFrame().size;
     
-    if (m_eType == CAIndicatorTypeHorizontal)
+    if (m_eType == CAIndicator::Orientation::Horizontal)
     {
         point.x += p_off.x;
         point.x = MAX(point.x, size.width/2);
@@ -1465,7 +1465,7 @@ void CAIndicator::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         DPoint indictor_point = ccpSub(point, ccpMult(size, 0.5f));
         DSize view_size = ccpSub(m_pMyScrollView->getViewSize(), m_pMyScrollView->getBounds().size);
         DPoint view_offset = m_pMyScrollView->getContentOffset();
-        if (m_eType == CAIndicatorTypeHorizontal)
+        if (m_eType == CAIndicator::Orientation::Horizontal)
         {
             view_offset.x = indictor_point.x / indictor_size.width * view_size.width;
         }

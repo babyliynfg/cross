@@ -29,7 +29,7 @@ DHorizontalLayout::DHorizontalLayout(const DHorizontalLayout& other)
     
 }
 
-DHorizontalLayout::DHorizontalLayout(float var1, float var2, const Type& type)
+DHorizontalLayout::DHorizontalLayout(float var1, float var2, DHorizontalLayout::Type type)
 :left(FLOAT_NONE)
 ,right(FLOAT_NONE)
 ,width(FLOAT_NONE)
@@ -38,31 +38,31 @@ DHorizontalLayout::DHorizontalLayout(float var1, float var2, const Type& type)
 {
     switch (type)
     {
-        case L_R:
+        case DHorizontalLayout::Type::L_R:
         {
             left = var1;
             right = var2;
         }
             break;
-        case L_W:
+        case DHorizontalLayout::Type::L_W:
         {
             left = var1;
             width = var2;
         }
             break;
-        case R_W:
+        case DHorizontalLayout::Type::R_W:
         {
             right = var1;
             width = var2;
         }
             break;
-        case W_C:
+        case DHorizontalLayout::Type::W_C:
         {
             width = var1;
             center = var2;
         }
             break;
-        case NW_C:
+        case DHorizontalLayout::Type::NW_C:
         {
             normalizedWidth = var1;
             center = var2;
@@ -114,7 +114,7 @@ DVerticalLayout::DVerticalLayout(const DVerticalLayout& other)
     
 }
 
-DVerticalLayout::DVerticalLayout(float var1, float var2, const Type& type)
+DVerticalLayout::DVerticalLayout(float var1, float var2, DVerticalLayout::Type type)
 :top(FLOAT_NONE)
 ,bottom(FLOAT_NONE)
 ,height(FLOAT_NONE)
@@ -123,31 +123,31 @@ DVerticalLayout::DVerticalLayout(float var1, float var2, const Type& type)
 {
     switch (type)
     {
-        case T_B:
+        case DVerticalLayout::Type::T_B:
         {
             top = var1;
             bottom = var2;
         }
             break;
-        case T_H:
+        case DVerticalLayout::Type::T_H:
         {
             top = var1;
             height = var2;
         }
             break;
-        case B_H:
+        case DVerticalLayout::Type::B_H:
         {
             bottom = var1;
             height = var2;
         }
             break;
-        case H_C:
+        case DVerticalLayout::Type::H_C:
         {
             height = var1;
             center = var2;
         }
             break;
-        case NH_C:
+        case DVerticalLayout::Type::NH_C:
         {
             normalizedHeight = var1;
             center = var2;

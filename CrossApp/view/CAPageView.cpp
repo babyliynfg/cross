@@ -10,9 +10,9 @@
 #include "basics/CAScheduler.h"
 #include "animation/CAAnimation.h"
 
-CAPageView::CAPageView(const Orientation& type)
+CAPageView::CAPageView(CAPageView::Orientation type)
 :m_eOrientation(type)
-,m_ePageViewState(None)
+,m_ePageViewState(CAPageView::State::None)
 ,m_nCurrPage(0)
 ,m_pPageViewDelegate(NULL)
 ,m_bListener(false)
@@ -71,7 +71,7 @@ bool CAPageView::init()
     
     this->setShowsScrollIndicators(false);
 
-    if (m_eOrientation == Horizontal)
+    if (m_eOrientation == CAPageView::Orientation::Horizontal)
     {
         this->setVerticalScrollEnabled(false);
     }
@@ -106,7 +106,7 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
     
     m_pViews = CADeque<CAView*>(vec);
     
-    if (m_eOrientation == Horizontal)
+    if (m_eOrientation == CAPageView::Orientation::Horizontal)
     {
         this->setViewSize(DSize(m_obContentSize.width * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1), 0));
     }
@@ -118,7 +118,7 @@ void CAPageView::setViews(const CADeque<CAView*>& vec)
     for (size_t i=0; i<m_pViews.size(); i++)
     {
         DRect rect = this->getBounds();
-        if (m_eOrientation == Horizontal)
+        if (m_eOrientation == CAPageView::Orientation::Horizontal)
         {
             rect.origin.x = (rect.size.width + m_fSpacing) * i;
         }
@@ -137,7 +137,7 @@ void CAPageView::setContentSize(const DSize& contentSize)
     
     if (!m_pViews.empty())
     {
-        if (m_eOrientation == Horizontal)
+        if (m_eOrientation == CAPageView::Orientation::Horizontal)
         {
             this->setViewSize(DSize(m_obContentSize.width * m_pViews.size() + m_fSpacing * (m_pViews.size() - 1), 0));
         }
@@ -149,7 +149,7 @@ void CAPageView::setContentSize(const DSize& contentSize)
         for (size_t i=0; i<m_pViews.size(); i++)
         {
             DRect rect = this->getBounds();
-            if (m_eOrientation == Horizontal)
+            if (m_eOrientation == CAPageView::Orientation::Horizontal)
             {
                 rect.origin.x = (rect.size.width + m_fSpacing) * i;
             }
@@ -181,7 +181,7 @@ CAView* CAPageView::getSubViewAtIndex(int index)
 
 void CAPageView::setShowsScrollIndicators(bool var)
 {
-    bool bVertScroll = m_eOrientation == Vertical;
+    bool bVertScroll = m_eOrientation == CAPageView::Orientation::Vertical;
     this->setShowsHorizontalScrollIndicator(var && !bVertScroll);
     this->setShowsVerticalScrollIndicator(var && bVertScroll);
     m_bShowsScrollIndicators = var;
@@ -216,7 +216,7 @@ int CAPageView::getCurrPage()
 
 void CAPageView::runAnimation(bool animated)
 {
-    if (m_eOrientation == Horizontal)
+    if (m_eOrientation == CAPageView::Orientation::Horizontal)
     {
         this->setContentOffset(DPoint(m_nCurrPage * (m_obContentSize.width + m_fSpacing), 0), animated);
     }
@@ -274,21 +274,21 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     CAScrollView::ccTouchEnded(pTouch, pEvent);
     CC_RETURN_IF(m_vTouches.size() > 1);
-    if (m_eOrientation == Horizontal)
+    if (m_eOrientation == CAPageView::Orientation::Horizontal)
     {
         float off_x = -m_tInertia.x;
         
         if (off_x > 0)
         {
-            m_ePageViewState = Next;
+            m_ePageViewState = CAPageView::State::Next;
         }
         else if (off_x < 0)
         {
-            m_ePageViewState = Last;
+            m_ePageViewState = CAPageView::State::Last;
         }
         else
         {
-            m_ePageViewState = None;
+            m_ePageViewState = CAPageView::State::None;
         }
     }
     else
@@ -297,30 +297,30 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         
         if (off_y > 0)
         {
-            m_ePageViewState = Next;
+            m_ePageViewState = CAPageView::State::Next;
         }
         else if (off_y < 0)
         {
-            m_ePageViewState = Last;
+            m_ePageViewState = CAPageView::State::Last;
         }
         else
         {
-            m_ePageViewState = None;
+            m_ePageViewState = CAPageView::State::None;
         }
     }
     
     int page = this->getCurrPage();
-    if (m_ePageViewState == Next)
+    if (m_ePageViewState == CAPageView::State::Next)
     {
         page++;
     }
-    else if (m_ePageViewState == Last)
+    else if (m_ePageViewState == CAPageView::State::Last)
     {
         page--;
     }
     else
     {
-        if (m_eOrientation == Horizontal)
+        if (m_eOrientation == CAPageView::Orientation::Horizontal)
         {
             float width = this->getBounds().size.width;
             float off_x = this->getContentOffset().x - this->getCurrPage() * width;
@@ -355,7 +355,7 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         if (m_pPageViewDelegate)
         {
             DPoint point = this->convertTouchToNodeSpace(pTouch);
-            m_pPageViewDelegate->pageViewDidSelectPageAtIndex(this, this->getCurrPage(), point);
+            m_pPageViewDelegate->pageViewDidSelectedPageAtIndex(this, this->getCurrPage(), point);
         }
         this->runAnimation(true);
     }

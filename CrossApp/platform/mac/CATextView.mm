@@ -51,7 +51,7 @@
     [super keyUp:theEvent];
     
     
-    if (_textView->getReturnType() != CrossApp::CATextView::Default)
+    if (_textView->getReturnType() != CrossApp::CATextView::ReturnType::Default)
     {
         if ([theEvent keyCode] == 36||
             [theEvent keyCode] == 76)
@@ -195,9 +195,14 @@
 
 NS_CC_BEGIN
 CATextView::CATextView()
-:m_obLastPoint(DPoint(-0xffff, -0xffff))
-,m_pDelegate(NULL)
-,m_iFontSize(40)
+: m_pBackgroundView(nullptr)
+, m_pShowImageView(nullptr)
+, m_pTextView(nullptr)
+, m_pDelegate(nullptr)
+, m_iFontSize(40)
+, m_eAlign(CATextView::Align::Left)
+, m_eReturnType(CATextView::ReturnType::Default)
+, m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
     this->setPoint(DPoint(-5000, -5000));
@@ -503,19 +508,19 @@ void CATextView::setBackgroundImage(CAImage* image)
     m_pBackgroundView->setImage(image);
 }
 
-void CATextView::setTextViewAlign(const TextViewAlign &var)
+void CATextView::setAlign(CATextView::Align var)
 {
     m_eAlign = var;
     
     switch (var)
     {
-        case CATextView::Left :
+        case CATextView::Align::Left :
             [textView_Mac setAlignment:NSTextAlignmentLeft];
             break;
-        case CATextView::Center:
+        case CATextView::Align::Center:
             [textView_Mac setAlignment:NSTextAlignmentCenter];
             break;
-        case CATextView::Right:
+        case CATextView::Align::Right:
             [textView_Mac setAlignment:NSTextAlignmentRight];
             break;
         default:
@@ -525,17 +530,17 @@ void CATextView::setTextViewAlign(const TextViewAlign &var)
     delayShowImage();
 }
 
-const CATextView::TextViewAlign& CATextView::getTextViewAlign()
+CATextView::Align CATextView::getAlign()
 {
     return m_eAlign;
 }
 
-void CATextView::setReturnType(const ReturnType &var)
+void CATextView::setReturnType(CATextView::ReturnType var)
 {
     m_eReturnType = var;
 }
 
-const CATextView::ReturnType& CATextView::getReturnType()
+CATextView::ReturnType CATextView::getReturnType()
 {
     return m_eReturnType;
 }

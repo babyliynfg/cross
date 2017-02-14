@@ -66,66 +66,90 @@ void CCApplication::setStatusBarStyle(const CAStatusBarStyle &var)
     m_eStatusBarStyle = var;
 }
 
-ccLanguageType CCApplication::getCurrentLanguage()
+LanguageType CCApplication::getCurrentLanguage()
 {
     std::string languageName = getCurrentLanguageJNI();
     const char* pLanguageName = languageName.c_str();
-    ccLanguageType ret = kLanguageEnglish;
-
+    LanguageType ret = LanguageType::ENGLISH;
+    
     if (0 == strcmp("zh", pLanguageName))
     {
-        ret = kLanguageChinese;
+        ret = LanguageType::CHINESE;
     }
     else if (0 == strcmp("en", pLanguageName))
     {
-        ret = kLanguageEnglish;
+        ret = LanguageType::ENGLISH;
     }
     else if (0 == strcmp("fr", pLanguageName))
     {
-        ret = kLanguageFrench;
+        ret = LanguageType::FRENCH;
     }
     else if (0 == strcmp("it", pLanguageName))
     {
-        ret = kLanguageItalian;
+        ret = LanguageType::ITALIAN;
     }
     else if (0 == strcmp("de", pLanguageName))
     {
-        ret = kLanguageGerman;
+        ret = LanguageType::GERMAN;
     }
     else if (0 == strcmp("es", pLanguageName))
     {
-        ret = kLanguageSpanish;
-    }
-    else if (0 == strcmp("nl", pLanguageName))
-    {
-        ret = kLanguageDutch;
+        ret = LanguageType::SPANISH;
     }
     else if (0 == strcmp("ru", pLanguageName))
     {
-        ret = kLanguageRussian;
+        ret = LanguageType::RUSSIAN;
+    }
+    else if (0 == strcmp("nl", pLanguageName))
+    {
+        ret = LanguageType::DUTCH;
     }
     else if (0 == strcmp("ko", pLanguageName))
     {
-        ret = kLanguageKorean;
+        ret = LanguageType::KOREAN;
     }
     else if (0 == strcmp("ja", pLanguageName))
     {
-        ret = kLanguageJapanese;
+        ret = LanguageType::JAPANESE;
     }
     else if (0 == strcmp("hu", pLanguageName))
     {
-        ret = kLanguageHungarian;
+        ret = LanguageType::HUNGARIAN;
     }
     else if (0 == strcmp("pt", pLanguageName))
     {
-        ret = kLanguagePortuguese;
+        ret = LanguageType::PORTUGUESE;
     }
     else if (0 == strcmp("ar", pLanguageName))
     {
-        ret = kLanguageArabic;
+        ret = LanguageType::ARABIC;
     }
-    
+    else if (0 == strcmp("nb", pLanguageName))
+    {
+        ret = LanguageType::NORWEGIAN;
+    }
+    else if (0 == strcmp("pl", pLanguageName))
+    {
+        ret = LanguageType::POLISH;
+    }
+    else if (0 == strcmp("tr", pLanguageName))
+    {
+        ret = LanguageType::TURKISH;
+    }
+    else if (0 == strcmp("uk", pLanguageName))
+    {
+        ret = LanguageType::UKRAINIAN;
+    }
+    else if (0 == strcmp("ro", pLanguageName))
+    {
+        ret = LanguageType::ROMANIAN;
+    }
+    else if (0 == strcmp("bg", pLanguageName))
+    {
+        ret = LanguageType::BULGARIAN;
+    }
     return ret;
+
 }
 
 TargetPlatform CCApplication::getTargetPlatform()

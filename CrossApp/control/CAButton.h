@@ -34,9 +34,9 @@ public:
         TouchCancelled
     };
     
-    enum class Type
+    enum class Type : int
     {
-        Custom,
+        Custom = 0,
         SquareRect,
         RoundedRect,
     };

@@ -116,7 +116,7 @@ _AgaginInitGlyphs:
 		}
 		if (cszTemp.empty())
 		{
-			vAlignment = CAVerticalTextAlignmentTop;
+			vAlignment = CAVerticalTextAlignment::Top;
 		}
 		else
 		{
@@ -134,20 +134,20 @@ _AgaginInitGlyphs:
 	}
 
 	ETextAlign eAlign;
-	if (CAVerticalTextAlignmentTop == vAlignment)
+	if (CAVerticalTextAlignment::Top == vAlignment)
 	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignTop
-        : (CATextAlignmentLeft == hAlignment) ? kAlignTopLeft : kAlignTopRight;
+		eAlign = (CATextAlignment::Center == hAlignment) ? kAlignTop
+        : (CATextAlignment::Left == hAlignment) ? kAlignTopLeft : kAlignTopRight;
 	}
-	else if (CAVerticalTextAlignmentCenter == vAlignment)
+	else if (CAVerticalTextAlignment::Center == vAlignment)
 	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignCenter
-        : (CATextAlignmentLeft == hAlignment) ? kAlignLeft : kAlignRight;
+		eAlign = (CATextAlignment::Center == hAlignment) ? kAlignCenter
+        : (CATextAlignment::Left == hAlignment) ? kAlignLeft : kAlignRight;
 	}
-	else if (CAVerticalTextAlignmentBottom == vAlignment)
+	else if (CAVerticalTextAlignment::Bottom == vAlignment)
 	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignBottom
-        : (CATextAlignmentLeft == hAlignment) ? kAlignBottomLeft : kAlignBottomRight;
+		eAlign = (CATextAlignment::Center == hAlignment) ? kAlignBottom
+        : (CATextAlignment::Left == hAlignment) ? kAlignBottomLeft : kAlignBottomRight;
 	}
 	else
 	{
@@ -167,7 +167,7 @@ _AgaginInitGlyphs:
 	m_bUnderLine = false;
 
 	CAImage* image = new CAImage();
-	if (!image->initWithRawData(pData, CAImage::PixelFormat_RGBA8888, width, height))
+	if (!image->initWithRawData(pData, CAImage::PixelFormat::RGBA8888, width, height))
 	{
         CC_SAFE_RELEASE_NULL(image);
 	}

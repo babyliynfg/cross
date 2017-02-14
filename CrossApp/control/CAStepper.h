@@ -14,28 +14,31 @@
 
 NS_CC_BEGIN
 
-typedef enum
-{
-    CAStepperOrientationHorizontal,
-    CAStepperOrientationVertical
-}CAStepperOrientation;
-
 class CAImageView;
 class CAScale9ImageView;
 class CC_DLL CAStepper : public CAControl
 {
 
 public:
-    CAStepper(const CAStepperOrientation& type = CAStepperOrientationHorizontal);
+    
+    enum class Orientation : int
+    {
+        Horizontal = 0,
+        Vertical
+    };
+    
+public:
+    
+    CAStepper(CAStepper::Orientation type = CAStepper::Orientation::Horizontal);
     virtual ~CAStepper();
 
-    static CAStepper* create(const CAStepperOrientation& type = CAStepperOrientationHorizontal);
+    static CAStepper* create(CAStepper::Orientation type = CAStepper::Orientation::Horizontal);
     static CAStepper* createWithFrame(const DRect& rect
-                                      , const CAStepperOrientation& type = CAStepperOrientationHorizontal);
+                                      , CAStepper::Orientation type = CAStepper::Orientation::Horizontal);
     static CAStepper* createWithCenter(const DRect& rect
-                                       , const CAStepperOrientation& type = CAStepperOrientationHorizontal);
+                                       , CAStepper::Orientation type = CAStepper::Orientation::Horizontal);
     static CAStepper* createWithLayout(const DLayout& layout
-                                      , const CAStepperOrientation& type = CAStepperOrientationHorizontal);
+                                      , CAStepper::Orientation type = CAStepper::Orientation::Horizontal);
     virtual bool init();
     
     virtual void onEnter();
@@ -103,7 +106,7 @@ private:
     CAView* m_pDividerImageView;
     CAColor4B m_cTintColor;
     
-    CAStepperOrientation m_pCAStepperOrientation;
+    CAStepper::Orientation m_pOrientation;
     
 private:
     

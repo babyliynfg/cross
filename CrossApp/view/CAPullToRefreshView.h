@@ -22,18 +22,18 @@ class CC_DLL CAPullToRefreshView: public CAView
     
 public:
     
-    typedef enum
+    enum class Type : int
     {
         Header = 0,
         Footer,
         Custom
-    }PullToRefreshType;
+    };
     
-    CAPullToRefreshView(const PullToRefreshType& type);
+    CAPullToRefreshView(CAPullToRefreshView::Type type);
     
     virtual ~CAPullToRefreshView();
     
-    static CAPullToRefreshView* create(const PullToRefreshType& type);
+    static CAPullToRefreshView* create(CAPullToRefreshView::Type type);
     
     virtual bool init();
     
@@ -48,29 +48,26 @@ public:
     CC_SYNTHESIZE_RETAIN(CAImage*, m_pPullToImage, PullToImage);
     
     CC_SYNTHESIZE_RETAIN(CAActivityIndicatorView*, m_pLoadingView, LoadingView);
-    
-    CC_SYNTHESIZE_PASS_BY_REF(CALayoutLinearType, m_eLayoutLinearType, LayoutLinearType);
-    
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(PullToRefreshType, m_eType, Type);
+        
+    CC_SYNTHESIZE_READONLY(CAPullToRefreshView::Type, m_eType, Type);
     
 protected:
     
+    enum class State : int
+    {
+        Normal = 1,
+        Pulling,
+        Refreshing,
+        None
+    };
+        
     bool isLayoutFinish();
     
     void startLayout();
     
     void updateLayout();
     
-    typedef enum
-    {
-        Normal = 1,
-        Pulling,
-        Refreshing,
-        None
-    }
-    PullToRefreshStateType;
-    
-    void setPullToRefreshStateType(const PullToRefreshStateType& stateType);
+    void setState(CAPullToRefreshView::State stateType);
     
     bool isCanRefresh();
     
@@ -90,12 +87,8 @@ protected:
     
     CAImageView* m_pPullToImageView;
     
-    PullToRefreshStateType m_eStateType;
+    CAPullToRefreshView::State m_eState;
 };
-
-#define CAPullToRefreshTypeHeader Header
-#define CAPullToRefreshTypeFooter Footer
-#define CAPullToRefreshTypeCustom Custom
 
 NS_CC_END
 

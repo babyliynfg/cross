@@ -258,7 +258,7 @@ CAImage* CAGif::getImage(unsigned int index)
         }
     }
 
-    return CAImage::createWithRawDataNoCache(m_pData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
+    return CAImage::createWithRawDataNoCache(m_pData, CAImage::PixelFormat::RGBA8888, m_uPixelsWide, m_uPixelsHigh);
 }
 
 void CAGif::getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal)

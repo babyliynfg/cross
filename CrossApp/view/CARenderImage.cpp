@@ -26,7 +26,7 @@ CARenderImage::CARenderImage()
 , m_uFBO(0)
 , m_uOldFBO(0)
 , m_uDepthRenderBufffer(0)
-, m_ePixelFormat(CAImage::PixelFormat_RGBA8888)
+, m_ePixelFormat(CAImage::PixelFormat::RGBA8888)
 , m_uClearFlags(0)
 , m_sClearColor(ccc4f(0,0,0,1))
 , m_fClearDepth(0.0f)
@@ -186,7 +186,7 @@ CARenderImage * CARenderImage::create(int w, int h)
 {
     CARenderImage *pRet = new CARenderImage();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, CAImage::PixelFormat_RGBA8888, 0))
+    if(pRet && pRet->initWithWidthAndHeight(w, h, CAImage::PixelFormat::RGBA8888, 0))
     {
         pRet->autorelease();
         return pRet;
@@ -202,7 +202,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
 
 bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    CCAssert(eFormat != CAImage::PixelFormat_A8, "only RGB and RGBA formats are valid for a render texture");
+    CCAssert(eFormat != CAImage::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool bRet = false;
     unsigned char *data = NULL;
