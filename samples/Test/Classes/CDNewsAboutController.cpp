@@ -127,8 +127,8 @@ void CDNewsAboutTableCell::initWithCell()
     CALabel* cellText = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(20, 0), DVerticalLayout_T_B(0, 0)));
     cellText->setTag(100);
     cellText->setFontSize(30);
-    cellText->setTextAlignment(CATextAlignmentLeft);
-    cellText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    cellText->setTextAlignment(CATextAlignment::Left);
+    cellText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     this->addSubview(cellText);
     
     CAScale9ImageView* iv = CAScale9ImageView::createWithLayout(DLayout(DHorizontalLayout_R_W(20, 50), DVerticalLayout_H_C(50, 0.5)));
@@ -233,7 +233,7 @@ void CDNewsAboutController::tableViewDidSelectRowAtIndexPath(CATableView* table,
         this->getView()->insertSubview(_waitview, CAWindowZOrderTop);
         
         CAActivityIndicatorView* p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        p_pLoading->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
+        p_pLoading->setStyle(CAActivityIndicatorView::Style::WhiteLarge);
         p_pLoading->startAnimating();
         _waitview->addSubview(p_pLoading);
         
@@ -243,8 +243,8 @@ void CDNewsAboutController::tableViewDidSelectRowAtIndexPath(CATableView* table,
         label->setText("正在清理...");
         label->setColor(CAColor_white);
         label->setFontSize(18);
-        label->setTextAlignment(CATextAlignmentCenter);
-        label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        label->setTextAlignment(CATextAlignment::Center);
+        label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         _waitview->addSubview(label);
         
         this->start();

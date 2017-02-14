@@ -90,8 +90,8 @@ void PickerViewTest::viewDidLoad()
         city_value->setText(UTF8("天津市"));
         city_value->setColor(CAColor_black);
         city_value->setFontSize(28);
-        city_value->setTextAlignment(CATextAlignmentCenter);
-        city_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        city_value->setTextAlignment(CATextAlignment::Center);
+        city_value->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     
         CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view1->addSubview(p_pickerView);
@@ -103,7 +103,7 @@ void PickerViewTest::viewDidLoad()
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     else if(PickerViewNum == 1)
     {
-        CADatePickerView* dpv = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerModeDate);
+        CADatePickerView* dpv = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::Date);
         //dpv->setDate(2004, 2, 16, false);
         dpv->setDelegate(this);
         
@@ -114,7 +114,7 @@ void PickerViewTest::viewDidLoad()
     }
     else if(PickerViewNum == 2)
     {
-        CADatePickerView* dpv3 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerModeDateAndTime);
+        CADatePickerView* dpv3 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::DateAndTime);
         dpv3->setDelegate(this);
     
         CAView* view3 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
@@ -124,7 +124,7 @@ void PickerViewTest::viewDidLoad()
     }
     else if(PickerViewNum == 3)
     {
-        CADatePickerView* dpv4 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerModeTime);
+        CADatePickerView* dpv4 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::Time);
         dpv4->setDelegate(this);
     
         CAView* view4 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
@@ -134,7 +134,7 @@ void PickerViewTest::viewDidLoad()
     }
     else
     {
-        CADatePickerView* dpv5 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerModeCountDownTimer);
+        CADatePickerView* dpv5 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::CountDownTimer);
         dpv5->setDelegate(this);
     
         CAView* view5 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));

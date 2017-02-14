@@ -38,7 +38,7 @@ bool CDListViewTest::init()
     listView->setListViewDataSource(this);
     listView->setAllowsSelection(true);
     listView->setAllowsMultipleSelection(false);
-    listView->setOrientation(CAListView::Horizontal);
+    listView->setOrientation(CAListView::Orientation::Horizontal);
     //listView->setShowsHorizontalScrollIndicator(false);
     listView->setShowsScrollIndicators(false);
     listView->setSeparatorColor(CAColor_clear);
@@ -86,8 +86,8 @@ CAListViewCell* CDListViewTest::listViewCellAtIndex(CAListView *listView, const 
         cell = CAListViewCell::create("ListViewCell");
         CALabel* test = CALabel::createWithLayout(DLayoutFill);
         test->setColor(ccc4(51, 204, 255, 255));
-        test->setTextAlignment(CATextAlignmentCenter);
-        test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        test->setTextAlignment(CATextAlignment::Center);
+        test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         test->setFontSize(28);
         test->setTag(100);
         cell->addSubview(test);
@@ -124,7 +124,7 @@ void ListViewTest::viewDidLoad()
     p_ListView->setListViewDataSource(this);
     p_ListView->setAllowsSelection(true);
     p_ListView->setAllowsMultipleSelection(false);
-    p_ListView->setOrientation(CAListView::Vertical);
+    p_ListView->setOrientation(CAListView::Orientation::Vertical);
     p_ListView->setShowsScrollIndicators(true);
 
     p_ListView->setSeparatorColor(CAColor_gray);
@@ -166,8 +166,8 @@ CAListViewCell* ListViewTest::listViewCellAtIndex(CAListView *listView, const DS
         
         CALabel* test = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_W(0, 200), DVerticalLayoutFill));
         test->setColor(ccc4(51, 204, 255, 255));
-        test->setTextAlignment(CATextAlignmentCenter);
-        test->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        test->setTextAlignment(CATextAlignment::Center);
+        test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         test->setFontSize(28);
         test->setTag(100);
         cell->addSubview(test);

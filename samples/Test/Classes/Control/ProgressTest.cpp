@@ -22,8 +22,8 @@ void ProgressTest::viewDidLoad()
     progress_value->setText("");
     progress_value->setFontSize(30);
     progress_value->setColor(ccc4(51, 204, 255, 255));
-    progress_value->setTextAlignment(CATextAlignmentCenter);
-    progress_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    progress_value->setTextAlignment(CATextAlignment::Center);
+    progress_value->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     this->getView()->addSubview(progress_value);
     
     progress = CAProgress::create();

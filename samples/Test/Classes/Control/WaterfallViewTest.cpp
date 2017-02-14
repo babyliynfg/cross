@@ -24,8 +24,8 @@ void WaterfallViewTest::viewDidLoad()
         colorArr.push_back(ccc4(r, g, b, 255));
     }
     
-    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeHeader);
-    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::CAPullToRefreshTypeFooter);
+    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Header);
+    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer);
     
     Waterfall = CAWaterfallView::createWithLayout(DLayoutFill);
     Waterfall->setItemMargin(10);
@@ -113,8 +113,8 @@ CAWaterfallViewCell* WaterfallViewTest::waterfallCellAtIndex(CAWaterfallView *wa
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(24);
-        itemText->setTextAlignment(CATextAlignmentCenter);
-        itemText->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        itemText->setTextAlignment(CATextAlignment::Center);
+        itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         p_Cell->getContentView()->addSubview(itemText);
     }
     

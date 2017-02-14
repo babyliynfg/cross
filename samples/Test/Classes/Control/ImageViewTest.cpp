@@ -52,7 +52,7 @@ void ImageViewTest::viewDidLoad()
     else if (ImageViewNum == 1)
     {
         CAImageView* image2 = CAImageView::createWithLayout(DLayoutFill);
-        image2->setImageViewScaleType(CAImageViewScaleTypeFitImageXY);
+        image2->setScaleType(CAImageView::ScaleType::FitImageXY);
         image2->setImage(CAImage::create("image/h1.png"));
     
         CAView* view2 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
@@ -63,7 +63,7 @@ void ImageViewTest::viewDidLoad()
     else if (ImageViewNum == 2)
     {
         CAImageView* image3 = CAImageView::createWithLayout(DLayoutFill);
-        image3->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+        image3->setScaleType(CAImageView::ScaleType::FitImageCrop);
         image3->setImage(CAImage::create("image/h1.png"));
     
         CAView* view3 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
@@ -74,7 +74,7 @@ void ImageViewTest::viewDidLoad()
     else if (ImageViewNum == 3)
     {
         CAImageView* image4 = CAImageView::createWithLayout(DLayoutFill);
-        image4->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+        image4->setScaleType(CAImageView::ScaleType::FitImageInside);
         image4->setImage(CAImage::create("image/h1.png"));
     
         CAView* view4 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));

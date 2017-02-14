@@ -35,7 +35,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     m_image = _image;
     
     CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-    idc1->setStyle(CAActivityIndicatorViewStyleWhiteLarge);
+    idc1->setStyle(CAActivityIndicatorView::Style::WhiteLarge);
     idc1->startAnimating();
     this->getView()->insertSubview(idc1, -1);
     
@@ -43,7 +43,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
     for (int i=0; i<m_image.m_imageUrl.size(); i++)
     {
         CommonUrlImageView* temImage = CommonUrlImageView::createWithLayout(DLayoutFill);
-        temImage->setImageViewScaleType(CAImageViewScaleTypeFitImageInside);
+        temImage->setScaleType(CAImageView::ScaleType::FitImageInside);
 //        temImage->setImage(CAImage::create("image/HelloWorld.png"));
         temImage->setUrl(m_image.m_imageUrl[i]);
         
@@ -59,7 +59,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
         viewList.pushBack(p_ScrollView);
     }
     
-    p_PageView = CAPageView::createWithLayout(DLayoutFill, CAPageView::Horizontal);
+    p_PageView = CAPageView::createWithLayout(DLayoutFill, CAPageView::Orientation::Horizontal);
     p_PageView->setViews(viewList);
     p_PageView->setPageViewDelegate(this);
     p_PageView->setBackgroundColor(CAColor_black);

@@ -21,11 +21,11 @@ void StepperTest::viewDidLoad()
     step_value->setText("step_value:0");
     step_value->setColor(CAColor_black);
     step_value->setFontSize(28);
-    step_value->setTextAlignment(CATextAlignmentCenter);
-    step_value->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    step_value->setTextAlignment(CATextAlignment::Center);
+    step_value->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     this->getView()->addSubview(step_value);
     
-    step = CAStepper::createWithLayout(DLayout(DHorizontalLayout_W_C(360, 0.5), DVerticalLayout_H_C(60, 0.5)), CAStepperOrientationHorizontal);
+    step = CAStepper::createWithLayout(DLayout(DHorizontalLayout_W_C(360, 0.5), DVerticalLayout_H_C(60, 0.5)), CAStepper::Orientation::Horizontal);
     //step->setWraps(true);//是否循环,默认循环
     step->setMinValue(0);
     step->setMaxValue(50);

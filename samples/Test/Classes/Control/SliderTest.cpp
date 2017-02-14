@@ -46,8 +46,8 @@ void SliderTest::viewDidLoad()
         sliderValue1->setColor(ccc4(51,204,255,255));
         sliderValue1->setText("0");
         sliderValue1->setFontSize(30);
-        sliderValue1->setTextAlignment(CATextAlignmentCenter);
-        sliderValue1->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        sliderValue1->setTextAlignment(CATextAlignment::Center);
+        sliderValue1->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         view1->addSubview(sliderValue1);
     
         CASlider* slider1 = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(120, 120), DVerticalLayout_T_H(500, 56)));
@@ -76,8 +76,8 @@ void SliderTest::viewDidLoad()
         sliderValue2->setColor(ccc4(51, 204, 255, 255));
         sliderValue2->setText("0");
         sliderValue2->setFontSize(30);
-        sliderValue2->setTextAlignment(CATextAlignmentCenter);
-        sliderValue2->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+        sliderValue2->setTextAlignment(CATextAlignment::Center);
+        sliderValue2->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         view2->addSubview(sliderValue2);
     
         CASlider* slider2 = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(120, 120), DVerticalLayout_T_H(500, 56)));

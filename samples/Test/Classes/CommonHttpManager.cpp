@@ -180,7 +180,7 @@ void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
 
     CAHttpRequest* httpRequest = new CAHttpRequest();
     httpRequest->setUrl(getRul.c_str());
-    httpRequest->setRequestType(CAHttpRequest::kHttpGet);
+    httpRequest->setRequestType(CAHttpRequest::Type::Get);
     CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJson);
     httpRequest->setResponseCallback(callBack, httpresponse_selector(CommonHttpResponseCallBack::onResponse));
     
@@ -216,7 +216,7 @@ void CommonHttpManager::send_post(const std::string& url,std::map<std::string,st
 
     CAHttpRequest* httpRequest = new CAHttpRequest();
     httpRequest->setUrl(url.c_str());
-    httpRequest->setRequestType(CAHttpRequest::kHttpPost);
+    httpRequest->setRequestType(CAHttpRequest::Type::Post);
     httpRequest->setRequestData(postData.c_str(), postData.length());
     CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJsonNoCache);
     httpRequest->setResponseCallback(callBack, httpresponse_selector(CommonHttpResponseCallBack::onResponse));
@@ -250,7 +250,7 @@ void CommonHttpManager::send_postFile(const std::string& url,std::map<std::strin
     
     CAHttpRequest* httpRequest = new CAHttpRequest();
     httpRequest->setUrl(url.c_str());
-    httpRequest->setRequestType(CAHttpRequest::kHttpPostFile);
+    httpRequest->setRequestType(CAHttpRequest::Type::PostFile);
     httpRequest->setRequestData(postData.c_str(), postData.length());
     httpRequest->setFileNameToPost(file);
     CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJsonNoCache);
@@ -305,7 +305,7 @@ void CommonHttpManager::get_image(const std::string& url,CAObject* pTarget,SEL_C
         {
             CAHttpRequest* httpRequest = new CAHttpRequest();
             httpRequest->setUrl(url.c_str());
-            httpRequest->setRequestType(CAHttpRequest::kHttpGet);
+            httpRequest->setRequestType(CAHttpRequest::Type::Get);
             std::vector<std::string> header;
             //header.push_back("Referer:");
             httpRequest->setHeaders(header);
