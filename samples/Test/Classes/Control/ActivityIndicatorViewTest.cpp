@@ -17,7 +17,7 @@ ActivityIndicatorViewTest::~ActivityIndicatorViewTest()
     ActivityIndicatorNum = 0;
 }
 
-void CDUIShowAutoCollectionView::ActivityIndicatorRightBtnRightcallback(CAControl* control, DPoint point)
+void CDUIShowAutoCollectionView::ActivityIndicatorRightBtnRightcallback(CAButton* control)
 {
     if (showActivityIndicatorNavigationBar >= 4)
     {

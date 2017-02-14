@@ -33,8 +33,6 @@ public:
     
 public:
     
-    void pageControlCallBack(CrossApp::CAControl *btn, CrossApp::DPoint point);
-    
     void pageViewDidBeginTurning(CAPageView* pageView);
     
     void pageViewDidEndTurning(CAPageView* pageView);

@@ -179,21 +179,21 @@ void CDNewsAboutController::viewDidLoad()
     head->setImage(CAImage::create("image/avatar_bg_70.png"));
     view->addSubview(head);
     
-    CAButton* btn1 = CAButton::create(CAButtonTypeSquareRect);
+    CAButton* btn1 = CAButton::create(CAButton::Type::SquareRect);
     btn1->setLayout(DLayout(DHorizontalLayout_W_C(130, 0.2), DVerticalLayout_H_C(130, 0.5)));
-    btn1->setBackgroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("image/about_btn1_up.png")));
-    btn1->setBackgroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create("image/about_btn1_down.png")));
+    btn1->setBackgroundViewForState(CAControl::State::Normal, CAImageView::createWithImage(CAImage::create("image/about_btn1_up.png")));
+    btn1->setBackgroundViewForState(CAControl::State::Highlighted, CAImageView::createWithImage(CAImage::create("image/about_btn1_down.png")));
     
-    CAButton* btn2 = CAButton::create(CAButtonTypeSquareRect);
+    CAButton* btn2 = CAButton::create(CAButton::Type::SquareRect);
     btn2->setLayout(DLayout(DHorizontalLayout_W_C(130, 0.5), DVerticalLayout_H_C(130, 0.5)));
-    btn2->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn2_up.png")));
-    btn2->setBackgroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create("image/about_btn2_down.png")));
+    btn2->setBackgroundViewForState(CAControl::State::Normal, CAScale9ImageView::createWithImage(CAImage::create("image/about_btn2_up.png")));
+    btn2->setBackgroundViewForState(CAControl::State::Highlighted, CAImageView::createWithImage(CAImage::create("image/about_btn2_down.png")));
     
-    CAButton* btn3 = CAButton::create(CAButtonTypeSquareRect);
+    CAButton* btn3 = CAButton::create(CAButton::Type::SquareRect);
     btn3->setTag(100);
     btn3->setLayout(DLayout(DHorizontalLayout_W_C(130, 0.8), DVerticalLayout_H_C(130, 0.5)));
-    btn3->setBackgroundViewForState(CAControlStateNormal, CAImageView::createWithImage(CAImage::create("image/about_btn3_up.png")));
-    btn3->setBackgroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create("image/about_btn3_down.png")));
+    btn3->setBackgroundViewForState(CAControl::State::Normal, CAImageView::createWithImage(CAImage::create("image/about_btn3_up.png")));
+    btn3->setBackgroundViewForState(CAControl::State::Highlighted, CAImageView::createWithImage(CAImage::create("image/about_btn3_down.png")));
     
     CAView* view1 = CAView::createWithLayout(DLayoutFill, ccc4(210,210,210,255));
     view1->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_NH_C(0.24, 0.88)));

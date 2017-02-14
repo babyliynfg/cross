@@ -56,7 +56,7 @@ static const CHAR* adressTag[34] =
     _T("澳门特别行政区"),
 };
 
-void CDUIShowAutoCollectionView::PickerViewRightBtnRightcallback(CAControl* control, DPoint point)
+void CDUIShowAutoCollectionView::PickerViewRightBtnRightcallback(CAButton* btn)
 {
     if (showPickerViewNavigationBar >= 4)
     {

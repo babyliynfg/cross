@@ -28,10 +28,6 @@ public:
     CALabel* sliderValue2;
     CASlider* slider;
     
-public:
-    
-    void sliderValueChange(CAControl* btn, DPoint point);
-    
 };
 
 

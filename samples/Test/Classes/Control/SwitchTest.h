@@ -22,10 +22,6 @@ protected:
     
     void viewDidUnload();
     
-public:
-    
-    void switchStateChange(CAControl* btn, DPoint point);
-    
 };
 
 

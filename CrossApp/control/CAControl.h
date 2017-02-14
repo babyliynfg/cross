@@ -43,9 +43,9 @@ public:
     
     void setControlStateHighlighted() { this->setControlState(CAControl::State::Highlighted); }
     
-    void setControlStateDisabled() { this->setControlState(CAControl::State::Selected); }
+    void setControlStateSelected() { this->setControlState(CAControl::State::Selected); }
     
-    void setControlStateSelected() { this->setControlState(CAControl::State::Disabled); }
+    void setControlStateDisabled() { this->setControlState(CAControl::State::Disabled); }
     
 protected:
 

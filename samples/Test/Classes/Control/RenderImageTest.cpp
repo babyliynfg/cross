@@ -21,12 +21,15 @@ void RenderImageTest::viewDidLoad()
     
     dle_ren_index = 0;
     
-    CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
+    CAButton* btn = CAButton::create(CAButton::Type::SquareRect);
     btn->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_B_H(100, 54)));
-    btn->setTitleForState(CAControlStateNormal, "Click");
-    btn->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
+    btn->setTitleForState(CAControl::State::Normal, "Click");
+    btn->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
     btn->setTag(1);
-    btn->addTarget(this, CAControl_selector(RenderImageTest::renderCallBack), CAControlEventTouchUpInSide);
+    btn->addTarget([=](CAButton* button)
+    {
+        CADevice::openAlbum(this);
+    }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn);
 }
 
@@ -34,41 +37,6 @@ void RenderImageTest::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-void RenderImageTest::renderCallBack(CAControl* control, DPoint point)
-{
-    CAButton* button = (CAButton*)control;
-    if (button->getTag()==1) {
-        CADevice::openAlbum(this);
-    }else if(button->getTag()==2) {
-        
-        m_clvImage->setClippingEnabled(true);
-        CARenderImage* rm = CARenderImage::create(winSize.width-200, winSize.height-200);
-        rm->printscreenWithView(m_clvImage);
-        
-        renderImage = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100, 100)));
-        this->getView()->addSubview(renderImage);
-        
-        m_clvImage->setClippingEnabled(false);
-        
-        if (m_clv!=NULL)
-        {
-            this->getView()->removeSubview(m_clv);
-            m_clv = NULL;
-            this->getView()->removeSubview(m_clvImage);
-            m_clvImage = NULL;
-            this->getView()->removeSubview(render_btn);
-            render_btn = NULL;
-        }
-        
-        CAImageView* imageView = CAImageView::createWithLayout(DLayoutFill);
-        imageView->setImage(rm->getImageView()->getImage());
-        renderImage->addSubview(imageView);
-        
-        CAScheduler::schedule(schedule_selector(RenderImageTest::scheduleFuck), this, 3);
-    }
-    
 }
 
 CADrawView* getStencil(const DSize& size, int index)
@@ -81,7 +49,7 @@ CADrawView* getStencil(const DSize& size, int index)
         ver[2] = DPoint(size.width, size.height);
         ver[3] = DPoint(size.width, 0);
         CADrawView* stencil = CADrawView::create();
-        stencil->drawPolygon(ver, 4, ccc4f(255, 0, 0, 0), 2, ccc4f(255, 0, 0, 0));
+        stencil->drawPolygon(ver, 4, ccc4(255, 0, 0, 0), 2, ccc4(255, 0, 0, 0));
         stencil->setFrameOrigin(DPoint(0, size.height));
         return stencil;
     }
@@ -95,7 +63,7 @@ CADrawView* getStencil(const DSize& size, int index)
             cir[i] = DPoint(x, y);
         }
         CADrawView* stencil = CADrawView::create();
-        stencil->drawPolygon(cir, 720, ccc4f(1, 1, 1, 0.5), 0, ccc4f(1, 1, 1, 0));
+        stencil->drawPolygon(cir, 720, ccc4(1, 1, 1, 0.5), 0, ccc4(1, 1, 1, 0));
         stencil->setCenterOrigin(DPoint(size.width/2, size.height/2));
         return stencil;
     }
@@ -162,12 +130,38 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     iv->setFrame(ivRect);
     m_clv->addSubview(iv);
     
-    render_btn = CAButton::create(CAButtonTypeSquareRect);
+    render_btn = CAButton::create(CAButton::Type::SquareRect);
     render_btn->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_B_H(100, 54)));
-    render_btn->setTitleForState(CAControlStateNormal, "Click");
-    render_btn->setTitleColorForState(CAControlStateNormal, ccc4(51,204,255,255));
-    render_btn->addTarget(this, CAControl_selector(RenderImageTest::renderCallBack), CAControlEventTouchUpInSide);
+    render_btn->setTitleForState(CAControl::State::Normal, "Click");
+    render_btn->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
     render_btn->setTag(2);
+    render_btn->addTarget([=](CAButton* button)
+    {
+        m_clvImage->setClippingEnabled(true);
+        CARenderImage* rm = CARenderImage::create(winSize.width-200, winSize.height-200);
+        rm->printscreenWithView(m_clvImage);
+        
+        renderImage = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100, 100)));
+        this->getView()->addSubview(renderImage);
+        
+        m_clvImage->setClippingEnabled(false);
+        
+        if (m_clv!=NULL)
+        {
+            this->getView()->removeSubview(m_clv);
+            m_clv = NULL;
+            this->getView()->removeSubview(m_clvImage);
+            m_clvImage = NULL;
+            this->getView()->removeSubview(render_btn);
+            render_btn = NULL;
+        }
+        
+        CAImageView* imageView = CAImageView::createWithLayout(DLayoutFill);
+        imageView->setImage(rm->getImageView()->getImage());
+        renderImage->addSubview(imageView);
+        
+        CAScheduler::schedule(schedule_selector(RenderImageTest::scheduleFuck), this, 3);
+    }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(render_btn);
 }
 

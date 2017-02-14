@@ -39,8 +39,6 @@ public:
 public:
     
     void endAction();
-    
-    void doAction(CAControl* btn,DPoint point);
 
 };
 

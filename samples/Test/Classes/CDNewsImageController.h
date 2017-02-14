@@ -60,7 +60,6 @@ public:
     void onRefreshRequestFinished(const HttpResponseStatus& status, const CSJson::Value& json);
     float getRandNum();
     void showAlert();
-    void buttonCallBack(CAControl* btn,DPoint point);
 public:
     string getSign(std::map<std::string,std::string> key_value);
     DSize winSize;

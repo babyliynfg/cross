@@ -20,7 +20,18 @@ void SwitchTest::viewDidLoad()
     CASwitch* customSwitch1 = CASwitch::createWithLayout(DLayout(DHorizontalLayout_L_W(150, 100), DVerticalLayout_T_H(350, 20)));
     customSwitch1->setTag(100);
     customSwitch1->setIsOn(true, false);
-    customSwitch1->addTarget(this, CAControl_selector(SwitchTest::switchStateChange));
+    customSwitch1->setTarget([=](CASwitch* switch1, int)
+    {
+        CASwitch* state = switch1;
+        if (!state->isOn())
+        {
+            CCLog("switchStateChange false");
+        }
+        else
+        {
+            CCLog("switchStateChange true");
+        }
+    });
     this->getView()->addSubview(customSwitch1);
     
     CASwitch* customSwitch2 = CASwitch::createWithLayout(DLayout(DHorizontalLayout_R_W(150, 100), DVerticalLayout_T_H(350, 20)));
@@ -28,7 +39,18 @@ void SwitchTest::viewDidLoad()
     customSwitch2->setIsOn(true, false);
     customSwitch2->setOnImage(CAImage::create("image/Switch_on.png"));
     customSwitch2->setOffImage(CAImage::create("image/Switch_off.png"));
-    customSwitch2->addTarget(this, CAControl_selector(SwitchTest::switchStateChange));
+    customSwitch2->setTarget([=](CASwitch* switch2, int)
+    {
+        CASwitch* state = switch2;
+        if (!state->isOn())
+        {
+            CCLog("switchStateChange false");
+        }
+        else
+        {
+            CCLog("switchStateChange true");
+        }
+    });
     this->getView()->addSubview(customSwitch2);
 }
 
@@ -36,19 +58,6 @@ void SwitchTest::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-void SwitchTest::switchStateChange(CAControl* btn, DPoint point)
-{
-    CASwitch* state = (CASwitch*)btn;
-    if (!state->isOn())
-    {
-        CCLog("switchStateChange false");
-    }
-    else
-    {
-        CCLog("switchStateChange true");
-    }
 }
 
 

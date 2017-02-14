@@ -32,21 +32,19 @@ void StepperTest::viewDidLoad()
     step->setStepValue(1);
     //step->setAutoRepeat(false);
     this->getView()->addSubview(step);
-    step->addTarget(this, CAControl_selector(StepperTest::stepperCallBack));
+    step->setTarget([=](CAStepper* stepper, int)
+    {
+        char tem[30];
+        sprintf(tem, "step_value:%.0f",step->getValue());
+        step_value->setText(tem);
+        CCLog("step-tag === %f",step->getValue());
+    });
 }
 
 void StepperTest::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-void StepperTest::stepperCallBack(CAControl *btn, DPoint point)
-{
-    char tem[30];
-    sprintf(tem, "step_value:%.0f",step->getValue());
-    step_value->setText(tem);
-    CCLog("step-tag === %f",step->getValue());
 }
 
 

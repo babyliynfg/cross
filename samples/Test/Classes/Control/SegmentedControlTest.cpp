@@ -27,7 +27,10 @@ void SegmentedControlTest::viewDidLoad()
     }
     segment1->setTitleColor(CAColor_black);
     segment1->setTitleSelectedColor(CAColor_white);
-    segment1->addTarget(this, CASegmentedControl_selector(SegmentedControlTest::segmentCallback));
+    segment1->setTarget([=](CASegmentedControl* segmentedControl, int)
+    {
+        CCLog("segmentCallback");
+    });
     segment1->setSelectedAtIndex(0);
     this->getView()->addSubview(segment1);
     
@@ -40,8 +43,10 @@ void SegmentedControlTest::viewDidLoad()
     }
     segment2->setTitleColor(CAColor_black);
     segment2->setTitleSelectedColor(CAColor_white);
-    
-    segment2->addTarget(this, CASegmentedControl_selector(SegmentedControlTest::segmentCallback));
+    segment2->setTarget([=](CASegmentedControl* segmentedControl, int)
+    {
+        CCLog("segmentCallback");
+    });
     segment2->setBackgroundImage(CAImage::create("image/seg1.png"));
     segment2->setSegmentItemBackgroundImage(CAImage::create("image/seg2.png"));
     segment2->setTintColor(ccc4(44, 178, 93, 255));
@@ -53,9 +58,4 @@ void SegmentedControlTest::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-void SegmentedControlTest::segmentCallback(CASegmentedControl* btn, int index)
-{
-    CCLog("segmentCallback");
 }

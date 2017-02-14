@@ -201,7 +201,7 @@ AutoCollectionViewVerticalTest::~AutoCollectionViewVerticalTest()
     AutoCollectionViewVerticalNum = 0;
 }
 
-void CDUIShowAutoCollectionView::AutoCollectionVerticalRightBtnRightcallback(CAControl* control, DPoint point)
+void CDUIShowAutoCollectionView::AutoCollectionVerticalRightBtnRightcallback(CAButton* btn)
 {
     if (showAutoCollectionVerticalNavigationBar >= 1)
     {

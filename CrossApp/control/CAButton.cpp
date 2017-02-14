@@ -23,6 +23,7 @@ NS_CC_BEGIN
 
 CAButton::CAButton(const CAButton::Type& buttonType)
 :m_eButtonType(buttonType)
+,m_eState(CAButton::State::Normal)
 ,m_pImageView(NULL)
 ,m_pLabel(NULL)
 ,m_sTitleFontName("")
@@ -405,7 +406,7 @@ void CAButton::setControlState(CAControl::State var)
     {
         this->insertSubview(m_mBackgroundViews.at(m_eState), -1);
     }
-    else
+    else if (m_mBackgroundViews.contains(CAControl::State::Normal))
     {
         this->insertSubview(m_mBackgroundViews.at(CAControl::State::Normal), -1);
     }
