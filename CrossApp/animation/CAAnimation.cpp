@@ -18,12 +18,12 @@ namespace CAAnimation
         CAAnimation::Model model;
         std::string animationID;
         float delay{0.0f};
-        std::function<void(const CAAnimation::Model&)> function{nullptr};
+        CAAnimation::Callback callback{nullptr};
     };
 
     struct CC_DLL Animation : public CAObject
     {
-        void startAnimation(float totalTime, float interval, float delay, const std::function<void(const CAAnimation::Model&)>& function);
+        void startAnimation(const CAAnimation::Callback& callback, float totalTime, float interval, float delay);
         
         void update(float dt);
         
@@ -32,14 +32,14 @@ namespace CAAnimation
         Info m_obInfo;
     };
     
-    static CADeque<Animation*> _deque;
+    static std::map<std::string, Animation> _map;
     
-    void Animation::startAnimation(float totalTime, float interval, float delay, const std::function<void(const CAAnimation::Model&)>& function)
+    void Animation::startAnimation(const CAAnimation::Callback& callback, float totalTime, float interval, float delay)
     {
         m_obInfo.model.total = totalTime;
         m_obInfo.model.dt = interval;
         m_obInfo.delay = delay;
-        m_obInfo.function = function;
+        m_obInfo.callback = callback;
         CAScheduler::getScheduler()->scheduleUpdate(this, CAScheduler::PRIORITY_SYSTEM, false);
     }
     
@@ -64,75 +64,53 @@ namespace CAAnimation
         if (m_obInfo.model.now >= m_obInfo.model.total)
         {
             this->retain();
-            _deque.eraseObject(this);
+            _map.erase(m_obInfo.animationID);
             this->end();
             this->release();
         }
-        else if (m_obInfo.function)
+        else if (m_obInfo.callback)
         {
-            m_obInfo.function(m_obInfo.model);
+            m_obInfo.callback(m_obInfo.model);
         }
     }
     
     void Animation::end()
     {
         CAScheduler::getScheduler()->unscheduleUpdate(this);
-        if (m_obInfo.function)
+        if (m_obInfo.callback)
         {
-            m_obInfo.function(m_obInfo.model);
+            m_obInfo.callback(m_obInfo.model);
         }
     }
     
     bool isSchedule(const std::string& animationID)
     {
-        bool ret = false;
-        for (auto& var : _deque)
-        {
-            if (var->m_obInfo.animationID.compare(animationID) == 0)
-            {
-                ret = true;
-                break;
-            }
-        }
-        return ret;
+        return _map.find(animationID) != _map.end();
     }
     
-    void schedule(const std::string& animationID, float totalTime, const std::function<void(const CAAnimation::Model&)>& function)
+    void schedule(const CAAnimation::Callback& callback, const std::string& animationID, float totalTime)
     {
-        schedule(animationID, totalTime, 0, 0.0f, function);
+        schedule(callback, animationID, totalTime, 0, 0.0f);
     }
     
-    void schedule(const std::string& animationID, float totalTime, float interval, const std::function<void(const CAAnimation::Model&)>& function)
+    void schedule(const CAAnimation::Callback& callback, const std::string& animationID, float totalTime, float interval)
     {
-        schedule(animationID, totalTime, interval, 0.0f, function);
+        schedule(callback, animationID, totalTime, interval, 0.0f);
     }
     
-    void schedule(const std::string& animationID, float totalTime, float interval, float delay, const std::function<void(const CAAnimation::Model&)>& function)
+    void schedule(const CAAnimation::Callback& callback, const std::string& animationID, float totalTime, float interval, float delay)
     {
-        Animation* obj = new Animation();
-        _deque.pushBack(obj);
-        obj->startAnimation(totalTime, interval, delay, function);
-        obj->release();
+        CC_RETURN_IF(_map.find(animationID) != _map.end());
+        Animation obj;
+        obj.startAnimation(callback, totalTime, interval, delay);
+        _map.insert(std::make_pair(animationID, obj));
     }
 
     void unschedule(const std::string& animationID)
     {
-        for (auto itr = _deque.begin(); itr!=_deque.end();)
-        {
-            Animation* var = *itr;
-            if (var->m_obInfo.animationID.compare(animationID) == 0)
-            {
-                var->retain();
-                itr = _deque.erase(itr);
-                var->end();
-                var->release();
-                break;
-            }
-            else
-            {
-                ++itr;
-            }
-        }
+        CC_RETURN_IF(_map.find(animationID) == _map.end());
+        _map.at(animationID).end();
+        _map.erase(animationID);
     }
 
 }

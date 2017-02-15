@@ -42,7 +42,7 @@ CAVideoPlayerView::CAVideoPlayerView()
 
 CAVideoPlayerView::~CAVideoPlayerView()
 {
-	CAScheduler::unschedule(schedule_selector(CAVideoPlayerView::tick), this);
+	CAScheduler::getScheduler()->unschedule(schedule_selector(CAVideoPlayerView::tick), this);
 
 	CAThread::clear(true);
 	setPosition(0);
@@ -113,7 +113,7 @@ bool CAVideoPlayerView::init()
 	CAThread::setMaxMsgCount(8);
 	CAThread::startAndWait(decodeProcessThread);
 
-	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::update), this, 1 / 60.0f);
+	CAScheduler::getScheduler()->schedule(schedule_selector(CAVideoPlayerView::update), this, 1 / 60.0f);
     return true;
 }
 
@@ -196,7 +196,7 @@ void CAVideoPlayerView::update(float fDelta)
 		{
 			setFirstVideoFrame();
 		}
-		CAScheduler::unschedule(schedule_selector(CAVideoPlayerView::update), this);
+		CAScheduler::getScheduler()->unschedule(schedule_selector(CAVideoPlayerView::update), this);
 	}
 }
 
@@ -315,7 +315,7 @@ void CAVideoPlayerView::play()
 	m_tickCorrectionTime.tv_usec = 0;
 
 	this->enableAudio(true);
-	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
+	CAScheduler::getScheduler()->schedule(schedule_selector(CAVideoPlayerView::tick), this, 0);
 	m_isPlaying = true;
 }
 
@@ -647,7 +647,7 @@ void CAVideoPlayerView::tick(float dt)
 
 	float correction = tickCorrection();
 	float time = MAX(interval + correction, 0.01f);
-	CAScheduler::schedule(schedule_selector(CAVideoPlayerView::tick), this, time);
+	CAScheduler::getScheduler()-> schedule(schedule_selector(CAVideoPlayerView::tick), this, time);
 }
 
 float CAVideoPlayerView::tickCorrection()

@@ -364,7 +364,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
         m_tInertia = DPointZero;
         m_tCloseToPoint = point;
         m_tInitialPoint = m_pContainer->m_obPoint;
-        CAAnimation::schedule("contentOffset:" + m_s__StrID, 0.2f, [&](const CAAnimation::Model& model)
+        CAAnimation::schedule([&](const CAAnimation::Model& model)
         {
             if (model.now < model.total)
             {
@@ -394,7 +394,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
                 this->changedFromPullToRefreshView();
                 this->setTouchEnabledAtSubviews(true);
             }
-        });
+        }, "contentOffset:" + m_s__StrID, 0.2f);
         this->setTouchEnabledAtSubviews(false);
     }
     else

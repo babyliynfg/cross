@@ -751,13 +751,16 @@ void CAScheduler::removeUpdateFromHash(struct _listEntry *entry)
 
 void CAScheduler::unscheduleUpdate(CAObject *target)
 {
-    if (target == nullptr)
+    if (target != nullptr)
     {
-        return;
+        this->unscheduleUpdateWithName(target->getStrID());
     }
-    
+}
+
+void CAScheduler::unscheduleUpdateWithName(const std::string& name)
+{
     tHashUpdateEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForUpdates, &target->getStrID(), element);
+    HASH_FIND_PTR(_hashForUpdates, &name, element);
     if (element)
     {
         if (_updateHashLocked)
@@ -792,42 +795,35 @@ void CAScheduler::unscheduleAllWithMinPriority(int minPriority)
     
     // Updates selectors
     tListEntry *entry, *tmp;
-    auto it = CAObject::all().find(entry->name);
-    if(it != CAObject::all().end())
+    if(minPriority < 0)
     {
-        CAObject* target = it->second;
-        if(minPriority < 0)
-        {
-            DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
-            {
-                if(entry->priority >= minPriority)
-                {
-                    unscheduleUpdate(target);
-                }
-            }
-        }
-        
-        if(minPriority <= 0)
-        {
-            DL_FOREACH_SAFE(_updates0List, entry, tmp)
-            {
-                unscheduleUpdate(target);
-            }
-        }
-        
-        DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
+        DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
         {
             if(entry->priority >= minPriority)
             {
-                unscheduleUpdate(target);
+                this->unscheduleUpdateWithName(entry->name);
             }
         }
     }
     
+    if(minPriority <= 0)
+    {
+        DL_FOREACH_SAFE(_updates0List, entry, tmp)
+        {
+            this->unscheduleUpdateWithName(entry->name);
+        }
+    }
     
-    
-    
+    DL_FOREACH_SAFE(_updatesPosList, entry, tmp)
+    {
+        if(entry->priority >= minPriority)
+        {
+            this->unscheduleUpdateWithName(entry->name);
+        }
+    }
+#if CC_ENABLE_SCRIPT_BINDING
     m_obScriptHandlerEntries.clear();
+#endif
 }
 
 unsigned int CAScheduler::scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)

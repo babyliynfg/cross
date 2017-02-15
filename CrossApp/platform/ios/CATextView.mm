@@ -285,8 +285,8 @@ void CATextView::update(float t)
 }
 void CATextView::delayShowImage()
 {
-    CC_RETURN_IF(CAScheduler::isScheduled(schedule_selector(CATextView::showImage), this));
-    CAScheduler::schedule(schedule_selector(CATextView::showImage), this, 0, 0, 0);
+    CC_RETURN_IF(CAScheduler::getScheduler()->isScheduled(schedule_selector(CATextView::showImage), this));
+    CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::showImage), this, 0, 0, 0);
 }
 void CATextView::showImage()
 {
@@ -320,11 +320,11 @@ void CATextView::hideTextView()
 void CATextView::showNativeTextView()
 {
     this->update(0);
-    CAScheduler::schedule(schedule_selector(CATextView::update), this, 1/60.0f);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::update), this, 1/60.0f);
 }
 void CATextView::hideNativeTextView()
 {
-    CAScheduler::unschedule(schedule_selector(CATextView::update), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CATextView::update), this);
     [textView_iOS performSelector:@selector(hide) withObject:nil afterDelay:1/60.0f];
 }
 void CATextView::setContentSize(const DSize& contentSize)

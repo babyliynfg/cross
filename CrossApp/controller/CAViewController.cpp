@@ -989,7 +989,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        CAAnimation::schedule("", 0.25f, [&](const CAAnimation::Model& model)
+        CAAnimation::schedule([&](const CAAnimation::Model& model)
         {
             m_fProgress = model.now / model.total;
             
@@ -997,7 +997,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
             {
                 this->update(0);
             }
-        });
+        }, "CANavigationController:" + m_s__StrID, 0.25f);
         
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.2f);
@@ -1696,15 +1696,15 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        CAAnimation::schedule("", 0.25f, [&](const CAAnimation::Model& model)
-                              {
-                                  m_fProgress = model.now / model.total;
-                                  
-                                  if (this->getView()->getSuperview())
-                                  {
-                                      this->update(0);
-                                  }
-                              });
+        CAAnimation::schedule([&](const CAAnimation::Model& model)
+        {
+            m_fProgress = model.now / model.total;
+            
+            if (this->getView()->getSuperview())
+            {
+                this->update(0);
+            }
+        }, "CATabBarController:" + m_s__StrID, 0.25f);
         
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.2f);

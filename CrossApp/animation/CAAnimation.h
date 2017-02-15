@@ -22,12 +22,14 @@ namespace CAAnimation
         float total{0.0f};
     };
     
+    typedef std::function<void(const CAAnimation::Model&)> Callback;
+    
     // defaule: interval = 1/60.f, delay = 0.0f;
-    CC_DLL void schedule(const std::string& animationID, float totalTime, const std::function<void(const CAAnimation::Model&)>& function);
+    CC_DLL void schedule(const CAAnimation::Callback& callback, const std::string& animationID, float totalTime);
     
-    CC_DLL void schedule(const std::string& animationID, float totalTime, float interval, const std::function<void(const CAAnimation::Model&)>& function);
+    CC_DLL void schedule(const CAAnimation::Callback& callback, const std::string& animationID, float totalTime, float interval);
     
-    CC_DLL void schedule(const std::string& animationID, float totalTime, float interval, float delay, const std::function<void(const CAAnimation::Model&)>& function);
+    CC_DLL void schedule(const CAAnimation::Callback& callback, const std::string& animationID, float totalTime, float interval, float delay);
     
     CC_DLL void unschedule(const std::string& animationID);
     

@@ -91,6 +91,8 @@ public:
     
 protected:
 
+    void unscheduleUpdateWithName(const std::string& name);
+    
     void schedulePerFrame(const CAScheduler::Callback& callback, CAObject *target, int priority, bool paused);
     
     void removeHashElement(struct _hashSelectorEntry *element);

@@ -515,12 +515,12 @@ void CATextField::showTextField()
 
 void CATextField::hideNativeTextField()
 {
-    CAScheduler::unschedule(schedule_selector(CATextField::update), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CATextField::update), this);
 }
 
 void CATextField::showNativeTextField()
 {
-    CAScheduler::schedule(schedule_selector(CATextField::update), this, 1/60.0f);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CATextField::update), this, 1/60.0f);
 }
 
 void CATextField::delayShowImage()

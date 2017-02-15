@@ -26,11 +26,11 @@ CAObject::CAObject(void)
 
     m_u__ID = ++uObjectCount;
 
-    char str[32];
-    sprintf(str, "%u", m_u__ID);
+    char str[8];
+    sprintf(str, "%x", m_u__ID);
     m_s__StrID = str;
-    
-    s_all[m_s__StrID] = this;
+
+    s_all.insert(std::make_pair(m_s__StrID, this));
 }
 
 CAObject::~CAObject(void)
