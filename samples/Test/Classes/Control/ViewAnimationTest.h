@@ -35,10 +35,6 @@ public:
     CAButton* animation_2_btn_search;
     CAButton* animation_2_btn_cancel;
     CAImageView* animation_3_imageview;
-    
-public:
-    
-    void endAction();
 
 };
 

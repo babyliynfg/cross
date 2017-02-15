@@ -52,7 +52,7 @@ void ViewAnimationTest::viewDidLoad()
         btn1->addTarget([=](CAButton* btn)
         {
             animation_1_view->setScale(1);
-            CAViewAnimation::beginAnimations("", NULL);
+            CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(0.3f);
             CAViewAnimation::setAnimationRepeatAutoreverses(true);
             
@@ -98,11 +98,18 @@ void ViewAnimationTest::viewDidLoad()
             animation_2_textfield->setAlpha(0);
             animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
             
-            CAViewAnimation::beginAnimations("", NULL);
+            CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(0.3f);
             animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
             animation_2_textfield->setAlpha(1);
-            CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(ViewAnimationTest::endAction));
+            CAViewAnimation::setAnimationDidStopSelector([=]()
+            {
+                if (animation_2_btn_cancel->isVisible()) {
+                    animation_2_btn_cancel->setVisible(false);
+                }else{
+                    animation_2_btn_cancel->setVisible(true);
+                }
+            });
             CAViewAnimation::commitAnimations();
         }, CAButton::Event::TouchUpInSide);
         
@@ -113,11 +120,18 @@ void ViewAnimationTest::viewDidLoad()
         animation_2_btn_cancel->setTitleColorForState(CAControl::State::Normal, CAColor_white);
         animation_2_btn_cancel->addTarget([=](CAButton* btn)
         {
-            CAViewAnimation::beginAnimations("", NULL);
+            CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(0.3f);
             animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
             animation_2_textfield->setAlpha(0);
-            CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(ViewAnimationTest::endAction));
+            CAViewAnimation::setAnimationDidStopSelector([=]()
+            {
+                if (animation_2_btn_cancel->isVisible()) {
+                    animation_2_btn_cancel->setVisible(false);
+                }else{
+                    animation_2_btn_cancel->setVisible(true);
+                }
+            });
             CAViewAnimation::commitAnimations();
         }, CAButton::Event::TouchUpInSide);
         animation_2_btn_cancel->setVisible(false);
@@ -147,7 +161,7 @@ void ViewAnimationTest::viewDidLoad()
             
             animation_3_imageview->setImageRect(DRect(0,0,0,imageSize.height));
             animation_3_imageview->setLayout(DLayout(DHorizontalLayout_L_W(0, 0), DVerticalLayoutFill));
-            CAViewAnimation::beginAnimations("", NULL);
+            CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(0.8f);
             CAViewAnimation::setAnimationRepeatAutoreverses(true);
             animation_3_imageview->setImageRect(DRect(0,0,imageSize.width,imageSize.height));
@@ -168,14 +182,4 @@ void ViewAnimationTest::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-void ViewAnimationTest::endAction()
-{
-    if (animation_2_btn_cancel->isVisible()) {
-        animation_2_btn_cancel->setVisible(false);
-    }else{
-        animation_2_btn_cancel->setVisible(true);
-    }
-    
 }

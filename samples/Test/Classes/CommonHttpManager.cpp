@@ -35,8 +35,6 @@ protected:
     
     virtual ~CommonImageCacheManager();
     
-    void update();
-    
 private:
     
     CADeque<CAImage*> m_dImageQueue;
@@ -72,21 +70,19 @@ CommonImageCacheManager::~CommonImageCacheManager()
     
 }
 
-void CommonImageCacheManager::update()
-{
-    CAApplication::getApplication()->getImageCache()->removeImage(m_dImageQueue.front());
-    m_dImageQueue.popFront();
-    CCLog("------- %ld", m_dImageQueue.size());
-}
-
 void CommonImageCacheManager::pushImage(CAImage* image)
 {
     CC_RETURN_IF(m_dImageQueue.contains(image));
     m_dImageQueue.pushBack(image);
     
-    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::beginAnimations("");
     CAViewAnimation::setAnimationDuration(10);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CommonImageCacheManager::update));
+    CAViewAnimation::setAnimationDidStopSelector([=]()
+    {
+        CAApplication::getApplication()->getImageCache()->removeImage(m_dImageQueue.front());
+        m_dImageQueue.popFront();
+        CCLog("------- %ld", m_dImageQueue.size());
+    });
     CAViewAnimation::commitAnimations();
 }
 
@@ -691,9 +687,9 @@ CommonUrlImageView::~CommonUrlImageView()
     m_pDelegate = NULL;
     
     CC_SAFE_RETAIN(m_pobImage);
-    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::beginAnimations("");
     CAViewAnimation::setAnimationDuration(1.0f);
-    CAViewAnimation::setAnimationDidStopSelector(m_pobImage, CAViewAnimation0_selector(CAImage::release));
+    CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAImage::release, this));
     CAViewAnimation::commitAnimations();
 }
 
