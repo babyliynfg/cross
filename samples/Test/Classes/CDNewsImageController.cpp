@@ -182,7 +182,7 @@ void CDNewsImageController::initImageCollectionView()
 
 void CDNewsImageController::showAlert()
 {
-    p_alertView = CAView::createWithFrame(this->getView()->getBounds());
+    p_alertView = CAView::createWithLayout(DLayoutFill);
     this->getView()->addSubview(p_alertView);
     
     CAImageView* bg = CAImageView::createWithLayout(DLayoutFill);
@@ -191,7 +191,7 @@ void CDNewsImageController::showAlert()
     
     CAButton* btn5 = CAButton::create(CAButton::Type::SquareRect);
     btn5->setTag(100);
-    btn5->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(0, 0)));
+    btn5->setLayout(DLayoutFill);
     btn5->setTitleColorForState(CAControl::State::Normal,CAColor_white);
     btn5->setBackgroundViewForState(CAControl::State::Normal, bg);
     btn5->setBackgroundViewForState(CAControl::State::Highlighted, bg);

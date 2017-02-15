@@ -129,7 +129,7 @@ void CDShowNewsImage::scrollViewTouchUpWithoutMoved(CAScrollView* view, const DP
     {
         m_isShow=false;
         //开始执行动画
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         //动画时长
         CAViewAnimation::setAnimationDuration(0.2f);
         
@@ -142,7 +142,7 @@ void CDShowNewsImage::scrollViewTouchUpWithoutMoved(CAScrollView* view, const DP
     {
         m_isShow=true;
         //开始执行动画
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         //动画时长
         CAViewAnimation::setAnimationDuration(0.2f);
         

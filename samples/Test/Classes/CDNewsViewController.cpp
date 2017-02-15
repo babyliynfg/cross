@@ -164,7 +164,7 @@ void CDNewsViewController::showAlert()
         p_alertView= NULL;
     }
 
-    p_alertView = CAView::createWithFrame(this->getView()->getBounds());
+    p_alertView = CAView::createWithLayout(DLayoutFill);
     this->getView()->addSubview(p_alertView);
     
     CAImageView* bg = CAImageView::createWithLayout(DLayoutFill);
