@@ -133,8 +133,6 @@ protected:
     
     CAView* dequeueReusableLine();
     
-    void firstReloadData();
-    
     void reloadViewSizeData();
     
     void clearData();

@@ -35,7 +35,7 @@ static GLint g_sStencilBits = -1;
 
 
 CAClippingView::CAClippingView()
-: m_pStencil(NULL)
+: m_pStencil(nullptr)
 , m_fAlphaThreshold(1.0f)
 , m_bInverted(true)
 , m_bClippingEnabled(true)
@@ -78,7 +78,7 @@ CAClippingView* CAClippingView::create(CAView *pStencil)
 
 bool CAClippingView::init()
 {
-    return init(NULL);
+    return init(nullptr);
 }
 
 bool CAClippingView::init(CAView *pStencil)
@@ -450,7 +450,7 @@ void CAClippingView::setStencil(CAView *pStencil)
 {
     if (m_pStencil)
     {
-        m_pStencil->setSuperview(NULL);
+        m_pStencil->setSuperview(nullptr);
         if (this->isRunning())
         {
             m_pStencil->onExitTransitionDidStart();

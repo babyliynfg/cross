@@ -14,8 +14,8 @@ NS_CC_BEGIN
 
 
 CATouchView::CATouchView()
-: m_pCurTouch(NULL)
-, m_pCurEvent(NULL)
+: m_pCurTouch(nullptr)
+, m_pCurEvent(nullptr)
 {
 }
 
@@ -54,8 +54,8 @@ void CATouchView::ccTouchTimer(float interval)
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 CATextToolBarView::CATextToolBarView()
-: m_pBackView(NULL)
-, m_pControlView(NULL)
+: m_pBackView(nullptr)
+, m_pControlView(nullptr)
 {
 }
 
@@ -230,7 +230,7 @@ void CATextResponder::resignAllResponder(CATextResponder* pCurExcept)
 
 		s_AllTextResponder[i]->resignResponder();
 	}
-	CAApplication::getApplication()->getTouchDispatcher()->setFirstResponder(NULL);
+	CAApplication::getApplication()->getTouchDispatcher()->setFirstResponder(nullptr);
 }
 
 

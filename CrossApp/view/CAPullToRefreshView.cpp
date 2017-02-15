@@ -19,12 +19,12 @@ NS_CC_BEGIN
 
 CAPullToRefreshView::CAPullToRefreshView(CAPullToRefreshView::Type type)
 :m_eType(type)
-,m_pPullToImage(NULL)
-,m_pLoadingView(NULL)
-,m_pPullToImageView(NULL)
-,m_pPullToRefreshLabel(NULL)
-,m_pReleaseToRefreshLabel(NULL)
-,m_pRefreshingLabel(NULL)
+,m_pPullToImage(nullptr)
+,m_pLoadingView(nullptr)
+,m_pPullToImageView(nullptr)
+,m_pPullToRefreshLabel(nullptr)
+,m_pReleaseToRefreshLabel(nullptr)
+,m_pRefreshingLabel(nullptr)
 ,m_sPullToRefreshText("")
 ,m_sReleaseToRefreshText("")
 ,m_sRefreshingText("")
@@ -195,7 +195,7 @@ void CAPullToRefreshView::setState(CAPullToRefreshView::State stateType)
             
             CAViewAnimation::removeAnimations(m_s__StrID);
             
-            CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+            CAViewAnimation::beginAnimations(m_s__StrID);
             CAViewAnimation::setAnimationDuration(0.2f * m_pPullToImageView->getRotation() / 180.f);
             m_pPullToImageView->setRotation(0);
             CAViewAnimation::commitAnimations();
@@ -214,7 +214,7 @@ void CAPullToRefreshView::setState(CAPullToRefreshView::State stateType)
             
             CAViewAnimation::removeAnimations(m_s__StrID);
             
-            CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+            CAViewAnimation::beginAnimations(m_s__StrID);
             CAViewAnimation::setAnimationDuration(0.2f * (1 - m_pPullToImageView->getRotation() / 180.f));
             m_pPullToImageView->setRotation(180);
             CAViewAnimation::commitAnimations();

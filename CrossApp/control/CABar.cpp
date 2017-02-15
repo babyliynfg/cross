@@ -21,13 +21,13 @@ NS_CC_BEGIN
 #pragma CANavigationBar
 
 CANavigationBar::CANavigationBar(bool clearance)
-:m_pContentView(NULL)
-,m_pTitle(NULL)
-,m_pDelegate(NULL)
-,m_pBackgroundView(NULL)
+:m_pContentView(nullptr)
+,m_pTitle(nullptr)
+,m_pDelegate(nullptr)
+,m_pBackgroundView(nullptr)
 ,m_cTitleColor(CAColor_white)
 ,m_cButtonColor(CAColor_white)
-,m_pItem(NULL)
+,m_pItem(nullptr)
 ,m_pGoBackBarButtonItem(nullptr)
 ,m_bClearance(clearance)
 {
@@ -426,8 +426,8 @@ void CANavigationBar::goBack(CAButton* btn)
 #pragma CABadgeView
 
 CABadgeView::CABadgeView()
-:m_pBackground(NULL)
-,m_pTextView(NULL)
+:m_pBackground(nullptr)
+,m_pTextView(nullptr)
 {
 
 }
@@ -479,21 +479,21 @@ void CABadgeView::setBadgeText(const std::string& text)
 #pragma CATabBar
 
 CATabBar::CATabBar(bool clearance)
-:m_pContentView(NULL)
-,m_pBackgroundView(NULL)
-,m_pSelectedIndicatorView(NULL)
-,m_pBackgroundImage(NULL)
+:m_pContentView(nullptr)
+,m_pBackgroundView(nullptr)
+,m_pSelectedIndicatorView(nullptr)
+,m_pBackgroundImage(nullptr)
 ,m_sBackgroundColor(CAColor_white)
-,m_pSelectedBackgroundImage(NULL)
+,m_pSelectedBackgroundImage(nullptr)
 ,m_sSelectedBackgroundColor(CAColor_white)
-,m_pSelectedIndicatorImage(NULL)
+,m_pSelectedIndicatorImage(nullptr)
 ,m_sSelectedIndicatorColor(CAColor_white)
-,m_pSelectedItem(NULL)
+,m_pSelectedItem(nullptr)
 ,m_cItemSize(DSizeZero)
 ,m_nSelectedIndex(-1)
 ,m_bSelectedTitleBold(false)
 ,m_bShowIndicator(false)
-,m_pDelegate(NULL)
+,m_pDelegate(nullptr)
 ,m_bClearance(clearance)
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
@@ -1010,7 +1010,7 @@ void CATabBar::setSelectedAtIndex(int index)
             rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
             rect.origin.y = m_cItemSize.height - rect.size.height;
             
-            CAViewAnimation::beginAnimations("", NULL);
+            CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(0.3f);
             CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
             m_pSelectedIndicatorView->setFrame(rect);

@@ -21,10 +21,10 @@ CAProgress::CAProgress()
 :m_fProgress(0.0f)
 ,m_cProgressTintColor(CAColor_white)
 ,m_cProgressTrackColor(CAColor_white)
-,m_pProgressTintImage(NULL)
-,m_pProgressTrackImage(NULL)
-,m_pProgressImageView(NULL)
-,m_pTarckImageView(NULL)
+,m_pProgressTintImage(nullptr)
+,m_pProgressTrackImage(nullptr)
+,m_pProgressImageView(nullptr)
+,m_pTarckImageView(nullptr)
 {
     this->setHaveNextResponder(true);
     this->setMultipleTouchEnabled(true);
@@ -97,11 +97,11 @@ bool CAProgress::init()
     }
     CAView::setColor(CAColor_clear);
     
-    m_pTarckImageView = CAScale9ImageView::createWithImage(NULL);
+    m_pTarckImageView = CAScale9ImageView::createWithImage(nullptr);
     m_pTarckImageView->setFrame(this->getBounds());
     this->insertSubview(m_pTarckImageView, -1);
     
-    m_pProgressImageView = CAScale9ImageView::createWithImage(NULL);
+    m_pProgressImageView = CAScale9ImageView::createWithImage(nullptr);
     m_pProgressImageView->setFrame(this->getBounds());
     this->addSubview(m_pProgressImageView);
     
@@ -200,9 +200,9 @@ void CAProgress::setProgress(float progress, bool animated)
 	{
         this->animatedBegin();
 		float time = fabsf(progress - m_fProgress) * 0.3f;
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(time);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAProgress::animatedFinish));
+        CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAProgress::animatedFinish, this));
         m_pIndicator->setFrameOrigin(point);
         CAViewAnimation::commitAnimations();
 	}

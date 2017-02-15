@@ -42,14 +42,14 @@ Properties::Properties(const Properties& copy)
 }
 
 Properties::Properties(unsigned char* data, unsigned long dataLenght, ssize_t* dataIdx)
-    : _variables(NULL), _dirPath(NULL), _parent(NULL), _dataIdx(dataIdx), _data(nullptr), _dataLenght(0)
+    : _variables(nullptr), _dirPath(nullptr), _parent(nullptr), _dataIdx(dataIdx), _data(nullptr), _dataLenght(0)
 {
     readProperties();
     rewind();
 }
 
 Properties::Properties(unsigned char* data, unsigned long dataLenght, ssize_t* dataIdx, const std::string& name, const char* id, const char* parentID, Properties* parent)
-    : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent), _dataIdx(dataIdx), _data(data), _dataLenght(dataLenght)
+    : _namespace(name), _variables(nullptr), _dirPath(nullptr), _parent(parent), _dataIdx(dataIdx), _data(data), _dataLenght(dataLenght)
 {
     if (id)
     {

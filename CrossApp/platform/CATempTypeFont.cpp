@@ -10,7 +10,7 @@ NS_CC_BEGIN
 
 
 CATempTypeFont::CATempTypeFont()
-: m_CurFontFace(NULL)
+: m_CurFontFace(nullptr)
 {
 }
 

@@ -177,7 +177,7 @@ static void* networkThread(void *data)
         httpClient->s_responseQueue.clear();
     }
 
-    pthread_exit(NULL);
+    pthread_exit(nullptr);
     
     return 0;
 }
@@ -228,7 +228,7 @@ class CURLRaii
 public:
     CURLRaii()
         : m_curl(curl_easy_init())
-        , m_headers(NULL)
+        , m_headers(nullptr)
     {
     }
 

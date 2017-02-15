@@ -100,8 +100,8 @@ class CC_DLL CAAutoCollectionView : public CAScrollView
 	struct CollectionViewSection
 	{
 		CollectionViewSection()
-		: pSectionHeaderView(NULL)
-		, pSectionFooterView(NULL)
+		: pSectionHeaderView(nullptr)
+		, pSectionFooterView(nullptr)
 		{
 
 		}
@@ -231,9 +231,7 @@ protected:
 	void loadCollectionCell();
     
     void updateSectionHeaderAndFooterRects();
-    
-    void firstReloadData();
-    
+
 public:
 
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);

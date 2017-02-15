@@ -29,7 +29,7 @@ void CALock::UnLock()
 
 CAThread::CAThread()
 : m_bIsRunning(false)
-, m_pThreadFunc(NULL)
+, m_pThreadFunc(nullptr)
 , m_iMaxMsgCount(32)
 {
 	pthread_mutex_init(&m_SleepMutex, NULL);

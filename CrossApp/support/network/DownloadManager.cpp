@@ -94,7 +94,7 @@ void CADownloadManager::destroyInstance()
 
 
 CADownloadManager::CADownloadManager()
-:m_pDelegate(NULL)
+:m_pDelegate(nullptr)
 ,m_nDownloadMaxCount(1)
 {
 	std::string fullPath = FileUtils::getInstance()->getWritablePath() + "downloadMgr.db";
@@ -665,7 +665,7 @@ class DownloadResponseHelper : public CrossApp::CAObject
 {
 	typedef struct _Message
 	{
-		_Message() : what(0), obj(NULL){}
+		_Message() : what(0), obj(nullptr){}
 		_Message(unsigned int w, void* o) : what(w), obj(o) {}
 
 		unsigned int what;
@@ -676,8 +676,8 @@ class DownloadResponseHelper : public CrossApp::CAObject
 public:
 
 	DownloadResponseHelper()
-		: _curl(NULL)
-		, m_headers(NULL)
+		: _curl(nullptr)
+		, m_headers(nullptr)
 	{
 		_messageQueue = new std::list<Message*>();
 		pthread_mutex_init(&_messageQueueMutex, NULL);
@@ -825,12 +825,12 @@ CADownloadResponse::CADownloadResponse(const std::string& downloadUrl, const std
 : _fileName(fileName)
 , _downloadUrl(downloadUrl)
 , _downHeaders(downHeaders)
-, _tid(NULL)
+, _tid(nullptr)
 , _connectionTimeout(0)
 , _initialFileSize(0)
 , _localFileSize(0)
 , _totalFileSize(0)
-, _schedule(NULL)
+, _schedule(nullptr)
 , _downloadCmd(DownloadCmd_Null)
 , _downloadStatus(DownloadStatus_Running)
 , _download_id(downloadId)

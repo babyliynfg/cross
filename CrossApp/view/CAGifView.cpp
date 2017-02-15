@@ -14,7 +14,7 @@ CAGifView::CAGifView()
 :m_iGifIndex(0)
 ,m_fDurTime(0.0f)
 ,m_fTimes(1.0f)
-,m_pGif(NULL)
+,m_pGif(nullptr)
 ,m_bIsRepeatForever(true)
 ,m_fLeft(0.0f)
 ,m_fRight(0.0f)
@@ -79,7 +79,7 @@ CAGifView* CAGifView::createWithGif(CAGif* gif)
 
 bool CAGifView::init()
 {
-    return this->initWithGif(NULL);
+    return this->initWithGif(nullptr);
 }
 
 bool CAGifView::initWithGif(CAGif* gif)

@@ -177,9 +177,7 @@ protected:
     CAView* dequeueReusableLine();
     
     void updateSectionHeaderAndFooterRects();
-    
-    void firstReloadData();
-    
+
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -321,8 +319,6 @@ protected:
     void dragInAnimation();
     
     void dragOutAnimation();
-    
-    void dragInAnimationEnd();
     
     void setDragging(bool var);
     

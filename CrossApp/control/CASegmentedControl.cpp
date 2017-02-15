@@ -21,9 +21,9 @@ NS_CC_BEGIN
 
 CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     : m_nItemsCount(itemsCount)
-    , m_pBackgroundView(NULL)
-    , m_pNewSegmentItemBackgroundImage(NULL)
-    , m_pSegmentItemBackgroundImage(NULL)
+    , m_pBackgroundView(nullptr)
+    , m_pNewSegmentItemBackgroundImage(nullptr)
+    , m_pSegmentItemBackgroundImage(nullptr)
     , m_fSeparateWidth(LINE_WIDTH)
     , m_iSelectedIndex(0)
     , m_iTouchIndex(-1)
@@ -33,7 +33,7 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_cImageColor(CAColor_white)
     , m_cImageSelectedColor(CAColor_white)
     , m_cTintColor(ccc4(54, 195, 240, 255))
-    , m_pTarget(NULL)
+    , m_pTarget(nullptr)
     , m_sTitleFontName("")
     , m_fTitleFontSize(24)
 {
@@ -151,12 +151,12 @@ void CASegmentedControl::initWithData()
     for (size_t i=0; i<m_nItemsCount; i++)
     {
         m_vTitles.push_back("");
-        m_vNormalImages.pushBack(NULL);
-        m_vSelectedImages.pushBack(NULL);
+        m_vNormalImages.pushBack(nullptr);
+        m_vSelectedImages.pushBack(nullptr);
         m_vItemContentOffsets.push_back(DSizeZero);
         m_vItemImageSizes.push_back(DSizeZero);
         m_vItemTouchEnableds.push_back(true);
-        m_vSegmentItemsTitles.pushBack(NULL);
+        m_vSegmentItemsTitles.pushBack(nullptr);
     }
 }
 

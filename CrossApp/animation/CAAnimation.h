@@ -13,17 +13,25 @@
 
 NS_CC_BEGIN
 
-typedef void (CAObject::*SEL_CAAnimation)(float dt, float now, float total);
-#define CAAnimation_selector(_SELECTOR) (SEL_CAAnimation)(&_SELECTOR)
-
 namespace CAAnimation
 {
-
-    CC_DLL void schedule(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval = 1/60.0f, float delay = 0.0f);
-
-    CC_DLL void unschedule(SEL_CAAnimation selector, CAObject* target);
+    struct CC_DLL Model
+    {
+        float dt{0.0f};
+        float now{0.0f};
+        float total{0.0f};
+    };
     
-    CC_DLL bool isSchedule(SEL_CAAnimation selector, CAObject* target);
+    // defaule: interval = 1/60.f, delay = 0.0f;
+    CC_DLL void schedule(const std::string& animationID, float totalTime, const std::function<void(const CAAnimation::Model&)>& function);
+    
+    CC_DLL void schedule(const std::string& animationID, float totalTime, float interval, const std::function<void(const CAAnimation::Model&)>& function);
+    
+    CC_DLL void schedule(const std::string& animationID, float totalTime, float interval, float delay, const std::function<void(const CAAnimation::Model&)>& function);
+    
+    CC_DLL void unschedule(const std::string& animationID);
+    
+    CC_DLL bool isSchedule(const std::string& animationID);
 };
 
 

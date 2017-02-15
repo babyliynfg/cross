@@ -162,8 +162,6 @@ protected:
 protected:
     
     void updateWithPreferredSize();
-
-    void setTouchLongPress();
     
     void setContentSize(const DSize & var);
 

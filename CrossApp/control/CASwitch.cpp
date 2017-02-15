@@ -20,13 +20,13 @@ NS_CC_BEGIN
 
 CASwitch::CASwitch()
     : CAControl()
-    , m_onImage(NULL)
-    , m_offImage(NULL)
-    , m_thumbTintImage(NULL)
+    , m_onImage(nullptr)
+    , m_offImage(nullptr)
+    , m_thumbTintImage(nullptr)
     , m_bIsOn(false)
-    , m_pOnImageView(NULL)
-    , m_pOffImageView(NULL)
-    , m_pThumbTintImageView(NULL)
+    , m_pOnImageView(nullptr)
+    , m_pOffImageView(nullptr)
+    , m_pThumbTintImageView(nullptr)
 {
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch");
     this->setOnImage(CAImage::create(map.at("onImage")));
@@ -187,7 +187,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
     m_pOffImageView->setCenterOrigin(point);
     if (animated)
     {
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.2f);
         if (m_bIsOn)
         {
@@ -209,10 +209,10 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
             
             if (callfunced)
             {
-                CAViewAnimation::beginAnimations("", NULL);
+                CAViewAnimation::beginAnimations("");
                 CAViewAnimation::setAnimationDuration(0.2f);
                 CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-                CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CASwitch::updateValueChanged));
+                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CASwitch::updateValueChanged, this));
                 m_pThumbTintImageView->setFrameOrigin(point);
                 CAViewAnimation::commitAnimations();
             }

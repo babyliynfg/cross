@@ -24,8 +24,8 @@ NS_CC_BEGIN
 CAButton::CAButton(const CAButton::Type& buttonType)
 :m_eButtonType(buttonType)
 ,m_eState(CAButton::State::Normal)
-,m_pImageView(NULL)
-,m_pLabel(NULL)
+,m_pImageView(nullptr)
+,m_pLabel(nullptr)
 ,m_sTitleFontName("")
 ,m_fTitleFontSize(0)
 ,m_bTitleBold(false)
@@ -314,9 +314,12 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         
         if (m_mFunctions.count(CAButton::Event::TouchLongPress) > 0)
         {
-            CAViewAnimation::beginAnimations(m_s__StrID + "TouchLongPress", NULL);
+            CAViewAnimation::beginAnimations(m_s__StrID + "TouchLongPress");
             CAViewAnimation::setAnimationDuration(0.5f);
-            CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAButton::setTouchLongPress));
+            CAViewAnimation::setAnimationDidStopSelector([=]()
+            {
+                this->callBackFunction(CAButton::Event::TouchLongPress);
+            });
             CAViewAnimation::commitAnimations();
         }
         
@@ -524,11 +527,6 @@ void CAButton::interruptTouchState()
     CC_RETURN_IF(m_eState != CAControl::State::Highlighted);
 
     this->ccTouchCancelled(NULL, NULL);
-}
-
-void CAButton::setTouchLongPress()
-{
-    this->callBackFunction(CAButton::Event::TouchLongPress);
 }
 
 void CAButton::setContentSize(const DSize & var)

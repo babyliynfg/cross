@@ -14,15 +14,15 @@
 NS_CC_BEGIN
 
 CADrawerController::CADrawerController()
-:m_pLeftViewController(NULL)
-,m_pRightViewController(NULL)
+:m_pLeftViewController(nullptr)
+,m_pRightViewController(nullptr)
 ,m_fDivision(0)
 ,m_fCurrDivision(0)
 ,m_bShow(false)
 ,m_bEffect3D(false)
 ,m_fOffX(0)
 ,m_bAnimation(false)
-,m_pBackgroundView(NULL)
+,m_pBackgroundView(nullptr)
 {
     this->getView()->setColor(CAColor_clear);
     this->setTouchMoved(true);

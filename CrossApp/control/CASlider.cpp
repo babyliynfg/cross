@@ -24,12 +24,12 @@ CASlider::CASlider()
     , m_fMinValue(0.0f)
     , m_fMaxValue(1.0f)
     , m_fTrackHeight(4.0f)
-    , m_pMinTrackTintImage(NULL)
-    , m_pMaxTrackTintImage(NULL)
-    , m_pThumbTintImage(NULL)
-    , m_pMinTrackTintImageView(NULL)
-    , m_pMaxTrackTintImageView(NULL)
-    , m_pThumbTintImageView(NULL)
+    , m_pMinTrackTintImage(nullptr)
+    , m_pMaxTrackTintImage(nullptr)
+    , m_pThumbTintImage(nullptr)
+    , m_pMinTrackTintImageView(nullptr)
+    , m_pMaxTrackTintImageView(nullptr)
+    , m_pThumbTintImageView(nullptr)
 {
     this->setPriorityScroll(true);
     this->setVerticalScrollEnabled(false);

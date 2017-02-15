@@ -10,8 +10,8 @@
 NS_CC_BEGIN
 
 CAWindow::CAWindow()
-:m_pRootViewController(NULL)
-,m_pModalViewController(NULL)
+:m_pRootViewController(nullptr)
+,m_pModalViewController(nullptr)
 ,m_bCameraOrderDirty(true)
 {
     this->setDisplayRange(false);
@@ -97,27 +97,29 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         layout.vertical = DVerticalLayout_T_B(y, -y);
         view->setLayout(layout);
 
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.1f);
         CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWindow::presentEnd));
+        CAViewAnimation::setAnimationDidStopSelector([&]()
+        {
+            if (m_pRootViewController)
+            {
+                m_pRootViewController->viewDidDisappear();
+            }
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+        });
         view->setLayout(DLayoutFill);
         CAViewAnimation::commitAnimations();
     }
     else
     {
-        this->presentEnd();
+        if (m_pRootViewController)
+        {
+            m_pRootViewController->viewDidDisappear();
+        }
+        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
     }
-}
-
-void CAWindow::presentEnd()
-{
-    if (m_pRootViewController)
-    {
-        m_pRootViewController->viewDidDisappear();
-    }
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
 void CAWindow::dismissModalViewController(bool animated)
@@ -134,11 +136,17 @@ void CAWindow::dismissModalViewController(bool animated)
     {
         CAView* view = m_pModalViewController->getView();
 
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.1f);
         CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWindow::dismissEnd));
+        CAViewAnimation::setAnimationDidStopSelector([&]()
+        {
+            m_pModalViewController->viewDidDisappear();
+            m_pModalViewController->removeViewFromSuperview();
+            CC_SAFE_RELEASE_NULL(m_pModalViewController);
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+        });
         DLayout layout = view->getLayout();
         float y = m_obContentSize.height;
         layout.vertical = DVerticalLayout_T_B(y, -y);
@@ -147,17 +155,12 @@ void CAWindow::dismissModalViewController(bool animated)
     }
     else
     {
-        this->dismissEnd();
+        m_pModalViewController->viewDidDisappear();
+        m_pModalViewController->removeViewFromSuperview();
+        CC_SAFE_RELEASE_NULL(m_pModalViewController);
+        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
     }
     
-}
-
-void CAWindow::dismissEnd()
-{
-    m_pModalViewController->viewDidDisappear();
-    m_pModalViewController->removeViewFromSuperview();
-    CC_SAFE_RELEASE_NULL(m_pModalViewController);
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
 }
 
 void CAWindow::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)

@@ -12,7 +12,7 @@ NS_CC_BEGIN
 CAFTRichFont g_AFTRichFont;
 
 CAFTRichFont::CAFTRichFont()
-: m_pCurrentLine(NULL)
+: m_pCurrentLine(nullptr)
 {
 	m_ItalicMatrix.xx = 0x10000L;
 	m_ItalicMatrix.xy = ITALIC_LEAN_VALUE * 0x10000L;

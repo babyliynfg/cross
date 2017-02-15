@@ -12,7 +12,7 @@ NS_CC_BEGIN
 
 
 CAEmojiFont::CAEmojiFont()
-: m_CurFontFace(NULL)
+: m_CurFontFace(nullptr)
 {
 	FT_Init_FreeType(&m_gFtLibrary);
 	initEmojiFont();

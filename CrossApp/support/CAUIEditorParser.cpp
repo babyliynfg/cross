@@ -45,9 +45,9 @@ NS_CC_BEGIN
 
 
 CAUIEditorParser::CAUIEditorParser()
-:m_pSupverview(NULL)
-,m_pViewController(NULL)
-,m_pMyDocument(NULL)
+:m_pSupverview(nullptr)
+,m_pViewController(nullptr)
+,m_pMyDocument(nullptr)
 {
     
 }

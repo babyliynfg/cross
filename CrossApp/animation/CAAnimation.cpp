@@ -15,55 +15,31 @@ namespace CAAnimation
 {
     struct Info
     {
-        float interval;
-        float now;
-        float total;
-        float delay;
-        SEL_CAAnimation selector;
-        CAObject* target;
+        CAAnimation::Model model;
+        std::string animationID;
+        float delay{0.0f};
+        std::function<void(const CAAnimation::Model&)> function{nullptr};
     };
 
-    class CC_DLL Animation : public CAObject
+    struct CC_DLL Animation : public CAObject
     {
-    public:
-        
-        Animation();
-        
-        virtual ~Animation();
-        
-        void startAnimation(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay);
+        void startAnimation(float totalTime, float interval, float delay, const std::function<void(const CAAnimation::Model&)>& function);
         
         void update(float dt);
         
         void end();
         
         Info m_obInfo;
-        
     };
     
     static CADeque<Animation*> _deque;
     
-    Animation::Animation()
+    void Animation::startAnimation(float totalTime, float interval, float delay, const std::function<void(const CAAnimation::Model&)>& function)
     {
-        m_obInfo.now = 0;
-        m_obInfo.total = 0;
-        m_obInfo.interval = 0;
-        m_obInfo.selector = nullptr;
-        m_obInfo.target = nullptr;
-    }
-    
-    Animation::~Animation()
-    {
-        CC_SAFE_RELEASE(m_obInfo.target);
-    }
-    
-    void Animation::startAnimation(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
-    {
-        m_obInfo.total = totalTime;
-        m_obInfo.interval = interval;
+        m_obInfo.model.total = totalTime;
+        m_obInfo.model.dt = interval;
         m_obInfo.delay = delay;
-        m_obInfo.selector = selector;
-        m_obInfo.target = target->retain();
+        m_obInfo.function = function;
         CAScheduler::schedule(schedule_selector(Animation::update), this, interval);
     }
     
@@ -81,40 +57,38 @@ namespace CAAnimation
             m_obInfo.delay = 0.0f;
         }
         
-        m_obInfo.interval = dt;
-        m_obInfo.now += dt;
-        m_obInfo.now = MIN(m_obInfo.now, m_obInfo.total);
+        m_obInfo.model.dt = dt;
+        m_obInfo.model.now += dt;
+        m_obInfo.model.now = MIN(m_obInfo.model.now, m_obInfo.model.total);
         
-        if (m_obInfo.now >= m_obInfo.total)
+        if (m_obInfo.model.now >= m_obInfo.model.total)
         {
             this->retain();
             _deque.eraseObject(this);
             this->end();
             this->release();
         }
-        else if (m_obInfo.target && m_obInfo.selector)
+        else if (m_obInfo.function)
         {
-            ((CAObject *)m_obInfo.target->*m_obInfo.selector)(m_obInfo.interval, m_obInfo.now, m_obInfo.total);
+            m_obInfo.function(m_obInfo.model);
         }
     }
     
     void Animation::end()
     {
         CAScheduler::unscheduleAllForTarget(this);
-        if (m_obInfo.target && m_obInfo.selector)
+        if (m_obInfo.function)
         {
-            ((CAObject *)m_obInfo.target->*m_obInfo.selector)(m_obInfo.interval, m_obInfo.total, m_obInfo.total);
+            m_obInfo.function(m_obInfo.model);
         }
     }
     
-    bool isSchedule(SEL_CAAnimation selector, CAObject* target)
+    bool isSchedule(const std::string& animationID)
     {
         bool ret = false;
-        
-        for (CADeque<Animation*>::iterator itr=_deque.begin(); itr!=_deque.end(); itr++)
+        for (auto& var : _deque)
         {
-            Animation* obj = *itr;
-            if (obj->m_obInfo.selector == selector && obj->m_obInfo.target == target)
+            if (var->m_obInfo.animationID.compare(animationID) == 0)
             {
                 ret = true;
                 break;
@@ -123,31 +97,40 @@ namespace CAAnimation
         return ret;
     }
     
-    void schedule(SEL_CAAnimation selector, CAObject* target, float totalTime, float interval, float delay)
+    void schedule(const std::string& animationID, float totalTime, const std::function<void(const CAAnimation::Model&)>& function)
     {
-        CC_RETURN_IF(isSchedule(selector, target));
+        schedule(animationID, totalTime, 0, 0.0f, function);
+    }
+    
+    void schedule(const std::string& animationID, float totalTime, float interval, const std::function<void(const CAAnimation::Model&)>& function)
+    {
+        schedule(animationID, totalTime, interval, 0.0f, function);
+    }
+    
+    void schedule(const std::string& animationID, float totalTime, float interval, float delay, const std::function<void(const CAAnimation::Model&)>& function)
+    {
         Animation* obj = new Animation();
         _deque.pushBack(obj);
-        obj->startAnimation(selector, target, totalTime, interval, delay);
+        obj->startAnimation(totalTime, interval, delay, function);
         obj->release();
     }
 
-    void unschedule(SEL_CAAnimation selector, CAObject* target)
+    void unschedule(const std::string& animationID)
     {
-        for (auto itr=_deque.begin(); itr!=_deque.end();)
+        for (auto itr = _deque.begin(); itr!=_deque.end();)
         {
-            Animation* obj = *itr;
-            if (obj->m_obInfo.selector == selector && obj->m_obInfo.target == target)
+            Animation* var = *itr;
+            if (var->m_obInfo.animationID.compare(animationID) == 0)
             {
-                obj->retain();
+                var->retain();
                 itr = _deque.erase(itr);
-                obj->end();
-                obj->release();
+                var->end();
+                var->release();
                 break;
             }
             else
             {
-                itr++;
+                ++itr;
             }
         }
     }

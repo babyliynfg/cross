@@ -20,8 +20,8 @@
 NS_CC_BEGIN
 
 CATouchController::CATouchController()
-:m_pTouch(NULL)
-,m_pEvent(NULL)
+:m_pTouch(nullptr)
+,m_pEvent(nullptr)
 ,m_tFirstPoint(DPointZero)
 ,m_bBanMultipleTouch(false)
 {
@@ -491,8 +491,8 @@ CATouchDispatcher::CATouchDispatcher(void)
 :m_iDispatchEvents(0)
 ,m_bLocked(false)
 ,m_bBanMultipleTouch(false)
-,m_pFirstResponder(NULL)
-,m_pScrollRunningResponder(NULL)
+,m_pFirstResponder(nullptr)
+,m_pScrollRunningResponder(nullptr)
 {
     
 }

@@ -23,7 +23,7 @@ CAThemeManager* CAThemeManager::create(const std::string& filePath)
 }
 
 CAThemeManager::CAThemeManager(const std::string& filePath)
-:m_pMyDocument(NULL)
+:m_pMyDocument(nullptr)
 ,m_sThemePath(filePath)
 {
     if (m_sThemePath.back() != '/')

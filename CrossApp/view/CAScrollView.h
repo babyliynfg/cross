@@ -192,8 +192,6 @@ protected:
 
     void deaccelerateScrolling(float dt);
     
-    void closeToPoint(float dt, float now, float total);
-    
     void initIndicator();
     
     void showIndicator();

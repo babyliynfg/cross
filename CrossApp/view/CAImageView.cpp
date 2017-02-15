@@ -78,7 +78,7 @@ CAImageView* CAImageView::create()
 
 bool CAImageView::init(void)
 {
-    return CAImageView::initWithImage(NULL);
+    return CAImageView::initWithImage(nullptr);
 }
 
 bool CAImageView::initWithImage(CAImage* image)

@@ -12,10 +12,10 @@ NS_CC_BEGIN
 typedef struct DelayTimerElement
 {
 	DelayTimerElement()
-		: pOwnerObj(NULL)
-		, func1(NULL)
-		, func2(NULL)
-		, pObj(NULL)
+		: pOwnerObj(nullptr)
+		, func1(nullptr)
+		, func2(nullptr)
+		, pObj(nullptr)
 		, fInterval(0)
 		, fCurrentTime(0)
 	{
@@ -201,8 +201,8 @@ CAObject::CAObject(void)
 : m_uReference(1) // when the object is created, the reference count of it is 1
 , m_uAutoReleaseCount(0)
 , m_nTag(TagInvalid)
-, m_pUserData(NULL)
-, m_pUserObject(NULL)
+, m_pUserData(nullptr)
+, m_pUserObject(nullptr)
 {
     static unsigned int uObjectCount = 0;
 

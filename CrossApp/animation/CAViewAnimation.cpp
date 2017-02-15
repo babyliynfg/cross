@@ -254,12 +254,11 @@ CAViewAnimation::~CAViewAnimation()
 
 }
 
-void CAViewAnimation::beginAnimations(const std::string& animationID, void* context)
+void CAViewAnimation::beginAnimations(const std::string& animationID)
 {
     CAViewAnimation::getInstance()->m_bBeginAnimations = true;
-    CAViewAnimationModule* module = new CAViewAnimationModule();
+    CAViewAnimation::Module* module = new CAViewAnimation::Module();
     module->animationID = animationID;
-    module->context = context;
     CAViewAnimation::getInstance()->m_vWillModules.pushBack(module);
     module->release();
 }
@@ -321,44 +320,18 @@ void CAViewAnimation::setAnimationRepeatAutoreverses(bool repeatAutoreverses)
     animation->m_vWillModules.back()->repeatAutoreverses = repeatAutoreverses;
 }
 
-void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation0 selector)
+void CAViewAnimation::setAnimationWillStartSelector(const std::function<void()>& function)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
-    CC_SAFE_RETAIN(target);
-    CC_SAFE_RELEASE(animation->m_vWillModules.back()->willStartTarget);
-    animation->m_vWillModules.back()->willStartTarget = target;
-    animation->m_vWillModules.back()->willStartSel0 = selector;
+    animation->m_vWillModules.back()->willStartFunction = function;
 }
 
-void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation2 selector)
+void CAViewAnimation::setAnimationDidStopSelector(const std::function<void()>& function)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
-    CC_SAFE_RETAIN(target);
-    CC_SAFE_RELEASE(animation->m_vWillModules.back()->willStartTarget);
-    animation->m_vWillModules.back()->willStartTarget = target;
-    animation->m_vWillModules.back()->willStartSel2 = selector;
-}
-
-void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation0 selector)
-{
-    CAViewAnimation* animation = CAViewAnimation::getInstance();
-    CC_RETURN_IF(animation->m_vWillModules.empty());
-    CC_SAFE_RETAIN(target);
-    CC_SAFE_RELEASE(animation->m_vWillModules.back()->didStopTarget);
-    animation->m_vWillModules.back()->didStopTarget = target;
-    animation->m_vWillModules.back()->didStopSel0 = selector;
-}
-
-void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation2 selector)
-{
-    CAViewAnimation* animation = CAViewAnimation::getInstance();
-    CC_RETURN_IF(animation->m_vWillModules.empty());
-    CC_SAFE_RETAIN(target);
-    CC_SAFE_RELEASE(animation->m_vWillModules.back()->didStopTarget);
-    animation->m_vWillModules.back()->didStopTarget = target;
-    animation->m_vWillModules.back()->didStopSel2 = selector;
+    animation->m_vWillModules.back()->didStopFunction = function;
 }
 
 void CAViewAnimation::removeAnimations(const std::string& animationID)
@@ -366,7 +339,7 @@ void CAViewAnimation::removeAnimations(const std::string& animationID)
     CCAssert(animationID.length() > 0, "");
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     
-    for (CADeque<CAViewAnimationModule*>::iterator itr=animation->m_vWillModules.begin();
+    for (CADeque<CAViewAnimation::Module*>::iterator itr=animation->m_vWillModules.begin();
          itr!=animation->m_vWillModules.end();)
     {
         if ((*itr)->animationID.compare(animationID) == 0)
@@ -379,7 +352,7 @@ void CAViewAnimation::removeAnimations(const std::string& animationID)
         }
     }
     
-    for (CAVector<CAViewAnimationModule*>::iterator itr=animation->m_vModules.begin();
+    for (CAVector<CAViewAnimation::Module*>::iterator itr=animation->m_vModules.begin();
          itr!=animation->m_vModules.end();)
     {
         if ((*itr)->animationID.compare(animationID) == 0)
@@ -398,17 +371,17 @@ void CAViewAnimation::removeAnimationsWithView(CAView* view)
     CC_RETURN_IF(view == NULL);
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     
-    for (CADeque<CAViewAnimationModule*>::iterator itr=animation->m_vWillModules.begin();
+    for (CADeque<CAViewAnimation::Module*>::iterator itr=animation->m_vWillModules.begin();
          itr!=animation->m_vWillModules.end(); itr++)
     {
-        CAViewAnimationModule* module = *itr;
+        CAViewAnimation::Module* module = *itr;
         module->animations.erase(view);
     }
     
-    for (CAVector<CAViewAnimationModule*>::iterator itr=animation->m_vModules.begin();
+    for (CAVector<CAViewAnimation::Module*>::iterator itr=animation->m_vModules.begin();
          itr!=animation->m_vModules.end(); itr++)
     {
-        CAViewAnimationModule* module = *itr;
+        CAViewAnimation::Module* module = *itr;
         module->animations.erase(view);
     }
 }
@@ -432,8 +405,8 @@ bool CAViewAnimation::areBeginAnimationsWithID(const std::string& animationID)
 {
     bool bRet = false;
     
-    CADeque<CAViewAnimationModule*>* willModule = &CAViewAnimation::getInstance()->m_vWillModules;
-    CADeque<CAViewAnimationModule*>::const_iterator itr = willModule->begin();
+    CADeque<CAViewAnimation::Module*>* willModule = &CAViewAnimation::getInstance()->m_vWillModules;
+    CADeque<CAViewAnimation::Module*>::const_iterator itr = willModule->begin();
     for (; itr!=willModule->end(); itr++)
     {
         if ((*itr)->animationID.compare(animationID) == 0)
@@ -446,8 +419,8 @@ bool CAViewAnimation::areBeginAnimationsWithID(const std::string& animationID)
     
     if (bRet == false)
     {
-        CAVector<CAViewAnimationModule*>* module = &CAViewAnimation::getInstance()->m_vModules;
-        CAVector<CAViewAnimationModule*>::const_iterator itr2 = module->begin();
+        CAVector<CAViewAnimation::Module*>* module = &CAViewAnimation::getInstance()->m_vModules;
+        CAVector<CAViewAnimation::Module*>::const_iterator itr2 = module->begin();
         for (; itr2!=module->end(); itr2++)
         {
             if ((*itr2)->animationID.compare(animationID) == 0)
@@ -463,7 +436,7 @@ bool CAViewAnimation::areBeginAnimationsWithID(const std::string& animationID)
 
 void CAViewAnimation::update(float dt)
 {
-    CAVector<CAViewAnimationModule*> modules = CAVector<CAViewAnimationModule*>(m_vModules);
+    CAVector<CAViewAnimation::Module*> modules = CAVector<CAViewAnimation::Module*>(m_vModules);
     m_vModules.clear();
 	for (auto& module : modules)
     {
@@ -472,19 +445,13 @@ void CAViewAnimation::update(float dt)
 
         if (time > -FLT_MIN)
         {
-            if (!module->isAlreadyRunning())
+            if (!module->alreadyRunning)
             {
-                if (module->willStartSel2 && module->willStartTarget)
+                if (module->willStartFunction)
                 {
-                    ((CAObject *)module->willStartTarget->*module->willStartSel2)(module->animationID, module->context);
-                    module->willStartSel2 = NULL;
+                    module->willStartFunction();
+                    module->willStartFunction = nullptr;
                 }
-                else if (module->willStartSel0 && module->willStartTarget)
-                {
-                    ((CAObject *)module->willStartTarget->*module->willStartSel0)();
-                    module->willStartSel0 = NULL;
-                }
-                CC_SAFE_RELEASE_NULL(module->willStartTarget);
                 
 				CAMap<CAView*, CAObject*>& animations = module->animations;
                 CAMap<CAView*, CAObject*>::iterator itr_animation = animations.begin();
@@ -496,7 +463,7 @@ void CAViewAnimation::update(float dt)
                     model->getReady();
                     ++itr_animation;
                 }
-                module->setAlreadyRunning(true);
+                module->alreadyRunning = true;
             }
             
             float times = 0;
@@ -628,17 +595,10 @@ void CAViewAnimation::update(float dt)
             
             if (times >= module->repeatCount && module->repeatCount < 1048576)
             {
-                if (module->didStopTarget)
+                if (module->didStopFunction)
                 {
-                    if (module->didStopSel2)
-                    {
-                        ((CAObject *)module->didStopTarget->*module->didStopSel2)(module->animationID, module->context);
-                    }
-                    else if (module->didStopSel0)
-                    {
-                        ((CAObject *)module->didStopTarget->*module->didStopSel0)();
-                    }
-                    CC_SAFE_RELEASE_NULL(module->didStopTarget);
+                    module->didStopFunction();
+                    module->didStopFunction = nullptr;
                 }
                 continue;
             }
@@ -783,7 +743,7 @@ void CAViewAnimation::setFlipY(bool flipY, CAView* view)
 
 void CAViewAnimation::allocCAViewModel(CAView* view)
 {
-    CAViewAnimationModule* module = m_vWillModules.back();
+    CAViewAnimation::Module* module = m_vWillModules.back();
     if (module->animations.at(view) == NULL)
     {
         module->animations.insert(view, CAViewModel::create(view));

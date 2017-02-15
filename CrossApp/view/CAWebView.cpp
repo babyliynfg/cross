@@ -22,9 +22,9 @@ NS_CC_BEGIN
 CAWebView::CAWebView()
 : _impl(new CAWebViewImpl(this))
 , m_bHideNativeWeCmd(false)
-, m_pWebViewDelegate(NULL)
-, m_pImageView(NULL)
-, m_pLoadingView(NULL)
+, m_pWebViewDelegate(nullptr)
+, m_pImageView(nullptr)
+, m_pLoadingView(nullptr)
 , m_obLastPoint(DPointZero)
 , m_obLastContentSize(DSizeZero)
 {

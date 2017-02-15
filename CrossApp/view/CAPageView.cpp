@@ -14,7 +14,7 @@ CAPageView::CAPageView(CAPageView::Orientation type)
 :m_eOrientation(type)
 ,m_ePageViewState(CAPageView::State::None)
 ,m_nCurrPage(0)
-,m_pPageViewDelegate(NULL)
+,m_pPageViewDelegate(nullptr)
 ,m_bListener(false)
 ,m_fSpacing(0)
 {
@@ -256,7 +256,7 @@ void CAPageView::contentOffsetFinish(float dt)
 
 bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (CAAnimation::isSchedule(CAAnimation_selector(CAPageView::closeToPoint), this))
+    if (CAAnimation::isSchedule("contentOffset:" + m_s__StrID))
     {
         return false;
     }

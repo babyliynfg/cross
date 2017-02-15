@@ -18,7 +18,7 @@ CAScale9ImageView::CAScale9ImageView()
 , m_fInsetBottom(0)
 , m_obCapInsets(DRectZero)
 , m_obOriginalSize(DSizeZero)
-, m_pScale9ImageView(NULL)
+, m_pScale9ImageView(nullptr)
 , m_bUpdatePositions(false)
 , m_bAutoCapInsets(true)
 {
@@ -92,7 +92,7 @@ CAScale9ImageView* CAScale9ImageView::createWithLayout(const CrossApp::DLayout &
 
 bool CAScale9ImageView::init()
 {
-    return this->initWithImage(NULL);
+    return this->initWithImage(nullptr);
 }
 
 bool CAScale9ImageView::initWithImage(CAImage* image)

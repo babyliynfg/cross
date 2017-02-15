@@ -26,8 +26,8 @@ static FT_Library s_FreeTypeLibrary = NULL;
 
 CAFreeTypeFont::CAFreeTypeFont()
 :m_space(" ")
-,m_currentLine(NULL)
-,m_face(NULL)
+,m_currentLine(nullptr)
+,m_face(nullptr)
 ,m_inWidth(0)
 ,m_inHeight(0)
 ,m_inFontSize(0)

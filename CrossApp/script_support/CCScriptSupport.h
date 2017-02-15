@@ -87,7 +87,7 @@ public:
 private:
     CCSchedulerScriptHandlerEntry(int nHandler)
     : CCScriptHandlerEntry(nHandler)
-    , m_pTimer(NULL)
+    , m_pTimer(nullptr)
     , m_bPaused(false)
     , m_bMarkedForDeletion(false)
     {
@@ -354,7 +354,7 @@ public:
     
 private:
     CCScriptEngineManager(void)
-    : m_pScriptEngine(NULL)
+    : m_pScriptEngine(nullptr)
     {
     }
     

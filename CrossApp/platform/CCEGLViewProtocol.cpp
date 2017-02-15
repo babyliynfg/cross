@@ -44,7 +44,7 @@ static void removeUsedIndexBit(int index)
 }
 
 CCEGLViewProtocol::CCEGLViewProtocol()
-: m_pDelegate(NULL)
+: m_pDelegate(nullptr)
 , m_fScale(1.0f)
 , m_eOrientation(CAInterfaceOrientation::Unknown)
 {

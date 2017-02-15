@@ -10,7 +10,7 @@ NS_CC_BEGIN
 
 
 CAFTFontCache::CAFTFontCache()
-: m_pCurFontData(NULL)
+: m_pCurFontData(nullptr)
 {
 	initDefaultFont();
 //    CAEmojiFont::getInstance();

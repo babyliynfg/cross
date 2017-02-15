@@ -8,13 +8,13 @@
 NS_CC_BEGIN
 
 CAWaterfallView::CAWaterfallView()
-: m_pWaterfallViewDataSource(NULL)
-, m_pWaterfallViewDelegate(NULL)
-, m_pWaterfallHeaderView(NULL)
-, m_pWaterfallFooterView(NULL)
+: m_pWaterfallViewDataSource(nullptr)
+, m_pWaterfallViewDelegate(nullptr)
+, m_pWaterfallHeaderView(nullptr)
+, m_pWaterfallFooterView(nullptr)
 , m_bAllowsSelection(false)
 , m_bAllowsMultipleSelection(false)
-, m_pHighlightedWaterfallCells(NULL)
+, m_pHighlightedWaterfallCells(nullptr)
 , m_nWaterfallHeaderHeight(0)
 , m_nWaterfallFooterHeight(0)
 , m_nColumnCount(3)
@@ -41,9 +41,13 @@ void CAWaterfallView::onEnterTransitionDidFinish()
 
     if (m_mpUsedWaterfallCells.empty())
     {
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWaterfallView::firstReloadData));
+        CAViewAnimation::setAnimationDidStopSelector([&]()
+        {
+            CC_RETURN_IF(!m_mpUsedWaterfallCells.empty());
+            this->reloadData();
+        });
         CAViewAnimation::commitAnimations();
     }
 }
@@ -227,9 +231,9 @@ bool CAWaterfallView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
 
-				CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+				CAViewAnimation::beginAnimations(m_s__StrID);
 				CAViewAnimation::setAnimationDuration(0.05f);
-				CAViewAnimation::setAnimationDidStopSelector(pCell, CAViewAnimation0_selector(CAWaterfallViewCell::setControlStateHighlighted));
+                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAWaterfallViewCell::setControlStateHighlighted, pCell));
 				CAViewAnimation::commitAnimations();
 				break;
 			}
@@ -532,12 +536,6 @@ void CAWaterfallView::reloadData()
     {
         this->startDeaccelerateScroll();
     }
-}
-
-void CAWaterfallView::firstReloadData()
-{
-	CC_RETURN_IF(!m_mpUsedWaterfallCells.empty());
-	this->reloadData();
 }
 
 void CAWaterfallView::recoveryWaterfallCell()

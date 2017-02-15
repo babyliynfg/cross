@@ -24,15 +24,15 @@
 NS_CC_BEGIN
 
 CAViewController::CAViewController()
-:m_pView(NULL)
-,m_pNavigationController(NULL)
-,m_pNavigationBarItem(NULL)
-,m_pTabBarController(NULL)
-,m_pTabBarItem(NULL)
+:m_pView(nullptr)
+,m_pNavigationController(nullptr)
+,m_pNavigationBarItem(nullptr)
+,m_pTabBarController(nullptr)
+,m_pTabBarItem(nullptr)
 ,m_sTitle("The Title")
 ,m_bLifeLock(false)
 ,m_bKeypadEnabled(false)
-,m_pParser(NULL)
+,m_pParser(nullptr)
 {
     m_pView = CAView::createWithColor(CAColor_white);
     m_pView->retain();
@@ -44,7 +44,7 @@ CAViewController::CAViewController()
 CAViewController::~CAViewController()
 {
     CC_SAFE_RELEASE_NULL(m_pParser);
-    m_pView->setContentContainer(NULL);
+    m_pView->setContentContainer(nullptr);
     CC_SAFE_RELEASE_NULL(m_pView);
     CC_SAFE_RELEASE_NULL(m_pTabBarItem);
     CC_SAFE_RELEASE_NULL(m_pNavigationBarItem);
@@ -281,7 +281,7 @@ void CAViewController::dismissModalViewController(bool animated)
 CANavigationController::CANavigationController()
 :m_bNavigationBarHidden(false)
 ,m_bPopViewController(false)
-,m_pNavigationBarBackgroundImage(NULL)
+,m_pNavigationBarBackgroundImage(nullptr)
 ,m_sNavigationBarBackgroundColor(CAColor_white)
 ,m_sNavigationBarTitleColor(CAColor_white)
 ,m_sNavigationBarButtonColor(CAColor_white)
@@ -609,44 +609,44 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
 
 /************************************/
 
-void beginPushAnimation(float width, CAView* last, CAView* new_, CAObject* target, SEL_CAViewAnimation0 selector)
+void beginPushAnimation(float width, CAView* last, CAView* new_, const std::function<void()>& function)
 {
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDelay(0.05f);
+    CAViewAnimation::beginAnimations("");
+    CAViewAnimation::setAnimationDelay(0.1f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationDelay(1/30.0f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     last->setFrameOrigin(DPoint(-width/3.0f, 0));
     CAViewAnimation::commitAnimations();
     
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDelay(0.05f);
+    CAViewAnimation::beginAnimations("");
+    CAViewAnimation::setAnimationDelay(0.1f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationDelay(1/30.0f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-    CAViewAnimation::setAnimationDidStopSelector(target, selector);
+    CAViewAnimation::setAnimationDidStopSelector(function);
     new_->setFrameOrigin(DPointZero);
     CAViewAnimation::commitAnimations();
 }
 
-void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, CAObject* target, SEL_CAViewAnimation0 selector)
+void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, const std::function<void()>& function)
 {
     DRect rect = bounds;
     rect.origin = DPoint(-bounds.size.width/3.0f, 0);
     show->setFrame(rect);
     
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDelay(0.05f);
+    CAViewAnimation::beginAnimations("");
+    CAViewAnimation::setAnimationDelay(0.1f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     show->setFrameOrigin(DPointZero);
     CAViewAnimation::commitAnimations();
     
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDelay(0.05f);
+    CAViewAnimation::beginAnimations("");
+    CAViewAnimation::setAnimationDelay(0.1f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-    CAViewAnimation::setAnimationDidStopSelector(target, selector);
+    CAViewAnimation::setAnimationDidStopSelector(function);
     back->setFrameOrigin(DPoint(bounds.size.width + 10, 0));
     CAViewAnimation::commitAnimations();
 }
@@ -682,7 +682,7 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     if (animated)
     {
         beginPushAnimation(x, lastContainer, newContainer,
-                           this, CAViewAnimation0_selector(CANavigationController::replaceViewControllerFinish));
+                           std::bind(&CANavigationController::replaceViewControllerFinish, this));
     }
     else
     {
@@ -727,7 +727,7 @@ void CANavigationController::pushViewController(CAViewController* viewController
     if (animated)
     {
         beginPushAnimation(x, lastContainer, newContainer,
-                           this, CAViewAnimation0_selector(CANavigationController::pushViewControllerFinish));
+                           std::bind(&CANavigationController::pushViewControllerFinish, this));
     }
     else
     {
@@ -791,7 +791,7 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     if (animated)
     {
         beginPopAnimation(this->getView()->getBounds(), showContainer, backContainer,
-                          this, CAViewAnimation0_selector(CANavigationController::popViewControllerFinish));
+                          std::bind(&CANavigationController::popViewControllerFinish, this));
     }
     else
     {
@@ -861,7 +861,7 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     if (animated)
     {
         beginPopAnimation(this->getView()->getBounds(), showContainer, backContainer,
-                          this, CAViewAnimation0_selector(CANavigationController::popToRootViewControllerFinish));
+                          std::bind(&CANavigationController::popToRootViewControllerFinish, this));
     }
     else
     {
@@ -989,12 +989,26 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        CAAnimation::schedule(CAAnimation_selector(CANavigationController::navigationBarHiddenAnimation), this, 0.25f);
+        CAAnimation::schedule("", 0.25f, [&](const CAAnimation::Model& model)
+        {
+            m_fProgress = model.now / model.total;
+            
+            if (this->getView()->getSuperview())
+            {
+                this->update(0);
+            }
+        });
         
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationWillStartSelector(CAApplication::getApplication()->getTouchDispatcher(), CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsFalse));
-        CAViewAnimation::setAnimationDidStopSelector(CAApplication::getApplication()->getTouchDispatcher(), CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsTrue));
+        CAViewAnimation::setAnimationWillStartSelector([]()
+        {
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+        });
+        CAViewAnimation::setAnimationDidStopSelector([]()
+        {
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+        });
         CAViewAnimation::commitAnimations();
     }
     else
@@ -1028,16 +1042,6 @@ int CANavigationController::getNavigationBarNowY(CAViewController* viewControlle
         }
     }
     return y;
-}
-
-void CANavigationController::navigationBarHiddenAnimation(float delay, float now, float total)
-{
-    m_fProgress = now / total;
-
-    if (this->getView()->getSuperview())
-    {
-        this->update(0);
-    }
 }
 
 void CANavigationController::update(float dt)
@@ -1119,35 +1123,35 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         lastViewController->viewDidAppear();
         
-        CAViewAnimation::beginAnimations("navigation_animation", NULL);
+        CAViewAnimation::beginAnimations("navigation_animation");
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.02f);
         CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         lastContainer->setFrameOrigin(DPointZero);
         CAViewAnimation::commitAnimations();
         
-        CAViewAnimation::beginAnimations("navigation_animation2", NULL);
+        CAViewAnimation::beginAnimations("navigation_animation2");
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.03f);
         CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::popViewControllerFinish));
+        CAViewAnimation::setAnimationDidStopSelector(std::bind(&CANavigationController::popViewControllerFinish, this));
         backContainer->setFrameOrigin(DPoint(x, 0));
         CAViewAnimation::commitAnimations();
     }
     else
     {
-        CAViewAnimation::beginAnimations("navigation_animation", NULL);
+        CAViewAnimation::beginAnimations("navigation_animation");
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.03f);
         CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         lastContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
         CAViewAnimation::commitAnimations();
         
-        CAViewAnimation::beginAnimations("navigation_animation2", NULL);
+        CAViewAnimation::beginAnimations("navigation_animation2");
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.02f);
         CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::homingViewControllerFinish));
+        CAViewAnimation::setAnimationDidStopSelector(std::bind(&CANavigationController::homingViewControllerFinish, this));
         backContainer->setFrameOrigin(DPointZero);
         CAViewAnimation::commitAnimations();
     }
@@ -1179,12 +1183,12 @@ bool CANavigationController::isReachBoundaryLeft()
 CATabBarController::CATabBarController()
 :m_nSelectedIndex(0)
 ,m_nLastSelectedIndex(UINT_NONE)
-,m_pTabBar(NULL)
-,m_pContainer(NULL)
+,m_pTabBar(nullptr)
+,m_pContainer(nullptr)
 ,m_bTabBarHidden(false)
-,m_pTabBarBackgroundImage(NULL)
-,m_pTabBarSelectedBackgroundImage(NULL)
-,m_pTabBarSelectedIndicatorImage(NULL)
+,m_pTabBarBackgroundImage(nullptr)
+,m_pTabBarSelectedBackgroundImage(nullptr)
+,m_pTabBarSelectedIndicatorImage(nullptr)
 ,m_sTabBarBackgroundColor(CAColor_white)
 ,m_sTabBarSelectedBackgroundColor(CAColor_white)
 ,m_sTabBarSelectedIndicatorColor(CAColor_white)
@@ -1692,12 +1696,26 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        CAAnimation::schedule(CAAnimation_selector(CATabBarController::tabBarHiddenAnimation), this, 0.25f);
+        CAAnimation::schedule("", 0.25f, [&](const CAAnimation::Model& model)
+                              {
+                                  m_fProgress = model.now / model.total;
+                                  
+                                  if (this->getView()->getSuperview())
+                                  {
+                                      this->update(0);
+                                  }
+                              });
         
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.3f);
-        CAViewAnimation::setAnimationWillStartSelector(CAApplication::getApplication()->getTouchDispatcher(), CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsFalse));
-        CAViewAnimation::setAnimationDidStopSelector(CAApplication::getApplication()->getTouchDispatcher(), CAViewAnimation0_selector(CATouchDispatcher::setDispatchEventsTrue));
+        CAViewAnimation::beginAnimations("");
+        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationWillStartSelector([]()
+        {
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+        });
+        CAViewAnimation::setAnimationDidStopSelector([]()
+        {
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+        });
         CAViewAnimation::commitAnimations();
     }
     else
@@ -1710,16 +1728,6 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
         }
     }
     
-}
-
-void CATabBarController::tabBarHiddenAnimation(float delay, float now, float total)
-{
-    m_fProgress = now / total;
-
-    if (this->getView()->getSuperview())
-    {
-        this->update(0);
-    }
 }
 
 void CATabBarController::update(float dt)

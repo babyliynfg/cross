@@ -12,8 +12,8 @@
 NS_CC_BEGIN
 
 CAPickerView::CAPickerView()
-: m_delegate(NULL)
-, m_dataSource(NULL)
+: m_delegate(nullptr)
+, m_dataSource(nullptr)
 , m_fontSizeNormal(20)
 , m_fontSizeSelected(22)
 , m_fontColorNormal(ccc4(0, 0, 0, 255))
@@ -346,7 +346,7 @@ CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const DSize&
         if (cell == NULL)
         {
             cell = CATableViewCell::create("CrossApp");
-            cell->setBackgroundView(NULL);
+            cell->setBackgroundView(nullptr);
         }
         else
         {

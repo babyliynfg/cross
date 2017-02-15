@@ -49,7 +49,7 @@ bool CAResponder::resignFirstResponder()
         return false;
     }
     
-    CAApplication::getApplication()->getTouchDispatcher()->setFirstResponder(NULL);
+    CAApplication::getApplication()->getTouchDispatcher()->setFirstResponder(nullptr);
     
     return true;
 }

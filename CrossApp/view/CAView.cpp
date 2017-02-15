@@ -1153,7 +1153,7 @@ void CAView::removeAllSubviews()
                 subview->onExit();
             }
             
-            subview->setSuperview(NULL);
+            subview->setSuperview(nullptr);
         }
         m_obSubviews.clear();
     }
@@ -1173,7 +1173,7 @@ void CAView::detachSubview(CAView *subview)
     }
     
     // set Superview nil at the end
-    subview->setSuperview(NULL);
+    subview->setSuperview(nullptr);
     
     m_obSubviews.eraseObject(subview);
     

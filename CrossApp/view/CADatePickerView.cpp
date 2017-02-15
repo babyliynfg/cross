@@ -18,9 +18,9 @@ NS_CC_BEGIN
 #pragma execution_character_set("utf-8")
 
 CADatePickerView::CADatePickerView(CADatePickerView::Mode m_mode)
-: m_pPickerView(NULL)
+: m_pPickerView(nullptr)
 , m_eMode(m_mode)
-, m_pDelegate(NULL)
+, m_pDelegate(nullptr)
 ,isSetDate(false)
 {
 

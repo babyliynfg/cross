@@ -13,14 +13,14 @@ NS_CC_BEGIN
 #pragma CAListView
 
 CAListView::CAListView()
-: m_pListViewDataSource(NULL)
-, m_pListViewDelegate(NULL)
+: m_pListViewDataSource(nullptr)
+, m_pListViewDelegate(nullptr)
 , m_bAllowsSelection(false)
 , m_bAllowsMultipleSelection(false)
-, m_pHighlightedListCells(NULL)
+, m_pHighlightedListCells(nullptr)
 , m_eOrientation(CAListView::Orientation::Vertical)
-, m_pListHeaderView(NULL)
-, m_pListFooterView(NULL)
+, m_pListHeaderView(nullptr)
+, m_pListFooterView(nullptr)
 , m_nListHeaderHeight(0)
 , m_nListFooterHeight(0)
 , m_obSeparatorColor(ccc4Int(0xffefeef4))
@@ -46,9 +46,13 @@ void CAListView::onEnterTransitionDidFinish()
 
 	if (m_mpUsedListCells.empty())
 	{
-        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAListView::firstReloadData));
+        CAViewAnimation::setAnimationDidStopSelector([&]()
+        {
+            CC_RETURN_IF(!m_mpUsedListCells.empty());
+            this->reloadData();
+        });
         CAViewAnimation::commitAnimations();
 	}
 }
@@ -257,9 +261,9 @@ bool CAListView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
 
-                CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+                CAViewAnimation::beginAnimations(m_s__StrID);
                 CAViewAnimation::setAnimationDuration(0.05f);
-                CAViewAnimation::setAnimationDidStopSelector(pCell, CAViewAnimation0_selector(CAListViewCell::setControlStateHighlighted));
+                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAListViewCell::setControlStateHighlighted, pCell));
                 CAViewAnimation::commitAnimations();
 				break;
 			}
@@ -556,12 +560,6 @@ void CAListView::reloadData()
     {
         this->startDeaccelerateScroll();
     }
-}
-
-void CAListView::firstReloadData()
-{
-    CC_RETURN_IF(!m_mpUsedListCells.empty());
-    this->reloadData();
 }
 
 void CAListView::recoveryCell()

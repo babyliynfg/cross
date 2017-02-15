@@ -11,13 +11,13 @@ NS_CC_BEGIN
 #pragma CACollectionView
 
 CAAutoCollectionView::CAAutoCollectionView()
-: m_pCollectionViewDataSource(NULL)
-, m_pCollectionViewDelegate(NULL)
-, m_pCollectionHeaderView(NULL)
-, m_pCollectionFooterView(NULL)
+: m_pCollectionViewDataSource(nullptr)
+, m_pCollectionViewDelegate(nullptr)
+, m_pCollectionHeaderView(nullptr)
+, m_pCollectionFooterView(nullptr)
 , m_bAllowsSelection(false)
 , m_bAllowsMultipleSelection(false)
-, m_pHighlightedCollectionCells(NULL)
+, m_pHighlightedCollectionCells(nullptr)
 , m_nCollectionHeaderHeight(0)
 , m_nCollectionFooterHeight(0)
 , m_nHoriCellInterval(5)
@@ -46,9 +46,13 @@ void CAAutoCollectionView::onEnterTransitionDidFinish()
 {
 	CAScrollView::onEnterTransitionDidFinish();
 
-    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::beginAnimations("");
     CAViewAnimation::setAnimationDuration(0);
-	CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAAutoCollectionView::firstReloadData));
+    CAViewAnimation::setAnimationDidStopSelector([&]()
+    {
+        CC_RETURN_IF(!m_mpUsedCollectionCells.empty());
+        this->reloadData();
+    });
     CAViewAnimation::commitAnimations();
 }
 
@@ -262,9 +266,9 @@ bool CAAutoCollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
 
-                CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+                CAViewAnimation::beginAnimations(m_s__StrID);
                 CAViewAnimation::setAnimationDuration(0.05f);
-                CAViewAnimation::setAnimationDidStopSelector(pCell, CAViewAnimation0_selector(CACollectionViewCell::setControlStateHighlighted));
+                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CACollectionViewCell::setControlStateHighlighted, pCell));
                 CAViewAnimation::commitAnimations();
 				break;
 			}
@@ -799,12 +803,6 @@ void CAAutoCollectionView::reloadData()
     {
         this->startDeaccelerateScroll();
     }
-}
-
-void CAAutoCollectionView::firstReloadData()
-{
-	CC_RETURN_IF(!m_mpUsedCollectionCells.empty());
-	this->reloadData();
 }
 
 void CAAutoCollectionView::recoveryCollectionCell()

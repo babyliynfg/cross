@@ -162,8 +162,6 @@ protected:
 
 	void updateSectionHeaderAndFooterRects();
 
-	void firstReloadData();
-
 public:
 
 	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);

@@ -58,7 +58,7 @@ CGNode::CGNode(void)
 , m_bAdditionalTransformDirty(false)
 , m_bTransformUpdated(true)
 , m_nZOrder(0)
-, m_pParent(NULL)
+, m_pParent(nullptr)
 , m_uOrderOfArrival(0)
 , m_pGlProgramState(nullptr)
 , m_bRunning(false)
@@ -69,8 +69,8 @@ CGNode::CGNode(void)
 , _displayedColor(CAColor_white)
 , _realColor(CAColor_white)
 , m_bDisplayRange(true)
-, m_pSuperviewCAView(NULL)
-, m_pCAView(NULL)
+, m_pSuperviewCAView(nullptr)
+, m_pCAView(nullptr)
 , m_iCameraMask(1)
 , m_pApplication(CAApplication::getApplication())
 {
@@ -691,7 +691,7 @@ void CGNode::removeAllChildren()
                 var->onExitTransitionDidStart();
                 var->onExit();
             }
-            var->setParent(NULL);
+            var->setParent(nullptr);
         }
         m_obChildren.clear();
     }
@@ -706,7 +706,7 @@ void CGNode::detachChild(CGNode* child)
        child->onExit();
     }
     
-    child->setParent(NULL);
+    child->setParent(nullptr);
     
     m_obChildren.eraseObject(child);
     

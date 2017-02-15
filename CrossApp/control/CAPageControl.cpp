@@ -21,8 +21,8 @@ CAPageControl::CAPageControl()
 , m_bDefersCurrentPageDisplay(false)
 , m_pageIndicatorTintColor(ccc4(255, 255, 255, 255))
 , m_currentPageIndicatorTintColor(ccc4(255, 255, 255, 255))
-, m_pPageImage(NULL)
-, m_pSelectPageImage(NULL)
+, m_pPageImage(nullptr)
+, m_pSelectPageImage(nullptr)
 , m_style(CAPageControl::Style::Dot)
 {
     

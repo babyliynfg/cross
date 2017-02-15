@@ -23,16 +23,16 @@ NS_CC_BEGIN
 #pragma CATableView
 
 CATableView::CATableView()
-:m_pTableHeaderView(NULL)
-,m_pTableFooterView(NULL)
-,m_pDraggingOutCell(NULL)
+:m_pTableHeaderView(nullptr)
+,m_pTableFooterView(nullptr)
+,m_pDraggingOutCell(nullptr)
 ,m_obSeparatorColor(ccc4Int(0xffefeef4))
 ,m_nSeparatorViewHeight(1)
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
 ,m_nSections(0)
-,m_pTableViewDataSource(NULL)
-,m_pTableViewDelegate(NULL)
+,m_pTableViewDataSource(nullptr)
+,m_pTableViewDelegate(nullptr)
 ,m_bAllowsSelection(false)
 ,m_bAllowsMultipleSelection(false)
 ,m_bAlwaysTopSectionHeader(true)
@@ -63,9 +63,13 @@ void CATableView::onEnterTransitionDidFinish()
 {
     CAScrollView::onEnterTransitionDidFinish();
     
-    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::beginAnimations("");
     CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATableView::firstReloadData));
+    CAViewAnimation::setAnimationDidStopSelector([&]()
+    {
+        CC_RETURN_IF(!m_mpUsedTableCells.empty());
+        this->reloadData();
+    });
     CAViewAnimation::commitAnimations();
 }
 
@@ -459,12 +463,6 @@ void CATableView::reloadData()
     {
         this->startDeaccelerateScroll();
     }
-}
-
-void CATableView::firstReloadData()
-{
-    CC_RETURN_IF(!m_mpUsedTableCells.empty());
-    this->reloadData();
 }
 
 void CATableView::loadTableCell()
@@ -917,10 +915,13 @@ void CATableViewCell::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 void CATableViewCell::dragInAnimation()
 {
     CAViewAnimation::removeAnimations("dragging" + m_s__StrID);
-    CAViewAnimation::beginAnimations("dragging" + m_s__StrID, NULL);
+    CAViewAnimation::beginAnimations("dragging" + m_s__StrID);
     CAViewAnimation::setAnimationDuration(0.15f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATableViewCell::dragInAnimationEnd));
+    CAViewAnimation::setAnimationDidStopSelector([&]()
+    {
+        this->setDragging(false);
+    });
     m_pContentView->setLayout(DLayoutFill);
     CAViewAnimation::commitAnimations();
 }
@@ -928,16 +929,11 @@ void CATableViewCell::dragInAnimation()
 void CATableViewCell::dragOutAnimation()
 {
     CAViewAnimation::removeAnimations("dragging" + m_s__StrID);
-    CAViewAnimation::beginAnimations("dragging" + m_s__StrID, NULL);
+    CAViewAnimation::beginAnimations("dragging" + m_s__StrID);
     CAViewAnimation::setAnimationDuration(0.15f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(-(int)m_nDraggingLength, (int)m_nDraggingLength), DVerticalLayoutFill));
     CAViewAnimation::commitAnimations();
-}
-
-void CATableViewCell::dragInAnimationEnd()
-{
-    this->setDragging(false);
 }
 
 void CATableViewCell::setDragging(bool var)

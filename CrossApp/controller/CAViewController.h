@@ -226,8 +226,6 @@ protected:
     void homingViewControllerFinish();
     
     void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
-    
-    void navigationBarHiddenAnimation(float delay, float now, float total);
 
     void update(float dt);
     
@@ -327,8 +325,6 @@ protected:
     virtual void renderingSelectedViewController();
     
     void update(float dt);
-    
-    void tabBarHiddenAnimation(float delay, float now, float total);
     
     int getTabBarNowY();
     

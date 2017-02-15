@@ -14,12 +14,6 @@
 #include "view/CAScale9ImageView.h"
 NS_CC_BEGIN
 
-typedef void (CAObject::*SEL_CAViewAnimation2)(const std::string&, void*);
-#define CAViewAnimation2_selector(_SELECTOR) (SEL_CAViewAnimation2)(&_SELECTOR)
-
-typedef void (CAObject::*SEL_CAViewAnimation0)();
-#define CAViewAnimation0_selector(_SELECTOR) (SEL_CAViewAnimation0)(&_SELECTOR)
-
 class CC_DLL CAViewAnimation: public CAObject
 {
 public:
@@ -33,60 +27,24 @@ public:
     };
 
 private:
-        class CC_DLL CAViewAnimationModule : public CAObject
+        struct Module : public CAObject
         {
-        public:
-            
             std::string                 animationID;
-            void*                       context;
-            float                       duration;
-            float                       delay;
-            float                       repeatCount;
-            bool                        repeatAutoreverses;
-            CAViewAnimation::Curve      curve;
-            float                       time;
             CAMap<CAView*, CAObject*>   animations;
-            
-            CAObject*                   willStartTarget;
-            CAObject*                   didStopTarget;
-            
-            SEL_CAViewAnimation0        willStartSel0;
-            SEL_CAViewAnimation0        didStopSel0;
-            
-            SEL_CAViewAnimation2        willStartSel2;
-            SEL_CAViewAnimation2        didStopSel2;
-            
-            CC_SYNTHESIZE_IS(bool, bAlreadyRunning, AlreadyRunning);
-            
-            CAViewAnimationModule()
-            : willStartTarget(NULL)
-            , didStopTarget(NULL)
-            , willStartSel0(NULL)
-            , didStopSel0(NULL)
-            , willStartSel2(NULL)
-            , didStopSel2(NULL)
-            , animationID("")
-            , context(NULL)
-            , duration(0.2f)
-            , delay(0.0f)
-            , time(0.0f)
-            , repeatCount(1.0f)
-            , repeatAutoreverses(false)
-            , curve(CAViewAnimation::Curve::Linear)
-            , bAlreadyRunning(false)
-            {
-                
-            }
-            
-            virtual ~CAViewAnimationModule()
-            {
-                
-            }
+            float                       duration{0.2f};
+            float                       delay{0.0f};
+            float                       repeatCount{1.0f};
+            bool                        repeatAutoreverses{false};
+            float                       time{0.0f};
+            CAViewAnimation::Curve      curve{CAViewAnimation::Curve::Linear};
+            std::function<void()>       willStartFunction{nullptr};
+            std::function<void()>       didStopFunction{nullptr};
+            bool                        alreadyRunning{false};
         };
         
 public:
         
-    static void beginAnimations(const std::string& animationID, void* context);
+    static void beginAnimations(const std::string& animationID);
     
     static void commitAnimations();
     
@@ -100,13 +58,9 @@ public:
     
     static void setAnimationRepeatAutoreverses(bool repeatAutoreverses);// default(false)
     
-    static void setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation0 selector);
-    
-    static void setAnimationWillStartSelector(CAObject* target, SEL_CAViewAnimation2 selector);
-    
-    static void setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation0 selector);
-    
-    static void setAnimationDidStopSelector(CAObject* target, SEL_CAViewAnimation2 selector);
+    static void setAnimationWillStartSelector(const std::function<void()>& function);
+
+    static void setAnimationDidStopSelector(const std::function<void()>& function);
     
     static void removeAnimations(const std::string& animationID);
     
@@ -168,9 +122,9 @@ protected:
     
     bool m_bBeginAnimations;
     
-    CADeque<CAViewAnimationModule*> m_vWillModules;
+    CADeque<CAViewAnimation::Module*> m_vWillModules;
         
-    CAVector<CAViewAnimationModule*> m_vModules;
+    CAVector<CAViewAnimation::Module*> m_vModules;
         
     friend class CAView;
     

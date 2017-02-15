@@ -31,7 +31,7 @@ static int spriteCount = 0;
 
 CGSprite::CGSprite(void)
 : m_bShouldBeHidden(false)
-, m_pobImage(NULL)
+, m_pobImage(nullptr)
 {
     // clean the Quad
     memset(&m_sQuad, 0, sizeof(m_sQuad));
@@ -170,7 +170,7 @@ bool CGSprite::initWithImage(CAImage *image, const DRect& rect, bool rotated)
     {
         this->setImage(image);
         this->setImageRect(rect, rotated, rect.size);
-        this->setBatchNode(NULL);
+        this->setBatchNode(nullptr);
         
         return true;
     }
@@ -687,7 +687,7 @@ void CGSprite::setBatchNode(CGSpriteBatchNode *pobSpriteBatchNode)
     if( ! m_pobBatchNode )
     {
         m_uAtlasIndex = UINT_NONE;
-        setImageAtlas(NULL);
+        setImageAtlas(nullptr);
         m_bRecursiveDirty = false;
         setDirty(false);
         

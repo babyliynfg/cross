@@ -551,7 +551,7 @@ StyledWriter::normalizeEOL( const std::string &text )
 // //////////////////////////////////////////////////////////////////
 
 StyledStreamWriter::StyledStreamWriter( std::string indentation )
-   : document_(NULL)
+   : document_(nullptr)
    , rightMargin_( 74 )
    , indentation_( indentation )
 {

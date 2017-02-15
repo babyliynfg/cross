@@ -16,11 +16,11 @@ NS_CC_BEGIN
 static CAVector<CAAlertView*> s_vAlertViewCaches;
 
 CAAlertView::CAAlertView()
-: m_pContentLabel(NULL)
-, m_pTitleLabel(NULL)
-, m_pCAlertBtnEvent(NULL)
-, m_pCAlertTarget(NULL)
-, m_pBtnTableView(NULL)
+: m_pContentLabel(nullptr)
+, m_pTitleLabel(nullptr)
+, m_pCAlertBtnEvent(nullptr)
+, m_pCAlertTarget(nullptr)
+, m_pBtnTableView(nullptr)
 , m_sMsgFontName("")
 , m_fAlertViewHeight(0.0f)
 , m_fAlertViewTitleHeight(0.0f)
@@ -414,7 +414,7 @@ void CAAlertView::show()
     
     this->setAlpha(0);
     m_pScale9BackView->setScale(0.5f);
-    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::beginAnimations("");
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     this->setAlpha(1.0f);
@@ -426,10 +426,10 @@ void CAAlertView::hide()
 {
     s_vAlertViewCaches.eraseObject(this);
     
-    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::beginAnimations("");
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseIn);
-    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAAlertView::removeFromSuperview));
+    CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAAlertView::removeFromSuperview, this));
     this->setAlpha(0.0f);
     m_pScale9BackView->setScale(0.5f);
     CAViewAnimation::commitAnimations();

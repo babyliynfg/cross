@@ -43,12 +43,6 @@ public:
     void setCameraOrderDirty() { m_bCameraOrderDirty = true; }
     
 protected:
-
-    void presentEnd();
-    
-    void dismissEnd();
-    
-protected:
     
     CC_PROPERTY(CAViewController*, m_pRootViewController, RootViewController);
     

@@ -12,11 +12,11 @@
 NS_CC_BEGIN
 
 CACell::CACell()
-:m_pBackgroundView(NULL)
-,m_pContentView(NULL)
+:m_pBackgroundView(nullptr)
+,m_pContentView(nullptr)
 ,m_bControlStateEffect(true)
 ,m_bAllowsSelected(true)
-,m_pParser(NULL)
+,m_pParser(nullptr)
 {
     this->setHaveNextResponder(true);
     this->setDisplayRange(false);
