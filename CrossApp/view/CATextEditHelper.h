@@ -39,15 +39,13 @@ private:
 
 typedef struct CallbackTarget
 {
-	CallbackTarget(CAObject* t, SEL_CallFunc s, const std::string& szBtnText)
-		: target(t)
-		, selector(s)
+    CallbackTarget(const std::function<void()>& s, const std::string& szBtnText)
+		: function(s)
 		, cszButtonText(szBtnText)
 	{
 
 	}
-	CAObject* target;
-	SEL_CallFunc selector;
+	std::function<void()> function;
 	std::string cszButtonText;
 
 } CallbackTarget;
@@ -67,7 +65,7 @@ public:
 	static bool isTextToolBarShow();
 	static void hideTextToolBar();
 
-	void addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector);
+    void addButton(const std::string& strBtnText, const std::function<void()>& callback);
 	void show(CAView* pView = NULL);
 
 protected:

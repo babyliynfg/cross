@@ -388,7 +388,7 @@ void CAHttpClient::destroyInstance(ssize_t thread)
 {
     if (s_pHttpClientMaps.find(thread) != s_pHttpClientMaps.end())
     {
-        CAScheduler::unschedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), s_pHttpClientMaps[thread]);
+        CAScheduler::getScheduler()->unschedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), s_pHttpClientMaps[thread]);
         CC_SAFE_DELETE(s_pHttpClientMaps[thread]);
         s_pHttpClientMaps.erase(thread);
     }
@@ -414,7 +414,7 @@ CAHttpClient::CAHttpClient(ssize_t thread)
 , s_SleepMutex(pthread_mutex_t())
 , s_SleepCondition(pthread_cond_t())
 {
-    CAScheduler::schedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), this, 0);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), this, 0);
     CAScheduler::getScheduler()->pauseTarget(this);
     lazyInitThreadSemphore();
 }

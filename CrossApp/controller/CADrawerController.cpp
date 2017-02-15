@@ -30,7 +30,7 @@ CADrawerController::CADrawerController()
     
     memset(m_pContainer, NULL, sizeof(CAView*) * 2);
     
-    CANotificationCenter::getInstance()->addObserver(this, callfuncO_selector(CADrawerController::changeStatusBarOrientation), CAApplicationDidChangeStatusBarOrientationNotification, NULL);
+    CANotificationCenter::getInstance()->addObserver(CAApplicationDidChangeStatusBarOrientationNotification, this, std::bind(&CADrawerController::changeStatusBarOrientation, this, std::placeholders::_1));
 }
 
 CADrawerController::~CADrawerController()
@@ -38,7 +38,7 @@ CADrawerController::~CADrawerController()
     CC_SAFE_RELEASE(m_pLeftViewController);
     CC_SAFE_RELEASE(m_pRightViewController);
     
-    CANotificationCenter::getInstance()->removeObserver(this, CAApplicationDidChangeStatusBarOrientationNotification);
+    CANotificationCenter::getInstance()->removeObserver(CAApplicationDidChangeStatusBarOrientationNotification, this);
 }
 
 bool CADrawerController::initWithController(CAViewController* leftViewController, CAViewController* rightViewController)
@@ -223,7 +223,7 @@ void CADrawerController::showLeftViewController(bool animated)
     if (animated)
     {
         m_fCurrDivision = m_pContainer[1]->getFrameOrigin().x;
-        CAScheduler::schedule(schedule_selector(CADrawerController::scheduleShowAction), this, 1/60.0f);
+        CAScheduler::getScheduler()->schedule(schedule_selector(CADrawerController::scheduleShowAction), this, 1/60.0f);
         m_bAnimation = true;
     }
     else
@@ -246,7 +246,7 @@ void CADrawerController::hideLeftViewController(bool animated)
         m_fCurrDivision = m_pContainer[1]->getFrameOrigin().x;
         m_pContainer[0]->setTouchEnabled(false);
         m_pContainer[1]->setTouchEnabled(false);
-        CAScheduler::schedule(schedule_selector(CADrawerController::scheduleHideAction), this, 1/60.0f);
+        CAScheduler::getScheduler()->schedule(schedule_selector(CADrawerController::scheduleHideAction), this, 1/60.0f);
         m_bAnimation = true;
     }
     else
@@ -326,7 +326,7 @@ void CADrawerController::scheduleShowAction(float dt)
 {
     if (m_fDivision - m_fCurrDivision < FLT_EPSILON)
     {
-        CAScheduler::unschedule(schedule_selector(CADrawerController::scheduleShowAction), this);
+        CAScheduler::getScheduler()->unschedule(schedule_selector(CADrawerController::scheduleShowAction), this);
         this->showEnded();
         m_bAnimation = false;
     }
@@ -341,7 +341,7 @@ void CADrawerController::scheduleHideAction(float dt)
 {
     if (m_fCurrDivision < FLT_EPSILON)
     {
-        CAScheduler::unschedule(schedule_selector(CADrawerController::scheduleHideAction), this);
+        CAScheduler::getScheduler()->unschedule(schedule_selector(CADrawerController::scheduleHideAction), this);
         this->hideEnded();
         m_bAnimation = false;
     }

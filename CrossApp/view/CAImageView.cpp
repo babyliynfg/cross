@@ -266,7 +266,7 @@ void CAImageView::startAnimating()
     CC_RETURN_IF(m_vAnimationImages.empty());
     CC_RETURN_IF(m_bAnimating);
     m_bAnimating = true;
-    CAScheduler::schedule(schedule_selector(CAImageView::update), this, m_fAnimationDuration);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CAImageView::update), this, m_fAnimationDuration);
 }
 
 void CAImageView::stopAnimating()
@@ -274,7 +274,7 @@ void CAImageView::stopAnimating()
     CC_RETURN_IF(!m_bAnimating);
     m_bAnimating = false;
     m_fAnimationRunTime = 0;
-    CAScheduler::unschedule(schedule_selector(CAImageView::update), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CAImageView::update), this);
 }
 
 bool CAImageView::isAnimating()
@@ -331,7 +331,15 @@ CAView* CAImageView::copy()
 
 void CAImageView::setImageAsyncWithFile(const std::string& path)
 {
-    CAImageCache::getInstance()->addImageFullPathAsync(path, this, callfuncO_selector(CAImageView::asyncFinish));
+    CAImageView* target = this;
+    const std::string& name = this->getStrID();
+    CAImageCache::getInstance()->addImageFullPathAsync(path, [=](CAImage* image)
+    {
+        if (CAObject::all().count(name) > 0)
+        {
+            target->setImage(image);
+        }
+    });
 }
 void CAImageView::setImageRect(const DRect& rect)
 {

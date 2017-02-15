@@ -86,13 +86,13 @@ bool CAWebView::init()
 void CAWebView::onEnterTransitionDidFinish()
 {
     CAView::onEnterTransitionDidFinish();
-    CAScheduler::schedule(schedule_selector(CAWebView::update), this, 1/60.0f);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CAWebView::update), this, 1/60.0f);
 }
 
 void CAWebView::onExitTransitionDidStart()
 {
     CAView::onExitTransitionDidStart();
-    CAScheduler::unschedule(schedule_selector(CAWebView::update), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CAWebView::update), this);
 }
 
 void CAWebView::setJavascriptInterfaceScheme(const std::string &scheme)

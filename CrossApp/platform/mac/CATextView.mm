@@ -363,8 +363,8 @@ void CATextView::update(float t)
 
 void CATextView::delayShowImage()
 {
-    CC_RETURN_IF(CAScheduler::isScheduled(schedule_selector(CATextView::showImage), this));
-    CAScheduler::schedule(schedule_selector(CATextView::showImage), this, 0, 0, 0);
+    CC_RETURN_IF(CAScheduler::getScheduler()->isScheduled(schedule_selector(CATextView::showImage), this));
+    CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::showImage), this, 0, 0, 0);
 }
 
 void CATextView::showImage()
@@ -380,7 +380,7 @@ void CATextView::showImage()
     free(data);
     m_pShowImageView->setImage(image);
     
-    CAScheduler::unschedule(schedule_selector(CATextView::showImage), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CATextView::showImage), this);
 }
 
 void CATextView::showTextView()
@@ -395,12 +395,12 @@ void CATextView::hideTextView()
 void CATextView::showNativeTextView()
 {
     [textView_Mac show];
-    CAScheduler::schedule(schedule_selector(CATextView::update), this, 1/60.0f);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::update), this, 1/60.0f);
 }
 
 void CATextView::hideNativeTextView()
 {
-    CAScheduler::unschedule(schedule_selector(CATextView::update), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CATextView::update), this);
     
     [textView_Mac hide];
 }

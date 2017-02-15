@@ -21,7 +21,10 @@ CATouchView::CATouchView()
 
 bool CATouchView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::schedule(schedule_selector(CATouchView::ccTouchTimer), this, 0, 0, 1.0f);
+    CAScheduler::getScheduler()->scheduleOnce([&](float de)
+    {
+        ccTouchPress(m_pCurTouch, m_pCurEvent);
+    }, "function", 1.0f);
 
 	m_pCurTouch = pTouch;
 	m_pCurEvent = pEvent;
@@ -30,24 +33,23 @@ bool CATouchView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CATouchView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::unschedule(schedule_selector(CATouchView::ccTouchTimer), this);
+	CAScheduler::getScheduler()->unscheduleAllForName("function");
 }
 
 void CATouchView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::unschedule(schedule_selector(CATouchView::ccTouchTimer), this);
+	CAScheduler::getScheduler()->unscheduleAllForName("function");
 }
 
 void CATouchView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::unschedule(schedule_selector(CATouchView::ccTouchTimer), this);
+	CAScheduler::getScheduler()->unscheduleAllForName("function");
 }
 
 
 void CATouchView::ccTouchTimer(float interval)
 {
-	CAScheduler::unschedule(schedule_selector(CATouchView::ccTouchTimer), this);
-	ccTouchPress(m_pCurTouch, m_pCurEvent);
+	
 }
 
 
@@ -70,9 +72,9 @@ CATextToolBarView::~CATextToolBarView()
     m_CallbackTargets.clear();
 }
 
-void CATextToolBarView::addButton(const std::string& strBtnText, CAObject* target, SEL_CallFunc selector)
+void CATextToolBarView::addButton(const std::string& strBtnText, const std::function<void()>& callback)
 {
-	m_CallbackTargets.push_back(CallbackTarget(target, selector, strBtnText));
+	m_CallbackTargets.push_back(CallbackTarget(callback, strBtnText));
 }
 
 
@@ -112,7 +114,7 @@ void CATextToolBarView::show(CAView* pView)
             int btnIndex = btn->getTag();
             if (btnIndex>=0 && btnIndex<m_CallbackTargets.size())
             {
-                ((CAObject*)m_CallbackTargets[btnIndex].target->*m_CallbackTargets[btnIndex].selector)();
+                m_CallbackTargets[btnIndex].function();
             }
             CATextToolBarView::hideTextToolBar();
             

@@ -195,7 +195,7 @@ void CATouchController::touchBegan()
         
         if (!m_vTouchMovedsViewCache.empty())
         {
-            CAScheduler::schedule(schedule_selector(CATouchController::passingTouchesViews), this, 0, 0, 0.05f);
+            CAScheduler::getScheduler()->schedule(schedule_selector(CATouchController::passingTouchesViews), this, 0, 0, 0.05f);
         }
         else
         {
@@ -212,7 +212,7 @@ void CATouchController::touchMoved()
 
     if (!m_vTouchMovedsViewCache.empty())
     {
-        bool isScheduledPassing = CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViews), this);
+        bool isScheduledPassing = CAScheduler::getScheduler()->isScheduled(schedule_selector(CATouchController::passingTouchesViews), this);
         
         bool isTouchEventScrollHandOverToSuperview = true;
         
@@ -227,7 +227,7 @@ void CATouchController::touchMoved()
         
         if (isScheduledPassing || isTouchEventScrollHandOverToSuperview)
         {
-            CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
+            CAScheduler::getScheduler()->unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
             
             while (!m_vTouchMovedsViewCache.empty())
             {
@@ -416,10 +416,10 @@ void CATouchController::touchMoved()
 
 void CATouchController::touchEnded()
 {
-    bool isScheduledPassing = CAScheduler::isScheduled(schedule_selector(CATouchController::passingTouchesViews), this);
+    bool isScheduledPassing = CAScheduler::getScheduler()->isScheduled(schedule_selector(CATouchController::passingTouchesViews), this);
     if (isScheduledPassing)
     {
-        CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
+        CAScheduler::getScheduler()->unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
         this->passingTouchesViews();
     }
     
@@ -439,7 +439,7 @@ void CATouchController::touchEnded()
 
 void CATouchController::touchCancelled()
 {
-    CAScheduler::unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CATouchController::passingTouchesViews), this);
     
     CAView* view = dynamic_cast<CAView*>(CAApplication::getApplication()->getTouchDispatcher()->getFirstResponder());
     bool isContainsFirstPoint = view && view->convertRectToWorldSpace(view->getBounds()).containsPoint(m_tFirstPoint);

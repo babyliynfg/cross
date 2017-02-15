@@ -61,7 +61,7 @@ public:
     void stopAnimating();
     bool isAnimating();
 
-    void setTargetOnCancel(CAObject* target, SEL_CallFunc callBack);
+    void onCancel(const std::function<void()>& callBack);
     
     CC_SYNTHESIZE(float, m_fLoadingMinTime, LoadingMinTime);
     
@@ -78,8 +78,7 @@ private:
     CAActivityIndicatorView::Style m_style; // default is CAActivityIndicatorView::Style::White
     
     CAObject* m_pTarget;
-    SEL_CallFunc m_pCallFunc;
-    CAImageView* m_pImageBG;
+    std::function<void()> m_pCallFunc;
     DSize m_obActivityIndicatorOffset;
     
 private:

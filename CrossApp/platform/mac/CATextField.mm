@@ -476,7 +476,7 @@ void CATextField::showTextField()
 
 void CATextField::hideNativeTextField()
 {
-    CAScheduler::unschedule(schedule_selector(CATextField::update), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CATextField::update), this);
     
     [textField_MAC hide];
 }
@@ -484,13 +484,13 @@ void CATextField::hideNativeTextField()
 void CATextField::showNativeTextField()
 {
     [textField_MAC show];
-    CAScheduler::schedule(schedule_selector(CATextField::update), this, 1/60.0f);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CATextField::update), this, 1/60.0f);
 }
 
 void CATextField::delayShowImage()
 {
-    CC_RETURN_IF(CAScheduler::isScheduled(schedule_selector(CATextField::showImage), this));
-    CAScheduler::schedule(schedule_selector(CATextField::showImage), this, 0, 0, 0);
+    CC_RETURN_IF(CAScheduler::getScheduler()->isScheduled(schedule_selector(CATextField::showImage), this));
+    CAScheduler::getScheduler()->schedule(schedule_selector(CATextField::showImage), this, 0, 0, 0);
 }
 
 void CATextField::showImage()

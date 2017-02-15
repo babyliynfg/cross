@@ -26,9 +26,9 @@ public:
 
     CAImage* addImage(const std::string& fileimage);
 
-    void addImageAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector);
+    void addImageAsync(const std::string& path, const std::function<void(CAImage*)>& function);
 
-    void addImageFullPathAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector);
+    void addImageFullPathAsync(const std::string& path, const std::function<void(CAImage*)>& function);
 
     CAImage* imageForKey(const std::string& key);
     

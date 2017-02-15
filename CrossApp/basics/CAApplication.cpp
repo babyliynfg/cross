@@ -95,7 +95,7 @@ bool CAApplication::init(void)
     m_pScheduler = new (std::nothrow) CAScheduler();
     // action manager
     m_pActionManager = new (std::nothrow) ActionManager();
-    m_pScheduler->scheduleSelectorUpdate(m_pActionManager, CAScheduler::PRIORITY_SYSTEM, false);
+    m_pScheduler->scheduleUpdate(m_pActionManager, CAScheduler::PRIORITY_SYSTEM, false);
     
     m_pImageCache = new (std::nothrow) CAImageCache();
     
@@ -749,7 +749,7 @@ void CAApplication::restartApplication()
     m_pImageCache = new (std::nothrow) CAImageCache();
     
     // Reschedule for action manager
-    CAScheduler::getScheduler()->scheduleSelectorUpdate(this->getActionManager(), CAScheduler::PRIORITY_SYSTEM, false);
+    CAScheduler::getScheduler()->scheduleUpdate(this->getActionManager(), CAScheduler::PRIORITY_SYSTEM, false);
     
     // release the objects
     CAPoolManager::getInstance()->pop();
@@ -1010,7 +1010,6 @@ void CCDisplayLinkDirector::mainLoop(void)
         if (! m_bPaused)
         {
             CAScheduler::getScheduler()->update(m_fDeltaTime);
-            CAObject::updateDelayTimers(m_fDeltaTime);
             drawScene();
         }
         CAPoolManager::getInstance()->pop();}

@@ -188,7 +188,7 @@ void CAActivityIndicatorView::startAnimating()
     m_fLoadingTime = 0.0f;
     m_animationIndex = 0;
     this->setVisible(true);
-    CAScheduler::schedule(schedule_selector(CAActivityIndicatorView::animation), this, 1/60.0f);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CAActivityIndicatorView::animation), this, 1/60.0f);
 }
 
 void CAActivityIndicatorView::stopAnimating()
@@ -198,12 +198,11 @@ void CAActivityIndicatorView::stopAnimating()
 
 bool CAActivityIndicatorView::isAnimating()
 {
-    return CAScheduler::isScheduled(schedule_selector(CAActivityIndicatorView::animation), this);
+    return CAScheduler::getScheduler()->isScheduled(schedule_selector(CAActivityIndicatorView::animation), this);
 }
 
-void CAActivityIndicatorView::setTargetOnCancel(CAObject* target, SEL_CallFunc callBack)
+void CAActivityIndicatorView::onCancel(const std::function<void()>& callBack)
 {
-    m_pTarget = target;
     m_pCallFunc = callBack;
 }
 
@@ -221,11 +220,11 @@ void CAActivityIndicatorView::animation(float dt)
     {
         CC_BREAK_IF(m_fLoadingTime < m_fLoadingMinTime);
         CC_BREAK_IF(m_bStopAnimation == false);
-        CAScheduler::unschedule(schedule_selector(CAActivityIndicatorView::animation), this);
+        CAScheduler::getScheduler()->unschedule(schedule_selector(CAActivityIndicatorView::animation), this);
         this->setVisible(false);
-        if (m_pTarget && m_pCallFunc)
+        if (m_pCallFunc)
         {
-            ((CAObject*)m_pTarget->*m_pCallFunc)();
+            m_pCallFunc();
         }
     }
     while (0);

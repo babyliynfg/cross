@@ -274,12 +274,7 @@ void CAViewAnimation::commitAnimations()
         manager->m_vWillModules.popFront();
     }
     
-    do
-    {
-        CC_BREAK_IF(CAScheduler::isScheduled(schedule_selector(CAViewAnimation::update), manager));
-        CAScheduler::schedule(schedule_selector(CAViewAnimation::update), manager, 1/60.0f);
-    }
-    while (0);
+    CAScheduler::getScheduler()->scheduleUpdate(manager, CAScheduler::PRIORITY_SYSTEM, false);
 }
 
 void CAViewAnimation::setAnimationDuration(float duration)
@@ -609,7 +604,7 @@ void CAViewAnimation::update(float dt)
     
     if (m_vModules.empty())
     {
-        CAScheduler::unschedule(schedule_selector(CAViewAnimation::update), this);
+        CAScheduler::getScheduler()->scheduleUpdate(this, CAScheduler::PRIORITY_SYSTEM, true);
     }
 }
 

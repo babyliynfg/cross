@@ -261,7 +261,7 @@ bool CAStepper::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_bAutoRepeat)
     {
-        CAScheduler::schedule(schedule_selector(CAStepper::repeat), this, 0.1f, kCCRepeatForever, 0.5f);
+        CAScheduler::getScheduler()->schedule(schedule_selector(CAStepper::repeat), this, 0.1f, kCCRepeatForever, 0.5f);
     }
     
     return true;
@@ -288,7 +288,7 @@ void CAStepper::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         this->removeSubview(m_pBackgroundHighlightedmageView);
         m_pBackgroundHighlightedmageView = NULL;
     }
-    CAScheduler::unschedule(schedule_selector(CAStepper::repeat), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CAStepper::repeat), this);
 }
 
 void CAStepper::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
@@ -307,7 +307,7 @@ void CAStepper::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         this->removeSubview(m_pBackgroundHighlightedmageView);
         m_pBackgroundHighlightedmageView = NULL;
     }
-    CAScheduler::unschedule(schedule_selector(CAStepper::repeat), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CAStepper::repeat), this);
 }
 
 void CAStepper::onEnter()

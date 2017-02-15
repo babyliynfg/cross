@@ -241,7 +241,7 @@ void CALabel::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
 	if (m_bEnableCopy)
 	{
 		CATextToolBarView *pToolBar = CATextToolBarView::create();
-		pToolBar->addButton(UTF8("\u590d\u5236"), this, callfunc_selector(CALabel::copySelectText));
+		pToolBar->addButton(UTF8("\u590d\u5236"), std::bind(&CALabel::copySelectText, this));
 		pToolBar->show();
 	}
 }

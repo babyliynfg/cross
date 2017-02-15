@@ -386,7 +386,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
                 {
                     m_pScrollViewDelegate->scrollViewStopMoved(this);
                 }
-                CAScheduler::schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
+                CAScheduler::getScheduler()->schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
                 
                 this->hideIndicator();
                 m_tCloseToPoint = this->getViewSize();
@@ -405,7 +405,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
         {
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
-        CAScheduler::schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
+        CAScheduler::getScheduler()->schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
     }
 }
 
@@ -494,7 +494,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             m_tCloseToPoint = this->getViewSize();
             m_tInitialPoint = m_tCloseToPoint;
             
-            CAScheduler::schedule(schedule_selector(CAScrollView::updatePointOffset), this, 0);
+            CAScheduler::getScheduler()->schedule(schedule_selector(CAScrollView::updatePointOffset), this, 0);
         }
         else if (m_vTouches.size() == 2)
         {
@@ -532,7 +532,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
             }
 
             m_tPointOffset.clear();
-            CAScheduler::unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
+            CAScheduler::getScheduler()->unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
         }
         
         return true;
@@ -688,7 +688,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     if (m_vTouches.size() == 1)
     {
         DPoint p = DPointZero;
-        CAScheduler::unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
+        CAScheduler::getScheduler()->unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
         if (m_tPointOffset.size() > 0)
         {
             for (unsigned int i=0; i<m_tPointOffset.size(); i++)
@@ -798,7 +798,7 @@ void CAScrollView::updatePointOffset(float dt)
 
 void CAScrollView::stopDeaccelerateScroll()
 {
-    CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     m_tInertia = DPointZero;
     m_bDecelerating = false;
     this->setScrollRunning(false);
@@ -812,8 +812,8 @@ void CAScrollView::startDeaccelerateScroll()
 {
     CC_RETURN_IF(!m_bRunning);
     CAAnimation::unschedule("contentOffset:" + m_s__StrID);
-    CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
-    CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
+    CAScheduler::getScheduler()->schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
     m_bDecelerating = true;
     this->setScrollRunning(true);
     if (m_bTouchEnabledAtSubviews)

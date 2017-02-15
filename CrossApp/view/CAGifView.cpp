@@ -125,7 +125,7 @@ void CAGifView::setGif(CAGif* gif)
         
         if(m_pGif->getImages().size() > 0)
         {
-            CAScheduler::getScheduler()->scheduleSelectorUpdate(this, 0, !m_bRunning);
+            CAScheduler::getScheduler()->scheduleUpdate(this, 0, !m_bRunning);
         }
     }
 }

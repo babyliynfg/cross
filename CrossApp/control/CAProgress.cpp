@@ -228,13 +228,12 @@ void CAProgress::update(float dt)
 
 void CAProgress::animatedBegin()
 {
-    CAScheduler::unschedule(schedule_selector(CAProgress::update), this);
-	CAScheduler::schedule(schedule_selector(CAProgress::update), this, 1 / 60.0f);
+	CAScheduler::getScheduler()->scheduleUpdate(this, 0, false);
 }
 
 void CAProgress::animatedFinish()
 {
-	CAScheduler::unschedule(schedule_selector(CAProgress::update), this);
+    CAScheduler::getScheduler()->unscheduleUpdate(this);
 }
 
 void CAProgress::setContentSize(const DSize & var)

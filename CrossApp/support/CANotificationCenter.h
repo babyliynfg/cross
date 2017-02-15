@@ -8,41 +8,27 @@
 
 NS_CC_BEGIN
 
-/**
- * @js NA
- * @lua NA
- */
-class CC_DLL CANotificationObserver : public CAObject
-{
-public:
-
-    CANotificationObserver(CAObject *target,
-                           SEL_CallFuncO selector,
-                           const std::string& name,
-                           CAObject *obj);
-    
-    ~CANotificationObserver();
-    
-    void performSelector(CAObject *obj);
-    
-    CC_PROPERTY_READONLY(CAObject *, m_target, Target);
-    
-    CC_PROPERTY_READONLY(SEL_CallFuncO, m_selector, Selector);
-    
-    CC_PROPERTY_READONLY_PASS_BY_REF(std::string, m_name, Name);
-    
-    CC_PROPERTY_READONLY(CAObject *, m_object, Object);
-    
-    CC_PROPERTY(int, m_nHandler,Handler);
-};
-
-/**
- * @js NA
- */
 class CC_DLL CANotificationCenter : public CAObject
 {
 public:
 
+    typedef std::function<void(CAObject*)> Callback;
+    
+    struct CC_DLL Observer : public CAObject
+    {
+        Observer(const std::string& name, CAObject *target, const CANotificationCenter::Callback& callback);
+
+        void performSelector(CAObject *obj);
+        
+        std::string name;
+        CAObject *target;
+        CANotificationCenter::Callback callback;
+        int handler{0};
+    };
+    
+    
+public:
+    
     CANotificationCenter();
 
     ~CANotificationCenter();
@@ -51,28 +37,15 @@ public:
     
     static void destroyInstance();
     
-    CC_DEPRECATED_ATTRIBUTE static CANotificationCenter *sharedNotificationCenter(void)
-    {
-        return CANotificationCenter::getInstance();
-    }
-    
-    CC_DEPRECATED_ATTRIBUTE static void purgeNotificationCenter(void)
-    {
-        CANotificationCenter::destroyInstance();
-    }
+    void addObserver(const std::string& name, CAObject *target, const CANotificationCenter::Callback& callback);
 
-    void addObserver(CAObject *target, 
-                     SEL_CallFuncO selector,
-                     const std::string& name,
-                     CAObject *obj);
-
-    void removeObserver(CAObject *target,const std::string& name);
+    void removeObserver(const std::string& name, CAObject *target);
 
     int removeAllObservers(CAObject *target);
 
-    void registerScriptObserver(CAObject *target, int handler, const std::string& name);
+    void registerScriptObserver(const std::string& name, CAObject *target, int handler);
 
-    void unregisterScriptObserver(CAObject *target, const std::string& name);
+    void unregisterScriptObserver(const std::string& name, CAObject *target);
 
     void postNotification(const std::string& name);
 
@@ -84,9 +57,9 @@ public:
     
 private:
 
-    bool observerExisted(CAObject *target, const std::string& name);
+    bool observerExisted(const std::string& name, CAObject *target);
 
-    CAList<CANotificationObserver*> m_observers;
+    CAList<Observer*> m_observers;
     
     int     m_scriptHandler;
 };

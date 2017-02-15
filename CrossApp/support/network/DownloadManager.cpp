@@ -681,7 +681,7 @@ public:
 	{
 		_messageQueue = new std::list<Message*>();
 		pthread_mutex_init(&_messageQueueMutex, NULL);
-		CAScheduler::schedule(schedule_selector(DownloadResponseHelper::update), this, 0);
+		CAScheduler::getScheduler()->schedule(schedule_selector(DownloadResponseHelper::update), this, 0);
 	}
 
 	~DownloadResponseHelper()

@@ -40,7 +40,7 @@ namespace CAAnimation
         m_obInfo.model.dt = interval;
         m_obInfo.delay = delay;
         m_obInfo.function = function;
-        CAScheduler::schedule(schedule_selector(Animation::update), this, interval);
+        CAScheduler::getScheduler()->scheduleUpdate(this, CAScheduler::PRIORITY_SYSTEM, false);
     }
     
     void Animation::update(float dt)
@@ -76,7 +76,7 @@ namespace CAAnimation
     
     void Animation::end()
     {
-        CAScheduler::unscheduleAllForTarget(this);
+        CAScheduler::getScheduler()->unscheduleUpdate(this);
         if (m_obInfo.function)
         {
             m_obInfo.function(m_obInfo.model);

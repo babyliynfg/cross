@@ -36,9 +36,8 @@ enum class _AsyncType
 
 typedef struct _AsyncStruct
 {
-    std::string            filename;
-    CAObject    *target;
-    SEL_CallFuncO        selector;
+    std::string                   filename;
+    std::function<void(CAImage*)> function;
 } AsyncStruct;
 
 typedef struct _ImageInfo
@@ -182,24 +181,20 @@ const char* CAImageCache::description()
     return crossapp_format_string("<CAImageCache | Number of textures = %lu>", m_mImages.size()).c_str();
 }
 
-void CAImageCache::addImageAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector)
+void CAImageCache::addImageAsync(const std::string& path, const std::function<void(CAImage*)>& function)
 {
-    std::string pathKey = path;
+    std::string pathKey = FileUtils::getInstance()->fullPathForFilename(path);
 
-    this->addImageFullPathAsync(pathKey.c_str(), target, selector);
+    this->addImageFullPathAsync(pathKey, function);
 }
 
-void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *target, SEL_CallFuncO selector)
+void CAImageCache::addImageFullPathAsync(const std::string& path, const std::function<void(CAImage*)>& function)
 {
     CAImage* image = m_mImages.at(path);
 
-    if (image != NULL)
+    if (image)
     {
-        if (target && selector)
-        {
-            (target->*selector)(image);
-        }
-        
+        function(image);
         return;
     }
     
@@ -219,18 +214,15 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
     
     if (0 == s_nAsyncRefCount)
     {
-        CAScheduler::schedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this, 0);
+        CAScheduler::getScheduler()->schedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this, 0);
     }
     
     ++s_nAsyncRefCount;
 
-    CC_SAFE_RETAIN(target);
-    
     // generate async struct
     AsyncStruct *data = new AsyncStruct();
     data->filename = path;
-    data->target = target;
-    data->selector = selector;
+    data->function = function;
     
     // add async struct into queue
     pthread_mutex_lock(&s_asyncStructQueueMutex);
@@ -256,8 +248,6 @@ void CAImageCache::addImageAsyncCallBack(float dt)
         CAImage *image = pImageInfo->image;
         image->premultipliedImageData();
         
-        CAObject *target = pAsyncStruct->target;
-        SEL_CallFuncO selector = pAsyncStruct->selector;
         const char* filename = pAsyncStruct->filename.c_str();
 
         // cache the image
@@ -265,10 +255,9 @@ void CAImageCache::addImageAsyncCallBack(float dt)
         m_mImages.insert(filename, image);
         image->release();
 
-        if (target && selector)
+        if (pAsyncStruct->function)
         {
-            (target->*selector)(image);
-            target->release();
+            pAsyncStruct->function(image);
         }
         
         delete pAsyncStruct;
@@ -277,7 +266,7 @@ void CAImageCache::addImageAsyncCallBack(float dt)
         --s_nAsyncRefCount;
         if (0 == s_nAsyncRefCount)
         {
-            CAScheduler::unschedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this);
+            CAScheduler::getScheduler()->unschedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this);
         }
     }
 }

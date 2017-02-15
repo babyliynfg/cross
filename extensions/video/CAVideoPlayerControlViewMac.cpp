@@ -11,12 +11,12 @@ CAVideoPlayerControlView::CAVideoPlayerControlView()
 , m_bShowBackButton(false)
 , m_szTitle(UTF8("\u672a\u547d\u540d"))
 {
-	CAScheduler::schedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this, 0);
+	CAScheduler::getScheduler()->schedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this, 0);
 }
 
 CAVideoPlayerControlView::~CAVideoPlayerControlView()
 {
-	CAScheduler::unschedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this);
+	CAScheduler::getScheduler()->unschedule(schedule_selector(CAVideoPlayerControlView::updatePlayUI), this);
 }
 
 CAVideoPlayerControlView* CAVideoPlayerControlView::createWithFrame(const DRect& rect)

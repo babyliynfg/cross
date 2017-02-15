@@ -30,7 +30,6 @@ ActionManager* ActionManager::getInstance()
     if (s_pActionManager == nullptr)
     {
         s_pActionManager = new (std::nothrow) ActionManager();
-        CAScheduler::getScheduler()->scheduleSelectorUpdate(s_pActionManager, CAScheduler::PRIORITY_SYSTEM, false);
     }
     return s_pActionManager;
 }
