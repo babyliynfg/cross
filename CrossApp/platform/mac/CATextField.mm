@@ -388,6 +388,23 @@
 
 NS_CC_BEGIN
 CATextField::CATextField()
+: m_pBackgroundView(nullptr)
+, m_pImgeView(nullptr)
+, m_pTextField(nullptr)
+, m_pDelegate(nullptr)
+, m_bUpdateImage(true)
+, m_bSecureTextEntry(false)
+, m_bAllowkeyBoardHide(true)
+, m_cTextColor(CAColor_black)
+, m_cPlaceHdolderColor(CAColor_gray)
+, m_iMarginLeft(10)
+, m_iMarginRight(10)
+, m_iFontSize(40)
+, m_iMaxLenght(0)
+, m_eClearBtn(CATextField::ClearButtonMode::None)
+, m_eAlign(CATextField::Align::Left)
+, m_eReturnType(CATextField::ReturnType::Done)
+, m_obLastPoint(DPoint(-0xffff, -0xffff))
 {
     this->setHaveNextResponder(false);
     this->setPoint(DPoint(-5000, -5000));

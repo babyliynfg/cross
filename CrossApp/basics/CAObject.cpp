@@ -92,35 +92,29 @@ bool CAObject::isEqual(const CAObject *pObject)
 
 void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 {
-    static long callfunID = 0;
     CAScheduler::getScheduler()->scheduleOnce([=](float dt)
     {
         (this->*callFunc)();
-    }, crossapp_format_string("perform:%x", callfunID), this, afterDelay);
-    
-    ++callfunID;
+    }, crossapp_format_string("perform:%x", callFunc), this, afterDelay);
 }
 
 void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
 {
-    static long callfunID = 0;
     CAScheduler::getScheduler()->scheduleOnce([&](float dt)
     {
         (this->*callFunc)(objParam);
-    }, crossapp_format_string("performO:%x", callfunID), this, afterDelay);
-    
-    ++callfunID;
+    }, crossapp_format_string("performO:%x", callFunc), this, afterDelay);
 }
 
-//void CAObject::cancelPreviousPerformRequests(SEL_CallFunc callFunc)
-//{
-//    CAScheduler::getScheduler()->unscheduleAllForName(crossapp_format_string("%d:%d", m_u__ID, callFunc));
-//}
-//
-//void CAObject::cancelPreviousPerformRequests(SEL_CallFuncO callFunc)
-//{
-//    CAScheduler::getScheduler()->unscheduleAllForName(crossapp_format_string("%d:%d", m_u__ID, callFunc));
-//}
+void CAObject::cancelPreviousPerformRequests(SEL_CallFunc callFunc)
+{
+    CAScheduler::getScheduler()->unschedule(crossapp_format_string("perform:%x", callFunc), this);
+}
+
+void CAObject::cancelPreviousPerformRequests(SEL_CallFuncO callFunc)
+{
+    CAScheduler::getScheduler()->unschedule(crossapp_format_string("performO:%x", callFunc), this);
+}
 
 
 NS_CC_END
