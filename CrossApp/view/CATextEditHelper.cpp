@@ -24,7 +24,7 @@ bool CATouchView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     CAScheduler::getScheduler()->scheduleOnce([&](float de)
     {
         ccTouchPress(m_pCurTouch, m_pCurEvent);
-    }, "function", 1.0f);
+    }, "function", this, 1.0f);
 
 	m_pCurTouch = pTouch;
 	m_pCurEvent = pEvent;
@@ -33,17 +33,17 @@ bool CATouchView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CATouchView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::getScheduler()->unscheduleAllForName("function");
+	CAScheduler::getScheduler()->unschedule("function", this);
 }
 
 void CATouchView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::getScheduler()->unscheduleAllForName("function");
+	CAScheduler::getScheduler()->unschedule("function", this);
 }
 
 void CATouchView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-	CAScheduler::getScheduler()->unscheduleAllForName("function");
+	CAScheduler::getScheduler()->unschedule("function", this);
 }
 
 

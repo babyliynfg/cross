@@ -94,7 +94,7 @@ public:
 
 #define callfunc_selector(_SELECTOR) static_cast<CrossApp::SEL_CallFunc>(&_SELECTOR)
 #define callfuncO_selector(_SELECTOR) static_cast<CrossApp::SEL_CallFuncO>(&_SELECTOR)
-#define schedule_selector(_SELECTOR) (SEL_Schedule)(&_SELECTOR)
+#define schedule_selector(_SELECTOR) (CrossApp::SEL_Schedule)(&_SELECTOR)
 
 
 const float FLOAT_NONE = FLT_MAX;

@@ -14,7 +14,7 @@ typedef struct _listEntry
 {
     struct _listEntry   *prev, *next;
     CAScheduler::Callback     callback;
-    std::string         name;
+    void                *target;
     int                 priority;
     bool                paused;
     bool                markedForDeletion; // selector will no longer be called and entry will be removed at end of the next tick
@@ -24,7 +24,7 @@ typedef struct _hashUpdateEntry
 {
     tListEntry          **list;        // Which list does it belong to ?
     tListEntry          *entry;        // entry in the list
-    std::string         name;
+    void                *target;
     CAScheduler::Callback     callback;
     UT_hash_handle      hh;
 } tHashUpdateEntry;
@@ -33,7 +33,7 @@ typedef struct _hashUpdateEntry
 typedef struct _hashSelectorEntry
 {
     ccArray             *timers;
-    std::string         name;
+    void                *target;
     int                 timerIndex;
     Timer               *currentTimer;
     bool                currentTimerSalvaged;
@@ -92,21 +92,23 @@ protected:
 class CC_DLL TimerTargetCallback : public Timer
 {
 public:
-    
     TimerTargetCallback();
     
-    bool initWithCallback(CAScheduler* scheduler, const CAScheduler::Callback& callback, const std::string& name, float seconds, unsigned int repeat, float delay);
+    // Initializes a timer with a target, a lambda and an interval in seconds, repeat in number of times to repeat, delay in seconds.
+    bool initWithCallback(CAScheduler* scheduler, const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float seconds, unsigned int repeat, float delay);
     
     inline const CAScheduler::Callback& getCallback() const { return _callback; };
-    inline const std::string& getName() const { return _name; };
+    inline const std::string& getCallbackName() const { return _callbackName; };
     
-    virtual void trigger(float dt);
-    virtual void cancel();
+    virtual void trigger(float dt) override;
+    virtual void cancel() override;
     
 protected:
+    void* _target;
     CAScheduler::Callback _callback;
-    std::string _name;
+    std::string _callbackName;
 };
+
 
 // implementation Timer
 
@@ -197,17 +199,16 @@ void Timer::update(float dt)
 
 
 // TimerTargetCallback
-
 TimerTargetCallback::TimerTargetCallback()
 :_callback(nullptr)
 {
 }
 
-bool TimerTargetCallback::initWithCallback(CAScheduler* scheduler, const CAScheduler::Callback& callback, const std::string& name, float seconds, unsigned int repeat, float delay)
+bool TimerTargetCallback::initWithCallback(CAScheduler* scheduler, const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float seconds, unsigned int repeat, float delay)
 {
     _scheduler = scheduler;
     _callback = callback;
-    _name = name;
+    _callbackName = callbackName;
     setupTimerWithInterval(seconds, repeat, delay);
     return true;
 }
@@ -222,11 +223,11 @@ void TimerTargetCallback::trigger(float dt)
 
 void TimerTargetCallback::cancel()
 {
-    _scheduler->unschedule(_name);
+    _scheduler->unschedule(_callbackName, _target);
 }
 
-// TimerTargetSelector
 
+// TimerTargetSelector
 TimerTargetSelector::TimerTargetSelector()
 : _target(nullptr)
 , _selector(nullptr)
@@ -254,6 +255,7 @@ void TimerTargetSelector::cancel()
 {
     _scheduler->unschedule(_selector, _target);
 }
+
 
 
 
@@ -299,9 +301,9 @@ void CAScheduler::removeHashElement(_hashSelectorEntry *element)
     free(element);
 }
 
-void CAScheduler::scheduleOnce(const CAScheduler::Callback& callback, const std::string& name, float delay, bool paused)
+void CAScheduler::scheduleOnce(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float delay, bool paused)
 {
-    this->schedule(callback, name, 0.0f, 0, delay, paused);
+    this->schedule(callback, callbackName, target, 0.0f, 0, delay, paused);
 }
 
 void CAScheduler::scheduleOnce(SEL_Schedule selector, CAObject *target, float delay, bool paused)
@@ -309,9 +311,9 @@ void CAScheduler::scheduleOnce(SEL_Schedule selector, CAObject *target, float de
     this->schedule(selector, target, 0.0f, 0, delay, paused);
 }
 
-void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& name, float interval, bool paused)
+void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float interval, bool paused)
 {
-    this->schedule(callback, name, interval, kCCRepeatForever, 0.0f, paused);
+    this->schedule(callback, callbackName, target, interval, kCCRepeatForever, 0.0f, paused);
 }
 
 void CAScheduler::schedule(SEL_Schedule selector, CrossApp::CAObject *target, float interval, bool paused)
@@ -319,22 +321,20 @@ void CAScheduler::schedule(SEL_Schedule selector, CrossApp::CAObject *target, fl
     this->schedule(selector, target, interval, kCCRepeatForever, 0.0f, paused);
 }
 
-void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& name, float interval, unsigned int repeat, float delay, bool paused)
+void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float interval, unsigned int repeat, float delay, bool paused)
 {
-    CCAssert(!name.empty(), "key should not be empty!");
-    
-    delay = MAX(delay, 1/60.0f);
-    interval = MAX(interval, 1/60.0f);
+    CCAssert(target, "Argument target must be non-nullptr");
+    CCAssert(!callbackName.empty(), "key should not be empty!");
     
     tHashTimerEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForTimers, &name, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     
     if (! element)
     {
         element = (tHashTimerEntry *)calloc(sizeof(*element), 1);
-        element->name = name;
+        element->target = target;
         
-        HASH_ADD_PTR(_hashForTimers, name, element);
+        HASH_ADD_PTR(_hashForTimers, target, element);
         
         // Is this the 1st element ? Then set the pause level to all the selectors of this target
         element->paused = paused;
@@ -354,9 +354,9 @@ void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::str
         {
             TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
             
-            if (timer && name == timer->getName())
+            if (timer && callbackName == timer->getCallbackName())
             {
-                CCLOG("CCScheduler#schedule. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
+                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);
                 return;
             }
@@ -365,31 +365,31 @@ void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::str
     }
     
     TimerTargetCallback *timer = new (std::nothrow) TimerTargetCallback();
-    timer->initWithCallback(this, callback, name, interval, repeat, delay);
+    timer->initWithCallback(this, callback, callbackName, target, interval, repeat, delay);
     ccArrayAppendObject(element->timers, timer);
     timer->release();
 }
 
 void CAScheduler::schedule(SEL_Schedule selector, CAObject *target, float interval, unsigned int repeat, float delay, bool paused)
 {
-    CCASSERT(target, "Argument target must be non-nullptr");
-    const std::string& name = target->getStrID();
+    CCAssert(target, "Argument target must be non-nullptr");
+    
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);
     
     if (! element)
     {
         element = (tHashTimerEntry *)calloc(sizeof(*element), 1);
-        element->name = name;
+        element->target = target;
         
-        HASH_ADD_PTR(_hashForTimers, name, element);
+        HASH_ADD_PTR(_hashForTimers, target, element);
         
         // Is this the 1st element ? Then set the pause level to all the selectors of this target
         element->paused = paused;
     }
     else
     {
-        CCASSERT(element->paused == paused, "element's paused should be paused.");
+        CCAssert(element->paused == paused, "element's paused should be paused.");
     }
     
     if (element->timers == nullptr)
@@ -418,58 +418,58 @@ void CAScheduler::schedule(SEL_Schedule selector, CAObject *target, float interv
     timer->release();
 }
 
-void CAScheduler::unschedule(const std::string &name)
+void CAScheduler::unschedule(const std::string &callbackName, void *target)
 {
-//    // explicit handle nil arguments when removing an object
-//    if (name.empty())
-//    {
-//        return;
-//    }
-//    
-//    //CCASSERT(target);
-//    //CCASSERT(selector);
-//    
-//    tHashTimerEntry *element = nullptr;
-//    HASH_FIND_PTR(_hashForTimers, &name, element);
-//    
-//    if (element)
-//    {
-//        for (int i = 0; i < element->timers->num; ++i)
-//        {
-//            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
-//            
-//            if (timer && name == timer->getName())
-//            {
-//                if (timer == element->currentTimer && (! element->currentTimerSalvaged))
-//                {
-//                    element->currentTimer->retain();
-//                    element->currentTimerSalvaged = true;
-//                }
-//                
-//                ccArrayRemoveObjectAtIndex(element->timers, i, true);
-//                
-//                // update timerIndex in case we are in tick:, looping over the actions
-//                if (element->timerIndex >= i)
-//                {
-//                    element->timerIndex--;
-//                }
-//                
-//                if (element->timers->num == 0)
-//                {
-//                    if (_currentTarget == element)
-//                    {
-//                        _currentTargetSalvaged = true;
-//                    }
-//                    else
-//                    {
-//                        removeHashElement(element);
-//                    }
-//                }
-//                
-//                return;
-//            }
-//        }
-//    }
+    // explicit handle nil arguments when removing an object
+    if (target == nullptr || callbackName.empty())
+    {
+        return;
+    }
+    
+    //CCAssert(target);
+    //CCAssert(selector);
+    
+    tHashTimerEntry *element = nullptr;
+    HASH_FIND_PTR(_hashForTimers, &target, element);
+    
+    if (element)
+    {
+        for (int i = 0; i < element->timers->num; ++i)
+        {
+            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            
+            if (timer && callbackName == timer->getCallbackName())
+            {
+                if (timer == element->currentTimer && (! element->currentTimerSalvaged))
+                {
+                    element->currentTimer->retain();
+                    element->currentTimerSalvaged = true;
+                }
+                
+                ccArrayRemoveObjectAtIndex(element->timers, i, true);
+                
+                // update timerIndex in case we are in tick:, looping over the actions
+                if (element->timerIndex >= i)
+                {
+                    element->timerIndex--;
+                }
+                
+                if (element->timers->num == 0)
+                {
+                    if (_currentTarget == element)
+                    {
+                        _currentTargetSalvaged = true;
+                    }
+                    else
+                    {
+                        removeHashElement(element);
+                    }
+                }
+                
+                return;
+            }
+        }
+    }
 }
 
 void CAScheduler::unschedule(SEL_Schedule selector, CAObject *target)
@@ -479,10 +479,12 @@ void CAScheduler::unschedule(SEL_Schedule selector, CAObject *target)
     {
         return;
     }
-
-    std::string name = target->getStrID();
+    
+    //CCAssert(target);
+    //CCAssert(selector);
+    
     tHashTimerEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForTimers, &name, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     
     if (element)
     {
@@ -524,17 +526,17 @@ void CAScheduler::unschedule(SEL_Schedule selector, CAObject *target)
     }
 }
 
-void CAScheduler::unscheduleAllForName(const std::string& name)
+void CAScheduler::unscheduleAllForTarget(void* target)
 {
     // explicit nullptr handling
-    if (name.empty())
+    if (target == nullptr)
     {
         return;
     }
     
     // Custom Selectors
     tHashTimerEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForTimers, &name, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     
     if (element)
     {
@@ -555,155 +557,46 @@ void CAScheduler::unscheduleAllForName(const std::string& name)
             removeHashElement(element);
         }
     }
-}
-
-void CAScheduler::unscheduleAllForTarget(CAObject* target)
-{
-    // explicit nullptr handling
-    if (target == nullptr)
-    {
-        return;
-    }
     
-    this->unscheduleAllForName(target->getStrID());
-    
-    // update selector
     unscheduleUpdate(target);
 }
 
-
-void CAScheduler::priorityIn(tListEntry **list, const CAScheduler::Callback& callback, const std::string& name, int priority, bool paused)
+bool CAScheduler::isScheduled(const std::string& callbackName, void *target)
 {
-    tListEntry *listElement = new (std::nothrow) tListEntry();
+    CCAssert(!callbackName.empty(), "Argument key must not be empty");
+    CCAssert(target, "Argument target must be non-nullptr");
     
-    listElement->callback = callback;
-    listElement->name = name;
-    listElement->priority = priority;
-    listElement->paused = paused;
-    listElement->next = listElement->prev = nullptr;
-    listElement->markedForDeletion = false;
+    tHashTimerEntry *element = nullptr;
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     
-    // empty list ?
-    if (! *list)
+    if (!element)
     {
-        DL_APPEND(*list, listElement);
+        return false;
     }
-    else
+    
+    if (element->timers == nullptr)
     {
-        bool added = false;
+        return false;
+    }
+    
+    for (int i = 0; i < element->timers->num; ++i)
+    {
+        TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
         
-        for (tListEntry *element = *list; element; element = element->next)
-        {
-            if (priority < element->priority)
-            {
-                if (element == *list)
-                {
-                    DL_PREPEND(*list, listElement);
-                }
-                else
-                {
-                    listElement->next = element;
-                    listElement->prev = element->prev;
-                    
-                    element->prev->next = listElement;
-                    element->prev = listElement;
-                }
-                
-                added = true;
-                break;
-            }
-        }
-        
-        // Not added? priority has the higher value. Append it.
-        if (! added)
-        {
-            DL_APPEND(*list, listElement);
-        }
+        if (timer && callbackName == timer->getCallbackName())
+            return true;
     }
-    
-    // update hash entry for quick access
-    tHashUpdateEntry *hashElement = (tHashUpdateEntry *)calloc(sizeof(*hashElement), 1);
-    hashElement->name = name;
-    hashElement->list = list;
-    hashElement->entry = listElement;
-    HASH_ADD_PTR(_hashForUpdates, name, hashElement);
-}
 
-void CAScheduler::appendIn(_listEntry **list, const CAScheduler::Callback& callback, const std::string& name, bool paused)
-{
-    tListEntry *listElement = new (std::nothrow) tListEntry();
-    
-    listElement->callback = callback;
-    listElement->name = name;
-    listElement->paused = paused;
-    listElement->priority = 0;
-    listElement->markedForDeletion = false;
-    
-    DL_APPEND(*list, listElement);
-    
-    // update hash entry for quicker access
-    tHashUpdateEntry *hashElement = (tHashUpdateEntry *)calloc(sizeof(*hashElement), 1);
-    hashElement->name = name;
-    hashElement->list = list;
-    hashElement->entry = listElement;
-    HASH_ADD_PTR(_hashForUpdates, name, hashElement);
-}
-
-void CAScheduler::schedulePerFrame(const CAScheduler::Callback& callback, CAObject *target, int priority, bool paused)
-{
-    const std::string& name = target->getStrID();
-    tHashUpdateEntry *hashElement = nullptr;
-    HASH_FIND_PTR(_hashForUpdates, &name, hashElement);
-    if (hashElement)
-    {
-        // check if priority has changed
-        if ((*hashElement->list)->priority != priority)
-        {
-            if (_updateHashLocked)
-            {
-                CCLOG("warning: you CANNOT change update priority in scheduled function");
-                hashElement->entry->markedForDeletion = false;
-                hashElement->entry->paused = paused;
-                return;
-            }
-            else
-            {
-                // will be added again outside if (hashElement).
-                unscheduleUpdate(target);
-            }
-        }
-        else
-        {
-            hashElement->entry->markedForDeletion = false;
-            hashElement->entry->paused = paused;
-            return;
-        }
-    }
-    
-    // most of the updates are going to be 0, that's way there
-    // is an special list for updates with priority 0
-    if (priority == 0)
-    {
-        appendIn(&_updates0List, callback, name, paused);
-    }
-    else if (priority < 0)
-    {
-        priorityIn(&_updatesNegList, callback, name, priority, paused);
-    }
-    else
-    {
-        // priority > 0
-        priorityIn(&_updatesPosList, callback, name, priority, paused);
-    }
+    return false;
 }
 
 bool CAScheduler::isScheduled(SEL_Schedule selector, CAObject *target)
 {
+    CCAssert(selector, "Argument selector must be non-nullptr");
     CCAssert(target, "Argument target must be non-nullptr");
     
-    const std::string& name = target->getStrID();
     tHashTimerEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForTimers, &name, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     
     if (!element)
     {
@@ -718,9 +611,9 @@ bool CAScheduler::isScheduled(SEL_Schedule selector, CAObject *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (timer && name == timer->getName())
+            if (timer && selector == timer->getSelector())
             {
                 return true;
             }
@@ -728,15 +621,13 @@ bool CAScheduler::isScheduled(SEL_Schedule selector, CAObject *target)
         
         return false;
     }
-    
-    return false;  // should never get here
 }
 
 void CAScheduler::removeUpdateFromHash(struct _listEntry *entry)
 {
     tHashUpdateEntry *element = nullptr;
-
-    HASH_FIND_PTR(_hashForUpdates, &entry->name, element);
+    
+    HASH_FIND_PTR(_hashForUpdates, &entry->target, element);
     if (element)
     {
         // list entry
@@ -746,31 +637,6 @@ void CAScheduler::removeUpdateFromHash(struct _listEntry *entry)
         // hash entry
         HASH_DEL(_hashForUpdates, element);
         free(element);
-    }
-}
-
-void CAScheduler::unscheduleUpdate(CAObject *target)
-{
-    if (target != nullptr)
-    {
-        this->unscheduleUpdateWithName(target->getStrID());
-    }
-}
-
-void CAScheduler::unscheduleUpdateWithName(const std::string& name)
-{
-    tHashUpdateEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForUpdates, &name, element);
-    if (element)
-    {
-        if (_updateHashLocked)
-        {
-            element->entry->markedForDeletion = true;
-        }
-        else
-        {
-            this->removeUpdateFromHash(element->entry);
-        }
     }
 }
 
@@ -788,7 +654,7 @@ void CAScheduler::unscheduleAllWithMinPriority(int minPriority)
     {
         // element may be removed in unscheduleAllSelectorsForTarget
         nextElement = (tHashTimerEntry *)element->hh.next;
-        unscheduleAllForName(element->name);
+        unscheduleAllForTarget(element->target);
         
         element = nextElement;
     }
@@ -801,7 +667,7 @@ void CAScheduler::unscheduleAllWithMinPriority(int minPriority)
         {
             if(entry->priority >= minPriority)
             {
-                this->unscheduleUpdateWithName(entry->name);
+                unscheduleUpdate(entry->target);
             }
         }
     }
@@ -810,7 +676,7 @@ void CAScheduler::unscheduleAllWithMinPriority(int minPriority)
     {
         DL_FOREACH_SAFE(_updates0List, entry, tmp)
         {
-            this->unscheduleUpdateWithName(entry->name);
+            unscheduleUpdate(entry->target);
         }
     }
     
@@ -818,9 +684,10 @@ void CAScheduler::unscheduleAllWithMinPriority(int minPriority)
     {
         if(entry->priority >= minPriority)
         {
-            this->unscheduleUpdateWithName(entry->name);
+            unscheduleUpdate(entry->target);
         }
     }
+
 #if CC_ENABLE_SCRIPT_BINDING
     m_obScriptHandlerEntries.clear();
 #endif
@@ -835,6 +702,7 @@ unsigned int CAScheduler::scheduleScriptFunc(unsigned int nHandler, float fInter
 
 void CAScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 {
+#if CC_ENABLE_SCRIPT_BINDING
     for (auto &obj : m_obScriptHandlerEntries)
     {
         CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(obj);
@@ -844,15 +712,17 @@ void CAScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
             break;
         }
     }
+#endif
 }
 
-void CAScheduler::resumeName(const std::string& name)
+
+void CAScheduler::resumeTarget(void *target)
 {
-    CCAssert(!name.empty(), "target can't be nullptr!");
+    CCAssert(target != nullptr, "target can't be nullptr!");
     
     // custom selectors
     tHashTimerEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForTimers, &name, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     if (element)
     {
         element->paused = false;
@@ -860,7 +730,7 @@ void CAScheduler::resumeName(const std::string& name)
     
     // update selector
     tHashUpdateEntry *elementUpdate = nullptr;
-    HASH_FIND_PTR(_hashForUpdates, &name, elementUpdate);
+    HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
     if (elementUpdate)
     {
         CCAssert(elementUpdate->entry != nullptr, "elementUpdate's entry can't be nullptr!");
@@ -868,22 +738,13 @@ void CAScheduler::resumeName(const std::string& name)
     }
 }
 
-void CAScheduler::resumeTarget(CAObject *target)
+void CAScheduler::pauseTarget(void *target)
 {
-    if (target == nullptr)
-    {
-        return;
-    }
-    this->resumeName(target->getStrID());
-}
-
-void CAScheduler::pauseName(const std::string& name)
-{
-    CCAssert(!name.empty(), "target can't be nullptr!");
+    CCAssert(target != nullptr, "target can't be nullptr!");
     
     // custom selectors
     tHashTimerEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForTimers, &name, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     if (element)
     {
         element->paused = true;
@@ -891,7 +752,7 @@ void CAScheduler::pauseName(const std::string& name)
     
     // update selector
     tHashUpdateEntry *elementUpdate = nullptr;
-    HASH_FIND_PTR(_hashForUpdates, &name, elementUpdate);
+    HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
     if (elementUpdate)
     {
         CCAssert(elementUpdate->entry != nullptr, "elementUpdate's entry can't be nullptr!");
@@ -899,22 +760,13 @@ void CAScheduler::pauseName(const std::string& name)
     }
 }
 
-void CAScheduler::pauseTarget(CAObject *target)
+bool CAScheduler::isTargetPaused(void *target)
 {
-    if (target == nullptr)
-    {
-        return;
-    }
-    this->pauseName(target->getStrID());
-}
-
-bool CAScheduler::isNamePaused(const std::string& name)
-{
-    CCAssert(!name.empty(), "target must be non nil" );
+    CCAssert( target != nullptr, "target must be non nil" );
     
     // Custom selectors
     tHashTimerEntry *element = nullptr;
-    HASH_FIND_PTR(_hashForTimers, &name, element);
+    HASH_FIND_PTR(_hashForTimers, &target, element);
     if( element )
     {
         return element->paused;
@@ -922,22 +774,13 @@ bool CAScheduler::isNamePaused(const std::string& name)
     
     // We should check update selectors if target does not have custom selectors
     tHashUpdateEntry *elementUpdate = nullptr;
-    HASH_FIND_PTR(_hashForUpdates, &name, elementUpdate);
+    HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
     if ( elementUpdate )
     {
         return elementUpdate->entry->paused;
     }
     
     return false;  // should never get here
-}
-
-bool CAScheduler::isTargetPaused(CAObject *target)
-{
-    if (target == nullptr)
-    {
-        return false;
-    }
-    return this->isNamePaused(target->getStrID());
 }
 
 void CAScheduler::pauseAll()
@@ -1120,6 +963,8 @@ void CAScheduler::update(float dt)
         }
     }
     
+#if CC_ENABLE_SCRIPT_BINDING
+    
     if (!m_obScriptHandlerEntries.empty())
     {
         for (auto& obj : m_obScriptHandlerEntries)
@@ -1135,7 +980,7 @@ void CAScheduler::update(float dt)
             }
         }
     }
-    
+#endif
     // delete all updates that are marked for deletion
     // updates with priority < 0
     DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
@@ -1173,13 +1018,15 @@ void CAScheduler::update(float dt)
     
     // Testing size is faster than locking / unlocking.
     // And almost never there will be functions scheduled to be called.
-    if( !_functionsToPerform.empty() ) {
+    if( !_functionsToPerform.empty() )
+    {
         _performMutex.lock();
         // fixed #4123: Save the callback functions, they must be invoked after '_performMutex.unlock()', otherwise if new functions are added in callback, it will cause thread deadlock.
         auto temp = _functionsToPerform;
         _functionsToPerform.clear();
         _performMutex.unlock();
-        for( const auto &function : temp ) {
+        for( const auto &function : temp )
+        {
             function();
         }
         
@@ -1194,4 +1041,149 @@ void CAScheduler::scheduleUpdate(CAObject *target, int priority, bool paused)
     },target, priority, paused);
 }
 
+void CAScheduler::unscheduleUpdate(void *target)
+{
+    if (target == nullptr)
+    {
+        return;
+    }
+    
+    tHashUpdateEntry *element = nullptr;
+    HASH_FIND_PTR(_hashForUpdates, &target, element);
+    if (element)
+    {
+        if (_updateHashLocked)
+        {
+            element->entry->markedForDeletion = true;
+        }
+        else
+        {
+            this->removeUpdateFromHash(element->entry);
+        }
+    }
+}
+
+void CAScheduler::priorityIn(tListEntry **list, const CAScheduler::Callback& callback, void *target, int priority, bool paused)
+{
+    tListEntry *listElement = new (std::nothrow) tListEntry();
+    
+    listElement->callback = callback;
+    listElement->target = target;
+    listElement->priority = priority;
+    listElement->paused = paused;
+    listElement->next = listElement->prev = nullptr;
+    listElement->markedForDeletion = false;
+    
+    // empty list ?
+    if (! *list)
+    {
+        DL_APPEND(*list, listElement);
+    }
+    else
+    {
+        bool added = false;
+        
+        for (tListEntry *element = *list; element; element = element->next)
+        {
+            if (priority < element->priority)
+            {
+                if (element == *list)
+                {
+                    DL_PREPEND(*list, listElement);
+                }
+                else
+                {
+                    listElement->next = element;
+                    listElement->prev = element->prev;
+                    
+                    element->prev->next = listElement;
+                    element->prev = listElement;
+                }
+                
+                added = true;
+                break;
+            }
+        }
+        
+        // Not added? priority has the higher value. Append it.
+        if (! added)
+        {
+            DL_APPEND(*list, listElement);
+        }
+    }
+    
+    // update hash entry for quick access
+    tHashUpdateEntry *hashElement = (tHashUpdateEntry *)calloc(sizeof(*hashElement), 1);
+    hashElement->target = target;
+    hashElement->list = list;
+    hashElement->entry = listElement;
+    HASH_ADD_PTR(_hashForUpdates, target, hashElement);
+}
+
+void CAScheduler::appendIn(_listEntry **list, const CAScheduler::Callback& callback, void *target, bool paused)
+{
+    tListEntry *listElement = new (std::nothrow) tListEntry();
+    
+    listElement->callback = callback;
+    listElement->target = target;
+    listElement->paused = paused;
+    listElement->priority = 0;
+    listElement->markedForDeletion = false;
+    
+    DL_APPEND(*list, listElement);
+    
+    // update hash entry for quicker access
+    tHashUpdateEntry *hashElement = (tHashUpdateEntry *)calloc(sizeof(*hashElement), 1);
+    hashElement->target = target;
+    hashElement->list = list;
+    hashElement->entry = listElement;
+    HASH_ADD_PTR(_hashForUpdates, target, hashElement);
+}
+
+void CAScheduler::schedulePerFrame(const CAScheduler::Callback& callback, void *target, int priority, bool paused)
+{
+    tHashUpdateEntry *hashElement = nullptr;
+    HASH_FIND_PTR(_hashForUpdates, &target, hashElement);
+    if (hashElement)
+    {
+        // check if priority has changed
+        if ((*hashElement->list)->priority != priority)
+        {
+            if (_updateHashLocked)
+            {
+                CCLOG("warning: you CANNOT change update priority in scheduled function");
+                hashElement->entry->markedForDeletion = false;
+                hashElement->entry->paused = paused;
+                return;
+            }
+            else
+            {
+                // will be added again outside if (hashElement).
+                unscheduleUpdate(target);
+            }
+        }
+        else
+        {
+            hashElement->entry->markedForDeletion = false;
+            hashElement->entry->paused = paused;
+            return;
+        }
+    }
+    
+    // most of the updates are going to be 0, that's way there
+    // is an special list for updates with priority 0
+    if (priority == 0)
+    {
+        appendIn(&_updates0List, callback, target, paused);
+    }
+    else if (priority < 0)
+    {
+        priorityIn(&_updatesNegList, callback, target, priority, paused);
+    }
+    else
+    {
+        // priority > 0
+        priorityIn(&_updatesPosList, callback, target, priority, paused);
+    }
+}
 NS_CC_END

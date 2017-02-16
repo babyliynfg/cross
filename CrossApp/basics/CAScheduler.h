@@ -30,37 +30,33 @@ public:
 
     static CAScheduler* getScheduler();
     
-    void scheduleOnce(const CAScheduler::Callback& callback, const std::string& name, float delay, bool paused = false);
+    void scheduleOnce(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float delay, bool paused = false);
     void scheduleOnce(SEL_Schedule selector, CAObject *target, float delay, bool paused = false);
     
-    void schedule(const CAScheduler::Callback& callback, const std::string& name, float interval, bool paused = false);
+    void schedule(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float interval, bool paused = false);
     void schedule(SEL_Schedule selector, CAObject *target, float interval, bool paused = false);
     
-    void schedule(const CAScheduler::Callback& callback, const std::string& name, float interval, unsigned int repeat, float delay, bool paused = false);
+    void schedule(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float interval, unsigned int repeat, float delay, bool paused = false);
     void schedule(SEL_Schedule selector, CAObject *target, float interval, unsigned int repeat, float delay, bool paused = false);
 
-    void unschedule(const std::string& name);
+    void unschedule(const std::string& callbackName, void *target);
     void unschedule(SEL_Schedule selector, CAObject *target);
     
-    void unscheduleAllForName(const std::string& name);
-    void unscheduleAllForTarget(CAObject* target);
+    void unscheduleAllForTarget(void* target);
     
     void unscheduleAll();
 
+    bool isScheduled(const std::string& callbackName, void *target);
     bool isScheduled(SEL_Schedule selector, CAObject *target);
 
-    void pauseName(const std::string& name);
-    void pauseTarget(CAObject *target);
-
-    void resumeName(const std::string& name);
-    void resumeTarget(CAObject *target);
+    void pauseTarget(void *target);
     
-    bool isNamePaused(const std::string& name);
-    bool isTargetPaused(CAObject *target);
-
+    void resumeTarget(void *target);
+    
+    bool isTargetPaused(void *target);
 
     void scheduleUpdate(CAObject *target, int priority, bool paused);
-    void unscheduleUpdate(CAObject *target);
+    void unscheduleUpdate(void *target);
     void unscheduleAllWithMinPriority(int minPriority);
     
     void pauseAllTargetsWithMinPriority(int minPriority);
@@ -90,16 +86,14 @@ public:
     void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
     
 protected:
-
-    void unscheduleUpdateWithName(const std::string& name);
     
-    void schedulePerFrame(const CAScheduler::Callback& callback, CAObject *target, int priority, bool paused);
+    void schedulePerFrame(const CAScheduler::Callback& callback, void *target, int priority, bool paused);
     
     void removeHashElement(struct _hashSelectorEntry *element);
     void removeUpdateFromHash(struct _listEntry *entry);
 
-    void priorityIn(struct _listEntry **list, const CAScheduler::Callback& callback, const std::string& name, int priority, bool paused);
-    void appendIn(struct _listEntry **list, const CAScheduler::Callback& callback, const std::string& name, bool paused);
+    void priorityIn(struct _listEntry **list, const CAScheduler::Callback& callback, void *target, int priority, bool paused);
+    void appendIn(struct _listEntry **list, const CAScheduler::Callback& callback, void *target, bool paused);
     
     
     float _timeScale;
