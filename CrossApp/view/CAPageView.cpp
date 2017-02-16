@@ -244,9 +244,8 @@ int CAPageView::getSpacing()
     return m_fSpacing;
 }
 
-void CAPageView::contentOffsetFinish(float dt)
+void CAPageView::contentOffsetFinish()
 {
-    CAScrollView::contentOffsetFinish(dt);
     if (m_pPageViewDelegate && m_bListener && m_vTouches.empty())
     {
         m_pPageViewDelegate->pageViewDidEndTurning(this);

@@ -358,7 +358,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
 {
     DPoint point = ccpMult(offset, -1);
     point = ccpAdd(point, ccpMult(m_pContainer->getAnchorPointInPoints(), m_pContainer->getScale()));
-    
+
     if (animated)
     {
         m_tInertia = DPointZero;
@@ -381,18 +381,18 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
             else
             {
                 this->setContainerPoint(m_tCloseToPoint);
-                this->update(1/60.0f);
-                if (m_pScrollViewDelegate)
-                {
-                    m_pScrollViewDelegate->scrollViewStopMoved(this);
-                }
-                CAScheduler::getScheduler()->schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
-                
+                this->update(model.dt);
                 this->hideIndicator();
                 m_tCloseToPoint = this->getViewSize();
                 m_tInitialPoint = m_tCloseToPoint;
                 this->changedFromPullToRefreshView();
                 this->setTouchEnabledAtSubviews(true);
+                
+                if (m_pScrollViewDelegate)
+                {
+                    m_pScrollViewDelegate->scrollViewDidMoved(this);
+                }
+                this->performSelector(callfunc_selector(CAScrollView::contentOffsetFinish), 0);
             }
         }, "contentOffset:" + m_s__StrID, 0.2f);
         this->setTouchEnabledAtSubviews(false);
@@ -401,11 +401,12 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
     {
         this->setContainerPoint(point);
         this->update(1/60.0f);
+        
         if (m_pScrollViewDelegate)
         {
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
-        CAScheduler::getScheduler()->schedule(schedule_selector(CAScrollView::contentOffsetFinish), this, 0, 0, 1/60.0f);
+        this->performSelector(callfunc_selector(CAScrollView::contentOffsetFinish), 0);
     }
 }
 

@@ -326,6 +326,9 @@ void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::str
     CCAssert(target, "Argument target must be non-nullptr");
     CCAssert(!callbackName.empty(), "key should not be empty!");
     
+    interval = MAX(interval, 1/60.f);
+    delay = MAX(delay, 1/60.f);
+    
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);
     
@@ -373,6 +376,9 @@ void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::str
 void CAScheduler::schedule(SEL_Schedule selector, CAObject *target, float interval, unsigned int repeat, float delay, bool paused)
 {
     CCAssert(target, "Argument target must be non-nullptr");
+    
+    interval = MAX(interval, 1/60.f);
+    delay = MAX(delay, 1/60.f);
     
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);

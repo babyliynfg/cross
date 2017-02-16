@@ -50,10 +50,13 @@ void LabelTest::viewDidLoad()
 
 	if (LabelNum == 0)
 	{
+        CAView* view = CAView::createWithLayout(DLayoutFill);
+        view->setColor(CAColor_gray);
+        this->getView()->addSubview(view);
+        
 		CAFont Font;
 		Font.fontSize = 36;
 		Font.color = CAColor_red;
-		Font.fontName = "c:/x.ttf";
 
 		CALabel* label = CALabel::create();
 		label->setText(cc);
@@ -61,11 +64,12 @@ void LabelTest::viewDidLoad()
         label->setTextAlignment(CATextAlignment::Center);
         label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.16)));
+        view->addSubview(label);
+        
 
 		CAFont Font1;
 		Font1.fontSize = 36;
 		Font1.color = CAColor_red;
-		Font1.fontName = "c:/x.ttf";
 		Font1.underLine = true;
 
 		CALabel* label1 = CALabel::create();
@@ -74,30 +78,34 @@ void LabelTest::viewDidLoad()
         label1->setTextAlignment(CATextAlignment::Center);
         label1->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label1->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.32)));
-
+        view->addSubview(label1);
+        
+        
 		CALabel* label2 = CALabel::create();
 		CAFont Font2;
 		Font2.fontSize = 36;
 		Font2.color = CAColor_red;
-		Font2.fontName = "c:/x.ttf";
 		Font2.bold = true;
 		label2->setText(cc);
 		label2->setFont(Font2);
         label2->setTextAlignment(CATextAlignment::Center);
         label2->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label2->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.48)));
+        view->addSubview(label2);
+        
 
 		CALabel* label3 = CALabel::create();
 		CAFont Font3;
 		Font3.fontSize = 36;
 		Font3.color = CAColor_red;
-		Font3.fontName = "c:/x.ttf";
 		Font3.italics = true;
 		label3->setText(cc);
 		label3->setFont(Font3);
         label3->setTextAlignment(CATextAlignment::Center);
         label3->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label3->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.64)));
+        view->addSubview(label3);
+        
 
 		CALabel* label4 = CALabel::create();
 		CAFont Font4;
@@ -108,16 +116,7 @@ void LabelTest::viewDidLoad()
         label4->setTextAlignment(CATextAlignment::Center);
         label4->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label4->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.8)));
-
-		CAView* view = CAView::createWithLayout(DLayoutFill);
-		view->addSubview(label);
-		view->addSubview(label1);
-		view->addSubview(label2);
-		view->addSubview(label3);
-		view->addSubview(label4);
-		view->setColor(CAColor_gray);
-
-		this->getView()->addSubview(view);
+        view->addSubview(label4);
 	}
 	else if (LabelNum == 1)
 	{

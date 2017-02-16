@@ -408,7 +408,7 @@ CommonHttpResponseCallBack* CommonHttpResponseCallBack::scheduleCallBack(CAObjec
     if (pTarget == NULL) return NULL;
     CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url);
     callBack->m_nTimes = 0;
-    CAScheduler::schedule(schedule_selector(CommonHttpResponseCallBack::update), callBack, 1/10.0f);
+    CAScheduler::getScheduler()->scheduleUpdate(callBack, CAScheduler::PRIORITY_SYSTEM, false);
     return callBack;
 }
 
@@ -433,7 +433,7 @@ void CommonHttpResponseCallBack::update(float dt)
     
     if (m_nTimes > 100 || image)
     {
-        CAScheduler::unschedule(schedule_selector(CommonHttpResponseCallBack::update), this);
+        CAScheduler::getScheduler()->unscheduleUpdate(this);
         this->release();
     }
 }
@@ -442,7 +442,10 @@ CommonHttpResponseCallBack* CommonHttpResponseCallBack::imagePathAsync(CrossApp:
 {
     if (pTarget == NULL) return NULL;
     CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url, type);
-    CAApplication::getApplication()->getImageCache()->addImageFullPathAsync(path, callBack, callfuncO_selector(CommonHttpResponseCallBack::imagePathAsyncFinish));
+    CAApplication::getApplication()->getImageCache()->addImageFullPathAsync(path, [=](CAImage* image)
+    {
+        callBack->imagePathAsyncFinish(image);
+    });
     return callBack;
 }
 

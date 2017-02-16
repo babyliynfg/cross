@@ -72,12 +72,12 @@ void WaterfallViewTest::refreshData2(float interval)
 
 void WaterfallViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData1), this, 0.1, 0, 0.5f + CCRANDOM_0_1(), false);
+    CAScheduler::getScheduler()->schedule(schedule_selector(WaterfallViewTest::refreshData1), this, 0.1, 0, 0.5f + CCRANDOM_0_1(), false);
 }
 
 void WaterfallViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData2), this, 0.1, 0, 0.5f + CCRANDOM_0_1(), false);
+    CAScheduler::getScheduler()->schedule(schedule_selector(WaterfallViewTest::refreshData2), this, 0.1, 0, 0.5f + CCRANDOM_0_1(), false);
 }
 
 void WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex)

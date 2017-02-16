@@ -248,7 +248,7 @@ void CDNewsAboutController::tableViewDidSelectRowAtIndexPath(CATableView* table,
         _waitview->addSubview(label);
         
         this->start();
-        CAScheduler::schedule(schedule_selector(CDNewsAboutController::deleteCallBack), this, 0.01f);
+        CAScheduler::getScheduler()->schedule(schedule_selector(CDNewsAboutController::deleteCallBack), this, 0.01f);
     }
 }
 
@@ -340,7 +340,7 @@ void CDNewsAboutController::deleteCallBack(float dt)
     if (_filesize<=0) {
         this->getView()->removeSubview(_waitview);
         _waitview = NULL;
-        CAScheduler::unschedule(schedule_selector(CDNewsAboutController::deleteCallBack), this);
+        CAScheduler::getScheduler()->unschedule(schedule_selector(CDNewsAboutController::deleteCallBack), this);
         char temstr[200];
         sprintf(temstr, UTF8("本次共清理%0.1fM缓存!"),_tempfilesize/1048576.0f);
 		CAAlertView* alertView = CAAlertView::createWithText(UTF8("提示"), temstr, UTF8("关闭"), NULL);

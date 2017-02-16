@@ -749,7 +749,7 @@ void CAApplication::restartApplication()
     m_pImageCache = new (std::nothrow) CAImageCache();
     
     // Reschedule for action manager
-    CAScheduler::getScheduler()->scheduleUpdate(this->getActionManager(), CAScheduler::PRIORITY_SYSTEM, false);
+    m_pScheduler->scheduleUpdate(this->getActionManager(), CAScheduler::PRIORITY_SYSTEM, false);
     
     // release the objects
     CAPoolManager::getInstance()->pop();

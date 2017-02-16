@@ -176,7 +176,7 @@ protected:
         return 120.0f;
     }
     
-    virtual void contentOffsetFinish(float dt) {};
+    virtual void contentOffsetFinish() {};
     
     void getScrollWindowNotOutPoint(DPoint& point);
     

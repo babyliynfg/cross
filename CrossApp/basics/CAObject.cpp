@@ -35,7 +35,7 @@ CAObject::CAObject(void)
 
 CAObject::~CAObject(void)
 {
-    CAScheduler::getScheduler()->unscheduleUpdate(this);;
+    CAScheduler::getScheduler()->unscheduleAllForTarget(this);;
     
     CC_SAFE_RELEASE(m_pUserObject);
     
@@ -93,10 +93,12 @@ bool CAObject::isEqual(const CAObject *pObject)
 void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 {
     static long callfunID = 0;
-    CAScheduler::getScheduler()->scheduleOnce([&](float dt)
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt)
     {
         (this->*callFunc)();
     }, crossapp_format_string("perform:%x", callfunID), this, afterDelay);
+    
+    ++callfunID;
 }
 
 void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
@@ -106,6 +108,8 @@ void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float
     {
         (this->*callFunc)(objParam);
     }, crossapp_format_string("performO:%x", callfunID), this, afterDelay);
+    
+    ++callfunID;
 }
 
 //void CAObject::cancelPreviousPerformRequests(SEL_CallFunc callFunc)

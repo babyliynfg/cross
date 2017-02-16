@@ -141,7 +141,10 @@ void CDNewsImageController::viewDidLoad()
             p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_W_C(50, 0.5), DVerticalLayout_H_C(0, 0.5)));
             this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
             p_pLoading->setLoadingMinTime(0.5f);
-            p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageCollectionView));
+            p_pLoading->onCancel([=]()
+            {
+                this->initImageCollectionView();
+            });
         }
     }else{
         this->initImageCollectionView();
@@ -219,7 +222,10 @@ void CDNewsImageController::showAlert()
             p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_W_C(50, 0.5), DVerticalLayout_T_H(50, 0.5)));
             this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
             p_pLoading->setLoadingMinTime(0.5f);
-            p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageCollectionView));
+            p_pLoading->onCancel([=]()
+            {
+                this->initImageCollectionView();
+            });
         }
     }, CAButton::Event::TouchUpInSide);
     p_alertView->addSubview(btn5);

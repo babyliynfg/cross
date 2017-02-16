@@ -50,7 +50,7 @@ public:
     
     static CAPageView* createWithLayout(const DLayout& layout, const Orientation& type);
     
-    bool init();
+    virtual bool init() override;
     
     CC_SYNTHESIZE_READONLY(Orientation, m_eOrientation, Orientation);
     
@@ -70,20 +70,20 @@ public:
     
     CAView* getSubViewAtIndex(int index);
     
-    virtual void setShowsScrollIndicators(bool var);
+    virtual void setShowsScrollIndicators(bool var) override;
     
 protected:
 
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent) override;
     
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent) override;
     
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent) override;
     
-    virtual void contentOffsetFinish(float dt);
+    virtual void contentOffsetFinish() override;
     
-    virtual void setContentSize(const DSize& contentSize);
-    
+    virtual void setContentSize(const DSize& contentSize) override;
+
     void runAnimation(bool animated);
     
 private:
