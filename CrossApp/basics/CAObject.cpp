@@ -35,7 +35,7 @@ CAObject::CAObject(void)
 
 CAObject::~CAObject(void)
 {
-    CAScheduler::getScheduler()->unscheduleUpdate(this);;
+    CAScheduler::getScheduler()->unscheduleAllForTarget(this);
     
     CC_SAFE_RELEASE(m_pUserObject);
     
@@ -92,17 +92,25 @@ bool CAObject::isEqual(const CAObject *pObject)
 
 void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 {
-    CAScheduler::getScheduler()->scheduleOnce([&](float dt)
+    const std::string& name = m_s__StrID;
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt)
     {
-        (this->*callFunc)();
+        if (CAObject::all().find(name) != CAObject::all().end())
+        {
+            (this->*callFunc)();
+        }
     }, crossapp_format_string("%d:%d", m_u__ID, callFunc), afterDelay);
 }
 
 void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
 {
-    CAScheduler::getScheduler()->scheduleOnce([&](float dt)
+    const std::string& name = m_s__StrID;
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt)
     {
-        (this->*callFunc)(objParam);
+        if (CAObject::all().find(name) != CAObject::all().end())
+        {
+            (this->*callFunc)(objParam);
+        }
     }, crossapp_format_string("%d:%d", m_u__ID, callFunc), afterDelay);
 }
 

@@ -28,7 +28,7 @@ void ProgressTest::viewDidLoad()
     
     progress = CAProgress::create();
     progress->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(550, 0)));
-    CAScheduler::schedule(schedule_selector(ProgressTest::progressValueChange), this, 0.01, false);
+    CAScheduler::getScheduler()->schedule(schedule_selector(ProgressTest::progressValueChange), this, 0.01, false);
     this->getView()->addSubview(progress);
 }
 

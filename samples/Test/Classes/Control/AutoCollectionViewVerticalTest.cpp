@@ -292,12 +292,12 @@ void AutoCollectionViewVerticalTest::refreshData2(float interval)
 
 void AutoCollectionViewVerticalTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
+    CAScheduler::getScheduler()->schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
 void AutoCollectionViewVerticalTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
+    CAScheduler::getScheduler()->schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
 void AutoCollectionViewVerticalTest::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)

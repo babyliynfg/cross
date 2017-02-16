@@ -160,7 +160,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
         imageView->setImage(rm->getImageView()->getImage());
         renderImage->addSubview(imageView);
         
-        CAScheduler::schedule(schedule_selector(RenderImageTest::scheduleFuck), this, 3);
+        CAScheduler::getScheduler()->schedule(schedule_selector(RenderImageTest::scheduleFuck), this, 3);
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(render_btn);
 }
@@ -168,7 +168,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
 void RenderImageTest::scheduleFuck(float dt)
 {
     if (dle_ren_index>=1) {
-        CAScheduler::unschedule(schedule_selector(RenderImageTest::scheduleFuck), this);
+        CAScheduler::getScheduler()->unschedule(schedule_selector(RenderImageTest::scheduleFuck), this);
         if (renderImage!=NULL)
         {
             this->getView()->removeSubview(renderImage);

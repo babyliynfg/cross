@@ -80,10 +80,10 @@ void ScrollViewTest::scrollViewDidZoom(CAScrollView* view)
 void ScrollViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
     colorArr.clear();
-    CAScheduler::schedule(schedule_selector(ScrollViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::getScheduler()->schedule(schedule_selector(ScrollViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
 }
 
 void ScrollViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(ScrollViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::getScheduler()->schedule(schedule_selector(ScrollViewTest::refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
 }

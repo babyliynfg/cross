@@ -76,12 +76,12 @@ void CollectionViewTest::refreshData2(float interval)
 
 void CollectionViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(CollectionViewTest::refreshData1), this, 0.1, 0, 0.5f + CCRANDOM_0_1());
+    CAScheduler::getScheduler()->schedule(schedule_selector(CollectionViewTest::refreshData1), this, 0.1, 0, 0.5f + CCRANDOM_0_1());
 }
 
 void CollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(CollectionViewTest::refreshData2), this, 0.1, 0, 0.5f + CCRANDOM_0_1());
+    CAScheduler::getScheduler()->schedule(schedule_selector(CollectionViewTest::refreshData2), this, 0.1, 0, 0.5f + CCRANDOM_0_1());
 }
 
 

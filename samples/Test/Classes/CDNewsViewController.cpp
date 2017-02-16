@@ -149,7 +149,10 @@ void CDNewsViewController::viewDidLoad()
         p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
         this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
         p_pLoading->setLoadingMinTime(0.5f);
-        p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
+        p_pLoading->onCancel([=]()
+        {
+            this->initNewsTableView();
+        });
     }
     else
     {
@@ -198,7 +201,10 @@ void CDNewsViewController::showAlert()
             p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
             this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
             p_pLoading->setLoadingMinTime(0.5f);
-            p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
+            p_pLoading->onCancel([=]()
+            {
+                this->initNewsTableView();
+            });
         }
     }, CAButton::Event::TouchUpInSide);
     p_alertView->addSubview(btn5);
