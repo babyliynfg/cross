@@ -1037,7 +1037,7 @@ void CAScheduler::scheduleUpdate(CAObject *target, int priority, bool paused)
 {
     this->schedulePerFrame([target](float dt)
     {
-        target->update(dt);
+        target->update(MIN(dt, 0.05));
     },target, priority, paused);
 }
 

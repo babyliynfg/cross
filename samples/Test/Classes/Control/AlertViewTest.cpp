@@ -54,9 +54,9 @@ void AlertViewTest::viewDidLoad()
     btn3->setTitleForState(CAControl::State::Normal, "Click-3");
     btn3->addTarget([=](CAButton* btn)
     {
-        std::string message = "message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,!";
+        std::string message = "message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long!";
         
-        CAAlertView::create("Alert", message.c_str(), "ok","close","button3","button4","button5","button6","button7", nullptr)->show([=](int index)
+        CAAlertView::create("Alert", message.c_str(), "button1", "button2", "button3", "button4", "button5", "button6", "button7", "button8", "button9", "button10", nullptr)->show([=](int index)
         {
             this->alertCallBack(index);
         });

@@ -66,7 +66,6 @@ void __show_alertView(const std::string& title, const std::string& message, cons
         int index = ((int)returnCode) - ((int)NSAlertFirstButtonReturn);
         [delegate clickedButtonAtIndex:index];
     }];
-
 }
 
 NS_CC_END
