@@ -107,8 +107,8 @@ import android.widget.TextView.OnEditorActionListener;
 		{
 			HashMap.Entry entry = (HashMap.Entry) iter.next();
 			CrossAppTextField val = (CrossAppTextField)entry.getValue();
-			if (val.textField.isFocused())
-			{
+            if (val.textField!=null && val.textField.isFocused())
+            {
 				showKeyboard = true;
 				break;
 			}

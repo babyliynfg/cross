@@ -71,7 +71,15 @@ static id s_sharedDirectorCaller;
                       
 -(void) doCaller: (id) sender
 {
-    [EAGLContext setCurrentContext: [[EAGLView sharedEGLView] context]];
+    if ([EAGLView sharedEGLView])
+    {
+        [EAGLContext setCurrentContext: [[EAGLView sharedEGLView] context]];
+    }
+    else
+    {
+        [displayLink release];
+    }
+
     CrossApp::CAApplication::getApplication()->mainLoop();
 }
 

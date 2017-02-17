@@ -295,6 +295,7 @@ CANavigationController::CANavigationController()
     this->setVerticalScrollEnabled(false);
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
     this->setNavigationBarBackgroundImage(CAImage::create(map.at("backgroundView")));
+    m_sNavigationBarTitleColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor")));
 }
 
 CANavigationController::~CANavigationController()
@@ -611,19 +612,12 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
 
 void beginPushAnimation(float width, CAView* last, CAView* new_, const std::function<void()>& function)
 {
-    CAViewAnimation::beginAnimations("");
+    CAViewAnimation::beginAnimations("navgationController-push");
     CAViewAnimation::setAnimationDelay(0.1f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationDelay(1/30.0f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     last->setFrameOrigin(DPoint(-width/3.0f, 0));
-    CAViewAnimation::commitAnimations();
-    
-    CAViewAnimation::beginAnimations("");
-    CAViewAnimation::setAnimationDelay(0.1f);
-    CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationDelay(1/30.0f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     CAViewAnimation::setAnimationDidStopSelector(function);
     new_->setFrameOrigin(DPointZero);
     CAViewAnimation::commitAnimations();
@@ -634,31 +628,37 @@ void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, const st
     DRect rect = bounds;
     rect.origin = DPoint(-bounds.size.width/3.0f, 0);
     show->setFrame(rect);
-    
-    CAViewAnimation::beginAnimations("");
-    CAViewAnimation::setAnimationDelay(0.1f);
-    CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-    show->setFrameOrigin(DPointZero);
-    CAViewAnimation::commitAnimations();
-    
-    CAViewAnimation::beginAnimations("");
+
+    CAViewAnimation::beginAnimations("navgationController-pop");
     CAViewAnimation::setAnimationDelay(0.1f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     CAViewAnimation::setAnimationDidStopSelector(function);
+    show->setFrameOrigin(DPointZero);
     back->setFrameOrigin(DPoint(bounds.size.width + 10, 0));
     CAViewAnimation::commitAnimations();
+}
+
+bool isAnimation()
+{
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-push"))
+    {
+        return true;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-pop"))
+    {
+        return true;
+    }
+    return false;
 }
 
 /************************************/
 
 void CANavigationController::replaceViewController(CrossApp::CAViewController *viewController, bool animated)
 {
-    if (this->getView()->getSuperview() == NULL)
-    {
-        return;
-    }
+    CC_RETURN_IF(this->getView()->getSuperview() == nullptr);
+    CC_RETURN_IF(isAnimation());
     
     if (m_pNavigationBars.size() == 1)
     {
@@ -711,10 +711,8 @@ void CANavigationController::replaceViewControllerFinish()
 
 void CANavigationController::pushViewController(CAViewController* viewController, bool animated)
 {
-    if (this->getView()->getSuperview() == NULL)
-    {
-        return;
-    }
+    CC_RETURN_IF(this->getView()->getSuperview() == nullptr);
+    CC_RETURN_IF(isAnimation());
 
     float x = this->getView()->getBounds().size.width;
     
@@ -753,10 +751,13 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
 {
     if (m_pViewControllers.size() == 1)
     {
-        return NULL;
+        return nullptr;
     }
-
-    float x = this->getView()->getBounds().size.width;
+    
+    if(isAnimation())
+    {
+        return nullptr;
+    }
     
     CAViewController* backViewController = m_pViewControllers.back();
     CAView* backContainer = m_pContainers.back();
@@ -824,10 +825,8 @@ void CANavigationController::popViewControllerFinish()
 // sprhawk@163.com: 2015-03-08
 void CANavigationController::popToRootViewControllerAnimated(bool animated)
 {
-    if (m_pViewControllers.size() == 1)
-    {
-        return ;
-    }
+    CC_RETURN_IF(m_pViewControllers.size() == 1);
+    CC_RETURN_IF(isAnimation());
     
     float x = this->getView()->getBounds().size.width;
     
@@ -876,7 +875,7 @@ void CANavigationController::popToRootViewControllerFinish()
     {
         CAViewController* backViewController = m_pViewControllers.back();
         backViewController->viewDidDisappear();
-        backViewController->m_pNavigationController = NULL;
+        backViewController->m_pNavigationController = nullptr;
         backViewController->removeViewFromSuperview();
         m_pViewControllers.popBack();
         
@@ -909,7 +908,7 @@ CAViewController* CANavigationController::popFirstViewController()
 {
     if (m_pViewControllers.size() <= 1)
     {
-        return NULL;
+        return nullptr;
     }
     
     CAViewController* frontViewController = m_pViewControllers.front();
@@ -933,7 +932,12 @@ CAViewController* CANavigationController::popViewControllerAtIndex(int index)
 {
     if (index >= m_pViewControllers.size() || index < 0)
     {
-        return NULL;
+        return nullptr;
+    }
+    
+    if (isAnimation())
+    {
+        return nullptr;
     }
     
     if (index == m_pViewControllers.size() - 1)
@@ -943,7 +947,7 @@ CAViewController* CANavigationController::popViewControllerAtIndex(int index)
     
     CAViewController* viewController = m_pViewControllers.at(index);
     viewController->viewDidDisappear();
-    viewController->m_pNavigationController = NULL;
+    viewController->m_pNavigationController = nullptr;
     viewController->removeViewFromSuperview();
     viewController->retain()->autorelease();
     m_pViewControllers.erase(index);
@@ -973,7 +977,7 @@ CAViewController* CANavigationController::getViewControllerAtIndex(int index)
     }
     while (0);
     
-    return NULL;
+    return nullptr;
 }
 
 CAViewController* CANavigationController::getBackViewController()
@@ -1410,11 +1414,11 @@ void CATabBarController::viewDidLoad()
     for (unsigned int i=0; i<m_pViewControllers.size(); i++)
     {
         CAViewController* view = m_pViewControllers.at(i);
-        if (view->getTabBarItem() == NULL)
+        if (view->getTabBarItem() == nullptr)
         {
             char title[8];
             sprintf(title, "item%d", i);
-            CATabBarItem* item = CATabBarItem::create(title, NULL);
+            CATabBarItem* item = CATabBarItem::create(title, nullptr);
             item->setTag(i);
             view->setTabBarItem(item);
         }
@@ -1692,7 +1696,7 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
 {
     CC_RETURN_IF(m_bTabBarHidden == hidden);
     m_bTabBarHidden = hidden;
-    CC_RETURN_IF(this->getView()->getSuperview() == NULL);
+    CC_RETURN_IF(this->getView()->getSuperview() == nullptr);
     
     if (animated)
     {

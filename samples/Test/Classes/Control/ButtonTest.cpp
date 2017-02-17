@@ -88,7 +88,6 @@ void ButtonTest::viewDidLoad()
     btn5->setTitleForState(CAControl::State::Highlighted, "Highlighted");
     btn5->setBackgroundViewForState(CAControl::State::Normal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
     btn5->setBackgroundViewForState(CAControl::State::Highlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
-    btn5->setBackgroundViewForState(CAControl::State::Selected, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_selected.png")));
     btn5->addTarget([=](CAButton* btn)
     {
         CCLog("Button AllowsSelected");

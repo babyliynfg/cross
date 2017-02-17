@@ -876,6 +876,7 @@ void CAApplication::setNotificationView(CAView *view)
     if (m_pNotificationView)
     {
         m_pNotificationView->becomeFirstResponder();
+        m_pNotificationView->reViewlayout(m_obWinSizeInPoints);
     }
     CC_SAFE_RETAIN(m_pNotificationView);
     this->updateDraw();

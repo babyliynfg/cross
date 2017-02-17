@@ -567,8 +567,6 @@ const std::string& CATextField::getPlaceHolderText()
 
 void CATextField::setPlaceHolderColor(const CAColor4B &var)
 {
-    CC_RETURN_IF(CAColor4BEqual(m_cPlaceHdolderColor, var));
-    
     m_cPlaceHdolderColor = var;
     
     UIColor* color = [UIColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
@@ -615,10 +613,6 @@ const std::string& CATextField::getText()
 
 void CATextField::setTextColor(const CAColor4B &var)
 {
-    if (CAColor4BEqual(m_cTextColor, var)) {
-        return;
-    }
-    
     m_cTextColor = var;
     
     textField_iOS.textColor = [UIColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];

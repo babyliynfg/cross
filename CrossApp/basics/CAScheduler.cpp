@@ -116,7 +116,7 @@ Timer::Timer()
 : _scheduler(nullptr)
 , _elapsed(-1)
 , _runForever(false)
-, _useDelay(false)
+, _useDelay(true)
 , _timesExecuted(0)
 , _repeat(0)
 , _delay(0.0f)
@@ -127,9 +127,9 @@ Timer::Timer()
 void Timer::setupTimerWithInterval(float seconds, unsigned int repeat, float delay)
 {
     _elapsed = -1;
-    _interval = seconds;
-    _delay = delay;
-    _useDelay = (_delay > 0.0f) ? true : false;
+    _interval = MAX(seconds, 1/60.f);
+    _useDelay = true;
+    _delay = MAX(delay, 1/60.f);
     _repeat = repeat;
     _runForever = (_repeat == kCCRepeatForever) ? true : false;
 }
@@ -326,9 +326,6 @@ void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::str
     CCAssert(target, "Argument target must be non-nullptr");
     CCAssert(!callbackName.empty(), "key should not be empty!");
     
-    interval = MAX(interval, 1/60.f);
-    delay = MAX(delay, 1/60.f);
-    
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);
     
@@ -376,10 +373,7 @@ void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::str
 void CAScheduler::schedule(SEL_Schedule selector, CAObject *target, float interval, unsigned int repeat, float delay, bool paused)
 {
     CCAssert(target, "Argument target must be non-nullptr");
-    
-    interval = MAX(interval, 1/60.f);
-    delay = MAX(delay, 1/60.f);
-    
+
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);
     

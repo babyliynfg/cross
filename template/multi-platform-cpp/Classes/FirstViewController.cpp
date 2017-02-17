@@ -15,7 +15,7 @@ void FirstViewController::viewDidLoad()
 {
     // Do any additional setup after loading the view from its nib.
     CAImageView* imageView = CAImageView::createWithImage(CAImage::create("r/HelloWorld.png"));
-    imageView->setImageViewScaleType(CAImageViewScaleTypeFitImageCrop);
+    imageView->setScaleType(CAImageView::ScaleType::FitImageCrop);
 	imageView->setLayout(DLayoutFill);
     this->getView()->addSubview(imageView);
 
@@ -28,8 +28,8 @@ void FirstViewController::viewDidLoad()
     font.fontSize = 72;
     
     CALabel* label = CALabel::createWithLayout(labelLayout);
-    label->setTextAlignment(CATextAlignmentCenter);
-    label->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
+    label->setTextAlignment(CATextAlignment::Center);
+    label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     label->setFont(font);
     label->setText("Hello World!");
     this->getView()->addSubview(label);

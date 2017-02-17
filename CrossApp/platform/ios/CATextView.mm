@@ -193,7 +193,7 @@ CATextView* CATextView::createWithLayout(const DLayout& layout)
 
 bool CATextView::init()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextView");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);

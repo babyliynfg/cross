@@ -762,10 +762,6 @@ const std::string& CATextField::getText()
 
 void CATextField::setTextColor(const CAColor4B &var)
 {
-    if (CAColor4BEqual(m_cTextColor, var)) {
-        return;
-    }
-    
     m_cTextColor = var;
     
     textField_MAC.textColor = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];

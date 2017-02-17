@@ -234,8 +234,8 @@ public:
 
     ~CURLRaii()
     {
-//        if (m_curl)
-//            curl_easy_cleanup(m_curl);
+        if (m_curl)
+            curl_easy_cleanup(m_curl);
 
         if (m_headers)
             curl_slist_free_all(m_headers);
