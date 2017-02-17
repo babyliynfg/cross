@@ -86,9 +86,7 @@ public:
     unsigned int getUID(){ return m_u__ID; }
     
     const std::string& getStrID(){ return m_s__StrID; }
-    
-    static const std::map<std::string, CAObject*>& all();
-    
+
     friend class CAAutoreleasePool;
 };
 

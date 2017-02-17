@@ -11,7 +11,7 @@
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccGLStateCache.h"
-#include "support/CANotificationCenter.h"
+#include "basics/CANotificationCenter.h"
 #include "ccTypes.h"
 #include "CCGL.h"
 #include <errno.h>

@@ -7,7 +7,7 @@
 //
 
 #include "CGNode.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "basics/CACamera.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"

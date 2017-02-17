@@ -3,7 +3,7 @@
 #include "ccConfig.h"
 #include "CGSprite.h"
 #include "view/CADrawingPrimitives.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"

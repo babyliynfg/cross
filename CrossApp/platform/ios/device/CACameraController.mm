@@ -8,7 +8,7 @@
 
 #import "CACameraController.h"
 #import "EAGLView.h"
-#include "../CADevice.h"
+#include "platform/CADevice.h"
 @interface CACameraController ()
 {
     UIImage *_image;

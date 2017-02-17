@@ -2,7 +2,7 @@
 #include "ccMacros.h"
 #include "platform/CAFTRichFont.h"
 #include "support/deelx.h"
-#include "support/device/CADevice.h"
+#include "platform/CADevice.h"
 
 NS_CC_BEGIN
 

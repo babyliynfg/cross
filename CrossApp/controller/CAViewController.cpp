@@ -8,7 +8,7 @@
 
 #include "CAViewController.h"
 #include "basics/CAApplication.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "basics/CAScheduler.h"
 #include "view/CAWindow.h"
 #include "view/CAScale9ImageView.h"
@@ -16,7 +16,7 @@
 #include "animation/CAViewAnimation.h"
 #include "animation/CAAnimation.h"
 #include "support/CAUIEditorParser.h"
-#include "support/device/CADevice.h"
+#include "platform/CADevice.h"
 #include "script_support/CCScriptSupport.h"
 #include "support/CAThemeManager.h"
 #include "support/ccUtils.h"

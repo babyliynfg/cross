@@ -10,7 +10,7 @@
 #include "view/CAImageView.h"
 #include "dispatcher/CATouch.h"
 #include "view/CAScale9ImageView.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "view/CARenderImage.h"
 #include "basics/CAApplication.h"
 #include "support/CAThemeManager.h"

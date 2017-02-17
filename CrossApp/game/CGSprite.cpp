@@ -17,7 +17,7 @@
 #include "view/CADrawingPrimitives.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "math/CAAffineTransform.h"
 #include "math/TransformUtils.h"
 #include "math/CAAffineTransform.h"

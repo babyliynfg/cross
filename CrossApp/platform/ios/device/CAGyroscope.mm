@@ -7,7 +7,7 @@
 //
 
 #import "CAGyroscope.h"
-#include "../CADevice.h"
+#include "platform/CADevice.h"
 #import <CoreMotion/CoreMotion.h>
 
 @interface CAGyroscope ()

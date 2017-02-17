@@ -6,7 +6,7 @@
 //
 //
 
-#include "../CADevice.h"
+#include "platform/CADevice.h"
 #include "CACameraController.h"
 #include "CAAlbumController.h"
 #include "CAAddress.h"

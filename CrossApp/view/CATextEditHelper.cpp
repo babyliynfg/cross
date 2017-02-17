@@ -23,7 +23,7 @@ bool CATouchView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     CAScheduler::getScheduler()->scheduleOnce([&](float de)
     {
-        ccTouchPress(m_pCurTouch, m_pCurEvent);
+        this->ccTouchPress(m_pCurTouch, m_pCurEvent);
     }, "function", this, 1.0f);
 
 	m_pCurTouch = pTouch;

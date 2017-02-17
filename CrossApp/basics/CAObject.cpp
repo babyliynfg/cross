@@ -8,13 +8,6 @@
 
 NS_CC_BEGIN
 
-static std::map<std::string, CAObject*> s_all;
-
-const std::map<std::string, CAObject*>& CAObject::all()
-{
-    return s_all;
-}
-
 CAObject::CAObject(void)
 : m_uReference(1) // when the object is created, the reference count of it is 1
 , m_uAutoReleaseCount(0)
@@ -29,8 +22,6 @@ CAObject::CAObject(void)
     char str[8];
     sprintf(str, "%x", m_u__ID);
     m_s__StrID = str;
-
-    s_all.insert(std::make_pair(m_s__StrID, this));
 }
 
 CAObject::~CAObject(void)
@@ -49,8 +40,6 @@ CAObject::~CAObject(void)
     {
         pEngine->removeScriptObjectByObject(this);
     }
-    
-    s_all.erase(m_s__StrID);
 }
 
 void CAObject::release(void)

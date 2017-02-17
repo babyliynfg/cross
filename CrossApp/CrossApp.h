@@ -43,6 +43,8 @@
 #include "basics/CAIndexPath.h"
 #include "basics/CAThread.h"
 #include "basics/CASyncQueue.h"
+#include "basics/CANotificationCenter.h"
+#include "basics/CAPointExtension.h"
 
 //control
 #include "control/CABar.h"
@@ -145,22 +147,21 @@
 // support
 #include "support/ccUtils.h"
 #include "support/ccUTF8.h"
-#include "support/CANotificationCenter.h"
-#include "support/CAPointExtension.h"
 #include "support/CAProfiling.h"
 #include "support/user_default/CAUserDefault.h"
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/md5.h"
 #include "support/base64.h"
-#include "support/network/HttpRequest.h"
-#include "support/network/HttpResponse.h"
-#include "support/network/HttpClient.h"
-#include "support/network/DownloadManager.h"
 #include "support/Json/CSContentJsonDictionary.h"
 #include "support/sqlite3/sqlite3.h"
 #include "support/LocalStorage/LocalStorage.h"
-#include "support/device/CADevice.h"
 #include "support/CAThemeManager.h"
+
+// network
+#include "network/HttpRequest.h"
+#include "network/HttpResponse.h"
+#include "network/HttpClient.h"
+#include "network/DownloadManager.h"
 
 // platform
 #include "platform/CACommon.h"
@@ -173,6 +174,7 @@
 #include "platform/CATextField.h"
 #include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"
+#include "platform/CADevice.h"
 //script_support
 #include "script_support/CCScriptSupport.h"
 #include "script_support/JSViewController.h"

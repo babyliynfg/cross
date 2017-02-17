@@ -1,14 +1,14 @@
 
 
 #include "CADrawView.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAConfiguration.h"
+#include "basics/CAApplication.h"
+#include "basics/CANotificationCenter.h"
+#include "basics/CAPointExtension.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
-#include "support/CANotificationCenter.h"
-#include "basics/CAConfiguration.h"
-#include "basics/CAApplication.h"
 #include "ccTypes.h"
 #include "CCGL.h"
 #include "game/actions/CGActionCatmullRom.h"

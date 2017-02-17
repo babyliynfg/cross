@@ -1,11 +1,11 @@
 #include "CCEGLViewProtocol.h"
 #include "dispatcher/CATouchDispatcher.h"
 #include "dispatcher/CATouch.h"
-#include "basics/CAApplication.h"
 #include "cocoa/CCSet.h"
 #include "platform/CADensityDpi.h"
-#include "support/CANotificationCenter.h"
 #include "basics/CACamera.h"
+#include "basics/CAApplication.h"
+#include "basics/CANotificationCenter.h"
 NS_CC_BEGIN
 
 static CATouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };

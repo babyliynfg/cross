@@ -6,7 +6,7 @@
 #include "basics/CAApplication.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include <string.h>
 #include <cmath>
 

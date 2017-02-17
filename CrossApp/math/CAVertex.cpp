@@ -1,7 +1,7 @@
 
 
 #include "CAVertex.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN

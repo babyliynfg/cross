@@ -52,12 +52,6 @@ public:
      */
     static CAProfiler* getInstance(void);
     
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static CAProfiler* sharedCAProfiler(void);
-    
     /** Creates and adds a new timer
      * @js NA
      * @lua NA

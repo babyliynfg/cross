@@ -10,7 +10,7 @@
 #include "view/CAScale9ImageView.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "basics/CAApplication.h"
 #include "animation/CAViewAnimation.h"
 #include "support/CAThemeManager.h"

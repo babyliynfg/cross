@@ -12,7 +12,7 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "dispatcher/CATouch.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "CCEGLView.h"
 #include "animation/CAViewAnimation.h"
 #include "platform/CADensityDpi.h"

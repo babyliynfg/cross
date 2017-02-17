@@ -11,7 +11,7 @@
 #include "view/CALabel.h"
 #include "view/CAScrollView.h"
 #include "basics/CAApplication.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
 #include "support/CAThemeManager.h"

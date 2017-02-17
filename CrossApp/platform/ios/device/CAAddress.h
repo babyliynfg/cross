@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-#include "../CADevice.h"
+#include "platform/CADevice.h"
 
 @interface CAAddress : NSObject
 {

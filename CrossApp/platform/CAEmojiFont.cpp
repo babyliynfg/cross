@@ -4,7 +4,7 @@
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
 #include <string.h>
-#include "support/device/CADevice.h"
+#include "platform/CADevice.h"
 
 
 

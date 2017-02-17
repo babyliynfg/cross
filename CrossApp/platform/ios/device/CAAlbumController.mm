@@ -8,7 +8,7 @@
 
 #import "CAAlbumController.h"
 #import "EAGLView.h"
-#include "../CADevice.h"
+#include "platform/CADevice.h"
 
 @interface CAAlbumController ()
 {
@@ -55,7 +55,7 @@
     CGImageRef imageRef = NULL;
     CGDataProviderRef provider = NULL;
     
-    if (pixelFormat == CAImage::PixelFormat_RGBA8888 || pixelFormat == CAImage::PixelFormat_RGBA4444)
+    if (pixelFormat == CAImage::PixelFormat::RGBA8888 || pixelFormat == CAImage::PixelFormat::RGBA4444)
     {
         provider = CGDataProviderCreateWithData(NULL, image->getData(), 4*(image->getPixelsWide())*image->getPixelsHigh(), NULL);
         

@@ -8,9 +8,10 @@
 
 #include "CADrawerController.h"
 #include "animation/CAAnimation.h"
-#include "basics/CAApplication.h"
 #include "dispatcher/CATouchDispatcher.h"
-#include "support/CANotificationCenter.h"
+#include "basics/CAApplication.h"
+#include "basics/CANotificationCenter.h"
+
 NS_CC_BEGIN
 
 CADrawerController::CADrawerController()

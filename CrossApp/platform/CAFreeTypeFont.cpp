@@ -5,7 +5,7 @@
 #include "CATempTypeFont.h"
 #include "CAEmojiFont.h"
 #include <string.h>
-#include "support/device/CADevice.h"
+#include "platform/CADevice.h"
 
 
 NS_CC_BEGIN

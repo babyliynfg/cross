@@ -2,7 +2,7 @@
 #include "CGProgressTimer.h"
 #include "ccMacros.h"
 #include "images/CAImageCache.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "basics/CAApplication.h"
 #include "math/TransformUtils.h"
 #include "view/CADrawingPrimitives.h"

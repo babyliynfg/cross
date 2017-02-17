@@ -4,7 +4,7 @@
 #include "game/CGNode.h"
 #include "basics/CAApplication.h"
 #include "ccTypeInfo.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 
 NS_CC_BEGIN
 //

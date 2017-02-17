@@ -1,6 +1,6 @@
 
 #include "TableViewTest.h"
-//#include "support/device/CADevice.h"
+//#include "platform/CADevice.h"
 //#include "CrossAppExt.h"
 
 USING_NS_CC;

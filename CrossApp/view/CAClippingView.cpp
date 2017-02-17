@@ -6,7 +6,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "basics/CAApplication.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "view/CADrawingPrimitives.h"
 
 

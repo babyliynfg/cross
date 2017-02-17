@@ -1,21 +1,19 @@
 
 
 #include "CARenderImage.h"
+#include "CCGL.h"
+#include "ccTypes.h"
+#include "CCEGLView.h"
+#include <string>
 #include "basics/CAApplication.h"
-#include "platform/platform.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
 #include "support/ccUtils.h"
 #include "images/CAImageCache.h"
-#include "platform/CAFileUtils.h"
-#include "CCGL.h"
-#include "support/CANotificationCenter.h"
-#include "ccTypes.h"
-#include "CCEGLView.h"
-#include <string>
 #include "basics/CACamera.h"
 #include "basics/CAConfiguration.h"
-
+#include "basics/CANotificationCenter.h"
+#include "platform/CAFileUtils.h"
 NS_CC_BEGIN
 
 // implementation CARenderImage

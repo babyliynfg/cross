@@ -14,7 +14,7 @@
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
 #include "basics/CAScheduler.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 
 
 NS_CC_BEGIN

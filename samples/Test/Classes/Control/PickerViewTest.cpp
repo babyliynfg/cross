@@ -1,6 +1,6 @@
 ﻿
 #include "PickerViewTest.h"
-//#include "support/device/CADevice.h"
+//#include "platform/CADevice.h"
 #include "CDUIShowAutoCollectionView.h"
 
 int PickerViewNum = 0;

@@ -331,14 +331,11 @@ CAView* CAImageView::copy()
 
 void CAImageView::setImageAsyncWithFile(const std::string& path)
 {
-    CAImageView* target = this;
-    const std::string& name = this->getStrID();
-    CAImageCache::getInstance()->addImageFullPathAsync(path, [=](CAImage* image)
+    this->retain();
+    CAImageCache::getInstance()->addImageFullPathAsync(path, [&](CAImage* image)
     {
-        if (CAObject::all().count(name) > 0)
-        {
-            target->setImage(image);
-        }
+        this->setImage(image);
+        this->release();
     });
 }
 void CAImageView::setImageRect(const DRect& rect)
