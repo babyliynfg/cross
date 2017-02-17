@@ -9,6 +9,8 @@
 #include "CAWindow.h"
 #include "support/CAThemeManager.h"
 #include "support/ccUtils.h"
+#include "view/CAClippingView.h"
+#include "view/CAScale9ImageView.h"
 
 NS_CC_BEGIN
 

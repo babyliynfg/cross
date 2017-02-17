@@ -7,125 +7,42 @@
 //
 
 
-#ifndef __CrossApp__CAAlertView__
-#define __CrossApp__CAAlertView__
+#ifndef __CAAlertView__
+#define __CAAlertView__
 
-#include <iostream>
-#include "view/CAView.h"
-#include "view/CAScale9ImageView.h"
-#include "controller/CABarItem.h"
-#include "view/CATableView.h"
-#include "view/CALabel.h"
-#include "view/CAClippingView.h"
-#include <string>
-#include <vector>
+#include "basics/CAObject.h"
+#include "basics/CASTLContainer.h"
+#include <functional>
 
 NS_CC_BEGIN
 
-class CAButton;
-class CAObject;
-class CATableView;
-class CAAlertViewDelegate;
-class CAAlertView;
-
-
-#define ALERT_VIEW_TITLE_FONT 34
-#define ALERT_VIEW_MESG_FONT 25
-#define ALERT_VIEW_WIDTH 540
-#define ALERT_VIEW_MESG_WIDTH 490
-
-typedef void (CAObject::*SEL_CAAlertBtnEvent)(int index);
-#define CAAlertView_selector(_SELECTOR) (SEL_CAAlertBtnEvent)(&_SELECTOR)
-
-class CC_DLL CAAlertView 
-	: public CAView
-	, public CATableViewDataSource
-	, public CATableViewDelegate
+class CC_DLL CAAlertView : public CAObject
 {
 public:
-
-	CAAlertView();
     
-	virtual ~CAAlertView();
-
-    static bool hideWithDisplayed();
+    static CAAlertView* create(const char* title, const char* message);
     
-	static CAAlertView *create();
-
-	static CAAlertView *createWithText(const char* pszTitle, const char* pszAlertMsg, const char* pszBtnText, ...);
+    static CAAlertView* create(const char* title, const char* message, const char* buttonTitle, ...);
     
-	bool initWithText(const char* szTitle, const char* szAlertMsg, const char* pszBtnText, ...);
-
-	void addButton(const std::string& btnText, CAColor4B col = ccc4(3, 100, 255, 255), CAImage* pNormalImage = NULL, CAImage* pHighlightedImage = NULL);
-
-	void addButton(CAButton* pBtn);
-
-    void setTarget(CAObject* target, SEL_CAAlertBtnEvent selector);
-	
-	void show();
-
-    void hide();
+    void show();
     
-	//optional
-	void setMessageFontName(std::string &var);
-
-	void setTitle(std::string var, CAColor4B col = CAColor_black);
-
-	void setAlertMessage(std::string var, CAColor4B col = CAColor_black);
-   
-protected:
-
-	bool init();
-
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
-    
-	virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
-    
-	virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-    
-	void setLabel(CALabel*& pLabel, const char* szTitle, const char* fontName, const CAColor4B& col);
-
-    virtual void setContentSize(const DSize& var);
+    void show(const std::function<void(int)>& callback);
     
 private:
-
-	void showAlertView();
-
-	void adjustButtonView();
-
-	void addGrayLine(int y);
-
-	void calcuAlerViewSize();
-
+    
+    CAAlertView(const char* title, const char* message);
+    
 private:
     
-	std::string m_sMsgFontName;
-
-	CALabel* m_pTitleLabel;
-
-	CALabel* m_pContentLabel;
-
-	CAVector<CAButton*> m_vAllBtn;
-
-	CATableView* m_pBtnTableView;
-
-	SEL_CAAlertBtnEvent m_pCAlertBtnEvent;
+    std::string m_sTitle;
     
-	CAObject* m_pCAlertTarget;
-
-	float m_fAlertViewHeight;
-
-	float m_fAlertViewTitleHeight;
-
-	float m_fAlertViewMessageHeight;
-
-	float m_fAlertViewLineHeight;
-
-	CAClippingView *m_pBackView;
+    std::string m_sMessage;
     
-    CAScale9ImageView *m_pScale9BackView;
+    std::function<void(int)> m_callback;
+    
+    std::vector<std::string> m_vButtonTitles;
 };
 
 NS_CC_END
 
-#endif /* defined(__CrossApp__CAAlertView__) */
+#endif /* defined(__CAAlertView__) */

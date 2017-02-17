@@ -77,6 +77,8 @@
 		B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */; };
 		B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */; };
 		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
+		D6596E0D1E56D1C200A55CF9 /* CAAlertViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */; };
+		D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */; };
 		D6ADC36A1E56A43C00750771 /* CADevice.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC3691E56A43C00750771 /* CADevice.h */; };
 		D6ADC37B1E56A44400750771 /* CAAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC36C1E56A44400750771 /* CAAddress.h */; };
 		D6ADC37C1E56A44400750771 /* CAAddress.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC36D1E56A44400750771 /* CAAddress.mm */; };
@@ -527,6 +529,8 @@
 		B0D7FA7D1B21506B004B2B86 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../the_third_party/curl/prebuilt/ios/libssl.a; sourceTree = "<group>"; };
 		B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAEmojiFont.cpp; sourceTree = "<group>"; };
 		B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
+		D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlertViewImpl.mm; sourceTree = "<group>"; };
+		D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertViewImpl.h; sourceTree = "<group>"; };
 		D6ADC3691E56A43C00750771 /* CADevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADevice.h; sourceTree = "<group>"; };
 		D6ADC36C1E56A44400750771 /* CAAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddress.h; sourceTree = "<group>"; };
 		D6ADC36D1E56A44400750771 /* CAAddress.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddress.mm; sourceTree = "<group>"; };
@@ -1045,6 +1049,7 @@
 		1551A43F158F2ADE00E66CFE /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */,
 				D6ADC3691E56A43C00750771 /* CADevice.h */,
 				E0C0BA5B1CEC52C30097F0C3 /* CAGyroDelegate.h */,
 				E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */,
@@ -1083,6 +1088,7 @@
 			isa = PBXGroup;
 			children = (
 				D6ADC36B1E56A44400750771 /* device */,
+				D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */,
 				E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */,
 				E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */,
 				B07E81151C33B36700A39C95 /* CATextView.mm */,
@@ -1968,6 +1974,7 @@
 				D6ADC7401E56A72800750771 /* CATextEditHelper.h in Headers */,
 				D6ADC5FC1E56A72800750771 /* CAConsole.h in Headers */,
 				D6ADC6871E56A72800750771 /* CAMathUtil.h in Headers */,
+				D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */,
 				D6ADC6F11E56A72800750771 /* writer.h in Headers */,
 				D6ADC37D1E56A44400750771 /* CAAlbumController.h in Headers */,
 				D6ADC69B1E56A72800750771 /* CCFrameBuffer.h in Headers */,
@@ -2192,6 +2199,7 @@
 				D6ADC6471E56A72800750771 /* CATouchDispatcher.cpp in Sources */,
 				1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */,
 				D6ADC73F1E56A72800750771 /* CATextEditHelper.cpp in Sources */,
+				D6596E0D1E56D1C200A55CF9 /* CAAlertViewImpl.mm in Sources */,
 				D6ADC6B91E56A72800750771 /* CCRenderer.cpp in Sources */,
 				D6ADC6ED1E56A72800750771 /* json_value.cpp in Sources */,
 				1551A74D158F2ADE00E66CFE /* AccelerometerSimulation.m in Sources */,

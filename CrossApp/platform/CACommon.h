@@ -7,11 +7,6 @@
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup platform
- * @{
- */
-
 /// The max length of CCLog message.
 static const int kMaxLogLen = 16*1024;
 
@@ -19,11 +14,6 @@ static const int kMaxLogLen = 16*1024;
 @brief Output Debug message.
 */
 void CC_DLL CCLog(const char * pszFormat, ...) CC_FORMAT_PRINTF(1, 2);
-
-/**
-@brief Pop out a message box
-*/
-void CC_DLL CAMessageBox(const char * pszTitle, const char * pszMsg);
 
 /**
 @brief Enum the language type supported now

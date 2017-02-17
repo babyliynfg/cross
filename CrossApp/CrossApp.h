@@ -175,6 +175,7 @@
 #include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"
 #include "platform/CADevice.h"
+
 //script_support
 #include "script_support/CCScriptSupport.h"
 #include "script_support/JSViewController.h"

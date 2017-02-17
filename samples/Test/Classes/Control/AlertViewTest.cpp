@@ -15,6 +15,7 @@ AlertViewTest::~AlertViewTest()
 
 }
 
+
 void AlertViewTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
@@ -26,9 +27,11 @@ void AlertViewTest::viewDidLoad()
     btn1->setTitleForState(CAControl::State::Normal, "Click-1");
     btn1->addTarget([=](CAButton* btn)
     {
-        CAAlertView* alertView = CAAlertView::createWithText("Alert", "this is a alert!", "close",NULL);
-        alertView->show();
-        alertView->setTarget(this, CAAlertView_selector(AlertViewTest::alertCallBack));
+        CAAlertView::create("Alert", "this is a alert!", "close", nullptr)->show([=](int index)
+        {
+            this->alertCallBack(index);
+        });
+
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn1);
     
@@ -38,9 +41,10 @@ void AlertViewTest::viewDidLoad()
     btn2->setTitleForState(CAControl::State::Normal, "Click-2");
     btn2->addTarget([=](CAButton* btn)
     {
-        CAAlertView* alertView = CAAlertView::createWithText("Alert", "this is a alert!", "ok","close",NULL);
-        alertView->show();
-        alertView->setTarget(this, CAAlertView_selector(AlertViewTest::alertCallBack));
+        CAAlertView::create("Alert", "this is a alert!", "ok","close", nullptr)->show([=](int index)
+        {
+            this->alertCallBack(index);
+        });
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn2);
     
@@ -50,9 +54,12 @@ void AlertViewTest::viewDidLoad()
     btn3->setTitleForState(CAControl::State::Normal, "Click-3");
     btn3->addTarget([=](CAButton* btn)
     {
-        CAAlertView* alertView = CAAlertView::createWithText("Alert", "message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,!", "ok","close","button3","button4","button5","button6","button7",NULL);
-        alertView->show();
-        alertView->setTarget(this, CAAlertView_selector(AlertViewTest::alertCallBack));
+        std::string message = "message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,!";
+        
+        CAAlertView::create("Alert", message.c_str(), "ok","close","button3","button4","button5","button6","button7", nullptr)->show([=](int index)
+        {
+            this->alertCallBack(index);
+        });
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn3);
     

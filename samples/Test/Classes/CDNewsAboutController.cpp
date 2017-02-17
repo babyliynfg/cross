@@ -343,8 +343,7 @@ void CDNewsAboutController::deleteCallBack(float dt)
         CAScheduler::getScheduler()->unschedule(schedule_selector(CDNewsAboutController::deleteCallBack), this);
         char temstr[200];
         sprintf(temstr, UTF8("本次共清理%0.1fM缓存!"),_tempfilesize/1048576.0f);
-		CAAlertView* alertView = CAAlertView::createWithText(UTF8("提示"), temstr, UTF8("关闭"), NULL);
-        alertView->show();
+		CAAlertView::create(UTF8("提示"), temstr, UTF8("关闭"), NULL)->show();
         _tempfilesize = 0;
     }
 }

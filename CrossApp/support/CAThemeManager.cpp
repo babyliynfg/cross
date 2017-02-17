@@ -8,7 +8,7 @@
 
 #include "CAThemeManager.h"
 #include "platform/CAFileUtils.h"
-#include "platform/CACommon.h"
+#include "view/CAAlertView.h"
 
 NS_CC_BEGIN
 
@@ -70,7 +70,7 @@ CAThemeManager::CAThemeManager(const std::string& filePath)
     }
     else
     {
-        CAMessageBox("警告", "主题配置文件缺失");
+        CAAlertView::create("警告", "主题配置文件缺失")->show();
         return;
     }
     

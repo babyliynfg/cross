@@ -229,8 +229,7 @@ void RootWindow::intNewsView()
 
 void RootWindow::keyBackClicked()
 {
-    CC_RETURN_IF(CAAlertView::hideWithDisplayed());
-    
+
     if (this->getModalViewController())
     {
         this->dismissModalViewController(true);
