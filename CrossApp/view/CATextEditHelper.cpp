@@ -111,7 +111,8 @@ void CATextToolBarView::show(CAView* pView)
         btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
         btn->setBackgroundViewForState(CAControl::State::Highlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
 		btn->setTag(i);
-        btn->addTarget([=](CAButton* btn){
+        btn->addTarget([=]()
+        {
         
             int btnIndex = btn->getTag();
             if (btnIndex>=0 && btnIndex<m_CallbackTargets.size())

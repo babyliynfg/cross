@@ -12,12 +12,12 @@
 
 MenuViewController::MenuViewController()
 {
-    CANotificationCenter::getInstance()->addObserver(CAApplicationDidChangeStatusBarOrientationNotification, this, std::bind(&MenuViewController::changeStatusBarOrientation, this, std::placeholders::_1));
+    CANotificationCenter::getInstance()->addObserver(std::bind(&MenuViewController::changeStatusBarOrientation, this, std::placeholders::_1), this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 MenuViewController::~MenuViewController()
 {
-    CANotificationCenter::getInstance()->removeObserver(CAApplicationDidChangeStatusBarOrientationNotification, this);
+    CANotificationCenter::getInstance()->removeObserver(this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 void MenuViewController::viewDidLoad()

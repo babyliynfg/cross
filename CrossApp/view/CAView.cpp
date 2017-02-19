@@ -88,6 +88,7 @@ CAView::CAView(void)
 , m_obLayout(DLayoutZero)
 , m_eLayoutType(0)
 , m_iCameraMask(1)
+, m_iCurrTrianglesCommandsIndex(0)
 , m_pApplication(CAApplication::getApplication())
 {
     m_sBlendFunc = BlendFunc_alpha_non_premultiplied;
@@ -100,6 +101,8 @@ CAView::CAView(void)
     m_sQuad.tr.colors = tmpColor;
     
     m_tTransform = m_tInverse = Mat4::IDENTITY;
+    
+    this->setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
     
     this->updateRotationQuat();
     this->setAnchorPoint(DPoint(0.5f, 0.5f));
@@ -883,9 +886,10 @@ void CAView::setGLProgramState(GLProgramState* glProgramState)
 {
     if (glProgramState != m_pGlProgramState)
     {
+        CC_SAFE_RETAIN(glProgramState);
         CC_SAFE_RELEASE(m_pGlProgramState);
         m_pGlProgramState = glProgramState;
-        CC_SAFE_RETAIN(m_pGlProgramState);
+        
         
         if (m_pGlProgramState)
             m_pGlProgramState->setBinding(this);
@@ -1204,38 +1208,47 @@ void CAView::sortAllSubviews()
     }
 }
 
-void CAView::drawShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAImage* image, const ccV3F_C4B_T2F_Quad& quad, const BlendFunc& blendFunc)
+TrianglesCommand* CAView::getTrianglesCommand(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAImage* image, const ccV3F_C4B_T2F_Quad& quad, const BlendFunc& blendFunc)
 {
-    if(m_bInsideBounds)
+    static unsigned short quadIndices[] = {0,1,2, 3,2,1};
+    
+    TrianglesCommand::Triangles triangles;
+    triangles.indices = quadIndices;
+    triangles.vertCount = 4;
+    triangles.indexCount = 6;
+    triangles.verts = (ccV3F_C4B_T2F*)&quad;
+    
+    if (m_vTrianglesCommands.size() <= m_iCurrTrianglesCommandsIndex)
     {
-        static unsigned short quadIndices[] = {0,1,2, 3,2,1};
-        
-        TrianglesCommand::Triangles triangles;
-        triangles.indices = quadIndices;
-        triangles.vertCount = 4;
-        triangles.indexCount = 6;
-        triangles.verts = (ccV3F_C4B_T2F*)&quad;
-
-        m_obTrianglesCommand.init(0,
-                                  image->getName(),
-                                  getGLProgramState(),
-                                  blendFunc,
-                                  triangles,
-                                  transform,
-                                  flags);
-        
-        renderer->addCommand(&m_obTrianglesCommand);
+        m_vTrianglesCommands.push_back(TrianglesCommand());
     }
+    
+    TrianglesCommand* trianglesCommand = &m_vTrianglesCommands.at(m_iCurrTrianglesCommandsIndex++);
+    trianglesCommand->init(0,
+                          image->getName(),
+                          this->getGLProgramState(),
+                          blendFunc,
+                          triangles,
+                          transform,
+                          flags);
+    
+    return trianglesCommand;
 }
 
 void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (m_bLeftShadowed)
+    if (m_bLeftShadowed && m_bInsideBounds)
     {
-        CC_SAFE_DELETE(m_pLeftShadowedQuad);
-        m_pLeftShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        if (m_pLeftShadowedQuad == nullptr)
+        {
+            m_pLeftShadowedQuad = new ccV3F_C4B_T2F_Quad();
+        }
         
-        ccV3F_C4B_T2F_Quad quad = *m_pLeftShadowedQuad;
+        ccV3F_C4B_T2F_Quad& quad = *m_pLeftShadowedQuad;
+        quad.tl = m_sQuad.tl;
+        quad.bl = m_sQuad.bl;
+        quad.tr = m_sQuad.tr;
+        quad.br = m_sQuad.br;
         
         GLfloat x1,x2,y1,y2;
         x1 = -12;
@@ -1253,22 +1266,28 @@ void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t 
 
         quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
         
-        this->drawShadow(renderer, transform, flags,
-                         CAImage::CC_SHADOW_LEFT_IMAGE(),
-                         quad,
-                         BlendFunc_alpha_non_premultiplied);
-
+        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags,
+                                                              CAImage::CC_SHADOW_LEFT_IMAGE(),
+                                                              quad,
+                                                              BlendFunc_alpha_non_premultiplied);
+        renderer->addCommand(command);
     }
 }
 
 void CAView::drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (m_bRightShadowed)
+    if (m_bRightShadowed && m_bInsideBounds)
     {
-        CC_SAFE_DELETE(m_pRightShadowedQuad);
-        m_pRightShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        if (m_pRightShadowedQuad == nullptr)
+        {
+            m_pRightShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        }
         
-        ccV3F_C4B_T2F_Quad quad = *m_pRightShadowedQuad;
+        ccV3F_C4B_T2F_Quad& quad = *m_pRightShadowedQuad;
+        quad.tl = m_sQuad.tl;
+        quad.bl = m_sQuad.bl;
+        quad.tr = m_sQuad.tr;
+        quad.br = m_sQuad.br;
         
         GLfloat x1,x2,y1,y2;
         x1 = m_obContentSize.width;
@@ -1286,22 +1305,28 @@ void CAView::drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t
         
         quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
         
-        this->drawShadow(renderer, transform, flags,
-                         CAImage::CC_SHADOW_RIGHT_IMAGE(),
-                         quad,
-                         BlendFunc_alpha_non_premultiplied);
+        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags,
+                                                              CAImage::CC_SHADOW_RIGHT_IMAGE(),
+                                                              quad,
+                                                              BlendFunc_alpha_non_premultiplied);
+        renderer->addCommand(command);
     }
-    
 }
 
 void CAView::drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (m_bTopShadowed)
+    if (m_bTopShadowed && m_bInsideBounds)
     {
-        CC_SAFE_DELETE(m_pTopShadowedQuad);
-        m_pTopShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        if (m_pTopShadowedQuad == nullptr)
+        {
+            m_pTopShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        }
         
-        ccV3F_C4B_T2F_Quad quad = *m_pTopShadowedQuad;
+        ccV3F_C4B_T2F_Quad& quad = *m_pTopShadowedQuad;
+        quad.tl = m_sQuad.tl;
+        quad.bl = m_sQuad.bl;
+        quad.tr = m_sQuad.tr;
+        quad.br = m_sQuad.br;
         
         GLfloat x1,x2,y1,y2;
         x1 = 0;
@@ -1319,22 +1344,28 @@ void CAView::drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t f
         
         quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
         
-        this->drawShadow(renderer, transform, flags,
-                         CAImage::CC_SHADOW_TOP_IMAGE(),
-                         quad,
-                         BlendFunc_alpha_non_premultiplied);
+        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags,
+                                                              CAImage::CC_SHADOW_TOP_IMAGE(),
+                                                              quad,
+                                                              BlendFunc_alpha_non_premultiplied);
+        renderer->addCommand(command);
     }
-    
 }
 
 void CAView::drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (m_bBottomShadowed)
+    if (m_bBottomShadowed && m_bInsideBounds)
     {
-        CC_SAFE_DELETE(m_pBottomShadowedQuad);
-        m_pBottomShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        if (m_pBottomShadowedQuad == nullptr)
+        {
+            m_pBottomShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
+        }
         
-        ccV3F_C4B_T2F_Quad quad = *m_pBottomShadowedQuad;
+        ccV3F_C4B_T2F_Quad& quad = *m_pBottomShadowedQuad;
+        quad.tl = m_sQuad.tl;
+        quad.bl = m_sQuad.bl;
+        quad.tr = m_sQuad.tr;
+        quad.br = m_sQuad.br;
         
         GLfloat x1,x2,y1,y2;
         x1 = 0;
@@ -1352,12 +1383,12 @@ void CAView::drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_
         
         quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
         
-        this->drawShadow(renderer, transform, flags,
-                         CAImage::CC_SHADOW_BOTTOM_IMAGE(),
-                         quad,
-                         BlendFunc_alpha_non_premultiplied);
+        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags,
+                                                              CAImage::CC_SHADOW_BOTTOM_IMAGE(),
+                                                              quad,
+                                                              BlendFunc_alpha_non_premultiplied);
+        renderer->addCommand(command);
     }
-    
 }
 
 void CAView::visitEve(void)
@@ -1385,23 +1416,8 @@ void CAView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
     
     if(m_bInsideBounds)
     {
-        static unsigned short quadIndices[] = {0,1,2, 3,2,1};
-        
-        TrianglesCommand::Triangles triangles;
-        triangles.indices = quadIndices;
-        triangles.vertCount = 4;
-        triangles.indexCount = 6;
-        triangles.verts = (ccV3F_C4B_T2F*)&m_sQuad;
-        
-        m_obTrianglesCommand.init(0,
-                               m_pobImage->getName(),
-                               getGLProgramState(),
-                               m_sBlendFunc,
-                               triangles,
-                               transform,
-                               flags);
-        
-        renderer->addCommand(&m_obTrianglesCommand);
+        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags, m_pobImage, m_sQuad, m_sBlendFunc);
+        renderer->addCommand(command);
     }
 }
 
@@ -1474,13 +1490,12 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     if (visibleByCamera)
     {
         this->checkInsideBounds(renderer, m_tModelViewTransform, flags);
-//        this->drawLeftShadow(renderer, m_tModelViewTransform, flags);
-//        this->drawRightShadow(renderer, m_tModelViewTransform, flags);
-//        this->drawTopShadow(renderer, m_tModelViewTransform, flags);
-//        this->drawBottomShadow(renderer, m_tModelViewTransform, flags);
+        this->drawLeftShadow(renderer, m_tModelViewTransform, flags);
+        this->drawRightShadow(renderer, m_tModelViewTransform, flags);
+        this->drawTopShadow(renderer, m_tModelViewTransform, flags);
+        this->drawBottomShadow(renderer, m_tModelViewTransform, flags);
     }
-    
-    
+
     m_bScissorRestored = false;
 
     if (m_bDisplayRange == false)
@@ -1549,6 +1564,8 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     {
         this->draw(renderer, m_tModelViewTransform, flags);
     }
+    
+    m_iCurrTrianglesCommandsIndex = 0;
     
     if (m_pCGNode)
     {

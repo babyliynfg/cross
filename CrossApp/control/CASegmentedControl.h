@@ -73,7 +73,7 @@ public:
     
     void setTitleFontSize(float titleSize);
     
-    void setTarget(const std::function<void(CASegmentedControl*, int)>& function);
+    void setTarget(const std::function<void(int)>& function);
     
     void setTitleForSegmentAtIndex(const std::string& title, int index);
     std::string getTitleForSegmentAtIndex(int index);
@@ -165,7 +165,7 @@ protected:
     
     CAObject*                       m_pTarget;
     
-    std::function<void(CASegmentedControl*, int)>  m_function{nullptr};
+    std::function<void(int)>  m_function{nullptr};
 
 };
 

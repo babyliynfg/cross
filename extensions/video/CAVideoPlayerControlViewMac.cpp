@@ -104,7 +104,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
     CAImage* barImage = CAImage::create("source_material/grayvdo_progress_bar.png");
     m_playSlider = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(32, 32), DVerticalLayout_T_H(25, 56)));
     m_playSlider->setThumbTintImage(barImage);
-    m_playSlider->setTargetForTouchUpSide([=](CASlider* slider, float value){
+    m_playSlider->setTargetForTouchUpSide([=](float value)
+    {
     
         if (m_glView == NULL || m_playSlider == NULL)
             return;
@@ -122,7 +123,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
     m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButton::Type::Custom);
     m_playButton->setImageForState(CAControl::State::Normal, backImage);
     m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
-    m_playButton->addTarget([=](CAButton* btn){
+    m_playButton->addTarget([=]()
+    {
     
         if (m_glView == NULL)
             return;

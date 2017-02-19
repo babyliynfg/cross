@@ -74,7 +74,7 @@ public:
 
     CC_SYNTHESIZE(bool, m_bTouchEffect, TouchEffect); // default is false, alpha
 
-    void setTarget(const std::function<void(CAStepper*, float)>& function);
+    void setTarget(const std::function<void(float)>& function);
     
 public:
 
@@ -92,7 +92,7 @@ protected:
     
 private:
     
-    std::function<void(CAStepper*, float)> m_function{nullptr};
+    std::function<void(float)> m_function{nullptr};
     
     CAMap<CAStepper::State, CAImage*> m_mBackgroundImages;
     CAMap<CAStepper::State, CAImage*> m_mIncrementImages;

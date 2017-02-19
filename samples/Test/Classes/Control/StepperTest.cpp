@@ -32,12 +32,12 @@ void StepperTest::viewDidLoad()
     step->setStepValue(1);
     //step->setAutoRepeat(false);
     this->getView()->addSubview(step);
-    step->setTarget([=](CAStepper* stepper, int index)
+    step->setTarget([=](float value)
     {
         char tem[30];
-        sprintf(tem, "step_value:%.0f",step->getValue());
+        sprintf(tem, "step_value:%.0f",value);
         step_value->setText(tem);
-        CCLog("step-tag === %f",step->getValue());
+        CCLog("step-tag === %f",value);
     });
 }
 

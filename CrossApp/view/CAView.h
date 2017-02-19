@@ -398,7 +398,7 @@ protected:
     
     void drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
     
-    void drawShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAImage* image, const ccV3F_C4B_T2F_Quad& quad, const BlendFunc& blendFunc);
+    TrianglesCommand* getTrianglesCommand(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAImage* image, const ccV3F_C4B_T2F_Quad& quad, const BlendFunc& blendFunc);
     
 protected:
  
@@ -488,7 +488,9 @@ protected:
     
     bool                        m_bInsideBounds;
     CAImage*                    m_pobImage;
-    TrianglesCommand            m_obTrianglesCommand;
+    
+    std::vector<TrianglesCommand> m_vTrianglesCommands;
+    size_t                      m_iCurrTrianglesCommandsIndex;
     
     CustomCommand               m_obBeforeDrawCommand;
     CustomCommand               m_obAfterDrawCommand;

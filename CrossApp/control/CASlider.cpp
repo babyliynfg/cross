@@ -283,7 +283,7 @@ void CASlider::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     this->setValue(value);
     
     if (m_function)
-        m_function(this, m_fValue);
+        m_function(m_fValue);
 }
 
 void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
@@ -302,19 +302,19 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         this->setValue(value);
         
         if (m_function)
-            m_function(this, m_fValue);
+            m_function(m_fValue);
     }
     
     if (m_functionTouchUpSide)
-        m_functionTouchUpSide(this, m_fValue);
+        m_functionTouchUpSide(m_fValue);
 }
 
-void CASlider::setTarget(const std::function<void (CASlider*, float)>& function)
+void CASlider::setTarget(const std::function<void(float)>& function)
 {
     m_function = function;
 }
 
-void CASlider::setTargetForTouchUpSide(const std::function<void (CASlider*, float)>& function)
+void CASlider::setTargetForTouchUpSide(const std::function<void(float)>& function)
 {
     m_functionTouchUpSide = function;
 }

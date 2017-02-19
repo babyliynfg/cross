@@ -1,9 +1,3 @@
-#!/usr/bin/python
-# create_project.py
-# Create cross-platform CrossApp project
-# Copyright (c) 2012 CrossApp
-# Author: WangZhe
-
 # define global variables
 context = {
 "language"          : "undefined",

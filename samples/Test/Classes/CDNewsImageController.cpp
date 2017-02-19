@@ -198,7 +198,7 @@ void CDNewsImageController::showAlert()
     btn5->setTitleColorForState(CAControl::State::Normal,CAColor_white);
     btn5->setBackgroundViewForState(CAControl::State::Normal, bg);
     btn5->setBackgroundViewForState(CAControl::State::Highlighted, bg);
-    btn5->addTarget([=](CAButton* btn)
+    btn5->addTarget([=]()
     {
         this->getView()->removeSubview(p_alertView);
         p_alertView = NULL;

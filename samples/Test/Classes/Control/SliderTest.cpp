@@ -51,19 +51,12 @@ void SliderTest::viewDidLoad()
         view1->addSubview(sliderValue1);
     
         CASlider* slider1 = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(120, 120), DVerticalLayout_T_H(500, 56)));
-        slider1->setTarget([=](CASlider* slider, int index)
+        slider1->setTarget([=](float v)
         {
-            char value[20] = "";
-            CASlider* p_Slider = slider;
-            sprintf(value, "%.02f%%", p_Slider->getValue() * 100);
-            if (p_Slider->getTag()==100) {
-                sliderValue1->setText(value);
-            }else if(p_Slider->getTag()==101)
-            {
-                sliderValue2->setText(value);
-            }
+            char value[20];
+            sprintf(value, "%.02f%%", v * 100);
+            sliderValue1->setText(value);
         });
-        slider1->setTag(100);
         view1->addSubview(slider1);
         this->getView()->addSubview(view1);
     }
@@ -85,17 +78,11 @@ void SliderTest::viewDidLoad()
         slider2->setMaxTrackTintImage(CAImage::create("source_material/ex1.png"));
         slider2->setMinTrackTintImage(CAImage::create("source_material/ex3.png"));
         slider2->setThumbTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
-        slider2->setTarget([=](CASlider* slider, int index)
+        slider2->setTarget([=](float v)
         {
             char value[20] = "";
-            CASlider* p_Slider = slider;
-            sprintf(value, "%.02f%%", p_Slider->getValue() * 100);
-            if (p_Slider->getTag()==100) {
-                sliderValue1->setText(value);
-            }else if(p_Slider->getTag()==101)
-            {
-                sliderValue2->setText(value);
-            }
+            sprintf(value, "%.02f%%", v * 100);
+            sliderValue2->setText(value);
         });
         view2->addSubview(slider2);
     

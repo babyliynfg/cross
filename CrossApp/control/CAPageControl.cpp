@@ -213,7 +213,7 @@ void CAPageControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                     updateCurrentPageDisplay();
                 
                 if (m_function)
-                    m_function(this, m_currentPage);
+                    m_function(m_currentPage);
             }
             break;
         }
@@ -262,7 +262,7 @@ CAPageControl::Style CAPageControl::getStyle()
     return m_style;
 }
 
-void CAPageControl::setTarget(const std::function<void(CAPageControl*, int)>& function)
+void CAPageControl::setTarget(const std::function<void(int)>& function)
 {
     m_function = function;
 }

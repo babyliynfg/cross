@@ -31,7 +31,7 @@ void CANotificationCenter::destroyInstance(void)
     CC_SAFE_RELEASE_NULL(s_sharedNotifCenter);
 }
 
-bool CANotificationCenter::observerExisted(const std::string& name, CAObject *target)
+bool CANotificationCenter::observerExisted(CAObject *target, const std::string& name)
 {
     for (auto & observer : m_observers)
     {
@@ -43,11 +43,11 @@ bool CANotificationCenter::observerExisted(const std::string& name, CAObject *ta
     return false;
 }
 
-void CANotificationCenter::addObserver(const std::string& name, CAObject *target, const CANotificationCenter::Callback& callback)
+void CANotificationCenter::addObserver(const CANotificationCenter::Callback& callback, CAObject *target, const std::string& name)
 {
-    CC_RETURN_IF(this->observerExisted(name, target));
+    CC_RETURN_IF(this->observerExisted(target, name));
     
-    Observer *observer = new Observer(name, target, callback);
+    Observer *observer = new Observer(callback, target, name);
     if (observer)
     {
         m_observers.pushBack(observer);
@@ -55,7 +55,7 @@ void CANotificationCenter::addObserver(const std::string& name, CAObject *target
     }
 }
 
-void CANotificationCenter::removeObserver(const std::string& name, CAObject *target)
+void CANotificationCenter::removeObserver(CAObject *target, const std::string& name)
 {
     for (auto itr=m_observers.begin(); itr!=m_observers.end();)
     {
@@ -96,12 +96,12 @@ int CANotificationCenter::removeAllObservers(CAObject *target)
 	return size;
 }
 
-void CANotificationCenter::registerScriptObserver(const std::string& name, CAObject *target, int handler)
+void CANotificationCenter::registerScriptObserver(CAObject *target, const std::string& name, int handler)
 {
     
-    CC_RETURN_IF(this->observerExisted(name, target));
+    CC_RETURN_IF(this->observerExisted(target, name));
     
-    Observer *observer = new Observer(name, target, nullptr);
+    Observer *observer = new Observer(nullptr, target, name);
     if (observer)
     {
         observer->handler = handler;
@@ -110,7 +110,7 @@ void CANotificationCenter::registerScriptObserver(const std::string& name, CAObj
     }
 }
 
-void CANotificationCenter::unregisterScriptObserver(const std::string& name, CAObject *target)
+void CANotificationCenter::unregisterScriptObserver(CAObject *target, const std::string& name)
 {        
     for (auto itr=m_observers.begin(); itr!=m_observers.end();)
     {
@@ -172,7 +172,7 @@ int CANotificationCenter::getObserverHandlerByName(const std::string& name)
 }
 
 
-CANotificationCenter::Observer::Observer(const std::string& name, CAObject *target, const CANotificationCenter::Callback& callback)
+CANotificationCenter::Observer::Observer(const CANotificationCenter::Callback& callback, CAObject *target, const std::string& name)
 :name(name)
 ,target(target)
 ,callback(callback)

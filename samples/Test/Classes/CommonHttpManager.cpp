@@ -178,7 +178,7 @@ void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
     httpRequest->setUrl(getRul.c_str());
     httpRequest->setRequestType(CAHttpRequest::Type::Get);
     CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJson);
-    httpRequest->setResponseCallback(callBack, httpresponse_selector(CommonHttpResponseCallBack::onResponse));
+    httpRequest->setResponseCallback(std::bind(&CommonHttpResponseCallBack::onResponse, callBack, std::placeholders::_1, std::placeholders::_2));
     
     std::sort(m_pHttpJsonClients.begin(), m_pHttpJsonClients.end(), compareHttpClient);
     m_pHttpJsonClients.front()->send(httpRequest);
@@ -215,7 +215,7 @@ void CommonHttpManager::send_post(const std::string& url,std::map<std::string,st
     httpRequest->setRequestType(CAHttpRequest::Type::Post);
     httpRequest->setRequestData(postData.c_str(), postData.length());
     CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJsonNoCache);
-    httpRequest->setResponseCallback(callBack, httpresponse_selector(CommonHttpResponseCallBack::onResponse));
+    httpRequest->setResponseCallback(std::bind(&CommonHttpResponseCallBack::onResponse, callBack, std::placeholders::_1, std::placeholders::_2));
     
     std::sort(m_pHttpJsonClients.begin(), m_pHttpJsonClients.end(), compareHttpClient);
     m_pHttpJsonClients.front()->send(httpRequest);
@@ -250,7 +250,7 @@ void CommonHttpManager::send_postFile(const std::string& url,std::map<std::strin
     httpRequest->setRequestData(postData.c_str(), postData.length());
     httpRequest->setFileNameToPost(file);
     CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJsonNoCache);
-    httpRequest->setResponseCallback(callBack, httpresponse_selector(CommonHttpResponseCallBack::onResponse));
+    httpRequest->setResponseCallback(std::bind(&CommonHttpResponseCallBack::onResponse, callBack, std::placeholders::_1, std::placeholders::_2));
     
     std::sort(m_pHttpJsonClients.begin(), m_pHttpJsonClients.end(), compareHttpClient);
     m_pHttpJsonClients.front()->send(httpRequest);
@@ -306,7 +306,7 @@ void CommonHttpManager::get_image(const std::string& url,CAObject* pTarget,SEL_C
             //header.push_back("Referer:");
             httpRequest->setHeaders(header);
             callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, type);
-            httpRequest->setResponseCallback(callBack, httpresponse_selector(CommonHttpResponseCallBack::onResponse));
+            httpRequest->setResponseCallback(std::bind(&CommonHttpResponseCallBack::onResponse, callBack, std::placeholders::_1, std::placeholders::_2));
             
             std::sort(m_pHttpImageClients.begin(), m_pHttpImageClients.end(), compareHttpClient);
             m_pHttpImageClients.front()->send(httpRequest);

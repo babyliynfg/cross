@@ -20,10 +20,9 @@ void SwitchTest::viewDidLoad()
     CASwitch* customSwitch1 = CASwitch::createWithLayout(DLayout(DHorizontalLayout_L_W(150, 100), DVerticalLayout_T_H(350, 20)));
     customSwitch1->setTag(100);
     customSwitch1->setIsOn(true, false);
-    customSwitch1->setTarget([=](CASwitch* switch1, int index)
+    customSwitch1->setTarget([=](bool on)
     {
-        CASwitch* state = switch1;
-        if (!state->isOn())
+        if (!on)
         {
             CCLog("switchStateChange false");
         }
@@ -39,10 +38,9 @@ void SwitchTest::viewDidLoad()
     customSwitch2->setIsOn(true, false);
     customSwitch2->setOnImage(CAImage::create("image/Switch_on.png"));
     customSwitch2->setOffImage(CAImage::create("image/Switch_off.png"));
-    customSwitch2->setTarget([=](CASwitch* switch2, int index)
+    customSwitch2->setTarget([=](bool on)
     {
-        CASwitch* state = switch2;
-        if (!state->isOn())
+        if (!on)
         {
             CCLog("switchStateChange false");
         }

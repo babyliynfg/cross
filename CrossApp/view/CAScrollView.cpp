@@ -555,13 +555,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
                        this->convertToNodeSpace(pTouch->getPreviousLocation()));
         
-        DPoint off = p_off;
-        if (off.getLength() <= 5)
-        {
-            off = DPointZero;
-        }
-        
-        m_tPointOffset.push_back(off);
+        this->updatePointOffset();
     }
     else if (m_vTouches.size() == 2)
     {
@@ -692,15 +686,14 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         CAScheduler::getScheduler()->unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
         if (m_tPointOffset.size() > 0)
         {
-            for (unsigned int i=0; i<m_tPointOffset.size(); i++)
+            for (auto& var : m_tPointOffset)
             {
-                p = ccpAdd(p, m_tPointOffset.at(i));
+                p = ccpAdd(p, var);
             }
             p = p/m_tPointOffset.size();
         }
         m_tInertia = p;
         m_tPointOffset.clear();
-        
         
         this->startDeaccelerateScroll();
         
@@ -778,7 +771,7 @@ void CAScrollView::switchPCMode(bool var)
 
 void CAScrollView::updatePointOffset(float dt)
 {
-    CC_RETURN_IF(m_vTouches.size() == 0);
+    CC_RETURN_IF(m_vTouches.empty());
     CC_RETURN_IF(m_bScrollEnabled == false);
     CATouch* pTouch = dynamic_cast<CATouch*>(m_vTouches.at(0));
     DPoint p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
@@ -788,9 +781,9 @@ void CAScrollView::updatePointOffset(float dt)
     {
         p_off = DPointZero;
     }
-    
+
     m_tPointOffset.push_back(p_off);
-    
+
     while (m_tPointOffset.size() > 3)
     {
         m_tPointOffset.pop_front();

@@ -31,7 +31,7 @@ CADrawerController::CADrawerController()
     
     memset(m_pContainer, NULL, sizeof(CAView*) * 2);
     
-    CANotificationCenter::getInstance()->addObserver(CAApplicationDidChangeStatusBarOrientationNotification, this, std::bind(&CADrawerController::changeStatusBarOrientation, this, std::placeholders::_1));
+    CANotificationCenter::getInstance()->addObserver(std::bind(&CADrawerController::changeStatusBarOrientation, this, std::placeholders::_1), this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 CADrawerController::~CADrawerController()
@@ -39,7 +39,7 @@ CADrawerController::~CADrawerController()
     CC_SAFE_RELEASE(m_pLeftViewController);
     CC_SAFE_RELEASE(m_pRightViewController);
     
-    CANotificationCenter::getInstance()->removeObserver(CAApplicationDidChangeStatusBarOrientationNotification, this);
+    CANotificationCenter::getInstance()->removeObserver(this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 bool CADrawerController::initWithController(CAViewController* leftViewController, CAViewController* rightViewController)

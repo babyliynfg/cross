@@ -51,7 +51,7 @@ static void* networkThread(void *data)
 {
     CAHttpClient* httpClient = (CAHttpClient*)data;
     
-    CAHttpRequest *request = NULL;
+    CAHttpRequest *request = nullptr;
     
     while (true) 
     {
@@ -60,7 +60,7 @@ static void* networkThread(void *data)
             break;
         }
         
-        request = NULL;
+        request = nullptr;
         
         pthread_mutex_lock(&httpClient->s_requestQueueMutex);
         if (!httpClient->s_requestQueue.empty())
@@ -70,7 +70,7 @@ static void* networkThread(void *data)
         }
         pthread_mutex_unlock(&httpClient->s_requestQueueMutex);
         
-        if (NULL == request)
+        if (nullptr == request)
         {
         	pthread_cond_wait(&httpClient->s_SleepCondition, &httpClient->s_SleepMutex);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
@@ -139,7 +139,7 @@ static void* networkThread(void *data)
                 CCAssert(true, "CAHttpClient: unkown request type, only GET and POSt are supported");
                 break;
         }
-        request->release();
+
         response->setResponseCode(responseCode);
         if (retValue != 0)
         {
@@ -334,8 +334,8 @@ static int processPostFileTask(CAHttpRequest *request, write_callback callback, 
 	if (!ok)
 		return 1;
 
-	curl_httppost* pFormPost = NULL;
-	curl_httppost* pLastElem = NULL;
+	curl_httppost* pFormPost = nullptr;
+	curl_httppost* pLastElem = nullptr;
 
 	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "filepath", CURLFORM_FILE, 
 		request->getFileNameToPost(), CURLFORM_CONTENTTYPE, "application/octet-stream", CURLFORM_END);
@@ -363,7 +363,7 @@ static int processPostFileTask(CAHttpRequest *request, write_callback callback, 
 	if (pFormPost)
 	{
 		curl_formfree(pFormPost);
-		pFormPost = NULL;
+		pFormPost = nullptr;
 	}
 	return ok ? 0 : 1;
 }
@@ -373,7 +373,7 @@ CAHttpClient* CAHttpClient::getInstance(ssize_t thread)
 {
     if (thread >= MAX_THREAD)
     {
-        return NULL;
+        return nullptr;
     }
     
     if (s_pHttpClientMaps.find(thread) == s_pHttpClientMaps.end())
@@ -437,13 +437,13 @@ bool CAHttpClient::lazyInitThreadSemphore()
     }
     else
     {
-        pthread_mutex_init(&s_requestQueueMutex, NULL);
-        pthread_mutex_init(&s_responseQueueMutex, NULL);
+        pthread_mutex_init(&s_requestQueueMutex, nullptr);
+        pthread_mutex_init(&s_responseQueueMutex, nullptr);
         
-        pthread_mutex_init(&s_SleepMutex, NULL);
-        pthread_cond_init(&s_SleepCondition, NULL);
+        pthread_mutex_init(&s_SleepMutex, nullptr);
+        pthread_cond_init(&s_SleepCondition, nullptr);
 
-        pthread_create(&s_networkThread, NULL, networkThread, this);
+        pthread_create(&s_networkThread, nullptr, networkThread, this);
         pthread_detach(s_networkThread);
         
         need_quit = false;
@@ -471,7 +471,7 @@ void CAHttpClient::send(CAHttpRequest* request)
 // Poll and notify main thread if responses exists in queue
 void CAHttpClient::dispatchResponseCallbacks(float delta)
 {
-    CAHttpResponse* response = NULL;
+    CAHttpResponse* response = nullptr;
     
     pthread_mutex_lock(&s_responseQueueMutex);
     if (!s_responseQueue.empty())
@@ -486,16 +486,16 @@ void CAHttpClient::dispatchResponseCallbacks(float delta)
         --_asyncRequestCount;
         
         CAHttpRequest *request = response->getHttpRequest();
-        CC_RETURN_IF(request == NULL);
-        CAObject *pTarget = request->getTarget();
-        SEL_HttpResponse pSelector = request->getSelector();
-
-        if (pTarget && pSelector) 
-        {
-            (pTarget->*pSelector)(this, response);
-        }
+        CC_RETURN_IF(request == nullptr);
+        const CAHttpRequest::Callback& callback = request->getCallback();
         
+        if (callback != nullptr)
+        {
+            callback(this, response);
+        }
+
         response->release();
+        request->release();
     }
     
     if (0 == _asyncRequestCount)

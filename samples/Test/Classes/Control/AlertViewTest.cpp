@@ -25,7 +25,7 @@ void AlertViewTest::viewDidLoad()
     btn1->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.25)));
     btn1->setTag(100);
     btn1->setTitleForState(CAControl::State::Normal, "Click-1");
-    btn1->addTarget([=](CAButton* btn)
+    btn1->addTarget([=]()
     {
         CAAlertView::create("Alert", "this is a alert!", "close", nullptr)->show([=](int index)
         {
@@ -39,7 +39,7 @@ void AlertViewTest::viewDidLoad()
     btn2->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.5)));
     btn2->setTag(200);
     btn2->setTitleForState(CAControl::State::Normal, "Click-2");
-    btn2->addTarget([=](CAButton* btn)
+    btn2->addTarget([=]()
     {
         CAAlertView::create("Alert", "this is a alert!", "ok","close", nullptr)->show([=](int index)
         {
@@ -52,7 +52,7 @@ void AlertViewTest::viewDidLoad()
     btn3->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.75)));
     btn3->setTag(300);
     btn3->setTitleForState(CAControl::State::Normal, "Click-3");
-    btn3->addTarget([=](CAButton* btn)
+    btn3->addTarget([=]()
     {
         std::string message = "message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long!";
         

@@ -674,7 +674,7 @@ void CASegmentedControl::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (changed && m_function)
     {
-        m_function(this, m_iSelectedIndex);
+        m_function(m_iSelectedIndex);
     }
 }
 
@@ -683,7 +683,7 @@ void CASegmentedControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     this->setSelectedAtIndex(m_iSelectedIndex);
 }
 
-void CASegmentedControl::setTarget(const std::function<void(CASegmentedControl*, int)>& function)
+void CASegmentedControl::setTarget(const std::function<void(int)>& function)
 {
     m_function = function;
 }

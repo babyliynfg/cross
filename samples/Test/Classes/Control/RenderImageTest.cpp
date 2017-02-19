@@ -26,7 +26,7 @@ void RenderImageTest::viewDidLoad()
     btn->setTitleForState(CAControl::State::Normal, "Click");
     btn->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
     btn->setTag(1);
-    btn->addTarget([=](CAButton* btn)
+    btn->addTarget([=]()
     {
         CADevice::openAlbum(this);
     }, CAButton::Event::TouchUpInSide);
@@ -135,7 +135,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     render_btn->setTitleForState(CAControl::State::Normal, "Click");
     render_btn->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
     render_btn->setTag(2);
-    render_btn->addTarget([=](CAButton* btn)
+    render_btn->addTarget([=]()
     {
         m_clvImage->setClippingEnabled(true);
         CARenderImage* rm = CARenderImage::create(winSize.width-200, winSize.height-200);

@@ -168,7 +168,7 @@ void Timer::update(float dt)
                 if (_elapsed >= _delay)
                 {
                     _elapsed = _elapsed - _delay;
-                    trigger(_elapsed);
+                    trigger(_interval);
                     _timesExecuted += 1;
                     _useDelay = false;
                 }

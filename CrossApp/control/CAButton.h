@@ -95,7 +95,7 @@ public:
     
     void setTitleTextAlignment(const CATextAlignment& var);
  
-    void addTarget(const std::function<void(CAButton*)>& function, CAButton::Event event);
+    void addTarget(const std::function<void()>& function, CAButton::Event event);
 
     void setControlState(CAControl::State state);
     
@@ -155,7 +155,7 @@ protected:
     
     bool m_bDefineImageOffset;
     
-    std::map<CAButton::Event, std::function<void(CAButton*)>> m_mFunctions;
+    std::map<CAButton::Event, std::function<void()>> m_mFunctions;
     
     bool m_bTouchClick;
     

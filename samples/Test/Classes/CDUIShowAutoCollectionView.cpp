@@ -71,7 +71,6 @@ CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNa
     
     m_vTitle.push_back("RenderImage");
     m_vTitle.push_back("Animation");
-    
 }
 
 CDUIShowAutoCollectionView::~CDUIShowAutoCollectionView()
@@ -91,7 +90,7 @@ void CDUIShowAutoCollectionView::viewDidLoad()
     
     this->getView()->addSubview(p_AutoCollection);
     
-    /*
+    
     CGSpriteFrameCache::getInstance()->addSpriteFramesWithFile("animation/monster_12000.plist");
     
     CAVector<CGSpriteFrame*> vec;
@@ -114,7 +113,7 @@ void CDUIShowAutoCollectionView::viewDidLoad()
     
     MoveBy* moveBy = MoveBy::create(8, DPoint(500, 0));
     sprite->runAction(moveBy);
-    */
+    
 }
 
 void CDUIShowAutoCollectionView::viewDidUnload()

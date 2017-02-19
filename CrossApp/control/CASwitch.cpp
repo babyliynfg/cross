@@ -238,7 +238,7 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
 void CASwitch::updateValueChanged()
 {
     if (m_function)
-        m_function(this, m_bIsOn);
+        m_function(m_bIsOn);
 }
 
 bool CASwitch::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
@@ -268,7 +268,7 @@ void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     }
 }
 
-void CASwitch::setTarget(const std::function<void(CASwitch*, bool)>& function)
+void CASwitch::setTarget(const std::function<void(bool)>& function)
 {
     m_function = function;
 }

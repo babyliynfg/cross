@@ -71,7 +71,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(CAView*, m_pCustomView, CustomView);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CAButton*)>, m_function, CallbackFunction);
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_function, CallbackFunction);
     
 };
 

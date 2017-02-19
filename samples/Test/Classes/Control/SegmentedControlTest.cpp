@@ -27,7 +27,7 @@ void SegmentedControlTest::viewDidLoad()
     }
     segment1->setTitleColor(CAColor_black);
     segment1->setTitleSelectedColor(CAColor_white);
-    segment1->setTarget([=](CASegmentedControl* segmentedControl, int index)
+    segment1->setTarget([=](int index)
     {
         CCLog("segmentCallback");
     });
@@ -43,7 +43,7 @@ void SegmentedControlTest::viewDidLoad()
     }
     segment2->setTitleColor(CAColor_black);
     segment2->setTitleSelectedColor(CAColor_white);
-    segment2->setTarget([=](CASegmentedControl* segmentedControl, int index)
+    segment2->setTarget([=](int index)
     {
         CCLog("segmentCallback");
     });

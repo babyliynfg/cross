@@ -49,7 +49,7 @@ void ViewAnimationTest::viewDidLoad()
         btn1->setTitleForState(CAControl::State::Normal, "Play Animation");
         btn1->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
         btn1->setTag(100);
-        btn1->addTarget([=](CAButton* btn)
+        btn1->addTarget([=]()
         {
             animation_1_view->setScale(1);
             CAViewAnimation::beginAnimations("");
@@ -91,7 +91,7 @@ void ViewAnimationTest::viewDidLoad()
         animation_2_btn_search = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(25, 56), DVerticalLayout_H_C(48, 0.5)), CAButton::Type::Custom);
         animation_2_btn_search->setImageForState(CAControl::State::Normal, CAImage::create("image/search_btn.png"));
         animation_2_btn_search->setTag(201);
-        animation_2_btn_search->addTarget([=](CAButton* btn)
+        animation_2_btn_search->addTarget([=]()
         {
             animation_2_textfield->setVisible(true);
             animation_2_btn_cancel->setVisible(false);
@@ -118,7 +118,7 @@ void ViewAnimationTest::viewDidLoad()
         animation_2_btn_cancel->setTitleForState(CAControl::State::Normal, "Cancel");
         animation_2_btn_cancel->setTag(202);
         animation_2_btn_cancel->setTitleColorForState(CAControl::State::Normal, CAColor_white);
-        animation_2_btn_cancel->addTarget([=](CAButton* btn)
+        animation_2_btn_cancel->addTarget([=]()
         {
             CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(0.3f);
@@ -155,7 +155,7 @@ void ViewAnimationTest::viewDidLoad()
         btn3->setTitleForState(CAControl::State::Normal, "Play Animation");
         btn3->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
         btn3->setTag(300);
-        btn3->addTarget([=](CAButton* btn)
+        btn3->addTarget([=]()
         {
             DSize imageSize = CAImage::create("image/2.jpg")->getContentSize();
             

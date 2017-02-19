@@ -85,6 +85,7 @@
     <CANavigationBar name="CANavigationBar">
         <BackgroundView name="backgroundView" path="1" value="navigation_bg.png"/>
         <Image name="leftButtonImage" path="1" value="btn_left_white.png"/>
+        <Image name="titleColor" path="0" value="0xffffffff"/>
     </CANavigationBar>
     <CABadgeView name="CABadgeView">
         <Image name="badgeImage" path="1" value="bg_badge.png"/>

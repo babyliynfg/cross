@@ -16,7 +16,7 @@ public:
     
     struct CC_DLL Observer : public CAObject
     {
-        Observer(const std::string& name, CAObject *target, const CANotificationCenter::Callback& callback);
+        Observer(const CANotificationCenter::Callback& callback, CAObject *target, const std::string& name);
 
         void performSelector(CAObject *obj);
         
@@ -37,15 +37,15 @@ public:
     
     static void destroyInstance();
     
-    void addObserver(const std::string& name, CAObject *target, const CANotificationCenter::Callback& callback);
+    void addObserver(const CANotificationCenter::Callback& callback, CAObject *target, const std::string& name);
 
-    void removeObserver(const std::string& name, CAObject *target);
+    void removeObserver(CAObject *target, const std::string& name);
 
     int removeAllObservers(CAObject *target);
 
-    void registerScriptObserver(const std::string& name, CAObject *target, int handler);
+    void registerScriptObserver(CAObject *target, const std::string& name, int handler);
 
-    void unregisterScriptObserver(const std::string& name, CAObject *target);
+    void unregisterScriptObserver(CAObject *target, const std::string& name);
 
     void postNotification(const std::string& name);
 
@@ -57,7 +57,7 @@ public:
     
 private:
 
-    bool observerExisted(const std::string& name, CAObject *target);
+    bool observerExisted(CAObject *target, const std::string& name);
 
     CAList<Observer*> m_observers;
     

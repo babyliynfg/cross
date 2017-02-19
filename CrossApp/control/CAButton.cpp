@@ -610,7 +610,7 @@ void CAButton::setTitleTextAlignment(const CATextAlignment& var)
     m_pLabel->setTextAlignment(var);
 }
 
-void CAButton::addTarget(const std::function<void(CAButton*)>& function, CAButton::Event event)
+void CAButton::addTarget(const std::function<void()>& function, CAButton::Event event)
 {
     m_mFunctions[event] = function;
 }
@@ -620,7 +620,7 @@ void CAButton::callBackFunction(CAButton::Event event)
     auto it = m_mFunctions.find(event);
     if (it != m_mFunctions.end())
     {
-        (it->second)(this);
+        (it->second)();
     }
 }
 

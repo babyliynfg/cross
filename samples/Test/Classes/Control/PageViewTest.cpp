@@ -32,11 +32,10 @@ void PageViewTest::viewDidLoad()
     pageControl->setNumberOfPages((int)_view.size());
     pageControl->setPageIndicatorTintColor(CAColor_gray);
     pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
-    pageControl->setTarget([=](CAPageControl* pageControl, int index)
+    pageControl->setTarget([=](int index)
     {
-        CAPageControl* button = pageControl;
-        CCLog("btn_tag===%d",button->getCurrentPage());
-        p_pageView->setCurrPage(button->getCurrentPage(), true);
+        CCLog("btn_tag===%d",pageControl->getCurrentPage());
+        p_pageView->setCurrPage(pageControl->getCurrentPage(), true);
     });
     this->getView()->addSubview(pageControl);
 }

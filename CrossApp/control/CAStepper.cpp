@@ -447,7 +447,7 @@ void CAStepper::action()
     // send value change event
     if (bValueChange && m_bContinuous && m_function)
     {
-        m_function(this, m_value);
+        m_function(m_value);
     }
 }
 
@@ -558,7 +558,7 @@ void CAStepper::setContentSize(const DSize & var)
     }
 }
 
-void CAStepper::setTarget(const std::function<void(CAStepper*, float)>& function)
+void CAStepper::setTarget(const std::function<void(float)>& function)
 {
     m_function = function;
 }

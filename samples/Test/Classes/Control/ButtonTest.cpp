@@ -28,7 +28,7 @@ void ButtonTest::viewDidLoad()
     //设置Button的标题颜色和状态
     btn1->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
     //添加回调事件
-    btn1->addTarget([=](CAButton* btn)
+    btn1->addTarget([=]()
     {
         CCLog("Button Noborder");
     }, CAButton::Event::TouchUpInSide);
@@ -42,7 +42,7 @@ void ButtonTest::viewDidLoad()
     //设置Button标题的显示文本
     btn2->setTitleForState(CAControl::State::Normal,"SquareRect");
     //添加回调事件
-    btn2->addTarget([=](CAButton* btn)
+    btn2->addTarget([=]()
     {
         CCLog("Button SquareRect");
     }, CAButton::Event::TouchUpInSide);
@@ -56,7 +56,7 @@ void ButtonTest::viewDidLoad()
     //设置Button标题的显示文本
     btn3->setTitleForState(CAControl::State::Normal, "RoundedRect");
     //添加回调事件
-    btn3->addTarget([=](CAButton* btn)
+    btn3->addTarget([=]()
     {
         CCLog("Button RoundedRect");
     }, CAButton::Event::TouchUpInSide);
@@ -74,7 +74,7 @@ void ButtonTest::viewDidLoad()
     //设置Button的背景View
     btn4->setBackgroundViewForState(CAControl::State::Highlighted, CAScale9ImageView::createWithImage(CAImage::create("image/button_down.png")));
     //添加回调事件
-    btn4->addTarget([=](CAButton* btn)
+    btn4->addTarget([=]()
     {
         CCLog("Button Custom");
     }, CAButton::Event::TouchUpInSide);
@@ -88,7 +88,7 @@ void ButtonTest::viewDidLoad()
     btn5->setTitleForState(CAControl::State::Highlighted, "Highlighted");
     btn5->setBackgroundViewForState(CAControl::State::Normal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
     btn5->setBackgroundViewForState(CAControl::State::Highlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
-    btn5->addTarget([=](CAButton* btn)
+    btn5->addTarget([=]()
     {
         CCLog("Button AllowsSelected");
     }, CAButton::Event::TouchUpInSide);
