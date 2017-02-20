@@ -75,21 +75,20 @@ CAView::CAView(void)
 , m_bFlipY(false)
 , m_pContentContainer(nullptr)
 , m_bIsAnimation(false)
-, m_pLeftShadowedQuad(nullptr)
-, m_pRightShadowedQuad(nullptr)
-, m_pTopShadowedQuad(nullptr)
-, m_pBottomShadowedQuad(nullptr)
-, m_bLeftShadowed(false)
-, m_bRightShadowed(false)
-, m_bTopShadowed(false)
-, m_bBottomShadowed(false)
+, m_pLeftShadow(nullptr)
+, m_pRightShadow(nullptr)
+, m_pTopShadow(nullptr)
+, m_pBottomShadow(nullptr)
 , m_pParentCGNode(nullptr)
 , m_pCGNode(nullptr)
 , m_obLayout(DLayoutZero)
 , m_eLayoutType(0)
 , m_iCameraMask(1)
-, m_iCurrTrianglesCommandsIndex(0)
 , m_pApplication(CAApplication::getApplication())
+, m_obOnEnterCallback(nullptr)
+, m_obOnEnterTransitionDidFinishCallback(nullptr)
+, m_obOnExitCallback(nullptr)
+, m_obOnExitTransitionDidStartCallback(nullptr)
 {
     m_sBlendFunc = BlendFunc_alpha_non_premultiplied;
     memset(&m_sQuad, 0, sizeof(m_sQuad));
@@ -101,9 +100,7 @@ CAView::CAView(void)
     m_sQuad.tr.colors = tmpColor;
     
     m_tTransform = m_tInverse = Mat4::IDENTITY;
-    
-    this->setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-    
+
     this->updateRotationQuat();
     this->setAnchorPoint(DPoint(0.5f, 0.5f));
     
@@ -112,10 +109,10 @@ CAView::CAView(void)
 
 CAView::~CAView(void)
 {
-    CC_SAFE_DELETE(m_pLeftShadowedQuad);
-    CC_SAFE_DELETE(m_pRightShadowedQuad);
-    CC_SAFE_DELETE(m_pTopShadowedQuad);
-    CC_SAFE_DELETE(m_pBottomShadowedQuad);
+    CC_SAFE_DELETE(m_pLeftShadow);
+    CC_SAFE_DELETE(m_pRightShadow);
+    CC_SAFE_DELETE(m_pTopShadow);
+    CC_SAFE_DELETE(m_pBottomShadow);
     
     CC_SAFE_RELEASE_NULL(m_pGlProgramState);
     CAScheduler::getScheduler()->pauseTarget(this);
@@ -869,11 +866,7 @@ void CAView::setShaderProgram(GLProgram *pShaderProgram)
 {
     if (m_pGlProgramState == nullptr || (m_pGlProgramState && m_pGlProgramState->getGLProgram() != pShaderProgram))
     {
-        CC_SAFE_RELEASE(m_pGlProgramState);
-        m_pGlProgramState = GLProgramState::getOrCreateWithGLProgram(pShaderProgram);
-        m_pGlProgramState->retain();
-        
-        m_pGlProgramState->setBinding(this);
+        this->setGLProgramState(GLProgramState::getOrCreateWithGLProgram(pShaderProgram));
     }
 }
 
@@ -894,26 +887,6 @@ void CAView::setGLProgramState(GLProgramState* glProgramState)
         if (m_pGlProgramState)
             m_pGlProgramState->setBinding(this);
     }
-}
-
-void CAView::enabledLeftShadow(bool var)
-{
-    m_bLeftShadowed = var;
-}
-
-void CAView::enabledRightShadow(bool var)
-{
-    m_bRightShadowed = var;
-}
-
-void CAView::enabledTopShadow(bool var)
-{
-    m_bTopShadowed = var;
-}
-
-void CAView::enabledBottomShadow(bool var)
-{
-    m_bBottomShadowed = var;
 }
 
 const char* CAView::description()
@@ -1208,189 +1181,6 @@ void CAView::sortAllSubviews()
     }
 }
 
-TrianglesCommand* CAView::getTrianglesCommand(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAImage* image, const ccV3F_C4B_T2F_Quad& quad, const BlendFunc& blendFunc)
-{
-    static unsigned short quadIndices[] = {0,1,2, 3,2,1};
-    
-    TrianglesCommand::Triangles triangles;
-    triangles.indices = quadIndices;
-    triangles.vertCount = 4;
-    triangles.indexCount = 6;
-    triangles.verts = (ccV3F_C4B_T2F*)&quad;
-    
-    if (m_vTrianglesCommands.size() <= m_iCurrTrianglesCommandsIndex)
-    {
-        m_vTrianglesCommands.push_back(TrianglesCommand());
-    }
-    
-    TrianglesCommand* trianglesCommand = &m_vTrianglesCommands.at(m_iCurrTrianglesCommandsIndex++);
-    trianglesCommand->init(0,
-                          image->getName(),
-                          this->getGLProgramState(),
-                          blendFunc,
-                          triangles,
-                          transform,
-                          flags);
-    
-    return trianglesCommand;
-}
-
-void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (m_bLeftShadowed && m_bInsideBounds)
-    {
-        if (m_pLeftShadowedQuad == nullptr)
-        {
-            m_pLeftShadowedQuad = new ccV3F_C4B_T2F_Quad();
-        }
-        
-        ccV3F_C4B_T2F_Quad& quad = *m_pLeftShadowedQuad;
-        quad.tl = m_sQuad.tl;
-        quad.bl = m_sQuad.bl;
-        quad.tr = m_sQuad.tr;
-        quad.br = m_sQuad.br;
-        
-        GLfloat x1,x2,y1,y2;
-        x1 = -12;
-        y1 = 0;
-        x2 = 0;
-        y2 = m_obContentSize.height;
-        
-        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
-        
-        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
-        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
-
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
-        
-        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags,
-                                                              CAImage::CC_SHADOW_LEFT_IMAGE(),
-                                                              quad,
-                                                              BlendFunc_alpha_non_premultiplied);
-        renderer->addCommand(command);
-    }
-}
-
-void CAView::drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (m_bRightShadowed && m_bInsideBounds)
-    {
-        if (m_pRightShadowedQuad == nullptr)
-        {
-            m_pRightShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
-        }
-        
-        ccV3F_C4B_T2F_Quad& quad = *m_pRightShadowedQuad;
-        quad.tl = m_sQuad.tl;
-        quad.bl = m_sQuad.bl;
-        quad.tr = m_sQuad.tr;
-        quad.br = m_sQuad.br;
-        
-        GLfloat x1,x2,y1,y2;
-        x1 = m_obContentSize.width;
-        y1 = 0;
-        x2 = m_obContentSize.width + 12;
-        y2 = m_obContentSize.height;
-        
-        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
-        
-        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
-        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
-        
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
-        
-        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags,
-                                                              CAImage::CC_SHADOW_RIGHT_IMAGE(),
-                                                              quad,
-                                                              BlendFunc_alpha_non_premultiplied);
-        renderer->addCommand(command);
-    }
-}
-
-void CAView::drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (m_bTopShadowed && m_bInsideBounds)
-    {
-        if (m_pTopShadowedQuad == nullptr)
-        {
-            m_pTopShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
-        }
-        
-        ccV3F_C4B_T2F_Quad& quad = *m_pTopShadowedQuad;
-        quad.tl = m_sQuad.tl;
-        quad.bl = m_sQuad.bl;
-        quad.tr = m_sQuad.tr;
-        quad.br = m_sQuad.br;
-        
-        GLfloat x1,x2,y1,y2;
-        x1 = 0;
-        y1 = m_obContentSize.height;
-        x2 = m_obContentSize.width;
-        y2 = m_obContentSize.height + 6;
-        
-        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
-        
-        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
-        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
-        
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
-        
-        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags,
-                                                              CAImage::CC_SHADOW_TOP_IMAGE(),
-                                                              quad,
-                                                              BlendFunc_alpha_non_premultiplied);
-        renderer->addCommand(command);
-    }
-}
-
-void CAView::drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (m_bBottomShadowed && m_bInsideBounds)
-    {
-        if (m_pBottomShadowedQuad == nullptr)
-        {
-            m_pBottomShadowedQuad = new ccV3F_C4B_T2F_Quad(m_sQuad);
-        }
-        
-        ccV3F_C4B_T2F_Quad& quad = *m_pBottomShadowedQuad;
-        quad.tl = m_sQuad.tl;
-        quad.bl = m_sQuad.bl;
-        quad.tr = m_sQuad.tr;
-        quad.br = m_sQuad.br;
-        
-        GLfloat x1,x2,y1,y2;
-        x1 = 0;
-        y1 = -6;
-        x2 = m_obContentSize.width;
-        y2 = 0;
-        
-        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
-        
-        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
-        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
-        
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
-        
-        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags,
-                                                              CAImage::CC_SHADOW_BOTTOM_IMAGE(),
-                                                              quad,
-                                                              BlendFunc_alpha_non_premultiplied);
-        renderer->addCommand(command);
-    }
-}
-
 void CAView::visitEve(void)
 {
     for (auto& subview : m_obSubviews)
@@ -1416,8 +1206,22 @@ void CAView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
     
     if(m_bInsideBounds)
     {
-        TrianglesCommand* command = this->getTrianglesCommand(renderer, transform, flags, m_pobImage, m_sQuad, m_sBlendFunc);
-        renderer->addCommand(command);
+        static unsigned short quadIndices[] = {0,1,2, 3,2,1};
+        
+        TrianglesCommand::Triangles triangles;
+        triangles.indices = quadIndices;
+        triangles.vertCount = 4;
+        triangles.indexCount = 6;
+        triangles.verts = (ccV3F_C4B_T2F*)&m_sQuad;
+
+        m_obTrianglesCommand.init(0,
+                               m_pobImage->getName(),
+                               this->getGLProgramState(),
+                               m_sBlendFunc,
+                               triangles,
+                               transform,
+                               flags);
+        renderer->addCommand(&m_obTrianglesCommand);
     }
 }
 
@@ -1565,8 +1369,6 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
         this->draw(renderer, m_tModelViewTransform, flags);
     }
     
-    m_iCurrTrianglesCommandsIndex = 0;
-    
     if (m_pCGNode)
     {
         m_pCGNode->visit(renderer, m_tModelViewTransform, flags);
@@ -1665,6 +1467,11 @@ void CAView::onEnter()
     {
         m_pCGNode->onEnter();
     }
+    
+    if (m_obOnEnterCallback)
+    {
+        m_obOnEnterCallback();
+    }
 }
 
 void CAView::onEnterTransitionDidFinish()
@@ -1695,6 +1502,11 @@ void CAView::onEnterTransitionDidFinish()
     {
         m_pContentContainer->viewOnEnterTransitionDidFinish();
     }
+    
+    if (m_obOnEnterTransitionDidFinishCallback)
+    {
+        m_obOnEnterTransitionDidFinishCallback();
+    }
 }
 
 void CAView::onExitTransitionDidStart()
@@ -1724,6 +1536,11 @@ void CAView::onExitTransitionDidStart()
     {
         m_pContentContainer->viewOnExitTransitionDidStart();
     }
+    
+    if (m_obOnExitTransitionDidStartCallback)
+    {
+        m_obOnExitTransitionDidStartCallback();
+    }
 }
 
 void CAView::onExit()
@@ -1748,6 +1565,11 @@ void CAView::onExit()
     if (m_pCGNode)
     {
         m_pCGNode->onExit();
+    }
+    
+    if (m_obOnExitCallback)
+    {
+        m_obOnExitCallback();
     }
 }
 
@@ -2487,6 +2309,207 @@ void CAView::setCameraMask(unsigned short mask, bool applyChildren)
         {
             var->setCameraMask(mask, applyChildren);
         }
+    }
+}
+
+void CAView::enabledLeftShadow(bool var)
+{
+    if (var)
+    {
+        if (m_pLeftShadow == nullptr)
+        {
+            GLProgramState* glProgramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+            m_pLeftShadow = new CAView::Shadow(CAImage::CC_SHADOW_LEFT_IMAGE(),
+                                               glProgramState,
+                                               BlendFunc_alpha_non_premultiplied);
+        }
+    }
+    else
+    {
+        CC_SAFE_DELETE(m_pLeftShadow);
+    }
+}
+
+void CAView::enabledRightShadow(bool var)
+{
+    if (var)
+    {
+        if (m_pRightShadow == nullptr)
+        {
+            GLProgramState* glProgramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+            m_pRightShadow = new CAView::Shadow(CAImage::CC_SHADOW_RIGHT_IMAGE(),
+                                               glProgramState,
+                                               BlendFunc_alpha_non_premultiplied);
+        }
+    }
+    else
+    {
+        CC_SAFE_DELETE(m_pRightShadow);
+    }
+}
+
+void CAView::enabledTopShadow(bool var)
+{
+    if (var)
+    {
+        if (m_pTopShadow == nullptr)
+        {
+            GLProgramState* glProgramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+            m_pTopShadow = new CAView::Shadow(CAImage::CC_SHADOW_TOP_IMAGE(),
+                                                glProgramState,
+                                                BlendFunc_alpha_non_premultiplied);
+        }
+    }
+    else
+    {
+        CC_SAFE_DELETE(m_pTopShadow);
+    }
+}
+
+void CAView::enabledBottomShadow(bool var)
+{
+    if (var)
+    {
+        if (m_pBottomShadow== nullptr)
+        {
+            GLProgramState* glProgramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+            m_pBottomShadow = new CAView::Shadow(CAImage::CC_SHADOW_BOTTOM_IMAGE(),
+                                              glProgramState,
+                                              BlendFunc_alpha_non_premultiplied);
+        }
+    }
+    else
+    {
+        CC_SAFE_DELETE(m_pBottomShadow);
+    }
+}
+
+void CAView::drawShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAView::Shadow* shadow)
+{
+    static unsigned short quadIndices[] = {0,1,2, 3,2,1};
+    
+    TrianglesCommand::Triangles triangles;
+    triangles.indices = quadIndices;
+    triangles.vertCount = 4;
+    triangles.indexCount = 6;
+    triangles.verts = (ccV3F_C4B_T2F*)&shadow->quad;
+    
+    TrianglesCommand* trianglesCommand = &shadow->trianglesCommand;
+    trianglesCommand->init(0,
+                           shadow->image->getName(),
+                           shadow->glProgramState,
+                           shadow->blendFunc,
+                           triangles,
+                           transform,
+                           flags);
+    renderer->addCommand(trianglesCommand);
+}
+
+void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
+{
+    if (m_pLeftShadow && m_bInsideBounds)
+    {
+        ccV3F_C4B_T2F_Quad& quad = m_pLeftShadow->quad;
+        quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = -12;
+        y1 = 0;
+        x2 = 0;
+        y2 = m_obContentSize.height;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(renderer, transform, flags, m_pLeftShadow);
+    }
+}
+
+void CAView::drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
+{
+    if (m_pRightShadow && m_bInsideBounds)
+    {
+        ccV3F_C4B_T2F_Quad& quad = m_pRightShadow->quad;
+        quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = m_obContentSize.width;
+        y1 = 0;
+        x2 = m_obContentSize.width + 12;
+        y2 = m_obContentSize.height;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(renderer, transform, flags, m_pRightShadow);
+    }
+}
+
+void CAView::drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
+{
+    if (m_pTopShadow && m_bInsideBounds)
+    {
+        ccV3F_C4B_T2F_Quad& quad = m_pTopShadow->quad;
+        quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = 0;
+        y1 = m_obContentSize.height;
+        x2 = m_obContentSize.width;
+        y2 = m_obContentSize.height + 6;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(renderer, transform, flags, m_pTopShadow);
+    }
+}
+
+void CAView::drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
+{
+    if (m_pBottomShadow && m_bInsideBounds)
+    {
+        ccV3F_C4B_T2F_Quad& quad = m_pBottomShadow->quad;
+        quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = 0;
+        y1 = -6;
+        x2 = m_obContentSize.width;
+        y2 = 0;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(renderer, transform, flags, m_pBottomShadow);
     }
 }
 

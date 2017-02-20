@@ -73,6 +73,10 @@ CGNode::CGNode(void)
 , m_pCAView(nullptr)
 , m_iCameraMask(1)
 , m_pApplication(CAApplication::getApplication())
+, m_obOnEnterCallback(nullptr)
+, m_obOnEnterTransitionDidFinishCallback(nullptr)
+, m_obOnExitCallback(nullptr)
+, m_obOnExitTransitionDidStartCallback(nullptr)
 {
     memset((void*)&m_sQuad, 0, sizeof(m_sQuad));
     
@@ -524,11 +528,7 @@ void CGNode::setShaderProgram(GLProgram *glProgram)
 {
     if (m_pGlProgramState == nullptr || (m_pGlProgramState && m_pGlProgramState->getGLProgram() != glProgram))
     {
-        CC_SAFE_RELEASE(m_pGlProgramState);
-        m_pGlProgramState = GLProgramState::getOrCreateWithGLProgram(glProgram);
-        m_pGlProgramState->retain();
-        
-        m_pGlProgramState->setBinding(this);
+        this->setGLProgramState(GLProgramState::getOrCreateWithGLProgram(glProgram));
     }
 }
 
@@ -541,9 +541,10 @@ void CGNode::setGLProgramState(GLProgramState* glProgramState)
 {
     if (glProgramState != m_pGlProgramState)
     {
+        CC_SAFE_RETAIN(glProgramState);
         CC_SAFE_RELEASE(m_pGlProgramState);
         m_pGlProgramState = glProgramState;
-        CC_SAFE_RETAIN(m_pGlProgramState);
+        
         
         if (m_pGlProgramState)
             m_pGlProgramState->setBinding(this);
@@ -928,7 +929,10 @@ void CGNode::onEnter()
         m_pCAView->onEnter();
     }
     
-    this->updateDraw();
+    if (m_obOnEnterCallback)
+    {
+        m_obOnEnterCallback();
+    }
 }
 
 void CGNode::onEnterTransitionDidFinish()
@@ -943,6 +947,11 @@ void CGNode::onEnterTransitionDidFinish()
     {
         m_pCAView->onEnterTransitionDidFinish();
     }
+    
+    if (m_obOnEnterTransitionDidFinishCallback)
+    {
+        m_obOnEnterTransitionDidFinishCallback();
+    }
 }
 
 void CGNode::onExitTransitionDidStart()
@@ -956,6 +965,11 @@ void CGNode::onExitTransitionDidStart()
     if (m_pCAView)
     {
         m_pCAView->onExitTransitionDidStart();
+    }
+    
+    if (m_obOnExitTransitionDidStartCallback)
+    {
+        m_obOnExitTransitionDidStartCallback();
     }
 }
 
@@ -974,6 +988,11 @@ void CGNode::onExit()
     if (m_pCAView)
     {
         m_pCAView->onExit();
+    }
+    
+    if (m_obOnExitCallback)
+    {
+        m_obOnExitCallback();
     }
 }
 

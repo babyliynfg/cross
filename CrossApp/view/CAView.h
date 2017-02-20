@@ -53,7 +53,6 @@ enum {
     kNodeOnCleanup
 };
 
-
 class CC_DLL CAView
 :public CAResponder
 ,public CARGBAProtocol
@@ -210,6 +209,22 @@ public:
 
     virtual bool isRunning();
 
+    void setOnEnterCallback(const std::function<void()>& callback) { m_obOnEnterCallback = callback; }
+    
+    const std::function<void()>& getOnEnterCallback() const { return m_obOnEnterCallback; }
+    
+    void setOnExitCallback(const std::function<void()>& callback) { m_obOnExitCallback = callback; }
+    
+    const std::function<void()>& getOnExitCallback() const { return m_obOnExitCallback; }
+    
+    void setonEnterTransitionDidFinishCallback(const std::function<void()>& callback) { m_obOnEnterTransitionDidFinishCallback = callback; }
+    
+    const std::function<void()>& getonEnterTransitionDidFinishCallback() const { return m_obOnEnterTransitionDidFinishCallback; }
+    
+    void setonExitTransitionDidStartCallback(const std::function<void()>& callback) { m_obOnExitTransitionDidStartCallback = callback; }
+    
+    const std::function<void()>& getonExitTransitionDidStartCallback() const { return m_obOnExitTransitionDidStartCallback; }
+    
     virtual void onEnter();
 
     virtual void onEnterTransitionDidFinish();
@@ -389,17 +404,7 @@ protected:
     void updateRotationQuat();
     
     void checkInsideBounds(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
-    void drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
-    void drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
-    void drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
-    void drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
-    TrianglesCommand* getTrianglesCommand(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAImage* image, const ccV3F_C4B_T2F_Quad& quad, const BlendFunc& blendFunc);
-    
+
 protected:
  
     CC_SYNTHESIZE(CAContentContainer*, m_pContentContainer, ContentContainer);
@@ -472,7 +477,6 @@ protected:
     bool                        m_bScissorRestored;
     DRect                       m_obSupviewScissorRect;
     
-    
     DRect                       m_obRect;
     bool                        m_bRectRotated;
     
@@ -489,27 +493,54 @@ protected:
     bool                        m_bInsideBounds;
     CAImage*                    m_pobImage;
     
-    std::vector<TrianglesCommand> m_vTrianglesCommands;
-    size_t                      m_iCurrTrianglesCommandsIndex;
+    TrianglesCommand            m_obTrianglesCommand;
     
     CustomCommand               m_obBeforeDrawCommand;
     CustomCommand               m_obAfterDrawCommand;
-    
-    
-    ccV3F_C4B_T2F_Quad*         m_pLeftShadowedQuad;
-    ccV3F_C4B_T2F_Quad*         m_pRightShadowedQuad;
-    ccV3F_C4B_T2F_Quad*         m_pTopShadowedQuad;
-    ccV3F_C4B_T2F_Quad*         m_pBottomShadowedQuad;
-    
-    bool                        m_bLeftShadowed;
-    bool                        m_bRightShadowed;
-    bool                        m_bTopShadowed;
-    bool                        m_bBottomShadowed;
     
     CGNode*                     m_pCGNode;
     CGNode*                     m_pParentCGNode;
     
     CAApplication*              m_pApplication;
+    
+protected:
+    
+    struct Shadow
+    {
+        Shadow(CAImage* image, GLProgramState* glProgramState, BlendFunc blendFunc)
+        : image(image)
+        , glProgramState(glProgramState)
+        , blendFunc(blendFunc)
+        {
+            CC_SAFE_RETAIN(glProgramState);
+        }
+        ~Shadow()
+        {
+            CC_SAFE_RELEASE(glProgramState);
+        }
+        CAImage*            image;
+        ccV3F_C4B_T2F_Quad  quad;
+        BlendFunc           blendFunc;
+        TrianglesCommand    trianglesCommand;
+        GLProgramState*     glProgramState;
+    };
+    
+    void drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
+    
+    void drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
+    
+    void drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
+    
+    void drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
+    
+    void drawShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAView::Shadow* shadow);
+    
+    CAView::Shadow*             m_pLeftShadow;
+    CAView::Shadow*             m_pRightShadow;
+    CAView::Shadow*             m_pTopShadow;
+    CAView::Shadow*             m_pBottomShadow;
+    
+protected:
     
     friend class                CGNode;
     
