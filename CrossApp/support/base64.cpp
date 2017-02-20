@@ -8,14 +8,14 @@
 namespace CrossApp
 {
     
-    unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     
-    int _base64Decode(const unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
+    int _base64Decode(const char *input, int input_len, char *output, int *output_len )
     {
         static char inalphabet[256], decoder[256];
         int i, bits, c = 0, char_count, errors = 0;
-        unsigned int input_idx = 0;
-        unsigned int output_idx = 0;
+        int input_idx = 0;
+        int output_idx = 0;
         
         for (i = (sizeof alphabet) - 1; i >= 0 ; i--) {
             inalphabet[alphabet[i]] = 1;
@@ -73,12 +73,12 @@ namespace CrossApp
         return errors;
     }
     
-    void _base64Encode( const unsigned char *input, unsigned int input_len, char *output )
+    void _base64Encode( const char *input, int input_len, char *output )
     {
-        unsigned int char_count;
-        unsigned int bits;
-        unsigned int input_idx = 0;
-        unsigned int output_idx = 0;
+        int char_count;
+        int bits;
+        int input_idx = 0;
+        int output_idx = 0;
         
         char_count = 0;
         bits = 0;
@@ -116,36 +116,60 @@ namespace CrossApp
         output[ output_idx++ ] = 0;
     }
     
-    int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char **out)
+    std::string base64Decode(const std::string& string)
     {
-        unsigned int outLength = 0;
+        std::string result;
         
+        int outLength = 0;
         //should be enough to store 6-bit buffers in 8-bit buffers
-        *out = (unsigned char*)malloc(inLength / 4 * 3 + 1);
-        if( *out ) {
-            int ret = _base64Decode(in, inLength, *out, &outLength);
+        char* out = (char*)malloc(string.length() / 4 * 3 + 1);
+        if( *out )
+        {
+            int ret = _base64Decode(string.c_str(), (int)string.length(), out, &outLength);
             
             if (ret > 0 )
             {
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
                 printf("Base64Utils: error decoding");
 #endif
-                free(*out);
-                *out = nullptr;            
-                outLength = 0;
+            }
+            else
+            {
+                result.resize(outLength);
+                for (int i=0; i<outLength; i++)
+                {
+                    result[i] = out[i];
+                }
             }
         }
-        return outLength;
+        
+        free(out);
+        outLength = 0;
+        
+        return result;
     }
     
-    int base64Encode(const unsigned char *in, unsigned int inLength, char **out) {
-        unsigned int outLength = (inLength + 2) / 3 * 4;
+    std::string base64Encode(const std::string& string)
+    {
+        std::string result;
         
+        int outLength = ((int)string.length() + 2) / 3 * 4;
         //should be enough to store 8-bit buffers in 6-bit buffers
-        *out = (char*)malloc(outLength+1);
-        if( *out ) {
-            _base64Encode(in, inLength, *out);
+        char* out = (char*)malloc(outLength + 1);
+        if( out )
+        {
+            _base64Encode(string.c_str(), (int)string.length(), out);
         }
-        return outLength;
+        
+        result.resize(outLength);
+        for (int i=0; i<outLength; i++)
+        {
+            result[i] = out[i];
+        }
+        
+        free(out);
+        outLength = 0;
+        
+        return result;
     }
 }//namespace   CrossApp 

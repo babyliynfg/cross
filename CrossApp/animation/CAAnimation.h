@@ -20,6 +20,7 @@ namespace CAAnimation
         float dt{0.0f};
         float now{0.0f};
         float total{0.0f};
+        bool  end{false};
     };
     
     typedef std::function<void(const CAAnimation::Model&)> Callback;

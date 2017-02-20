@@ -127,13 +127,14 @@ void CAVideoPlayerControlView::buildCtrlViews()
     m_playSlider->setThumbTintImage(barImage);
     bottomPanel->addSubview(m_playSlider);
     
-    m_playSlider->setTarget([=](CASlider* slider, float value){
+    m_playSlider->setTarget([=](float value){
         
         m_playTimeLabel->setText(formatTimeInterval(m_glView->getDuration() * m_playSlider->getValue(), false).append(" / ").append(formatTimeInterval(m_glView->getDuration() - 1, false)));
         
     });
     
-    m_playSlider->setTargetForTouchUpSide([=](CASlider* slider, float value){
+    m_playSlider->setTargetForTouchUpSide([=](float value)
+    {
         
         float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
         m_glView->setPosition(moviePosition);
@@ -152,7 +153,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
     m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButton::Type::Custom);
     m_playButton->setImageForState(CAControl::State::Normal, backImage);
     m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
-    m_playButton->addTarget([=](CAButton* btn){
+    m_playButton->addTarget([=]
+    {
         if (m_glView == NULL)
             return;
         

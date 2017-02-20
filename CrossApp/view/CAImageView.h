@@ -72,8 +72,6 @@ protected:
 
     void update(float dt);
     
-    virtual void asyncFinish(CAObject* var);
-    
     virtual void setContentSize(const DSize& contentSize);
     
     virtual void updateByScaleType();

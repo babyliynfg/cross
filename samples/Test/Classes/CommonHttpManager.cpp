@@ -1,11 +1,11 @@
  
 #include "CommonHttpManager.h"
 
-static const char* common_loadingBackground = "dm_resource/loading_background.png";
-static const char* common_loadingIcon = "dm_resource/loading_icon.png";
-
 #define REQUEST_JSON_COUNT 2
-#define REQUEST_IMAGE_COUNT 4
+#define REQUEST_IMAGE_COUNT 2
+
+static const char* loading_bg              = "";
+static const char* loading_icon            = "";
 
 static std::map<std::string, CAObject*> _httpResponses;
 
@@ -29,18 +29,12 @@ public:
     
     void removeImage(CAImage* image);
     
-protected:
-    
-    CommonImageCacheManager();
-    
-    virtual ~CommonImageCacheManager();
-    
 private:
     
     CADeque<CAImage*> m_dImageQueue;
 };
 
-static CommonImageCacheManager* _imageCacheManager = NULL;
+static CommonImageCacheManager* _imageCacheManager = nullptr;
 
 CommonImageCacheManager* CommonImageCacheManager::getInstance()
 {
@@ -60,15 +54,6 @@ void CommonImageCacheManager::destroyInstance()
     }
 }
 
-CommonImageCacheManager::CommonImageCacheManager()
-{
-    
-}
-
-CommonImageCacheManager::~CommonImageCacheManager()
-{
-    
-}
 
 void CommonImageCacheManager::pushImage(CAImage* image)
 {
@@ -77,11 +62,10 @@ void CommonImageCacheManager::pushImage(CAImage* image)
     
     CAViewAnimation::beginAnimations("");
     CAViewAnimation::setAnimationDuration(10);
-    CAViewAnimation::setAnimationDidStopSelector([=]()
+    CAViewAnimation::setAnimationDidStopSelector([&]
     {
         CAApplication::getApplication()->getImageCache()->removeImage(m_dImageQueue.front());
         m_dImageQueue.popFront();
-        CCLog("------- %ld", m_dImageQueue.size());
     });
     CAViewAnimation::commitAnimations();
 }
@@ -91,14 +75,13 @@ void CommonImageCacheManager::removeImage(CAImage* image)
     m_dImageQueue.eraseObject(image);
 }
 
-
 #pragma CommonHttpManager
 
-CommonHttpManager* _HttpManager = NULL;
+CommonHttpManager* _HttpManager = nullptr;
 
 CommonHttpManager* CommonHttpManager::getInstance()
 {
-    if (_HttpManager == NULL)
+    if (_HttpManager == nullptr)
     {
         _HttpManager = new CommonHttpManager();
     }
@@ -110,30 +93,30 @@ void CommonHttpManager::destroyInstance()
     if (_HttpManager)
     {
         delete _HttpManager;
-        _HttpManager = NULL;
+        _HttpManager = nullptr;
     }
 }
 
 CommonHttpManager::CommonHttpManager()
-: m_pActivityIndicatorView(NULL)
+: m_pActivityIndicatorView(nullptr)
 {
     for (int i=0; i<REQUEST_JSON_COUNT; i++)
     {
         CAHttpClient* httpClient = CAHttpClient::getInstance(15 - i);
-        httpClient->setTimeoutForConnect(10);
-        httpClient->setTimeoutForRead(10);
+        httpClient->setTimeoutForConnect(5);
+        httpClient->setTimeoutForRead(5);
         m_pHttpJsonClients.push_back(httpClient);
     }
     for (int i=REQUEST_JSON_COUNT; i<REQUEST_JSON_COUNT + REQUEST_IMAGE_COUNT; i++)
     {
         CAHttpClient* httpClient = CAHttpClient::getInstance(15 - i);
-        httpClient->setTimeoutForConnect(10);
-        httpClient->setTimeoutForRead(10);
+        httpClient->setTimeoutForConnect(5);
+        httpClient->setTimeoutForRead(5);
         m_pHttpImageClients.push_back(httpClient);
     }
     
 
-    std::string fullPath = FileUtils::getInstance()->getWritablePath() + "crossapp_url.db";
+    std::string fullPath = FileUtils::getInstance()->getWritablePath() + "commonHttpManager.db";
     localStorageInit(fullPath.c_str());
     CommonImageCacheManager::getInstance();
 }
@@ -153,9 +136,8 @@ CommonHttpManager::~CommonHttpManager()
 
 void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
                                  std::string> key_value,
-                                 CAObject* pTarget,
-                                 SEL_CommonHttpJson pSelector,
-                                 bool isLoading)
+                                 const JsonCallback& callback,
+                                 CAView* view)
 {
     std::string getRul = url;
     if (!key_value.empty())
@@ -173,26 +155,93 @@ void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
         }
         while (1);
     }
-
+    CCLog("url==%s",getRul.c_str());
     CAHttpRequest* httpRequest = new CAHttpRequest();
     httpRequest->setUrl(getRul.c_str());
     httpRequest->setRequestType(CAHttpRequest::Type::Get);
-    CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJson);
-    httpRequest->setResponseCallback(std::bind(&CommonHttpResponseCallBack::onResponse, callBack, std::placeholders::_1, std::placeholders::_2));
+    
+    httpRequest->setResponseCallback([=](CAHttpClient* client, CAHttpResponse* response)
+    {
+        if (response->isSucceed())
+        {
+            std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
+            if (!data.empty())
+            {
+                localStorageSetItem(MD5(url).md5().c_str(), data.c_str());
+                
+                CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n",data.c_str());
+                
+                CSJson::Reader read;
+                CSJson::Value root;
+                bool succ = read.parse(data, root);
+                if (succ == false)
+                {
+                    CCLog("GetParseError \n");
+                }
+                
+                if (callback)
+                {
+                    callback(CommonHttpManager::ResponseStatus::Succeed, root);
+                }
+                
+            }
+            else
+            {
+                if (callback)
+                {
+                    callback(CommonHttpManager::ResponseStatus::Faild, CSJson::Value());
+                }
+            }
+            
+        }
+        else
+        {
+            const char* data = localStorageGetItem(MD5(url).md5().c_str());
+            
+            do
+            {
+                CC_BREAK_IF(data == NULL);
+                CSJson::Reader read;
+                CSJson::Value root;
+                bool succ = read.parse(data, root);
+                if (succ == false)
+                {
+                    CCLog("GetParseError \n");
+                    break;
+                }
+                
+                if (callback)
+                {
+                    callback(CommonHttpManager::ResponseStatus::Succeed, root);
+                }
+                return;
+            }
+            while (0);
+            
+            if (callback)
+            {
+                callback(CommonHttpManager::ResponseStatus::Faild, CSJson::Value());
+            }
+        }
+
+    });
     
     std::sort(m_pHttpJsonClients.begin(), m_pHttpJsonClients.end(), compareHttpClient);
     m_pHttpJsonClients.front()->send(httpRequest);
     httpRequest->release();
     
-    if (isLoading)
+    if (view)
     {
-        this->starActivityIndicatorView();
+        this->starActivityIndicatorView(view);
     }
 }
 
 
 
-void CommonHttpManager::send_post(const std::string& url,std::map<std::string,std::string> key_value,CAObject* pTarget,SEL_CommonHttpJson pSelector,bool isLoading)
+void CommonHttpManager::send_post(const std::string& url,
+                                  std::map<std::string,std::string> key_value,
+                                  const JsonCallback& callback,
+                                  CAView* view)
 {
     std::string postData;
     if (!key_value.empty())
@@ -208,26 +257,69 @@ void CommonHttpManager::send_post(const std::string& url,std::map<std::string,st
         }
         while (1);
     }
-    //CCLog("---%s %s",url.c_str(), postData.c_str());
+    CCLog("send_post url:%s postData:%s",url.c_str(), postData.c_str());
 
     CAHttpRequest* httpRequest = new CAHttpRequest();
     httpRequest->setUrl(url.c_str());
     httpRequest->setRequestType(CAHttpRequest::Type::Post);
-    httpRequest->setRequestData(postData.c_str(), postData.length());
-    CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJsonNoCache);
-    httpRequest->setResponseCallback(std::bind(&CommonHttpResponseCallBack::onResponse, callBack, std::placeholders::_1, std::placeholders::_2));
+    httpRequest->setRequestData(postData.c_str(), (unsigned int)postData.length());
+    
+    httpRequest->setResponseCallback([=](CAHttpClient* client, CAHttpResponse* response)
+    {
+        if (response->isSucceed())
+        {
+            std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
+            if (!data.empty())
+            {
+                CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n", data.c_str());
+                
+                CSJson::Reader read;
+                CSJson::Value root;
+                bool succ = read.parse(data, root);
+                if (succ == false)
+                {
+                    CCLog("GetParseError \n");
+                }
+                
+                if (callback)
+                {
+                    callback(CommonHttpManager::ResponseStatus::Succeed, root);
+                }
+            }
+            else
+            {
+                if (callback)
+                {
+                    callback(CommonHttpManager::ResponseStatus::Faild, CSJson::Value());
+                }
+            }
+            
+        }
+        else
+        {
+            CCLog("ResponseCode:%d, Error:%s",response->getResponseCode(),response->getErrorBuffer());
+            if (callback)
+            {
+                callback(CommonHttpManager::ResponseStatus::Faild, CSJson::Value());
+            }
+        }
+    });
     
     std::sort(m_pHttpJsonClients.begin(), m_pHttpJsonClients.end(), compareHttpClient);
     m_pHttpJsonClients.front()->send(httpRequest);
     httpRequest->release();
     
-    if (isLoading)
+    if (view)
     {
-        this->starActivityIndicatorView();
+        this->starActivityIndicatorView(view);
     }
 }
 
-void CommonHttpManager::send_postFile(const std::string& url,std::map<std::string, std::string> key_value,const std::string& file,CAObject* pTarget,SEL_CommonHttpJson pSelector,bool isLoading)
+void CommonHttpManager::send_postFile(const std::string& url,
+                                      std::map<std::string, std::string> key_value,
+                                      const std::string& file,
+                                      const JsonCallback& callback,
+                                      CAView* view)
 {
     std::string postData;
     if (!key_value.empty())
@@ -243,40 +335,104 @@ void CommonHttpManager::send_postFile(const std::string& url,std::map<std::strin
         }
         while (1);
     }
-    
+    CCLog("url==%s",postData.c_str());
     CAHttpRequest* httpRequest = new CAHttpRequest();
     httpRequest->setUrl(url.c_str());
     httpRequest->setRequestType(CAHttpRequest::Type::PostFile);
-    httpRequest->setRequestData(postData.c_str(), postData.length());
+    httpRequest->setRequestData(postData.c_str(), (unsigned int)postData.length());
     httpRequest->setFileNameToPost(file);
-    CommonHttpResponseCallBack* callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, CommonHttpResponseCallBack::CommonHttpResponseJsonNoCache);
-    httpRequest->setResponseCallback(std::bind(&CommonHttpResponseCallBack::onResponse, callBack, std::placeholders::_1, std::placeholders::_2));
+
+    httpRequest->setResponseCallback([=](CAHttpClient* client, CAHttpResponse* response)
+    {
+        if (response->isSucceed())
+        {
+            std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
+            if (!data.empty())
+            {
+                CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n", data.c_str());
+                
+                CSJson::Reader read;
+                CSJson::Value root;
+                bool succ = read.parse(data, root);
+                if (succ == false)
+                {
+                    CCLog("GetParseError \n");
+                }
+                
+                if (callback)
+                {
+                    callback(CommonHttpManager::ResponseStatus::Succeed, root);
+                }
+            }
+            else
+            {
+                if (callback)
+                {
+                    callback(CommonHttpManager::ResponseStatus::Faild, CSJson::Value());
+                }
+            }
+            
+        }
+        else
+        {
+            CCLog("ResponseCode:%d, Error:%s",response->getResponseCode(),response->getErrorBuffer());
+            if (callback)
+            {
+                callback(CommonHttpManager::ResponseStatus::Faild, CSJson::Value());
+            }
+        }
+    });
     
     std::sort(m_pHttpJsonClients.begin(), m_pHttpJsonClients.end(), compareHttpClient);
     m_pHttpJsonClients.front()->send(httpRequest);
     httpRequest->release();
     
-    if (isLoading)
+    if (view)
     {
-        this->starActivityIndicatorView();
+        this->starActivityIndicatorView(view);
     }
     
 }
 
-void CommonHttpManager::get_image(const std::string& url,CAObject* pTarget,SEL_CommonHttpImage pSelector,const HttpGetImageType& type)
+void CommonHttpManager::get_image(const std::string& url,
+                                  const ImageCallback& callback,
+                                  ImageCacheType type)
 {
     std::string key = MD5(url).md5();
     
     CAImage* image = CAApplication::getApplication()->getImageCache()->imageForKey(key);
-    CommonHttpResponseCallBack* callBack = NULL;
-    
+
     if (image)
     {
-        (pTarget->*pSelector)(image, url.c_str());
+        if (callback)
+        {
+            callback(image, url);
+        }
     }
     else if (_httpResponses.count(url) > 0)
     {
-        callBack = CommonHttpResponseCallBack::scheduleCallBack(pTarget, pSelector, url);
+        std::string animationID = crossapp_format_string("wait:%s", url.c_str());
+        CAAnimation::schedule([=](const CAAnimation::Model& model)
+        {
+            std::string key = MD5(url).md5();
+            
+            CAImage* image = CAApplication::getApplication()->getImageCache()->imageForKey(key);
+            
+            if (image == nullptr)
+            {
+                key = FileUtils::getInstance()->getWritablePath() + "image/" + key;
+                image = CAApplication::getApplication()->getImageCache()->imageForKey(key);
+            }
+            
+            if (image)
+            {
+                if (callback)
+                {
+                    callback(image, url);
+                }
+                CAAnimation::unschedule(animationID);
+            }
+        }, animationID, 1.0f);
     }
     else
     {
@@ -295,7 +451,13 @@ void CommonHttpManager::get_image(const std::string& url,CAObject* pTarget,SEL_C
         
         if (pSize > 1)
         {
-            callBack = CommonHttpResponseCallBack::imagePathAsync(pTarget, pSelector, imagePath, url, type);
+            CAApplication::getApplication()->getImageCache()->addImageFullPathAsync(imagePath, [=](CAImage* image)
+            {
+                if (callback)
+                {
+                    callback(image, url);
+                }
+            });
         }
         else
         {
@@ -305,8 +467,55 @@ void CommonHttpManager::get_image(const std::string& url,CAObject* pTarget,SEL_C
             std::vector<std::string> header;
             //header.push_back("Referer:");
             httpRequest->setHeaders(header);
-            callBack = CommonHttpResponseCallBack::create(pTarget, pSelector, url, type);
-            httpRequest->setResponseCallback(std::bind(&CommonHttpResponseCallBack::onResponse, callBack, std::placeholders::_1, std::placeholders::_2));
+            
+            httpRequest->setResponseCallback([=](CAHttpClient* client, CAHttpResponse* response)
+            {
+                if (response->isSucceed())
+                {
+                    std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
+                    unsigned char* pData = ((unsigned char*)(const_cast<char*>(data.c_str())));
+                    size_t pSize = data.length();
+                    
+                    std::string key = MD5(url).md5();
+                    CAImage* image = nullptr;
+                    
+                    if (type != ImageCacheType::NoAllCache)
+                    {
+                        std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/";
+                        FileUtils::getInstance()->createDirectory(imagePath.c_str());
+                        imagePath = imagePath + key;
+                        FILE *fp = fopen(string(imagePath).c_str(), "wb+");
+                        if (fp)
+                        {
+                            fwrite(pData, sizeof(unsigned char), pSize, fp);
+                            fclose(fp);
+                        }
+                        
+                        CAApplication::getApplication()->getImageCache()->addImageFullPathAsync(imagePath, [=](CAImage* image)
+                        {
+                            if (callback)
+                            {
+                                callback(image, url);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        image = CAImage::createWithImageData(pData, pSize, key);
+                        
+                        if (callback)
+                        {
+                            callback(image, url);
+                        }
+                    }
+                    
+                    if (type != ImageCacheType::Default)
+                    {
+                        CommonImageCacheManager::getInstance()->pushImage(image);
+                    }
+                }
+
+            });
             
             std::sort(m_pHttpImageClients.begin(), m_pHttpImageClients.end(), compareHttpClient);
             m_pHttpImageClients.front()->send(httpRequest);
@@ -315,24 +524,24 @@ void CommonHttpManager::get_image(const std::string& url,CAObject* pTarget,SEL_C
     }
 }
 
-void CommonHttpManager::starActivityIndicatorView()
+void CommonHttpManager::starActivityIndicatorView(CAView* view)
 {
-    if (m_pActivityIndicatorView == NULL)
+    if (m_pActivityIndicatorView == nullptr)
     {
-        CAWindow* window = CAApplication::getApplication()->getRootWindow();
-        DRect rect = window->getBounds();
+        m_pActivityIndicatorView = CAActivityIndicatorView::createWithLayout(DLayoutFill);
+        CC_SAFE_RETAIN(m_pActivityIndicatorView);
+        m_pActivityIndicatorView->setStyle(CAActivityIndicatorView::Style::Image);
         
-        m_pActivityIndicatorView = CAActivityIndicatorView::createWithFrame(rect);
-        CAImageView* indicator = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_W(0, 50), DVerticalLayout_T_H(0, 50)));
-        indicator->setImage(CAImage::create(common_loadingIcon));
-        m_pActivityIndicatorView->setActivityIndicatorView(indicator);
-        CAView* bg = CAView::createWithFrame(DRect(0, 0, 275, 300), CAColor_clear);
-        CAImageView* bg2 = CAImageView::createWithFrame(DRect(0, 0, 275, 100));
-        bg2->setImage(CAImage::create(common_loadingBackground));
-        bg->addSubview(bg2);
+        CAImageView* bg = CAImageView::createWithLayout(DLayout(DHorizontalLayout_W_C(270, 0.5), DVerticalLayout_H_C(151, 0.5)));
+        bg->setImage(CAImage::create(loading_bg));
         m_pActivityIndicatorView->setActivityBackView(bg);
-        m_pActivityIndicatorView->setLoadingMinTime(0.3f);
-        window->insertSubview(m_pActivityIndicatorView, CAWindowZOrderTop);
+        
+        CAImageView* imageView = CAImageView::createWithImage(CAImage::create(loading_icon));
+        imageView->setCenter(DRect(0, 0, 64, 64));
+        m_pActivityIndicatorView->setActivityIndicatorView(imageView);
+        m_pActivityIndicatorView->setActivityIndicatorOffset(DSize(-60, 0));
+
+        view->insertSubview(m_pActivityIndicatorView, CAWindowZOrderTop);
     }
     else
     {
@@ -345,355 +554,28 @@ void CommonHttpManager::stopActivityIndicatorView()
     if (m_pActivityIndicatorView)
     {
         m_pActivityIndicatorView->stopAnimating();
+        m_pActivityIndicatorView->removeFromSuperview();
+        CC_SAFE_RELEASE_NULL(m_pActivityIndicatorView);
     }
 }
 
-
-#pragma CommonHttpResponseCallBack
-
-CommonHttpResponseCallBack::~CommonHttpResponseCallBack()
-{
-    _httpResponses.erase(m_sUrl);
-    CC_SAFE_RELEASE_NULL(m_pTarget);
-}
-
-CommonHttpResponseCallBack::CommonHttpResponseCallBack(CAObject* pTarget, SEL_CommonHttpJson pSelector, const std::string& url, const CommonHttpResponseType& type)
-:m_eType(type)
-,m_pTarget(pTarget)
-,m_pSelectorJson(pSelector)
-,m_pSelectorImage(NULL)
-,m_sUrl(url)
-,m_eGetImageType(HttpGetImageDefault)
-{
-    CC_SAFE_RETAIN(pTarget);
-    if (_httpResponses.count(m_sUrl) == 0)
-    {
-        _httpResponses[m_sUrl] = m_pTarget;
-    }
-}
-
-CommonHttpResponseCallBack* CommonHttpResponseCallBack::create(CAObject* pTarget, SEL_CommonHttpJson pSelector, const std::string& url, const CommonHttpResponseType& type)
-{
-    CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url, type);
-    callBack->autorelease();
-    return callBack;
-}
-
-
-
-CommonHttpResponseCallBack::CommonHttpResponseCallBack(CAObject* pTarget, SEL_CommonHttpImage pSelector, const std::string& url, const HttpGetImageType& type)
-:m_eType(CommonHttpResponseImage)
-,m_pTarget(pTarget)
-,m_pSelectorJson(NULL)
-,m_pSelectorImage(pSelector)
-,m_sUrl(url)
-,m_eGetImageType(type)
-{
-    CC_SAFE_RETAIN(m_pTarget);
-    if (_httpResponses.count(m_sUrl) == 0)
-    {
-        _httpResponses[m_sUrl] = m_pTarget;
-    }
-}
-
-CommonHttpResponseCallBack* CommonHttpResponseCallBack::create(CAObject* pTarget,SEL_CommonHttpImage pSelector,const std::string& url,const HttpGetImageType& type)
-{
-    CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url, type);
-    callBack->autorelease();
-    return callBack;
-}
-
-CommonHttpResponseCallBack* CommonHttpResponseCallBack::scheduleCallBack(CAObject* pTarget,SEL_CommonHttpImage pSelector,const std::string& url)
-{
-    if (pTarget == NULL) return NULL;
-    CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url);
-    callBack->m_nTimes = 0;
-    CAScheduler::getScheduler()->scheduleUpdate(callBack, CAScheduler::PRIORITY_SYSTEM, false);
-    return callBack;
-}
-
-void CommonHttpResponseCallBack::update(float dt)
-{
-    m_nTimes++;
-    
-    std::string key = MD5(m_sUrl).md5();
-    
-    CAImage* image = CAApplication::getApplication()->getImageCache()->imageForKey(key);
-    
-    if (image == NULL)
-    {
-        key = FileUtils::getInstance()->getWritablePath() + "image/" + key;
-        image = CAApplication::getApplication()->getImageCache()->imageForKey(key);
-    }
-    
-    if (image && m_pTarget)
-    {
-        (m_pTarget->*m_pSelectorImage)(image, m_sUrl.c_str());
-    }
-    
-    if (m_nTimes > 100 || image)
-    {
-        CAScheduler::getScheduler()->unscheduleUpdate(this);
-        this->release();
-    }
-}
-
-CommonHttpResponseCallBack* CommonHttpResponseCallBack::imagePathAsync(CrossApp::CAObject *pTarget,SEL_CommonHttpImage pSelector,const std::string &path,const std::string& url,const HttpGetImageType& type)
-{
-    if (pTarget == NULL) return NULL;
-    CommonHttpResponseCallBack* callBack = new CommonHttpResponseCallBack(pTarget, pSelector, url, type);
-    CAApplication::getApplication()->getImageCache()->addImageFullPathAsync(path, [=](CAImage* image)
-    {
-        callBack->imagePathAsyncFinish(image);
-    });
-    return callBack;
-}
-
-void CommonHttpResponseCallBack::imagePathAsyncFinish(CAObject* var)
-{
-    CAImage* image = static_cast<CAImage*>(var);
-    if (image)
-    {
-        if (m_pTarget)
-        {
-            (m_pTarget->*m_pSelectorImage)(image, m_sUrl.c_str());
-        }
-        
-        if (m_eGetImageType != HttpGetImageDefault)
-        {
-            CommonImageCacheManager::getInstance()->pushImage(image);
-        }
-    }
-    this->release();
-}
-
-
-void CommonHttpResponseCallBack::onResponse(CAHttpClient* client, CAHttpResponse* response)
-{
-    CC_RETURN_IF(!m_pTarget);
-    switch (m_eType)
-    {
-        case CommonHttpResponseJsonNoCache:
-            this->onResponseJsonNoCache(client, response);
-            break;
-        case CommonHttpResponseJson:
-            this->onResponseJson(client, response);
-            break;
-        case CommonHttpResponseImage:
-            this->onResponseImage(client, response);
-            break;
-        default:
-            break;
-    }
-}
-
-void CommonHttpResponseCallBack::onResponseJsonNoCache(CAHttpClient* client, CAHttpResponse* response)
-{
-    CommonHttpManager::getInstance()->stopActivityIndicatorView();
-    
-    CC_RETURN_IF(!m_pSelectorJson);
-    if (response->isSucceed())
-    {
-        std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
-        if (!data.empty())
-        {
-            if (CAViewController* viewController = dynamic_cast<CAViewController*>(m_pTarget))
-            {
-                CC_RETURN_IF(viewController->isViewRunning() == false);
-            }
-            
-            //CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n",data.c_str());
-            
-            CSJson::Reader read;
-            CSJson::Value root;
-            bool succ = read.parse(data, root);
-            if (succ == false)
-            {
-                CCLog("GetParseError \n");
-            }
-            
-            if (m_pTarget)
-            {
-                (m_pTarget->*m_pSelectorJson)(HttpResponseSucceed, root);
-            }
-        }
-        else
-        {
-            CSJson::Value root;
-            if (m_pTarget)
-            {
-                (m_pTarget->*m_pSelectorJson)(HttpResponseFaild, root);
-            }
-        }
-        
-    }
-    else
-    {
-        CSJson::Value root;
-        if (m_pTarget)
-        {
-            (m_pTarget->*m_pSelectorJson)(HttpResponseFaild, root);
-        }
-    }
-}
-
-void CommonHttpResponseCallBack::onResponseJson(CAHttpClient* client, CAHttpResponse* response)
-{
-    CommonHttpManager::getInstance()->stopActivityIndicatorView();
-    
-    CC_RETURN_IF(!m_pSelectorJson);
-    if (response->isSucceed())
-    {
-        std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
-        if (!data.empty())
-        {
-            localStorageSetItem(MD5(m_sUrl).md5().c_str(), data.c_str());
-            
-            if (CAViewController* viewController = dynamic_cast<CAViewController*>(m_pTarget))
-            {
-                CC_RETURN_IF(viewController->isViewRunning() == false);
-            }
-            
-            //CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n",data.c_str());
-            
-            CSJson::Reader read;
-            CSJson::Value root;
-            bool succ = read.parse(data, root);
-            if (succ == false)
-            {
-                CCLog("GetParseError \n");
-            }
-            
-            if (m_pTarget)
-            {
-                (m_pTarget->*m_pSelectorJson)(HttpResponseSucceed, root);
-            }
-        }
-        else
-        {
-            if (CAViewController* viewController = dynamic_cast<CAViewController*>(m_pTarget))
-            {
-                CC_RETURN_IF(viewController->isViewRunning() == false);
-            }
-            
-            CSJson::Value root;
-            if (m_pTarget)
-            {
-                (m_pTarget->*m_pSelectorJson)(HttpResponseFaild, root);
-            }
-        }
-        
-    }
-    else
-    {
-        if (CAViewController* viewController = dynamic_cast<CAViewController*>(m_pTarget))
-        {
-            CC_RETURN_IF(viewController->isViewRunning() == false);
-        }
-        
-        const char* data = localStorageGetItem(MD5(m_sUrl).md5().c_str());
-
-        do
-        {
-            CC_BREAK_IF(data == NULL);
-            CSJson::Reader read;
-            CSJson::Value root;
-            bool succ = read.parse(data, root);
-            if (succ == false)
-            {
-                CCLog("GetParseError \n");
-                break;
-            }
-            
-            if (m_pTarget)
-            {
-                (m_pTarget->*m_pSelectorJson)(HttpResponseSucceed, root);
-            }
-            return;
-        }
-        while (0);
-        
-        CSJson::Value root;
-        if (m_pTarget)
-        {
-            (m_pTarget->*m_pSelectorJson)(HttpResponseFaild, root);
-        }
-    }
-}
-
-void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpResponse* response)
-{
-    CC_RETURN_IF(!m_pSelectorImage);
-    if (response->isSucceed())
-    {
-        std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
-        unsigned char* pData = ((unsigned char*)(const_cast<char*>(data.c_str())));
-        size_t pSize = data.length();
-
-        std::string key = MD5(m_sUrl).md5();
-        CAImage* image = NULL;
-
-        
-
-        if (m_eGetImageType != HttpGetImageNoAllCache)
-        {
-            std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/";
-            FileUtils::getInstance()->createDirectory(imagePath.c_str());
-            FILE *fp = fopen(string(imagePath + key).c_str(), "wb+");
-            if (fp)
-            {
-                fwrite(pData, sizeof(unsigned char), pSize, fp);
-                fclose(fp);
-            }
-            
-            CommonHttpResponseCallBack::imagePathAsync(m_pTarget, m_pSelectorImage, string(imagePath + key).c_str(), m_sUrl, m_eGetImageType);
-        }
-        else
-        {
-            image = CAImage::createWithImageData(pData, pSize, key);
-            
-            if (m_pTarget && m_pSelectorImage && image)
-            {
-                (m_pTarget->*m_pSelectorImage)(image, m_sUrl.c_str());
-            }
-        }
-
-        if (m_eGetImageType != HttpGetImageDefault)
-        {
-            CommonImageCacheManager::getInstance()->pushImage(image);
-        }
-    }
-}
 
 #pragma CommonUrlImageView
 
-CommonUrlImageViewDelegate::CommonUrlImageViewDelegate()
-{
-
-}
-
-CommonUrlImageViewDelegate::~CommonUrlImageViewDelegate()
-{
-
-}
-
 CommonUrlImageView::CommonUrlImageView()
-:m_pDelegate(NULL)
-,m_eType(HttpGetImageNoMemoryCache)
+:m_eType(ImageCacheType::NoMemoryCache)
+,m_callback(nullptr)
 {
     
 }
 
 CommonUrlImageView::~CommonUrlImageView()
 {
-    CC_SAFE_RELEASE(dynamic_cast<CAObject*>(m_pDelegate));
-    m_pDelegate = NULL;
-    
     CC_SAFE_RETAIN(m_pobImage);
-    CAViewAnimation::beginAnimations("");
-    CAViewAnimation::setAnimationDuration(1.0f);
-    CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAImage::release, this));
-    CAViewAnimation::commitAnimations();
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt)
+    {
+        m_pobImage->release();
+    }, "release", m_pobImage, 1.0f);
 }
 
 CommonUrlImageView* CommonUrlImageView::createWithImage(CAImage* image)
@@ -747,13 +629,19 @@ CommonUrlImageView* CommonUrlImageView::createWithLayout(const CrossApp::DLayout
 void CommonUrlImageView::setUrl(const std::string& url)
 {
     CC_RETURN_IF(url.empty());
-    m_sUrl = DecodeURL(url);
-    CommonHttpManager::getInstance()->get_image(m_sUrl, this, CommonHttpImage_selector(CommonUrlImageView::onRequestFinished), m_eType);
+    
+    m_sUrl = CrossApp::base64Decode(url);
+    
+    CommonHttpManager::getInstance()->get_image(m_sUrl, [=](CAImage* image, const std::string& url)
+    {
+        this->onRequestFinished(image, url);
+    }, m_eType);
 }
 
 void CommonUrlImageView::setImageAndUrl(CAImage* image, const std::string& url)
 {
-    m_sUrl = DecodeURL(url);
+    m_sUrl = CrossApp::base64Decode(url);
+    
     this->onRequestFinished(image, m_sUrl.c_str());
 }
 
@@ -782,38 +670,32 @@ std::pair<std::string, CAImage*> CommonUrlImageView::getUrlPair()
     return std::pair<std::string, CAImage*>(MD5(m_sUrl).md5(), this->getImage());
 }
 
-void CommonUrlImageView::onRequestFinished(CAImage* image, const char* url)
+void CommonUrlImageView::onRequestFinished(CAImage* image, const std::string& url)
 {
-    CC_RETURN_IF(url && m_sUrl.compare(url) != 0);
-    this->setImage(image);
-    if (m_pDelegate)
+    if (image && m_sUrl.compare(url) == 0)
     {
-        m_pDelegate->imageViewRequestFinished(this);
+        this->setImage(image);
+        if (m_callback)
+        {
+            m_callback();
+        }
     }
 }
 
-void CommonUrlImageView::asyncFinish(CAObject* var)
+void CommonUrlImageView::setImageAsyncWithFile(const std::string& path)
 {
-    CAImageView::asyncFinish(var);
-    if (m_eType != HttpGetImageDefault)
+    this->retain();
+    CAImageCache::getInstance()->addImageFullPathAsync(path, [&](CAImage* image)
     {
-        CAApplication::getApplication()->getImageCache()->removeImage(static_cast<CAImage*>(var));
-    }
-    if (m_pDelegate)
-    {
-        m_pDelegate->imageViewRequestFinished(this);
-    }
+        this->setImage(image);
+        this->release();
+        if (m_eType != ImageCacheType::Default)
+        {
+            CAApplication::getApplication()->getImageCache()->removeImage(image);
+        }
+        if (m_callback)
+        {
+            m_callback();
+        }
+    });
 }
-
-void CommonUrlImageView::setDelegate(CommonUrlImageViewDelegate *var)
-{
-    CC_SAFE_RELEASE(dynamic_cast<CAObject*>(m_pDelegate));
-    CC_SAFE_RETAIN(dynamic_cast<CAObject*>(var));
-    m_pDelegate = var;
-}
-
-CommonUrlImageViewDelegate* CommonUrlImageView::getDelegate()
-{
-    return m_pDelegate;
-}
-
