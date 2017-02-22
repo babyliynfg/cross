@@ -16,7 +16,7 @@ NS_CC_BEGIN
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
-enum class
+typedef enum
 {
     SAX_NONE = 0,
     SAX_KEY,
@@ -27,7 +27,7 @@ enum class
     SAX_ARRAY
 }SAXState;
 
-enum class
+typedef enum
 {
     SAX_RESULT_NONE = 0,
     SAX_RESULT_DICT,

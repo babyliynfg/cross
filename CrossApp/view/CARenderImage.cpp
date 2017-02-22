@@ -36,15 +36,15 @@ CARenderImage::CARenderImage()
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     // Listen this event to save render Image before come to background.
     // Then it can be restored after coming to foreground on Android.
-    CANotificationCenter::getInstance()->addObserver(this,
-                                                     callfuncO_selector(CARenderImage::listenToBackground),
-                                                     EVENT_COME_TO_BACKGROUND,
-                                                     NULL);
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
+        this->listenToBackground(obj);
+    }, this, EVENT_COME_TO_BACKGROUND);
     
-    CANotificationCenter::getInstance()->addObserver(this,
-                                                     callfuncO_selector(CARenderImage::listenToForeground),
-                                                     EVENT_COME_TO_FOREGROUND, // this is misspelt
-                                                     NULL);
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
+        this->listenToForeground(obj);
+    }, this, EVENT_COME_TO_FOREGROUND);
 #endif
 
 }
@@ -59,12 +59,6 @@ CARenderImage::~CARenderImage()
     {
         glDeleteRenderbuffers(1, &m_uDepthRenderBufffer);
     }
-    
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    CANotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
-    CANotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
-#endif
-
 }
 
 void CARenderImage::listenToBackground(CrossApp::CAObject *obj)

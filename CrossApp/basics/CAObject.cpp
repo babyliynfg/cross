@@ -1,9 +1,10 @@
 
 
 #include "CAObject.h"
-#include "CAAutoreleasePool.h"
+#include "basics/CAAutoreleasePool.h"
 #include "ccMacros.h"
-#include "CAScheduler.h"
+#include "basics/CAScheduler.h"
+#include "basics/CANotificationCenter.h"
 #include "script_support/CCScriptSupport.h"
 
 NS_CC_BEGIN
@@ -27,6 +28,7 @@ CAObject::CAObject(void)
 CAObject::~CAObject(void)
 {
     CAScheduler::getScheduler()->unscheduleAllForTarget(this);;
+    CANotificationCenter::getInstance()->removeAllObservers(this);
     
     CC_SAFE_RELEASE(m_pUserObject);
     

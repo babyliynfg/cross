@@ -1,6 +1,6 @@
 #include "basics/CAApplication.h"
 #include "platform/CAFileUtils.h"
-#include "support/CANotificationCenter.h"
+#include "basics/CANotificationCenter.h"
 #include "platform/android/CCApplication.h"
 #include "platform/android/CCEGLView.h"
 #include "JniHelper.h"
@@ -16,7 +16,7 @@ extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeOnPause() {
         CCApplication::sharedApplication()->applicationDidEnterBackground();
 
-        CANotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
+        CANotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeOnResume() {

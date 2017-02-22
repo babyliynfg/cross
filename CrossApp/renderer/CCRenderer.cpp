@@ -220,12 +220,11 @@ Renderer::~Renderer()
 void Renderer::initGLView()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
         /** listen the event that renderer was recreated on Android/WP8 */
         this->setupBuffer();
-    });
-    
-    CAApplication::getApplication()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
+    }, this, EVENT_COME_TO_FOREGROUND);
 #endif
 
     setupBuffer();
@@ -246,8 +245,10 @@ void Renderer::setupBuffer()
 void Renderer::setupVBOAndVAO()
 {
     //generate vbo and vao for trianglesCommand
+#if CC_TEXTURE_ATLAS_USE_VAO
     glGenVertexArrays(1, &_buffersVAO);
     GL::bindVAO(_buffersVAO);
+#endif
 
     glGenBuffers(2, &_buffersVBO[0]);
 

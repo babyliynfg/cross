@@ -10,7 +10,6 @@
 NS_CC_BEGIN
 
 class CCEGLViewProtocol;
-class EventListenerCustom;
 
 namespace experimental {
 
@@ -72,9 +71,6 @@ public:
     
 protected:
     CAImage* _image;
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _rebuildTextureListener;
-#endif
 };
 
 class CC_DLL RenderTargetRenderBuffer : public RenderTargetBase
@@ -94,9 +90,6 @@ public:
 protected:
     GLenum _format;
     GLuint _colorBuffer;
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _reBuildRenderBufferListener;
-#endif
 };
 
 class CC_DLL RenderTargetDepthStencil : public RenderTargetBase
@@ -117,9 +110,6 @@ public:
 protected:
 
     GLuint _depthStencilBuffer;
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _reBuildDepthStencilListener;
-#endif
 };
 
 class CC_DLL FrameBuffer : public CAObject
@@ -180,11 +170,7 @@ private:
     //static GLuint _defaultFBO;
     static FrameBuffer* _defaultFBO;
     static std::set<FrameBuffer*> _frameBuffers;
-    
-private:
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _dirtyFBOListener;
-#endif
+
 };
 } // end of namespace experimental
 

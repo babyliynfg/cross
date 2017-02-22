@@ -4,13 +4,14 @@
 #include "ccMacros.h"
 #include "basics/CAConfiguration.h"
 #include "basics/CAApplication.h"
+#include "basics/CANotificationCenter.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCMaterial.h"
 #include "renderer/CCPass.h"
-#include "xxhash.h"
+#include "support/xxhash/xxhash.h"
 
 NS_CC_BEGIN
 
@@ -29,9 +30,13 @@ MeshCommand::MeshCommand()
     _type = RenderCommand::Type::MESH_COMMAND;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    
+    _notificationTarget = new CAObject();
     // listen the event that renderer was recreated on Android/WP8
-    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
-    CAApplication::getApplication()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
+        this->listenRendererRecreated();
+    }, _notificationTarget, EVENT_COME_TO_FOREGROUND);
 #endif
 }
 
@@ -124,7 +129,7 @@ MeshCommand::~MeshCommand()
 {
     releaseVAO();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    CAApplication::getApplication()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
+    delete _notificationTarget;
 #endif
 }
 
@@ -276,8 +281,10 @@ void MeshCommand::buildVAO()
                                     : _glProgramState;
 
     releaseVAO();
+#if CC_TEXTURE_ATLAS_USE_VAO
     glGenVertexArrays(1, &_vao);
     GL::bindVAO(_vao);
+#endif
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     auto flags = programState->getVertexAttribsFlags();
     for (int i = 0; flags > 0; i++) {
@@ -298,14 +305,16 @@ void MeshCommand::releaseVAO()
 {
     if (_vao)
     {
+#if CC_TEXTURE_ATLAS_USE_VAO
         glDeleteVertexArrays(1, &_vao);
-        _vao = 0;
         GL::bindVAO(0);
+#endif
+        _vao = 0;
     }
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-void MeshCommand::listenRendererRecreated(EventCustom* event)
+void MeshCommand::listenRendererRecreated()
 {
     _vao = 0;
 }

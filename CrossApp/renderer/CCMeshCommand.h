@@ -42,7 +42,7 @@ public:
     uint32_t getMaterialID() const;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    void listenRendererRecreated(EventCustom* event);
+    void listenRendererRecreated();
 #endif
 
 protected:
@@ -85,11 +85,11 @@ protected:
     GLProgramState* _glProgramState;
     RenderState::StateBlock* _stateBlock;
     GLuint _textureID;
-
-
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    EventListenerCustom* _rendererRecreatedListener;
+    CAObject* _notificationTarget;
 #endif
+
 };
 
 NS_CC_END

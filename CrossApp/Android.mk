@@ -22,7 +22,6 @@ animation/CAViewAnimation.cpp \
 animation/CAAnimation.cpp \
 basics/CAApplication.cpp \
 basics/CAAutoreleasePool.cpp \
-basics/CACamera.cpp \
 basics/CALayout.cpp \
 basics/CAPoint.cpp \
 basics/CASize.cpp \
@@ -38,6 +37,10 @@ basics/CAIndexPath.cpp \
 basics/CAThread.cpp \
 basics/CANotificationCenter.cpp \
 basics/CAPointExtension.cpp \
+basics/CAConsole.cpp \
+basics/CACamera.cpp \
+basics/CACameraBackgroundBrush.cpp \
+basics/CAConfiguration.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCSet.cpp \
 cocoa/CACalendar.cpp \
@@ -60,6 +63,7 @@ dispatcher/CATouchDispatcher.cpp \
 dispatcher/CATouch.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
+images/CAImageCube.cpp \
 images/CAGif.cpp \
 images/gif_lib/egif_lib.c \
 images/gif_lib/openbsd-reallocarray.c \
@@ -69,10 +73,6 @@ images/gif_lib/gif_font.c \
 images/gif_lib/gif_hash.c \
 images/gif_lib/gifalloc.c \
 images/gif_lib/quantize.c \
-shaders/CAGLProgram.cpp \
-shaders/CAShaderCache.cpp \
-shaders/ccGLStateCache.cpp \
-shaders/ccShaders.cpp \
 support/md5.cpp \
 support/CAProfiling.cpp \
 support/base64.cpp \
@@ -96,10 +96,16 @@ support/Json/lib_json/json_value.cpp \
 support/Json/lib_json/json_reader.cpp \
 support/Json/lib_json/json_writer.cpp \
 support/sqlite3/sqlite3.c \
+support/poly2tri/common/shapes.cc \
+support/poly2tri/sweep/advancing_front.cc \
+support/poly2tri/sweep/cdt.cc \
+support/poly2tri/sweep/sweep.cc \
+support/poly2tri/sweep/sweep_context.cc \
+support/clipper/clipper.cpp \
+support/xxhash/xxhash.c \
 network/HttpClient.cpp \
 network/DownloadManager.cpp \
 network/WebSocket.cpp \
-view/CABatchView.cpp \
 view/CAClippingView.cpp \
 view/CAImageView.cpp \
 view/CALabel.cpp \
@@ -132,6 +138,30 @@ math/CAMat4.cpp \
 math/CAQuaternion.cpp \
 math/TransformUtils.cpp \
 $(MATHNEONFILE) \
+renderer/CCCustomCommand.cpp \
+renderer/CCGLProgram.cpp \
+renderer/CCGLProgramCache.cpp \
+renderer/CCGLProgramState.cpp \
+renderer/CCGLProgramStateCache.cpp \
+renderer/CCGroupCommand.cpp \
+renderer/CCMaterial.cpp \
+renderer/CCMeshCommand.cpp \
+renderer/CCPass.cpp \
+renderer/CCPrimitive.cpp \
+renderer/CCPrimitiveCommand.cpp \
+renderer/CCProperties.cpp \
+renderer/CCBatchCommand.cpp \
+renderer/CCQuadCommand.cpp \
+renderer/CCRenderCommand.cpp \
+renderer/CCRenderState.cpp \
+renderer/CCRenderer.cpp \
+renderer/CCTechnique.cpp \
+renderer/CCTrianglesCommand.cpp \
+renderer/CCVertexIndexBuffer.cpp \
+renderer/CCVertexIndexData.cpp \
+renderer/CCFrameBuffer.cpp \
+renderer/ccGLStateCache.cpp \
+renderer/ccShaders.cpp \
 platform/CASAXParser.cpp \
 platform/CAFileUtils.cpp \
 platform/platform.cpp \
@@ -152,6 +182,7 @@ platform/android/CATextField.cpp \
 platform/android/CATextView.cpp \
 platform/android/CAClipboard.cpp \
 platform/android/CADevice.cpp \
+platform/android/CAAlertViewImpl.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppHelper.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppRenderer.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppAccelerometer.cpp \
@@ -197,10 +228,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
+		 -landroid \
                 -lz
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
+			-landroid \
                        -lz
 
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_jpeg_static

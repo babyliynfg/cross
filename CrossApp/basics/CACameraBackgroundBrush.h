@@ -171,7 +171,6 @@ protected:
 
 class CAImageCube;
 class GLProgramState;
-class EventListenerCustom;
 
 /**
  * Skybox brush clear buffer with a skybox
@@ -233,10 +232,6 @@ protected:
     GLuint      _indexBuffer;
     
     CAImageCube*  _image;
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    EventListenerCustom* _backToForegroundListener;
-#endif
 
 private:
     bool _actived;

@@ -310,7 +310,7 @@ extern "C"
     {
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
         env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
-        CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat_RGBA8888, width, height);
+        CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, width, height);
         CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
         imageView->setImage(image);
         free(data);
@@ -419,8 +419,7 @@ CATextField::~CATextField()
 {
     s_map.erase(m_u__ID);
     onRemoveView(m_u__ID);
-    CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
-    m_pDelegate = NULL;
+    m_pDelegate = nullptr;
 }
 
 void CATextField::onEnterTransitionDidFinish()
@@ -470,7 +469,7 @@ bool CATextField::resignFirstResponder()
     if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
     {
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(0xbbbb);
-        ima->setImage(NULL);
+        ima->setImage(nullptr);
     }
 
     return result;
@@ -525,13 +524,8 @@ void CATextField::showNativeTextField()
 
 void CATextField::delayShowImage()
 {
-    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
-    {
-        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0.1f);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextField::showImage));
-        CAViewAnimation::commitAnimations();
-    }
+    this->cancelPreviousPerformRequests(callfunc_selector(CATextField::showImage));
+    this->performSelector(callfunc_selector(CATextField::showImage), 0.1);
 }
 
 void CATextField::showImage()
@@ -664,8 +658,7 @@ void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     this->ccTouchEnded(pTouch, pEvent);
 }
 
-//
-void CATextField::setClearButtonMode(const ClearButtonMode& var)
+void CATextField::setClearButtonMode(ClearButtonMode var)
 {
     setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
     showClearButtonJNI(m_u__ID);
@@ -835,7 +828,7 @@ const CAColor4B& CATextField::getTextColor()
 	return m_cTextColor; 
 }
 
-void CATextField::setKeyboardType(KeyboardType type)
+void CATextField::setKeyboardType(CATextField::KeyboardType var)
 {
 	m_eKeyBoardType = var;
 	setKeyboardTypeJNI(m_u__ID,(int)var);
@@ -910,12 +903,6 @@ int CATextField::getMaxLenght()
 {
     return m_iMaxLenght;
 }
-
-void CATextField::clearBtnCallBack(CAControl* con, DPoint point)
-{
-	setText("");
-}
-
 
 NS_CC_END
 

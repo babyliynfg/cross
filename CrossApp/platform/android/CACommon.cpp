@@ -23,14 +23,4 @@ void CCLog(const char * pszFormat, ...)
     __android_log_print(ANDROID_LOG_DEBUG, "CrossApp debug info", "%s", buf);
 }
 
-void CAMessageBox(const char * pszTitle, const char * pszMsg)
-{
-    showDialogJNI(pszMsg, pszTitle);
-}
-
-//void CCLuaLog(const char * pszFormat)
-//{
-//    __android_log_print(ANDROID_LOG_DEBUG, "CrossApp debug info", "%s", pszFormat);
-//}
-
 NS_CC_END

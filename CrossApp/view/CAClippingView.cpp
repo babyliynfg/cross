@@ -140,8 +140,12 @@ void CAClippingView::onExit()
 
 void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if (!m_bVisible || m_obSubviews.empty())
+    CC_RETURN_IF(!m_bVisible || m_obSubviews.empty());
+    
+    if (!m_bClippingEnabled || !m_pStencil || g_sStencilBits < 1)
     {
+        // draw everything, as if there where no stencil
+        CAView::visit(renderer, parentTransform, parentFlags);
         return;
     }
     

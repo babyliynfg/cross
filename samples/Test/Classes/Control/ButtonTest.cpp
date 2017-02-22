@@ -26,7 +26,7 @@ void ButtonTest::viewDidLoad()
     btn1->setTitleForState(CAControl::State::Normal, "Noborder");
     btn1->setTitleFontSize(40);
     //设置Button的标题颜色和状态
-    btn1->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
+    btn1->setTitleColorForState(CAControl::State::Normal, ccc4Int(CrossApp::hex2Int("0xff2ec0ff")));
     //添加回调事件
     btn1->addTarget([=]()
     {

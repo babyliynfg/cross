@@ -7,6 +7,7 @@
 #include "renderer/ccGLStateCache.h"
 #include "basics/CAApplication.h"
 #include "basics/CACamera.h"
+#include "basics/CANotificationCenter.h"
 #include "images/CAImage.h"
 
 NS_CC_BEGIN
@@ -329,22 +330,16 @@ GLProgramState::GLProgramState()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     /** listen the event that renderer was recreated on Android/WP8 */
     CCLOG("create rendererRecreatedListener for GLProgramState");
-    _backToForegroundlistener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, 
-        [this](EventCustom*) 
-        {
-            CCLOG("Dirty Uniform and Attributes of GLProgramState"); 
-            _uniformAttributeValueDirty = true;
-        });
-    CAApplication::getApplication()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
+        CCLOG("Dirty Uniform and Attributes of GLProgramState");
+        _uniformAttributeValueDirty = true;
+    }, this, EVENT_COME_TO_FOREGROUND);
 #endif
 }
 
 GLProgramState::~GLProgramState()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    CAApplication::getApplication()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
-#endif
-    
     CC_SAFE_RELEASE(_glprogram);
 }
 
@@ -382,7 +377,7 @@ GLProgramState* GLProgramState::clone() const
 
 bool GLProgramState::init(GLProgram* glprogram)
 {
-    CCASSERT(glprogram, "invalid shader");
+    CCAssert(glprogram, "invalid shader");
 
     _glprogram = glprogram;
     _glprogram->retain();

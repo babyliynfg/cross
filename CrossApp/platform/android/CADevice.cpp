@@ -511,7 +511,7 @@ ToMainThread * ToMainThread::sharedMain()
 void ToMainThread::getPath(const char* path)
 {
     _path = path;
-    CAScheduler::schedule(schedule_selector(ToMainThread::runDelegate), this, 0,false);
+    CAScheduler::getScheduler()->schedule(schedule_selector(ToMainThread::runDelegate), this, 0);
 }
     
 void ToMainThread::runDelegate()
@@ -521,7 +521,7 @@ void ToMainThread::runDelegate()
         CAImage *image = new CAImage();
         if (image->initWithImageFile(_path))
         {
-            CAScheduler::unschedule(schedule_selector(ToMainThread::runDelegate), this);
+            CAScheduler::getScheduler()->unschedule(schedule_selector(ToMainThread::runDelegate), this);
             delegate->getSelectedImage(CAImage::generateMipmapsWithImage(image));
             image->release();
         }

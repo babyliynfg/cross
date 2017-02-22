@@ -14,8 +14,6 @@
 
 NS_CC_BEGIN
 
-class EventListenerCustom;
-
 /**
 VertexBuffer is an abstraction of low level openGL Vertex Buffer Object.
 It is used to save an array of vertices.
@@ -73,10 +71,6 @@ protected:
     Event handler for foreground.
     */
     void recreateVBO() const;
-    /**
-    Event listener for foreground.
-    */
-    EventListenerCustom* _recreateVBOEventListener;
 protected:
     /**
     Internal handle for openGL.
@@ -205,10 +199,6 @@ protected:
     Event handler for foreground.
     */
     void recreateVBO() const;
-    /**
-    Event listener for foreground.
-    */
-    EventListenerCustom* _recreateVBOEventListener;
     /**
     Buffer used for shadow copy.
     */

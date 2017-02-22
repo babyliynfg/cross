@@ -25,8 +25,6 @@ void SegmentedControlTest::viewDidLoad()
         sprintf(temstr, "Page%d", i + 1);
         segment1->setTitleForSegmentAtIndex(temstr, i);
     }
-    segment1->setTitleColor(CAColor_black);
-    segment1->setTitleSelectedColor(CAColor_white);
     segment1->setTarget([=](int index)
     {
         CCLog("segmentCallback");

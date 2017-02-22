@@ -28,7 +28,7 @@ CC_DLL unsigned long ccNextPOT(unsigned long value);
 
 CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const std::string& strDelimiter, bool bIncludeEmptyStr = false);
 
-CC_DLL long hex2Int(const std::string& hexStr);
+CC_DLL unsigned int hex2Int(const std::string& hexStr);
 }
 
 #endif // __SUPPORT_CC_UTILS_H__

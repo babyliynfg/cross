@@ -59,9 +59,11 @@ private:
 
     bool observerExisted(CAObject *target, const std::string& name);
 
-    CAList<Observer*> m_observers;
+    void insertList(CAObject *target);
     
-    int     m_scriptHandler;
+    std::map<CAObject*, CAList<Observer*>> m_observers;
+
+    int m_scriptHandler;
 };
 
 

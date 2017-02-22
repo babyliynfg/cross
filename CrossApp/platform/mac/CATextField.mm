@@ -506,8 +506,8 @@ void CATextField::showNativeTextField()
 
 void CATextField::delayShowImage()
 {
-    CC_RETURN_IF(CAScheduler::getScheduler()->isScheduled(schedule_selector(CATextField::showImage), this));
-    CAScheduler::getScheduler()->schedule(schedule_selector(CATextField::showImage), this, 0, 0, 0);
+    this->cancelPreviousPerformRequests(callfunc_selector(CATextField::showImage));
+    this->performSelector(callfunc_selector(CATextField::showImage), 0);
 }
 
 void CATextField::showImage()

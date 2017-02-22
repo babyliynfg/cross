@@ -997,11 +997,13 @@ void CAView::updateDraw()
     m_bContentSizeDirty = m_bTransformUpdated = m_bTransformDirty = m_bInverseDirty = true;
     
     CAView* v = m_pSuperview;
-    CC_RETURN_IF(v == NULL);
-    while (v == v->getSuperview())
+    if (v)
     {
-        CC_BREAK_IF(v == NULL);
-        CC_RETURN_IF(!v->isVisible());
+        while (v == v->getSuperview())
+        {
+            CC_BREAK_IF(v == nullptr);
+            CC_RETURN_IF(!v->isVisible());
+        }
     }
     CAApplication::getApplication()->updateDraw();
 }

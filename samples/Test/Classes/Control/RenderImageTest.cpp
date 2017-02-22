@@ -22,7 +22,7 @@ void RenderImageTest::viewDidLoad()
     dle_ren_index = 0;
     
     CAButton* btn = CAButton::create(CAButton::Type::SquareRect);
-    btn->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_B_H(100, 54)));
+    btn->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_B_H(50, 54)));
     btn->setTitleForState(CAControl::State::Normal, "Click");
     btn->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
     btn->setTag(1);
@@ -63,7 +63,7 @@ CADrawView* getStencil(const DSize& size, int index)
             cir[i] = DPoint(x, y);
         }
         CADrawView* stencil = CADrawView::create();
-        stencil->drawPolygon(cir, 720, ccc4(1, 1, 1, 0.5), 0, ccc4(1, 1, 1, 0));
+        stencil->drawPolygon(cir, 720, ccc4(255, 255, 255, 127), 0, ccc4(255, 255, 255, 0));
         stencil->setCenterOrigin(DPoint(size.width/2, size.height/2));
         return stencil;
     }
@@ -76,14 +76,13 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     
     DRect scrollRect;
     scrollRect.origin.x = 100;
-    scrollRect.origin.y = 100;
+    scrollRect.origin.y = 50;
     scrollRect.size.width = winSize.width - 200;
     scrollRect.size.height = winSize.height - 200;
     
     m_clvImage = CAClippingView::create();
     m_clvImage->setStencil(getStencil(scrollRect.size, index));
     m_clvImage->setFrame(scrollRect);
-    m_clvImage->setInverted(false);
     m_clvImage->setClippingEnabled(false);
     this->getView()->addSubview(m_clvImage);
     
@@ -97,30 +96,31 @@ void RenderImageTest::getSelectedImage(CAImage *image)
         temp_mini = scrollRect.size.width/image->getContentSize().width;
     }
     CAScrollView* scrollView = CAScrollView::createWithFrame(m_clvImage->getBounds());
-    scrollView->setViewSize(DSize(image->getContentSize()));
-    scrollView->setContentOffset(DPoint(0,winSize.height/4), false);
+    scrollView->setViewSize(image->getContentSize());
+    scrollView->setContentOffset(DPointZero, false);
     scrollView->setMinimumZoomScale(temp_mini);
     scrollView->setMaximumZoomScale(2.5f);
     scrollView->setBackgroundColor(CAColor_clear);
     scrollView->setShowsScrollIndicators(false);
-    scrollView->setBounces(false);
     scrollView->setScrollViewDelegate(this);
     scrollView->setDisplayRange(true);
+    scrollView->enabledTopShadow(true);
+    scrollView->enabledBottomShadow(true);
+    scrollView->enabledLeftShadow(true);
+    scrollView->enabledRightShadow(true);
     m_clvImage->addSubview(scrollView);
     
-    DRect rect;
-    rect.origin = DPointZero;
-    rect.size = scrollView->getViewSize();
-    CAImageView* imv = CAImageView::createWithLayout(DLayoutFill);
-    imv->setImage(image);
+    CAImageView* imv = CAImageView::createWithImage(image);
+    imv->setLayout(DLayoutFill);
     imv->setScaleType(CAImageView::ScaleType::FitImageInside);
     scrollView->addSubview(imv);
     
     m_clv = CAClippingView::create();
     m_clv->setStencil(getStencil(scrollRect.size, index));
     m_clv->setFrame(scrollRect);
-    m_clv->setInverted(true);
     m_clv->setTouchEnabled(false);
+    m_clv->setInverted(false);
+    m_clv->setClippingEnabled(true);
     this->getView()->addSubview(m_clv);
     
     DRect ivRect;
@@ -131,7 +131,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     m_clv->addSubview(iv);
     
     render_btn = CAButton::create(CAButton::Type::SquareRect);
-    render_btn->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_B_H(100, 54)));
+    render_btn->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_B_H(50, 54)));
     render_btn->setTitleForState(CAControl::State::Normal, "Click");
     render_btn->setTitleColorForState(CAControl::State::Normal, ccc4(51,204,255,255));
     render_btn->setTag(2);
@@ -141,7 +141,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
         CARenderImage* rm = CARenderImage::create(winSize.width-200, winSize.height-200);
         rm->printscreenWithView(m_clvImage);
         
-        renderImage = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100, 100)));
+        renderImage = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(50, 150)));
         this->getView()->addSubview(renderImage);
         
         m_clvImage->setClippingEnabled(false);

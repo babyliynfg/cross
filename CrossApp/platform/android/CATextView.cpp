@@ -220,7 +220,7 @@ extern "C"
     {
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
         env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
-        CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat_RGBA8888, width, height);
+        CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, width, height);
         CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
         imageView->setImage(image);
         free(data);
@@ -311,8 +311,7 @@ CATextView::~CATextView()
 {
     s_map.erase(m_u__ID);
     textViewOnRemoveView(m_u__ID);
-    CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
-    m_pDelegate = NULL;
+    m_pDelegate = nullptr;
 }
 
 void CATextView::onEnterTransitionDidFinish()
@@ -386,18 +385,13 @@ void CATextView::hideNativeTextView()
 void CATextView::showNativeTextView()
 {
     this->update(0);
-	CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::update), this, 1 / 60.0f);
+	CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::update), this, 0);
 }
 
 void CATextView::delayShowImage()
 {
-    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
-    {
-        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0.1f);
-		CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextView::showImage));
-        CAViewAnimation::commitAnimations();
-    }
+    this->cancelPreviousPerformRequests(callfunc_selector(CATextView::showImage));
+    this->performSelector(callfunc_selector(CATextView::showImage), 0.1);
 }
 
 void CATextView::showImage()
@@ -446,7 +440,7 @@ CATextView* CATextView::createWithLayout(const DLayout& layout)
 
 bool CATextView::init()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextView");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
@@ -533,8 +527,6 @@ const int& CATextView::getFontSize()
 	return m_iFontSize;
 }
 
-
-
 void CATextView::setText(const std::string& var)
 {
 	m_sText = var;
@@ -584,7 +576,7 @@ void CATextView::setBackgroundImage(CAImage* image)
     m_pBackgroundView->setImage(image);
 }
 
-void CATextView::setAlign(const TextViewAlign& var)
+void CATextView::setAlign(CATextView::Align var)
 {
     m_eAlign = var;
     

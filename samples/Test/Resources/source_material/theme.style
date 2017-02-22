@@ -16,7 +16,7 @@
         <BackgroundView name="backgroundView_highlighted" path="1" value="btn_rounded_highlighted.png"/>
         <BackgroundView name="backgroundView_selected" path="1" value="btn_rounded_selected.png"/>
         <BackgroundView name="backgroundView_disabled" path="1" value="btn_rounded_disabled.png"/>
-        <Color name="titleColor_normal" path="0" value="0xff2EC0FF"/>
+        <Color name="titleColor_normal" path="0" value="0xff2ec0ff"/>
         <Color name="titleColor_highlighted" path="0" value="0xffffffff"/>
         <Color name="titleColor_selected" path="0" value="0xffffffff"/>
         <Color name="titleColor_disabled" path="0" value="0xffffffff"/>
@@ -25,9 +25,9 @@
     <CASegmentedControl name="CASegmentedControl">
         <BackgroundView name="backgroundView_normal" path="1" value="segmented_normal.png"/>
         <BackgroundView name="backgroundView_selected" path="1" value="segmented_selected.png"/>
-        <Color name="titleColor_normal" path="0" value="0xff36C3F0"/>
+        <Color name="titleColor_normal" path="0" value="0xff2ec0ff"/>
         <Color name="titleColor_selected" path="0" value="0xffffffff"/>
-        <Color name="tintColor" path="0" value="0xff36C3F0"/>
+        <Color name="tintColor" path="0" value="0xff2ec0ff"/>
         <Size name="height" path="0" value="60"/>
     </CASegmentedControl>
     <CAActivityIndicatorView name="CAActivityIndicatorView">
