@@ -38,12 +38,21 @@ CARenderImage::CARenderImage()
     // Then it can be restored after coming to foreground on Android.
     CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {
-        this->listenToBackground(obj);
+        
     }, this, EVENT_COME_TO_BACKGROUND);
     
     CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {
-        this->listenToForeground(obj);
+        // -- regenerate frame buffer object and attach the texture
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
+        
+        glGenFramebuffers(1, &m_uFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
+        
+        //    m_pImage->setAliasTexParameters();
+        
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_uOldFBO);
     }, this, EVENT_COME_TO_FOREGROUND);
 #endif
 
@@ -59,26 +68,6 @@ CARenderImage::~CARenderImage()
     {
         glDeleteRenderbuffers(1, &m_uDepthRenderBufffer);
     }
-}
-
-void CARenderImage::listenToBackground(CrossApp::CAObject *obj)
-{
-
-}
-
-void CARenderImage::listenToForeground(CrossApp::CAObject *obj)
-{
-// -- regenerate frame buffer object and attach the texture
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
-    
-    glGenFramebuffers(1, &m_uFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
-    
-//    m_pImage->setAliasTexParameters();
-    
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_uOldFBO);
-
 }
 
 CAImageView * CARenderImage::getImageView()

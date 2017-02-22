@@ -31,6 +31,9 @@ void Java_org_CrossApp_lib_CrossAppRenderer_nativeInit(JNIEnv*  env, jobject thi
     }
     else
     {
+    	GL::invalidateStateCache();
+    	GLProgramCache::getInstance()->reloadDefaultGLPrograms();
+    	ccDrawInit();
         CAImageCache::reloadAllImages();
         CANotificationCenter::getInstance()->postNotification(EVENT_COME_TO_FOREGROUND);
         CAApplication::getApplication()->setGLDefaultValues();

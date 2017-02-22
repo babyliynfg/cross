@@ -47,10 +47,6 @@ public:
 
     bool saveToFile(const char *szFilePath);
 
-    void listenToBackground(CAObject *obj);
-
-    void listenToForeground(CAObject *obj);
-
     unsigned int getClearFlags() const;
     void setClearFlags(unsigned int uClearFlags);
 
