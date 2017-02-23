@@ -248,6 +248,10 @@ protected:
     bool _isDepthTestFor2D;
     
     GroupCommandManager* _groupCommandManager;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    CAObject* _notificationTarget;
+#endif
 };
 
 NS_CC_END

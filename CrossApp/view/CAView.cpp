@@ -104,7 +104,7 @@ CAView::CAView(void)
     this->updateRotationQuat();
     this->setAnchorPoint(DPoint(0.5f, 0.5f));
     
-    CCLog("CAView = %d\n", ++viewCount);
+    //CCLog("CAView = %d\n", ++viewCount);
 }
 
 CAView::~CAView(void)
@@ -137,7 +137,7 @@ CAView::~CAView(void)
         m_pCGNode->m_pSuperviewCAView = nullptr;
         m_pCGNode->release();
     }
-    CCLog("~CAView = %d\n", --viewCount);
+    //CCLog("~CAView = %d\n", --viewCount);
 }
 
 CAView * CAView::create(void)

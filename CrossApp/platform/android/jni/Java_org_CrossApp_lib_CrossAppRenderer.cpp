@@ -16,7 +16,7 @@ extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeOnPause() {
         CCApplication::sharedApplication()->applicationDidEnterBackground();
 
-        CANotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
+        CANotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND);
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeOnResume() {

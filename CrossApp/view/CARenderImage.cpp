@@ -33,11 +33,13 @@ CARenderImage::CARenderImage()
 , m_uPixelsWide(0)
 , m_uPixelsHigh(0)
 {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // Listen this event to save render Image before come to background.
     // Then it can be restored after coming to foreground on Android.
     CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {
+        glDeleteFramebuffers(1, &m_uFBO);
+        m_uFBO = 0;
         
     }, this, EVENT_COME_TO_BACKGROUND);
     
@@ -50,8 +52,11 @@ CARenderImage::CARenderImage()
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
         
         //    m_pImage->setAliasTexParameters();
+        if (m_pImage)
+        {
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
+        }
         
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
         glBindFramebuffer(GL_FRAMEBUFFER, m_uOldFBO);
     }, this, EVENT_COME_TO_FOREGROUND);
 #endif
@@ -368,41 +373,37 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
 
 void CARenderImage::begin()
 {
-    CAApplication* application = CAApplication::getApplication();
-    CCASSERT(nullptr != application, "CAApplication is null when setting matrix stack");
+    m_pApplication->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    m_tProjectionMatrix = m_pApplication->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
-    application->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    m_tProjectionMatrix = application->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    
-    application->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    m_tTransformMatrix = application->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    m_pApplication->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    m_tTransformMatrix = m_pApplication->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     {
-        application->setProjection(application->getProjection());
+        m_pApplication->setProjection(m_pApplication->getProjection());
         
         const DSize texSize = DSize((float)m_uPixelsWide, (float)m_uPixelsHigh);
         
         // Calculate the adjustment ratios based on the old and new projections
-        DSize size = application->getWinSize();
+        DSize size = m_pApplication->getWinSize();
         
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
         
         Mat4 orthoMatrix;
         Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
-        application->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+        m_pApplication->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
     
+    Renderer *renderer =  m_pApplication->getRenderer();
     m_obGroupCommand.init(0);
-    
-    Renderer *renderer =  application->getRenderer();
     renderer->addCommand(&m_obGroupCommand);
     renderer->pushGroup(m_obGroupCommand.getRenderQueueID());
-    
+
     m_obBeginCommand.init(0);
     m_obBeginCommand.func = std::bind(&CARenderImage::onBegin, this);
     
-    application->getRenderer()->addCommand(&m_obBeginCommand);
+    m_pApplication->getRenderer()->addCommand(&m_obBeginCommand);
 
 }
 
@@ -491,27 +492,25 @@ void CARenderImage::clearStencil(int stencilValue)
 
 void CARenderImage::onBegin()
 {
-    //
-    CAApplication *application = CAApplication::getApplication();
+
+    m_tOldProjMatrix = m_pApplication->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    m_pApplication->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, m_tProjectionMatrix);
     
-    m_tOldProjMatrix = application->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    application->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, m_tProjectionMatrix);
-    
-    m_tOldProjMatrix = application->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    application->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, m_tTransformMatrix);
+    m_tOldProjMatrix = m_pApplication->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    m_pApplication->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, m_tTransformMatrix);
     
     {
-        application->setProjection(application->getProjection());
+        m_pApplication->setProjection(m_pApplication->getProjection());
         const DSize texSize = DSize((float)m_uPixelsWide, (float)m_uPixelsHigh);
         
         // Calculate the adjustment ratios based on the old and new projections
-        DSize size = application->getWinSize();
+        DSize size = m_pApplication->getWinSize();
         float widthRatio = size.width / texSize.width;
         float heightRatio = size.height / texSize.height;
         
         Mat4 orthoMatrix;
         Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
-        application->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+        m_pApplication->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
     
     //calculate viewport
@@ -527,8 +526,7 @@ void CARenderImage::onBegin()
     // TODO: move this to configuration, so we don't check it every time
     /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
      */
-    char* glExtensions = (char *)glGetString(GL_EXTENSIONS);
-    if (glExtensions && strstr(glExtensions, "GL_QCOM"))
+    if (CAConfiguration::getInstance()->checkForGLExtension("GL_QCOM"))
     {
         // -- bind a temporary texture so we can clear the render buffer without losing our texture
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImageCopy->getName(), 0);

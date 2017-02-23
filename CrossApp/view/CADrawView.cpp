@@ -275,7 +275,7 @@ bool CADrawView::init()
     _dirtyGLLine = true;
     _dirtyGLPoint = true;
     
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // Need to listen the event only when not use batchnode, because it will use VBO
     CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {

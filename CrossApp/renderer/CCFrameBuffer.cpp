@@ -2,6 +2,7 @@
 #include "renderer/CCFrameBuffer.h"
 #include "renderer/CCRenderer.h"
 #include "basics/CAApplication.h"
+#include "basics/CANotificationCenter.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -80,16 +81,6 @@ bool RenderTarget::init(unsigned int width, unsigned int height, CAImage::PixelF
         free(data);
         return false;
     }
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
-    {
-        auto dataLen = _width * _height * 4;
-        auto data = malloc(dataLen);
-        _texture->initWithData(data, dataLen,_texture->getPixelFormat(), _width, _height, Size(_width, _height));
-        free(data);
-        CCLOG("RenderTarget Texture recreated is %d", _texture->getName());
-    }, this, EVENT_COME_TO_FOREGROUND);
-#endif
     return true;
 }
 
@@ -107,9 +98,6 @@ RenderTarget::~RenderTarget()
 RenderTargetRenderBuffer::RenderTargetRenderBuffer()
 : _colorBuffer(0)
 , _format(GL_RGBA4)
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-, _reBuildRenderBufferListener(nullptr)
-#endif
 {
     _type = Type::RenderBuffer;
 }
@@ -121,9 +109,6 @@ RenderTargetRenderBuffer::~RenderTargetRenderBuffer()
         glDeleteRenderbuffers(1, &_colorBuffer);
         _colorBuffer = 0;
     }
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    CAApplication::getApplication()->getEventDispatcher()->removeEventListener(_reBuildRenderBufferListener);
-#endif
 }
 
 bool RenderTargetRenderBuffer::init(unsigned int width, unsigned int height)
@@ -139,7 +124,7 @@ bool RenderTargetRenderBuffer::init(unsigned int width, unsigned int height)
     glRenderbufferStorage(GL_RENDERBUFFER, _format, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
     
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {
         /** listen the event that renderer was recreated on Android/WP8 */
@@ -151,7 +136,6 @@ bool RenderTargetRenderBuffer::init(unsigned int width, unsigned int height)
         glBindRenderbuffer(GL_RENDERBUFFER, _colorBuffer);
         glRenderbufferStorage(GL_RENDERBUFFER, _format, _width, _height);
         glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
-        CCLOG("RenderTargetRenderBuffer recreated, _colorBuffer is %d", _colorBuffer);
     }, this, EVENT_COME_TO_FOREGROUND);
 #endif
     
@@ -177,9 +161,6 @@ RenderTargetRenderBuffer* RenderTargetRenderBuffer::create(unsigned int width, u
 
 RenderTargetDepthStencil::RenderTargetDepthStencil()
 : _depthStencilBuffer(0)
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-, _reBuildDepthStencilListener(nullptr)
-#endif
 {
     _type = Type::RenderBuffer;
 }
@@ -191,9 +172,6 @@ RenderTargetDepthStencil::~RenderTargetDepthStencil()
         glDeleteRenderbuffers(1, &_depthStencilBuffer);
         _depthStencilBuffer = 0;
     }
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    CAApplication::getApplication()->getEventDispatcher()->removeEventListener(_reBuildDepthStencilListener);
-#endif
 }
 
 bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height)
@@ -208,7 +186,7 @@ bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height)
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
     
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {
         /** listen the event that renderer was recreated on Android/WP8 */
@@ -220,7 +198,6 @@ bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height)
         glBindRenderbuffer(GL_RENDERBUFFER, _depthStencilBuffer);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _width, _height);
         glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
-        CCLOG("RenderTargetDepthStencil recreated, _depthStencilBuffer is %d", _depthStencilBuffer);
     }, this, EVENT_COME_TO_FOREGROUND);
 #endif
     
@@ -326,7 +303,7 @@ bool FrameBuffer::init(uint8_t fid, unsigned int width, unsigned int height)
 //    _rt = RenderTarget::create(width, height);
 //    if(nullptr == _rt) return false;
     
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {
         if(isDefaultFBO()) return;
@@ -336,7 +313,6 @@ bool FrameBuffer::init(uint8_t fid, unsigned int width, unsigned int height)
         glGenFramebuffers(1, &_fbo);
         glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
         glBindFramebuffer(GL_FRAMEBUFFER, oldfbo);
-        CCLOG("Recreate FrameBufferObject _fbo is %d", _fbo);
         _fboBindingDirty = true;
     }, this, EVENT_COME_TO_FOREGROUND);
 #endif
@@ -353,9 +329,6 @@ FrameBuffer::FrameBuffer()
 , _rtDepthStencil(nullptr)
 , _fboBindingDirty(true)
 , _isDefault(false)
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-, _dirtyFBOListener(nullptr)
-#endif
 {
     _frameBuffers.insert(this);
 }
@@ -368,9 +341,6 @@ FrameBuffer::~FrameBuffer()
         glDeleteFramebuffers(1, &_fbo);
         _fbo = 0;
         _frameBuffers.erase(this);
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-        CAApplication::getApplication()->getEventDispatcher()->removeEventListener(_dirtyFBOListener);
-#endif
         if (isDefaultFBO())
             _defaultFBO = nullptr;
     }
