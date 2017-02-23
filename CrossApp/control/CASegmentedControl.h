@@ -26,19 +26,11 @@ class CC_DLL CASegmentedControl : public CAControl
 public:
     
     CASegmentedControl(unsigned int itemsCount);
-    
     virtual ~CASegmentedControl();
-    
-    virtual void onEnterTransitionDidFinish();
-    
-    virtual void onExitTransitionDidStart();
 
     static CASegmentedControl* create(unsigned int itemsCount);
-    
     static CASegmentedControl* createWithFrame(const DRect& rect, unsigned int itemsCount);
-    
     static CASegmentedControl* createWithCenter(const DRect& rect, unsigned int itemsCount);
-  
     static CASegmentedControl* createWithLayout(const DLayout& layout, unsigned int itemsCount);
     
     virtual bool init();
@@ -46,7 +38,6 @@ public:
     unsigned int getNumberOfSegments();
     
     void setSelectedAtIndex(int index);
-    
     int getSelectedAtIndex();
     
     void setBackgroundImage(CAImage* image);
@@ -87,15 +78,17 @@ public:
     void setEnabledForSegmentAtIndex(bool isEnable, int index);
     bool isEnabledForSegmentAtIndex(int index);
 
-protected:
+public:
 
+    virtual void onEnterTransitionDidFinish();
+    virtual void onExitTransitionDidStart();
+    
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-    
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+protected:
     
     void setContentSize(const DSize & var);
     
@@ -116,21 +109,17 @@ protected:
     unsigned int                    m_nItemsCount;
 
     int                             m_iSelectedIndex;
-    
     int                             m_iTouchIndex;
     
     std::vector<std::string>        m_vTitles;
     
     CAVector<CAImage*>              m_vNormalImages;
-    
     CAVector<CAImage*>              m_vSelectedImages;
     
     float                           m_fSegmentWidth;
     
     std::vector<bool>               m_vItemTouchEnableds;
-    
     std::vector<DSize>              m_vItemContentOffsets;
-    
     std::vector<DSize>              m_vItemImageSizes;
     
     CAScale9ImageView*              m_pBackgroundView;
@@ -138,13 +127,10 @@ protected:
     CAVector<CAImageView*>          m_vItemSelectedBackgrounds;
     
     CAImage*                        m_pSegmentItemBackgroundImage;
-    
     CAImage*                        m_pNewSegmentItemBackgroundImage;
     
     CAVector<CAView*>               m_vSegmentItems;
-    
     CAVector<CAView*>               m_vSegmentItemsTitles;
-    
     CAVector<CAView*>               m_vSeparateViews;
     
     float                           m_fSeparateWidth;
@@ -154,15 +140,10 @@ protected:
     std::string                     m_sTitleFontName;
     
     CAColor4B                       m_cTextColor;
-    
     CAColor4B                       m_cTextSelectedColor;
-    
     CAColor4B                       m_cImageColor;
-    
     CAColor4B                       m_cImageSelectedColor;
-    
     CAColor4B                       m_cTintColor;
-    
     CAObject*                       m_pTarget;
     
     std::function<void(int)>  m_function{nullptr};

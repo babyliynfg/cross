@@ -60,6 +60,7 @@
 #include "control/CASegmentedControl.h"
 #include "control/CAPageControl.h"
 #include "control/CAStepper.h"
+#include "control/CACheckbox.h"
 
 //controller
 #include "controller/CABarItem.h"

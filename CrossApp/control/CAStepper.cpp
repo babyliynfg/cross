@@ -310,9 +310,9 @@ void CAStepper::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     CAScheduler::getScheduler()->unschedule(schedule_selector(CAStepper::repeat), this);
 }
 
-void CAStepper::onEnter()
+void CAStepper::onEnterTransitionDidFinish()
 {
-    CAControl::onEnter();
+    CAControl::onEnterTransitionDidFinish();
 
     if (m_value<m_minimumValue)
     {
@@ -400,9 +400,9 @@ void CAStepper::onEnter()
     }
 }
 
-void CAStepper::onExit()
+void CAStepper::onExitTransitionDidStart()
 {
-    CAControl::onExit();
+    CAControl::onExitTransitionDidStart();
 }
 
 void CAStepper::action()

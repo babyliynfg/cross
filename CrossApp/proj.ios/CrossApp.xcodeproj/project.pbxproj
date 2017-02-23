@@ -79,6 +79,8 @@
 		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
 		D6596E0D1E56D1C200A55CF9 /* CAAlertViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */; };
 		D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */; };
+		D67ECD7C1E5EE2C100C9CA49 /* CACheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D67ECD7A1E5EE2C100C9CA49 /* CACheckbox.cpp */; };
+		D67ECD7D1E5EE2C100C9CA49 /* CACheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = D67ECD7B1E5EE2C100C9CA49 /* CACheckbox.h */; };
 		D6ADC36A1E56A43C00750771 /* CADevice.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC3691E56A43C00750771 /* CADevice.h */; };
 		D6ADC37B1E56A44400750771 /* CAAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC36C1E56A44400750771 /* CAAddress.h */; };
 		D6ADC37C1E56A44400750771 /* CAAddress.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC36D1E56A44400750771 /* CAAddress.mm */; };
@@ -531,6 +533,8 @@
 		B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
 		D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlertViewImpl.mm; sourceTree = "<group>"; };
 		D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertViewImpl.h; sourceTree = "<group>"; };
+		D67ECD7A1E5EE2C100C9CA49 /* CACheckbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACheckbox.cpp; sourceTree = "<group>"; };
+		D67ECD7B1E5EE2C100C9CA49 /* CACheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACheckbox.h; sourceTree = "<group>"; };
 		D6ADC3691E56A43C00750771 /* CADevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADevice.h; sourceTree = "<group>"; };
 		D6ADC36C1E56A44400750771 /* CAAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddress.h; sourceTree = "<group>"; };
 		D6ADC36D1E56A44400750771 /* CAAddress.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddress.mm; sourceTree = "<group>"; };
@@ -1233,6 +1237,8 @@
 		D6ADC46E1E56A72700750771 /* control */ = {
 			isa = PBXGroup;
 			children = (
+				D67ECD7A1E5EE2C100C9CA49 /* CACheckbox.cpp */,
+				D67ECD7B1E5EE2C100C9CA49 /* CACheckbox.h */,
 				D6ADC46F1E56A72700750771 /* CABar.cpp */,
 				D6ADC4701E56A72700750771 /* CABar.h */,
 				D6ADC4711E56A72700750771 /* CAButton.cpp */,
@@ -1990,6 +1996,7 @@
 				D6ADC6581E56A72800750771 /* CGActionProgressTimer.h in Headers */,
 				D6ADC6CC1E56A72800750771 /* base64.h in Headers */,
 				D6ADC62E1E56A72800750771 /* CASegmentedControl.h in Headers */,
+				D67ECD7D1E5EE2C100C9CA49 /* CACheckbox.h in Headers */,
 				D6ADC7221E56A72800750771 /* CADatePickerView.h in Headers */,
 				D6ADC6F31E56A72800750771 /* LocalStorage.h in Headers */,
 				1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */,
@@ -2160,6 +2167,7 @@
 				D6ADC6C71E56A72800750771 /* CCScriptSupport.cpp in Sources */,
 				1551A730158F2ADE00E66CFE /* CAApplicationCaller.mm in Sources */,
 				D6ADC6191E56A72800750771 /* CAValue.cpp in Sources */,
+				D67ECD7C1E5EE2C100C9CA49 /* CACheckbox.cpp in Sources */,
 				D6ADC67E1E56A72800750771 /* openbsd-reallocarray.c in Sources */,
 				D6ADC72D1E56A72800750771 /* CAListView.cpp in Sources */,
 				1551A734158F2ADE00E66CFE /* CCES2Renderer.m in Sources */,

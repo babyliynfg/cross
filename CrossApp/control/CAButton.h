@@ -44,60 +44,43 @@ public:
 public:
     
     CAButton(const CAButton::Type& buttonType);
-    
     virtual ~CAButton(void);
-    
-    virtual void onExitTransitionDidStart();
-    
-    virtual void onEnterTransitionDidFinish();
-    
+
     static CAButton* create(const CAButton::Type& buttonType);
-    
     static CAButton* createWithFrame(const DRect& rect, const CAButton::Type& buttonType);
-    
     static CAButton* createWithCenter(const DRect& rect, const CAButton::Type& buttonType);
-    
     static CAButton* createWithLayout(const DLayout& layout, const CAButton::Type& buttonType);
     
 public:
     
-    virtual bool init();
+    virtual bool init() override;
     
     void setBackgroundViewForState(CAControl::State state, CAView *var);
-    
     CAView* getBackgroundViewForState(CAControl::State state);
     
     void setImageForState(CAControl::State state, CAImage* var);
-    
     CAImage* getImageForState(CAControl::State state);
     
     void setTitleForState(CAControl::State state, const std::string& var);
-    
     const std::string& getTitleForState(CAControl::State state);
     
     void setImageColorForState(CAControl::State state, const CAColor4B& var);
-    
+
     void setTitleColorForState(CAControl::State state, const CAColor4B& var);
-    
-    void setTitleFontName(const std::string& var);
-    
+        
     void setImageOffset(const DSize& offset);
-    
     void setImageSize(const DSize& size);
-    
+        
+    void setTitleFontName(const std::string& var);
     void setTitleOffset(const DSize& offset);
-    
     void setTitleLabelSize(const DSize& size);
-    
     void setTitleFontSize(float fontSize);
-    
     void setTitleBold(bool bold);
-    
     void setTitleTextAlignment(const CATextAlignment& var);
  
     void addTarget(const std::function<void()>& function, CAButton::Event event);
 
-    void setControlState(CAControl::State state);
+    virtual void setControlState(CAControl::State state) override;
     
 public:
     
@@ -105,55 +88,41 @@ public:
 
 public:
     
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-    
-    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    virtual void onExitTransitionDidStart() override;
+    virtual void onEnterTransitionDidFinish() override;
+        
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent) override;
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent) override;
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent) override;
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent) override;
     
 protected:
 
     CAButton::Type m_eButtonType;
-    
-    CAControl::State m_eState;
-    
-    CAMap<CAControl::State, CAImage*> m_mImages;
-    
-    std::map<CAControl::State, CAColor4B> m_mImageColors;
-    
-    std::map<CAControl::State, std::string> m_mTitles;
-    
-    std::map<CAControl::State, CAColor4B> m_mTitleColors;
 
+    CAMap<CAControl::State, CAImage*> m_mImages;
+    std::map<CAControl::State, CAColor4B> m_mImageColors;
+    std::map<CAControl::State, std::string> m_mTitles;
+    std::map<CAControl::State, CAColor4B> m_mTitleColors;
     CAMap<CAControl::State, CAView*> m_mBackgroundViews;
     
     CAImageView* m_pImageView;
-    
     CALabel* m_pLabel;
     
-    std::string m_sTitleFontName;
-    
-    float m_fTitleFontSize;
-    
-    bool m_bTitleBold;
-        
-    DSize m_pTitleLabelSize;
-    
-    bool m_bDefineTitleLabelSize;
-    
     DSize m_pImageSize;
-    
     bool m_bDefineImageSize;
-    
-    DSize m_pTitleOffset;
-    
-    bool m_bDefineTitleOffset;
-    
     DSize m_pImageOffset;
-    
     bool m_bDefineImageOffset;
+        
+    std::string m_sTitleFontName;
+    float m_fTitleFontSize;
+    bool m_bTitleBold;
+    DSize m_pTitleLabelSize;
+    bool m_bDefineTitleLabelSize;
+    DSize m_pTitleOffset;
+    bool m_bDefineTitleOffset;
+        
+    
     
     std::map<CAButton::Event, std::function<void()>> m_mFunctions;
     
@@ -163,17 +132,14 @@ protected:
     
     void updateWithPreferredSize();
     
-    void setContentSize(const DSize & var);
+    void setContentSize(const DSize& var) override;
 
     void setBackgroundViewSquareRect();
-    
     void setBackgroundViewRoundedRect();
     
     void callBackFunction(CAButton::Event event);
 };
 
-#define setBackGroundViewForState(state, var) setBackgroundViewForState(state, var)
-#define getBackGroundViewForState(state, var) getBackgroundViewForState(state, var)
 NS_CC_END
 
 #endif /* defined(__CAButton__) */

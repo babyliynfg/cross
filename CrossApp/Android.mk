@@ -47,6 +47,7 @@ cocoa/CACalendar.cpp \
 control/CABar.cpp \
 control/CAButton.cpp \
 control/CAControl.cpp \
+control/CACheckbox.cpp \
 control/CAProgress.cpp \
 control/CASegmentedControl.cpp \
 control/CASlider.cpp \

@@ -44,9 +44,6 @@ public:
     virtual bool initWithFrame(const DRect& rect);
     virtual bool initWithCenter(const DRect& rect);
     
-    virtual void onEnter();
-    virtual void onExit();
-
     void setTarget(const std::function<void(int)>& function);
     
     CC_SYNTHESIZE(int, m_numberOfPages, NumberOfPages); // default is 0
@@ -70,6 +67,10 @@ public:
     virtual void setTouchEnabled(bool enable);
         
 protected:
+        
+    virtual void onExitTransitionDidStart();
+    virtual void onEnterTransitionDidFinish();
+        
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);    
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
