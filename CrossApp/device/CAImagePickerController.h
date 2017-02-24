@@ -1,0 +1,54 @@
+//
+//  CAImagePickerController.h
+//  CrossApp
+//
+//  Created by 秦乐 on 2017/2/21.
+//  Copyright © 2017年 cocos2d-x. All rights reserved.
+//
+
+#ifndef CAImagePickerController_h
+#define CAImagePickerController_h
+
+#include "basics/CAObject.h"
+#include "images/CAImage.h"
+
+NS_CC_BEGIN
+
+class CC_DLL CAImagePickerController : public CAObject
+{
+public:
+    
+    enum class SourceType
+    {
+        PhotoLibrary,
+        CameraDeviceRear,
+        CameraDeviceFront,
+        SavedPhotosAlbum
+    };
+    
+public:
+    
+    CAImagePickerController(SourceType type);
+    
+    virtual ~CAImagePickerController();
+    
+    static CAImagePickerController* create(SourceType type);
+    
+    bool init();
+    
+    void open(const std::function<void(CAImage*)>& callback);
+
+    void writeImageToPhoto(CAImage* image, const std::function<void(bool)>& finishCallback, const std::string &imageName = "");
+    
+private:
+
+    CAImage* m_pSavedImage;
+
+    SourceType m_eSourceType;
+    
+    void* m_pOriginal;
+};
+
+NS_CC_END
+
+#endif /* CACamera_h */
