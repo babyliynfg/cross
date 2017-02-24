@@ -4,7 +4,7 @@
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
 #include <string.h>
-#include "platform/CADevice.h"
+#include "device/CADevice.h"
 
 
 
@@ -44,7 +44,6 @@ unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
     
     const char* fontName = NULL;
     float version = atof(CADevice::getSystemVersionWithIOS());
-    
     if (version >= 9.0f)
     {
         fontName = "/System/Library/Fonts/Core/AppleColorEmoji@2x.ttf";

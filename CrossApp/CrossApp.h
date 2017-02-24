@@ -28,6 +28,7 @@
 //basics
 #include "basics/CAApplication.h"
 #include "basics/CAAutoreleasePool.h"
+#include "basics/CACamera.h"
 #include "basics/CAFPSImages.h"
 #include "basics/CAPoint.h"
 #include "basics/CASize.h"
@@ -44,11 +45,6 @@
 #include "basics/CASyncQueue.h"
 #include "basics/CANotificationCenter.h"
 #include "basics/CAPointExtension.h"
-#include "basics/CAConsole.h"
-#include "basics/CAValue.h"
-#include "basics/CACamera.h"
-#include "basics/CACameraBackgroundBrush.h"
-#include "basics/CAConfiguration.h"
 
 //control
 #include "control/CABar.h"
@@ -79,8 +75,8 @@
 // images
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
-#include "images/CAImageCube.h"
 #include "images/CAGif.h"
+
 
 //view
 #include "view/CAView.h"
@@ -130,15 +126,11 @@
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCMaterial.h"
-#include "renderer/CCMeshCommand.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCPrimitive.h"
 #include "renderer/CCPrimitiveCommand.h"
-#include "renderer/CCProperties.h"
-#include "renderer/CCBatchCommand.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCRenderCommandPool.h"
@@ -151,6 +143,7 @@
 #include "renderer/CCFrameBuffer.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/ccShaders.h"
+
 
 // support
 #include "support/ccUtils.h"
@@ -182,7 +175,13 @@
 #include "platform/CATextField.h"
 #include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"
-#include "platform/CADevice.h"
+//#include "platform/CADevice.h"
+
+// device
+#include "device/CADevice.h"
+#include "device/CAMotionManager.h"
+#include "device/CAImagePickerController.h"
+#include "device/CAAddressBook.h"
 
 //script_support
 #include "script_support/CCScriptSupport.h"

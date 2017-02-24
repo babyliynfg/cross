@@ -28,7 +28,10 @@ void RenderImageTest::viewDidLoad()
     btn->setTag(1);
     btn->addTarget([=]()
     {
-        CADevice::openAlbum(this);
+        CAImagePickerController::create(CAImagePickerController::SourceType::PhotoLibrary)->open([this](CAImage* image)
+        {
+            this->getSelectedImage(image);
+        });
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn);
 }

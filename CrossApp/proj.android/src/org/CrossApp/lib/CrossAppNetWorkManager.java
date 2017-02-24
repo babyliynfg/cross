@@ -1,6 +1,8 @@
 package org.CrossApp.lib;
 
 import java.util.List;
+
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -68,6 +70,28 @@ public class CrossAppNetWorkManager {
 		     netType = 1; 
 		 }
 		 return netType; 
+	}
+	
+	public static int isNetWorkAvailble()
+	{
+		int type = 0;
+		ConnectivityManager connManager = (ConnectivityManager) s_pActivity.getSystemService(Context.CONNECTIVITY_SERVICE); 
+		
+		// 获取代表联网状态的NetWorkInfo对象  
+		NetworkInfo networkInfo = connManager.getActiveNetworkInfo();  
+		if(networkInfo == null)
+		{
+			return type;
+		}
+		
+		// 获取当前的网络连接是否可用  
+		boolean available = networkInfo.isAvailable();  
+		if(available)
+		{  
+		   type = 1;  
+		} 
+	
+		return type;
 	}
 	
 	public void openWifi()

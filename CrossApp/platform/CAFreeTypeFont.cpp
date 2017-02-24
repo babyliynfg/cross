@@ -5,7 +5,7 @@
 #include "CATempTypeFont.h"
 #include "CAEmojiFont.h"
 #include <string.h>
-#include "platform/CADevice.h"
+#include "device/CADevice.h"
 
 
 NS_CC_BEGIN
@@ -1261,7 +1261,7 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         const char* fontName = NULL;
         
         float version = atof(CADevice::getSystemVersionWithIOS());
-        
+
         if (version >= 9.0f)
         {
             fontName = "/System/Library/Fonts/LanguageSupport/PingFang.ttc";

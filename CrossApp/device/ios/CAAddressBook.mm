@@ -1,42 +1,28 @@
 //
-//  CAAddress.m
-//  iBook
+//  CAAddressBook.cpp
+//  CrossApp
 //
-//  Created by lh on 14-5-6.
-//
+//  Created by 秦乐 on 2017/2/21.
+//  Copyright © 2017年 cocos2d-x. All rights reserved.
 //
 
-#import "CAAddress.h"
+#include "CAAddressBook.h"
+#import <Foundation/Foundation.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
-@implementation CAAddress
+NS_CC_BEGIN
 
--(id)init
+CAAddressBook::CAAddressBook()
 {
-    if (![super init]) {
-        return nil;
-    }
-    
-    
-    return self;
 }
 
-- (void) dealloc
+CAAddressBook::~CAAddressBook()
 {
-    [super dealloc];
-    _personListDelegate = NULL;
 }
 
--(void)addDelegate:(CrossApp::CAPersonListDelegate*)delegate;
+void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Date>&)>& callback)
 {
-    _personListDelegate = delegate;
-}
-
--(void)getAddressBook
-{
-    if(_personListDelegate == NULL)
-    {
-        return;
-    }
     
     CFErrorRef *error = nil;
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
@@ -48,13 +34,13 @@
         
         ABAddressBookRequestAccessWithCompletion
         (
-            addressBook,
-            ^(bool granted, CFErrorRef error)
-            {
-                accessGranted = granted;
-                dispatch_semaphore_signal(sema);
-            }
-        );
+         addressBook,
+         ^(bool granted, CFErrorRef error)
+         {
+             accessGranted = granted;
+             dispatch_semaphore_signal(sema);
+         }
+         );
         
         dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
     }
@@ -64,7 +50,7 @@
         accessGranted = YES;
     }
     
-    std::vector<CrossApp::CAAddressBookRecord> arr;
+    std::vector<CAAddressBook::Date> arr;
     
     if (accessGranted)
     {
@@ -75,7 +61,7 @@
         {
             
             ABRecordRef person = CFArrayGetValueAtIndex(results, i);
-            CrossApp::CAAddressBookRecord address;
+            CAAddressBook::Date address;
             
             NSString *firstName = (NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
             
@@ -269,19 +255,20 @@
                 //获取該Label下的电话值
                 
                 NSString * personPhone = (NSString*)ABMultiValueCopyValueAtIndex(phone, k);
-     
+                
                 address.phoneNumber = [personPhone cStringUsingEncoding:NSUTF8StringEncoding];
                 
             }
-
+            
             arr.push_back(address);
         }
-
+        
     }
     
-    if(_personListDelegate)
+    if(callback)
     {
-        _personListDelegate->getPersonList(arr);
+        callback(arr);
     }
 }
-@end
+
+NS_CC_END
