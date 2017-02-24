@@ -7,209 +7,210 @@
 //
 
 #include "../CADevice.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
-#include <jni.h>
-#include "basics/CAApplication.h"
-
 
 NS_CC_BEGIN
-
-extern "C"
+namespace CADevice
 {
-    const char* JAVAGetAppVersion()
+    extern "C"
     {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getAppVersion" , "()Ljava/lang/String;"))
+        const char* JAVAGetAppVersion()
         {
-            jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
-            const char* b = jmi.env->GetStringUTFChars( a , 0 );
-            jmi.env->DeleteLocalRef(jmi.classID);
-            return b;
-        }
-    }
-    
-    void JAVASetScreenBrightness(float sender)
-    {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setScreenBrightness" , "(I)V"))
-        {
-            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,sender);
-            jmi.env->DeleteLocalRef(jmi.classID);
-        }
-    }
-    
-    float JAVAgetBrightness()
-    {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getScreenBrightness" , "()I"))
-        {
-            jint nBrightness = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
-            int brightness = nBrightness;
-            jmi.env->DeleteLocalRef(jmi.classID);
-            return (float)brightness / 255.0f;
-        }
-    }
-    
-    CADevice::NetWorkData JAVAgetNetWorkType()
-    {
-        CADevice::NetWorkData networkType = CADevice::NetWorkData::None;
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getAPNType" , "()I"))
-        {
-            jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
-            switch (a)
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getAppVersion" , "()Ljava/lang/String;"))
             {
-                case 0:
-                    networkType = CADevice::NetWorkData::None;
-                    break;
-                case 1:
-                    networkType = CADevice::NetWorkData::Wifi;
-                    break;
-                case 2:
-                case 3:
-                    networkType = CADevice::NetWorkData::ReachableViaWWAN;
-                    break;
+                jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+                const char* b = jmi.env->GetStringUTFChars( a , 0 );
+                jmi.env->DeleteLocalRef(jmi.classID);
+                return b;
             }
         }
-        jmi.env->DeleteLocalRef(jmi.classID);
-        return networkType;
-    }
-    
-    bool JAVAisNetWorkAvailble()
-    {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getAPNType" , "()I"))
+        
+        void JAVASetScreenBrightness(int sender)
         {
-            jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
-            int b = a;
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setScreenBrightness" , "(I)V"))
+            {
+                jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,sender);
+                jmi.env->DeleteLocalRef(jmi.classID);
+            }
+        }
+        
+        float JAVAgetBrightness()
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getScreenBrightness" , "()I"))
+            {
+                jint nBrightness = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
+                int brightness = nBrightness;
+                jmi.env->DeleteLocalRef(jmi.classID);
+                return (float)brightness / 255.0f;
+            }
+        }
+        
+        CADevice::NetWorkData JAVAgetNetWorkType()
+        {
+            CADevice::NetWorkData networkType = CADevice::NetWorkData::None;
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getAPNType" , "()I"))
+            {
+                jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
+                switch (a)
+                {
+                    case 0:
+                        networkType = CADevice::NetWorkData::None;
+                        break;
+                    case 1:
+                        networkType = CADevice::NetWorkData::Wifi;
+                        break;
+                    case 2:
+                    case 3:
+                        networkType = CADevice::NetWorkData::ReachableViaWWAN;
+                        break;
+                }
+            }
             jmi.env->DeleteLocalRef(jmi.classID);
-            return (bool)b;
+            return networkType;
+        }
+        
+        bool JAVAisNetWorkAvailble()
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "isNetWorkAvailble" , "()I"))
+            {
+                jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
+                int b = (int)a;
+                jmi.env->DeleteLocalRef(jmi.classID);
+                return (bool)b;
+            }
+        }
+        
+        void JAVAsetVolume(float sender,int type)
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setVolum" , "(FI)V"))
+            {
+                jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,sender,type);
+                jmi.env->DeleteLocalRef(jmi.classID);
+            }
+        }
+        
+        float JAVAgetVolume(int type)
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getVolum" , "(I)F"))
+            {
+                jfloat a = (jfloat)jmi.env->CallStaticFloatMethod(jmi.classID , jmi.methodID,type);
+                float b = a;
+                jmi.env->DeleteLocalRef(jmi.classID);
+                return b;
+            }
+        }
+        
+        float JAVAgetBattery()
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getBatteryLevel" , "()I"))
+            {
+                jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
+                int b = a;
+                jmi.env->DeleteLocalRef(jmi.classID);
+                return (float)b/100.0f;
+            }
+        }
+        
+        void JAVAsendLocalNotification(const char* title, const char* content, int time)
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "sendLocalNotification" , "(Ljava/lang/String;Ljava/lang/String;I)V"))
+            {
+                jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(title),jmi.env->NewStringUTF(content),time);
+                jmi.env->DeleteLocalRef(jmi.classID);
+            }
+        }
+        
+        void JAVAOpenURL(const std::string &url)
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "browserOpenURL" , "(Ljava/lang/String;)V"))
+            {
+                jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()));
+                jmi.env->DeleteLocalRef(jmi.classID);
+            }
+        }
+        
+        void JAVASetIdleTimerDisabled(int type)
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setIdleTimerDisabled" , "(I)V"))
+            {
+                jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
+                jmi.env->DeleteLocalRef(jmi.classID);
+            }
         }
     }
-    
-    void JAVAsetVolume(float sender,int type)
+
+    #endif
+
+    const char* getAppVersion()
     {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setVolum" , "(FI)V"))
-        {
-            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,sender,type);
-            jmi.env->DeleteLocalRef(jmi.classID);
-        }
+        return JAVAGetAppVersion();
     }
-    
-    float JAVAgetVolume(int type)
+
+    void setScreenBrightness(float brightness)
     {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getVolum" , "(I)F"))
-        {
-            jfloat a = (jfloat)jmi.env->CallStaticFloatMethod(jmi.classID , jmi.methodID,type);
-            float b = a;
-            jmi.env->DeleteLocalRef(jmi.classID);
-            return b;
-        }
+        int sender = (int)(brightness*255.0f);
+        
+        JAVASetScreenBrightness(sender);
     }
-    
-    float JAVAgetBattery()
+
+    float getScreenBrightness()
     {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getBatteryLevel" , "()I"))
-        {
-            jint a = (jint)jmi.env->CallStaticIntMethod(jmi.classID , jmi.methodID);
-            int b = a;
-            jmi.env->DeleteLocalRef(jmi.classID);
-            return (float)b/100.0f;
-        }
+        return JAVAgetBrightness();
     }
-    
-    void JAVAsendLocalNotification(const char* title, const char* content, int time)
+
+    CADevice::NetWorkData getNetWorkType()
     {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "sendLocalNotification" , "(Ljava/lang/String;Ljava/lang/String;I)V"))
-        {
-            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(title),jmi.env->NewStringUTF(content),time);
-            jmi.env->DeleteLocalRef(jmi.classID);
-        }
+        return JAVAgetNetWorkType();
     }
-    
-    void JAVAOpenURL(const std::string &url)
+
+    bool isNetWorkAvailble()
     {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "browserOpenURL" , "(Ljava/lang/String;)V"))
-        {
-            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()));
-            jmi.env->DeleteLocalRef(jmi.classID);
-        }
+        return JAVAisNetWorkAvailble();
     }
-    
-    void JAVASetIdleTimerDisabled(int type)
+
+    void setVolume(float sender, CADevice::VolumeData type)
     {
-        JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setIdleTimerDisabled" , "(I)V"))
-        {
-            jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
-            jmi.env->DeleteLocalRef(jmi.classID);
-        }
+        int mType = (int)type;
+        JAVAsetVolume(sender, mType);
     }
-}
 
-const char* getAppVersion()
-{
-    return JAVAGetAppVersion();
-}
+    float getVolume(CADevice::VolumeData type)
+    {
+        int mType = (int)type;
+        JAVAgetVolume(mType);
+    }
 
-void setScreenBrightness(float brightness)
-{
-    int sender = (int)(brightness*255.0f);
-    
-    JAVASetScreenBrightness(sender);
-}
+    float getBatteryLevel()
+    {
+        return JAVAgetBattery();
+    }
 
-float getScreenBrightness()
-{
-    return JAVAgetBrightness();
-}
+    void sendLocalNotification(const char* title, const char* content,int time)
+    {
+        JAVAsendLocalNotification(title,content,time);
+    }
 
-CADevice::NetWorkData getNetWorkType()
-{
-    return JAVAgetNetWorkType();
-}
+    void OpenURL(const std::string &url)
+    {
+        JAVAOpenURL(url);
+    }
 
-bool isNetWorkAvailble()
-{
-    return JAVAisNetWorkAvailble();
-}
-
-void setVolume(float sender, CADevice::VolumeData type)
-{
-    int mType = (int)type;
-    JAVAsetVolume(sender, mType);
-}
-
-float getVolume(CADevice::VolumeData type)
-{
-    int mType = (int)type;
-    JAVAgetVolume(mType);
-}
-
-float getBatteryLevel()
-{
-    return JAVAgetBattery();
-}
-
-void sendLocalNotification(const char* title, const char* content,int time)
-{
-    JAVAsendLocalNotification(title,content,time);
-}
-
-void OpenURL(const std::string &url)
-{
-    JAVAOpenURL(url);
-}
-
-void setIdleTimerDisabled(bool isIdleTimerDisabled)
-{
-    int type = isIdleTimerDisabled ? 1 : 0;
-    JAVASetIdleTimerDisabled(type);
-}
-
+    void setIdleTimerDisabled(bool isIdleTimerDisabled)
+    {
+        int type = isIdleTimerDisabled ? 1 : 0;
+        JAVASetIdleTimerDisabled(type);
+    }
+};
 NS_CC_END

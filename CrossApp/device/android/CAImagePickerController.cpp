@@ -6,10 +6,11 @@
 //  Copyright © 2017年 cocos2d-x. All rights reserved.
 //
 
-#include "CAImagePickerController.h"
+#include "../CAImagePickerController.h"
+#include "basics/CAScheduler.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
-#include "basics/CAApplication.h"
 
 NS_CC_BEGIN
 
@@ -52,11 +53,14 @@ extern "C"
         if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "UpdateCamera", "(Ljava/lang/String;)V"))
         {
             jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID, jmi.env->NewStringUTF(savePath.c_str()));
+            jmi.env->DeleteLocalRef(jmi.classID);
         }
     }
 }
 
-std::function<void(CrossApp::CAImage*)> _callBack;
+#endif
+
+std::function<void(CrossApp::CAImage*)> _imagePickerControllerCallBack;
 
 CAImagePickerController::CAImagePickerController(SourceType type)
 : m_eSourceType(type)
@@ -81,33 +85,33 @@ CAImagePickerController* CAImagePickerController::create(SourceType type)
     return nullptr;
 }
 
-bool init()
+bool CAImagePickerController::init()
 {
     return true;
 }
 
-void open(const std::function<void(CrossApp::CAImage*)>& callback)
+void CAImagePickerController::open(const std::function<void(CrossApp::CAImage*)>& callback)
 {
-    _callBack = callback;
+    _imagePickerControllerCallBack = callback;
     
     switch (m_eSourceType)
     {
-        case SourceType::PhotoLibrary:
+        case CAImagePickerController::SourceType::PhotoLibrary:
         {
             JAVAOpenAlbum(1);
         }
             break;
-        case SourceType::CameraDeviceRear:
+        case CAImagePickerController::SourceType::CameraDeviceRear:
         {
-            JAVAOpenCamera(int type);
+            JAVAOpenCamera(1);
         }
             break;
-        case SourceType::CameraDeviceFront:
+        case CAImagePickerController::SourceType::CameraDeviceFront:
         {
-            JAVAOpenCamera(int type);
+            JAVAOpenCamera(2);
         }
             break;
-        case SourceType::SavedPhotosAlbum:
+        case CAImagePickerController::SourceType::SavedPhotosAlbum:
         {
             CCAssert(false, "");
             return;
@@ -118,14 +122,32 @@ void open(const std::function<void(CrossApp::CAImage*)>& callback)
     }
 }
 
-void writeImageToPhoto(CAImage* image, const std::function<void(bool)>& finishCallback, const std::string &imageName)
+void CAImagePickerController::writeImageToPhoto(CAImage* image, const std::function<void(bool)>& finishCallback, const std::string &imageName)
 {
     JAVAwriteImageToPhoto(image, imageName);
 }
 
+
 extern "C"
 {
-    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppNativeTool_NativeReturn
+    ( JNIEnv* env,jobject thiz ,jstring arg1, jobject arg2)
+    {
+        const char* str = env->GetStringUTFChars(arg1, false);
+
+        CAScheduler::getScheduler()->performFunctionInUIThread( [=]()
+       {
+           if (_imagePickerControllerCallBack)
+           {
+               CAImage *image = new CAImage();
+               if (image->initWithImageFile(str))
+               {
+                   _imagePickerControllerCallBack(CAImage::generateMipmapsWithImage(image));
+                   image->release();
+               }
+           }
+       });
+    }
 }
 
 NS_CC_END

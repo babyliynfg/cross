@@ -5,11 +5,11 @@
 //  Created by 秦乐 on 2017/2/21.
 //  Copyright © 2017年 cocos2d-x. All rights reserved.
 //
-#include "CAAddressBook.h"
+#include "../CAAddressBook.h"
+#include "support/Json/CSContentJsonDictionary.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
-#include "basics/CAApplication.h"
-
 
 NS_CC_BEGIN
 
@@ -26,6 +26,8 @@ extern "C"
     }
 }
 
+#endif
+
 CAAddressBook::CAAddressBook()
 {
 }
@@ -34,11 +36,13 @@ CAAddressBook::~CAAddressBook()
 {
 }
 
-std::function<void(const std::vector<CAAddressBook::Date>&)> _callBack;
+std::function<void(const std::vector<CAAddressBook::Date>&)> _bookCallBack;
 
-void getAddressBook(const std::function<void(const std::vector<CAAddressBook::Date>&)>& callback)
+std::vector<CAAddressBook::Date> _addressBookVec;
+
+void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Date>&)>& callback)
 {
-    _callBack = callback;
+    _bookCallBack = callback;
     
     JAVAGetAddressBook();
 }
@@ -47,6 +51,8 @@ extern "C"
 {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppPersonList_getPersonList(JNIEnv *env,jobject obj,jstring arg1)
     {
+        _addressBookVec.clear();
+        
         const char *sPersonList = env->GetStringUTFChars(arg1,false);
         
         CSJson::Reader read;
@@ -61,7 +67,7 @@ extern "C"
             {
                 CSJson::Value person;
                 person = personlist[i];
-                CAAddressBookRecord addrec;
+                CAAddressBook::Date addrec;
                 
                 addrec.fullname = person["name"].asString();
                 
@@ -84,14 +90,14 @@ extern "C"
                 
                 addrec.zip = person["address_postCode"].asString();
                 
-                _addressBookArr.push_back(addrec);
+                _addressBookVec.push_back(addrec);
                 
             }
         }
         
-        if(_callBack)
+        if(_bookCallBack)
         {
-            _callBack(_addressBookArr);
+            _bookCallBack(_addressBookVec);
         }
     }
 }

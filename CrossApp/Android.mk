@@ -181,13 +181,16 @@ platform/android/CAWebViewImpl.cpp \
 platform/android/CATextField.cpp \
 platform/android/CATextView.cpp \
 platform/android/CAClipboard.cpp \
-platform/android/CADevice.cpp \
 platform/android/CAAlertViewImpl.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppHelper.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppRenderer.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/TouchesJni.cpp \
+device/android/CADevice.cpp \
+device/android/CAAddressBook.cpp \
+device/android/CAMotionManager.cpp \
+device/android/CAImagePickerController.cpp \
 game/CGNode.cpp \
 game/CGSprite.cpp \
 game/CGSpriteFrame.cpp \

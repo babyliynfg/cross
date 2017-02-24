@@ -11,19 +11,20 @@
 
 #include "basics/CAObject.h"
 #include "images/CAImage.h"
-
+#include <iostream>
+#include <functional>
 NS_CC_BEGIN
 
 class CC_DLL CAImagePickerController : public CAObject
 {
 public:
     
-    enum class SourceType
+    enum class SourceType : int
     {
-        PhotoLibrary,
+        PhotoLibrary = 0,
         CameraDeviceRear,
         CameraDeviceFront,
-        SavedPhotosAlbum
+        SavedPhotosAlbum,
     };
     
 public:

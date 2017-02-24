@@ -10,6 +10,8 @@
 #define CAMotionManager_h
 
 #include "basics/CAObject.h"
+#include <iostream>
+#include <functional>
 NS_CC_BEGIN
 
 class CC_DLL CAMotionManager : public CAObject

@@ -53,28 +53,27 @@ public class CrossAppNativeTool
 	static String s;
 	public static Uri photoUri;
 	public static void CAImageCapture(int type)
-	{
+	{  
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		SimpleDateFormat timeStampFormat = new SimpleDateFormat(
 				"yyyy_MM_dd_HH_mm_ss");
-				String filename = timeStampFormat.format(new Date(0));
-				ContentValues values = new ContentValues();
-				values.put(Media.TITLE, filename);
+		String filename = timeStampFormat.format(new Date(0));
+		ContentValues values = new ContentValues();
+		values.put(Media.TITLE, filename);
 
-				photoUri = s_pContext.getContentResolver().insert(
-				MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+		photoUri = s_pContext.getContentResolver().insert(
+		MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
-				intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-			
-				int selectedType = 0;
-		        if (type ==0) {
-					selectedType = 0;
-				}
-		        else {
-					selectedType = 3;
-				}
-			
-		s_pContext.startActivityForResult(intent,selectedType);
+		if(type == 1)
+		{
+			intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+			s_pContext.startActivityForResult(intent,1);
+		}
+		else if(type == 2)
+		{
+			intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+			s_pContext.startActivityForResult(intent,1);
+		}
 	}
 	
 	public static void CAVideoCapture()
@@ -122,14 +121,17 @@ public class CrossAppNativeTool
 	    {
 	        
 	    }
+	    Log.d("6666666", "value:" + value);
 	    return value;
 	}
 
 	public static void setScreenBrightness( int value) 
 	{
 	   CrossAppActivity mActivity = (CrossAppActivity)s_pContext;
-	   mActivity.mLightHandler.sendEmptyMessage(value);
-	}
+	   //mActivity.mLightHandler.sendEmptyMessage(value);
+	   Settings.System.putInt(s_pContext.getContentResolver(),
+	            Settings.System.SCREEN_BRIGHTNESS, value);
+	}	
 	
 	public static void browserOpenURL(final String url)
 	{
@@ -193,7 +195,7 @@ public class CrossAppNativeTool
             switch (requestCode) 
             {  
             case 4:  // Photo
-
+            	Log.d("666666", "6666444444");
             	final String uriStr = getPath(s_pContext, intent.getData());
             	
             	String fileStr = getRealFilePath(s_pContext, intent.getData());
@@ -206,7 +208,7 @@ public class CrossAppNativeTool
 				});
                 break;  
             case 1:
-
+            	Log.d("666666", "66661111111");
             	Uri originalUri1;
             	if (intent != null && intent.getData() != null) 
             	{
@@ -238,6 +240,7 @@ public class CrossAppNativeTool
             	break;
             case 2:
             case 3:
+            	Log.d("666666", "66662222222");
             	Uri originalUri2;
             	if (intent != null && intent.getData() != null) 
             	{
@@ -269,6 +272,7 @@ public class CrossAppNativeTool
                 
                 break;
             case 0: 
+            	Log.d("666666", "6666000000");
             	 Uri takePhoto;
             	 
             	if (intent != null && intent.getData() != null) 
