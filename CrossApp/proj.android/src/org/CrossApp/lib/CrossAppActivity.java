@@ -45,9 +45,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	private CrossAppGLSurfaceView mGLSurfaceView;
 	
 	private CrossAppWebViewHelper mWebViewHelper = null;
-	
-	private CrossAppHandler mHandler;
-	
+
 	private static CrossAppRenderer mCrossAppRenderer;
 	
     public static Handler msHandler;
@@ -103,8 +101,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		super.onCreate(savedInstanceState);
 		
 		s_pActivity = this;
-
-    	this.mHandler = new CrossAppHandler(this);
 
     	CrossAppVolumeControl.setContext(s_pActivity);
     	
@@ -201,7 +197,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
     {
 		Callable<String> callable = new Callable<String>() 
 		{
-            @Override
+            @SuppressLint("NewApi") @Override
             public String call() throws Exception 
             {
             	ClipboardManager clipboard =  (ClipboardManager)s_pActivity.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -279,21 +275,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
         resolver.notifyChange(uri, null);
     }
 	
-	@Override
-	public void showDialog(final String pTitle, final String pMessage) {
-		Message msg = new Message();
-		msg.what = CrossAppHandler.HANDLER_SHOW_DIALOG;
-		msg.obj = new CrossAppHandler.DialogMessage(pTitle, pMessage);
-		this.mHandler.sendMessage(msg);
-	}
 
-	@Override
-	public void showEditTextDialog(final String pTitle, final String pContent, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) {
-		Message msg = new Message();
-		msg.what = CrossAppHandler.HANDLER_SHOW_EDITBOX_DIALOG;
-		msg.obj = new CrossAppHandler.EditBoxMessage(pTitle, pContent, pInputMode, pInputFlag, pReturnType, pMaxLength);
-		this.mHandler.sendMessage(msg);
-	}
 
 	@Override
 	public void runOnGLThread(final Runnable pRunnable) {

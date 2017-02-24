@@ -24,8 +24,8 @@ public class CrossAppHelper {
 	// Fields
 	// ===========================================================
 
-	private static CrossAppMusic sCocos2dMusic;
-	private static CrossAppSound sCocos2dSound;
+	private static CrossAppMusic sCrossAppMusic;
+	private static CrossAppSound sCrossAppound;
 	private static AssetManager sAssetManager;
 	private static CrossAppAccelerometer sCrossAppAccelerometer;
 	private static CrossAppGyroscope sCrossAppGyroscope;
@@ -52,8 +52,8 @@ public class CrossAppHelper {
 
 		CrossAppHelper.setsCrossAppAccelerometer(new CrossAppAccelerometer(pContext));
 		CrossAppHelper.setCrossAppGyroscope(new CrossAppGyroscope(pContext));
-		CrossAppHelper.sCocos2dMusic = new CrossAppMusic(pContext);
-		CrossAppHelper.sCocos2dSound = new CrossAppSound(pContext);
+		CrossAppHelper.sCrossAppMusic = new CrossAppMusic(pContext);
+		CrossAppHelper.sCrossAppound = new CrossAppSound(pContext);
 		CrossAppHelper.sAssetManager = pContext.getAssets();
 		CrossAppHelper.sSDL = new CrossAppSDL(pContext);
 		CrossAppBitmap.setContext(pContext);
@@ -148,101 +148,93 @@ public class CrossAppHelper {
 	}
 	
 	public static void preloadBackgroundMusic(final String pPath) {
-		CrossAppHelper.sCocos2dMusic.preloadBackgroundMusic(pPath);
+		CrossAppHelper.sCrossAppMusic.preloadBackgroundMusic(pPath);
 	}
 
 	public static void playBackgroundMusic(final String pPath, final boolean isLoop) {
-		CrossAppHelper.sCocos2dMusic.playBackgroundMusic(pPath, isLoop);
+		CrossAppHelper.sCrossAppMusic.playBackgroundMusic(pPath, isLoop);
 	}
 
 	public static void resumeBackgroundMusic() {
-		CrossAppHelper.sCocos2dMusic.resumeBackgroundMusic();
+		CrossAppHelper.sCrossAppMusic.resumeBackgroundMusic();
 	}
 
 	public static void pauseBackgroundMusic() {
-		CrossAppHelper.sCocos2dMusic.pauseBackgroundMusic();
+		CrossAppHelper.sCrossAppMusic.pauseBackgroundMusic();
 	}
 
 	public static void stopBackgroundMusic() {
-		CrossAppHelper.sCocos2dMusic.stopBackgroundMusic();
+		CrossAppHelper.sCrossAppMusic.stopBackgroundMusic();
 	}
 
 	public static void rewindBackgroundMusic() {
-		CrossAppHelper.sCocos2dMusic.rewindBackgroundMusic();
+		CrossAppHelper.sCrossAppMusic.rewindBackgroundMusic();
 	}
 
 	public static boolean isBackgroundMusicPlaying() {
-		return CrossAppHelper.sCocos2dMusic.isBackgroundMusicPlaying();
+		return CrossAppHelper.sCrossAppMusic.isBackgroundMusicPlaying();
 	}
 
 	public static float getBackgroundMusicVolume() {
-		return CrossAppHelper.sCocos2dMusic.getBackgroundVolume();
+		return CrossAppHelper.sCrossAppMusic.getBackgroundVolume();
 	}
 
 	public static void setBackgroundMusicVolume(final float volume) {
-		CrossAppHelper.sCocos2dMusic.setBackgroundVolume(volume);
+		CrossAppHelper.sCrossAppMusic.setBackgroundVolume(volume);
 	}
 
 	public static void preloadEffect(final String path) {
-		CrossAppHelper.sCocos2dSound.preloadEffect(path);
+		CrossAppHelper.sCrossAppound.preloadEffect(path);
 	}
 
 	public static int playEffect(final String path, final boolean isLoop) {
-		return CrossAppHelper.sCocos2dSound.playEffect(path, isLoop);
+		return CrossAppHelper.sCrossAppound.playEffect(path, isLoop);
 	}
 
 	public static void resumeEffect(final int soundId) {
-		CrossAppHelper.sCocos2dSound.resumeEffect(soundId);
+		CrossAppHelper.sCrossAppound.resumeEffect(soundId);
 	}
 
 	public static void pauseEffect(final int soundId) {
-		CrossAppHelper.sCocos2dSound.pauseEffect(soundId);
+		CrossAppHelper.sCrossAppound.pauseEffect(soundId);
 	}
 
 	public static void stopEffect(final int soundId) {
-		CrossAppHelper.sCocos2dSound.stopEffect(soundId);
+		CrossAppHelper.sCrossAppound.stopEffect(soundId);
 	}
 
 	public static float getEffectsVolume() {
-		return CrossAppHelper.sCocos2dSound.getEffectsVolume();
+		return CrossAppHelper.sCrossAppound.getEffectsVolume();
 	}
 
 	public static void setEffectsVolume(final float volume) {
-		CrossAppHelper.sCocos2dSound.setEffectsVolume(volume);
+		CrossAppHelper.sCrossAppound.setEffectsVolume(volume);
 	}
 
 	public static void unloadEffect(final String path) {
-		CrossAppHelper.sCocos2dSound.unloadEffect(path);
+		CrossAppHelper.sCrossAppound.unloadEffect(path);
 	}
 
 	public static void pauseAllEffects() {
-		CrossAppHelper.sCocos2dSound.pauseAllEffects();
+		CrossAppHelper.sCrossAppound.pauseAllEffects();
 	}
 
 	public static void resumeAllEffects() {
-		CrossAppHelper.sCocos2dSound.resumeAllEffects();
+		CrossAppHelper.sCrossAppound.resumeAllEffects();
 	}
 
 	public static void stopAllEffects() {
-		CrossAppHelper.sCocos2dSound.stopAllEffects();
+		CrossAppHelper.sCrossAppound.stopAllEffects();
 	}
 
 	public static void end() {
-		CrossAppHelper.sCocos2dMusic.end();
-		CrossAppHelper.sCocos2dSound.end();
+		CrossAppHelper.sCrossAppMusic.end();
+		CrossAppHelper.sCrossAppound.end();
 	}
 
 
 	public static void terminateProcess() {
 		android.os.Process.killProcess(android.os.Process.myPid());
-	}
-
-	private static void showDialog(final String pTitle, final String pMessage) {
-		CrossAppHelper.sCrossAppHelperListener.showDialog(pTitle, pMessage);
-	}
-
-	private static void showEditTextDialog(final String pTitle, final String pMessage, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) {
-		CrossAppHelper.sCrossAppHelperListener.showEditTextDialog(pTitle, pMessage, pInputMode, pInputFlag, pReturnType, pMaxLength);
 	}
 
 	public static void setEditTextDialogResult(final String pResult) {
@@ -388,10 +380,8 @@ public class CrossAppHelper {
 		CrossAppHelper.sCrossAppGyroscope = gyroscope;
 	}
 	
-	public static interface CrossAppHelperListener {
-		public void showDialog(final String pTitle, final String pMessage);
-		public void showEditTextDialog(final String pTitle, final String pMessage, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength);
-
+	public static interface CrossAppHelperListener 
+	{
 		public void runOnGLThread(final Runnable pRunnable);
 	}
 }
