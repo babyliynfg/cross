@@ -399,8 +399,8 @@ void CACheckbox::updateCheckboxState()
     DRect labelCenter = this->getBounds();
     float labelSize = 0;
     
-    CAImage* image = m_bIsOn ? m_pImageSelected : m_pImageNormal;
-    const std::string& title = m_bIsOn ? m_sTitleSelected : m_sTitleNormal;
+    CAImage* image = (m_bIsOn && m_pImageSelected) ? m_pImageSelected : m_pImageNormal;
+    const std::string& title = (m_bIsOn && !m_sTitleSelected.empty()) ? m_sTitleSelected : m_sTitleNormal;
 
     if (image && title.length() == 0)
     {
