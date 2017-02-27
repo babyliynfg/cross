@@ -375,7 +375,6 @@ void GLProgram::parseUniforms()
                     {
                         CCLOG("error: 0x%x  uniformName: %s", (int)__gl_error_code, uniformName);
                     }
-                    assert(__gl_error_code == GL_NO_ERROR);
 
                     _userUniforms[uniform.name] = uniform;
                 }

@@ -1341,14 +1341,12 @@ void CAConsole::commandUpload(int fd)
         {
             break;
         }
-        unsigned char *decode;
-        unsigned char *in = (unsigned char *)data;
-        int dt = base64Decode(in, 4, &decode);
-        for(int i = 0; i < dt; i++)
+        std::string decode = base64Decode(data).c_str();
+        const char* decodeData = decode.c_str();
+        for(int i = 0; i < decode.length(); i++)
         {
-            fwrite(decode+i, 1, 1, fp);
+            fwrite(decodeData + i, 1, 1, fp);
         }
-        free(decode);
     }
     fclose(fp);
 }

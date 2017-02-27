@@ -9,14 +9,14 @@
 namespace CrossApp
 {
 
-    static inline bool isBase64(unsigned char c)
+    static inline bool isBase64(char c)
     {
         return (isalnum(c) || (c == '+') || (c == '/'));
     }
     
-    int CC_DLL base64Decode(const unsigned char *in, unsigned int inLength, unsigned char **out);
+    std::string CC_DLL base64Decode(const std::string& string);
 
-    int CC_DLL base64Encode(const unsigned char *in, unsigned int inLength, char **out);
+    std::string CC_DLL base64Encode(const std::string& string);
     
 }//namespace   CrossApp 
 

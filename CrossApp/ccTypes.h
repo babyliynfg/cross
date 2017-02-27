@@ -58,6 +58,17 @@ getUIntFormColor4B(const CAColor4B& color)
     return (color.b + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000);
 }
 
+static inline CAColor4B ccc4Mult(const CAColor4B& color, float var)
+{
+    return
+    {
+        static_cast<GLubyte>(color.r * var),
+        static_cast<GLubyte>(color.g * var),
+        static_cast<GLubyte>(color.b * var),
+        static_cast<GLubyte>(color.a)
+    };
+}
+
 //CAColor4B predefined colors
 //! White color (255,255,255,255)
 static const CAColor4B CAColor_white   = {255, 255, 255, 255};
@@ -114,7 +125,6 @@ static inline CAColor4B ccc4BFromccc4F(const CAColor4F& c)
     CAColor4B ret = {(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
 	return ret;
 }
-
 
 /** returns YES if both CAColor4B are equal. Otherwise it returns NO.
  @since v0.99.1

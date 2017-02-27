@@ -338,14 +338,11 @@ void CAImageView::setImageAsyncWithFile(const std::string& path)
         this->release();
     });
 }
+
 void CAImageView::setImageRect(const DRect& rect)
 {
     CAView::setImageRect(rect);
 }
-void CAImageView::asyncFinish(CrossApp::CAObject *var)
-{
-    CAImage* image = dynamic_cast<CAImage*>(var);
-    this->setImage(image);
-}
+
 
 NS_CC_END

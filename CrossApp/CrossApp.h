@@ -56,6 +56,7 @@
 #include "control/CASegmentedControl.h"
 #include "control/CAPageControl.h"
 #include "control/CAStepper.h"
+#include "control/CACheckbox.h"
 
 //controller
 #include "controller/CABarItem.h"
@@ -174,7 +175,13 @@
 #include "platform/CATextField.h"
 #include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"
-#include "platform/CADevice.h"
+//#include "platform/CADevice.h"
+
+// device
+#include "device/CADevice.h"
+#include "device/CAMotionManager.h"
+#include "device/CAImagePickerController.h"
+#include "device/CAAddressBook.h"
 
 //script_support
 #include "script_support/CCScriptSupport.h"

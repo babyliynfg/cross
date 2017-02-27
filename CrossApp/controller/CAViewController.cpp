@@ -16,7 +16,7 @@
 #include "animation/CAViewAnimation.h"
 #include "animation/CAAnimation.h"
 #include "support/CAUIEditorParser.h"
-#include "platform/CADevice.h"
+#include "device/CADevice.h"
 #include "script_support/CCScriptSupport.h"
 #include "support/CAThemeManager.h"
 #include "support/ccUtils.h"

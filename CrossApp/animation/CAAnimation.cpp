@@ -71,6 +71,7 @@ namespace CAAnimation
     
     void Animation::end()
     {
+        info.model.end = true;
         _map.erase(info.animationID);
         CAScheduler::getScheduler()->unschedule("update", this);
         if (info.callback)

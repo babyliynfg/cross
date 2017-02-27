@@ -1,6 +1,7 @@
 
 #include "basics/CACameraBackgroundBrush.h"
 #include "basics/CACamera.h"
+#include "basics/CANotificationCenter.h"
 #include "ccMacros.h"
 #include "basics/CAConfiguration.h"
 #include "basics/CAApplication.h"
@@ -207,13 +208,10 @@ CACameraBackgroundSkyBoxBrush::CACameraBackgroundSkyBoxBrush()
 , _textureValid(true)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
-                                                            [this](EventCustom*)
-                                                            {
-                                                                initBuffer();
-                                                            }
-                                                            );
-    CAApplication::getApplication()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
+        initBuffer();
+    }, this, EVENT_COME_TO_FOREGROUND);
 #endif
 }
 

@@ -12,6 +12,7 @@ NS_CC_BEGIN
 
 CAControl::CAControl()
 :m_bRecSpe(true)
+,m_eState(CAControl::State::Normal)
 {
     this->setHaveNextResponder(false);
     this->setMultipleTouchEnabled(false);

@@ -17,8 +17,8 @@
 #include "basics/CAConfiguration.h"
 #include "basics/CAApplication.h"
 #include "basics/CACamera.h"
+#include "basics/CANotificationCenter.h"
 #include "view/CAWindow.h"
-
 
 NS_CC_BEGIN
 
@@ -178,9 +178,6 @@ Renderer::Renderer()
 ,_isDepthTestFor2D(false)
 ,_triBatchesToDraw(nullptr)
 ,_triBatchesToDrawCapacity(-1)
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-,_cacheTextureListener(nullptr)
-#endif
 {
     _groupCommandManager = new (std::nothrow) GroupCommandManager();
     
@@ -211,21 +208,18 @@ Renderer::~Renderer()
     glDeleteVertexArrays(1, &_buffersVAO);
     GL::bindVAO(0);
 #endif
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    CAApplication::getApplication()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
-#endif
 }
 
 void Renderer::initGLView()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-        /** listen the event that renderer was recreated on Android/WP8 */
-        this->setupBuffer();
-    });
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _notificationTarget = new CAObject();
     
-    CAApplication::getApplication()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
+//        /** listen the event that renderer was recreated on Android/WP8 */
+//        this->setupBuffer();
+    }, _notificationTarget, EVENT_COME_TO_FOREGROUND);
 #endif
 
     setupBuffer();
@@ -246,8 +240,10 @@ void Renderer::setupBuffer()
 void Renderer::setupVBOAndVAO()
 {
     //generate vbo and vao for trianglesCommand
+#if CC_TEXTURE_ATLAS_USE_VAO
     glGenVertexArrays(1, &_buffersVAO);
     GL::bindVAO(_buffersVAO);
+#endif
 
     glGenBuffers(2, &_buffersVBO[0]);
 

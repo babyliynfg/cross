@@ -50,58 +50,6 @@ const char * getApkPath() {
     return g_apkPath.c_str();
 }
 
-void showDialogJNI(const char * pszMsg, const char * pszTitle) {
-    if (!pszMsg) {
-        return;
-    }
-
-    JniMethodInfo t;
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "showDialog", "(Ljava/lang/String;Ljava/lang/String;)V")) {
-        jstring stringArg1;
-
-        if (!pszTitle) {
-            stringArg1 = t.env->NewStringUTF("");
-        } else {
-            stringArg1 = t.env->NewStringUTF(pszTitle);
-        }
-
-        jstring stringArg2 = t.env->NewStringUTF(pszMsg);
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2);
-
-        t.env->DeleteLocalRef(stringArg1);
-        t.env->DeleteLocalRef(stringArg2);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void showEditTextDialogJNI(const char* pszTitle, const char* pszMessage, int nInputMode, int nInputFlag, int nReturnType, int nMaxLength, EditTextCallback pfEditTextCallback, void* ctx) {
-    if (pszMessage == NULL) {
-        return;
-    }
-
-    s_pfEditTextCallback = pfEditTextCallback;
-    s_ctx = ctx;
-
-    JniMethodInfo t;
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "showEditTextDialog", "(Ljava/lang/String;Ljava/lang/String;IIII)V")) {
-        jstring stringArg1;
-
-        if (!pszTitle) {
-            stringArg1 = t.env->NewStringUTF("");
-        } else {
-            stringArg1 = t.env->NewStringUTF(pszTitle);
-        }
-
-        jstring stringArg2 = t.env->NewStringUTF(pszMessage);
-
-        t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2, nInputMode, nInputFlag, nReturnType, nMaxLength);
-
-        t.env->DeleteLocalRef(stringArg1);
-        t.env->DeleteLocalRef(stringArg2);
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
 void terminateProcessJNI() {
     JniMethodInfo t;
 

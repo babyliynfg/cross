@@ -20,42 +20,28 @@ public:
     CASlider();
     virtual ~CASlider();
     
-    virtual void onExitTransitionDidStart();
-    
-    virtual void onEnterTransitionDidFinish();
-    
     static CASlider* create();
-    
     static CASlider* createWithFrame(const DRect& rect);
-    
     static CASlider* createWithCenter(const DRect& rect);
-    
     static CASlider* createWithLayout(const DLayout& layout);
     
 public:
     
     bool init();
-    
     bool initWithFrame(const DRect& rect);
-    
     bool initWithCenter(const DRect& rect);
     
     void setTarget(const std::function<void(float)>& function);
-    
     void setTargetForTouchUpSide(const std::function<void(float)>& function);
     
     virtual void setValue(float value);
-    
     virtual void setMinValue(float minValue);
-    
     virtual void setMaxValue(float maxValue);
     
     virtual void setTrackHeight(float trackHeight);
     
     virtual void setMinTrackTintImage(CAImage* minTrackTintImage);
-    
     virtual void setMaxTrackTintImage(CAImage* maxTrackTintImage);
-    
     virtual void setThumbTintImage(CAImage* thumbTintImage);
     
 public:
@@ -78,10 +64,11 @@ public:
 
 public:
     
+    virtual void onExitTransitionDidStart();
+    virtual void onEnterTransitionDidFinish();
+    
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-    
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-    
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void layoutSubViews();

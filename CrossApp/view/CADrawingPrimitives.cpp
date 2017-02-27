@@ -6,17 +6,26 @@
 #include "basics/CAApplication.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCRenderer.h"
 #include "basics/CAPointExtension.h"
 #include <string.h>
 #include <cmath>
 
 NS_CC_BEGIN
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
+
 #ifndef M_PI
     #define M_PI       3.14159265358979323846
 #endif
 
 static bool s_bInitialized = false;
-static GLProgram* s_pShader = NULL;
+static GLProgram* s_shader = nullptr;
 static int s_nColorLocation = -1;
 static CAColor4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
 static int s_nPointSizeLocation = -1;
@@ -29,12 +38,12 @@ static void lazy_init( void )
         //
         // Position and 1 color passed as a uniform (to simulate glColor4ub )
         //
-        s_pShader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-        s_pShader->retain();
+        s_shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+        s_shader->retain();
         
-        s_nColorLocation = glGetUniformLocation( s_pShader->getProgram(), "u_color");
+        s_nColorLocation = s_shader->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
-        s_nPointSizeLocation = glGetUniformLocation( s_pShader->getProgram(), "u_pointSize");
+        s_nPointSizeLocation = s_shader->getUniformLocation("u_pointSize");
     CHECK_GL_ERROR_DEBUG();
 
         s_bInitialized = true;
@@ -49,7 +58,7 @@ void ccDrawInit()
 
 void ccDrawFree()
 {
-	CC_SAFE_RELEASE_NULL(s_pShader);
+	CC_SAFE_RELEASE_NULL(s_shader);
 	s_bInitialized = false;
 }
 
@@ -62,11 +71,11 @@ void ccDrawPoint( const DPoint& point )
     p.y = point.y;
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
 
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
-    s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, &p);
     glDrawArrays(GL_POINTS, 0, 1);
@@ -79,10 +88,10 @@ void ccDrawPoints( const DPoint *points, unsigned int numberOfPoints )
     lazy_init();
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
-    s_pShader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->setUniformLocationWith1f(s_nPointSizeLocation, s_fPointSize);
 
     // XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
     DPoint* newPoints = new DPoint[numberOfPoints];
@@ -121,9 +130,9 @@ void ccDrawLine( const DPoint& origin, const DPoint& destination )
         {destination.x, destination.y}
     };
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -156,9 +165,9 @@ void ccDrawPoly( const DPoint *poli, unsigned int numberOfPoints, bool closePoly
 {
     lazy_init();
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -198,9 +207,9 @@ void ccDrawSolidPoly( const DPoint *poli, unsigned int numberOfPoints, CAColor4F
 {
     lazy_init();
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &color.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &color.r, 1);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -254,9 +263,9 @@ void ccDrawCircle( const DPoint& center, float radius, float angle, unsigned int
     vertices[(segments+1)*2] = center.x;
     vertices[(segments+1)*2+1] = center.y;
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -287,9 +296,9 @@ void ccDrawQuadBezier(const DPoint& origin, const DPoint& control, const DPoint&
     vertices[segments].x = destination.x;
     vertices[segments].y = destination.y;
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -339,9 +348,9 @@ void ccDrawCardinalSpline(const std::vector<DPoint>& config, float tension,  uns
         vertices[i].y = newPos.y;
     }
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*)&s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*)&s_tColor.r, 1);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 
@@ -391,9 +400,9 @@ void ccDrawCubicBezier(const DPoint& origin, const DPoint& control1, const DPoin
     vertices[segments].x = destination.x;
     vertices[segments].y = destination.y;
 
-    s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
-    s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
+    s_shader->use();
+    s_shader->setUniformsForBuiltins();
+    s_shader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
 

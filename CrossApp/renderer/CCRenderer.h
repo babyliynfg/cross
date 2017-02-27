@@ -36,7 +36,6 @@
 
 NS_CC_BEGIN
 
-class EventListenerCustom;
 class TrianglesCommand;
 class MeshCommand;
 
@@ -250,8 +249,8 @@ protected:
     
     GroupCommandManager* _groupCommandManager;
     
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _cacheTextureListener;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    CAObject* _notificationTarget;
 #endif
 };
 

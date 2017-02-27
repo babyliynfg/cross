@@ -140,9 +140,9 @@ void CAPageControl::updateCurrentPageDisplay()
     updateDraw();
 }
 
-void CAPageControl::onEnter()
+void CAPageControl::onEnterTransitionDidFinish()
 {
-    CAControl::onEnter();
+    CAControl::onEnterTransitionDidFinish();
     
     if (m_pIndicators.size() != m_numberOfPages)
     {
@@ -178,9 +178,9 @@ void CAPageControl::onEnter()
     }
 }
 
-void CAPageControl::onExit()
+void CAPageControl::onExitTransitionDidStart()
 {
-    CAControl::onExit();
+    CAControl::onExitTransitionDidStart();
 }
 
 bool CAPageControl::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

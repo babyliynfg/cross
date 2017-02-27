@@ -209,6 +209,7 @@ bool TimerTargetCallback::initWithCallback(CAScheduler* scheduler, const CASched
     _scheduler = scheduler;
     _callback = callback;
     _callbackName = callbackName;
+    _target = target;
     setupTimerWithInterval(seconds, repeat, delay);
     return true;
 }
@@ -425,9 +426,6 @@ void CAScheduler::unschedule(const std::string &callbackName, void *target)
     {
         return;
     }
-    
-    //CCAssert(target);
-    //CCAssert(selector);
     
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);

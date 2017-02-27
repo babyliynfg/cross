@@ -1,7 +1,7 @@
 
 #include "renderer/CCRenderCommand.h"
 #include "basics/CACamera.h"
-#include "CGNode.h"
+
 NS_CC_BEGIN
 
 RenderCommand::RenderCommand()

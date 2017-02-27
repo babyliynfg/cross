@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.CrossApp.lib.CrossAppBattery;
+
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,6 +23,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
+import android.util.Log;
 import android.view.WindowManager;
 
 @SuppressLint("SimpleDateFormat")
@@ -178,6 +181,11 @@ public abstract class CrossAppDevice  extends Activity  {
 		return CrossAppNetWorkManager.getAPNType();
 	}
 	
+	public static int isNetWorkAvailble()
+	{
+		return CrossAppNetWorkManager.isNetWorkAvailble();
+	}
+	
 	// Accelerorometer
 	public static void enableAccelerometer() {
 		CrossAppHelper.setsAccelerometerEnabled(true);
@@ -243,6 +251,7 @@ public abstract class CrossAppDevice  extends Activity  {
 	
 	public static int getScreenBrightness() 
 	{
+		Log.d("66666", "66666452");
 		return CrossAppNativeTool.getScreenBrightness();
 	}
 

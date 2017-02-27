@@ -18,12 +18,11 @@ public:
     virtual ~RootWindow();
     
     virtual bool init();
+    
     CC_SYNTHESIZE_READONLY(CANavigationController*, m_pRootNavigationController, RootNavigationController);
+    
     CC_SYNTHESIZE_READONLY(CADrawerController*, m_pRootDrawerController, DrawerController);
 
-    void initUIView();
-    void intNewsView();
-    
     virtual void keyBackClicked();
 };
 

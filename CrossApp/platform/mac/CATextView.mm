@@ -363,8 +363,8 @@ void CATextView::update(float t)
 
 void CATextView::delayShowImage()
 {
-    CC_RETURN_IF(CAScheduler::getScheduler()->isScheduled(schedule_selector(CATextView::showImage), this));
-    CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::showImage), this, 0, 0, 0);
+    this->cancelPreviousPerformRequests(callfunc_selector(CATextView::showImage));
+    this->performSelector(callfunc_selector(CATextView::showImage), 0);
 }
 
 void CATextView::showImage()
@@ -379,8 +379,6 @@ void CATextView::showImage()
     CAImage *image = CAImage::createWithImageDataNoCache(data, data_MAC.length);
     free(data);
     m_pShowImageView->setImage(image);
-    
-    CAScheduler::getScheduler()->unschedule(schedule_selector(CATextView::showImage), this);
 }
 
 void CATextView::showTextView()

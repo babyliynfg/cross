@@ -41,9 +41,6 @@ public:
                                       , CAStepper::Orientation type = CAStepper::Orientation::Horizontal);
     virtual bool init();
     
-    virtual void onEnter();
-    virtual void onExit();
-    
     CC_SYNTHESIZE(bool, m_bContinuous, Continuous); // if true, value change events are sent any time the value changes during interaction. default = true
     CC_SYNTHESIZE(bool, m_bAutoRepeat, AutoRepeat); // if true, press & hold repeatedly alters value. default = true
     CC_SYNTHESIZE(bool, m_bWraps, Wraps);           // if true, value wraps from min <-> max. default = false
@@ -78,6 +75,9 @@ public:
     
 public:
 
+        virtual void onExitTransitionDidStart();
+        virtual void onEnterTransitionDidFinish();
+        
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);

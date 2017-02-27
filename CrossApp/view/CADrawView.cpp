@@ -124,11 +124,13 @@ CADrawView::~CADrawView()
     
     if (CAConfiguration::getInstance()->supportsShareableVAO())
     {
+#if CC_TEXTURE_ATLAS_USE_VAO
         GL::bindVAO(0);
         glDeleteVertexArrays(1, &_vao);
         glDeleteVertexArrays(1, &_vaoGLLine);
         glDeleteVertexArrays(1, &_vaoGLPoint);
         _vao = _vaoGLLine = _vaoGLPoint = 0;
+#endif
     }
 }
 
@@ -192,8 +194,11 @@ bool CADrawView::init()
     
     if (CAConfiguration::getInstance()->supportsShareableVAO())
     {
+#if CC_TEXTURE_ATLAS_USE_VAO
         glGenVertexArrays(1, &_vao);
         GL::bindVAO(_vao);
+#endif
+        
         glGenBuffers(1, &_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
@@ -206,9 +211,12 @@ bool CADrawView::init()
         // texcood
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
-        
+
+#if CC_TEXTURE_ATLAS_USE_VAO
         glGenVertexArrays(1, &_vaoGLLine);
         GL::bindVAO(_vaoGLLine);
+#endif
+        
         glGenBuffers(1, &_vboGLLine);
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
         glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)*_bufferCapacityGLLine, _bufferGLLine, GL_STREAM_DRAW);
@@ -221,9 +229,12 @@ bool CADrawView::init()
         // texcood
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
-        
+    
+#if CC_TEXTURE_ATLAS_USE_VAO
         glGenVertexArrays(1, &_vaoGLPoint);
         GL::bindVAO(_vaoGLPoint);
+#endif
+        
         glGenBuffers(1, &_vboGLPoint);
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
         glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
@@ -264,14 +275,12 @@ bool CADrawView::init()
     _dirtyGLLine = true;
     _dirtyGLPoint = true;
     
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // Need to listen the event only when not use batchnode, because it will use VBO
-    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-        /** listen the event that renderer was recreated on Android/WP8 */
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
         this->init();
-    });
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    }, this, EVENT_COME_TO_FOREGROUND);
 #endif
     
     return true;

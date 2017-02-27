@@ -395,16 +395,20 @@ CAImage* CAImageCache::imageForKey(const std::string& key)
 
 const std::string& CAImageCache::getImageFilePath(CAImage* image)
 {
+    static std::string result;
+    
+    result = "";
     for (CAMap<std::string, CAImage*>::iterator itr=m_mImages.begin();
          itr!=m_mImages.end();
          itr++)
     {
         if (itr->second->isEqual(image))
         {
-            return itr->first;
+            result = itr->first;
             break;
         }
     }
+    return result;
 }
 
 void CAImageCache::reloadAllImages()
@@ -453,9 +457,6 @@ CAImageAtlas::CAImageAtlas()
 
 CAImageAtlas::~CAImageAtlas()
 {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    CANotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
-#endif
     
     CCLOG("CrossApp: CAImageAtlas deallocing %p.", this);
     
@@ -466,8 +467,10 @@ CAImageAtlas::~CAImageAtlas()
     
     if (CAConfiguration::getInstance()->supportsShareableVAO())
     {
+#if CC_TEXTURE_ATLAS_USE_VAO
         glDeleteVertexArrays(1, &m_uVAOname);
         GL::bindVAO(0);
+#endif
     }
     CC_SAFE_RELEASE(m_pImage);
     
@@ -552,10 +555,10 @@ bool CAImageAtlas::initWithImage(CAImage *image, unsigned int capacity)
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     // listen the event when app go to background
-    CANotificationCenter::getInstance()->addObserver(this,
-                                                     callfuncO_selector(CAImageAtlas::listenBackToForeground),
-                                                     EVENT_COME_TO_FOREGROUND,
-                                                     NULL);
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
+    {
+        this->listenBackToForeground(obj);
+    }, this, EVENT_COME_TO_FOREGROUND);
 #endif
     
     this->setupIndices();
@@ -621,8 +624,10 @@ void CAImageAtlas::setupIndices()
 
 void CAImageAtlas::setupVBOandVAO()
 {
+#if CC_TEXTURE_ATLAS_USE_VAO
     glGenVertexArrays(1, &m_uVAOname);
     GL::bindVAO(m_uVAOname);
+#endif
     
 #define kQuadSize sizeof(m_pQuads[0].bl)
     

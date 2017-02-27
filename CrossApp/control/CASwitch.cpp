@@ -128,6 +128,11 @@ void CASwitch::onEnterTransitionDidFinish()
     this->updateSwitchState(false, false);
 }
 
+bool CASwitch::isOn()
+{
+    return m_bIsOn;
+}
+
 void CASwitch::setIsOn(bool on, bool animated)
 {
     if (m_bIsOn != on)
@@ -180,7 +185,7 @@ void CASwitch::setThumbTintImage(CAImage* thumbTintImage)
     }
 }
 
-void CASwitch::updateSwitchState(bool animated, bool callfunced)
+void CASwitch::updateSwitchState(bool animated, bool callback)
 {
     DPoint point = m_obContentSize/2;
     m_pOnImageView->setCenterOrigin(point);
@@ -207,12 +212,16 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
             DPoint point = DPointZero;
             point.x = m_bIsOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
             
-            if (callfunced)
+            if (callback)
             {
                 CAViewAnimation::beginAnimations("");
                 CAViewAnimation::setAnimationDuration(0.2f);
                 CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CASwitch::updateValueChanged, this));
+                CAViewAnimation::setAnimationDidStopSelector([this]()
+                {
+                    if (m_function)
+                        m_function(m_bIsOn);
+                });
                 m_pThumbTintImageView->setFrameOrigin(point);
                 CAViewAnimation::commitAnimations();
             }
@@ -227,18 +236,13 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
             DPoint point = DPointZero;
             point.x = m_bIsOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
             m_pThumbTintImageView->setFrameOrigin(point);
-            if (callfunced)
+            if (callback)
             {
-                updateValueChanged();
+                if (m_function)
+                    m_function(m_bIsOn);
             }
         }
     }
-}
-
-void CASwitch::updateValueChanged()
-{
-    if (m_function)
-        m_function(m_bIsOn);
 }
 
 bool CASwitch::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

@@ -85,15 +85,7 @@ void MenuViewController::changeStatusBarOrientation(CAObject* obj)
 void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
     RootWindow::getInstance()->dismissModalViewController(true);
-    if (row==0)
-    {
-        RootWindow::getInstance()->initUIView();
-    }
-    else if(row==1)
-    {
-        RootWindow::getInstance()->intNewsView();
-    }
-    else if(row==2)
+    if(row == 0)
     {
         CDWebViewController* _webController = new CDWebViewController();
         _webController->init();
@@ -104,7 +96,7 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, un
         RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
         _webController->initWebView("http://crossapp.9miao.com");
     }
-    else if(row==3)
+    else if(row == 1)
     {
         CDWebViewController* _webController = new CDWebViewController();
         _webController->init();
@@ -147,7 +139,7 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
 
 unsigned int MenuViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    return 4;
+    return 2;
 }
 
 unsigned int MenuViewController::numberOfSections(CATableView *table)

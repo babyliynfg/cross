@@ -161,7 +161,7 @@ void CAApplication::setGLDefaultValues(void)
 
 void CAApplication::updateDraw()
 {
-    m_nDrawCount = 30;
+    m_nDrawCount = 60;
 }
 
 void CAApplication::drawScene(float dt)

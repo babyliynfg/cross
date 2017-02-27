@@ -1,7 +1,7 @@
 
 #include "renderer/CCVertexIndexBuffer.h"
 #include "basics/CAApplication.h"
-
+#include "basics/CANotificationCenter.h"
 NS_CC_BEGIN
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -30,20 +30,16 @@ VertexBuffer* VertexBuffer::create(int sizePerVertex, int vertexNumber, GLenum u
 }
 
 VertexBuffer::VertexBuffer()
-: _recreateVBOEventListener(nullptr)
-, _vbo(0)
+: _vbo(0)
 , _sizePerVertex(0)
 , _vertexNumber(0)
 {
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    auto callBack = [this](EventCustom* event)
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {
         this->recreateVBO();
-    };
-
-    _recreateVBOEventListener = CAApplication::getApplication()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, callBack);
-
+    }, this, EVENT_COME_TO_FOREGROUND);
 #endif
 }
 
@@ -54,9 +50,6 @@ VertexBuffer::~VertexBuffer()
         glDeleteBuffers(1, &_vbo);
         _vbo = 0;
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    CAApplication::getApplication()->getEventDispatcher()->removeEventListener(_recreateVBOEventListener);
-#endif
 }
 
 bool VertexBuffer::init(int sizePerVertex, int vertexNumber, GLenum usage/* = GL_STATIC_DRAW*/)
@@ -162,15 +155,12 @@ IndexBuffer::IndexBuffer()
 : _vbo(0)
 , _type(IndexType::INDEX_TYPE_SHORT_16)
 , _indexNumber(0)
-, _recreateVBOEventListener(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    auto callBack = [this](EventCustom* event)
+    CANotificationCenter::getInstance()->addObserver([this](CAObject* obj)
     {
         this->recreateVBO();
-    };
-
-    _recreateVBOEventListener = CAApplication::getApplication()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, callBack);
+    }, this, EVENT_COME_TO_FOREGROUND);
 #endif
 }
 
@@ -181,9 +171,6 @@ IndexBuffer::~IndexBuffer()
         glDeleteBuffers(1, &_vbo);
         _vbo = 0;
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    CAApplication::getApplication()->getEventDispatcher()->removeEventListener(_recreateVBOEventListener);
-#endif
 }
 
 bool IndexBuffer::init(IndexBuffer::IndexType type, int number, GLenum usage/* = GL_STATIC_DRAW*/)

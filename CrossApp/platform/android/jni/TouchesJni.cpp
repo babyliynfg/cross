@@ -63,14 +63,14 @@ extern "C" {
     #define KEYCODE_MENU 0x52
 
     JNIEXPORT jboolean JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeKeyDown(JNIEnv * env, jobject thiz, jint keyCode) {
-        CAApplication* pDirector = CAApplication::getApplication();
+        CAApplication* application = CAApplication::getApplication();
         switch (keyCode) {
             case KEYCODE_BACK:
-                  if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked))
+                if (application->getKeypadDispatcher()->dispatchKeypadMSG(CAKeypadDispatcher::KeypadMSGType::BackClicked))
                     return JNI_TRUE;
                 break;
             case KEYCODE_MENU:
-                if (pDirector->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked))
+                if (application->getKeypadDispatcher()->dispatchKeypadMSG(CAKeypadDispatcher::KeypadMSGType::MenuClicked))
                     return JNI_TRUE;
                 break;
             default:

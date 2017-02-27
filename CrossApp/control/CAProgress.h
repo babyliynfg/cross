@@ -25,23 +25,15 @@ public:
     virtual ~CAProgress();
     
     static CAProgress* create();
-    
     static CAProgress* createWithFrame(const DRect& rect);
-    
     static CAProgress* createWithCenter(const DRect& rect);
-    
     static CAProgress* createWithLayout(const DLayout& layout);
     
-    virtual void onEnterTransitionDidFinish();
-    
-    virtual void onExitTransitionDidStart();
-
     bool init();
     
 	virtual void setColor(const CAColor4B& color);
     
 	void setProgress(float progress, bool animated = false);
-
 	float getProgress();
 
 public:
@@ -53,6 +45,11 @@ public:
 	CC_PROPERTY(CAImage*, m_pProgressTintImage, ProgressTintImage);
     
 	CC_PROPERTY(CAImage*, m_pProgressTrackImage, ProgressTrackImage);
+
+public:
+    
+    virtual void onEnterTransitionDidFinish();
+    virtual void onExitTransitionDidStart();
     
 protected:
 

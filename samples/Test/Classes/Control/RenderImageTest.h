@@ -6,7 +6,7 @@
 
 USING_NS_CC;
 
-class RenderImageTest: public CAViewController, public CAScrollViewDelegate, public CAMediaDelegate
+class RenderImageTest: public CAViewController, public CAScrollViewDelegate
 {
     
 public:

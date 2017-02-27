@@ -10,7 +10,7 @@
 #include "ccTypes.h"
 #include "game/CGNode.h"
 #include "view/CAView.h"
-#include <xxhash.h>
+#include "support/xxhash/xxhash.h"
 
 NS_CC_BEGIN
 

@@ -5,10 +5,8 @@
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
-
 #include "basics/CAApplication.h"
-
-#include "xxhash.h"
+#include "support/xxhash/xxhash.h"
 
 NS_CC_BEGIN
 

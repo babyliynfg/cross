@@ -28,9 +28,6 @@
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
-		4E0AEC051AF9E903002158F0 /* CDShowNewsImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0AEC031AF9E903002158F0 /* CDShowNewsImage.cpp */; };
-		4E0BB2B61AE0E7370037017A /* CDNewsAboutController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0BB2B41AE0E7370037017A /* CDNewsAboutController.cpp */; };
-		4E0FD26C1ADFC2A0006BCE76 /* CDNewsViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FD26A1ADFC2A0006BCE76 /* CDNewsViewController.cpp */; };
 		4EC5C5931AEE36B80003331B /* CDWebViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EC5C5911AEE36B80003331B /* CDWebViewController.cpp */; };
 		4EC91E981AE4A173003B5305 /* CommonHttpManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EC91E961AE4A173003B5305 /* CommonHttpManager.cpp */; };
 		4EE8374B1AFCB99600BCFA6D /* image in Resources */ = {isa = PBXBuildFile; fileRef = 4EE8374A1AFCB99600BCFA6D /* image */; };
@@ -75,7 +72,6 @@
 		B063D4C21CAD24F300B1FF13 /* ViewAnimationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A21CAD24F300B1FF13 /* ViewAnimationTest.cpp */; };
 		B063D4C31CAD24F300B1FF13 /* WaterfallViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A41CAD24F300B1FF13 /* WaterfallViewTest.cpp */; };
 		B063D4C41CAD24F300B1FF13 /* WebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A61CAD24F300B1FF13 /* WebViewTest.cpp */; };
-		B08BBA271BC8ACCE0044340B /* CDNewsImageController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B08BBA251BC8ACCE0044340B /* CDNewsImageController.cpp */; };
 		B093DB481CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB441CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp */; };
 		B093DB491CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */; };
 		D6B033F81D9507AE00388A90 /* CAVideoPlayerControlViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B0322A1D9507AD00388A90 /* CAVideoPlayerControlViewMac.cpp */; };
@@ -137,12 +133,6 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
-		4E0AEC031AF9E903002158F0 /* CDShowNewsImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDShowNewsImage.cpp; path = ../Classes/CDShowNewsImage.cpp; sourceTree = "<group>"; };
-		4E0AEC041AF9E903002158F0 /* CDShowNewsImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDShowNewsImage.h; path = ../Classes/CDShowNewsImage.h; sourceTree = "<group>"; };
-		4E0BB2B41AE0E7370037017A /* CDNewsAboutController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsAboutController.cpp; path = ../Classes/CDNewsAboutController.cpp; sourceTree = "<group>"; };
-		4E0BB2B51AE0E7370037017A /* CDNewsAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsAboutController.h; path = ../Classes/CDNewsAboutController.h; sourceTree = "<group>"; };
-		4E0FD26A1ADFC2A0006BCE76 /* CDNewsViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsViewController.cpp; path = ../Classes/CDNewsViewController.cpp; sourceTree = "<group>"; };
-		4E0FD26B1ADFC2A0006BCE76 /* CDNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsViewController.h; path = ../Classes/CDNewsViewController.h; sourceTree = "<group>"; };
 		4E89C58C1AE7A40900A6198A /* CDData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CDData.h; path = ../Classes/CDData.h; sourceTree = "<group>"; };
 		4EC5C5911AEE36B80003331B /* CDWebViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDWebViewController.cpp; path = ../Classes/CDWebViewController.cpp; sourceTree = "<group>"; };
 		4EC5C5921AEE36B80003331B /* CDWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDWebViewController.h; path = ../Classes/CDWebViewController.h; sourceTree = "<group>"; };
@@ -237,8 +227,6 @@
 		B063D4A51CAD24F300B1FF13 /* WaterfallViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaterfallViewTest.h; path = ../Classes/Control/WaterfallViewTest.h; sourceTree = "<group>"; };
 		B063D4A61CAD24F300B1FF13 /* WebViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebViewTest.cpp; path = ../Classes/Control/WebViewTest.cpp; sourceTree = "<group>"; };
 		B063D4A71CAD24F300B1FF13 /* WebViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewTest.h; path = ../Classes/Control/WebViewTest.h; sourceTree = "<group>"; };
-		B08BBA251BC8ACCE0044340B /* CDNewsImageController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDNewsImageController.cpp; path = ../Classes/CDNewsImageController.cpp; sourceTree = "<group>"; };
-		B08BBA261BC8ACCE0044340B /* CDNewsImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDNewsImageController.h; path = ../Classes/CDNewsImageController.h; sourceTree = "<group>"; };
 		B093DB441CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewHorizontalTest.cpp; path = ../Classes/Control/AutoCollectionViewHorizontalTest.cpp; sourceTree = "<group>"; };
 		B093DB451CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCollectionViewHorizontalTest.h; path = ../Classes/Control/AutoCollectionViewHorizontalTest.h; sourceTree = "<group>"; };
 		B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewVerticalTest.cpp; path = ../Classes/Control/AutoCollectionViewVerticalTest.cpp; sourceTree = "<group>"; };
@@ -306,14 +294,6 @@
 				B0621C2E1AC3DCB2005EBCA7 /* RootWindow.h */,
 				4EF2E6461ACE7B9B00A4DFE1 /* MenuViewController.cpp */,
 				4EF2E6471ACE7B9B00A4DFE1 /* MenuViewController.h */,
-				4E0AEC031AF9E903002158F0 /* CDShowNewsImage.cpp */,
-				4E0AEC041AF9E903002158F0 /* CDShowNewsImage.h */,
-				4E0FD26A1ADFC2A0006BCE76 /* CDNewsViewController.cpp */,
-				4E0FD26B1ADFC2A0006BCE76 /* CDNewsViewController.h */,
-				4E0BB2B41AE0E7370037017A /* CDNewsAboutController.cpp */,
-				4E0BB2B51AE0E7370037017A /* CDNewsAboutController.h */,
-				B08BBA251BC8ACCE0044340B /* CDNewsImageController.cpp */,
-				B08BBA261BC8ACCE0044340B /* CDNewsImageController.h */,
 				4E89C58C1AE7A40900A6198A /* CDData.h */,
 				4EC5C5911AEE36B80003331B /* CDWebViewController.cpp */,
 				4EC5C5921AEE36B80003331B /* CDWebViewController.h */,
@@ -640,13 +620,11 @@
 				B063D4C11CAD24F300B1FF13 /* VideoPlayerControlViewTest.cpp in Sources */,
 				B063D4B21CAD24F300B1FF13 /* PageViewTest.cpp in Sources */,
 				B063D4A81CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp in Sources */,
-				4E0FD26C1ADFC2A0006BCE76 /* CDNewsViewController.cpp in Sources */,
 				B063D4B61CAD24F300B1FF13 /* Scale9ImageViewTest.cpp in Sources */,
 				B063D4B81CAD24F300B1FF13 /* SegmentedControlTest.cpp in Sources */,
 				B063D4B91CAD24F300B1FF13 /* SliderTest.cpp in Sources */,
 				B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */,
 				B063D4B11CAD24F300B1FF13 /* ListViewTest.cpp in Sources */,
-				4E0BB2B61AE0E7370037017A /* CDNewsAboutController.cpp in Sources */,
 				B063D4AE1CAD24F300B1FF13 /* GifViewTest.cpp in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
 				B093DB481CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */,
@@ -655,7 +633,6 @@
 				B063D4BC1CAD24F300B1FF13 /* TabBarControllerTest.cpp in Sources */,
 				B063D4B31CAD24F300B1FF13 /* PickerViewTest.cpp in Sources */,
 				B063D4AB1CAD24F300B1FF13 /* ButtonTest.cpp in Sources */,
-				4E0AEC051AF9E903002158F0 /* CDShowNewsImage.cpp in Sources */,
 				B0621C311AC3DCB2005EBCA7 /* RootWindow.cpp in Sources */,
 				D6B033FA1D9507AE00388A90 /* CAVideoPlayerDecoderMac.cpp in Sources */,
 				D6B033F81D9507AE00388A90 /* CAVideoPlayerControlViewMac.cpp in Sources */,
@@ -667,7 +644,6 @@
 				4EC5C5931AEE36B80003331B /* CDWebViewController.cpp in Sources */,
 				D6B033FE1D9507AE00388A90 /* CAVideoPlayerViewMac.cpp in Sources */,
 				B063D4AF1CAD24F300B1FF13 /* ImageViewTest.cpp in Sources */,
-				B08BBA271BC8ACCE0044340B /* CDNewsImageController.cpp in Sources */,
 				4EF2E6481ACE7B9B00A4DFE1 /* MenuViewController.cpp in Sources */,
 				B063D4C21CAD24F300B1FF13 /* ViewAnimationTest.cpp in Sources */,
 				B063D4BE1CAD24F300B1FF13 /* TextFieldTest.cpp in Sources */,
