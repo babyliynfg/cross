@@ -57,6 +57,8 @@ CACheckbox::CACheckbox()
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACheckbox");
     this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
     this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
+    this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
+    this->setTitleColorStateSelected(ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))));
 }
 
 CACheckbox::~CACheckbox(void)
