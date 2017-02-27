@@ -881,29 +881,30 @@ bool jsval_to_dhorizontallayout(JSContext *cx, JS::HandleValue v, CrossApp::DHor
 //    horizontal->width = width;
 //    horizontal->center = center;
     
-    switch (type)
+    DHorizontalLayout::Type hType = DHorizontalLayout::Type(type);
+    switch (hType)
     {
-        case DHorizontalLayout::L_R:
+        case DHorizontalLayout::Type::L_R:
         {
             *horizontal = DHorizontalLayout_L_R(left, right);
         }
         break;
-        case DHorizontalLayout::L_W:
+        case DHorizontalLayout::Type::L_W:
         {
             *horizontal = DHorizontalLayout_L_W(left, width);
         }
         break;
-        case DHorizontalLayout::R_W:
+        case DHorizontalLayout::Type::R_W:
         {
             *horizontal = DHorizontalLayout_R_W(right, width);
         }
         break;
-        case DHorizontalLayout::W_C:
+        case DHorizontalLayout::Type::W_C:
         {
             *horizontal = DHorizontalLayout_W_C(width, center);
         }
         break;
-        case DHorizontalLayout::NW_C:
+        case DHorizontalLayout::Type::NW_C:
         {
             *horizontal = DHorizontalLayout_NW_C(left, center);
         }
@@ -945,30 +946,30 @@ bool jsval_to_dverticallayout(JSContext *cx, JS::HandleValue v, CrossApp::DVerti
 //    vertical->bottom = bottom;
 //    vertical->height = height;
 //    vertical->center = center;
-    
-    switch (type)
+    DVerticalLayout::Type vType = DVerticalLayout::Type(type);
+    switch (vType)
     {
-        case DVerticalLayout::T_B:
+        case DVerticalLayout::Type::T_B:
         {
            *vertical = DVerticalLayout_T_B(top,bottom);
         }
         break;
-        case DVerticalLayout::T_H:
+        case DVerticalLayout::Type::T_H:
         {
             *vertical = DVerticalLayout_T_H(top,height);
         }
         break;
-        case DVerticalLayout::B_H:
+        case DVerticalLayout::Type::B_H:
         {
             *vertical = DVerticalLayout_B_H(bottom,height);
         }
         break;
-        case DVerticalLayout::H_C:
+        case DVerticalLayout::Type::H_C:
         {
             *vertical = DVerticalLayout_H_C(height,center);
         }
         break;
-        case DVerticalLayout::NH_C:
+        case DVerticalLayout::Type::NH_C:
         {
             *vertical = DVerticalLayout_NH_C(top,center);
         }
@@ -1686,7 +1687,7 @@ bool jsval_to_matrix(JSContext *cx, JS::HandleValue vp, CrossApp::Mat4* ret)
                 ok = JS::ToNumber(cx, value, &number);
                 if (ok)
                 {
-                    ret->m.mat[i] = static_cast<float>(number);
+                    ret->m[i] = static_cast<float>(number);
                 }
             }
             else
@@ -3078,7 +3079,7 @@ jsval matrix_to_jsval(JSContext *cx, const CrossApp::Mat4& v)
     
     for (int i = 0; i < 16; i++) {
         JS::RootedValue arrElement(cx);
-        arrElement = DOUBLE_TO_JSVAL(v.m.mat[i]);
+        arrElement = DOUBLE_TO_JSVAL(v.m[i]);
         
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;

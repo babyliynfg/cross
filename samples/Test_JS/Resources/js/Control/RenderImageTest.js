@@ -55,10 +55,10 @@ var RenderImageTest = ca.CAViewController.extend({
         rect.y = 0;
         var imv = ca.CAImageView.createWithLayout(DLayoutFill);
         imv.setImage(image);
-        imv.setImageViewScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside);
+        imv.setScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside);
         scrollView.addSubview(imv);
 
-                                                 
+
 //        var m_clv = ca.CAClippingView.create();
 //        m_clv.setStencil(this.getStencil(ca.dsize(scrollRect.width,scrollRect.height), index));
 //        m_clv.setFrame(scrollRect);

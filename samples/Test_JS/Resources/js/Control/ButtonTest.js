@@ -16,7 +16,7 @@ var ButtonTest = ca.CAViewController.extend({
         //设置Button的标题颜色和状态
         btn1.setTitleColorForState(ca.CAControlState.Normal, ca.color(51,204,255,255));
         //添加回调事件
-        btn1.addTarget(this, this.buttonCallback, ca.CAControlEvents.TouchUpInSide);
+        btn1.addTarget(function(){ log("Button Noborder");}, ca.CAControlEvents.TouchUpInSide);
         this.getView().addSubview(btn1);
 
         var btn2 = ca.CAButton.create(ca.CAButtonType.SquareRect);
@@ -25,7 +25,7 @@ var ButtonTest = ca.CAViewController.extend({
         //设置Button标题的显示文本
         btn2.setTitleForState(ca.CAControlState.Normal, "SquareRect");
         //添加回调事件
-        btn2.addTarget(this, this.buttonCallback, ca.CAControlEvents.TouchUpInSide);
+        btn2.addTarget(function(){ log("Button SquareRect");}, ca.CAControlEvents.TouchUpInSide);
         this.getView().addSubview(btn2);
 
         var btn3 = ca.CAButton.create(ca.CAButtonType.RoundedRect);
@@ -34,9 +34,8 @@ var ButtonTest = ca.CAViewController.extend({
         //设置Button标题的显示文本
         btn3.setTitleForState(ca.CAControlState.Normal, "RoundedRect");
         //添加回调事件
-        btn3.addTarget(this, this.buttonCallback, ca.CAControlEvents.TouchUpInSide);
+        btn3.addTarget(function(){ log("Button RoundedRect");}, ca.CAControlEvents.TouchUpInSide);
         this.getView().addSubview(btn3);
-
 
         var btn4 = ca.CAButton.create(ca.CAButtonType.SquareRect);
         btn4.setTag(4);
@@ -48,12 +47,11 @@ var ButtonTest = ca.CAViewController.extend({
         //设置Button的背景View
         btn4.setBackgroundViewForState(ca.CAControlState.Highlighted,  ca.CAScale9ImageView.createWithImage( ca.CAImage.create("image/button_down.png")));
         //添加回调事件
-        btn4.addTarget(this, this.buttonCallback, ca.CAControlEvents.TouchDown);
+        btn4.addTarget(function(){ log("Button Custom");}, ca.CAControlEvents.TouchDown);
         this.getView().addSubview(btn4);
 
         var btn5 = ca.CAButton.create(ca.CAButtonType.SquareRect);
         btn5.setTag(5);
-        btn5.setAllowsSelected(true);
         btn5.setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.8)));
         btn5.setTitleForState(ca.CAControlState.Normal, "Normal");
         btn5.setTitleColorForState(ca.CAControlState.Normal, ca.WHITE);
@@ -62,32 +60,9 @@ var ButtonTest = ca.CAViewController.extend({
         btn5.setBackgroundViewForState(ca.CAControlState.Normal, ca.CAScale9ImageView.createWithImage(ca.CAImage.create("source_material/btn_rounded3D_normal.png")));
         btn5.setBackgroundViewForState(ca.CAControlState.Highlighted, ca.CAScale9ImageView.createWithImage(ca.CAImage.create("source_material/btn_rounded3D_highlighted.png")));
         btn5.setBackgroundViewForState(ca.CAControlState.Selected, ca.CAScale9ImageView.createWithImage(ca.CAImage.create("source_material/btn_rounded3D_selected.png")));
-        btn5.addTarget(this, this.buttonCallback, ca.CAControlEvents.TouchDown);
+        btn5.addTarget(function(){ log("Button AllowsSelected");}, ca.CAControlEvents.TouchDown);
         this.getView().addSubview(btn5);
 
 
     },
-    buttonCallback: function ( btn ,point) {
-        var tag = btn.getTag();
-        switch (tag) {
-            case 1:
-                log("Button Noborder");
-                break;
-            case 2:
-                log("Button SquareRect");
-                break;
-            case 3:
-                log("Button RoundedRect");
-                break;
-            case 4:
-                log("Button Custom");
-                break;
-            case 5:
-                log("Button AllowsSelected");
-                break;
-            default:
-                break;
-        }
-
-    }
 });

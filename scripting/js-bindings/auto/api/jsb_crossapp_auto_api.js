@@ -9,20 +9,6 @@ var ca = ca || {};
 ca.CAScheduler = {
 
 /**
- * @method scheduleSelectorUpdate
- * @param {ca.CAObject} arg0
- * @param {int} arg1
- * @param {bool} arg2
- */
-scheduleSelectorUpdate : function (
-caobject, 
-int, 
-bool 
-)
-{
-},
-
-/**
  * @method setTimeScale
  * @param {float} arg0
  */
@@ -33,33 +19,63 @@ float
 },
 
 /**
- * @method unscheduleScriptEntry
- * @param {unsigned int} arg0
+ * @method isScheduled
+ * @param {String} arg0
+ * @param {void} arg1
+ * @return {bool}
  */
-unscheduleScriptEntry : function (
-int 
+isScheduled : function (
+str, 
+void 
 )
 {
+    return false;
 },
 
 /**
- * @method unscheduleSelectorAllWithMinPriority
- * @param {int} arg0
- */
-unscheduleSelectorAllWithMinPriority : function (
-int 
-)
-{
-},
-
-/**
- * @method unscheduleSelector
+ * @method unschedule
  * @param {String} arg0
  * @param {void} arg1
  */
-unscheduleSelector : function (
+unschedule : function (
 str, 
 void 
+)
+{
+},
+
+/**
+ * @method scheduleOnce
+ * @param {function} arg0
+ * @param {String} arg1
+ * @param {void} arg2
+ * @param {float} arg3
+ * @param {bool} arg4
+ */
+scheduleOnce : function (
+func, 
+str, 
+void, 
+float, 
+bool 
+)
+{
+},
+
+/**
+ * @method unscheduleAllForTarget
+ * @param {void} arg0
+ */
+unscheduleAllForTarget : function (
+void 
+)
+{
+},
+
+/**
+ * @method resumeAll
+ */
+resumeAll : function (
 )
 {
 },
@@ -75,15 +91,59 @@ void
 },
 
 /**
- * @method isTargetPaused
- * @param {void} arg0
- * @return {bool}
+ * @method resumeAllTargetsWithMinPriority
+ * @param {int} arg0
  */
-isTargetPaused : function (
-void 
+resumeAllTargetsWithMinPriority : function (
+int 
 )
 {
-    return false;
+},
+
+/**
+ * @method pauseAll
+ */
+pauseAll : function (
+)
+{
+},
+
+/**
+ * @method scheduleScriptFunc
+ * @param {unsigned int} arg0
+ * @param {float} arg1
+ * @param {bool} arg2
+ * @return {unsigned int}
+ */
+scheduleScriptFunc : function (
+int, 
+float, 
+bool 
+)
+{
+    return 0;
+},
+
+/**
+ * @method schedule
+* @param {function|function} func
+* @param {String|String} str
+* @param {void|void} void
+* @param {float|float} float
+* @param {unsigned int|bool} int
+* @param {float} float
+* @param {bool} bool
+*/
+schedule : function(
+func,
+str,
+void,
+float,
+int,
+float,
+bool 
+)
+{
 },
 
 /**
@@ -107,65 +167,19 @@ void
 },
 
 /**
- * @method performFunctionInUIThread
- * @param {function} arg0
+ * @method unscheduleScriptEntry
+ * @param {unsigned int} arg0
  */
-performFunctionInUIThread : function (
-func 
+unscheduleScriptEntry : function (
+int 
 )
 {
 },
 
 /**
- * @method isScheduledSelector
- * @param {String} arg0
- * @param {void} arg1
- * @return {bool}
+ * @method unscheduleAll
  */
-isScheduledSelector : function (
-str, 
-void 
-)
-{
-    return false;
-},
-
-/**
- * @method unscheduleSelectorAllForTarget
- * @param {void} arg0
- */
-unscheduleSelectorAllForTarget : function (
-void 
-)
-{
-},
-
-/**
- * @method unscheduleSelectorAll
- */
-unscheduleSelectorAll : function (
-)
-{
-},
-
-/**
- * @method scheduleSelector
-* @param {function|function} func
-* @param {void|void} void
-* @param {float|float} float
-* @param {bool|unsigned int} bool
-* @param {String|float} str
-* @param {bool} bool
-* @param {String} str
-*/
-scheduleSelector : function(
-func,
-void,
-float,
-int,
-float,
-bool,
-str 
+unscheduleAll : function (
 )
 {
 },
@@ -181,19 +195,13 @@ void
 },
 
 /**
- * @method scheduleScriptFunc
- * @param {unsigned int} arg0
- * @param {float} arg1
- * @param {bool} arg2
- * @return {unsigned int}
+ * @method performFunctionInUIThread
+ * @param {function} arg0
  */
-scheduleScriptFunc : function (
-int, 
-float, 
-bool 
+performFunctionInUIThread : function (
+func 
 )
 {
-    return 0;
 },
 
 /**
@@ -207,27 +215,37 @@ getTimeScale : function (
 },
 
 /**
- * @method unscheduleAllForTarget
+ * @method unscheduleAllWithMinPriority
+ * @param {int} arg0
+ */
+unscheduleAllWithMinPriority : function (
+int 
+)
+{
+},
+
+/**
+ * @method isTargetPaused
+ * @param {void} arg0
+ * @return {bool}
+ */
+isTargetPaused : function (
+void 
+)
+{
+    return false;
+},
+
+/**
+ * @method scheduleUpdate
  * @param {ca.CAObject} arg0
+ * @param {int} arg1
+ * @param {bool} arg2
  */
-unscheduleAllForTarget : function (
-caobject 
-)
-{
-},
-
-/**
- * @method destroyScheduler
- */
-destroyScheduler : function (
-)
-{
-},
-
-/**
- * @method unscheduleAll
- */
-unscheduleAll : function (
+scheduleUpdate : function (
+caobject, 
+int, 
+bool 
 )
 {
 },
@@ -242,15 +260,6 @@ getScheduler : function (
     return ca.CAScheduler;
 },
 
-/**
- * @method CAScheduler
- * @constructor
- */
-CAScheduler : function (
-)
-{
-},
-
 };
 
 /**
@@ -260,12 +269,12 @@ ca.CAImage = {
 
 /**
  * @method getShaderProgram
- * @return {ca.CAGLProgram}
+ * @return {ca.GLProgram}
  */
 getShaderProgram : function (
 )
 {
-    return ca.CAGLProgram;
+    return ca.GLProgram;
 },
 
 /**
@@ -277,15 +286,13 @@ premultipliedImageData : function (
 },
 
 /**
- * @method initWithETCFile
- * @param {char} arg0
- * @return {bool}
+ * @method getMaxT
+ * @return {float}
  */
-initWithETCFile : function (
-char 
+getMaxT : function (
 )
 {
-    return false;
+    return 0;
 },
 
 /**
@@ -310,10 +317,10 @@ float
 
 /**
  * @method setShaderProgram
- * @param {ca.CAGLProgram} arg0
+ * @param {ca.GLProgram} arg0
  */
 setShaderProgram : function (
-caglprogram 
+glprogram 
 )
 {
 },
@@ -445,10 +452,12 @@ float
 /**
  * @method initWithImageFile
  * @param {String} arg0
+ * @param {bool} arg1
  * @return {bool}
  */
 initWithImageFile : function (
-str 
+str, 
+bool 
 )
 {
     return false;
@@ -485,25 +494,13 @@ getContentSize : function (
 },
 
 /**
- * @method getMaxT
- * @return {float}
+ * @method getData
+ * @return {unsigned char}
  */
-getMaxT : function (
+getData : function (
 )
 {
     return 0;
-},
-
-/**
- * @method initWithImageFileThreadSafe
- * @param {String} arg0
- * @return {bool}
- */
-initWithImageFileThreadSafe : function (
-str 
-)
-{
-    return false;
 },
 
 /**
@@ -582,11 +579,13 @@ isMonochrome : function (
  * @method initWithImageData
  * @param {unsigned char} arg0
  * @param {unsigned long} arg1
+ * @param {bool} arg2
  * @return {bool}
  */
 initWithImageData : function (
 char, 
-long 
+long, 
+bool 
 )
 {
     return false;
@@ -697,16 +696,6 @@ repremultipliedImageData : function (
 },
 
 /**
- * @method getData
- * @return {unsigned char}
- */
-getData : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method detectFormat
  * @param {unsigned char} arg0
  * @param {unsigned long} arg1
@@ -779,26 +768,72 @@ long
 },
 
 /**
- * @method scaleToNewImageWithImage
-* @param {ca.CAImage|ca.CAImage} caimage
-* @param {float|size_object} float
-* @param {float} float
-* @return {ca.CAImage|ca.CAImage}
-*/
-scaleToNewImageWithImage : function(
-caimage,
-float,
-float 
+ * @method createWithRawData
+ * @param {unsigned char} arg0
+ * @param {ca.CAImage::PixelFormat} arg1
+ * @param {unsigned int} arg2
+ * @param {unsigned int} arg3
+ * @param {String} arg4
+ * @return {ca.CAImage}
+ */
+createWithRawData : function (
+char, 
+pixelformat, 
+int, 
+int, 
+str 
 )
 {
     return ca.CAImage;
 },
 
 /**
- * @method CC_WHITE_IMAGE
+ * @method createWithImageData
+ * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
+ * @param {String} arg2
  * @return {ca.CAImage}
  */
-CC_WHITE_IMAGE : function (
+createWithImageData : function (
+char, 
+long, 
+str 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method getStringWidth
+ * @param {char} arg0
+ * @param {unsigned long} arg1
+ * @param {String} arg2
+ * @return {int}
+ */
+getStringWidth : function (
+char, 
+long, 
+str 
+)
+{
+    return 0;
+},
+
+/**
+ * @method CC_SHADOW_TOP_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_TOP_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method CC_SHADOW_RIGHT_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_RIGHT_IMAGE : function (
 )
 {
     return ca.CAImage;
@@ -829,14 +864,6 @@ long
 },
 
 /**
- * @method reloadAllImages
- */
-reloadAllImages : function (
-)
-{
-},
-
-/**
  * @method create
  * @param {String} arg0
  * @return {ca.CAImage}
@@ -846,46 +873,6 @@ str
 )
 {
     return ca.CAImage;
-},
-
-/**
- * @method createWithRawData
- * @param {unsigned char} arg0
- * @param {ca.CAImage::PixelFormat} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- * @param {String} arg4
- * @return {ca.CAImage}
- */
-createWithRawData : function (
-char, 
-pixelformat, 
-int, 
-int, 
-str 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method cutStringByWidth
- * @param {char} arg0
- * @param {unsigned long} arg1
- * @param {String} arg2
- * @param {int} arg3
- * @param {int} arg4
- * @return {int}
- */
-cutStringByWidth : function (
-char, 
-long, 
-str, 
-int, 
-int 
-)
-{
-    return 0;
 },
 
 /**
@@ -929,22 +916,6 @@ bool
 },
 
 /**
- * @method createWithImageData
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
- * @param {String} arg2
- * @return {ca.CAImage}
- */
-createWithImageData : function (
-char, 
-long, 
-str 
-)
-{
-    return ca.CAImage;
-},
-
-/**
  * @method getStringHeight
  * @param {char} arg0
  * @param {unsigned long} arg1
@@ -967,44 +938,6 @@ bool
 },
 
 /**
- * @method getStringWidth
- * @param {char} arg0
- * @param {unsigned long} arg1
- * @param {String} arg2
- * @return {int}
- */
-getStringWidth : function (
-char, 
-long, 
-str 
-)
-{
-    return 0;
-},
-
-/**
- * @method CC_SHADOW_TOP_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_TOP_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method generateMipmapsWithImage
- * @param {ca.CAImage} arg0
- * @return {ca.CAImage}
- */
-generateMipmapsWithImage : function (
-caimage 
-)
-{
-    return ca.CAImage;
-},
-
-/**
  * @method CC_SHADOW_BOTTOM_IMAGE
  * @return {ca.CAImage}
  */
@@ -1012,6 +945,48 @@ CC_SHADOW_BOTTOM_IMAGE : function (
 )
 {
     return ca.CAImage;
+},
+
+/**
+ * @method reloadAllImages
+ */
+reloadAllImages : function (
+)
+{
+},
+
+/**
+ * @method scaleToNewImageWithImage
+* @param {ca.CAImage|ca.CAImage} caimage
+* @param {float|size_object} float
+* @param {float} float
+* @return {ca.CAImage|ca.CAImage}
+*/
+scaleToNewImageWithImage : function(
+caimage,
+float,
+float 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method CC_WHITE_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_WHITE_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method purgeCAImage
+ */
+purgeCAImage : function (
+)
+{
 },
 
 /**
@@ -1033,10 +1008,32 @@ int
 },
 
 /**
- * @method CC_SHADOW_RIGHT_IMAGE
+ * @method cutStringByWidth
+ * @param {char} arg0
+ * @param {unsigned long} arg1
+ * @param {String} arg2
+ * @param {int} arg3
+ * @param {int} arg4
+ * @return {int}
+ */
+cutStringByWidth : function (
+char, 
+long, 
+str, 
+int, 
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method generateMipmapsWithImage
+ * @param {ca.CAImage} arg0
  * @return {ca.CAImage}
  */
-CC_SHADOW_RIGHT_IMAGE : function (
+generateMipmapsWithImage : function (
+caimage 
 )
 {
     return ca.CAImage;
@@ -1637,6 +1634,16 @@ int
 },
 
 /**
+ * @method setOnExitCallback
+ * @param {function} arg0
+ */
+setOnExitCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method sortAllSubviews
  */
 sortAllSubviews : function (
@@ -1775,16 +1782,6 @@ float
 },
 
 /**
- * @method getAtlasIndex
- * @return {unsigned int}
- */
-getAtlasIndex : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method removeSubviewByTag
  * @param {int} arg0
  */
@@ -1823,6 +1820,16 @@ getSuperviewToViewAffineTransform : function (
 },
 
 /**
+ * @method setonEnterTransitionDidFinishCallback
+ * @param {function} arg0
+ */
+setonEnterTransitionDidFinishCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method getTag
  * @return {int}
  */
@@ -1830,6 +1837,16 @@ getTag : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getonEnterTransitionDidFinishCallback
+ * @return {function}
+ */
+getonEnterTransitionDidFinishCallback : function (
+)
+{
+    return std::function<void ()>;
 },
 
 /**
@@ -1901,11 +1918,11 @@ float
 },
 
 /**
- * @method removeSubview
- * @param {ca.CAView} arg0
+ * @method setOnEnterCallback
+ * @param {function} arg0
  */
-removeSubview : function (
-caview 
+setOnEnterCallback : function (
+func 
 )
 {
 },
@@ -1929,15 +1946,13 @@ getLayout : function (
 },
 
 /**
- * @method getViewToSuperviewTransform
-* @param {ca.CAView} caview
-* @return {ca.Mat4|ca.Mat4}
-*/
-getViewToSuperviewTransform : function(
-caview 
+ * @method setonExitTransitionDidStartCallback
+ * @param {function} arg0
+ */
+setonExitTransitionDidStartCallback : function (
+func 
 )
 {
-    return ca.Mat4;
 },
 
 /**
@@ -1983,6 +1998,16 @@ str
 },
 
 /**
+ * @method getonExitTransitionDidStartCallback
+ * @return {function}
+ */
+getonExitTransitionDidStartCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
  * @method enabledLeftShadow
  * @param {bool} arg0
  */
@@ -2025,6 +2050,16 @@ dlayout
 },
 
 /**
+ * @method getOnEnterCallback
+ * @return {function}
+ */
+getOnEnterCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
  * @method enabledBottomShadow
  * @param {bool} arg0
  */
@@ -2042,6 +2077,16 @@ getViewToWorldAffineTransform : function (
 )
 {
     return ca.AffineTransform;
+},
+
+/**
+ * @method getPointZ
+ * @return {float}
+ */
+getPointZ : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2075,21 +2120,13 @@ getFrameOrigin : function (
 },
 
 /**
- * @method setDirty
- * @param {bool} arg0
+ * @method setCameraMask
+ * @param {unsigned short} arg0
+ * @param {bool} arg1
  */
-setDirty : function (
+setCameraMask : function (
+short, 
 bool 
-)
-{
-},
-
-/**
- * @method setGLServerState
- * @param {ca.ccGLServerState} arg0
- */
-setGLServerState : function (
-ccglserverstate 
 )
 {
 },
@@ -2102,6 +2139,16 @@ isImageRectRotated : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setGLProgramState
+ * @param {ca.GLProgramState} arg0
+ */
+setGLProgramState : function (
+glprogramstate 
+)
+{
 },
 
 /**
@@ -2122,6 +2169,16 @@ getDisplayedColor : function (
 )
 {
     return ca._Color4B;
+},
+
+/**
+ * @method removeSubview
+ * @param {ca.CAView} arg0
+ */
+removeSubview : function (
+caview 
+)
+{
 },
 
 /**
@@ -2171,16 +2228,6 @@ onEnter : function (
 },
 
 /**
- * @method setAtlasIndex
- * @param {unsigned int} arg0
- */
-setAtlasIndex : function (
-int 
-)
-{
-},
-
-/**
  * @method getCenterOrigin
  * @return {point_object}
  */
@@ -2213,6 +2260,18 @@ getRotation : function (
 },
 
 /**
+ * @method getViewToSuperviewTransform
+* @param {ca.CAView} caview
+* @return {ca.Mat4|ca.Mat4}
+*/
+getViewToSuperviewTransform : function(
+caview 
+)
+{
+    return ca.Mat4;
+},
+
+/**
  * @method getZOrder
  * @return {int}
  */
@@ -2234,28 +2293,38 @@ getSubviewsCount : function (
 
 /**
  * @method visit
- */
-visit : function (
+* @param {ca.Renderer} renderer
+* @param {ca.Mat4} mat4
+* @param {unsigned int} int
+*/
+visit : function(
+renderer,
+mat4,
+int 
 )
 {
 },
 
 /**
  * @method transform
+ * @param {ca.Mat4} arg0
+ * @return {ca.Mat4}
  */
 transform : function (
+mat4 
 )
 {
+    return ca.Mat4;
 },
 
 /**
- * @method setVertexZ
- * @param {float} arg0
+ * @method getGLProgramState
+ * @return {ca.GLProgramState}
  */
-setVertexZ : function (
-float 
+getGLProgramState : function (
 )
 {
+    return ca.GLProgramState;
 },
 
 /**
@@ -2351,16 +2420,6 @@ getCenter : function (
 },
 
 /**
- * @method isDirty
- * @return {bool}
- */
-isDirty : function (
-)
-{
-    return false;
-},
-
-/**
  * @method getRotationX
  * @return {int}
  */
@@ -2453,16 +2512,6 @@ int
 },
 
 /**
- * @method getVertexZ
- * @return {float}
- */
-getVertexZ : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method _setZOrder
  * @param {int} arg0
  */
@@ -2492,6 +2541,16 @@ isDisplayRange : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getOnExitCallback
+ * @return {function}
+ */
+getOnExitCallback : function (
+)
+{
+    return std::function<void ()>;
 },
 
 /**
@@ -2557,6 +2616,16 @@ getScaleX : function (
 },
 
 /**
+ * @method isVisitableByVisitingCamera
+ * @return {bool}
+ */
+isVisitableByVisitingCamera : function (
+)
+{
+    return false;
+},
+
+/**
  * @method addSubview
  * @param {ca.CAView} arg0
  */
@@ -2599,6 +2668,20 @@ float
 },
 
 /**
+ * @method processParentFlags
+ * @param {ca.Mat4} arg0
+ * @param {unsigned int} arg1
+ * @return {unsigned int}
+ */
+processParentFlags : function (
+mat4, 
+int 
+)
+{
+    return 0;
+},
+
+/**
  * @method getSubviews
  * @return {Array}
  */
@@ -2620,8 +2703,14 @@ getColor : function (
 
 /**
  * @method draw
- */
-draw : function (
+* @param {ca.Renderer} renderer
+* @param {ca.Mat4} mat4
+* @param {unsigned int} int
+*/
+draw : function(
+renderer,
+mat4,
+int 
 )
 {
 },
@@ -2634,14 +2723,6 @@ getBlendFunc : function (
 )
 {
     return ca.BlendFunc;
-},
-
-/**
- * @method transformAncestors
- */
-transformAncestors : function (
-)
-{
 },
 
 /**
@@ -2745,16 +2826,6 @@ int
 },
 
 /**
- * @method getGLServerState
- * @return {ca.ccGLServerState}
- */
-getGLServerState : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method create
  * @return {ca.CAView}
  */
@@ -2855,6 +2926,16 @@ getAnimationRepeatCount : function (
 },
 
 /**
+ * @method copy
+ * @return {ca.CAView}
+ */
+copy : function (
+)
+{
+    return ca.CAView;
+},
+
+/**
  * @method stopAnimating
  */
 stopAnimating : function (
@@ -2873,13 +2954,13 @@ caimage
 },
 
 /**
- * @method copy
- * @return {ca.CAView}
+ * @method getAnimationImages
+ * @return {Array}
  */
-copy : function (
+getAnimationImages : function (
 )
 {
-    return ca.CAView;
+    return new Array();
 },
 
 /**
@@ -2915,16 +2996,6 @@ str
 },
 
 /**
- * @method getImageViewScaleType
- * @return {ca.CAImageViewScaleType}
- */
-getImageViewScaleType : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method init
  * @return {bool}
  */
@@ -2935,23 +3006,23 @@ init : function (
 },
 
 /**
- * @method setImageViewScaleType
- * @param {ca.CAImageViewScaleType} arg0
+ * @method setAnimationDuration
+ * @param {float} arg0
  */
-setImageViewScaleType : function (
-caimageviewscaletype 
+setAnimationDuration : function (
+float 
 )
 {
 },
 
 /**
- * @method getAnimationImages
- * @return {Array}
+ * @method getScaleType
+ * @return {ca.CAImageView::ScaleType}
  */
-getAnimationImages : function (
+getScaleType : function (
 )
 {
-    return new Array();
+    return 0;
 },
 
 /**
@@ -2975,9 +3046,11 @@ drect
 },
 
 /**
- * @method startAnimating
+ * @method setScaleType
+ * @param {ca.CAImageView::ScaleType} arg0
  */
-startAnimating : function (
+setScaleType : function (
+scaletype 
 )
 {
 },
@@ -2993,11 +3066,9 @@ getImage : function (
 },
 
 /**
- * @method setAnimationDuration
- * @param {float} arg0
+ * @method startAnimating
  */
-setAnimationDuration : function (
-float 
+startAnimating : function (
 )
 {
 },
@@ -3108,8 +3179,14 @@ getOriginalSize : function (
 
 /**
  * @method draw
+ * @param {ca.Renderer} arg0
+ * @param {ca.Mat4} arg1
+ * @param {unsigned int} arg2
  */
 draw : function (
+renderer, 
+mat4, 
+int 
 )
 {
 },
@@ -3346,42 +3423,6 @@ CAScale9ImageView : function (
 };
 
 /**
- * @class CAViewAnimationModule
- */
-ca.CAViewAnimationModule = {
-
-/**
- * @method setAlreadyRunning
- * @param {bool} arg0
- */
-setAlreadyRunning : function (
-bool 
-)
-{
-},
-
-/**
- * @method isAlreadyRunning
- * @return {bool}
- */
-isAlreadyRunning : function (
-)
-{
-    return false;
-},
-
-/**
- * @method CAViewAnimationModule
- * @constructor
- */
-CAViewAnimationModule : function (
-)
-{
-},
-
-};
-
-/**
  * @class CAViewAnimation
  */
 ca.CAViewAnimation = {
@@ -3399,11 +3440,9 @@ bool
 /**
  * @method beginAnimations
  * @param {String} arg0
- * @param {void} arg1
  */
 beginAnimations : function (
-str, 
-void 
+str 
 )
 {
 },
@@ -3426,6 +3465,16 @@ str
  */
 setAnimationDelay : function (
 float 
+)
+{
+},
+
+/**
+ * @method setAnimationWillStartSelector
+ * @param {function} arg0
+ */
+setAnimationWillStartSelector : function (
+func 
 )
 {
 },
@@ -3490,10 +3539,10 @@ bool
 
 /**
  * @method setAnimationCurve
- * @param {ca.CAViewAnimationCurve} arg0
+ * @param {ca.CAViewAnimation::Curve} arg0
  */
 setAnimationCurve : function (
-caviewanimationcurve 
+curve 
 )
 {
 },
@@ -3543,7 +3592,7 @@ setControlStateHighlighted : function (
 
 /**
  * @method getControlState
- * @return {ca.CAControlState}
+ * @return {ca.CAControl::State}
  */
 getControlState : function (
 )
@@ -3552,31 +3601,23 @@ getControlState : function (
 },
 
 /**
- * @method setControlStateNormal
- */
-setControlStateNormal : function (
-)
-{
-},
-
-/**
  * @method setControlState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  */
 setControlState : function (
-cacontrolstate 
+state 
 )
 {
 },
 
 /**
- * @method setControlStateLocked
- * @param {bool} arg0
+ * @method isRecSpe
+ * @return {bool}
  */
-setControlStateLocked : function (
-bool 
+isRecSpe : function (
 )
 {
+    return false;
 },
 
 /**
@@ -3590,13 +3631,21 @@ init : function (
 },
 
 /**
- * @method getControlStateLocked
- * @return {bool}
+ * @method setControlStateNormal
  */
-getControlStateLocked : function (
+setControlStateNormal : function (
 )
 {
-    return false;
+},
+
+/**
+ * @method setRecSpe
+ * @param {bool} arg0
+ */
+setRecSpe : function (
+bool 
+)
+{
 },
 
 /**
@@ -4093,10 +4142,20 @@ getStatusBarOrientation : function (
 },
 
 /**
- * @method getDeltaTime
- * @return {float}
+ * @method getImageCache
+ * @return {ca.CAImageCache}
  */
-getDeltaTime : function (
+getImageCache : function (
+)
+{
+    return ca.CAImageCache;
+},
+
+/**
+ * @method getDeltaTime
+* @return {float|float}
+*/
+getDeltaTime : function(
 )
 {
     return 0;
@@ -4111,11 +4170,33 @@ setGLDefaultValues : function (
 },
 
 /**
+ * @method setActionManager
+ * @param {ca.ActionManager} arg0
+ */
+setActionManager : function (
+actionmanager 
+)
+{
+},
+
+/**
  * @method setAlphaBlending
  * @param {bool} arg0
  */
 setAlphaBlending : function (
 bool 
+)
+{
+},
+
+/**
+ * @method loadMatrix
+ * @param {ca.MATRIX_STACK_TYPE} arg0
+ * @param {ca.Mat4} arg1
+ */
+loadMatrix : function (
+matrix_stack_type, 
+mat4 
 )
 {
 },
@@ -4139,6 +4220,16 @@ getKeypadDispatcher : function (
 },
 
 /**
+ * @method getRenderer
+ * @return {ca.Renderer}
+ */
+getRenderer : function (
+)
+{
+    return ca.Renderer;
+},
+
+/**
  * @method getWinSize
  * @return {size_object}
  */
@@ -4152,6 +4243,18 @@ getWinSize : function (
  * @method end
  */
 end : function (
+)
+{
+},
+
+/**
+ * @method multiplyMatrix
+ * @param {ca.MATRIX_STACK_TYPE} arg0
+ * @param {ca.Mat4} arg1
+ */
+multiplyMatrix : function (
+matrix_stack_type, 
+mat4 
 )
 {
 },
@@ -4225,6 +4328,14 @@ getSecondsPerFrame : function (
 },
 
 /**
+ * @method resetMatrixStack
+ */
+resetMatrixStack : function (
+)
+{
+},
+
+/**
  * @method getStatusBarStyle
  * @return {ca.CAStatusBarStyle}
  */
@@ -4245,6 +4356,16 @@ init : function (
 },
 
 /**
+ * @method setScheduler
+ * @param {ca.CAScheduler} arg0
+ */
+setScheduler : function (
+cascheduler 
+)
+{
+},
+
+/**
  * @method reshapeProjection
  * @param {size_object} arg0
  */
@@ -4255,6 +4376,18 @@ dsize
 },
 
 /**
+ * @method getMatrix
+ * @param {ca.MATRIX_STACK_TYPE} arg0
+ * @return {ca.Mat4}
+ */
+getMatrix : function (
+matrix_stack_type 
+)
+{
+    return ca.Mat4;
+},
+
+/**
  * @method setKeypadDispatcher
  * @param {ca.CAKeypadDispatcher} arg0
  */
@@ -4262,16 +4395,6 @@ setKeypadDispatcher : function (
 cakeypaddispatcher 
 )
 {
-},
-
-/**
- * @method getAdaptationRatio
- * @return {float}
- */
-getAdaptationRatio : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -4349,11 +4472,31 @@ isNextDeltaTimeZero : function (
 },
 
 /**
+ * @method setImageCache
+ * @param {ca.CAImageCache} arg0
+ */
+setImageCache : function (
+caimagecache 
+)
+{
+},
+
+/**
  * @method setStatusBarStyle
  * @param {ca.CAStatusBarStyle} arg0
  */
 setStatusBarStyle : function (
 castatusbarstyle 
+)
+{
+},
+
+/**
+ * @method setClearColor
+ * @param {ca._Color4F} arg0
+ */
+setClearColor : function (
+_color4f 
 )
 {
 },
@@ -4403,19 +4546,29 @@ pause : function (
 },
 
 /**
- * @method drawScene
+ * @method setThemeManager
+ * @param {ca.CAThemeManager} arg0
  */
-drawScene : function (
+setThemeManager : function (
+cathememanager 
 )
 {
 },
 
 /**
- * @method setTouchDispatcher
- * @param {ca.CATouchDispatcher} arg0
+ * @method restart
  */
-setTouchDispatcher : function (
-catouchdispatcher 
+restart : function (
+)
+{
+},
+
+/**
+ * @method loadIdentityMatrix
+ * @param {ca.MATRIX_STACK_TYPE} arg0
+ */
+loadIdentityMatrix : function (
+matrix_stack_type 
 )
 {
 },
@@ -4436,6 +4589,16 @@ isDisplayStats : function (
  */
 setProjection : function (
 projection 
+)
+{
+},
+
+/**
+ * @method setStatusBarHidden
+ * @param {bool} arg0
+ */
+setStatusBarHidden : function (
+bool 
 )
 {
 },
@@ -4471,6 +4634,26 @@ bool
 },
 
 /**
+ * @method getThemeManager
+ * @return {ca.CAThemeManager}
+ */
+getThemeManager : function (
+)
+{
+    return ca.CAThemeManager;
+},
+
+/**
+ * @method popMatrix
+ * @param {ca.MATRIX_STACK_TYPE} arg0
+ */
+popMatrix : function (
+matrix_stack_type 
+)
+{
+},
+
+/**
  * @method getVisibleSize
  * @return {size_object}
  */
@@ -4481,6 +4664,16 @@ getVisibleSize : function (
 },
 
 /**
+ * @method setTouchDispatcher
+ * @param {ca.CATouchDispatcher} arg0
+ */
+setTouchDispatcher : function (
+catouchdispatcher 
+)
+{
+},
+
+/**
  * @method setNotificationView
  * @param {ca.CAView} arg0
  */
@@ -4488,6 +4681,16 @@ setNotificationView : function (
 caview 
 )
 {
+},
+
+/**
+ * @method getScheduler
+ * @return {ca.CAScheduler}
+ */
+getScheduler : function (
+)
+{
+    return ca.CAScheduler;
 },
 
 /**
@@ -4551,6 +4754,34 @@ bool
 },
 
 /**
+ * @method drawScene
+ */
+drawScene : function (
+)
+{
+},
+
+/**
+ * @method getActionManager
+ * @return {ca.ActionManager}
+ */
+getActionManager : function (
+)
+{
+    return ca.ActionManager;
+},
+
+/**
+ * @method pushMatrix
+ * @param {ca.MATRIX_STACK_TYPE} arg0
+ */
+pushMatrix : function (
+matrix_stack_type 
+)
+{
+},
+
+/**
  * @method getApplication
  * @return {ca.CAApplication}
  */
@@ -4558,108 +4789,6 @@ getApplication : function (
 )
 {
     return ca.CAApplication;
-},
-
-};
-
-/**
- * @class CAThread
- */
-ca.CAThread = {
-
-/**
- * @method setMaxMsgCount
- * @param {int} arg0
- */
-setMaxMsgCount : function (
-int 
-)
-{
-},
-
-/**
- * @method closeAtOnce
- */
-closeAtOnce : function (
-)
-{
-},
-
-/**
- * @method isRunning
- * @return {bool}
- */
-isRunning : function (
-)
-{
-    return false;
-},
-
-/**
- * @method OnRunning
- */
-OnRunning : function (
-)
-{
-},
-
-/**
- * @method clear
- */
-clear : function (
-)
-{
-},
-
-/**
- * @method OnExitInstance
- */
-OnExitInstance : function (
-)
-{
-},
-
-/**
- * @method start
- */
-start : function (
-)
-{
-},
-
-/**
- * @method OnInitInstance
- */
-OnInitInstance : function (
-)
-{
-},
-
-/**
- * @method close
- */
-close : function (
-)
-{
-},
-
-/**
- * @method notifyRun
- * @param {void} arg0
- */
-notifyRun : function (
-void 
-)
-{
-},
-
-/**
- * @method CAThread
- * @constructor
- */
-CAThread : function (
-)
-{
 },
 
 };
@@ -4691,12 +4820,24 @@ float
 
 /**
  * @method setTitleForState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  * @param {String} arg1
  */
 setTitleForState : function (
-cacontrolstate, 
+state, 
 str 
+)
+{
+},
+
+/**
+ * @method addTarget
+ * @param {function} arg0
+ * @param {ca.CAButton::Event} arg1
+ */
+addTarget : function (
+func, 
+event 
 )
 {
 },
@@ -4712,35 +4853,15 @@ catextalignment
 },
 
 /**
- * @method isAllowsSelected
- * @return {bool}
- */
-isAllowsSelected : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setBackgroundViewForState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  * @param {ca.CAView} arg1
  */
 setBackgroundViewForState : function (
-cacontrolstate, 
+state, 
 caview 
 )
 {
-},
-
-/**
- * @method isSelected
- * @return {bool}
- */
-isSelected : function (
-)
-{
-    return false;
 },
 
 /**
@@ -4755,11 +4876,11 @@ init : function (
 
 /**
  * @method setImageColorForState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  * @param {ca._Color4B} arg1
  */
 setImageColorForState : function (
-cacontrolstate, 
+state, 
 _color4b 
 )
 {
@@ -4767,11 +4888,11 @@ _color4b
 
 /**
  * @method getImageForState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  * @return {ca.CAImage}
  */
 getImageForState : function (
-cacontrolstate 
+state 
 )
 {
     return ca.CAImage;
@@ -4785,16 +4906,6 @@ setTitleLabelSize : function (
 dsize 
 )
 {
-},
-
-/**
- * @method isTouchClick
- * @return {bool}
- */
-isTouchClick : function (
-)
-{
-    return false;
 },
 
 /**
@@ -4827,11 +4938,11 @@ dsize
 
 /**
  * @method setTitleColorForState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  * @param {ca._Color4B} arg1
  */
 setTitleColorForState : function (
-cacontrolstate, 
+state, 
 _color4b 
 )
 {
@@ -4839,11 +4950,11 @@ _color4b
 
 /**
  * @method getBackgroundViewForState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  * @return {ca.CAView}
  */
 getBackgroundViewForState : function (
-cacontrolstate 
+state 
 )
 {
     return ca.CAView;
@@ -4879,21 +4990,21 @@ dsize
 
 /**
  * @method setControlState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  */
 setControlState : function (
-cacontrolstate 
+state 
 )
 {
 },
 
 /**
  * @method setImageForState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  * @param {ca.CAImage} arg1
  */
 setImageForState : function (
-cacontrolstate, 
+state, 
 caimage 
 )
 {
@@ -4908,22 +5019,12 @@ onEnterTransitionDidFinish : function (
 },
 
 /**
- * @method setAllowsSelected
- * @param {bool} arg0
- */
-setAllowsSelected : function (
-bool 
-)
-{
-},
-
-/**
  * @method getTitleForState
- * @param {ca.CAControlState} arg0
+ * @param {ca.CAControl::State} arg0
  * @return {String}
  */
 getTitleForState : function (
-cacontrolstate 
+state 
 )
 {
     return ;
@@ -4931,11 +5032,11 @@ cacontrolstate
 
 /**
  * @method create
- * @param {ca.CAButtonType} arg0
+ * @param {ca.CAButton::Type} arg0
  * @return {ca.CAButton}
  */
 create : function (
-cabuttontype 
+type 
 )
 {
     return ca.CAButton;
@@ -4944,12 +5045,12 @@ cabuttontype
 /**
  * @method createWithFrame
  * @param {rect_object} arg0
- * @param {ca.CAButtonType} arg1
+ * @param {ca.CAButton::Type} arg1
  * @return {ca.CAButton}
  */
 createWithFrame : function (
 drect, 
-cabuttontype 
+type 
 )
 {
     return ca.CAButton;
@@ -4958,12 +5059,12 @@ cabuttontype
 /**
  * @method createWithLayout
  * @param {layout_object} arg0
- * @param {ca.CAButtonType} arg1
+ * @param {ca.CAButton::Type} arg1
  * @return {ca.CAButton}
  */
 createWithLayout : function (
 dlayout, 
-cabuttontype 
+type 
 )
 {
     return ca.CAButton;
@@ -4972,12 +5073,12 @@ cabuttontype
 /**
  * @method createWithCenter
  * @param {rect_object} arg0
- * @param {ca.CAButtonType} arg1
+ * @param {ca.CAButton::Type} arg1
  * @return {ca.CAButton}
  */
 createWithCenter : function (
 drect, 
-cabuttontype 
+type 
 )
 {
     return ca.CAButton;
@@ -4986,10 +5087,10 @@ cabuttontype
 /**
  * @method CAButton
  * @constructor
- * @param {ca.CAButtonType} arg0
+ * @param {ca.CAButton::Type} arg0
  */
 CAButton : function (
-cabuttontype 
+type 
 )
 {
 },
@@ -5045,12 +5146,12 @@ int
  * @method setImageForSegmentAtIndex
  * @param {ca.CAImage} arg0
  * @param {int} arg1
- * @param {ca.CAControlState} arg2
+ * @param {ca.CAControl::State} arg2
  */
 setImageForSegmentAtIndex : function (
 caimage, 
 int, 
-cacontrolstate 
+state 
 )
 {
 },
@@ -5096,15 +5197,13 @@ getNumberOfSegments : function (
 },
 
 /**
- * @method setTitleForSegmentAtIndex
- * @param {String} arg0
- * @param {int} arg1
+ * @method init
+ * @return {bool}
  */
-setTitleForSegmentAtIndex : function (
-str, 
-int 
+init : function (
 )
 {
+    return false;
 },
 
 /**
@@ -5132,11 +5231,33 @@ int
 },
 
 /**
+ * @method setTitleForSegmentAtIndex
+ * @param {String} arg0
+ * @param {int} arg1
+ */
+setTitleForSegmentAtIndex : function (
+str, 
+int 
+)
+{
+},
+
+/**
  * @method setBackgroundImage
  * @param {ca.CAImage} arg0
  */
 setBackgroundImage : function (
 caimage 
+)
+{
+},
+
+/**
+ * @method setTarget
+ * @param {function} arg0
+ */
+setTarget : function (
+func 
 )
 {
 },
@@ -5191,16 +5312,6 @@ getImageSelectedColor : function (
 )
 {
     return ca._Color4B;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
 },
 
 /**
@@ -5426,6 +5537,16 @@ CABarItem : function (
 ca.CABarButtonItem = {
 
 /**
+ * @method getImageOffsetX
+ * @return {int}
+ */
+getImageOffsetX : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getCustomView
  * @return {ca.CAView}
  */
@@ -5433,6 +5554,26 @@ getCustomView : function (
 )
 {
     return ca.CAView;
+},
+
+/**
+ * @method setLabelWidth
+ * @param {unsigned int} arg0
+ */
+setLabelWidth : function (
+int 
+)
+{
+},
+
+/**
+ * @method setImageOffsetX
+ * @param {int} arg0
+ */
+setImageOffsetX : function (
+int 
+)
+{
 },
 
 /**
@@ -5482,13 +5623,23 @@ getHighlightedImage : function (
 },
 
 /**
- * @method getTarget
- * @return {ca.CAObject}
+ * @method setLabelOffsetX
+ * @param {int} arg0
  */
-getTarget : function (
+setLabelOffsetX : function (
+int 
 )
 {
-    return ca.CAObject;
+},
+
+/**
+ * @method setImageWidth
+ * @param {unsigned int} arg0
+ */
+setImageWidth : function (
+int 
+)
+{
 },
 
 /**
@@ -5534,10 +5685,60 @@ caimage
 },
 
 /**
+ * @method setCallbackFunction
+ * @param {function} arg0
+ */
+setCallbackFunction : function (
+func 
+)
+{
+},
+
+/**
  * @method getItemWidth
  * @return {unsigned int}
  */
 getItemWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getImageWidth
+ * @return {unsigned int}
+ */
+getImageWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getLabelOffsetX
+ * @return {int}
+ */
+getLabelOffsetX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getCallbackFunction
+ * @return {function}
+ */
+getCallbackFunction : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
+ * @method getLabelWidth
+ * @return {unsigned int}
+ */
+getLabelWidth : function (
 )
 {
     return 0;
@@ -5824,6 +6025,16 @@ CATabBarItem : function (
 ca.CANavigationBar = {
 
 /**
+ * @method getGoBackBarButtonItem
+ * @return {ca.CABarButtonItem}
+ */
+getGoBackBarButtonItem : function (
+)
+{
+    return ca.CABarButtonItem;
+},
+
+/**
  * @method getDelegate
  * @return {ca.CANavigationBarDelegate}
  */
@@ -5861,6 +6072,16 @@ getTitleColor : function (
 )
 {
     return ca._Color4B;
+},
+
+/**
+ * @method setGoBackBarButtonItem
+ * @param {ca.CABarButtonItem} arg0
+ */
+setGoBackBarButtonItem : function (
+cabarbuttonitem 
+)
+{
 },
 
 /**
@@ -6347,1589 +6568,19 @@ CATabBar : function (
 };
 
 /**
- * @class CARenderImage
- */
-ca.CARenderImage = {
-
-/**
- * @method listenToForeground
- * @param {ca.CAObject} arg0
- */
-listenToForeground : function (
-caobject 
-)
-{
-},
-
-/**
- * @method getClearDepth
- * @return {float}
- */
-getClearDepth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getClearStencil
- * @return {int}
- */
-getClearStencil : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setClearStencil
- * @param {float} arg0
- */
-setClearStencil : function (
-float 
-)
-{
-},
-
-/**
- * @method setImageView
- * @param {ca.CAImageView} arg0
- */
-setImageView : function (
-caimageview 
-)
-{
-},
-
-/**
- * @method initWithWidthAndHeight
-* @param {int|int} int
-* @param {int|int} int
-* @param {ca.CAImage::PixelFormat|ca.CAImage::PixelFormat} pixelformat
-* @param {unsigned int} int
-* @return {bool|bool}
-*/
-initWithWidthAndHeight : function(
-int,
-int,
-pixelformat,
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method visit
- */
-visit : function (
-)
-{
-},
-
-/**
- * @method isAutoDraw
- * @return {bool}
- */
-isAutoDraw : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getImageView
- * @return {ca.CAImageView}
- */
-getImageView : function (
-)
-{
-    return ca.CAImageView;
-},
-
-/**
- * @method setClearFlags
- * @param {unsigned int} arg0
- */
-setClearFlags : function (
-int 
-)
-{
-},
-
-/**
- * @method draw
- */
-draw : function (
-)
-{
-},
-
-/**
- * @method saveToFile
- * @param {char} arg0
- * @return {bool}
- */
-saveToFile : function (
-char 
-)
-{
-    return false;
-},
-
-/**
- * @method visitEve
- */
-visitEve : function (
-)
-{
-},
-
-/**
- * @method setAutoDraw
- * @param {bool} arg0
- */
-setAutoDraw : function (
-bool 
-)
-{
-},
-
-/**
- * @method setClearColor
- * @param {ca._Color4F} arg0
- */
-setClearColor : function (
-_color4f 
-)
-{
-},
-
-/**
- * @method getClearColor
- * @return {ca._Color4F}
- */
-getClearColor : function (
-)
-{
-    return ca._Color4F;
-},
-
-/**
- * @method listenToBackground
- * @param {ca.CAObject} arg0
- */
-listenToBackground : function (
-caobject 
-)
-{
-},
-
-/**
- * @method getClearFlags
- * @return {unsigned int}
- */
-getClearFlags : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setClearDepth
- * @param {float} arg0
- */
-setClearDepth : function (
-float 
-)
-{
-},
-
-/**
- * @method create
-* @param {int|int|int} int
-* @param {int|int|int} int
-* @param {ca.CAImage::PixelFormat|ca.CAImage::PixelFormat} pixelformat
-* @param {unsigned int} int
-* @return {ca.CARenderImage|ca.CARenderImage|ca.CARenderImage}
-*/
-create : function(
-int,
-int,
-pixelformat,
-int 
-)
-{
-    return ca.CARenderImage;
-},
-
-/**
- * @method CARenderImage
- * @constructor
- */
-CARenderImage : function (
-)
-{
-},
-
-};
-
-/**
- * @class CAProgress
- */
-ca.CAProgress = {
-
-/**
- * @method setProgressTintImage
- * @param {ca.CAImage} arg0
- */
-setProgressTintImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method getProgressTintImage
- * @return {ca.CAImage}
- */
-getProgressTintImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setProgressTrackColor
- * @param {ca._Color4B} arg0
- */
-setProgressTrackColor : function (
-_color4b 
-)
-{
-},
-
-/**
- * @method setColor
- * @param {ca._Color4B} arg0
- */
-setColor : function (
-_color4b 
-)
-{
-},
-
-/**
- * @method setProgressTrackImage
- * @param {ca.CAImage} arg0
- */
-setProgressTrackImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method getProgressTintColor
- * @return {ca._Color4B}
- */
-getProgressTintColor : function (
-)
-{
-    return ca._Color4B;
-},
-
-/**
- * @method getProgressTrackImage
- * @return {ca.CAImage}
- */
-getProgressTrackImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method getProgressTrackColor
- * @return {ca._Color4B}
- */
-getProgressTrackColor : function (
-)
-{
-    return ca._Color4B;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method onExitTransitionDidStart
- */
-onExitTransitionDidStart : function (
-)
-{
-},
-
-/**
- * @method getProgress
- * @return {float}
- */
-getProgress : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setProgress
- * @param {float} arg0
- * @param {bool} arg1
- */
-setProgress : function (
-float, 
-bool 
-)
-{
-},
-
-/**
- * @method onEnterTransitionDidFinish
- */
-onEnterTransitionDidFinish : function (
-)
-{
-},
-
-/**
- * @method setProgressTintColor
- * @param {ca._Color4B} arg0
- */
-setProgressTintColor : function (
-_color4b 
-)
-{
-},
-
-/**
- * @method create
- * @return {ca.CAProgress}
- */
-create : function (
-)
-{
-    return ca.CAProgress;
-},
-
-/**
- * @method createWithFrame
- * @param {rect_object} arg0
- * @return {ca.CAProgress}
- */
-createWithFrame : function (
-drect 
-)
-{
-    return ca.CAProgress;
-},
-
-/**
- * @method createWithLayout
- * @param {layout_object} arg0
- * @return {ca.CAProgress}
- */
-createWithLayout : function (
-dlayout 
-)
-{
-    return ca.CAProgress;
-},
-
-/**
- * @method createWithCenter
- * @param {rect_object} arg0
- * @return {ca.CAProgress}
- */
-createWithCenter : function (
-drect 
-)
-{
-    return ca.CAProgress;
-},
-
-/**
- * @method CAProgress
- * @constructor
- */
-CAProgress : function (
-)
-{
-},
-
-};
-
-/**
- * @class CASwitch
- */
-ca.CASwitch = {
-
-/**
- * @method getOnImage
- * @return {ca.CAImage}
- */
-getOnImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setOffImage
- * @param {ca.CAImage} arg0
- */
-setOffImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method isTouchClick
- * @return {bool}
- */
-isTouchClick : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getThumbTintImage
- * @return {ca.CAImage}
- */
-getThumbTintImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setIsOn
- * @param {bool} arg0
- * @param {bool} arg1
- */
-setIsOn : function (
-bool, 
-bool 
-)
-{
-},
-
-/**
- * @method isOn
- * @return {bool}
- */
-isOn : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setOnImage
- * @param {ca.CAImage} arg0
- */
-setOnImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method onExitTransitionDidStart
- */
-onExitTransitionDidStart : function (
-)
-{
-},
-
-/**
- * @method getOffImage
- * @return {ca.CAImage}
- */
-getOffImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method onEnterTransitionDidFinish
- */
-onEnterTransitionDidFinish : function (
-)
-{
-},
-
-/**
- * @method setThumbTintImage
- * @param {ca.CAImage} arg0
- */
-setThumbTintImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method create
- * @return {ca.CASwitch}
- */
-create : function (
-)
-{
-    return ca.CASwitch;
-},
-
-/**
- * @method createWithFrame
- * @param {rect_object} arg0
- * @return {ca.CASwitch}
- */
-createWithFrame : function (
-drect 
-)
-{
-    return ca.CASwitch;
-},
-
-/**
- * @method createWithLayout
- * @param {layout_object} arg0
- * @return {ca.CASwitch}
- */
-createWithLayout : function (
-dlayout 
-)
-{
-    return ca.CASwitch;
-},
-
-/**
- * @method createWithCenter
- * @param {rect_object} arg0
- * @return {ca.CASwitch}
- */
-createWithCenter : function (
-drect 
-)
-{
-    return ca.CASwitch;
-},
-
-/**
- * @method CASwitch
- * @constructor
- */
-CASwitch : function (
-)
-{
-},
-
-};
-
-/**
- * @class CASlider
- */
-ca.CASlider = {
-
-/**
- * @method initWithCenter
- * @param {rect_object} arg0
- * @return {bool}
- */
-initWithCenter : function (
-drect 
-)
-{
-    return false;
-},
-
-/**
- * @method getTrackHeight
- * @return {float}
- */
-getTrackHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setMinValue
- * @param {float} arg0
- */
-setMinValue : function (
-float 
-)
-{
-},
-
-/**
- * @method getMinValue
- * @return {float}
- */
-getMinValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getMaxValue
- * @return {float}
- */
-getMaxValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setMaxTrackTintImage
- * @param {ca.CAImage} arg0
- */
-setMaxTrackTintImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method setValue
- * @param {float} arg0
- */
-setValue : function (
-float 
-)
-{
-},
-
-/**
- * @method isTouchClick
- * @return {bool}
- */
-isTouchClick : function (
-)
-{
-    return false;
-},
-
-/**
- * @method initWithFrame
- * @param {rect_object} arg0
- * @return {bool}
- */
-initWithFrame : function (
-drect 
-)
-{
-    return false;
-},
-
-/**
- * @method layoutSubViews
- */
-layoutSubViews : function (
-)
-{
-},
-
-/**
- * @method onExitTransitionDidStart
- */
-onExitTransitionDidStart : function (
-)
-{
-},
-
-/**
- * @method setThumbTintImage
- * @param {ca.CAImage} arg0
- */
-setThumbTintImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method getMinTrackTintImage
- * @return {ca.CAImage}
- */
-getMinTrackTintImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setTrackHeight
- * @param {float} arg0
- */
-setTrackHeight : function (
-float 
-)
-{
-},
-
-/**
- * @method getThumbTintImage
- * @return {ca.CAImage}
- */
-getThumbTintImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setMaxValue
- * @param {float} arg0
- */
-setMaxValue : function (
-float 
-)
-{
-},
-
-/**
- * @method getValue
- * @return {float}
- */
-getValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getMaxTrackTintImage
- * @return {ca.CAImage}
- */
-getMaxTrackTintImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setMinTrackTintImage
- * @param {ca.CAImage} arg0
- */
-setMinTrackTintImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method onEnterTransitionDidFinish
- */
-onEnterTransitionDidFinish : function (
-)
-{
-},
-
-/**
- * @method create
- * @return {ca.CASlider}
- */
-create : function (
-)
-{
-    return ca.CASlider;
-},
-
-/**
- * @method createWithFrame
- * @param {rect_object} arg0
- * @return {ca.CASlider}
- */
-createWithFrame : function (
-drect 
-)
-{
-    return ca.CASlider;
-},
-
-/**
- * @method createWithLayout
- * @param {layout_object} arg0
- * @return {ca.CASlider}
- */
-createWithLayout : function (
-dlayout 
-)
-{
-    return ca.CASlider;
-},
-
-/**
- * @method createWithCenter
- * @param {rect_object} arg0
- * @return {ca.CASlider}
- */
-createWithCenter : function (
-drect 
-)
-{
-    return ca.CASlider;
-},
-
-/**
- * @method CASlider
- * @constructor
- */
-CASlider : function (
-)
-{
-},
-
-};
-
-/**
- * @class CAPageControl
- */
-ca.CAPageControl = {
-
-/**
- * @method setDefersCurrentPageDisplay
- * @param {bool} arg0
- */
-setDefersCurrentPageDisplay : function (
-bool 
-)
-{
-},
-
-/**
- * @method onEnter
- */
-onEnter : function (
-)
-{
-},
-
-/**
- * @method getPageIndicatorImage
- * @return {ca.CAImage}
- */
-getPageIndicatorImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method initWithCenter
- * @param {rect_object} arg0
- * @return {bool}
- */
-initWithCenter : function (
-drect 
-)
-{
-    return false;
-},
-
-/**
- * @method isSinglePage
- * @return {bool}
- */
-isSinglePage : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setPageIndicatorImage
- * @param {ca.CAImage} arg0
- */
-setPageIndicatorImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method setNumberOfPages
- * @param {int} arg0
- */
-setNumberOfPages : function (
-int 
-)
-{
-},
-
-/**
- * @method visit
- */
-visit : function (
-)
-{
-},
-
-/**
- * @method getNumberOfPages
- * @return {int}
- */
-getNumberOfPages : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setTouchEnabled
- * @param {bool} arg0
- */
-setTouchEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setPageIndicatorTintColor
- * @param {ca._Color4B} arg0
- */
-setPageIndicatorTintColor : function (
-_color4b 
-)
-{
-},
-
-/**
- * @method initWithFrame
- * @param {rect_object} arg0
- * @return {bool}
- */
-initWithFrame : function (
-drect 
-)
-{
-    return false;
-},
-
-/**
- * @method setSinglePage
- * @param {bool} arg0
- */
-setSinglePage : function (
-bool 
-)
-{
-},
-
-/**
- * @method getStyle
- * @return {ca.CAPageControlStyle}
- */
-getStyle : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getPageIndicatorTintColor
- * @return {ca._Color4B}
- */
-getPageIndicatorTintColor : function (
-)
-{
-    return ca._Color4B;
-},
-
-/**
- * @method setStyle
- * @param {ca.CAPageControlStyle} arg0
- */
-setStyle : function (
-capagecontrolstyle 
-)
-{
-},
-
-/**
- * @method isDefersCurrentPageDisplay
- * @return {bool}
- */
-isDefersCurrentPageDisplay : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setCurrentPageIndicatorTintColor
- * @param {ca._Color4B} arg0
- */
-setCurrentPageIndicatorTintColor : function (
-_color4b 
-)
-{
-},
-
-/**
- * @method setCurrentPage
- * @param {int} arg0
- */
-setCurrentPage : function (
-int 
-)
-{
-},
-
-/**
- * @method updateCurrentPageDisplay
- */
-updateCurrentPageDisplay : function (
-)
-{
-},
-
-/**
- * @method getCurrentPage
- * @return {int}
- */
-getCurrentPage : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method onExit
- */
-onExit : function (
-)
-{
-},
-
-/**
- * @method getCurrentPageIndicatorTintColor
- * @return {ca._Color4B}
- */
-getCurrentPageIndicatorTintColor : function (
-)
-{
-    return ca._Color4B;
-},
-
-/**
- * @method setCurrIndicatorImage
- * @param {ca.CAImage} arg0
- */
-setCurrIndicatorImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method getCurrIndicatorImage
- * @return {ca.CAImage}
- */
-getCurrIndicatorImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method create
- * @return {ca.CAPageControl}
- */
-create : function (
-)
-{
-    return ca.CAPageControl;
-},
-
-/**
- * @method createWithFrame
- * @param {rect_object} arg0
- * @return {ca.CAPageControl}
- */
-createWithFrame : function (
-drect 
-)
-{
-    return ca.CAPageControl;
-},
-
-/**
- * @method createWithLayout
- * @param {layout_object} arg0
- * @return {ca.CAPageControl}
- */
-createWithLayout : function (
-dlayout 
-)
-{
-    return ca.CAPageControl;
-},
-
-/**
- * @method createWithCenter
- * @param {rect_object} arg0
- * @return {ca.CAPageControl}
- */
-createWithCenter : function (
-drect 
-)
-{
-    return ca.CAPageControl;
-},
-
-/**
- * @method CAPageControl
- * @constructor
- */
-CAPageControl : function (
-)
-{
-},
-
-};
-
-/**
- * @class CAStepper
- */
-ca.CAStepper = {
-
-/**
- * @method onEnter
- */
-onEnter : function (
-)
-{
-},
-
-/**
- * @method setMinValue
- * @param {double} arg0
- */
-setMinValue : function (
-double 
-)
-{
-},
-
-/**
- * @method getBackgroundImageForState
- * @param {ca.CAControlState} arg0
- * @return {ca.CAImage}
- */
-getBackgroundImageForState : function (
-cacontrolstate 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setWraps
- * @param {bool} arg0
- */
-setWraps : function (
-bool 
-)
-{
-},
-
-/**
- * @method setValue
- * @param {double} arg0
- */
-setValue : function (
-double 
-)
-{
-},
-
-/**
- * @method setTailorImageAtIndex
- * @param {int} arg0
- */
-setTailorImageAtIndex : function (
-int 
-)
-{
-},
-
-/**
- * @method getContinuous
- * @return {bool}
- */
-getContinuous : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getTailorImageAtIndex
- * @param {int} arg0
- * @return {ca.CAView}
- */
-getTailorImageAtIndex : function (
-int 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method getAutoRepeat
- * @return {bool}
- */
-getAutoRepeat : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setContinuous
- * @param {bool} arg0
- */
-setContinuous : function (
-bool 
-)
-{
-},
-
-/**
- * @method getMinValue
- * @return {double}
- */
-getMinValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getIncrementImageForState
- * @param {ca.CAControlState} arg0
- * @return {ca.CAImage}
- */
-getIncrementImageForState : function (
-cacontrolstate 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setDividerColor
- * @param {ca._Color4B} arg0
- */
-setDividerColor : function (
-_color4b 
-)
-{
-},
-
-/**
- * @method getDecrementImageForState
- * @param {ca.CAControlState} arg0
- * @return {ca.CAImage}
- */
-getDecrementImageForState : function (
-cacontrolstate 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method getMaxValue
- * @return {double}
- */
-getMaxValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setDecrementImage
- * @param {ca.CAImage} arg0
- * @param {ca.CAControlState} arg1
- */
-setDecrementImage : function (
-caimage, 
-cacontrolstate 
-)
-{
-},
-
-/**
- * @method getWraps
- * @return {bool}
- */
-getWraps : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setStepValue
- * @param {double} arg0
- */
-setStepValue : function (
-double 
-)
-{
-},
-
-/**
- * @method setBackgroundImage
- * @param {ca.CAImage} arg0
- * @param {ca.CAControlState} arg1
- */
-setBackgroundImage : function (
-caimage, 
-cacontrolstate 
-)
-{
-},
-
-/**
- * @method setAutoRepeat
- * @param {bool} arg0
- */
-setAutoRepeat : function (
-bool 
-)
-{
-},
-
-/**
- * @method removeAllTargets
- */
-removeAllTargets : function (
-)
-{
-},
-
-/**
- * @method getDividerColor
- * @return {ca._Color4B}
- */
-getDividerColor : function (
-)
-{
-    return ca._Color4B;
-},
-
-/**
- * @method setTouchEffect
- * @param {bool} arg0
- */
-setTouchEffect : function (
-bool 
-)
-{
-},
-
-/**
- * @method onExit
- */
-onExit : function (
-)
-{
-},
-
-/**
- * @method setIncrementImage
- * @param {ca.CAImage} arg0
- * @param {ca.CAControlState} arg1
- */
-setIncrementImage : function (
-caimage, 
-cacontrolstate 
-)
-{
-},
-
-/**
- * @method getStepValue
- * @return {double}
- */
-getStepValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setMaxValue
- * @param {double} arg0
- */
-setMaxValue : function (
-double 
-)
-{
-},
-
-/**
- * @method getValue
- * @return {double}
- */
-getValue : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method visit
- */
-visit : function (
-)
-{
-},
-
-/**
- * @method getTouchEffect
- * @return {bool}
- */
-getTouchEffect : function (
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @return {ca.CAStepper}
- */
-create : function (
-)
-{
-    return ca.CAStepper;
-},
-
-/**
- * @method createWithFrame
- * @param {rect_object} arg0
- * @param {ca.CAStepperOrientation} arg1
- * @return {ca.CAStepper}
- */
-createWithFrame : function (
-drect, 
-castepperorientation 
-)
-{
-    return ca.CAStepper;
-},
-
-/**
- * @method createWithLayout
- * @param {layout_object} arg0
- * @param {ca.CAStepperOrientation} arg1
- * @return {ca.CAStepper}
- */
-createWithLayout : function (
-dlayout, 
-castepperorientation 
-)
-{
-    return ca.CAStepper;
-},
-
-/**
- * @method createWithCenter
- * @param {rect_object} arg0
- * @param {ca.CAStepperOrientation} arg1
- * @return {ca.CAStepper}
- */
-createWithCenter : function (
-drect, 
-castepperorientation 
-)
-{
-    return ca.CAStepper;
-},
-
-/**
- * @method CAStepper
- * @constructor
- */
-CAStepper : function (
-)
-{
-},
-
-};
-
-/**
  * @class CAActivityIndicatorView
  */
 ca.CAActivityIndicatorView = {
+
+/**
+ * @method onCancel
+ * @param {function} arg0
+ */
+onCancel : function (
+func 
+)
+{
+},
 
 /**
  * @method setCycleTime
@@ -7937,14 +6588,6 @@ ca.CAActivityIndicatorView = {
  */
 setCycleTime : function (
 float 
-)
-{
-},
-
-/**
- * @method draw
- */
-draw : function (
 )
 {
 },
@@ -8006,14 +6649,6 @@ getColor : function (
 },
 
 /**
- * @method visit
- */
-visit : function (
-)
-{
-},
-
-/**
  * @method setActivityBackView
  * @param {ca.CAView} arg0
  */
@@ -8025,10 +6660,10 @@ caview
 
 /**
  * @method setStyle
- * @param {ca.CAActivityIndicatorViewStyle} arg0
+ * @param {ca.CAActivityIndicatorView::Style} arg0
  */
 setStyle : function (
-caactivityindicatorviewstyle 
+style 
 )
 {
 },
@@ -8039,6 +6674,16 @@ caactivityindicatorviewstyle
  */
 setLoadingMinTime : function (
 float 
+)
+{
+},
+
+/**
+ * @method setActivityIndicatorOffset
+ * @param {size_object} arg0
+ */
+setActivityIndicatorOffset : function (
+dsize 
 )
 {
 },
@@ -8183,7 +6828,7 @@ str
 
 /**
  * @method getType
- * @return {ca.CAPullToRefreshView::PullToRefreshType}
+ * @return {ca.CAPullToRefreshView::Type}
  */
 getType : function (
 )
@@ -8262,16 +6907,6 @@ getReleaseToRefreshText : function (
 },
 
 /**
- * @method setLayoutLinearType
- * @param {ca.CALayoutLinearType} arg0
- */
-setLayoutLinearType : function (
-calayoutlineartype 
-)
-{
-},
-
-/**
  * @method setLabelColor
  * @param {ca._Color4B} arg0
  */
@@ -8289,16 +6924,6 @@ setReleaseToRefreshText : function (
 str 
 )
 {
-},
-
-/**
- * @method getLayoutLinearType
- * @return {ca.CALayoutLinearType}
- */
-getLayoutLinearType : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -8323,11 +6948,11 @@ getPullToRefreshText : function (
 
 /**
  * @method create
- * @param {ca.CAPullToRefreshView::PullToRefreshType} arg0
+ * @param {ca.CAPullToRefreshView::Type} arg0
  * @return {ca.CAPullToRefreshView}
  */
 create : function (
-pulltorefreshtype 
+type 
 )
 {
     return ca.CAPullToRefreshView;
@@ -8336,10 +6961,10 @@ pulltorefreshtype
 /**
  * @method CAPullToRefreshView
  * @constructor
- * @param {ca.CAPullToRefreshView::PullToRefreshType} arg0
+ * @param {ca.CAPullToRefreshView::Type} arg0
  */
 CAPullToRefreshView : function (
-pulltorefreshtype 
+type 
 )
 {
 },
@@ -8964,16 +7589,6 @@ int
 },
 
 /**
- * @method setShowsScrollIndicators
- * @param {bool} arg0
- */
-setShowsScrollIndicators : function (
-bool 
-)
-{
-},
-
-/**
  * @method setViews
 * @param {Array|ca.CADeque<ca.CAView >} array
 */
@@ -9014,13 +7629,17 @@ getCurrPage : function (
 },
 
 /**
- * @method init
- * @return {bool}
+ * @method setCurrPage
+ * @param {int} arg0
+ * @param {bool} arg1
+ * @param {bool} arg2
  */
-init : function (
+setCurrPage : function (
+int, 
+bool, 
+bool 
 )
 {
-    return false;
 },
 
 /**
@@ -9041,20 +7660,6 @@ getPageCount : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setCurrPage
- * @param {int} arg0
- * @param {bool} arg1
- * @param {bool} arg2
- */
-setCurrPage : function (
-int, 
-bool, 
-bool 
-)
-{
 },
 
 /**
@@ -9498,6 +8103,16 @@ bool
 },
 
 /**
+ * @method getNavigationBarGoBackBarButtonItem
+ * @return {ca.CABarButtonItem}
+ */
+getNavigationBarGoBackBarButtonItem : function (
+)
+{
+    return ca.CABarButtonItem;
+},
+
+/**
  * @method pushViewController
  * @param {ca.CAViewController} arg0
  * @param {bool} arg1
@@ -9619,6 +8234,16 @@ isReachBoundaryLeft : function (
  */
 setNavigationBarBackgroundColor : function (
 _color4b 
+)
+{
+},
+
+/**
+ * @method setNavigationBarGoBackBarButtonItem
+ * @param {ca.CABarButtonItem} arg0
+ */
+setNavigationBarGoBackBarButtonItem : function (
+cabarbuttonitem 
 )
 {
 },
@@ -10015,6 +8640,1764 @@ CATabBarController : function (
 };
 
 /**
+ * @class CAWindow
+ */
+ca.CAWindow = {
+
+/**
+ * @method presentModalViewController
+ * @param {ca.CAViewController} arg0
+ * @param {bool} arg1
+ */
+presentModalViewController : function (
+caviewcontroller, 
+bool 
+)
+{
+},
+
+/**
+ * @method setCameraOrderDirty
+ */
+setCameraOrderDirty : function (
+)
+{
+},
+
+/**
+ * @method render
+ * @param {ca.Renderer} arg0
+ * @param {ca.Mat4} arg1
+ * @param {ca.Mat4} arg2
+ */
+render : function (
+renderer, 
+mat4, 
+mat4 
+)
+{
+},
+
+/**
+ * @method dismissModalViewController
+ * @param {bool} arg0
+ */
+dismissModalViewController : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getRootViewController
+ * @return {ca.CAViewController}
+ */
+getRootViewController : function (
+)
+{
+    return ca.CAViewController;
+},
+
+/**
+ * @method getModalViewController
+ * @return {ca.CAViewController}
+ */
+getModalViewController : function (
+)
+{
+    return ca.CAViewController;
+},
+
+/**
+ * @method setRootViewController
+ * @param {ca.CAViewController} arg0
+ */
+setRootViewController : function (
+caviewcontroller 
+)
+{
+},
+
+/**
+ * @method getDefaultCamera
+ * @return {ca.CACamera}
+ */
+getDefaultCamera : function (
+)
+{
+    return ca.CACamera;
+},
+
+/**
+ * @method create
+ * @return {ca.CAWindow}
+ */
+create : function (
+)
+{
+    return ca.CAWindow;
+},
+
+/**
+ * @method CAWindow
+ * @constructor
+ */
+CAWindow : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAThread
+ */
+ca.CAThread = {
+
+/**
+ * @method setMaxMsgCount
+ * @param {int} arg0
+ */
+setMaxMsgCount : function (
+int 
+)
+{
+},
+
+/**
+ * @method closeAtOnce
+ */
+closeAtOnce : function (
+)
+{
+},
+
+/**
+ * @method isRunning
+ * @return {bool}
+ */
+isRunning : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method OnRunning
+ */
+OnRunning : function (
+)
+{
+},
+
+/**
+ * @method clear
+ */
+clear : function (
+)
+{
+},
+
+/**
+ * @method OnExitInstance
+ */
+OnExitInstance : function (
+)
+{
+},
+
+/**
+ * @method start
+ */
+start : function (
+)
+{
+},
+
+/**
+ * @method OnInitInstance
+ */
+OnInitInstance : function (
+)
+{
+},
+
+/**
+ * @method close
+ */
+close : function (
+)
+{
+},
+
+/**
+ * @method notifyRun
+ * @param {void} arg0
+ */
+notifyRun : function (
+void 
+)
+{
+},
+
+/**
+ * @method CAThread
+ * @constructor
+ */
+CAThread : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CARenderImage
+ */
+ca.CARenderImage = {
+
+/**
+ * @method getImageView
+ * @return {ca.CAImageView}
+ */
+getImageView : function (
+)
+{
+    return ca.CAImageView;
+},
+
+/**
+ * @method getClearStencil
+ * @return {int}
+ */
+getClearStencil : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setClearStencil
+ * @param {float} arg0
+ */
+setClearStencil : function (
+float 
+)
+{
+},
+
+/**
+ * @method saveToFile
+ * @param {char} arg0
+ * @return {bool}
+ */
+saveToFile : function (
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method getClearColor
+ * @return {ca._Color4F}
+ */
+getClearColor : function (
+)
+{
+    return ca._Color4F;
+},
+
+/**
+ * @method setClearFlags
+ * @param {unsigned int} arg0
+ */
+setClearFlags : function (
+int 
+)
+{
+},
+
+/**
+ * @method listenToBackground
+ * @param {ca.CAObject} arg0
+ */
+listenToBackground : function (
+caobject 
+)
+{
+},
+
+/**
+ * @method setImageView
+ * @param {ca.CAImageView} arg0
+ */
+setImageView : function (
+caimageview 
+)
+{
+},
+
+/**
+ * @method initWithWidthAndHeight
+* @param {int|int} int
+* @param {int|int} int
+* @param {ca.CAImage::PixelFormat|ca.CAImage::PixelFormat} pixelformat
+* @param {unsigned int} int
+* @return {bool|bool}
+*/
+initWithWidthAndHeight : function(
+int,
+int,
+pixelformat,
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method setAutoDraw
+ * @param {bool} arg0
+ */
+setAutoDraw : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setClearColor
+ * @param {ca._Color4F} arg0
+ */
+setClearColor : function (
+_color4f 
+)
+{
+},
+
+/**
+ * @method listenToForeground
+ * @param {ca.CAObject} arg0
+ */
+listenToForeground : function (
+caobject 
+)
+{
+},
+
+/**
+ * @method getClearFlags
+ * @return {unsigned int}
+ */
+getClearFlags : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method isAutoDraw
+ * @return {bool}
+ */
+isAutoDraw : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setClearDepth
+ * @param {float} arg0
+ */
+setClearDepth : function (
+float 
+)
+{
+},
+
+/**
+ * @method getClearDepth
+ * @return {float}
+ */
+getClearDepth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+* @param {int|int|int} int
+* @param {int|int|int} int
+* @param {ca.CAImage::PixelFormat|ca.CAImage::PixelFormat} pixelformat
+* @param {unsigned int} int
+* @return {ca.CARenderImage|ca.CARenderImage|ca.CARenderImage}
+*/
+create : function(
+int,
+int,
+pixelformat,
+int 
+)
+{
+    return ca.CARenderImage;
+},
+
+/**
+ * @method CARenderImage
+ * @constructor
+ */
+CARenderImage : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAProgress
+ */
+ca.CAProgress = {
+
+/**
+ * @method setProgressTintImage
+ * @param {ca.CAImage} arg0
+ */
+setProgressTintImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method getProgressTintImage
+ * @return {ca.CAImage}
+ */
+getProgressTintImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setProgressTrackColor
+ * @param {ca._Color4B} arg0
+ */
+setProgressTrackColor : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method setColor
+ * @param {ca._Color4B} arg0
+ */
+setColor : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method setProgressTrackImage
+ * @param {ca.CAImage} arg0
+ */
+setProgressTrackImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method getProgressTintColor
+ * @return {ca._Color4B}
+ */
+getProgressTintColor : function (
+)
+{
+    return ca._Color4B;
+},
+
+/**
+ * @method getProgressTrackImage
+ * @return {ca.CAImage}
+ */
+getProgressTrackImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method getProgressTrackColor
+ * @return {ca._Color4B}
+ */
+getProgressTrackColor : function (
+)
+{
+    return ca._Color4B;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method onExitTransitionDidStart
+ */
+onExitTransitionDidStart : function (
+)
+{
+},
+
+/**
+ * @method getProgress
+ * @return {float}
+ */
+getProgress : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setProgress
+ * @param {float} arg0
+ * @param {bool} arg1
+ */
+setProgress : function (
+float, 
+bool 
+)
+{
+},
+
+/**
+ * @method onEnterTransitionDidFinish
+ */
+onEnterTransitionDidFinish : function (
+)
+{
+},
+
+/**
+ * @method setProgressTintColor
+ * @param {ca._Color4B} arg0
+ */
+setProgressTintColor : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ca.CAProgress}
+ */
+create : function (
+)
+{
+    return ca.CAProgress;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @return {ca.CAProgress}
+ */
+createWithFrame : function (
+drect 
+)
+{
+    return ca.CAProgress;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @return {ca.CAProgress}
+ */
+createWithLayout : function (
+dlayout 
+)
+{
+    return ca.CAProgress;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @return {ca.CAProgress}
+ */
+createWithCenter : function (
+drect 
+)
+{
+    return ca.CAProgress;
+},
+
+/**
+ * @method CAProgress
+ * @constructor
+ */
+CAProgress : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CASwitch
+ */
+ca.CASwitch = {
+
+/**
+ * @method getOnImage
+ * @return {ca.CAImage}
+ */
+getOnImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setOffImage
+ * @param {ca.CAImage} arg0
+ */
+setOffImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method isTouchClick
+ * @return {bool}
+ */
+isTouchClick : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setTarget
+ * @param {function} arg0
+ */
+setTarget : function (
+func 
+)
+{
+},
+
+/**
+ * @method getThumbTintImage
+ * @return {ca.CAImage}
+ */
+getThumbTintImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setIsOn
+ * @param {bool} arg0
+ * @param {bool} arg1
+ */
+setIsOn : function (
+bool, 
+bool 
+)
+{
+},
+
+/**
+ * @method isOn
+ * @return {bool}
+ */
+isOn : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setOnImage
+ * @param {ca.CAImage} arg0
+ */
+setOnImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method onExitTransitionDidStart
+ */
+onExitTransitionDidStart : function (
+)
+{
+},
+
+/**
+ * @method getOffImage
+ * @return {ca.CAImage}
+ */
+getOffImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method onEnterTransitionDidFinish
+ */
+onEnterTransitionDidFinish : function (
+)
+{
+},
+
+/**
+ * @method setThumbTintImage
+ * @param {ca.CAImage} arg0
+ */
+setThumbTintImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ca.CASwitch}
+ */
+create : function (
+)
+{
+    return ca.CASwitch;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @return {ca.CASwitch}
+ */
+createWithFrame : function (
+drect 
+)
+{
+    return ca.CASwitch;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @return {ca.CASwitch}
+ */
+createWithLayout : function (
+dlayout 
+)
+{
+    return ca.CASwitch;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @return {ca.CASwitch}
+ */
+createWithCenter : function (
+drect 
+)
+{
+    return ca.CASwitch;
+},
+
+/**
+ * @method CASwitch
+ * @constructor
+ */
+CASwitch : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CASlider
+ */
+ca.CASlider = {
+
+/**
+ * @method setTargetForTouchUpSide
+ * @param {function} arg0
+ */
+setTargetForTouchUpSide : function (
+func 
+)
+{
+},
+
+/**
+ * @method initWithCenter
+ * @param {rect_object} arg0
+ * @return {bool}
+ */
+initWithCenter : function (
+drect 
+)
+{
+    return false;
+},
+
+/**
+ * @method getTrackHeight
+ * @return {float}
+ */
+getTrackHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMinValue
+ * @param {float} arg0
+ */
+setMinValue : function (
+float 
+)
+{
+},
+
+/**
+ * @method getMinValue
+ * @return {float}
+ */
+getMinValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getMaxValue
+ * @return {float}
+ */
+getMaxValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMaxTrackTintImage
+ * @param {ca.CAImage} arg0
+ */
+setMaxTrackTintImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method setValue
+ * @param {float} arg0
+ */
+setValue : function (
+float 
+)
+{
+},
+
+/**
+ * @method isTouchClick
+ * @return {bool}
+ */
+isTouchClick : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithFrame
+ * @param {rect_object} arg0
+ * @return {bool}
+ */
+initWithFrame : function (
+drect 
+)
+{
+    return false;
+},
+
+/**
+ * @method setTarget
+ * @param {function} arg0
+ */
+setTarget : function (
+func 
+)
+{
+},
+
+/**
+ * @method layoutSubViews
+ */
+layoutSubViews : function (
+)
+{
+},
+
+/**
+ * @method onExitTransitionDidStart
+ */
+onExitTransitionDidStart : function (
+)
+{
+},
+
+/**
+ * @method setThumbTintImage
+ * @param {ca.CAImage} arg0
+ */
+setThumbTintImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method getMinTrackTintImage
+ * @return {ca.CAImage}
+ */
+getMinTrackTintImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setTrackHeight
+ * @param {float} arg0
+ */
+setTrackHeight : function (
+float 
+)
+{
+},
+
+/**
+ * @method getThumbTintImage
+ * @return {ca.CAImage}
+ */
+getThumbTintImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setMaxValue
+ * @param {float} arg0
+ */
+setMaxValue : function (
+float 
+)
+{
+},
+
+/**
+ * @method getValue
+ * @return {float}
+ */
+getValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMaxTrackTintImage
+ * @return {ca.CAImage}
+ */
+getMaxTrackTintImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setMinTrackTintImage
+ * @param {ca.CAImage} arg0
+ */
+setMinTrackTintImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method onEnterTransitionDidFinish
+ */
+onEnterTransitionDidFinish : function (
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ca.CASlider}
+ */
+create : function (
+)
+{
+    return ca.CASlider;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @return {ca.CASlider}
+ */
+createWithFrame : function (
+drect 
+)
+{
+    return ca.CASlider;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @return {ca.CASlider}
+ */
+createWithLayout : function (
+dlayout 
+)
+{
+    return ca.CASlider;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @return {ca.CASlider}
+ */
+createWithCenter : function (
+drect 
+)
+{
+    return ca.CASlider;
+},
+
+/**
+ * @method CASlider
+ * @constructor
+ */
+CASlider : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAPageControl
+ */
+ca.CAPageControl = {
+
+/**
+ * @method setDefersCurrentPageDisplay
+ * @param {bool} arg0
+ */
+setDefersCurrentPageDisplay : function (
+bool 
+)
+{
+},
+
+/**
+ * @method onEnter
+ */
+onEnter : function (
+)
+{
+},
+
+/**
+ * @method getPageIndicatorImage
+ * @return {ca.CAImage}
+ */
+getPageIndicatorImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method initWithCenter
+ * @param {rect_object} arg0
+ * @return {bool}
+ */
+initWithCenter : function (
+drect 
+)
+{
+    return false;
+},
+
+/**
+ * @method isSinglePage
+ * @return {bool}
+ */
+isSinglePage : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setPageIndicatorImage
+ * @param {ca.CAImage} arg0
+ */
+setPageIndicatorImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method setNumberOfPages
+ * @param {int} arg0
+ */
+setNumberOfPages : function (
+int 
+)
+{
+},
+
+/**
+ * @method getNumberOfPages
+ * @return {int}
+ */
+getNumberOfPages : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setTouchEnabled
+ * @param {bool} arg0
+ */
+setTouchEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setPageIndicatorTintColor
+ * @param {ca._Color4B} arg0
+ */
+setPageIndicatorTintColor : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method initWithFrame
+ * @param {rect_object} arg0
+ * @return {bool}
+ */
+initWithFrame : function (
+drect 
+)
+{
+    return false;
+},
+
+/**
+ * @method setTarget
+ * @param {function} arg0
+ */
+setTarget : function (
+func 
+)
+{
+},
+
+/**
+ * @method setSinglePage
+ * @param {bool} arg0
+ */
+setSinglePage : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getStyle
+ * @return {ca.CAPageControl::Style}
+ */
+getStyle : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPageIndicatorTintColor
+ * @return {ca._Color4B}
+ */
+getPageIndicatorTintColor : function (
+)
+{
+    return ca._Color4B;
+},
+
+/**
+ * @method setStyle
+ * @param {ca.CAPageControl::Style} arg0
+ */
+setStyle : function (
+style 
+)
+{
+},
+
+/**
+ * @method isDefersCurrentPageDisplay
+ * @return {bool}
+ */
+isDefersCurrentPageDisplay : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setCurrentPageIndicatorTintColor
+ * @param {ca._Color4B} arg0
+ */
+setCurrentPageIndicatorTintColor : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method setCurrentPage
+ * @param {int} arg0
+ */
+setCurrentPage : function (
+int 
+)
+{
+},
+
+/**
+ * @method updateCurrentPageDisplay
+ */
+updateCurrentPageDisplay : function (
+)
+{
+},
+
+/**
+ * @method getCurrentPage
+ * @return {int}
+ */
+getCurrentPage : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method onExit
+ */
+onExit : function (
+)
+{
+},
+
+/**
+ * @method getCurrentPageIndicatorTintColor
+ * @return {ca._Color4B}
+ */
+getCurrentPageIndicatorTintColor : function (
+)
+{
+    return ca._Color4B;
+},
+
+/**
+ * @method setCurrIndicatorImage
+ * @param {ca.CAImage} arg0
+ */
+setCurrIndicatorImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method getCurrIndicatorImage
+ * @return {ca.CAImage}
+ */
+getCurrIndicatorImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method create
+ * @return {ca.CAPageControl}
+ */
+create : function (
+)
+{
+    return ca.CAPageControl;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @return {ca.CAPageControl}
+ */
+createWithFrame : function (
+drect 
+)
+{
+    return ca.CAPageControl;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @return {ca.CAPageControl}
+ */
+createWithLayout : function (
+dlayout 
+)
+{
+    return ca.CAPageControl;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @return {ca.CAPageControl}
+ */
+createWithCenter : function (
+drect 
+)
+{
+    return ca.CAPageControl;
+},
+
+/**
+ * @method CAPageControl
+ * @constructor
+ */
+CAPageControl : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAStepper
+ */
+ca.CAStepper = {
+
+/**
+ * @method onEnter
+ */
+onEnter : function (
+)
+{
+},
+
+/**
+ * @method setContinuous
+ * @param {bool} arg0
+ */
+setContinuous : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setWraps
+ * @param {bool} arg0
+ */
+setWraps : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setValue
+ * @param {float} arg0
+ */
+setValue : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTailorImageAtIndex
+ * @param {int} arg0
+ */
+setTailorImageAtIndex : function (
+int 
+)
+{
+},
+
+/**
+ * @method getContinuous
+ * @return {bool}
+ */
+getContinuous : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getTailorImageAtIndex
+ * @param {int} arg0
+ * @return {ca.CAView}
+ */
+getTailorImageAtIndex : function (
+int 
+)
+{
+    return ca.CAView;
+},
+
+/**
+ * @method getAutoRepeat
+ * @return {bool}
+ */
+getAutoRepeat : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setMinValue
+ * @param {float} arg0
+ */
+setMinValue : function (
+float 
+)
+{
+},
+
+/**
+ * @method getMinValue
+ * @return {float}
+ */
+getMinValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setDividerColor
+ * @param {ca._Color4B} arg0
+ */
+setDividerColor : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method getMaxValue
+ * @return {float}
+ */
+getMaxValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setDecrementImage
+ * @param {ca.CAControl::State} arg0
+ * @param {ca.CAImage} arg1
+ */
+setDecrementImage : function (
+state, 
+caimage 
+)
+{
+},
+
+/**
+ * @method getWraps
+ * @return {bool}
+ */
+getWraps : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setStepValue
+ * @param {float} arg0
+ */
+setStepValue : function (
+float 
+)
+{
+},
+
+/**
+ * @method setBackgroundImage
+ * @param {ca.CAControl::State} arg0
+ * @param {ca.CAImage} arg1
+ */
+setBackgroundImage : function (
+state, 
+caimage 
+)
+{
+},
+
+/**
+ * @method setTarget
+ * @param {function} arg0
+ */
+setTarget : function (
+func 
+)
+{
+},
+
+/**
+ * @method setAutoRepeat
+ * @param {bool} arg0
+ */
+setAutoRepeat : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getDividerColor
+ * @return {ca._Color4B}
+ */
+getDividerColor : function (
+)
+{
+    return ca._Color4B;
+},
+
+/**
+ * @method setTouchEffect
+ * @param {bool} arg0
+ */
+setTouchEffect : function (
+bool 
+)
+{
+},
+
+/**
+ * @method onExit
+ */
+onExit : function (
+)
+{
+},
+
+/**
+ * @method setIncrementImage
+ * @param {ca.CAControl::State} arg0
+ * @param {ca.CAImage} arg1
+ */
+setIncrementImage : function (
+state, 
+caimage 
+)
+{
+},
+
+/**
+ * @method getStepValue
+ * @return {float}
+ */
+getStepValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMaxValue
+ * @param {float} arg0
+ */
+setMaxValue : function (
+float 
+)
+{
+},
+
+/**
+ * @method getValue
+ * @return {float}
+ */
+getValue : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTouchEffect
+ * @return {bool}
+ */
+getTouchEffect : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @return {ca.CAStepper}
+ */
+create : function (
+)
+{
+    return ca.CAStepper;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @param {ca.CAStepper::Orientation} arg1
+ * @return {ca.CAStepper}
+ */
+createWithFrame : function (
+drect, 
+orientation 
+)
+{
+    return ca.CAStepper;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @param {ca.CAStepper::Orientation} arg1
+ * @return {ca.CAStepper}
+ */
+createWithLayout : function (
+dlayout, 
+orientation 
+)
+{
+    return ca.CAStepper;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @param {ca.CAStepper::Orientation} arg1
+ * @return {ca.CAStepper}
+ */
+createWithCenter : function (
+drect, 
+orientation 
+)
+{
+    return ca.CAStepper;
+},
+
+/**
+ * @method CAStepper
+ * @constructor
+ */
+CAStepper : function (
+)
+{
+},
+
+};
+
+/**
  * @class CADrawerController
  */
 ca.CADrawerController = {
@@ -10324,6 +10707,18 @@ long
 },
 
 /**
+ * @method getImageWithIndex
+ * @param {unsigned int} arg0
+ * @return {ca.CAImage}
+ */
+getImageWithIndex : function (
+int 
+)
+{
+    return ca.CAImage;
+},
+
+/**
  * @method getPixelsHigh
  * @return {unsigned int}
  */
@@ -10374,94 +10769,6 @@ long
  * @constructor
  */
 CAGif : function (
-)
-{
-},
-
-};
-
-/**
- * @class CAWindow
- */
-ca.CAWindow = {
-
-/**
- * @method presentModalViewController
- * @param {ca.CAViewController} arg0
- * @param {bool} arg1
- */
-presentModalViewController : function (
-caviewcontroller, 
-bool 
-)
-{
-},
-
-/**
- * @method setRootViewController
- * @param {ca.CAViewController} arg0
- */
-setRootViewController : function (
-caviewcontroller 
-)
-{
-},
-
-/**
- * @method getRootViewController
- * @return {ca.CAViewController}
- */
-getRootViewController : function (
-)
-{
-    return ca.CAViewController;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method dismissModalViewController
- * @param {bool} arg0
- */
-dismissModalViewController : function (
-bool 
-)
-{
-},
-
-/**
- * @method getModalViewController
- * @return {ca.CAViewController}
- */
-getModalViewController : function (
-)
-{
-    return ca.CAViewController;
-},
-
-/**
- * @method create
- * @return {ca.CAWindow}
- */
-create : function (
-)
-{
-    return ca.CAWindow;
-},
-
-/**
- * @method CAWindow
- * @constructor
- */
-CAWindow : function (
 )
 {
 },
@@ -10846,11 +11153,29 @@ bool
 },
 
 /**
+ * @method setControlStateHighlighted
+ */
+setControlStateHighlighted : function (
+)
+{
+},
+
+/**
  * @method setControlStateEffect
  * @param {bool} arg0
  */
 setControlStateEffect : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setControlState
+ * @param {ca.CAControl::State} arg0
+ */
+setControlState : function (
+state 
 )
 {
 },
@@ -10863,6 +11188,16 @@ getBackgroundView : function (
 )
 {
     return ca.CAView;
+},
+
+/**
+ * @method getControlState
+ * @return {ca.CAControl::State}
+ */
+getControlState : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -10888,6 +11223,22 @@ isControlStateEffect : function (
 },
 
 /**
+ * @method setControlStateNormal
+ */
+setControlStateNormal : function (
+)
+{
+},
+
+/**
+ * @method setControlStateSelected
+ */
+setControlStateSelected : function (
+)
+{
+},
+
+/**
  * @method initWithReuseIdentifier
  * @param {String} arg0
  * @return {bool}
@@ -10897,6 +11248,14 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setControlStateDisabled
+ */
+setControlStateDisabled : function (
+)
+{
 },
 
 /**
@@ -14187,8 +14546,14 @@ ca.CAWebView = {
 
 /**
  * @method draw
+ * @param {ca.Renderer} arg0
+ * @param {ca.Mat4} arg1
+ * @param {unsigned int} arg2
  */
 draw : function (
+renderer, 
+mat4, 
+int 
 )
 {
 },
@@ -14501,8 +14866,14 @@ bool
 
 /**
  * @method visit
+ * @param {ca.Renderer} arg0
+ * @param {ca.Mat4} arg1
+ * @param {unsigned int} arg2
  */
 visit : function (
+renderer, 
+mat4, 
+int 
 )
 {
 },
@@ -14615,98 +14986,27 @@ caview
 ca.CAAlertView = {
 
 /**
- * @method setAlertMessage
- * @param {String} arg0
- * @param {ca._Color4B} arg1
- */
-setAlertMessage : function (
-str, 
-_color4b 
-)
-{
-},
-
-/**
- * @method hide
- */
-hide : function (
-)
-{
-},
-
-/**
  * @method show
- */
-show : function (
-)
-{
-},
-
-/**
- * @method setTitle
- * @param {String} arg0
- * @param {ca._Color4B} arg1
- */
-setTitle : function (
-str, 
-_color4b 
-)
-{
-},
-
-/**
- * @method addButton
-* @param {ca.CAButton|String} cabutton
-* @param {ca._Color4B} _color4b
-* @param {ca.CAImage} caimage
-* @param {ca.CAImage} caimage
+* @param {function} func
 */
-addButton : function(
-str,
-_color4b,
-caimage,
-caimage 
-)
-{
-},
-
-/**
- * @method setMessageFontName
- * @param {String} arg0
- */
-setMessageFontName : function (
-str 
+show : function(
+func 
 )
 {
 },
 
 /**
  * @method create
+ * @param {char} arg0
+ * @param {char} arg1
  * @return {ca.CAAlertView}
  */
 create : function (
+char, 
+char 
 )
 {
     return ca.CAAlertView;
-},
-
-/**
- * @method hideWithDisplayed
- * @return {bool}
- */
-hideWithDisplayed : function (
-)
-{
-    return false;
-},
-
-/**
- * @method CAAlertView
- * @constructor
- */
-CAAlertView : function (
-)
-{
 },
 
 };
@@ -15201,11 +15501,11 @@ bool
 
 /**
  * @method create
- * @param {ca.CADatePickerMode} arg0
+ * @param {ca.CADatePickerView::Mode} arg0
  * @return {ca.CADatePickerView}
  */
 create : function (
-cadatepickermode 
+mode 
 )
 {
     return ca.CADatePickerView;
@@ -15214,12 +15514,12 @@ cadatepickermode
 /**
  * @method createWithFrame
  * @param {rect_object} arg0
- * @param {ca.CADatePickerMode} arg1
+ * @param {ca.CADatePickerView::Mode} arg1
  * @return {ca.CADatePickerView}
  */
 createWithFrame : function (
 drect, 
-cadatepickermode 
+mode 
 )
 {
     return ca.CADatePickerView;
@@ -15228,12 +15528,12 @@ cadatepickermode
 /**
  * @method createWithLayout
  * @param {layout_object} arg0
- * @param {ca.CADatePickerMode} arg1
+ * @param {ca.CADatePickerView::Mode} arg1
  * @return {ca.CADatePickerView}
  */
 createWithLayout : function (
 dlayout, 
-cadatepickermode 
+mode 
 )
 {
     return ca.CADatePickerView;
@@ -15242,12 +15542,12 @@ cadatepickermode
 /**
  * @method createWithCenter
  * @param {rect_object} arg0
- * @param {ca.CADatePickerMode} arg1
+ * @param {ca.CADatePickerView::Mode} arg1
  * @return {ca.CADatePickerView}
  */
 createWithCenter : function (
 drect, 
-cadatepickermode 
+mode 
 )
 {
     return ca.CADatePickerView;
@@ -15256,10 +15556,10 @@ cadatepickermode
 /**
  * @method CADatePickerView
  * @constructor
- * @param {ca.CADatePickerMode} arg0
+ * @param {ca.CADatePickerView::Mode} arg0
  */
 CADatePickerView : function (
-cadatepickermode 
+mode 
 )
 {
 },
@@ -15272,9 +15572,155 @@ cadatepickermode
 ca.CADrawView = {
 
 /**
- * @method draw
+ * @method drawLine
+ * @param {point_object} arg0
+ * @param {point_object} arg1
+ * @param {ca._Color4B} arg2
  */
-draw : function (
+drawLine : function (
+dpoint, 
+dpoint, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawPoints
+* @param {point_object|point_object} dpoint
+* @param {unsigned int|unsigned int} int
+* @param {float|ca._Color4B} float
+* @param {ca._Color4B} _color4b
+*/
+drawPoints : function(
+dpoint,
+int,
+float,
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawRect
+* @param {point_object|point_object} dpoint
+* @param {point_object|point_object} dpoint
+* @param {point_object|ca._Color4B} dpoint
+* @param {point_object} dpoint
+* @param {ca._Color4B} _color4b
+*/
+drawRect : function(
+dpoint,
+dpoint,
+dpoint,
+dpoint,
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawSolidCircle
+* @param {point_object|point_object} dpoint
+* @param {float|float} float
+* @param {float|float} float
+* @param {unsigned int|unsigned int} int
+* @param {ca._Color4B|float} _color4b
+* @param {float} float
+* @param {ca._Color4B} _color4b
+*/
+drawSolidCircle : function(
+dpoint,
+float,
+float,
+int,
+float,
+float,
+_color4b 
+)
+{
+},
+
+/**
+ * @method setLineWidth
+ * @param {int} arg0
+ */
+setLineWidth : function (
+int 
+)
+{
+},
+
+/**
+ * @method onDrawGLPoint
+ * @param {ca.Mat4} arg0
+ * @param {unsigned int} arg1
+ */
+onDrawGLPoint : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
+ * @method drawPolygon
+ * @param {point_object} arg0
+ * @param {int} arg1
+ * @param {ca._Color4B} arg2
+ * @param {float} arg3
+ * @param {ca._Color4B} arg4
+ */
+drawPolygon : function (
+dpoint, 
+int, 
+_color4b, 
+float, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawDot
+ * @param {point_object} arg0
+ * @param {float} arg1
+ * @param {ca._Color4B} arg2
+ */
+drawDot : function (
+dpoint, 
+float, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawCatmullRom
+ * @param {ca.PointArray} arg0
+ * @param {unsigned int} arg1
+ * @param {ca._Color4B} arg2
+ */
+drawCatmullRom : function (
+pointarray, 
+int, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawSegment
+ * @param {point_object} arg0
+ * @param {point_object} arg1
+ * @param {float} arg2
+ * @param {ca._Color4B} arg3
+ */
+drawSegment : function (
+dpoint, 
+dpoint, 
+float, 
+_color4b 
 )
 {
 },
@@ -15290,27 +15736,97 @@ getBlendFunc : function (
 },
 
 /**
- * @method drawPolygon
- * @param {point_object} arg0
+ * @method onDraw
+ * @param {ca.Mat4} arg0
  * @param {unsigned int} arg1
- * @param {ca._Color4F} arg2
- * @param {float} arg3
- * @param {ca._Color4F} arg4
  */
-drawPolygon : function (
-dpoint, 
-int, 
-_color4f, 
-float, 
-_color4f 
+onDraw : function (
+mat4, 
+int 
 )
 {
 },
 
 /**
- * @method clear
+ * @method drawCircle
+* @param {point_object|point_object} dpoint
+* @param {float|float} float
+* @param {float|float} float
+* @param {unsigned int|unsigned int} int
+* @param {bool|bool} bool
+* @param {ca._Color4B|float} _color4b
+* @param {float} float
+* @param {ca._Color4B} _color4b
+*/
+drawCircle : function(
+dpoint,
+float,
+float,
+int,
+bool,
+float,
+float,
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawQuadBezier
+ * @param {point_object} arg0
+ * @param {point_object} arg1
+ * @param {point_object} arg2
+ * @param {unsigned int} arg3
+ * @param {ca._Color4B} arg4
  */
-clear : function (
+drawQuadBezier : function (
+dpoint, 
+dpoint, 
+dpoint, 
+int, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method onDrawGLLine
+ * @param {ca.Mat4} arg0
+ * @param {unsigned int} arg1
+ */
+onDrawGLLine : function (
+mat4, 
+int 
+)
+{
+},
+
+/**
+ * @method drawSolidPoly
+ * @param {point_object} arg0
+ * @param {unsigned int} arg1
+ * @param {ca._Color4B} arg2
+ */
+drawSolidPoly : function (
+dpoint, 
+int, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawTriangle
+ * @param {point_object} arg0
+ * @param {point_object} arg1
+ * @param {point_object} arg2
+ * @param {ca._Color4B} arg3
+ */
+drawTriangle : function (
+dpoint, 
+dpoint, 
+dpoint, 
+_color4b 
 )
 {
 },
@@ -15326,51 +15842,99 @@ blendfunc
 },
 
 /**
- * @method init
- * @return {bool}
+ * @method clear
  */
-init : function (
+clear : function (
 )
 {
-    return false;
 },
 
 /**
- * @method drawDot
- * @param {point_object} arg0
+ * @method drawCardinalSpline
+ * @param {ca.PointArray} arg0
  * @param {float} arg1
- * @param {ca._Color4F} arg2
+ * @param {unsigned int} arg2
+ * @param {ca._Color4B} arg3
  */
-drawDot : function (
-dpoint, 
+drawCardinalSpline : function (
+pointarray, 
 float, 
-_color4f 
+int, 
+_color4b 
 )
 {
 },
 
 /**
- * @method drawSegment
+ * @method drawSolidRect
  * @param {point_object} arg0
  * @param {point_object} arg1
- * @param {float} arg2
- * @param {ca._Color4F} arg3
+ * @param {ca._Color4B} arg2
  */
-drawSegment : function (
+drawSolidRect : function (
 dpoint, 
 dpoint, 
-float, 
-_color4f 
+_color4b 
 )
 {
 },
 
 /**
- * @method listenBackToForeground
- * @param {ca.CAObject} arg0
+ * @method getLineWidth
+ * @return {float}
  */
-listenBackToForeground : function (
-caobject 
+getLineWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method drawPoly
+ * @param {point_object} arg0
+ * @param {unsigned int} arg1
+ * @param {bool} arg2
+ * @param {ca._Color4B} arg3
+ */
+drawPoly : function (
+dpoint, 
+int, 
+bool, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawPoint
+ * @param {point_object} arg0
+ * @param {float} arg1
+ * @param {ca._Color4B} arg2
+ */
+drawPoint : function (
+dpoint, 
+float, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method drawCubicBezier
+ * @param {point_object} arg0
+ * @param {point_object} arg1
+ * @param {point_object} arg2
+ * @param {point_object} arg3
+ * @param {unsigned int} arg4
+ * @param {ca._Color4B} arg5
+ */
+drawCubicBezier : function (
+dpoint, 
+dpoint, 
+dpoint, 
+dpoint, 
+int, 
+_color4b 
 )
 {
 },
@@ -15620,6 +16184,16 @@ isSecureTextEntry : function (
 },
 
 /**
+ * @method getAlign
+ * @return {ca.CATextField::Align}
+ */
+getAlign : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getMaxLenght
  * @return {int}
  */
@@ -15630,11 +16204,11 @@ getMaxLenght : function (
 },
 
 /**
- * @method setTextFieldAlign
- * @param {ca.CATextField::TextFieldAlign} arg0
+ * @method setAlign
+ * @param {ca.CATextField::Align} arg0
  */
-setTextFieldAlign : function (
-textfieldalign 
+setAlign : function (
+align 
 )
 {
 },
@@ -15840,16 +16414,6 @@ str
 },
 
 /**
- * @method getTextFieldAlign
- * @return {ca.CATextField::TextFieldAlign}
- */
-getTextFieldAlign : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setMarginImageRight
  * @param {size_object} arg0
  * @param {String} arg1
@@ -15972,16 +16536,6 @@ CATextField : function (
 ca.CATextView = {
 
 /**
- * @method setTextViewAlign
- * @param {ca.CATextView::TextViewAlign} arg0
- */
-setTextViewAlign : function (
-textviewalign 
-)
-{
-},
-
-/**
  * @method getDelegate
  * @return {ca.CATextViewDelegate}
  */
@@ -15999,6 +16553,16 @@ getFontSize : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setAlign
+ * @param {ca.CATextView::Align} arg0
+ */
+setAlign : function (
+align 
+)
+{
 },
 
 /**
@@ -16045,16 +16609,6 @@ int
  * @method onExitTransitionDidStart
  */
 onExitTransitionDidStart : function (
-)
-{
-},
-
-/**
- * @method setReturnType
- * @param {ca.CATextView::ReturnType} arg0
- */
-setReturnType : function (
-returntype 
 )
 {
 },
@@ -16110,6 +16664,16 @@ getReturnType : function (
 },
 
 /**
+ * @method getAlign
+ * @return {ca.CATextView::Align}
+ */
+getAlign : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method onEnterTransitionDidFinish
  */
 onEnterTransitionDidFinish : function (
@@ -16118,13 +16682,13 @@ onEnterTransitionDidFinish : function (
 },
 
 /**
- * @method getTextViewAlign
- * @return {ca.CATextView::TextViewAlign}
+ * @method setReturnType
+ * @param {ca.CATextView::ReturnType} arg0
  */
-getTextViewAlign : function (
+setReturnType : function (
+returntype 
 )
 {
-    return 0;
 },
 
 /**

@@ -141,7 +141,19 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 var ImageViewNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
 
                 var ImageViewRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
-                ImageViewRightBtn.setTarget(this, this.RightBtnRightcallback);
+                // ImageViewRightBtn.setTarget(this, this.RightBtnRightcallback);
+                ImageViewRightBtn.setCallbackFunction(function(){
+                  this.Num++;
+                  var ImageViewContrllerViewTest =  new ImageViewTest(this.Num);
+                  ImageViewContrllerViewTest.init();
+                  ImageViewContrllerViewTest.setNavigationBarItem(ImageViewNavigationBar);
+                  if(this.Num >= ImageViewContrllerViewTest.maxNum)
+                  {
+                      this.Num = -1;
+                  }
+                  ca.RootWindow.getRootNavigationController().replaceViewController(ImageViewContrllerViewTest, false);
+                });
+
                 ImageViewNavigationBar.addRightButtonItem(ImageViewRightBtn);
 
                 var ViewContrllerImageViewTest = new ImageViewTest(0);
@@ -482,7 +494,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             p_Cell.addSubview(itemText);
 
             var icon = ca.CAImageView.createWithLayout(DLayout(DHorizontalLayout_L_R(30,30),DVerticalLayout_T_H(20, 123)));
-            icon.setImageViewScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside);
+            icon.setScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside);
             icon.setTag(101);
             icon.setScale(0.6);
             p_Cell.addSubview(icon);
@@ -497,7 +509,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
 
         var icon = p_Cell.getSubviewByTag(101);
         icon.setImage(ca.CAImage.create(iconTag[item]));
-        
+
         return p_Cell;
     },
 

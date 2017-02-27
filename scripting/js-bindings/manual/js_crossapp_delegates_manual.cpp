@@ -531,21 +531,21 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "pageViewDidSelectedPageAtIndex", 3, args);
     }
     
-    CC_DEPRECATED_ATTRIBUTE virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point) override
-    {
-        jsval args[3];
-        
-        js_proxy_t * p = jsb_get_native_proxy(pageView);
-        if (!p) return;
-        
-        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-        
-        args[0] = OBJECT_TO_JSVAL(p->obj);
-        args[1] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), index);
-        args[2] = dpoint_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), point);
-        
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "pageViewDidSelectPageAtIndex", 3, args);
-    }
+//    CC_DEPRECATED_ATTRIBUTE virtual void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point) override
+//    {
+//        jsval args[3];
+//        
+//        js_proxy_t * p = jsb_get_native_proxy(pageView);
+//        if (!p) return;
+//        
+//        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+//        
+//        args[0] = OBJECT_TO_JSVAL(p->obj);
+//        args[1] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), index);
+//        args[2] = dpoint_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), point);
+//        
+//        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "pageViewDidSelectPageAtIndex", 3, args);
+//    }
 private:
     JS::Heap<JSObject*> _JSDelegate;
 };
