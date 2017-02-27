@@ -38,7 +38,19 @@ namespace CADevice
         Notification
     };
         
-    const char* getSystemVersionWithIOS();
+    enum class PlatForm : int
+    {
+        ios,
+        android,
+    };
+        
+    struct SystemVersion
+    {
+        PlatForm platform;
+        std::string version{""};
+    };
+        
+    CADevice::SystemVersion getSystemVersion();
 
     const char* getAppVersion();
         

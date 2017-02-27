@@ -43,7 +43,7 @@ unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     
     const char* fontName = NULL;
-    float version = atof(CADevice::getSystemVersionWithIOS());
+    float version = atof(CADevice::getSystemVersion().version.c_str());
     if (version >= 9.0f)
     {
         fontName = "/System/Library/Fonts/Core/AppleColorEmoji@2x.ttf";
