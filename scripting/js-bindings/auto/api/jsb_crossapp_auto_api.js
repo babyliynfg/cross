@@ -3460,6 +3460,16 @@ str
 },
 
 /**
+ * @method setAnimationDidStopSelector
+ * @param {function} arg0
+ */
+setAnimationDidStopSelector : function (
+func 
+)
+{
+},
+
+/**
  * @method setAnimationDelay
  * @param {float} arg0
  */
@@ -4809,141 +4819,9 @@ dsize
 },
 
 /**
- * @method setTitleFontSize
- * @param {float} arg0
+ * @method interruptTouchState
  */
-setTitleFontSize : function (
-float 
-)
-{
-},
-
-/**
- * @method setTitleForState
- * @param {ca.CAControl::State} arg0
- * @param {String} arg1
- */
-setTitleForState : function (
-state, 
-str 
-)
-{
-},
-
-/**
- * @method addTarget
- * @param {function} arg0
- * @param {ca.CAButton::Event} arg1
- */
-addTarget : function (
-func, 
-event 
-)
-{
-},
-
-/**
- * @method setTitleTextAlignment
- * @param {ca.CATextAlignment} arg0
- */
-setTitleTextAlignment : function (
-catextalignment 
-)
-{
-},
-
-/**
- * @method setBackgroundViewForState
- * @param {ca.CAControl::State} arg0
- * @param {ca.CAView} arg1
- */
-setBackgroundViewForState : function (
-state, 
-caview 
-)
-{
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setImageColorForState
- * @param {ca.CAControl::State} arg0
- * @param {ca._Color4B} arg1
- */
-setImageColorForState : function (
-state, 
-_color4b 
-)
-{
-},
-
-/**
- * @method getImageForState
- * @param {ca.CAControl::State} arg0
- * @return {ca.CAImage}
- */
-getImageForState : function (
-state 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method setTitleLabelSize
- * @param {size_object} arg0
- */
-setTitleLabelSize : function (
-dsize 
-)
-{
-},
-
-/**
- * @method setTitleFontName
- * @param {String} arg0
- */
-setTitleFontName : function (
-str 
-)
-{
-},
-
-/**
- * @method onExitTransitionDidStart
- */
-onExitTransitionDidStart : function (
-)
-{
-},
-
-/**
- * @method setTitleOffset
- * @param {size_object} arg0
- */
-setTitleOffset : function (
-dsize 
-)
-{
-},
-
-/**
- * @method setTitleColorForState
- * @param {ca.CAControl::State} arg0
- * @param {ca._Color4B} arg1
- */
-setTitleColorForState : function (
-state, 
-_color4b 
+interruptTouchState : function (
 )
 {
 },
@@ -4961,9 +4839,35 @@ state
 },
 
 /**
- * @method interruptTouchState
+ * @method addTarget
+ * @param {function} arg0
+ * @param {ca.CAButton::Event} arg1
  */
-interruptTouchState : function (
+addTarget : function (
+func, 
+event 
+)
+{
+},
+
+/**
+ * @method setTitleLabelSize
+ * @param {size_object} arg0
+ */
+setTitleLabelSize : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setBackgroundViewForState
+ * @param {ca.CAControl::State} arg0
+ * @param {ca.CAView} arg1
+ */
+setBackgroundViewForState : function (
+state, 
+caview 
 )
 {
 },
@@ -4989,11 +4893,21 @@ dsize
 },
 
 /**
- * @method setControlState
- * @param {ca.CAControl::State} arg0
+ * @method setTitleFontSize
+ * @param {float} arg0
  */
-setControlState : function (
-state 
+setTitleFontSize : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTitleFontName
+ * @param {String} arg0
+ */
+setTitleFontName : function (
+str 
 )
 {
 },
@@ -5011,9 +4925,59 @@ caimage
 },
 
 /**
- * @method onEnterTransitionDidFinish
+ * @method setTitleColorForState
+ * @param {ca.CAControl::State} arg0
+ * @param {ca._Color4B} arg1
  */
-onEnterTransitionDidFinish : function (
+setTitleColorForState : function (
+state, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method setImageColorForState
+ * @param {ca.CAControl::State} arg0
+ * @param {ca._Color4B} arg1
+ */
+setImageColorForState : function (
+state, 
+_color4b 
+)
+{
+},
+
+/**
+ * @method setTitleForState
+ * @param {ca.CAControl::State} arg0
+ * @param {String} arg1
+ */
+setTitleForState : function (
+state, 
+str 
+)
+{
+},
+
+/**
+ * @method getImageForState
+ * @param {ca.CAControl::State} arg0
+ * @return {ca.CAImage}
+ */
+getImageForState : function (
+state 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setTitleTextAlignment
+ * @param {ca.CATextAlignment} arg0
+ */
+setTitleTextAlignment : function (
+catextalignment 
 )
 {
 },
@@ -5028,6 +4992,16 @@ state
 )
 {
     return ;
+},
+
+/**
+ * @method setTitleOffset
+ * @param {size_object} arg0
+ */
+setTitleOffset : function (
+dsize 
+)
+{
 },
 
 /**
@@ -5113,6 +5087,16 @@ float
 },
 
 /**
+ * @method setImageColor
+ * @param {ca._Color4B} arg0
+ */
+setImageColor : function (
+_color4b 
+)
+{
+},
+
+/**
  * @method setSegmentItemBackgroundImage
  * @param {ca.CAImage} arg0
  */
@@ -5123,11 +5107,13 @@ caimage
 },
 
 /**
- * @method setTitleColor
- * @param {ca._Color4B} arg0
+ * @method setImageSizeAtIndex
+ * @param {size_object} arg0
+ * @param {int} arg1
  */
-setTitleColor : function (
-_color4b 
+setImageSizeAtIndex : function (
+dsize, 
+int 
 )
 {
 },
@@ -5157,13 +5143,13 @@ state
 },
 
 /**
- * @method setImageColor
- * @param {ca._Color4B} arg0
+ * @method init
+ * @return {bool}
  */
-setImageColor : function (
-_color4b 
+init : function (
 )
 {
+    return false;
 },
 
 /**
@@ -5197,23 +5183,23 @@ getNumberOfSegments : function (
 },
 
 /**
- * @method init
- * @return {bool}
+ * @method setTitleForSegmentAtIndex
+ * @param {String} arg0
+ * @param {int} arg1
  */
-init : function (
+setTitleForSegmentAtIndex : function (
+str, 
+int 
 )
 {
-    return false;
 },
 
 /**
- * @method setImageSizeAtIndex
- * @param {size_object} arg0
- * @param {int} arg1
+ * @method setTitleColor
+ * @param {ca._Color4B} arg0
  */
-setImageSizeAtIndex : function (
-dsize, 
-int 
+setTitleColor : function (
+_color4b 
 )
 {
 },
@@ -5228,18 +5214,6 @@ int
 )
 {
     return false;
-},
-
-/**
- * @method setTitleForSegmentAtIndex
- * @param {String} arg0
- * @param {int} arg1
- */
-setTitleForSegmentAtIndex : function (
-str, 
-int 
-)
-{
 },
 
 /**
@@ -8877,16 +8851,6 @@ getClearStencil : function (
 },
 
 /**
- * @method setClearStencil
- * @param {float} arg0
- */
-setClearStencil : function (
-float 
-)
-{
-},
-
-/**
  * @method saveToFile
  * @param {char} arg0
  * @return {bool}
@@ -8899,13 +8863,13 @@ char
 },
 
 /**
- * @method getClearColor
- * @return {ca._Color4F}
+ * @method setClearStencil
+ * @param {float} arg0
  */
-getClearColor : function (
+setClearStencil : function (
+float 
 )
 {
-    return ca._Color4F;
 },
 
 /**
@@ -8914,16 +8878,6 @@ getClearColor : function (
  */
 setClearFlags : function (
 int 
-)
-{
-},
-
-/**
- * @method listenToBackground
- * @param {ca.CAObject} arg0
- */
-listenToBackground : function (
-caobject 
 )
 {
 },
@@ -8977,13 +8931,13 @@ _color4f
 },
 
 /**
- * @method listenToForeground
- * @param {ca.CAObject} arg0
+ * @method getClearColor
+ * @return {ca._Color4F}
  */
-listenToForeground : function (
-caobject 
+getClearColor : function (
 )
 {
+    return ca._Color4F;
 },
 
 /**
@@ -9324,9 +9278,9 @@ bool
 
 /**
  * @method isOn
- * @return {bool}
- */
-isOn : function (
+* @return {bool|bool}
+*/
+isOn : function(
 )
 {
     return false;
@@ -9583,11 +9537,13 @@ layoutSubViews : function (
 },
 
 /**
- * @method onExitTransitionDidStart
+ * @method getMaxTrackTintImage
+ * @return {ca.CAImage}
  */
-onExitTransitionDidStart : function (
+getMaxTrackTintImage : function (
 )
 {
+    return ca.CAImage;
 },
 
 /**
@@ -9651,13 +9607,11 @@ getValue : function (
 },
 
 /**
- * @method getMaxTrackTintImage
- * @return {ca.CAImage}
+ * @method onExitTransitionDidStart
  */
-getMaxTrackTintImage : function (
+onExitTransitionDidStart : function (
 )
 {
-    return ca.CAImage;
 },
 
 /**
@@ -9746,14 +9700,6 @@ ca.CAPageControl = {
  */
 setDefersCurrentPageDisplay : function (
 bool 
-)
-{
-},
-
-/**
- * @method onEnter
- */
-onEnter : function (
 )
 {
 },
@@ -9961,14 +9907,6 @@ getCurrentPage : function (
 },
 
 /**
- * @method onExit
- */
-onExit : function (
-)
-{
-},
-
-/**
  * @method getCurrentPageIndicatorTintColor
  * @return {ca._Color4B}
  */
@@ -10059,14 +9997,6 @@ CAPageControl : function (
  * @class CAStepper
  */
 ca.CAStepper = {
-
-/**
- * @method onEnter
- */
-onEnter : function (
-)
-{
-},
 
 /**
  * @method setContinuous
@@ -10255,6 +10185,14 @@ bool
 },
 
 /**
+ * @method onExitTransitionDidStart
+ */
+onExitTransitionDidStart : function (
+)
+{
+},
+
+/**
  * @method getDividerColor
  * @return {ca._Color4B}
  */
@@ -10270,14 +10208,6 @@ getDividerColor : function (
  */
 setTouchEffect : function (
 bool 
-)
-{
-},
-
-/**
- * @method onExit
- */
-onExit : function (
 )
 {
 },
@@ -10332,6 +10262,14 @@ getTouchEffect : function (
 )
 {
     return false;
+},
+
+/**
+ * @method onEnterTransitionDidFinish
+ */
+onEnterTransitionDidFinish : function (
+)
+{
 },
 
 /**

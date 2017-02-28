@@ -60,19 +60,19 @@ var CollectionViewTest = ca.CAViewController.extend({
     scrollViewHeaderBeginRefreshing: function(view)
     {
         //CAScheduler.schedule(schedule_selector(CollectionViewTest.refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.refreshData1,0.01);
+        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this.refreshData1,this,0.01);
     },
     scrollViewFooterBeginRefreshing: function( view)
     {
         //CAScheduler.schedule(schedule_selector(CollectionViewTest.refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.refreshData2,0.01);
+        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this.refreshData2,this,0.01);
     },
     collectionViewDidSelectCellAtIndexPath: function(collectionView, section, row, item)
     {
         var cell = collectionView.cellForRowAtIndexPath(section, row, item);
         cell.getContentView().setRotation(-360);
         cell.getContentView().setScale(0.5);
-        ca.CAViewAnimation.beginAnimations("", null);
+        ca.CAViewAnimation.beginAnimations("");
         cell.getContentView().setRotation(0);
         cell.getContentView().setScale(1.0);
         ca.CAViewAnimation.commitAnimations();

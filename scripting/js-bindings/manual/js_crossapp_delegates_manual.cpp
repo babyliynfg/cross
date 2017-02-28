@@ -291,32 +291,32 @@ static bool js_crossapp_CATextView_setDelegate(JSContext *cx, uint32_t argc, jsv
 };
 
 //JS_MediaDelegate*********
-class JSB_MediaDelegate: public CAObject, public CAMediaDelegate{
-    
-public:
-    JSB_MediaDelegate()
-    {
-        _JSDelegate = nullptr;
-    }
-    ~JSB_MediaDelegate()
-    {
-        _JSDelegate = nullptr;
-    }
-    
-    void setJSDelegate(JS::HandleObject pJSDelegate)
-    {
-        _JSDelegate = pJSDelegate;
-    }
-    virtual void getSelectedImage(CAImage *image){
-        js_proxy_t * p = jsb_get_native_proxy(image);
-        if (!p) return;
-        
-        jsval arg = OBJECT_TO_JSVAL(p->obj);
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "getSelectedImage", 1, &arg);
-    }
-private:
-    JS::Heap<JSObject*> _JSDelegate;
-};
+//class JSB_MediaDelegate: public CAObject, public CAMediaDelegate{
+//    
+//public:
+//    JSB_MediaDelegate()
+//    {
+//        _JSDelegate = nullptr;
+//    }
+//    ~JSB_MediaDelegate()
+//    {
+//        _JSDelegate = nullptr;
+//    }
+//    
+//    void setJSDelegate(JS::HandleObject pJSDelegate)
+//    {
+//        _JSDelegate = pJSDelegate;
+//    }
+//    virtual void getSelectedImage(CAImage *image){
+//        js_proxy_t * p = jsb_get_native_proxy(image);
+//        if (!p) return;
+//        
+//        jsval arg = OBJECT_TO_JSVAL(p->obj);
+//        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "getSelectedImage", 1, &arg);
+//    }
+//private:
+//    JS::Heap<JSObject*> _JSDelegate;
+//};
 
 
 

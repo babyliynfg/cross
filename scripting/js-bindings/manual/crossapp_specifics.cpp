@@ -1655,47 +1655,47 @@ bool js_crossapp_CAViewAnimation_setAnimationWillStartSelector_2(JSContext *cx, 
 }
 
 
-bool js_crossapp_CAViewAnimation_setAnimationDidStopSelector(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 2) {
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsval(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector_0 : Error processing arguments");
-        
-//        JSControlCallback* callback = new JSControlCallback();
-        
-//        CrossApp::CAViewAnimation::setAnimationDidStopSelector(callback, callback->getViewAnimation0(jsobj, jsval));****
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector_0 : wrong number of arguments");
-    return false;
-}
+//bool js_crossapp_CAViewAnimation_setAnimationDidStopSelector(JSContext *cx, uint32_t argc, jsval *vp)
+//{
+//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+//    bool ok = true;
+//    if (argc == 2) {
+//        JS::RootedValue jsobj(cx, args.get(0));
+//        
+//        JS::RootedValue jsval(cx, args.get(1));
+//        
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector_0 : Error processing arguments");
+//        
+////        JSControlCallback* callback = new JSControlCallback();
+//        
+////        CrossApp::CAViewAnimation::setAnimationDidStopSelector(callback, callback->getViewAnimation0(jsobj, jsval));****
+//        args.rval().setUndefined();
+//        return true;
+//    }
+//    JS_ReportError(cx, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector_0 : wrong number of arguments");
+//    return false;
+//}
 
-bool js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 2) {
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsval(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2 : Error processing arguments");
-        
-//        JSControlCallback* callback = new JSControlCallback();
-        
-//        CrossApp::CAViewAnimation::setAnimationDidStopSelector(callback, callback->getViewAnimation2(jsobj, jsval));****
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2 : wrong number of arguments");
-    return false;
-}
+//bool js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2(JSContext *cx, uint32_t argc, jsval *vp)
+//{
+//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+//    bool ok = true;
+//    if (argc == 2) {
+//        JS::RootedValue jsobj(cx, args.get(0));
+//        
+//        JS::RootedValue jsval(cx, args.get(1));
+//        
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2 : Error processing arguments");
+//        
+////        JSControlCallback* callback = new JSControlCallback();
+//        
+////        CrossApp::CAViewAnimation::setAnimationDidStopSelector(callback, callback->getViewAnimation2(jsobj, jsval));****
+//        args.rval().setUndefined();
+//        return true;
+//    }
+//    JS_ReportError(cx, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2 : wrong number of arguments");
+//    return false;
+//}
 
 bool js_crossapp_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -6259,8 +6259,8 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj = tmpVal.toObjectOrNull();
 //    JS_DefineFunction(cx, tmpObj, "setAnimationWillStartSelector", js_crossapp_CAViewAnimation_setAnimationWillStartSelector, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "setAnimationWillStartSelector_2", js_crossapp_CAViewAnimation_setAnimationWillStartSelector_2, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "setAnimationDidStopSelector", js_crossapp_CAViewAnimation_setAnimationDidStopSelector, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "setAnimationDidStopSelector_2", js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setAnimationDidStopSelector", js_crossapp_CAViewAnimation_setAnimationDidStopSelector, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setAnimationDidStopSelector_2", js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
 //
 //    JS_DefineFunction(cx, ccObj, "glEnableVertexAttribs", js_crossapp_ccGLEnableVertexAttribs, 1, JSPROP_READONLY | JSPROP_PERMANENT);

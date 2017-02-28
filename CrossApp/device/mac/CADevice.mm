@@ -11,7 +11,7 @@
 #import <AddressBook/AddressBook.h>
 #import "Reachability.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
-#import <MediaPlayer/MediaPlayer.h>
+//#import <MediaPlayer/MediaPlayer.h>
 #import <AppKit/AppKit.h>
 
 NS_CC_BEGIN

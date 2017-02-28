@@ -10,6 +10,8 @@ var ImageViewTest = ca.CAViewController.extend({
         this.initImageView();
     },
     initImageView:function(){
+        log("ImageViewText-->imageViewNum:"+this.imageViewNum);
+
         this.getView().removeAllSubviews();
 
         if (this.imageViewNum == 0)

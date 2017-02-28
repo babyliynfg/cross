@@ -142,14 +142,15 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
 
                 var ImageViewRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
                 // ImageViewRightBtn.setTarget(this, this.RightBtnRightcallback);
+                var imgNum = this.Num;
                 ImageViewRightBtn.setCallbackFunction(function(){
-                  this.Num++;
-                  var ImageViewContrllerViewTest =  new ImageViewTest(this.Num);
+                  imgNum++;
+                  var ImageViewContrllerViewTest = new ImageViewTest(imgNum);
                   ImageViewContrllerViewTest.init();
                   ImageViewContrllerViewTest.setNavigationBarItem(ImageViewNavigationBar);
-                  if(this.Num >= ImageViewContrllerViewTest.maxNum)
+                  if(imgNum >= ImageViewContrllerViewTest.maxNum)
                   {
-                      this.Num = -1;
+                      imgNum = -1;
                   }
                   ca.RootWindow.getRootNavigationController().replaceViewController(ImageViewContrllerViewTest, false);
                 });
@@ -174,22 +175,23 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             }
             case 5:
             {
-                //showActivityIndicatorNavigationBar = 0;
-                //ActivityIndicatorNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
-                //
-                //CABarButtonItem* ActivityIndicatorRightBtn = CABarButtonItem.create("", CAImage.create("source_material/btn_right_white.png"), null);
-                //ActivityIndicatorRightBtn.setTarget(this, CAControl_selector(CDUIShowAutoCollectionView.RightBtnRightcallback));
-                //ActivityIndicatorNavigationBar.addRightButtonItem(ActivityIndicatorRightBtn);
-                //
-                //ActivityIndicatorViewTest* ViewContrllerIndicatorViewTest = new ActivityIndicatorViewTest();
-                //ViewContrllerIndicatorViewTest.init();
-                //ViewContrllerIndicatorViewTest.setNavigationBarItem(ActivityIndicatorNavigationBar);
-                //ViewContrllerIndicatorViewTest.autorelease();
-                //ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerIndicatorViewTest, true);
                 var ImageViewNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
 
                 var ImageViewRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
-                ImageViewRightBtn.setTarget(this, this.RightBtnRightcallback);
+                // ImageViewRightBtn.setTarget(this, this.RightBtnRightcallback);
+                var indicatorViewNum = this.Num;
+                ImageViewRightBtn.setCallbackFunction(function(){
+                    indicatorViewNum++;
+                    var ActivityIndicatorContrllerViewTest = new ActivityIndicatorViewTest(indicatorViewNum);
+                    ActivityIndicatorContrllerViewTest.init();
+                    ActivityIndicatorContrllerViewTest.setNavigationBarItem(ImageViewNavigationBar);
+                    if(indicatorViewNum >= ActivityIndicatorContrllerViewTest.maxNum)
+                    {
+                        indicatorViewNum = -1;
+                    }
+                    ca.RootWindow.getRootNavigationController().replaceViewController(ActivityIndicatorContrllerViewTest, false);
+                });
+
                 ImageViewNavigationBar.addRightButtonItem(ImageViewRightBtn);
 
                 var ViewContrllerImageViewTest = new ActivityIndicatorViewTest(0);
@@ -213,11 +215,21 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             }
             case 7:
             {
-                //showSliderNavigationBar = 0;
                 var SliderNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
-
                 var  SliderRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
-                SliderRightBtn.setTarget(this, this.RightBtnRightcallback);
+                var sliderNum = this.Num;
+                SliderRightBtn.setCallbackFunction(function()
+                {
+                  sliderNum++;
+                  var SliderTestContrllerViewTest = new SliderTest(sliderNum);
+                  SliderTestContrllerViewTest.init();
+                  SliderTestContrllerViewTest.setNavigationBarItem(SliderNavigationBar);
+                  if(sliderNum >= SliderTestContrllerViewTest.maxNum)
+                  {
+                      sliderNum = -1;
+                  }
+                  ca.RootWindow.getRootNavigationController().replaceViewController(SliderTestContrllerViewTest, false);
+                });
                 SliderNavigationBar.addRightButtonItem(SliderRightBtn);
 
                 var ViewContrllerSliderTest = new SliderTest(0);
@@ -252,7 +264,20 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 var LabelNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
 
                 var LabelRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
-                LabelRightBtn.setTarget(this, this.RightBtnRightcallback);
+                // LabelRightBtn.setTarget(this, this.RightBtnRightcallback);
+                  var LabelNum = this.Num;
+                  LabelRightBtn.setCallbackFunction(function()
+                  {
+                    LabelNum++;
+                    var LabelTestContrllerViewTest = new LabelTest(LabelNum);
+                    LabelTestContrllerViewTest.init();
+                    LabelTestContrllerViewTest.setNavigationBarItem(LabelNavigationBar);
+                    if(LabelNum >= LabelTestContrllerViewTest.maxNum)
+                    {
+                        LabelNum = -1;
+                    }
+                    ca.RootWindow.getRootNavigationController().replaceViewController(LabelTestContrllerViewTest, false);
+                  });
                 LabelNavigationBar.addRightButtonItem(LabelRightBtn);
 
                 var ViewContrllerLabelTest = new LabelTest(0);
@@ -448,7 +473,18 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 var ViewAnimationNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
 
                 var ViewAnimationRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
-                ViewAnimationRightBtn.setTarget(this, this.RightBtnRightcallback);
+                var animationNum = this.Num;
+                ViewAnimationRightBtn.setCallbackFunction(function(){
+                  animationNum++;
+                  ViewAnimationContrllerTest = new ViewAnimationTest(animationNum);
+                  ViewAnimationContrllerTest.init();
+                  ViewAnimationContrllerTest.setNavigationBarItem(ViewAnimationNavigationBar);
+                  if(animationNum >= ViewAnimationContrllerTest.maxNum)
+                  {
+                      animationNum = -1;
+                  }
+                  ca.RootWindow.getRootNavigationController().replaceViewController(ViewAnimationContrllerTest, false);
+                });
                 ViewAnimationNavigationBar.addRightButtonItem(ViewAnimationRightBtn);
 
                 var ViewContrllerViewAnimationTest = new ViewAnimationTest(0);

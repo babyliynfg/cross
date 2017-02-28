@@ -8669,6 +8669,40 @@ bool js_crossapp_CAViewAnimation_areBeginAnimationsWithID(JSContext *cx, uint32_
     JS_ReportError(cx, "js_crossapp_CAViewAnimation_areBeginAnimationsWithID : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CAViewAnimation_setAnimationDidStopSelector(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector : Error processing arguments");
+        CrossApp::CAViewAnimation::setAnimationDidStopSelector(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAViewAnimation_setAnimationDidStopSelector : wrong number of arguments");
+    return false;
+}
 bool js_crossapp_CAViewAnimation_setAnimationDelay(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -8883,6 +8917,7 @@ void js_register_crossapp_CAViewAnimation(JSContext *cx, JS::HandleObject global
         JS_FN("setAnimationsEnabled", js_crossapp_CAViewAnimation_setAnimationsEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("beginAnimations", js_crossapp_CAViewAnimation_beginAnimations, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("areBeginAnimationsWithID", js_crossapp_CAViewAnimation_areBeginAnimationsWithID, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnimationDidStopSelector", js_crossapp_CAViewAnimation_setAnimationDidStopSelector, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimationDelay", js_crossapp_CAViewAnimation_setAnimationDelay, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimationWillStartSelector", js_crossapp_CAViewAnimation_setAnimationWillStartSelector, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("areAnimationsEnabled", js_crossapp_CAViewAnimation_areAnimationsEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -11987,28 +12022,24 @@ bool js_crossapp_CAButton_setImageSize(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAButton_setImageSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAButton_setTitleFontSize(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAButton_interruptTouchState(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleFontSize : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleFontSize : Error processing arguments");
-        cobj->setTitleFontSize(arg0);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_interruptTouchState : Invalid Native Object");
+    if (argc == 0) {
+        cobj->interruptTouchState();
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAButton_setTitleFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAButton_interruptTouchState : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAButton_setTitleForState(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAButton_getBackgroundViewForState(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -12016,19 +12047,26 @@ bool js_crossapp_CAButton_setTitleForState(JSContext *cx, uint32_t argc, jsval *
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleForState : Invalid Native Object");
-    if (argc == 2) {
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_getBackgroundViewForState : Invalid Native Object");
+    if (argc == 1) {
         CrossApp::CAControl::State arg0;
-        std::string arg1;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleForState : Error processing arguments");
-        cobj->setTitleForState(arg0, arg1);
-        args.rval().setUndefined();
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_getBackgroundViewForState : Error processing arguments");
+        CrossApp::CAView* ret = cobj->getBackgroundViewForState(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAButton_setTitleForState : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_crossapp_CAButton_getBackgroundViewForState : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAButton_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12073,7 +12111,7 @@ bool js_crossapp_CAButton_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAButton_addTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAButton_setTitleTextAlignment(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAButton_setTitleLabelSize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -12081,17 +12119,17 @@ bool js_crossapp_CAButton_setTitleTextAlignment(JSContext *cx, uint32_t argc, js
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleTextAlignment : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleLabelSize : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CATextAlignment arg0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleTextAlignment : Error processing arguments");
-        cobj->setTitleTextAlignment(arg0);
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleLabelSize : Error processing arguments");
+        cobj->setTitleLabelSize(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAButton_setTitleTextAlignment : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAButton_setTitleLabelSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAButton_setBackgroundViewForState(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12123,228 +12161,6 @@ bool js_crossapp_CAButton_setBackgroundViewForState(JSContext *cx, uint32_t argc
     }
 
     JS_ReportError(cx, "js_crossapp_CAButton_setBackgroundViewForState : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAButton_init(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_init : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->init();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_init : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAButton_setImageColorForState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setImageColorForState : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CAControl::State arg0;
-        CrossApp::CAColor4B arg1;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        ok &= jsval_to_cacolor4b(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setImageColorForState : Error processing arguments");
-        cobj->setImageColorForState(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_setImageColorForState : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAButton_getImageForState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_getImageForState : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAControl::State arg0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_getImageForState : Error processing arguments");
-        CrossApp::CAImage* ret = cobj->getImageForState(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_getImageForState : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAButton_setTitleLabelSize(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleLabelSize : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DSize arg0;
-        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleLabelSize : Error processing arguments");
-        cobj->setTitleLabelSize(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_setTitleLabelSize : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAButton_setTitleFontName(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleFontName : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleFontName : Error processing arguments");
-        cobj->setTitleFontName(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_setTitleFontName : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAButton_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_onExitTransitionDidStart : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExitTransitionDidStart();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAButton_setTitleOffset(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleOffset : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DSize arg0;
-        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleOffset : Error processing arguments");
-        cobj->setTitleOffset(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_setTitleOffset : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAButton_setTitleColorForState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleColorForState : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CAControl::State arg0;
-        CrossApp::CAColor4B arg1;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        ok &= jsval_to_cacolor4b(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleColorForState : Error processing arguments");
-        cobj->setTitleColorForState(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_setTitleColorForState : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAButton_getBackgroundViewForState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_getBackgroundViewForState : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAControl::State arg0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_getBackgroundViewForState : Error processing arguments");
-        CrossApp::CAView* ret = cobj->getBackgroundViewForState(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_getBackgroundViewForState : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAButton_interruptTouchState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_interruptTouchState : Invalid Native Object");
-    if (argc == 0) {
-        cobj->interruptTouchState();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAButton_interruptTouchState : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAButton_setTitleBold(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12389,7 +12205,7 @@ bool js_crossapp_CAButton_setImageOffset(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CAButton_setImageOffset : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAButton_setControlState(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAButton_setTitleFontSize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -12397,17 +12213,38 @@ bool js_crossapp_CAButton_setControlState(JSContext *cx, uint32_t argc, jsval *v
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setControlState : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleFontSize : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CAControl::State arg0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setControlState : Error processing arguments");
-        cobj->setControlState(arg0);
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleFontSize : Error processing arguments");
+        cobj->setTitleFontSize(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAButton_setControlState : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAButton_setTitleFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAButton_setTitleFontName(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleFontName : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleFontName : Error processing arguments");
+        cobj->setTitleFontName(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAButton_setTitleFontName : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAButton_setImageForState(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12441,21 +12278,124 @@ bool js_crossapp_CAButton_setImageForState(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CAButton_setImageForState : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAButton_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAButton_setTitleColorForState(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_onEnterTransitionDidFinish : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onEnterTransitionDidFinish();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleColorForState : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::CAControl::State arg0;
+        CrossApp::CAColor4B arg1;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cacolor4b(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleColorForState : Error processing arguments");
+        cobj->setTitleColorForState(arg0, arg1);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAButton_onEnterTransitionDidFinish : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAButton_setTitleColorForState : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CAButton_setImageColorForState(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setImageColorForState : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::CAControl::State arg0;
+        CrossApp::CAColor4B arg1;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_cacolor4b(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setImageColorForState : Error processing arguments");
+        cobj->setImageColorForState(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAButton_setImageColorForState : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CAButton_setTitleForState(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleForState : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::CAControl::State arg0;
+        std::string arg1;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleForState : Error processing arguments");
+        cobj->setTitleForState(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAButton_setTitleForState : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CAButton_getImageForState(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_getImageForState : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAControl::State arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_getImageForState : Error processing arguments");
+        CrossApp::CAImage* ret = cobj->getImageForState(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAButton_getImageForState : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAButton_setTitleTextAlignment(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleTextAlignment : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CATextAlignment arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleTextAlignment : Error processing arguments");
+        cobj->setTitleTextAlignment(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAButton_setTitleTextAlignment : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAButton_getTitleForState(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12479,6 +12419,27 @@ bool js_crossapp_CAButton_getTitleForState(JSContext *cx, uint32_t argc, jsval *
     }
 
     JS_ReportError(cx, "js_crossapp_CAButton_getTitleForState : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAButton_setTitleOffset(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleOffset : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleOffset : Error processing arguments");
+        cobj->setTitleOffset(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAButton_setTitleOffset : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAButton_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12648,27 +12609,23 @@ void js_register_crossapp_CAButton(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setImageSize", js_crossapp_CAButton_setImageSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleFontSize", js_crossapp_CAButton_setTitleFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleForState", js_crossapp_CAButton_setTitleForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("addTarget", js_crossapp_CAButton_addTarget, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleTextAlignment", js_crossapp_CAButton_setTitleTextAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBackgroundViewForState", js_crossapp_CAButton_setBackgroundViewForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_crossapp_CAButton_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setImageColorForState", js_crossapp_CAButton_setImageColorForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getImageForState", js_crossapp_CAButton_getImageForState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleLabelSize", js_crossapp_CAButton_setTitleLabelSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleFontName", js_crossapp_CAButton_setTitleFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExitTransitionDidStart", js_crossapp_CAButton_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleOffset", js_crossapp_CAButton_setTitleOffset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleColorForState", js_crossapp_CAButton_setTitleColorForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBackgroundViewForState", js_crossapp_CAButton_getBackgroundViewForState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("interruptTouchState", js_crossapp_CAButton_interruptTouchState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBackgroundViewForState", js_crossapp_CAButton_getBackgroundViewForState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addTarget", js_crossapp_CAButton_addTarget, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleLabelSize", js_crossapp_CAButton_setTitleLabelSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBackgroundViewForState", js_crossapp_CAButton_setBackgroundViewForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleBold", js_crossapp_CAButton_setTitleBold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageOffset", js_crossapp_CAButton_setImageOffset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setControlState", js_crossapp_CAButton_setControlState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleFontSize", js_crossapp_CAButton_setTitleFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleFontName", js_crossapp_CAButton_setTitleFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageForState", js_crossapp_CAButton_setImageForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onEnterTransitionDidFinish", js_crossapp_CAButton_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleColorForState", js_crossapp_CAButton_setTitleColorForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageColorForState", js_crossapp_CAButton_setImageColorForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleForState", js_crossapp_CAButton_setTitleForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getImageForState", js_crossapp_CAButton_getImageForState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleTextAlignment", js_crossapp_CAButton_setTitleTextAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleForState", js_crossapp_CAButton_getTitleForState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleOffset", js_crossapp_CAButton_setTitleOffset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -12731,6 +12688,27 @@ bool js_crossapp_CASegmentedControl_setTitleFontSize(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CASegmentedControl_setImageColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setImageColor : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAColor4B arg0;
+        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setImageColor : Error processing arguments");
+        cobj->setImageColor(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setImageColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CASegmentedControl_setSegmentItemBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -12760,7 +12738,7 @@ bool js_crossapp_CASegmentedControl_setSegmentItemBackgroundImage(JSContext *cx,
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_setSegmentItemBackgroundImage : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CASegmentedControl_setTitleColor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CASegmentedControl_setImageSizeAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -12768,17 +12746,19 @@ bool js_crossapp_CASegmentedControl_setTitleColor(JSContext *cx, uint32_t argc, 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setTitleColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setTitleColor : Error processing arguments");
-        cobj->setTitleColor(arg0);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setImageSizeAtIndex : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::DSize arg0;
+        int arg1 = 0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setImageSizeAtIndex : Error processing arguments");
+        cobj->setImageSizeAtIndex(arg0, arg1);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setImageSizeAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_crossapp_CASegmentedControl_setSelectedAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12835,25 +12815,23 @@ bool js_crossapp_CASegmentedControl_setImageForSegmentAtIndex(JSContext *cx, uin
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_setImageForSegmentAtIndex : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
-bool js_crossapp_CASegmentedControl_setImageColor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CASegmentedControl_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setImageColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setImageColor : Error processing arguments");
-        cobj->setImageColor(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_init : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->init();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setImageColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_init : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CASegmentedControl_getSelectedAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12915,26 +12893,7 @@ bool js_crossapp_CASegmentedControl_getNumberOfSegments(JSContext *cx, uint32_t 
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_getNumberOfSegments : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CASegmentedControl_init(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_init : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->init();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_init : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CASegmentedControl_setImageSizeAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -12942,19 +12901,40 @@ bool js_crossapp_CASegmentedControl_setImageSizeAtIndex(JSContext *cx, uint32_t 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setImageSizeAtIndex : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : Invalid Native Object");
     if (argc == 2) {
-        CrossApp::DSize arg0;
+        std::string arg0;
         int arg1 = 0;
-        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setImageSizeAtIndex : Error processing arguments");
-        cobj->setImageSizeAtIndex(arg0, arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : Error processing arguments");
+        cobj->setTitleForSegmentAtIndex(arg0, arg1);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setImageSizeAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CASegmentedControl_setTitleColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setTitleColor : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAColor4B arg0;
+        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setTitleColor : Error processing arguments");
+        cobj->setTitleColor(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CASegmentedControl_isEnabledForSegmentAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12978,29 +12958,6 @@ bool js_crossapp_CASegmentedControl_isEnabledForSegmentAtIndex(JSContext *cx, ui
     }
 
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_isEnabledForSegmentAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : Invalid Native Object");
-    if (argc == 2) {
-        std::string arg0;
-        int arg1 = 0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : Error processing arguments");
-        cobj->setTitleForSegmentAtIndex(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_crossapp_CASegmentedControl_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -13536,18 +13493,18 @@ void js_register_crossapp_CASegmentedControl(JSContext *cx, JS::HandleObject glo
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setTitleFontSize", js_crossapp_CASegmentedControl_setTitleFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageColor", js_crossapp_CASegmentedControl_setImageColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSegmentItemBackgroundImage", js_crossapp_CASegmentedControl_setSegmentItemBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleColor", js_crossapp_CASegmentedControl_setTitleColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageSizeAtIndex", js_crossapp_CASegmentedControl_setImageSizeAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSelectedAtIndex", js_crossapp_CASegmentedControl_setSelectedAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageForSegmentAtIndex", js_crossapp_CASegmentedControl_setImageForSegmentAtIndex, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setImageColor", js_crossapp_CASegmentedControl_setImageColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_crossapp_CASegmentedControl_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSelectedAtIndex", js_crossapp_CASegmentedControl_getSelectedAtIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleSelectedColor", js_crossapp_CASegmentedControl_setTitleSelectedColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfSegments", js_crossapp_CASegmentedControl_getNumberOfSegments, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_crossapp_CASegmentedControl_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setImageSizeAtIndex", js_crossapp_CASegmentedControl_setImageSizeAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isEnabledForSegmentAtIndex", js_crossapp_CASegmentedControl_isEnabledForSegmentAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleForSegmentAtIndex", js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleColor", js_crossapp_CASegmentedControl_setTitleColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isEnabledForSegmentAtIndex", js_crossapp_CASegmentedControl_isEnabledForSegmentAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundImage", js_crossapp_CASegmentedControl_setBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTarget", js_crossapp_CASegmentedControl_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleFontName", js_crossapp_CASegmentedControl_setTitleFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -22794,27 +22751,6 @@ bool js_crossapp_CARenderImage_getClearStencil(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CARenderImage_getClearStencil : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CARenderImage_setClearStencil(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CARenderImage* cobj = (CrossApp::CARenderImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARenderImage_setClearStencil : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARenderImage_setClearStencil : Error processing arguments");
-        cobj->setClearStencil(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CARenderImage_setClearStencil : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CARenderImage_saveToFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -22838,23 +22774,25 @@ bool js_crossapp_CARenderImage_saveToFile(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CARenderImage_saveToFile : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CARenderImage_getClearColor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CARenderImage_setClearStencil(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CARenderImage* cobj = (CrossApp::CARenderImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARenderImage_getClearColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4F& ret = cobj->getClearColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4f_to_jsval(cx, ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARenderImage_setClearStencil : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARenderImage_setClearStencil : Error processing arguments");
+        cobj->setClearStencil(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CARenderImage_getClearColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CARenderImage_setClearStencil : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CARenderImage_setClearFlags(JSContext *cx, uint32_t argc, jsval *vp)
@@ -22876,35 +22814,6 @@ bool js_crossapp_CARenderImage_setClearFlags(JSContext *cx, uint32_t argc, jsval
     }
 
     JS_ReportError(cx, "js_crossapp_CARenderImage_setClearFlags : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CARenderImage_listenToBackground(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CARenderImage* cobj = (CrossApp::CARenderImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARenderImage_listenToBackground : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAObject* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARenderImage_listenToBackground : Error processing arguments");
-        cobj->listenToBackground(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CARenderImage_listenToBackground : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CARenderImage_setImageView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -23033,33 +22942,23 @@ bool js_crossapp_CARenderImage_setClearColor(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_crossapp_CARenderImage_setClearColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CARenderImage_listenToForeground(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CARenderImage_getClearColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CARenderImage* cobj = (CrossApp::CARenderImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARenderImage_listenToForeground : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAObject* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARenderImage_listenToForeground : Error processing arguments");
-        cobj->listenToForeground(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARenderImage_getClearColor : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::CAColor4F& ret = cobj->getClearColor();
+        jsval jsret = JSVAL_NULL;
+        jsret = cacolor4f_to_jsval(cx, ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CARenderImage_listenToForeground : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CARenderImage_getClearColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CARenderImage_getClearFlags(JSContext *cx, uint32_t argc, jsval *vp)
@@ -23288,16 +23187,14 @@ void js_register_crossapp_CARenderImage(JSContext *cx, JS::HandleObject global) 
     static JSFunctionSpec funcs[] = {
         JS_FN("getImageView", js_crossapp_CARenderImage_getImageView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getClearStencil", js_crossapp_CARenderImage_getClearStencil, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setClearStencil", js_crossapp_CARenderImage_setClearStencil, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("saveToFile", js_crossapp_CARenderImage_saveToFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getClearColor", js_crossapp_CARenderImage_getClearColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setClearStencil", js_crossapp_CARenderImage_setClearStencil, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setClearFlags", js_crossapp_CARenderImage_setClearFlags, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("listenToBackground", js_crossapp_CARenderImage_listenToBackground, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageView", js_crossapp_CARenderImage_setImageView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithWidthAndHeight", js_crossapp_CARenderImage_initWithWidthAndHeight, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAutoDraw", js_crossapp_CARenderImage_setAutoDraw, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setClearColor", js_crossapp_CARenderImage_setClearColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("listenToForeground", js_crossapp_CARenderImage_listenToForeground, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getClearColor", js_crossapp_CARenderImage_getClearColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getClearFlags", js_crossapp_CARenderImage_getClearFlags, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAutoDraw", js_crossapp_CARenderImage_isAutoDraw, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setClearDepth", js_crossapp_CARenderImage_setClearDepth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -24029,21 +23926,36 @@ bool js_crossapp_CASwitch_setIsOn(JSContext *cx, uint32_t argc, jsval *vp)
 }
 bool js_crossapp_CASwitch_isOn(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CASwitch* cobj = (CrossApp::CASwitch *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASwitch_isOn : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isOn();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
+    bool ok = true;
+    CrossApp::CASwitch* cobj = nullptr;
 
-    JS_ReportError(cx, "js_crossapp_CASwitch_isOn : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (CrossApp::CASwitch *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASwitch_isOn : Invalid Native Object");
+    do {
+        if (argc == 0) {
+            bool ret = cobj->isOn();
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            bool ret = cobj->isOn();
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_crossapp_CASwitch_isOn : wrong number of arguments");
     return false;
 }
 bool js_crossapp_CASwitch_setOnImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -24703,21 +24615,30 @@ bool js_crossapp_CASlider_layoutSubViews(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CASlider_layoutSubViews : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CASlider_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CASlider_getMaxTrackTintImage(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASlider* cobj = (CrossApp::CASlider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASlider_onExitTransitionDidStart : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASlider_getMaxTrackTintImage : Invalid Native Object");
     if (argc == 0) {
-        cobj->onExitTransitionDidStart();
-        args.rval().setUndefined();
+        CrossApp::CAImage* ret = cobj->getMaxTrackTintImage();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CASlider_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CASlider_getMaxTrackTintImage : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CASlider_setThumbTintImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -24862,30 +24783,21 @@ bool js_crossapp_CASlider_getValue(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CASlider_getValue : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CASlider_getMaxTrackTintImage(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CASlider_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASlider* cobj = (CrossApp::CASlider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASlider_getMaxTrackTintImage : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASlider_onExitTransitionDidStart : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CAImage* ret = cobj->getMaxTrackTintImage();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+        cobj->onExitTransitionDidStart();
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CASlider_getMaxTrackTintImage : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CASlider_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CASlider_setMinTrackTintImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -25100,14 +25012,14 @@ void js_register_crossapp_CASlider(JSContext *cx, JS::HandleObject global) {
         JS_FN("initWithFrame", js_crossapp_CASlider_initWithFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTarget", js_crossapp_CASlider_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("layoutSubViews", js_crossapp_CASlider_layoutSubViews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExitTransitionDidStart", js_crossapp_CASlider_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getMaxTrackTintImage", js_crossapp_CASlider_getMaxTrackTintImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setThumbTintImage", js_crossapp_CASlider_setThumbTintImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMinTrackTintImage", js_crossapp_CASlider_getMinTrackTintImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTrackHeight", js_crossapp_CASlider_setTrackHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getThumbTintImage", js_crossapp_CASlider_getThumbTintImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxValue", js_crossapp_CASlider_setMaxValue, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getValue", js_crossapp_CASlider_getValue, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getMaxTrackTintImage", js_crossapp_CASlider_getMaxTrackTintImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onExitTransitionDidStart", js_crossapp_CASlider_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMinTrackTintImage", js_crossapp_CASlider_setMinTrackTintImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CASlider_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -25170,23 +25082,6 @@ bool js_crossapp_CAPageControl_setDefersCurrentPageDisplay(JSContext *cx, uint32
     }
 
     JS_ReportError(cx, "js_crossapp_CAPageControl_setDefersCurrentPageDisplay : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAPageControl_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPageControl* cobj = (CrossApp::CAPageControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageControl_onEnter : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onEnter();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPageControl_onEnter : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAPageControl_getPageIndicatorImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -25629,23 +25524,6 @@ bool js_crossapp_CAPageControl_getCurrentPage(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_crossapp_CAPageControl_getCurrentPage : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAPageControl_onExit(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPageControl* cobj = (CrossApp::CAPageControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageControl_onExit : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExit();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPageControl_onExit : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAPageControl_getCurrentPageIndicatorTintColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -25874,7 +25752,6 @@ void js_register_crossapp_CAPageControl(JSContext *cx, JS::HandleObject global) 
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setDefersCurrentPageDisplay", js_crossapp_CAPageControl_setDefersCurrentPageDisplay, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onEnter", js_crossapp_CAPageControl_onEnter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPageIndicatorImage", js_crossapp_CAPageControl_getPageIndicatorImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithCenter", js_crossapp_CAPageControl_initWithCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isSinglePage", js_crossapp_CAPageControl_isSinglePage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -25895,7 +25772,6 @@ void js_register_crossapp_CAPageControl(JSContext *cx, JS::HandleObject global) 
         JS_FN("setCurrentPage", js_crossapp_CAPageControl_setCurrentPage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("updateCurrentPageDisplay", js_crossapp_CAPageControl_updateCurrentPageDisplay, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCurrentPage", js_crossapp_CAPageControl_getCurrentPage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExit", js_crossapp_CAPageControl_onExit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCurrentPageIndicatorTintColor", js_crossapp_CAPageControl_getCurrentPageIndicatorTintColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCurrIndicatorImage", js_crossapp_CAPageControl_setCurrIndicatorImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCurrIndicatorImage", js_crossapp_CAPageControl_getCurrIndicatorImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -25940,23 +25816,6 @@ void js_register_crossapp_CAPageControl(JSContext *cx, JS::HandleObject global) 
 JSClass  *jsb_CrossApp_CAStepper_class;
 JSObject *jsb_CrossApp_CAStepper_prototype;
 
-bool js_crossapp_CAStepper_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAStepper* cobj = (CrossApp::CAStepper *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAStepper_onEnter : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onEnter();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAStepper_onEnter : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAStepper_setContinuous(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -26373,6 +26232,23 @@ bool js_crossapp_CAStepper_setAutoRepeat(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CAStepper_setAutoRepeat : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAStepper_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAStepper* cobj = (CrossApp::CAStepper *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAStepper_onExitTransitionDidStart : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onExitTransitionDidStart();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAStepper_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CAStepper_getDividerColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -26411,23 +26287,6 @@ bool js_crossapp_CAStepper_setTouchEffect(JSContext *cx, uint32_t argc, jsval *v
     }
 
     JS_ReportError(cx, "js_crossapp_CAStepper_setTouchEffect : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAStepper_onExit(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAStepper* cobj = (CrossApp::CAStepper *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAStepper_onExit : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExit();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAStepper_onExit : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAStepper_setIncrementImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -26537,6 +26396,23 @@ bool js_crossapp_CAStepper_getTouchEffect(JSContext *cx, uint32_t argc, jsval *v
     }
 
     JS_ReportError(cx, "js_crossapp_CAStepper_getTouchEffect : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAStepper_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAStepper* cobj = (CrossApp::CAStepper *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAStepper_onEnterTransitionDidFinish : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onEnterTransitionDidFinish();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAStepper_onEnterTransitionDidFinish : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAStepper_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -26767,7 +26643,6 @@ void js_register_crossapp_CAStepper(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("onEnter", js_crossapp_CAStepper_onEnter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setContinuous", js_crossapp_CAStepper_setContinuous, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWraps", js_crossapp_CAStepper_setWraps, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setValue", js_crossapp_CAStepper_setValue, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -26786,14 +26661,15 @@ void js_register_crossapp_CAStepper(JSContext *cx, JS::HandleObject global) {
         JS_FN("setBackgroundImage", js_crossapp_CAStepper_setBackgroundImage, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTarget", js_crossapp_CAStepper_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAutoRepeat", js_crossapp_CAStepper_setAutoRepeat, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onExitTransitionDidStart", js_crossapp_CAStepper_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDividerColor", js_crossapp_CAStepper_getDividerColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchEffect", js_crossapp_CAStepper_setTouchEffect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExit", js_crossapp_CAStepper_onExit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setIncrementImage", js_crossapp_CAStepper_setIncrementImage, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStepValue", js_crossapp_CAStepper_getStepValue, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxValue", js_crossapp_CAStepper_setMaxValue, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getValue", js_crossapp_CAStepper_getValue, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTouchEffect", js_crossapp_CAStepper_getTouchEffect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onEnterTransitionDidFinish", js_crossapp_CAStepper_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

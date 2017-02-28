@@ -9,7 +9,7 @@ var SwitchTest = ca.CAViewController.extend({
         var customSwitch1 = ca.CASwitch.createWithLayout(DLayout(DHorizontalLayout_L_W(150, 100), DVerticalLayout_T_H(350, 20)));
         customSwitch1.setTag(100);
         customSwitch1.setIsOn(true, false);
-        customSwitch1.addTarget(this, this.switchStateChange);
+        customSwitch1.setTarget(this.switchStateChange);
         this.getView().addSubview(customSwitch1);
 
         var customSwitch2 = ca.CASwitch.createWithLayout(DLayout(DHorizontalLayout_R_W(150, 100), DVerticalLayout_T_H(350, 20)));
@@ -17,12 +17,11 @@ var SwitchTest = ca.CAViewController.extend({
         customSwitch2.setIsOn(true, false);
         customSwitch2.setOnImage(ca.CAImage.create("image/Switch_on.png"));
         customSwitch2.setOffImage(ca.CAImage.create("image/Switch_off.png"));
-        customSwitch2.addTarget(this, this.switchStateChange);
+        customSwitch2.setTarget(this.switchStateChange);
         this.getView().addSubview(customSwitch2);
     },
-    switchStateChange: function (btn, point) {
-
-        if (!btn.isOn())
+    switchStateChange: function (bIsOn) {
+        if (!bIsOn)
         {
             log("switchStateChange false");
         }

@@ -45,7 +45,7 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
             var cell = collectionView.cellForRowAtIndexPath(section, item);
             cell.getContentView().setRotation(-360);
             cell.getContentView().setScale(0.5);
-            ca.CAViewAnimation.beginAnimations("", NULL);
+            ca.CAViewAnimation.beginAnimations("");
             cell.getContentView().setRotation(0);
             cell.getContentView().setScale(1.0);
             ca.CAViewAnimation.commitAnimations();

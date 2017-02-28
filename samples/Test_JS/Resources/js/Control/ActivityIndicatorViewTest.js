@@ -7,10 +7,8 @@ var ActivityIndicatorViewTest = ca.CAViewController.extend({
     maxNum:4,
     ctor: function (num) {
         this._super();
-        if(num)
-        {
-            this.ActivityIndicatorNum = num;
-        }
+        log('ActivityIndicatorViewTest-->num:'+num);
+        this.ActivityIndicatorNum = num;
         if (this.ActivityIndicatorNum == 0)
         {
             var idc1 = ca.CAActivityIndicatorView.createWithLayout(DLayoutFill);
