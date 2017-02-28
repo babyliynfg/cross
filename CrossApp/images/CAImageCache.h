@@ -7,7 +7,7 @@
 #include "basics/CASTLContainer.h"
 #include "CAImage.h"
 #include <string>
-
+#include <functional>
 
 NS_CC_BEGIN
 

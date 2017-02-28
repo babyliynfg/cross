@@ -15,7 +15,9 @@
 #include "basics/CAScheduler.h"
 #include "dispatcher/CAIMEDelegate.h"
 #include "view/CAScrollView.h"
-#include "shaders/CAShaderCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCRenderState.h"
 #include "support/ccUTF8.h"
 #include "support/CAThemeManager.h"
 #include "support/ccUtils.h"
@@ -47,12 +49,7 @@ public:
 
 	bool init()
 	{
-		if (!CAView::init())
-		{
-			return false;
-		}
 
-		this->setColor(CAColor_clear);
 		m_pContainerView = CAScrollView::createWithFrame(DRectZero);
 		m_pContainerView->setShowsHorizontalScrollIndicator(false);
 		m_pContainerView->setHorizontalScrollEnabled(false);
@@ -62,7 +59,6 @@ public:
 		this->addSubview(m_pContainerView);
 
 		m_pImageView = new CAImageView();
-		m_pImageView->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
 		m_pContainerView->addSubview(m_pImageView);
 		return true;
 	}
@@ -259,7 +255,7 @@ public:
 			m_pCursorMark->setVisible(true);
 
 			m_pCursorMark->setAlpha(0);
-			CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+			CAViewAnimation::beginAnimations(m_s__StrID);
 			CAViewAnimation::setAnimationDuration(0.5f);
 			CAViewAnimation::setAnimationRepeatAutoreverses(true);
 			CAViewAnimation::setAnimationRepeatCount(1048576);
@@ -322,8 +318,8 @@ public:
 			m_pCATextView->getFontSize(),
 			width,
 			0,
-			CATextAlignmentLeft,
-			CAVerticalTextAlignmentTop,
+			CATextAlignment::Left,
+			CAVerticalTextAlignment::Top,
 			true,
 			0,
 			false,
@@ -666,24 +662,19 @@ void CATextView::showTextView()
 
 void CATextView::hideNativeTextView()
 {
-	CAScheduler::unschedule(schedule_selector(CATextView::update), this);
+	CAScheduler::getScheduler()->unschedule(schedule_selector(CATextView::update), this);
 }
 
 void CATextView::showNativeTextView()
 {
     this->update(0);
-	CAScheduler::schedule(schedule_selector(CATextView::update), this, 1 / 60.0f);
+	CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::update), this, 0);
 }
 
 void CATextView::delayShowImage()
 {
-    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
-    {
-        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0);
-		CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextView::showImage));
-        CAViewAnimation::commitAnimations();
-    }
+	this->cancelPreviousPerformRequests(callfunc_selector(CATextView::showImage));
+	this->performSelector(callfunc_selector(CATextView::showImage), 0.1);
 }
 
 void CATextView::showImage()
@@ -737,7 +728,7 @@ bool CATextView::init()
 		return false;
 	}
 	this->setColor(CAColor_clear);
-	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextView");
+	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
@@ -865,7 +856,7 @@ void CATextView::setBackgroundImage(CAImage* image)
     m_pBackgroundView->setImage(image);
 }
 
-void CATextView::setAlign(const TextViewAlign& var)
+void CATextView::setAlign(CATextView::Align var)
 {
     m_eAlign = var;
     

@@ -1,7 +1,6 @@
 #include <string>
 #include "CAApplication.h"
 #include "basics/CAConfiguration.h"
-#include "basics/CAConsole.h"
 #include "basics/CAAutoreleasePool.h"
 #include "CAFPSImages.h"
 #include "basics/CAPointExtension.h"
@@ -88,9 +87,7 @@ bool CAApplication::init(void)
     m_defaultFBO = nullptr;
     
     CAPoolManager::getInstance()->push();
-    
-    m_pConsole = new (std::nothrow) CAConsole;
-    
+
     // scheduler
     m_pScheduler = new (std::nothrow) CAScheduler();
     // action manager
@@ -114,7 +111,13 @@ bool CAApplication::init(void)
     m_pAccelerometer = new CAAccelerometer();
     
     m_pThemeManager = nullptr;
-    this->setThemeManager(CAThemeManager::create("source_material"));
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	this->setThemeManager(CAThemeManager::create("../../Resources/source_material"));
+#else
+	this->setThemeManager(CAThemeManager::create("source_material"));
+#endif
+    
     
     return true;
 }
@@ -128,10 +131,11 @@ CAApplication::~CAApplication(void)
     CC_SAFE_RELEASE(m_pTouchDispatcher);
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
     CC_SAFE_RELEASE(m_pThemeManager);
-    CC_SAFE_RELEASE(m_pScheduler);
-    CC_SAFE_RELEASE(m_pActionManager);
-    CC_SAFE_DELETE(m_pAccelerometer);
-    CC_SAFE_DELETE(m_defaultFBO);
+	CC_SAFE_DELETE(m_pAccelerometer);
+	CC_SAFE_DELETE(m_defaultFBO);
+	CC_SAFE_RELEASE_NULL(m_pActionManager);
+    CC_SAFE_RELEASE_NULL(m_pScheduler);
+    
     
     // delete fps string
     delete []m_pszFPS;

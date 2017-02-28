@@ -377,7 +377,7 @@ bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::strin
 	{
 		if (!DeleteFile(_wNew.c_str()))
 		{
-			CCLOGERROR("Fail to delete file %s !Error code is 0x%x", newfullpath.c_str(), GetLastError());
+			CCLOG("error!!!Fail to delete file %s !Error code is 0x%x", newfullpath.c_str(), GetLastError());
 		}
 	}
 
@@ -387,7 +387,7 @@ bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::strin
 	}
 	else
 	{
-		CCLOGERROR("Fail to rename file %s to %s !Error code is 0x%x", oldfullpath.c_str(), newfullpath.c_str(), GetLastError());
+		CCLOG("error!!!Fail to rename file %s to %s !Error code is 0x%x", oldfullpath.c_str(), newfullpath.c_str(), GetLastError());
 		return false;
 	}
 }
@@ -453,7 +453,7 @@ bool FileUtilsWin32::createDirectory(const std::string& dirPath)
 				BOOL ret = CreateDirectory(subpath.c_str(), NULL);
 				if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
 				{
-					CCLOGERROR("Fail create directory %s !Error code is 0x%x", utf8Path.c_str(), GetLastError());
+					CCLOG("error!!!Fail create directory %s !Error code is 0x%x", utf8Path.c_str(), GetLastError());
 					return false;
 				}
 			}
@@ -473,7 +473,7 @@ bool FileUtilsWin32::removeFile(const std::string &filepath)
 	}
 	else
 	{
-		CCLOGERROR("Fail remove file %s !Error code is 0x%x", filepath.c_str(), GetLastError());
+		CCLOG("error!!!Fail remove file %s !Error code is 0x%x", filepath.c_str(), GetLastError());
 		return false;
 	}
 }

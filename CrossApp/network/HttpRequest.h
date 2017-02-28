@@ -4,7 +4,7 @@
 #define __HTTP_REQUEST_H__
 
 #include "basics/CAObject.h"
-
+#include <functional>
 NS_CC_BEGIN
 
 class CAHttpClient;

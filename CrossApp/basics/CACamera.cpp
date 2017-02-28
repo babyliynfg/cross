@@ -363,15 +363,18 @@ void CACamera::onExit()
 
 void CACamera::setWindow(CAWindow* window)
 {
-    _window = window;
-    auto& cameras = _window->m_vCameras;
-    auto it = std::find(cameras.begin(), cameras.end(), this);
-    if (it == cameras.end())
-    {
-        _window->m_vCameras.push_back(this);
-        //notify scene that the CACamera order is dirty
-        _window->setCameraOrderDirty();
-    }
+	_window = window;
+	if (window)
+	{
+		auto& cameras = _window->m_vCameras;
+		auto it = std::find(cameras.begin(), cameras.end(), this);
+		if (it == cameras.end())
+		{
+			_window->m_vCameras.push_back(this);
+			//notify scene that the CACamera order is dirty
+			_window->setCameraOrderDirty();
+		}
+	}
 }
 
 void CACamera::clearBackground()

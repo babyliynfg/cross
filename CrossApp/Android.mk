@@ -37,7 +37,6 @@ basics/CAIndexPath.cpp \
 basics/CAThread.cpp \
 basics/CANotificationCenter.cpp \
 basics/CAPointExtension.cpp \
-basics/CAConsole.cpp \
 basics/CACamera.cpp \
 basics/CACameraBackgroundBrush.cpp \
 basics/CAConfiguration.cpp \

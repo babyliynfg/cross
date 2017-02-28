@@ -221,7 +221,7 @@ public:
 			m_pCursorMark->setVisible(true);
 
 			m_pCursorMark->setAlpha(0);
-			CAViewAnimation::beginAnimations(m_s__StrID, NULL);
+			CAViewAnimation::beginAnimations(m_s__StrID);
 			CAViewAnimation::setAnimationDuration(0.5f);
 			CAViewAnimation::setAnimationRepeatAutoreverses(true);
 			CAViewAnimation::setAnimationRepeatCount(1048576);
@@ -451,13 +451,13 @@ public:
 			CATextField::Align align = m_pTextFieldX->getAlign();
 			switch (align)
 			{
-			case CATextField::Left:
+			case CATextField::Align::Left:
 				iStr_d_length = 0;
 				break;
-			case CATextField::Center:
+			case CATextField::Align::Center:
 				iStr_d_length = (m_iLabelWidth - (m_iString_l_length + m_iString_r_length)) / 2;
 				break;
-			case CATextField::Right:
+			case CATextField::Align::Right:
 				iStr_d_length = (m_iLabelWidth - (m_iString_l_length + m_iString_r_length));
 				break;
 			}
@@ -516,8 +516,8 @@ public:
 			m_szFontName.c_str(),
 			fontSize,
 			size,
-			CATextAlignmentLeft,
-			CAVerticalTextAlignmentCenter,
+			CATextAlignment::Left,
+			CAVerticalTextAlignment::Center,
 			true);
 		DRect rect = DRectZero;
 		if (sPlaceHolder.length() == 0)
@@ -550,11 +550,11 @@ public:
 		GLfloat x1, x2, y1, y2;
 
 		CATextField::Align align = m_pTextFieldX->getAlign();
-		if (align == CATextField::Right)
+		if (align == CATextField::Align::Right)
 		{
 			x1 = m_iLabelWidth - m_obRect.size.width;
 		}
-		else if (align == CATextField::Center)
+		else if (align == CATextField::Align::Center)
 		{
 			x1 = (m_iLabelWidth - m_obRect.size.width) / 2;
 		}
@@ -566,10 +566,10 @@ public:
 		y1 = (m_obContentSize.height - m_obRect.size.height) / 2;
 		x2 = x1 + m_obRect.size.width;
 		y2 = y1 + m_obRect.size.height;
-		m_sQuad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
-		m_sQuad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
-		m_sQuad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
-		m_sQuad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+		m_sQuad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
+		m_sQuad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
+		m_sQuad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
+		m_sQuad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
 	}
 
 	void StartMouseMove(const DPoint& point)
@@ -691,7 +691,7 @@ bool CATextField::becomeFirstResponder()
 	}
 
 	bool result = CAControl::becomeFirstResponder();
-	const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
 	if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
 	{
 		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), map.at("clearImage"));
@@ -701,21 +701,18 @@ bool CATextField::becomeFirstResponder()
 
 void CATextField::hideNativeTextField()
 {
+
 }
 
 void CATextField::showNativeTextField()
 {
+
 }
 
 void CATextField::delayShowImage()
 {
-    if (!CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
-    {
-        CAViewAnimation::beginAnimations(m_s__StrID + "showImage", NULL);
-        CAViewAnimation::setAnimationDuration(0);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATextField::showImage));
-        CAViewAnimation::commitAnimations();
-    }
+	this->cancelPreviousPerformRequests(callfunc_selector(CATextField::showImage));
+	this->performSelector(callfunc_selector(CATextField::showImage), 0.1);
 }
 
 
@@ -848,7 +845,7 @@ void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     
 }
 
-void CATextField::setClearButtonMode(const ClearButtonMode& var)
+void CATextField::setClearButtonMode(ClearButtonMode var)
 {
 	m_eClearBtn = var;
 }
@@ -876,7 +873,7 @@ int CATextField::getMarginLeft()
 
 void CATextField::setMarginRight(int var)
 {
-    if (m_eClearBtn == None)
+	if (m_eClearBtn == CATextField::ClearButtonMode::None)
     {
         m_iMarginRight = var;
         
@@ -995,7 +992,7 @@ const CAColor4B& CATextField::getTextColor()
 }
 
 
-void CATextField::setKeyboardType(KeyboardType type)
+void CATextField::setKeyboardType(KeyboardType var)
 {
 	m_eKeyBoardType = var;
 }
@@ -1045,14 +1042,6 @@ void CATextField::setMaxLenght(int var)
 int CATextField::getMaxLenght()
 {
     return m_iMaxLenght;
-}
-
-void CATextField::clearBtnCallBack(CAControl* con, DPoint point)
-{
-    if (getText().length() > 0)
-    {
-        setText("");
-    }
 }
 
 NS_CC_END

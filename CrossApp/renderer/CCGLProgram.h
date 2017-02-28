@@ -5,7 +5,7 @@
 
 #include <unordered_map>
 #include <string>
-
+#include <algorithm>
 #include "ccMacros.h"
 #include "basics/CAObject.h"
 #include "ccTypes.h"

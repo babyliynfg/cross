@@ -92,20 +92,16 @@ protected:
     Hint for optimisation in GL.
     */
     GLenum _usage;
-protected:
-    /**
-    Static member to indicate that use _shadowCopy or not. 
-    */
-    static bool _enableShadowCopy;
+
 public:
     /**
     Static getter for shadowCopy.
     */
-    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
+	static bool isShadowCopyEnabled();
     /**
      Static setter for shadowCopy.
      */
-    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
+	static void enableShadowCopy(bool enabled);
 };
 
 /**
@@ -207,20 +203,16 @@ protected:
     Hint for optimisation in GL.
     */
     GLenum _usage;
-protected:
-    /**
-    Static member to indicate that use _shadowCopy or not.
-    */
-    static bool _enableShadowCopy;
+
 public:
     /**
     Static getter for shadowCopy.
     */
-    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
+	static bool isShadowCopyEnabled();
     /**
      Static setter for shadowCopy.
      */
-    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
+	static void enableShadowCopy(bool enabled);
 };
 
 

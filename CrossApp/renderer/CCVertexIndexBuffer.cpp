@@ -5,16 +5,32 @@
 NS_CC_BEGIN
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-bool VertexBuffer::_enableShadowCopy = true;
+bool s_vertexBufferEnableShadowCopy = true;
+bool s_indexBufferEnableShadowCopy = true;
 #else
-bool VertexBuffer::_enableShadowCopy = false;
+bool s_vertexBufferEnableShadowCopy = false;
+bool s_indexBufferEnableShadowCopy = false;
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-bool IndexBuffer::_enableShadowCopy = true;
-#else
-bool IndexBuffer::_enableShadowCopy = false;
-#endif
+bool VertexBuffer::isShadowCopyEnabled()
+{
+	return s_vertexBufferEnableShadowCopy;
+}
+
+void VertexBuffer::enableShadowCopy(bool enabled)
+{
+	s_vertexBufferEnableShadowCopy = enabled;
+}
+
+bool IndexBuffer::isShadowCopyEnabled()
+{
+	return s_indexBufferEnableShadowCopy;
+}
+
+void IndexBuffer::enableShadowCopy(bool enabled)
+{
+	s_indexBufferEnableShadowCopy = enabled;
+}
 
 VertexBuffer* VertexBuffer::create(int sizePerVertex, int vertexNumber, GLenum usage/* = GL_STATIC_DRAW*/)
 {

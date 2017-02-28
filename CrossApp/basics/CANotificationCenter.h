@@ -5,7 +5,7 @@
 
 #include "basics/CAObject.h"
 #include "basics/CASTLContainer.h"
-
+#include <functional>
 NS_CC_BEGIN
 
 class CC_DLL CANotificationCenter : public CAObject

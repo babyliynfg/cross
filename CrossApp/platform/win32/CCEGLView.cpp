@@ -8,9 +8,10 @@
 #include "dispatcher/CATouchDispatcher.h"
 #include "dispatcher/CAIMEDispatcher.h"
 #include "dispatcher/CAKeypadDispatcher.h"
-#include "support/CAPointExtension.h"
+#include "basics/CAPointExtension.h"
 #include "support/ccUTF8.h"
 #include "CCApplication.h"
+#include "view/CAAlertView.h"
 
 NS_CC_BEGIN
 
@@ -192,14 +193,15 @@ bool CCEGLView::initGL()
         sprintf(strComplain,
 		"OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
 		glVersion);
-		CAMessageBox("OpenGL version too old", strComplain);
+
+		CAAlertView::create("OpenGL version too old", strComplain)->show();
 		return false;
     }
 
     GLenum GlewInitResult = glewInit();
     if (GLEW_OK != GlewInitResult)
     {
-		CAMessageBox("OpenGL error", (char *)glewGetErrorString(GlewInitResult));
+		CAAlertView::create("OpenGL error", (char *)glewGetErrorString(GlewInitResult))->show();
         return false;
     }
 
@@ -223,7 +225,7 @@ bool CCEGLView::initGL()
 
     if(glew_dynamic_binding() == false)
 	{
-		CAMessageBox("OpenGL error", "No OpenGL framebuffer support. Please upgrade the driver of your video card.");
+		CAAlertView::create("OpenGL error", "No OpenGL framebuffer support. Please upgrade the driver of your video card.")->show();
 		return false;
 	}
 
@@ -638,14 +640,14 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
         {
         case VK_F1:
             if (GetKeyState(VK_LSHIFT) < 0 || GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
-                CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+                CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(CAKeypadDispatcher::KeypadMSGType::BackClicked);
             break;
         case VK_F2:
             if (GetKeyState(VK_LSHIFT) < 0 ||  GetKeyState(VK_RSHIFT) < 0 || GetKeyState(VK_SHIFT) < 0)
-                CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeMenuClicked);
+				CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(CAKeypadDispatcher::KeypadMSGType::MenuClicked);
             break;
         case VK_ESCAPE:
-			CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+			CAApplication::getApplication()->getKeypadDispatcher()->dispatchKeypadMSG(CAKeypadDispatcher::KeypadMSGType::BackClicked);
             break;
         case VK_LEFT:
             CAIMEDispatcher::sharedDispatcher()->dispatchCursorMoveBackward();
