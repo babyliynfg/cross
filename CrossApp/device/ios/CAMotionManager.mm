@@ -44,8 +44,6 @@ void CAMotionManager::startGyroscope(const CAMotionManager::Callback& callback)
     
     this->retain();
     
-    [convert(m_pMotionManager) setGyroUpdateInterval:convert(m_pMotionManager).gyroUpdateInterval];
-    
     [convert(m_pMotionManager) startGyroUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMGyroData *gyroData, NSError *error) {
         
         m_obData.x = gyroData.rotationRate.x;

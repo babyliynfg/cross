@@ -59,7 +59,6 @@ bool RootWindow::init()
     
     m_pRootNavigationController = new CANavigationController();
     m_pRootNavigationController->initWithRootViewController(viewController);
-    m_pRootNavigationController->setNavigationBarBackgroundImage(CAImage::create("image/navbg.jpg"));
 
     MenuViewController* _menuview = MenuViewController::create();
     

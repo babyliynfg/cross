@@ -30,6 +30,14 @@ CAAlertView* CAAlertView::create(const char* title, const char* message, const c
     return box;
 }
 
+CAAlertView* CAAlertView::create(const char* title, const char* message, const std::vector<std::string>& buttonTitles)
+{
+    CAAlertView* box = new CAAlertView(title, message);
+    box->m_vButtonTitles = buttonTitles;
+    box->autorelease();
+    return box;
+}
+
 CAAlertView::CAAlertView(const char* title, const char* message)
 :m_sTitle(title)
 ,m_sMessage(message)

@@ -39,8 +39,8 @@ CACheckbox::CACheckbox()
 ,m_pImageSelected(nullptr)
 ,m_cImageColorNormal(CAColor_white)
 ,m_cImageColorSelected(CAColor_white)
-,m_cTitleColorNormal(CAColor_white)
-,m_cTitleColorSelected(CAColor_white)
+,m_cTitleColorNormal(CAColor_black)
+,m_cTitleColorSelected(CAColor_black)
 ,m_bIsOn(false)
 {
     m_pImageView = new CAImageView();
