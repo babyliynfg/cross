@@ -28,8 +28,7 @@ void AlertViewTest::viewDidLoad()
     btn1->addTarget([=]()
     {
         
-        CAAlertView* alert = CAAlertView::create("Alert", "this is a alert!");
-        alert->addButtonTitle("close");
+        CAAlertView* alert = CAAlertView::create("Alert", "this is a alert!", "close", nullptr);
         alert->show([=](int index)
         {
             this->alertCallBack(index);

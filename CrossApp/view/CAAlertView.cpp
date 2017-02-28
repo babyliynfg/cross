@@ -8,7 +8,6 @@ static CAMap<unsigned int, CAAlertView*> s_gMessageBoxs;
 CAAlertView* CAAlertView::create(const std::string& title, const std::string& message)
 {
     CAAlertView* box = new CAAlertView(title, message);
-    box->addButtonTitle("OK");
     box->autorelease();
     return box;
 }
@@ -16,7 +15,7 @@ CAAlertView* CAAlertView::create(const std::string& title, const std::string& me
 CAAlertView* CAAlertView::create(const std::string& title, const std::string& message, const std::vector<std::string>& buttonTitles)
 {
     CAAlertView* box = new CAAlertView(title, message);
-    box->setButtonTitles(buttonTitles);
+    box->m_vButtonTitles = buttonTitles;
     box->autorelease();
     return box;
 }
@@ -46,17 +45,6 @@ CAAlertView::CAAlertView(const std::string& title, const std::string& message)
     
 }
 
-void CAAlertView::addButtonTitle(const std::string& buttonTitle)
-{
-    m_vButtonTitles.push_back(buttonTitle);
-}
-
-
-void CAAlertView::setButtonTitles(const std::vector<std::string>& buttonTitles)
-{
-    m_vButtonTitles = buttonTitles;
-}
-
 void CAAlertView::show()
 {
     s_gMessageBoxs.insert(m_u__ID, this);
@@ -70,7 +58,13 @@ void CAAlertView::show(const std::function<void(int)>& callback)
 {
     m_callback = callback;
     s_gMessageBoxs.insert(m_u__ID, this);
-    __show_alertView(m_sTitle, m_sMessage, m_vButtonTitles, [&](int index)
+    
+    std::vector<std::string> buttonTitles = m_vButtonTitles;
+    if (buttonTitles.empty())
+    {
+        buttonTitles.push_back("OK");
+    }
+    __show_alertView(m_sTitle, m_sMessage, buttonTitles, [&](int index)
     {
         if (m_callback)
         {
