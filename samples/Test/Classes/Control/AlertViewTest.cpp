@@ -27,10 +27,14 @@ void AlertViewTest::viewDidLoad()
     btn1->setTitleForState(CAControl::State::Normal, "Click-1");
     btn1->addTarget([=]()
     {
-        CAAlertView::create("Alert", "this is a alert!", "close", nullptr)->show([=](int index)
+        
+        CAAlertView* alert = CAAlertView::create("Alert", "this is a alert!");
+        alert->addButtonTitle("close");
+        alert->show([=](int index)
         {
             this->alertCallBack(index);
         });
+        
 
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn1);
@@ -41,10 +45,13 @@ void AlertViewTest::viewDidLoad()
     btn2->setTitleForState(CAControl::State::Normal, "Click-2");
     btn2->addTarget([=]()
     {
-        CAAlertView::create("Alert", "this is a alert!", "ok","close", nullptr)->show([=](int index)
+        
+        CAAlertView::create("Alert", "this is a alert!", {"ok", "close"})->show([=](int index)
         {
             this->alertCallBack(index);
         });
+        
+        
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn2);
     
@@ -54,12 +61,15 @@ void AlertViewTest::viewDidLoad()
     btn3->setTitleForState(CAControl::State::Normal, "Click-3");
     btn3->addTarget([=]()
     {
-        std::string message = "message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long, message is so long!";
+        
+        std::string message = "This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.";
         
         CAAlertView::create("Alert", message.c_str(), "button1", "button2", "button3", "button4", "button5", "button6", "button7", "button8", "button9", "button10", nullptr)->show([=](int index)
         {
             this->alertCallBack(index);
         });
+        
+        
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn3);
     

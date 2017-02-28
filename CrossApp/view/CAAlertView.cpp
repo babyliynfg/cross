@@ -5,10 +5,18 @@ NS_CC_BEGIN
 
 static CAMap<unsigned int, CAAlertView*> s_gMessageBoxs;
 
-CAAlertView* CAAlertView::create(const char* title, const char* message)
+CAAlertView* CAAlertView::create(const std::string& title, const std::string& message)
 {
     CAAlertView* box = new CAAlertView(title, message);
-    box->m_vButtonTitles.push_back("OK");
+    box->addButtonTitle("OK");
+    box->autorelease();
+    return box;
+}
+
+CAAlertView* CAAlertView::create(const std::string& title, const std::string& message, const std::vector<std::string>& buttonTitles)
+{
+    CAAlertView* box = new CAAlertView(title, message);
+    box->setButtonTitles(buttonTitles);
     box->autorelease();
     return box;
 }
@@ -30,15 +38,7 @@ CAAlertView* CAAlertView::create(const char* title, const char* message, const c
     return box;
 }
 
-CAAlertView* CAAlertView::create(const char* title, const char* message, const std::vector<std::string>& buttonTitles)
-{
-    CAAlertView* box = new CAAlertView(title, message);
-    box->m_vButtonTitles = buttonTitles;
-    box->autorelease();
-    return box;
-}
-
-CAAlertView::CAAlertView(const char* title, const char* message)
+CAAlertView::CAAlertView(const std::string& title, const std::string& message)
 :m_sTitle(title)
 ,m_sMessage(message)
 ,m_callback(nullptr)
@@ -46,6 +46,16 @@ CAAlertView::CAAlertView(const char* title, const char* message)
     
 }
 
+void CAAlertView::addButtonTitle(const std::string& buttonTitle)
+{
+    m_vButtonTitles.push_back(buttonTitle);
+}
+
+
+void CAAlertView::setButtonTitles(const std::vector<std::string>& buttonTitles)
+{
+    m_vButtonTitles = buttonTitles;
+}
 
 void CAAlertView::show()
 {

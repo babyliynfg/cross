@@ -20,29 +20,26 @@ class CC_DLL CAAlertView : public CAObject
 {
 public:
     
-    static CAAlertView* create(const char* title, const char* message);
-    
     static CAAlertView* create(const char* title, const char* message, const char* buttonTitle, ...);
+    static CAAlertView* create(const std::string& title, const std::string& message);
+    static CAAlertView* create(const std::string& title, const std::string& message, const std::vector<std::string>& buttonTitles);
     
-    static CAAlertView* create(const char* title, const char* message, const std::vector<std::string>& buttonTitles);
+    void addButtonTitle(const std::string& buttonTitle);
+    void setButtonTitles(const std::vector<std::string>& buttonTitles);
     
     void show();
-    
     void show(const std::function<void(int)>& callback);
     
 private:
     
-    CAAlertView(const char* title, const char* message);
+    CAAlertView(const std::string& title, const std::string& message);
     
 private:
     
     std::string m_sTitle;
-    
     std::string m_sMessage;
-    
-    std::function<void(int)> m_callback;
-    
     std::vector<std::string> m_vButtonTitles;
+    std::function<void(int)> m_callback;
 };
 
 NS_CC_END
