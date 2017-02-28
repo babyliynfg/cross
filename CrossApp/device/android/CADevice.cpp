@@ -15,6 +15,18 @@ namespace CADevice
 {
     extern "C"
     {
+        const char* JAVAGetSystemVersion()
+        {
+            JniMethodInfo jmi;
+            if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "getSystemVersion" , "()Ljava/lang/String;"))
+            {
+                jstring a = (jstring)jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
+                const char* b = jmi.env->GetStringUTFChars( a , 0 );
+                jmi.env->DeleteLocalRef(jmi.classID);
+                return b;
+            }
+        }
+        
         const char* JAVAGetAppVersion()
         {
             JniMethodInfo jmi;
@@ -153,6 +165,14 @@ namespace CADevice
 
     #endif
 
+    CADevice::SystemVersion getSystemVersion()
+    {
+        CADevice::SystemVersion systemVersion;
+        systemVersion.platform = PlatForm::android;
+        systemVersion.version = JAVAGetSystemVersion();
+        return systemVersion;
+    }
+    
     const char* getAppVersion()
     {
         return JAVAGetAppVersion();

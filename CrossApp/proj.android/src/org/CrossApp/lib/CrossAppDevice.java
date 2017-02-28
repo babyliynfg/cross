@@ -97,7 +97,11 @@ public abstract class CrossAppDevice  extends Activity  {
         });
      }
 
-    
+    public static String getSystemVersion()
+    {
+    	return android.os.Build.VERSION.RELEASE;
+    }
+	
     public static String getAppVersion(){
         String versionName = "";
         

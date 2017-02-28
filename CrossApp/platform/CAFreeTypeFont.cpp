@@ -1260,7 +1260,7 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         
         const char* fontName = NULL;
         
-        float version = atof(CADevice::getSystemVersionWithIOS());
+        float version = atof(CADevice::getSystemVersion().version.c_str());
 
         if (version >= 9.0f)
         {
