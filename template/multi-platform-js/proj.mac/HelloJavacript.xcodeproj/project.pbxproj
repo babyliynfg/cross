@@ -152,14 +152,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				480EDE7C1D953F2D00C758DA /* libbz2.1.0.tbd in Frameworks */,
-				480EDE7A1D953F1900C758DA /* CoreVideo.framework in Frameworks */,
-				480EDE781D953F0D00C758DA /* VideoDecodeAcceleration.framework in Frameworks */,
-				480EDE741D953E6900C758DA /* CoreFoundation.framework in Frameworks */,
-				480EDE761D953EDA00C758DA /* libiconv.2.tbd in Frameworks */,
-				480EDE721D953E5700C758DA /* VideoToolbox.framework in Frameworks */,
 				480EDE701D953E4D00C758DA /* Security.framework in Frameworks */,
-				48E1445D1CED68760029BABC /* libjs_static.a in Frameworks */,
+				480EDE721D953E5700C758DA /* VideoToolbox.framework in Frameworks */,
+				480EDE761D953EDA00C758DA /* libiconv.2.tbd in Frameworks */,
+				480EDE7C1D953F2D00C758DA /* libbz2.1.0.tbd in Frameworks */,
 				B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */,
 				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
@@ -171,6 +167,10 @@
 				15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */,
 				15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */,
 				15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */,
+				480EDE7A1D953F1900C758DA /* CoreVideo.framework in Frameworks */,
+				480EDE781D953F0D00C758DA /* VideoDecodeAcceleration.framework in Frameworks */,
+				480EDE741D953E6900C758DA /* CoreFoundation.framework in Frameworks */,
+				48E1445D1CED68760029BABC /* libjs_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,7 +574,7 @@
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/mac\"",
 					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/mac\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = HelloJavacript;
 				SDKROOT = macosx;
@@ -625,7 +625,7 @@
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/mac\"",
 					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/mac\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = HelloJavacript;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/include/mac";

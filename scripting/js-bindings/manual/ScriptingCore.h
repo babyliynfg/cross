@@ -22,7 +22,6 @@
 #include <vector>
 #include <memory>
 
-
 void js_log(const char *format, ...);
 
 typedef void (*sc_register_sth)(JSContext* cx, JS::HandleObject global);

@@ -6,7 +6,7 @@ var FirstViewController = ca.CAViewController.extend({
         this.getView().setColor(ca.color._getGray());
         var img = ca.CAImageView.createWithImage(ca.CAImage.create("r/HelloWorld.png"));
         img.setLayout(DLayoutFill);
-        img.setImageViewScaleType(1);
+        img.setScaleType(1);
         this.getView().addSubview(img);
 
         var font = new CAFont();

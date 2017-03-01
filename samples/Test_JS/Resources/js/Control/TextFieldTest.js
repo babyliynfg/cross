@@ -13,7 +13,7 @@ var TextFieldTest = ca.CAViewController.extend({
         //键盘类型
         textField1.setKeyboardType(0);
         //TextField的对齐方式
-        textField1.setTextFieldAlign(ca.TextViewAlign.Left);
+        textField1.setAlign(ca.TextViewAlign.Left);
         textField1.setDelegate(this);
         this.getView().addSubview(textField1);
 
@@ -23,7 +23,7 @@ var TextFieldTest = ca.CAViewController.extend({
         textField2.setKeyboardType(0);
         textField2.setMarginImageLeft(ca.size(60,60),"source_material/search.png");
         textField2.setClearButtonMode(ca.ClearButtonMode.WhileEditing);
-        textField2.setTextFieldAlign(ca.TextViewAlign.Left);
+        textField2.setAlign(ca.TextViewAlign.Left);
         textField2.setSecureTextEntry(true);
         textField2.setDelegate(this);
         this.getView().addSubview(textField2);

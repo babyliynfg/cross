@@ -19,7 +19,7 @@ var SegmentedControlTest = ca.CAViewController.extend({
         }
         segment1.setTitleColor(ca.BLACK);
         segment1.setTitleSelectedColor(ca.WHITE);
-        segment1.addTarget(this, this.segmentCallback);
+        segment1.setTarget(this.segmentCallback);
         segment1.setSelectedAtIndex(0);
         this.getView().addSubview(segment1);
 
@@ -34,15 +34,15 @@ var SegmentedControlTest = ca.CAViewController.extend({
         segment2.setTitleColor(ca.BLACK);
         segment2.setTitleSelectedColor(ca.WHITE);
 
-        segment2.addTarget(this, this.segmentCallback);
+        segment2.setTarget(this.segmentCallback);
         segment2.setBackgroundImage(ca.CAImage.create("image/seg1.png"));
         segment2.setSegmentItemBackgroundImage(ca.CAImage.create("image/seg2.png"));
         segment2.setTintColor(ca.color(44, 178, 93, 255));
         segment2.setSelectedAtIndex(0);
         this.getView().addSubview(segment2);
     },
-    segmentCallback: function ( btn, index) {
+    segmentCallback: function ( number) {
 
-        log("segmentCallback-->");
+        log("segmentCallback-->"+ number);
     }
 });
