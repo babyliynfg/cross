@@ -28,6 +28,8 @@ CASwitch::CASwitch()
     , m_pOffImageView(nullptr)
     , m_pThumbTintImageView(nullptr)
 {
+    this->setTouchEventScrollHandOverToSuperview(false);
+    
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch");
     this->setOnImage(CAImage::create(map.at("onImage")));
     this->setOffImage(CAImage::create(map.at("offImage")));
@@ -125,7 +127,7 @@ void CASwitch::onExitTransitionDidStart()
 void CASwitch::onEnterTransitionDidFinish()
 {
     CAControl::onEnterTransitionDidFinish();
-    this->updateSwitchState(false, false);
+    this->updateSwitchState(false);
 }
 
 bool CASwitch::isOn()
@@ -139,7 +141,7 @@ void CASwitch::setIsOn(bool on, bool animated)
     {
         m_bIsOn = on;
         CC_RETURN_IF(!m_bRunning);
-        this->updateSwitchState(animated, false);
+        this->updateSwitchState(animated);
     }
 }
 
@@ -185,62 +187,49 @@ void CASwitch::setThumbTintImage(CAImage* thumbTintImage)
     }
 }
 
-void CASwitch::updateSwitchState(bool animated, bool callback)
+void CASwitch::updateSwitchState(bool animated)
 {
     DPoint point = m_obContentSize/2;
     m_pOnImageView->setCenterOrigin(point);
     m_pOffImageView->setCenterOrigin(point);
     if (animated)
     {
+        CAViewAnimation::Curve curve = m_bIsOn ? CAViewAnimation::Curve::EaseIn : CAViewAnimation::Curve::EaseOut;
+        float offAlpha = m_bIsOn ? 0.0f : 1.0f;
+        float onAlpha = m_bIsOn ? 1.0f : 0.0f;
+        
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.2f);
-        if (m_bIsOn)
-        {
-            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseIn);
-            m_pOffImageView->setAlpha(0.0f);
-            m_pOnImageView->setAlpha(1.0f);
-        }
-        else
-        {
-            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-            m_pOffImageView->setAlpha(1.0f);
-            m_pOnImageView->setAlpha(0.0f);
-        }
+        CAViewAnimation::setAnimationCurve(curve);
+        m_pOffImageView->setAlpha(offAlpha);
+        m_pOnImageView->setAlpha(onAlpha);
         CAViewAnimation::commitAnimations();
+        
         if (m_pThumbTintImageView)
         {
             DPoint point = DPointZero;
             point.x = m_bIsOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
             
-            if (callback)
-            {
-                CAViewAnimation::beginAnimations("");
-                CAViewAnimation::setAnimationDuration(0.2f);
-                CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-                CAViewAnimation::setAnimationDidStopSelector([this]()
-                {
-                    if (m_function)
-                        m_function(m_bIsOn);
-                });
-                m_pThumbTintImageView->setFrameOrigin(point);
-                CAViewAnimation::commitAnimations();
-            }
+            CAViewAnimation::beginAnimations("");
+            CAViewAnimation::setAnimationDuration(0.2f);
+            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
+            m_pThumbTintImageView->setFrameOrigin(point);
+            CAViewAnimation::commitAnimations();
         }
     }
     else
     {
-        m_pOffImageView->setAlpha(m_bIsOn ? 0.0f : 1.0f);
-        m_pOnImageView->setAlpha(m_bIsOn? 1.0f : 0.0f);
+        float offAlpha = m_bIsOn ? 0.0f : 1.0f;
+        m_pOffImageView->setAlpha(offAlpha);
+        
+        float onAlpha = m_bIsOn ? 1.0f : 0.0f;
+        m_pOnImageView->setAlpha(onAlpha);
+        
         if (m_pThumbTintImageView)
         {
             DPoint point = DPointZero;
             point.x = m_bIsOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
             m_pThumbTintImageView->setFrameOrigin(point);
-            if (callback)
-            {
-                if (m_function)
-                    m_function(m_bIsOn);
-            }
         }
     }
 }
@@ -249,26 +238,45 @@ bool CASwitch::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
+
+    m_bPrevIsOn = m_bIsOn;
     
-	m_bTouchClick = true;
-    
-    
-    return m_bTouchClick;
+    return true;
+}
+
+void CASwitch::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+    if (this->convertToNodeSpace(pTouch->getLocation()).x < this->convertToNodeSpace(pTouch->getPreviousLocation()).x)
+    {
+        if (m_bIsOn == true)
+        {
+            m_bIsOn = false;
+            this->updateSwitchState(true);
+        }
+    }
+    else
+    {
+        if (m_bIsOn == false)
+        {
+            m_bIsOn = true;
+            this->updateSwitchState(true);
+        }
+    }
 }
 
 void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    if (!this->isTouchClick())
-        return;
-    
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     
-    if (getBounds().containsPoint(point))
+    if (this->getBounds().containsPoint(point) && !pTouch->isDelta())
     {
-        this->setControlState(CAControl::State::Normal);
         m_bIsOn = !m_bIsOn;
-        this->updateSwitchState(true, true);
+    }
+    
+    if (m_bPrevIsOn != m_bIsOn && m_function)
+    {
+        m_function(m_bIsOn);
     }
 }
 
@@ -294,7 +302,7 @@ void CASwitch::setContentSize(const DSize & var)
     m_pOnImageView->setFrame(bounds);
     m_pOffImageView->setFrame(bounds);
     m_pThumbTintImageView->setFrame(DRect(0, 0, bounds.size.height, bounds.size.height));
-    this->updateSwitchState(false, false);
+    this->updateSwitchState(false);
 }
 
 NS_CC_END

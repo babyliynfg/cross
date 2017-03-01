@@ -23814,25 +23814,6 @@ bool js_crossapp_CASwitch_setOffImage(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CASwitch_setOffImage : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CASwitch_isTouchClick(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CASwitch* cobj = (CrossApp::CASwitch *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASwitch_isTouchClick : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isTouchClick();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CASwitch_isTouchClick : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CASwitch_setTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -24250,7 +24231,6 @@ void js_register_crossapp_CASwitch(JSContext *cx, JS::HandleObject global) {
     static JSFunctionSpec funcs[] = {
         JS_FN("getOnImage", js_crossapp_CASwitch_getOnImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOffImage", js_crossapp_CASwitch_setOffImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isTouchClick", js_crossapp_CASwitch_isTouchClick, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTarget", js_crossapp_CASwitch_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getThumbTintImage", js_crossapp_CASwitch_getThumbTintImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setIsOn", js_crossapp_CASwitch_setIsOn, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),

@@ -1141,7 +1141,6 @@ void js_register_crossapp_CASwitch(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CASwitch_getOnImage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CASwitch_setOffImage(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CASwitch_isTouchClick(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CASwitch_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CASwitch_getThumbTintImage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CASwitch_setIsOn(JSContext *cx, uint32_t argc, jsval *vp);

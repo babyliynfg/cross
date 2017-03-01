@@ -682,34 +682,39 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     if (m_vTouches.size() == 1)
     {
-        DPoint p = DPointZero;
         CAScheduler::getScheduler()->unschedule(schedule_selector(CAScrollView::updatePointOffset), this);
-        if (m_tPointOffset.size() > 0)
+        
+        if (m_bTracking == true)
         {
-            for (auto& var : m_tPointOffset)
+            DPoint p = DPointZero;
+            if (m_tPointOffset.size() > 0)
             {
-                p = ccpAdd(p, var);
+                for (auto& var : m_tPointOffset)
+                {
+                    p = ccpAdd(p, var);
+                }
+                p = p/m_tPointOffset.size();
             }
-            p = p/m_tPointOffset.size();
+            m_tInertia = p;
+            m_tPointOffset.clear();
+            
+            this->startDeaccelerateScroll();
+            
+            if (m_pScrollViewDelegate)
+            {
+                m_pScrollViewDelegate->scrollViewDidEndDragging(this);
+            }
+            m_bTracking = false;
+            
+            this->detectionFromPullToRefreshView();
         }
-        m_tInertia = p;
-        m_tPointOffset.clear();
-        
-        this->startDeaccelerateScroll();
-        
-        if (m_pScrollViewDelegate && m_bTracking == false)
+        else
         {
-            m_pScrollViewDelegate->scrollViewTouchUpWithoutMoved(this, this->convertToNodeSpace(pTouch->getLocation()));
+            if (m_pScrollViewDelegate)
+            {
+                m_pScrollViewDelegate->scrollViewTouchUpWithoutMoved(this, this->convertToNodeSpace(pTouch->getLocation()));
+            }
         }
-        
-        if (m_pScrollViewDelegate)
-        {
-            m_pScrollViewDelegate->scrollViewDidEndDragging(this);
-        }
-        m_bTracking = false;
-        
-        this->detectionFromPullToRefreshView();
-
     }
     else if (m_vTouches.size() == 2)
     {
@@ -1273,7 +1278,7 @@ CAIndicator::CAIndicator(CAIndicator::Orientation type, CAScrollView* var)
 ,m_bPCMode(false)
 ,m_pMyScrollView(var)
 ,m_bTouch(false)
-,m_bHide(false)
+,m_bHide(true)
 {
     this->setHaveNextResponder(false);
 }
