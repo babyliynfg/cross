@@ -74,7 +74,7 @@ var WaterfallViewTest = ca.CAViewController.extend({
         cell = waterfallView.cellForRowAtIndexPath(itemIndex);
         cell.getContentView().setRotation(-360);
         cell.getContentView().setScale(0.5);
-        ca.CAViewAnimation.beginAnimations("", null);
+        ca.CAViewAnimation.beginAnimations("");
         cell.getContentView().setRotation(0);
         cell.getContentView().setScale(1.0);
         ca.CAViewAnimation.commitAnimations();

@@ -40,8 +40,6 @@ var ProgressTest = ca.CAViewController.extend({
     },
     viewOnEnterTransitionDidFinish:function() {
         log("viewOnEnterTransitionDidFinish------>");
-
-
     },
     progressValueChange: function (dt) {
         var currentValue = this.progress.getProgress() + 0.001;

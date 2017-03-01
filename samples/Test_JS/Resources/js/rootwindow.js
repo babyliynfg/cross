@@ -37,7 +37,7 @@ var RootWindow = ca.CAWindow.extend(
             this._super();
 
             this.initUIVIew();
-            
+
             //var alertViewTest = new AlertViewTest();
             //alertViewTest.init();
             //this.setRootViewController(alertViewTest);
@@ -137,7 +137,7 @@ var RootWindow = ca.CAWindow.extend(
             //this.setRootViewController(webViewTest);
 
 
-            
+
 
         },
         initUIVIew:function(){

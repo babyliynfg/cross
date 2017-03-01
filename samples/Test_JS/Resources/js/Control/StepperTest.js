@@ -25,12 +25,12 @@ var StepperTest = ca.CAViewController.extend({
         step.setStepValue(1);
         //step.setAutoRepeat(false);
         this.getView().addSubview(step);
-        step.addTarget(this, this.stepperCallBack);
+        var valueLabel = this.step_value;
+        step.setTarget(function (value) {
+            log("stepperCallBack-->");
+            var str = "step_value:" + value;
+            valueLabel.setText(str);
+        });
 
     },
-    stepperCallBack: function (btn, point) {
-        log("stepperCallBack-->");
-        var str = "step_value:" + btn.getValue();
-        this.step_value.setText(str);
-    }
 });

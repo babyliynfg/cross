@@ -28,7 +28,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore* sc = ScriptingCore::getInstance();
   
     sc->addRegisterCallback(register_all_crossapp);
-    sc->addRegisterCallback(register_cocos2dx_js_core);
+    sc->addRegisterCallback(register_crossapp_js_core);
     sc->addRegisterCallback(register_all_crossapp_delegates_manual);
 
     sc->start();

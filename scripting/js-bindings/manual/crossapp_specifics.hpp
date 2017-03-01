@@ -95,7 +95,7 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         // Return NULL if can't find its type rather than making an assert.
 //        assert(typeProxy);
         if (!typeProxy) {
-            CCLOGINFO("Could not find the type of native object.");
+//            CCLOGINFO("Could not find the type of native object.");
             return NULL;
         }
         
@@ -140,37 +140,37 @@ protected:
 
 
 
-class JSControlCallback : public CrossApp::CAObject{
-public:
-    JSControlCallback();
-    virtual ~JSControlCallback();
-
-    SEL_CAControl getTarget(JS::HandleValue obj,JS::HandleValue fun);
-    
-    SEL_CAAlertBtnEvent getAlertViewTarger(JS::HandleValue obj,JS::HandleValue fun);
-    
-    SEL_CASegmentedControl getCASegmentedTarget(JS::HandleValue obj,JS::HandleValue fun);
-    
-    SEL_CAViewAnimation0 getViewAnimation0(JS::HandleValue obj,JS::HandleValue fun);
-    
-    SEL_CAViewAnimation2 getViewAnimation2(JS::HandleValue obj,JS::HandleValue fun);
-    
-    void callbackJSFun(CAControl* control, DPoint point);
-    
-    void callbackJSSegmented(CASegmentedControl* control, int index);
-    
-    void callbackJSViewAnimation0();
-    
-    void callbackJSViewAnimation2(const std::string& id, void* v);
-    
-    void callAlertViewTarget(int index);
-    
-    
-private:
-    mozilla::Maybe<JS::PersistentRootedValue> _obj;
-    mozilla::Maybe<JS::PersistentRootedValue> _jsCallback;
-    
-};
+//class JSControlCallback : public CrossApp::CAObject{
+//public:
+//    JSControlCallback();
+//    virtual ~JSControlCallback();
+//
+//    SEL_CAControl getTarget(JS::HandleValue obj,JS::HandleValue fun);
+//    
+//    SEL_CAAlertBtnEvent getAlertViewTarger(JS::HandleValue obj,JS::HandleValue fun);
+//    
+//    SEL_CASegmentedControl getCASegmentedTarget(JS::HandleValue obj,JS::HandleValue fun);
+//    
+//    SEL_CAViewAnimation0 getViewAnimation0(JS::HandleValue obj,JS::HandleValue fun);
+//    
+//    SEL_CAViewAnimation2 getViewAnimation2(JS::HandleValue obj,JS::HandleValue fun);
+//    
+//    void callbackJSFun(CAControl* control, DPoint point);
+//    
+//    void callbackJSSegmented(CASegmentedControl* control, int index);
+//    
+//    void callbackJSViewAnimation0();
+//    
+//    void callbackJSViewAnimation2(const std::string& id, void* v);
+//    
+//    void callAlertViewTarget(int index);
+//    
+//    
+//private:
+//    mozilla::Maybe<JS::PersistentRootedValue> _obj;
+//    mozilla::Maybe<JS::PersistentRootedValue> _jsCallback;
+//    
+//};
 
 class JSScheduleWrapper: public JSCallbackWrapper {
     

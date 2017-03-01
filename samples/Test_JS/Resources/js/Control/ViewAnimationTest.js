@@ -28,7 +28,7 @@ var ViewAnimationTest = ca.CAViewController.extend({
             btn1.setTitleForState(ca.CAControlState.Normal, "Play Animation");
             btn1.setTitleColorForState(ca.CAControlState.Normal, ca.color(51,204,255,255));
             btn1.setTag(100);
-            btn1.addTarget(this, this.doAction, ca.CAControlEvents.TouchUpInSide);
+
             this.animation_1_view = ca.CAImageView.createWithLayout(DLayout(DHorizontalLayout_W_C(28, 0.5), DVerticalLayout_H_C(24, 0.5)));
             this.animation_1_view.setImage(ca.CAImage.create("image/heart1.png"));
 
@@ -37,6 +37,24 @@ var ViewAnimationTest = ca.CAViewController.extend({
             view1.addSubview(this.animation_1_view);
             view1.setColor(ca.color._getGray());
             this.getView().addSubview(view1);
+
+            var heart_1 = this.heart_index;
+            var animation_1 = this.animation_1_view;
+            btn1.addTarget(function(){
+              animation_1.setScale(1);
+              ca.CAViewAnimation.beginAnimations("");
+              ca.CAViewAnimation.setAnimationDuration(0.3);
+              ca.CAViewAnimation.setAnimationRepeatAutoreverses(true);
+              if (heart_1==0) {
+                  animation_1.setImage(ca.CAImage.create("image/heart2.png"));
+                  heart_1 = 1;
+              }else{
+                  animation_1.setImage(ca.CAImage.create("image/heart1.png"));
+                  heart_1 = 0;
+              }
+              animation_1.setScale(2);
+              ca.CAViewAnimation.commitAnimations();
+            }, ca.CAControlEvents.TouchUpInSide);
         }
         else if (this.AnimationNum == 1)
         {
@@ -51,14 +69,14 @@ var ViewAnimationTest = ca.CAViewController.extend({
 
             var animation_2_btn_search = ca.CAButton.createWithLayout(DLayout(DHorizontalLayout_L_W(25, 56), DVerticalLayout_H_C(48, 0.5)), ca.CAButtonType.Custom);
             animation_2_btn_search.setImageForState(ca.CAControlState.Normal, ca.CAImage.create("image/search_btn.png"));
-            animation_2_btn_search.addTarget(this, this.doAction, ca.CAControlEvents.TouchUpInSide);
+
             animation_2_btn_search.setTag(201);
 
             this.animation_2_btn_cancel = ca.CAButton.createWithLayout(DLayout(DHorizontalLayout_R_W(0, 100), DVerticalLayout_H_C(50, 0.5)), ca.CAButtonType.Custom);
             this.animation_2_btn_cancel.setTitleForState(ca.CAControlState.Normal, "Cancel");
             this.animation_2_btn_cancel.setTag(202);
             this.animation_2_btn_cancel.setTitleColorForState(ca.CAControlState.Normal, ca.WHITE);
-            this.animation_2_btn_cancel.addTarget(this, this.doAction, ca.CAControlEvents.TouchUpInSide);
+
             this.animation_2_btn_cancel.setVisible(false);
 
             var view2 = ca.CAView.createWithLayout(DLayoutFill);
@@ -68,6 +86,46 @@ var ViewAnimationTest = ca.CAViewController.extend({
             view2.addSubview(this.animation_2_btn_cancel);
             view2.setColor(ca.color._getGray());
             this.getView().addSubview(view2);
+
+
+            var animation_2_text = this.animation_2_textfield;
+            var animation_2_btn = this.animation_2_btn_cancel;
+            animation_2_btn_search.addTarget(function () {
+              animation_2_text.setVisible(true);
+              animation_2_btn.setVisible(false);
+              animation_2_text.setAlpha(0);
+              animation_2_text.setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
+
+              ca.CAViewAnimation.beginAnimations("");
+              ca.CAViewAnimation.setAnimationDuration(0.3);
+              animation_2_text.setLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
+              animation_2_text.setAlpha(1);
+              ca.CAViewAnimation.setAnimationDidStopSelector(function () {
+                if (animation_2_btn.isVisible()) {
+                    animation_2_btn.setVisible(false);
+                }else{
+                    animation_2_btn.setVisible(true);
+                }
+              });
+              ca.CAViewAnimation.commitAnimations();
+            }, ca.CAControlEvents.TouchUpInSide);
+
+            this.animation_2_btn_cancel.addTarget(function () {
+              ca.CAViewAnimation.beginAnimations("");
+              ca.CAViewAnimation.setAnimationDuration(0.3);
+              animation_2_text.setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
+              animation_2_text.setAlpha(0);
+              ca.CAViewAnimation.setAnimationDidStopSelector(function()
+              {
+                  if (animation_2_btn.isVisible()) {
+                      animation_2_btn.setVisible(false);
+                  }else{
+                      animation_2_btn.setVisible(true);
+                  }
+
+              });
+              ca.CAViewAnimation.commitAnimations();
+            }, ca.CAControlEvents.TouchUpInSide);
         }
         else if(this.AnimationNum == 2)
         {
@@ -80,24 +138,37 @@ var ViewAnimationTest = ca.CAViewController.extend({
             btn3.setTitleForState(ca.CAControlState.Normal, "Play Animation");
             btn3.setTitleColorForState(ca.CAControlState.Normal, ca.color(51,204,255,255));
             btn3.setTag(300);
-            btn3.addTarget(this, this.doAction, ca.CAControlEvents.TouchUpInSide);
+            // btn3.addTarget(this.doAction, ca.CAControlEvents.TouchUpInSide);
 
             var view3 = ca.CAView.createWithLayout(DLayoutFill);
             view3.addSubview(this.animation_3_imageview);
             view3.addSubview(btn3);
             view3.setColor(ca.color._getGray());
             this.getView().addSubview(view3);
+
+            var animation_3 = this.animation_3_imageview;
+            btn3.addTarget(function () {
+              var imageSize = ca.CAImage.create("image/2.jpg").getContentSize();
+              animation_3.setImageRect(ca.drect(0,0,0,imageSize.height));
+              animation_3.setLayout(DLayout(DHorizontalLayout_L_W(0, 0), DVerticalLayoutFill));
+              ca.CAViewAnimation.beginAnimations("");
+              ca.CAViewAnimation.setAnimationDuration(0.8);
+              ca.CAViewAnimation.setAnimationRepeatAutoreverses(true);
+              animation_3.setImageRect(ca.drect(0,0,imageSize.width,imageSize.height));
+              animation_3.setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayoutFill));
+              ca.CAViewAnimation.commitAnimations();
+            }, ca.CAControlEvents.TouchUpInSide);
         }
 
     },
-    doAction: function( btn, point)
+    doAction: function( )
     {
         var button = btn;
         var tag = button.getTag();
 
         if (tag==100) {
             this.animation_1_view.setScale(1);
-            ca.CAViewAnimation.beginAnimations("", 1);
+            ca.CAViewAnimation.beginAnimations("");
             ca.CAViewAnimation.setAnimationDuration(0.3);
             ca.CAViewAnimation.setAnimationRepeatAutoreverses(true);
             if (this.heart_index==0) {
@@ -115,14 +186,14 @@ var ViewAnimationTest = ca.CAViewController.extend({
             this.animation_2_textfield.setAlpha(0);
             this.animation_2_textfield.setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
 
-            ca.CAViewAnimation.beginAnimations("", null);
+            ca.CAViewAnimation.beginAnimations("");
             ca.CAViewAnimation.setAnimationDuration(0.3);
             this.animation_2_textfield.setLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
             this.animation_2_textfield.setAlpha(1);
             ca.CAViewAnimation.setAnimationDidStopSelector(this, this.endAction);
             ca.CAViewAnimation.commitAnimations();
         }else if(tag==202){
-            ca.CAViewAnimation.beginAnimations("", null);
+            ca.CAViewAnimation.beginAnimations("");
             ca.CAViewAnimation.setAnimationDuration(0.3);
             this.animation_2_textfield.setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
             this.animation_2_textfield.setAlpha(0);
