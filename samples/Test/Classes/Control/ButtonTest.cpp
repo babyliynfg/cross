@@ -80,30 +80,20 @@ void ButtonTest::viewDidLoad()
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn4);
     
-//    CAButton* btn5 = CAButton::create(CAButton::Type::SquareRect);
-//    btn5->setTag(5);
-//    btn5->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.8)));
-//    btn5->setTitleForState(CAControl::State::Normal, "Normal");
-//    btn5->setTitleColorForState(CAControl::State::Normal, CAColor_white);
-//    btn5->setTitleForState(CAControl::State::Highlighted, "Highlighted");
-//    btn5->setBackgroundViewForState(CAControl::State::Normal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
-//    btn5->setBackgroundViewForState(CAControl::State::Highlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
-//    btn5->addTarget([=]()
-//    {
-//        CCLog("Button AllowsSelected");
-//    }, CAButton::Event::TouchUpInSide);
-//    this->getView()->addSubview(btn5);
-    
-    CACheckbox* box = CACheckbox::createWithLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.8)));
-    box->setImageStateNormal(CAImage::create("source_material/switch_on.png"));
-    box->setImageStateSelected(CAImage::create("source_material/switch_off.png"));
-    box->setTitleStateNormal("未选中");
-    box->setTitleStateSelected("选中");
-    this->getView()->addSubview(box);
-    box->setTarget([](bool var)
+    CAButton* btn5 = CAButton::create(CAButton::Type::SquareRect);
+    btn5->setTag(5);
+    btn5->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.8)));
+    btn5->setTitleForState(CAControl::State::Normal, "Normal");
+    btn5->setTitleColorForState(CAControl::State::Normal, CAColor_white);
+    btn5->setTitleForState(CAControl::State::Highlighted, "Highlighted");
+    btn5->setBackgroundViewForState(CAControl::State::Normal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
+    btn5->setBackgroundViewForState(CAControl::State::Highlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
+    btn5->addTarget([=]()
     {
-        CCLog("box: %d", var);
-    });
+        CCLog("Button AllowsSelected");
+    }, CAButton::Event::TouchUpInSide);
+    this->getView()->addSubview(btn5);
+    
 }
 
 void ButtonTest::viewDidUnload()
