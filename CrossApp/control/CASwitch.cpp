@@ -30,7 +30,7 @@ CASwitch::CASwitch()
 {
     this->setTouchEventScrollHandOverToSuperview(false);
     
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch");
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch");
     this->setOnImage(CAImage::create(map.at("onImage")));
     this->setOffImage(CAImage::create(map.at("offImage")));
     this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
@@ -291,7 +291,7 @@ void CASwitch::setContentSize(const DSize & var)
     DSize size = var;
     if (m_bRecSpe)
     {
-        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch");
+        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch");
         int h = atoi(map.at("height").c_str());
         int w = atoi(map.at("width").c_str());
         size.height = (h == 0) ? size.height : h;

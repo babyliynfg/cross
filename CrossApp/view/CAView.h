@@ -44,6 +44,8 @@ class CARenderImage;
 class CGNode;
 class CGSprite;
 class CAApplication;
+class CAThemeManager;
+
 //script
 enum {
     kNodeOnEnter,
@@ -501,6 +503,7 @@ protected:
     CGNode*                     m_pCGNode;
     CGNode*                     m_pParentCGNode;
     
+    CAThemeManager*             m_pThemeManager;
     CAApplication*              m_pApplication;
     
 protected:

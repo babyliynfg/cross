@@ -1318,7 +1318,7 @@ bool CAIndicator::init()
         return false;
     }
     this->setColor(CAColor_clear);
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAIndicator");
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CAIndicator");
     CAImage* image = CAImage::create(map.at("backgroundView"));
     
     

@@ -157,7 +157,7 @@ bool CAButton::init()
 
 void CAButton::setBackgroundViewSquareRect()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CAButton_SquareRect");
     
     this->setBackgroundViewForState(CAControl::State::Normal,
                                     CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_normal"))));
@@ -173,7 +173,7 @@ void CAButton::setBackgroundViewSquareRect()
 
 void CAButton::setBackgroundViewRoundedRect()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CAButton_RoundedRect");
     
     this->setBackgroundViewForState(CAControl::State::Normal,
                                     CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_normal"))));
@@ -536,13 +536,13 @@ void CAButton::setContentSize(const DSize & var)
     {
         if (m_eButtonType == CAButton::Type::SquareRect)
         {
-            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
+            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CAButton_SquareRect");
             int h = atoi(map.at("height").c_str());
             size.height = (h == 0) ? size.height : h;
         }
         else if(m_eButtonType == CAButton::Type::RoundedRect)
         {
-            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
+            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CAButton_RoundedRect");
             int h = atoi(map.at("height").c_str());
             size.height = (h == 0) ? size.height : h;
         }

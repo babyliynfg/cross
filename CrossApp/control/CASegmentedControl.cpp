@@ -162,7 +162,7 @@ void CASegmentedControl::initWithData()
 
 void CASegmentedControl::initWithView()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASegmentedControl");
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASegmentedControl");
     m_pBackgroundView = CAScale9ImageView::createWithFrame(this->getBounds());
     m_pBackgroundView->setVisible(true);
     this->insertSubview(m_pBackgroundView, -2);
@@ -201,7 +201,7 @@ void CASegmentedControl::setContentSize(const CrossApp::DSize &var)
     if (m_bRecSpe)
     {
         size.width = MAX(size.width, size.height);
-        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASegmentedControl");
+        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASegmentedControl");
         int h = atoi(map.at("height").c_str());
         size.height = (h == 0) ? size.height : h;
     }

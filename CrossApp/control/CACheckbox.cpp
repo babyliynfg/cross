@@ -54,7 +54,7 @@ CACheckbox::CACheckbox()
     m_pLabel->setNumberOfLine(1);
     this->insertSubview(m_pLabel, 1);
     
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACheckbox");
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACheckbox");
     this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
     this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
     this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
@@ -502,7 +502,7 @@ void CACheckbox::setContentSize(const DSize & var)
     DSize size = var;
 //    if (m_bRecSpe)
 //    {
-//        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("");
+//        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("");
 //        int h = atoi(map.at("height").c_str());
 //        size.height = (h == 0) ? size.height : h;
 //    }
