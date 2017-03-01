@@ -32,8 +32,8 @@ void CheckboxTest::viewDidLoad()
     });
     
     CACheckbox* box1 = CACheckbox::createWithLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.55f)));
-    box1->setImageStateNormal(CAImage::create("source_material/switch_on.png"));
-    box1->setImageStateSelected(CAImage::create("source_material/switch_off.png"));
+    box1->setImageStateNormal(CAImage::create("source_material/checkbox_normal.png"));
+    box1->setImageStateSelected(CAImage::create("source_material/checkbox_selected.png"));
     box1->setTitleStateNormal("未选中");
     box1->setTitleStateSelected("选中");
     this->getView()->addSubview(box1);
