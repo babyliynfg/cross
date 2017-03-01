@@ -93,8 +93,6 @@
 		D6ADC5F81E56A72800750771 /* CACameraBackgroundBrush.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4421E56A72700750771 /* CACameraBackgroundBrush.h */; };
 		D6ADC5F91E56A72800750771 /* CAConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4431E56A72700750771 /* CAConfiguration.cpp */; };
 		D6ADC5FA1E56A72800750771 /* CAConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4441E56A72700750771 /* CAConfiguration.h */; };
-		D6ADC5FB1E56A72800750771 /* CAConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4451E56A72700750771 /* CAConsole.cpp */; };
-		D6ADC5FC1E56A72800750771 /* CAConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4461E56A72700750771 /* CAConsole.h */; };
 		D6ADC5FD1E56A72800750771 /* CAFPSImages.c in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4471E56A72700750771 /* CAFPSImages.c */; };
 		D6ADC5FE1E56A72800750771 /* CAFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4481E56A72700750771 /* CAFPSImages.h */; };
 		D6ADC5FF1E56A72800750771 /* CAIndexPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4491E56A72700750771 /* CAIndexPath.cpp */; };
@@ -540,8 +538,6 @@
 		D6ADC4421E56A72700750771 /* CACameraBackgroundBrush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACameraBackgroundBrush.h; sourceTree = "<group>"; };
 		D6ADC4431E56A72700750771 /* CAConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAConfiguration.cpp; sourceTree = "<group>"; };
 		D6ADC4441E56A72700750771 /* CAConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAConfiguration.h; sourceTree = "<group>"; };
-		D6ADC4451E56A72700750771 /* CAConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAConsole.cpp; sourceTree = "<group>"; };
-		D6ADC4461E56A72700750771 /* CAConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAConsole.h; sourceTree = "<group>"; };
 		D6ADC4471E56A72700750771 /* CAFPSImages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CAFPSImages.c; sourceTree = "<group>"; };
 		D6ADC4481E56A72700750771 /* CAFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFPSImages.h; sourceTree = "<group>"; };
 		D6ADC4491E56A72700750771 /* CAIndexPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIndexPath.cpp; sourceTree = "<group>"; };
@@ -1146,8 +1142,6 @@
 				D6ADC4421E56A72700750771 /* CACameraBackgroundBrush.h */,
 				D6ADC4431E56A72700750771 /* CAConfiguration.cpp */,
 				D6ADC4441E56A72700750771 /* CAConfiguration.h */,
-				D6ADC4451E56A72700750771 /* CAConsole.cpp */,
-				D6ADC4461E56A72700750771 /* CAConsole.h */,
 				D6ADC4471E56A72700750771 /* CAFPSImages.c */,
 				D6ADC4481E56A72700750771 /* CAFPSImages.h */,
 				D6ADC4491E56A72700750771 /* CAIndexPath.cpp */,
@@ -1949,7 +1943,6 @@
 				D6ADC6F91E56A72800750771 /* utils.h in Headers */,
 				D6ADC70E1E56A72800750771 /* xxhash.h in Headers */,
 				D6ADC7401E56A72800750771 /* CATextEditHelper.h in Headers */,
-				D6ADC5FC1E56A72800750771 /* CAConsole.h in Headers */,
 				D6ADC6871E56A72800750771 /* CAMathUtil.h in Headers */,
 				D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */,
 				D6ADC6F11E56A72800750771 /* writer.h in Headers */,
@@ -2118,7 +2111,6 @@
 				D6ADC7091E56A72800750771 /* CAUserDefault.cpp in Sources */,
 				D6ADC6D11E56A72800750771 /* CAUIEditorParser.cpp in Sources */,
 				D6ADC5FF1E56A72800750771 /* CAIndexPath.cpp in Sources */,
-				D6ADC5FB1E56A72800750771 /* CAConsole.cpp in Sources */,
 				D6ADC6171E56A72800750771 /* CAThread.cpp in Sources */,
 				D6ADC68E1E56A72800750771 /* DownloadManager.cpp in Sources */,
 				D6ADC6FD1E56A72800750771 /* cdt.cc in Sources */,

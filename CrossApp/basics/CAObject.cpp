@@ -27,8 +27,11 @@ CAObject::CAObject(void)
 
 CAObject::~CAObject(void)
 {
-    CAScheduler::getScheduler()->unscheduleAllForTarget(this);;
-    CANotificationCenter::getInstance()->removeAllObservers(this);
+	CANotificationCenter::getInstance()->removeAllObservers(this);
+	if (CAScheduler* scheduler = CAScheduler::getScheduler())
+	{
+		scheduler->unscheduleAllForTarget(this);;
+	}
     
     CC_SAFE_RELEASE(m_pUserObject);
     

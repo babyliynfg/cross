@@ -3,10 +3,7 @@
 #ifndef __CCGLPROGRAMCACHE_H__
 #define __CCGLPROGRAMCACHE_H__
 
-#include <string>
-#include <unordered_map>
-
-#include "basics/CAObject.h"
+#include "renderer/CCGLProgram.h"
 
 /**
  * @addtogroup renderer
@@ -14,8 +11,6 @@
  */
 
 NS_CC_BEGIN
-
-class GLProgram;
 
 /** GLProgramCache
  Singleton that stores manages GLProgram objects (shaders)

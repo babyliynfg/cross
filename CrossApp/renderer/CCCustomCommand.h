@@ -3,7 +3,7 @@
 #define _CC_CUSTOMCOMMAND_H_
 
 #include "renderer/CCRenderCommand.h"
-
+#include <functional>
 /**
  * @addtogroup renderer
  * @{

@@ -1,11 +1,7 @@
 #ifndef __CCGLPROGRAMSTATECACHE_H__
 #define __CCGLPROGRAMSTATECACHE_H__
 
-#include "ccTypes.h"
-#include "basics/CASTLContainer.h"
-#include "basics/CAPoint.h"
-#include "basics/CAPoint3D.h"
-#include "basics/CAVec4.h"
+#include "renderer/CCGLProgramState.h"
 
 /**
  * @addtogroup renderer
@@ -13,10 +9,6 @@
  */
 
 NS_CC_BEGIN
-
-class GLProgram;
-
-class GLProgramState;
 
 /**
  Some GLprogram state could be shared. GLProgramStateCache is used to cache this, and will reuse the

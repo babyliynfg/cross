@@ -24,9 +24,4 @@ void CCLog(const char * pszFormat, ...)
     printf("%s\n", szBuf);
 }
 
-void CAMessageBox(const char * pszTitle, const char * pszMsg)
-{
-    MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);
-}
-
 NS_CC_END

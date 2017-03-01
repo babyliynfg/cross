@@ -131,10 +131,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\CDNewsAboutController.cpp" />
-    <ClCompile Include="..\Classes\CDNewsImageController.cpp" />
-    <ClCompile Include="..\Classes\CDNewsViewController.cpp" />
-    <ClCompile Include="..\Classes\CDShowNewsImage.cpp" />
     <ClCompile Include="..\Classes\CDUIShowAutoCollectionView.cpp" />
     <ClCompile Include="..\Classes\CDWebViewController.cpp" />
     <ClCompile Include="..\Classes\CommonHttpManager.cpp" />
@@ -174,10 +170,6 @@
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AppMacros.h" />
     <ClInclude Include="..\Classes\CDData.h" />
-    <ClInclude Include="..\Classes\CDNewsAboutController.h" />
-    <ClInclude Include="..\Classes\CDNewsImageController.h" />
-    <ClInclude Include="..\Classes\CDNewsViewController.h" />
-    <ClInclude Include="..\Classes\CDShowNewsImage.h" />
     <ClInclude Include="..\Classes\CDUIShowAutoCollectionView.h" />
     <ClInclude Include="..\Classes\CDWebViewController.h" />
     <ClInclude Include="..\Classes\CommonHttpManager.h" />

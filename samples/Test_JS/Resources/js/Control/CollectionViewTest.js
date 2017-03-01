@@ -25,7 +25,7 @@ var CollectionViewTest = ca.CAViewController.extend({
 //    this.p_Conllection.setAllowsMultipleSelection(true);
         this.p_Conllection.setCollectionViewDelegate(this);
         this.p_Conllection.setCollectionViewDataSource(this);
-        this.p_Conllection.setScrollViewDelegate(this);
+        // this.p_Conllection.setScrollViewDelegate(this);
         this.p_Conllection.setHeaderRefreshView(this.headerRefreshView);
         this.p_Conllection.setFooterRefreshView(this.footerRefreshView);
         this.p_Conllection.setHoriInterval(20);

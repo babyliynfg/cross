@@ -882,8 +882,8 @@ bool Renderer::checkVisibility(const Mat4 &transform, const DSize &size)
     Vec2 v2p = CACamera::getVisitingCamera()->projectGL(v3p);
 
     // convert content size to world coordinates
-    float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
-    float wshh = std::max(fabsf(hSizeX * transform.m[1] + hSizeY * transform.m[5]), fabsf(hSizeX * transform.m[1] - hSizeY * transform.m[5]));
+    float wshw = MAX(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
+    float wshh = MAX(fabsf(hSizeX * transform.m[1] + hSizeY * transform.m[5]), fabsf(hSizeX * transform.m[1] - hSizeY * transform.m[5]));
     
     // enlarge visible rect half size in screen coord
     visiableRect.origin.x -= wshw;

@@ -397,8 +397,6 @@
 		D69B76611E4B03A9007D9771 /* CACameraBackgroundBrush.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B765B1E4B03A9007D9771 /* CACameraBackgroundBrush.h */; };
 		D69B76621E4B03A9007D9771 /* CAConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69B765C1E4B03A9007D9771 /* CAConfiguration.cpp */; };
 		D69B76631E4B03A9007D9771 /* CAConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B765D1E4B03A9007D9771 /* CAConfiguration.h */; };
-		D69B76641E4B03A9007D9771 /* CAConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69B765E1E4B03A9007D9771 /* CAConsole.cpp */; };
-		D69B76651E4B03A9007D9771 /* CAConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B765F1E4B03A9007D9771 /* CAConsole.h */; };
 		D69B76681E4B03E1007D9771 /* CAImageCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69B76661E4B03E1007D9771 /* CAImageCube.cpp */; };
 		D69B76691E4B03E1007D9771 /* CAImageCube.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B76671E4B03E1007D9771 /* CAImageCube.h */; };
 		D69B766B1E4B059B007D9771 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B766A1E4B059B007D9771 /* OpenGL.framework */; };
@@ -884,8 +882,6 @@
 		D69B765B1E4B03A9007D9771 /* CACameraBackgroundBrush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACameraBackgroundBrush.h; sourceTree = "<group>"; };
 		D69B765C1E4B03A9007D9771 /* CAConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAConfiguration.cpp; sourceTree = "<group>"; };
 		D69B765D1E4B03A9007D9771 /* CAConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAConfiguration.h; sourceTree = "<group>"; };
-		D69B765E1E4B03A9007D9771 /* CAConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAConsole.cpp; sourceTree = "<group>"; };
-		D69B765F1E4B03A9007D9771 /* CAConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAConsole.h; sourceTree = "<group>"; };
 		D69B76661E4B03E1007D9771 /* CAImageCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCube.cpp; sourceTree = "<group>"; };
 		D69B76671E4B03E1007D9771 /* CAImageCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageCube.h; sourceTree = "<group>"; };
 		D69B766A1E4B059B007D9771 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -987,8 +983,6 @@
 				D69B765B1E4B03A9007D9771 /* CACameraBackgroundBrush.h */,
 				D69B765C1E4B03A9007D9771 /* CAConfiguration.cpp */,
 				D69B765D1E4B03A9007D9771 /* CAConfiguration.h */,
-				D69B765E1E4B03A9007D9771 /* CAConsole.cpp */,
-				D69B765F1E4B03A9007D9771 /* CAConsole.h */,
 				D64A8C961D34912200F75021 /* CARect.cpp */,
 				D64A8C971D34912200F75021 /* CARect.h */,
 				D64A8C931D34912200F75021 /* CAPoint.cpp */,
@@ -1804,7 +1798,6 @@
 				04EAB0A41956D75600198A8E /* CAViewController.h in Headers */,
 				B0B05FAC1BB1483200B891CE /* CADrawView.h in Headers */,
 				D673AC091E52E2A0007E7A5B /* EAGLView.h in Headers */,
-				D69B76651E4B03A9007D9771 /* CAConsole.h in Headers */,
 				D66BCD4F1D3DC27700587C65 /* CGSpriteFrame.h in Headers */,
 				D67ECD771E5EBEC800C9CA49 /* CACheckbox.h in Headers */,
 				04EAB0A51956D75600198A8E /* CrossApp.h in Headers */,
@@ -2116,7 +2109,6 @@
 				020F5F881BF34BAB0098C44C /* CAWaterfallView.cpp in Sources */,
 				B0F9B6691C8E7F2B00BE7B1B /* CAFTRichFont.cpp in Sources */,
 				B0B05FCB1BB1483200B891CE /* CAView.cpp in Sources */,
-				D69B76641E4B03A9007D9771 /* CAConsole.cpp in Sources */,
 				B0A11DA51AE8C5C500933BF6 /* dgif_lib.c in Sources */,
 				B0B05FA71BB1483200B891CE /* CADatePickerView.cpp in Sources */,
 				3E2154551B8180340075448E /* json_value.cpp in Sources */,

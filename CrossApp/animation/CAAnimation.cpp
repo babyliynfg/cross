@@ -57,7 +57,7 @@ namespace CAAnimation
             info.model.now += dt;
             info.model.now = MIN(info.model.now, info.model.total);
             
-            if (info.model.now >= info.model.total)
+            if (info.model.now == info.model.total)
             {
                 this->end();
             }

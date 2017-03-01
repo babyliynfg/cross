@@ -14935,13 +14935,15 @@ func
 
 /**
  * @method create
- * @param {char} arg0
- * @param {char} arg1
- * @return {ca.CAAlertView}
- */
-create : function (
-char, 
-char 
+* @param {char|char} char
+* @param {char|char} char
+* @param {Array} array
+* @return {ca.CAAlertView|ca.CAAlertView}
+*/
+create : function(
+char,
+char,
+array 
 )
 {
     return ca.CAAlertView;

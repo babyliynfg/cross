@@ -1560,37 +1560,37 @@ bool jsval_cacolor_to_opacity(JSContext *cx, JS::HandleValue v, int32_t* ret) {
 //    return ret;
 //}
 //
-//bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret)
-//{
-//    JS::RootedObject jsobj(cx);
-//    bool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
-//    JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
-//    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
-//    
-//    uint32_t len = 0;
-//    JS_GetArrayLength(cx, jsobj, &len);
-//    ret->reserve(len);
-//    for (uint32_t i=0; i < len; i++)
-//    {
-//        JS::RootedValue value(cx);
-//        if (JS_GetElement(cx, jsobj, i, &value))
-//        {
-//            if (value.isString())
-//            {
-//                JSStringWrapper valueWapper(value.toString(), cx);
-//                ret->push_back(valueWapper.get());
-//            }
-//            else
-//            {
-//                JS_ReportError(cx, "not supported type in array");
-//                return false;
-//            }
-//        }
-//    }
-//    
-//    return true;
-//}
-//
+bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret)
+{
+    JS::RootedObject jsobj(cx);
+    bool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
+    JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
+    
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+    ret->reserve(len);
+    for (uint32_t i=0; i < len; i++)
+    {
+        JS::RootedValue value(cx);
+        if (JS_GetElement(cx, jsobj, i, &value))
+        {
+            if (value.isString())
+            {
+                JSStringWrapper valueWapper(value.toString(), cx);
+                ret->push_back(valueWapper.get());
+            }
+            else
+            {
+                JS_ReportError(cx, "not supported type in array");
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
 //bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int>* ret)
 //{
 //    JS::RootedObject jsobj(cx);

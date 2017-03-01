@@ -38526,25 +38526,55 @@ bool js_crossapp_CAAlertView_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 2) {
-        const char* arg0 = nullptr;
-        const char* arg1 = nullptr;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
-        std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAlertView_create : Error processing arguments");
-        CrossApp::CAAlertView* ret = CrossApp::CAAlertView::create(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAlertView>(cx, (CrossApp::CAAlertView*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
+    
+    do {
+        if (argc == 3) {
+            const char* arg0 = nullptr;
+            std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+            if (!ok) { ok = true; break; }
+            const char* arg1 = nullptr;
+            std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
+            if (!ok) { ok = true; break; }
+            std::vector<std::string> arg2;
+            ok &= jsval_to_std_vector_string(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAAlertView* ret = CrossApp::CAAlertView::create(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAlertView>(cx, (CrossApp::CAAlertView*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
         }
     } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
+    
+    do {
+        if (argc == 2) {
+            const char* arg0 = nullptr;
+            std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+            if (!ok) { ok = true; break; }
+            const char* arg1 = nullptr;
+            std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
+            if (!ok) { ok = true; break; }
+            CrossApp::CAAlertView* ret = CrossApp::CAAlertView::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAlertView>(cx, (CrossApp::CAAlertView*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
     JS_ReportError(cx, "js_crossapp_CAAlertView_create : wrong number of arguments");
     return false;
 }

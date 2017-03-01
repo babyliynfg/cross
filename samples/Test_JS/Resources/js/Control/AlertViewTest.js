@@ -61,8 +61,6 @@ var AlertViewTest = ca.CAViewController.extend({
                 alertView.setTarget(this, this.alerCallback);
                 break;
         }
-
-
     },
     alerCallback: function (btnIdex) {
         log("btnIndex==" + btnIdex);

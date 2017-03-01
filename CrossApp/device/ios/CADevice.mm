@@ -20,15 +20,18 @@ NS_CC_BEGIN
 
 namespace CADevice
 {
-    const char* getSystemVersionWithIOS()
+    CADevice::SystemVersion getSystemVersion()
     {
-        return [[[UIDevice currentDevice]systemVersion] UTF8String];
+        CADevice::SystemVersion systemVersion;
+        systemVersion.platform = PlatForm::ios;
+        systemVersion.version = [[[UIDevice currentDevice]systemVersion] UTF8String];
+        return systemVersion;
     }
     
     const char* getAppVersion()
     {
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+        NSString *app_Version = [infoDictionary objectForKey:@"CFBundleVersion"];
         return [app_Version UTF8String];
     }
     

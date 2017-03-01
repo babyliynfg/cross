@@ -1207,7 +1207,7 @@ static bool js_crossapp_CACollectionView_setCollectionViewDelegate(JSContext *cx
         JSB_CollectionViewDelegate* nativeDelegate = new (std::nothrow) JSB_CollectionViewDelegate();
         nativeDelegate->setJSDelegate(jsDelegate);
         
-        JS_SetProperty(cx, obj, "_delegate", args.get(0));
+        JS_SetProperty(cx, obj, "m_pCollectionViewDelegate", args.get(0));
         
         CAMap<std::string,CAObject*>* userDict = static_cast<CAMap<std::string,CAObject*>*>(cobj->getUserObject());
         if (NULL == userDict)

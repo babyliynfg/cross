@@ -24,6 +24,8 @@ public:
     
     static CAAlertView* create(const char* title, const char* message, const char* buttonTitle, ...);
     
+    static CAAlertView* create(const char* title, const char* message, const std::vector<std::string>& buttonTitles);
+    
     void show();
     
     void show(const std::function<void(int)>& callback);

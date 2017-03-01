@@ -30,8 +30,11 @@ CAThemeManager::CAThemeManager(const std::string& filePath)
     {
         m_sThemePath += "/";
     }
+
     unsigned long size = 0;
-    const char* data = (const char*)FileUtils::getInstance()->getFileData(m_sThemePath + "theme.style", "rb", &size);    if (size > 0)
+    const char* data = (const char*)FileUtils::getInstance()->getFileData(m_sThemePath + "theme.style", "rb", &size);    
+	
+	if (size > 0)
     {
         std::string str;
         str.resize(size);

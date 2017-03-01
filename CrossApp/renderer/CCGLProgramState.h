@@ -9,7 +9,7 @@
 #include "basics/CAPoint.h"
 #include "basics/CAPoint3D.h"
 #include "basics/CAVec4.h"
-
+#include <functional>
 /**
  * @addtogroup renderer
  * @{
@@ -68,7 +68,7 @@ public:
      Set call back to uniform value, which could be used for array and struct.
      @param callback Callback function to send data to OpenGL pipeline.
      */
-    void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
+	void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
     /**
      Set texture to uniform value.
      @param textureId The texture handle.
@@ -125,7 +125,7 @@ protected:
             const float* pointer;
             GLsizei size;
         } v4f;
-        std::function<void(GLProgram*, Uniform*)> *callback;
+		std::function<void(GLProgram*, Uniform*)> *callback;
 
         U() { memset( this, 0, sizeof(*this) ); }
         ~U(){}
