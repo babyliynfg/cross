@@ -292,7 +292,7 @@ extern "C"
 {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_showImageView(JNIEnv *env, jclass cls, jint key)
     {
-        if (CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda)))
+        if (CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("imageView")))
         {
             imageView->setVisible(true);
         }
@@ -300,7 +300,7 @@ extern "C"
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_hideImageView(JNIEnv *env, jclass cls, jint key)
     {
-        if (CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda)))
+        if (CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("imageView")))
         {
             imageView->setVisible(false);
         }
@@ -311,7 +311,7 @@ extern "C"
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
         env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
         CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, width, height);
-        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
+        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("imageView"));
         imageView->setImage(image);
         free(data);
     }
@@ -468,7 +468,7 @@ bool CATextField::resignFirstResponder()
     
     if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
     {
-        CAImageView* ima = (CAImageView*)this->getSubviewByTag(0xbbbb);
+        CAImageView* ima = (CAImageView*)this->getSubviewByTextTag("ImageRight");
         ima->setImage(nullptr);
     }
 
@@ -487,10 +487,11 @@ bool CATextField::becomeFirstResponder()
     becomeFirstResponderID(m_u__ID);
     
     this->showNativeTextField();
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    
 	if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
 	{
-        CAImageView* ima = (CAImageView*)this->getSubviewByTag(0xbbbb);
+        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CATextField");
+        CAImageView* ima = (CAImageView*)this->getSubviewByTextTag("ImageRight");
         ima->setImage(CAImage::create(map.at("clearImage")));
 	}
     
@@ -573,7 +574,7 @@ CATextField* CATextField::createWithLayout(const DLayout& layout)
 
 bool CATextField::init()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CATextField");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
@@ -583,7 +584,7 @@ bool CATextField::init()
     
     m_pImgeView = CAImageView::createWithLayout(DLayoutFill);
 	this->addSubview(m_pImgeView);
-    m_pImgeView->setTag(0xbcda);
+    m_pImgeView->setTextTag("imageView");
     
     return true;
 }
@@ -605,7 +606,7 @@ void CATextField::update(float dt)
 void CATextField::setContentSize(const DSize& contentSize)
 {
     DSize size = contentSize;
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CATextField");
     if (m_bRecSpe)
     {
         int h = atoi(map.at("height").c_str());
@@ -613,11 +614,17 @@ void CATextField::setContentSize(const DSize& contentSize)
     }
     CAControl::setContentSize(size);
     
-    if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing && this->isFirstResponder())
+    if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
     {
-        m_eClearBtn = CATextField::ClearButtonMode::None;
-        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), map.at("clearImage"));
-        m_eClearBtn = CATextField::ClearButtonMode::WhileEditing;
+        if (CAImageView* rightMarginView = dynamic_cast<CAImageView*>(this->getSubviewByTextTag("ImageRight")))
+        {
+            DLayout layout;
+            layout.horizontal.right = 0;
+            layout.horizontal.width = m_obContentSize.height;
+            layout.vertical.height = m_obContentSize.height;
+            layout.vertical.center = 0.5f;
+            rightMarginView->setLayout(layout);
+        }
     }
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
@@ -719,11 +726,11 @@ void CATextField::setMarginImageLeft(const DSize& imgSize, const std::string& fi
 	setMarginLeft(imgSize.width);
 
 	//setimage
-	CAImageView* leftMarginView = (CAImageView*)this->getSubviewByTag(1010);
+	CAImageView* leftMarginView = (CAImageView*)this->getSubviewByTextTag("ImageLeft");
 	if (!leftMarginView)
 	{
 		leftMarginView = CAImageView::create();
-		leftMarginView->setTag(1010);
+		leftMarginView->setTextTag("ImageLeft");
 		this->addSubview(leftMarginView);
 	}
     DLayout layout;
@@ -743,11 +750,11 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
     if (m_eClearBtn == CATextField::ClearButtonMode::None)
     {
         //setimage
-        CAImageView* rightMarginView = (CAImageView*)this->getSubviewByTag(0xbbbb);
+        CAImageView* rightMarginView = (CAImageView*)this->getSubviewByTextTag("ImageRight");
         if (!rightMarginView)
         {
             rightMarginView = CAImageView::create();
-            rightMarginView->setTag(0xbbbb);
+            rightMarginView->setTextTag("ImageRight");
             this->addSubview(rightMarginView);
         }
         DLayout layout;

@@ -819,11 +819,11 @@ void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& fil
     this->setMarginLeft(imgSize.width);
     
     //setimage
-    CAImageView* leftMarginView = (CAImageView*)this->getSubviewByTag(1010);
+    CAImageView* leftMarginView = (CAImageView*)this->getSubviewByTextTag("ImageLeft");
     if (!leftMarginView)
     {
         leftMarginView = CAImageView::create();
-        leftMarginView->setTag(1010);
+        leftMarginView->setTextTag("ImageLeft");
         this->addSubview(leftMarginView);
     }
     DLayout layout;
@@ -841,12 +841,12 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
     this->setMarginRight(imgSize.width);
     
     //setimage
-    CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
+    CAButton* rightMarginView = (CAButton*)this->getSubviewByTextTag("ImageRight");
 
     if (rightMarginView == NULL)
     {
         rightMarginView = CAButton::create(CAButton::Type::Custom);
-        rightMarginView->setTag(1011);
+        rightMarginView->setTextTag("ImageRight");
         this->addSubview(rightMarginView);
     }
     DLayout layout;
@@ -865,7 +865,7 @@ void CATextField::setClearButtonMode(CATextField::ClearButtonMode var)
     {
         this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
         const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CATextField");
-        CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
+        CAButton* rightMarginView = (CAButton*)this->getSubviewByTextTag("ImageRight");
         rightMarginView->setImageForState(CAControl::State::Normal, CAImage::create(map.at("clearImage")));
         rightMarginView->setImageColorForState(CAControl::State::Highlighted, ccc4Int(0xff666666));
         rightMarginView->addTarget([=]()
@@ -890,7 +890,7 @@ void CATextField::setClearButtonMode(CATextField::ClearButtonMode var)
     }
     else
     {
-        CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
+        CAButton* rightMarginView = (CAButton*)this->getSubviewByTextTag("ImageRight");
         if (rightMarginView)
         {
             rightMarginView->removeFromSuperview();
