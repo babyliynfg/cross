@@ -36,8 +36,6 @@ void SwitchTest::viewDidLoad()
     CASwitch* customSwitch2 = CASwitch::createWithLayout(DLayout(DHorizontalLayout_R_W(150, 100), DVerticalLayout_T_H(350, 20)), CASwitch::Type::SquareRect);
     customSwitch2->setTag(101);
     customSwitch2->setIsOn(true, false);
-    customSwitch2->setOnImage(CAImage::create("image/Switch_on.png"));
-    customSwitch2->setOffImage(CAImage::create("image/Switch_off.png"));
     customSwitch2->setTarget([=](bool on)
     {
         if (!on)

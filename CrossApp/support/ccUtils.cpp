@@ -42,7 +42,7 @@ CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const st
     
 CC_DLL unsigned int hex2Int(const std::string& hexStr)
 {
-    unsigned int x = 0;
+    unsigned int x = 0xffffffff;
     
     sscanf(hexStr.c_str(), "%x", &x);
     

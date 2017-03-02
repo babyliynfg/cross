@@ -191,13 +191,13 @@ CAView* CAStepper::getTailorImageAtIndex(int i)
     DRect rect;
     if (m_pOrientation==CAStepper::Orientation::Horizontal)
     {
-        rect.origin = DPoint(i*m_pBackgroundImageView->getBounds().size.width/2,0);
-        rect.size   = DSize(m_pBackgroundImageView->getBounds().size.width/2,m_pBackgroundImageView->getBounds().size.height);
+        rect.origin = DPoint(i*m_pBackgroundImageView->m_obContentSize.width/2,0);
+        rect.size   = DSize(m_pBackgroundImageView->m_obContentSize.width/2,m_pBackgroundImageView->m_obContentSize.height);
     }
     else
     {
-        rect.origin = DPoint(0,i*m_pBackgroundImageView->getBounds().size.height/2);
-        rect.size   = DSize(m_pBackgroundImageView->getBounds().size.width,m_pBackgroundImageView->getBounds().size.height/2);
+        rect.origin = DPoint(0,i*m_pBackgroundImageView->m_obContentSize.height/2);
+        rect.size   = DSize(m_pBackgroundImageView->m_obContentSize.width,m_pBackgroundImageView->m_obContentSize.height/2);
     }
     
     imageView = CAImageView::createWithImage(render->getImageView()->getImage());
@@ -335,16 +335,16 @@ void CAStepper::onEnterTransitionDidFinish()
         m_pDividerImageView->retain();
         if (m_pOrientation==CAStepper::Orientation::Horizontal)
         {
-            m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
-                                                  getBounds().size.height/2,
+            m_pDividerImageView->setCenter(DRect(m_obContentSize.width/2,
+                                                  m_obContentSize.height/2,
                                                   LINE_WIDTH,
-                                                  getBounds().size.height));
+                                                  m_obContentSize.height));
         }
         else
         {
-            m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
-                                                  getBounds().size.height/2,
-                                                  getBounds().size.width,
+            m_pDividerImageView->setCenter(DRect(m_obContentSize.width/2,
+                                                  m_obContentSize.height/2,
+                                                  m_obContentSize.width,
                                                   LINE_WIDTH));
         }
         
@@ -353,7 +353,7 @@ void CAStepper::onEnterTransitionDidFinish()
         addSubview(m_pDividerImageView);
     }
     
-    //float div = (m_pDividerImageView) ? m_pDividerImageView->getBounds().size.width/2 : 0;
+    //float div = (m_pDividerImageView) ? m_pDividerImageView->m_obContentSize.width/2 : 0;
     
     // init increment
     if (!m_pIncrementImageView)
@@ -361,15 +361,15 @@ void CAStepper::onEnterTransitionDidFinish()
         m_pIncrementImageView = CAImageView::createWithImage(m_mIncrementImages.at(CAStepper::State::Normal));
         m_pIncrementImageView->retain();
         if (m_pOrientation==CAStepper::Orientation::Horizontal) {
-            int tempw = MIN(getBounds().size.width, getBounds().size.height);
+            int tempw = MIN(m_obContentSize.width, m_obContentSize.height);
             m_pIncrementImageView->setScaleType(CAImageView::ScaleType::FitViewByHorizontal);
-            m_pIncrementImageView->setCenter(DRect(getBounds().size.width/4*3, getBounds().size.height/2,
+            m_pIncrementImageView->setCenter(DRect(m_obContentSize.width/4*3, m_obContentSize.height/2,
                                                    tempw,
                                                    tempw));
         }else{
-            int tempw = MIN(getBounds().size.width, getBounds().size.height);
+            int tempw = MIN(m_obContentSize.width, m_obContentSize.height);
             m_pIncrementImageView->setScaleType(CAImageView::ScaleType::FitViewByVertical);
-            m_pIncrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4,
+            m_pIncrementImageView->setCenter(DRect(m_obContentSize.width/2, m_obContentSize.height/4,
                                                    tempw,
                                                    tempw));
         }
@@ -383,15 +383,15 @@ void CAStepper::onEnterTransitionDidFinish()
         m_pDecrementImageView = CAImageView::createWithImage(m_mDecrementImages.at(CAStepper::State::Normal));
         m_pDecrementImageView->retain();
         if (m_pOrientation==CAStepper::Orientation::Horizontal) {
-            int tempw = MIN(getBounds().size.width, getBounds().size.height);
+            int tempw = MIN(m_obContentSize.width, m_obContentSize.height);
             m_pDecrementImageView->setScaleType(CAImageView::ScaleType::FitViewByHorizontal);
-            m_pDecrementImageView->setCenter(DRect(getBounds().size.width/4, getBounds().size.height/2,
+            m_pDecrementImageView->setCenter(DRect(m_obContentSize.width/4, m_obContentSize.height/2,
                                                    tempw,
                                                    tempw));
         }else{
-            int tempw = MIN(getBounds().size.width, getBounds().size.height);
+            int tempw = MIN(m_obContentSize.width, m_obContentSize.height);
             m_pDecrementImageView->setScaleType(CAImageView::ScaleType::FitViewByVertical);
-            m_pDecrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4*3,
+            m_pDecrementImageView->setCenter(DRect(m_obContentSize.width/2, m_obContentSize.height/4*3,
                                                    tempw,
                                                    tempw));
         }
@@ -461,14 +461,14 @@ void CAStepper::click(CATouch* pTouch)
     DRect increseRect, decreaseRect;
     if (m_pOrientation==CAStepper::Orientation::Horizontal) {
         increseRect = getBounds();
-        increseRect.origin.x = getBounds().size.width/2;
-        increseRect.size.width = getBounds().size.width/2;
+        increseRect.origin.x = m_obContentSize.width/2;
+        increseRect.size.width = m_obContentSize.width/2;
         decreaseRect = increseRect;
         decreaseRect.origin.x = 0;
     }else{
         decreaseRect = getBounds();
-        decreaseRect.origin.y = getBounds().size.height/2;
-        decreaseRect.size.height = getBounds().size.height/2;
+        decreaseRect.origin.y = m_obContentSize.height/2;
+        decreaseRect.size.height = m_obContentSize.height/2;
         increseRect = decreaseRect;
         increseRect.origin.y = 0;
     }
@@ -513,30 +513,30 @@ void CAStepper::setContentSize(const DSize & var)
 
         if (m_pOrientation==CAStepper::Orientation::Horizontal)
         {
-            m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
-                                                  getBounds().size.height/2,
+            m_pDividerImageView->setCenter(DRect(m_obContentSize.width/2,
+                                                  m_obContentSize.height/2,
                                                   LINE_WIDTH,
-                                                  getBounds().size.height));
+                                                  m_obContentSize.height));
         }else{
-            m_pDividerImageView->setCenter(DRect(getBounds().size.width/2,
-                                                  getBounds().size.height/2,
-                                                  getBounds().size.width,
+            m_pDividerImageView->setCenter(DRect(m_obContentSize.width/2,
+                                                  m_obContentSize.height/2,
+                                                  m_obContentSize.width,
                                                    LINE_WIDTH));
         }
     }
     
-    //float div = (m_pDividerImageView) ? m_pDividerImageView->getBounds().size.width/2 : 0;
+    //float div = (m_pDividerImageView) ? m_pDividerImageView->m_obContentSize.width/2 : 0;
     
     // init increment
     if (m_pIncrementImageView) {
         if (m_pOrientation==CAStepper::Orientation::Horizontal) {
-            int tempw = MIN(getBounds().size.width, getBounds().size.height);
-            m_pIncrementImageView->setCenter(DRect(getBounds().size.width/4*3, getBounds().size.height/2,
+            int tempw = MIN(m_obContentSize.width, m_obContentSize.height);
+            m_pIncrementImageView->setCenter(DRect(m_obContentSize.width/4*3, m_obContentSize.height/2,
                                                     tempw,
                                                     tempw));
         }else{
-            int tempw = MIN(getBounds().size.width, getBounds().size.height);
-            m_pIncrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4,
+            int tempw = MIN(m_obContentSize.width, m_obContentSize.height);
+            m_pIncrementImageView->setCenter(DRect(m_obContentSize.width/2, m_obContentSize.height/4,
                                                     tempw,
                                                     tempw));
         }
@@ -545,13 +545,13 @@ void CAStepper::setContentSize(const DSize & var)
     // init decrement
     if (m_pDecrementImageView) {
         if (m_pOrientation==CAStepper::Orientation::Horizontal) {
-            int tempw = MIN(getBounds().size.width, getBounds().size.height);
-            m_pDecrementImageView->setCenter(DRect(getBounds().size.width/4, getBounds().size.height/2,
+            int tempw = MIN(m_obContentSize.width, m_obContentSize.height);
+            m_pDecrementImageView->setCenter(DRect(m_obContentSize.width/4, m_obContentSize.height/2,
                                                     tempw,
                                                     tempw));
         }else{
-            int tempw = MIN(getBounds().size.width, getBounds().size.height);
-            m_pDecrementImageView->setCenter(DRect(getBounds().size.width/2, getBounds().size.height/4*3,
+            int tempw = MIN(m_obContentSize.width, m_obContentSize.height);
+            m_pDecrementImageView->setCenter(DRect(m_obContentSize.width/2, m_obContentSize.height/4*3,
                                                     tempw,
                                                     tempw));
         }
