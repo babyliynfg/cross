@@ -114,7 +114,7 @@ void CAActivityIndicatorView::onExit()
 void CAActivityIndicatorView::setStyle(CAActivityIndicatorView::Style style)
 {
     m_style = style;
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAActivityIndicatorView");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CAActivityIndicatorView");
     if (m_style != CAActivityIndicatorView::Style::Image)
     {
         DRect center = this->getBounds();

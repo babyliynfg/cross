@@ -293,7 +293,7 @@ CANavigationController::CANavigationController()
     m_pView->setDisplayRange(false);
     this->setTouchMoved(true);
     this->setVerticalScrollEnabled(false);
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CANavigationBar");
     this->setNavigationBarBackgroundImage(CAImage::create(map.at("backgroundView")));
     m_sNavigationBarTitleColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor")));
 }
@@ -1206,7 +1206,7 @@ CATabBarController::CATabBarController()
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
     
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATabBar");
     
     this->setTabBarBackgroundImage(CAImage::create(map.at("backgroundView_normal")));
     

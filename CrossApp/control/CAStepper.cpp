@@ -36,7 +36,7 @@ CAStepper::CAStepper(CAStepper::Orientation type)
 , m_pDividerImageView(nullptr)
 , m_pOrientation(type)
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAStepper");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CAStepper");
     this->setBackgroundImage(CAStepper::State::Normal, CAImage::create(map.at("backgroundView_normal")));
     this->setBackgroundImage(CAStepper::State::Highlighted, CAImage::create(map.at("backgroundView_selected")));
     this->setIncrementImage(CAStepper::State::Normal, CAImage::create(map.at("incImage_normal")));
@@ -488,7 +488,7 @@ void CAStepper::setContentSize(const DSize & var)
     DSize size = var;
     if (m_bRecSpe)
     {
-        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAStepper");
+        const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CAStepper");
         int w = atoi(map.at("width").c_str());
         int h = atoi(map.at("height").c_str());
         if (m_pOrientation == CAStepper::Orientation::Horizontal)

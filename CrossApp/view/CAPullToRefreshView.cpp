@@ -54,7 +54,7 @@ CAPullToRefreshView* CAPullToRefreshView::create(CAPullToRefreshView::Type type)
 
 bool CAPullToRefreshView::init()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPullToRefreshView");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CAPullToRefreshView");
     switch (m_eType)
     {
         case CAPullToRefreshView::Type::Header:

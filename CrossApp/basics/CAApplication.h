@@ -313,6 +313,7 @@ protected:
     friend class CCEGLViewProtocol;
 };
 
+#define GETINSTANCE_THEMEMAP(__KEY__) CAApplication::getApplication()->getThemeManager()->getThemeMap(__KEY__)
 
 class CCDisplayLinkDirector : public CAApplication
 {

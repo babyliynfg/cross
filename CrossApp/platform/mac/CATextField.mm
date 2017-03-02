@@ -568,7 +568,7 @@ CATextField* CATextField::createWithLayout(const DLayout& layout)
 
 bool CATextField::init()
 {
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATextField");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
@@ -607,7 +607,7 @@ void CATextField::update(float dt)
 void CATextField::setContentSize(const DSize& contentSize)
 {
     DSize size = contentSize;
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATextField");
     if (m_bRecSpe)
     {
         int h = atoi(map.at("height").c_str());
@@ -864,7 +864,7 @@ void CATextField::setClearButtonMode(CATextField::ClearButtonMode var)
     if (var == CATextField::ClearButtonMode::WhileEditing)
     {
         this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
-        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+        const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATextField");
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTextTag("ImageRight");
         rightMarginView->setImageForState(CAControl::State::Normal, CAImage::create(map.at("clearImage")));
         rightMarginView->setImageColorForState(CAControl::State::Highlighted, ccc4Int(0xff666666));
