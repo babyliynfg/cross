@@ -1,4 +1,4 @@
-ca.ENGINE_VERSION = "CrossApp-JS v1.4";
+ca.ENGINE_VERSION = "CrossApp-JS v2.0.0";
 
 ca.LANGUAGE_ENGLISH    = 0;
 ca.LANGUAGE_CHINESE    = 1;
@@ -13,66 +13,63 @@ ca.LANGUAGE_HUNGARIAN  = 9;
 ca.LANGUAGE_PORTUGUESE = 10;
 ca.LANGUAGE_ARABIC     = 11;
 
-ca.CAActivityIndicatorViewStyle = {};
-ca.CAActivityIndicatorViewStyle.WhiteLarge = 0;
-ca.CAActivityIndicatorViewStyle.GrayLarge = 1;
-ca.CAActivityIndicatorViewStyle.White = 2;
-ca.CAActivityIndicatorViewStyle.Gray = 3;
-ca.CAActivityIndicatorViewStyle.Image = 4;
+ca.CAActivityIndicatorView.Style = {};
+ca.CAActivityIndicatorView.Style.WhiteLarge = 0;
+ca.CAActivityIndicatorView.Style.GrayLarge = 1;
+ca.CAActivityIndicatorView.Style.White = 2;
+ca.CAActivityIndicatorView.Style.Gray = 3;
+ca.CAActivityIndicatorView.Style.Image = 4;
 
 //CAAutoCollectionView
-ca.Orientation = {};
-ca.Orientation.Horizontal = 0;
-ca.Orientation.Vertical = 1;
+ca.CAAutoCollectionView.Orientation = {};
+ca.CAAutoCollectionView.Orientation.Horizontal = 0;
+ca.CAAutoCollectionView.Orientation.Vertical = 1;
 
-ca.CellHoriAlign = {};
-ca.CellHoriAlign.HoriAlignLeft = 0;
-ca.CellHoriAlign.HoriAlignCenter = 1;
-ca.CellHoriAlign.HoriAlignRight = 2;
+ca.CAAutoCollectionView.CellHoriAlign = {};
+ca.CAAutoCollectionView.CellHoriAlign.HoriAlignLeft = 0;
+ca.CAAutoCollectionView.CellHoriAlign.HoriAlignCenter = 1;
+ca.CAAutoCollectionView.CellHoriAlign.HoriAlignRight = 2;
 
-ca.CellVertAlign = {};
-ca.CellVertAlign.VertAlignTop = 0;
-ca.CellVertAlign.VertAlignCenter = 1;
-ca.CellVertAlign.VertAlignBottom = 2;
+ca.CAAutoCollectionView.CellVertAlign = {};
+ca.CAAutoCollectionView.CellVertAlign.VertAlignTop = 0;
+ca.CAAutoCollectionView.CellVertAlign.VertAlignCenter = 1;
+ca.CAAutoCollectionView.CellVertAlign.VertAlignBottom = 2;
 
 ca.CABarVerticalAlignment = {};
 ca.CABarVerticalAlignment.Top = 0,
 ca.CABarVerticalAlignment.Bottom = 1;
 
-ca.CAButtonType = {};
-ca.CAButtonType.Custom = 0;
-ca.CAButtonType.SquareRect = 1;
-ca.CAButtonType.RoundedRect = 2;
+ca.CAButton.Type = {};
+ca.CAButton.Type.Custom = 0;
+ca.CAButton.Type.SquareRect = 1;
+ca.CAButton.Type.RoundedRect = 2;
 
-ca.CAControlEvents = {};
-ca.CAControlEvents.TouchDown = 0;
-ca.CAControlEvents.TouchDownRepeat = 1;
-ca.CAControlEvents.TouchMoved = 2;
-ca.CAControlEvents.TouchMovedOutSide = 3;
-ca.CAControlEvents.TouchUpInSide = 4;
-ca.CAControlEvents.TouchUpOutSide = 5;
-ca.CAControlEvents.TouchValueChanged = 6;
-ca.CAControlEvents.TouchLongPress = 7;
-ca.CAControlEvents.TouchCancelled = 8;
-ca.CAControlEvents.Max = 9;
+ca.CAButton.Event = {};
+ca.CAButton.Event.TouchDown = 0;
+ca.CAButton.Event.TouchDownRepeat = 1;
+ca.CAButton.Event.TouchMoved = 2;
+ca.CAButton.Event.TouchMovedOutSide = 3;
+ca.CAButton.Event.TouchUpInSide = 4;
+ca.CAButton.Event.TouchUpOutSide = 5;
+ca.CAButton.Event.TouchLongPress = 6;
+ca.CAButton.Event.TouchCancelled = 7;
 
-ca.CAControlState = {};
-ca.CAControlState.Normal = 0;
-ca.CAControlState.Highlighted = 1;
-ca.CAControlState.Disabled = 2;
-ca.CAControlState.Selected = 3;
-ca.CAControlState.All = 4;
+ca.CAControl.State = {};
+ca.CAControl.State.Normal = 0;
+ca.CAControl.State.Highlighted = 1;
+ca.CAControl.State.Selected = 2;
+ca.CAControl.State.Disabled = 3;
 
-ca.CADatePickerMode = {};
-ca.CADatePickerMode.CADatePickerModeTime = 0;
-ca.CADatePickerMode.CADatePickerModeDate = 1;
-ca.CADatePickerMode.CADatePickerModeDateAndTime = 2;
-ca.CADatePickerMode.CADatePickerModeCountDownTimer = 3;
+ca.CADatePickerView.Mode = {};
+ca.CADatePickerView.Mode.Time = 0;
+ca.CADatePickerView.Mode.Date = 1;
+ca.CADatePickerView.Mode.DateAndTime = 2;
+ca.CADatePickerView.Mode.CountDownTimer = 3;
 
 ca.CADeviceIdiom = {};
-ca.CADeviceIdiom.CADeviceIdiomUnknown = -1;
-ca.CADeviceIdiom.CADeviceIdiomPad = 0;
-ca.CADeviceIdiom.CADeviceIdiomPhone = 1;
+ca.CADeviceIdiom.Unknown = -1;
+ca.CADeviceIdiom.iPad = 0;
+ca.CADeviceIdiom.iPhone = 1;
 
 ca.CABlueToothState = {};
 ca.CABlueToothState.CABLUETOOTHOEPNSUCCESS = 0;
@@ -88,10 +85,19 @@ ca.CABlueToothType.CABLUETOOTHCLOSE = 1;
 ca.CABlueToothType.CABLUETOOTHDISCOVERY = 3 ;
 ca.CABlueToothType.CABLUETOOTHCANCELDISCOVERY = 4;
 
-ca.CANetWorkType = {};
-ca.CANetWorkType.CANetWorkTypeWifi= 0;
-ca.CANetWorkType.CANetWorkType3G = 1;
-ca.CANetWorkType.CANetWorkTypeNone =2;
+ca.CADevice = {};
+ca.CADevice.NetWorkData = {};
+ca.CADevice.NetWorkData.Wifi= 0;
+ca.CADevice.NetWorkData.ReachableViaWWAN = 1;
+ca.CADevice.NetWorkData.None =2;
+
+ca.CADevice.VolumeData = {};
+ca.CADevice.VolumeData.Music= 0;
+ca.CADevice.VolumeData.System = 1;
+ca.CADevice.VolumeData.Ring =2;
+ca.CADevice.VolumeData.VoicCall= 0;
+ca.CADevice.VolumeData.Alarm = 1;
+ca.CADevice.VolumeData.Notification =2;
 
 ca.ETextAlign = {};
 ca.ETextAlign.kAlignCenter        = 0x33, ///< Horizontal center and vertical center.
@@ -104,120 +110,124 @@ ca.ETextAlign.kAlignBottomLeft    = 0x21, ///< Horizontal left and vertical bott
 ca.ETextAlign.kAlignLeft          = 0x31, ///< Horizontal left and vertical center.
 ca.ETextAlign.kAlignTopLeft       = 0x11, ///< Horizontal left and vertical top.
 
-ca.PixelFormat = {};
-ca.PixelFormat.PixelFormat_RGBA8888 = 0;
-ca.PixelFormat.PixelFormat_RGB888 =1;
-ca.PixelFormat.PixelFormat_RGB565 =2;
-ca.PixelFormat.PixelFormat_A8 =3;
-ca.PixelFormat.PixelFormat_I8 =4;
-ca.PixelFormat.PixelFormat_AI88 =5;
-ca.PixelFormat.PixelFormat_RGBA4444 =6;
-ca.PixelFormat.PixelFormat_RGB5A1 =7;
-ca.PixelFormat.PixelFormat_Default = 0,
+ca.CAImage.PixelFormat = {};
+ca.CAImage.PixelFormat.RGBA8888 = 0;
+ca.CAImage.PixelFormat.RGB888 =1;
+ca.CAImage.PixelFormat.RGB565 =2;
+ca.CAImage.PixelFormat.A8 =3;
+ca.CAImage.PixelFormat.I8 =4;
+ca.CAImage.PixelFormat.AI88 =5;
+ca.CAImage.PixelFormat.RGBA4444 =6;
+ca.CAImage.PixelFormat.RGB5A1 =7;
+ca.CAImage.PixelFormat.DEFAULT = 0,
 
-ca.Format = {};
-ca.Format.JPG = 0;//! JPEG
-ca.Format.PNG = 1;//! PNG
-ca.Format.GIF = 2;//! GIF
-ca.Format.TIFF = 3;//! TIFF
-ca.Format.WEBP = 4;//! WebP
-ca.Format.ETC = 5;//! ETC
-ca.Format.TGA = 6;//! TGA
-ca.Format.RAW_DATA = 7;//! Raw Data
-ca.Format.UNKOWN = 8;//! Unknown format
+ca.CAImage.Format = {};
+ca.CAImage.Format.JPG = 0;//! JPEG
+ca.CAImage.Format.PNG = 1;//! PNG
+ca.CAImage.Format.GIF = 2;//! GIF
+ca.CAImage.Format.TIFF = 3;//! TIFF
+ca.CAImage.Format.WEBP = 4;//! WebP
+ca.CAImage.Format.ETC = 5;//! ETC
+ca.CAImage.Format.TGA = 6;//! TGA
+ca.CAImage.Format.RAW_DATA = 7;//! Raw Data
+ca.CAImage.Format.UNKOWN = 8;//! Unknown format
 
 ca.AsyncType = {};
 ca.AsyncType.AsyncImageType = 0;
 ca.AsyncType.AsyncStringType = 1;
 
-ca.CAImageViewScaleType = {};
-ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageXY = 0;         //塞满
-ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageCrop = 1;           //塞满裁剪，不变形, 居中
-ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside = 2;         //显示全部，不变形, 居中
-ca.CAImageViewScaleType.CAImageViewScaleTypeFitViewByHorizontal = 3;    //显示全部，不变形，横向适应图片
-ca.CAImageViewScaleType.CAImageViewScaleTypeFitViewByVertical = 4;       //显示全部，不变形，纵横适应图片
+ca.CAImageView.ScaleType = {};
+ca.CAImageView.ScaleType.FitImageXY = 0;         //塞满
+ca.CAImageView.ScaleType.FitImageCrop = 1;           //塞满裁剪，不变形, 居中
+ca.CAImageView.ScaleType.FitImageInside = 2;         //显示全部，不变形, 居中
+ca.CAImageView.ScaleType.FitViewByHorizontal = 3;    //显示全部，不变形，横向适应图片
+ca.CAImageView.ScaleType.FitViewByVertical = 4;       //显示全部，不变形，纵横适应图片
 
-ca.ccKeypadMSGType = {};
-ca.ccKeypadMSGType.kTypeBackClicked = 1;
-ca.ccKeypadMSGType.kTypeMenuClicked = 2;
+ca.CAKeypadDispatcher = {};
+ca.CAKeypadDispatcher.KeypadMSGType = {};
+ca.CAKeypadDispatcher.KeypadMSGType.BackClicked = 1;
+ca.CAKeypadDispatcher.KeypadMSGType.MenuClicked = 2;
 
-ca.DHorizontalLayoutType = {};
-ca.DHorizontalLayoutType.L_R = 0;
-ca.DHorizontalLayoutType.L_W = 1;
-ca.DHorizontalLayoutType.R_W = 2;
-ca.DHorizontalLayoutType.W_C = 3;
-ca.DHorizontalLayoutType.NW_C = 4;
+ca.DHorizontalLayout = {};
+ca.DHorizontalLayout.Type = {};
+ca.DHorizontalLayout.Type.L_R = 0;
+ca.DHorizontalLayout.Type.L_W = 1;
+ca.DHorizontalLayout.Type.R_W = 2;
+ca.DHorizontalLayout.Type.W_C = 3;
+ca.DHorizontalLayout.Type.NW_C = 4;
 
-ca.DVerticalLayoutType = {};
-ca.DVerticalLayoutType.T_B = 0;
-ca.DVerticalLayoutType.T_H = 1;
-ca.DVerticalLayoutType.B_H = 2;
-ca.DVerticalLayoutType.H_C = 3;
-ca.DVerticalLayoutType.NH_C = 4;
+ca.DVerticalLayout = {};
+ca.DVerticalLayout.Type = {};
+ca.DVerticalLayout.Type.T_B = 0;
+ca.DVerticalLayout.Type.T_H = 1;
+ca.DVerticalLayout.Type.B_H = 2;
+ca.DVerticalLayout.Type.H_C = 3;
+ca.DVerticalLayout.Type.NH_C = 4;
 
-ca.CAPageControlStyle = {};
-ca.CAPageControlStyle.Dot = 0;
-ca.CAPageControlStyle.Round = 1;
-ca.CAPageControlStyle.Rectangle = 2;
+ca.CAPageControl.Style = {};
+ca.CAPageControl.Style.Dot = 0;
+ca.CAPageControl.Style.Round = 1;
+ca.CAPageControl.Style.Rectangle = 2;
 
 ca.CAProgressStyle = {};
 ca.CAProgressStyle.Default = 0;
 ca.CAProgressStyle.Bar = 1;
 
-ca.PullToRefreshType = {};
-ca.PullToRefreshType.Header = 0;
-ca.PullToRefreshType.Footer = 1;
-ca.PullToRefreshType.Custom = 2;
+ca.CAPullToRefreshView.Type = {};
+ca.CAPullToRefreshView.Type.Header = 0;
+ca.CAPullToRefreshView.Type.Footer = 1;
+ca.CAPullToRefreshView.Type.Custom = 2;
 
-ca.MultitouchGesture = {};
-ca.MultitouchGesture.Zoom = 0;
-ca.MultitouchGesture.Rotate = 1;
-ca.MultitouchGesture.ZoomAndRotate = 2;
-ca.MultitouchGesture.None = 3;
+ca.CAScrollView.MultitouchGesture = {};
+ca.CAScrollView.MultitouchGesture.Zoom = 0;
+ca.CAScrollView.MultitouchGesture.Rotate = 1;
+ca.CAScrollView.MultitouchGesture.ZoomAndRotate = 2;
+ca.CAScrollView.MultitouchGesture.None = 3;
 
 ca.CAIndicatorType = {};
-ca.CAIndicatorType.Horizontal = 0;
-ca.CAIndicatorType.Vertical = 1;
+ca.CAIndicatorType.Orientation = {};
+ca.CAIndicatorType.Orientation.Horizontal = 0;
+ca.CAIndicatorType.Orientation.Vertical = 1;
 
-ca.CAStepperOrientation = {};
-ca.CAStepperOrientation.Horizontal = 0;
-ca.CAStepperOrientation.Vertical = 1;
+ca.CAStepper.Orientation = {};
+ca.CAStepper.Orientation.Horizontal = 0;
+ca.CAStepper.Orientation.Vertical = 1;
 
-ca.KeyboardType = {};
-ca.KeyboardType.Default = 0;
-ca.KeyboardType.NumbersAndPunctuation =1;
-ca.KeyboardType.URL = 2;
-ca.KeyboardType.NumberPad = 3;
-ca.KeyboardType.PhonePad = 4;
-ca.KeyboardType.NamePhonePad = 5;
-ca.KeyboardType.EmailAddress = 6;
+ca.CATextField.KeyboardType = {};
+ca.CATextField.KeyboardType.Default = 0;
+ca.CATextField.KeyboardType.NumbersAndPunctuation =1;
+ca.CATextField.KeyboardType.URL = 2;
+ca.CATextField.KeyboardType.NumberPad = 3;
+ca.CATextField.KeyboardType.PhonePad = 4;
+ca.CATextField.KeyboardType.NamePhonePad = 5;
+ca.CATextField.KeyboardType.EmailAddress = 6;
 
-ca.ReturnType = {};
-ca.ReturnType.Done=0,
-ca.ReturnType.Go = 1;
-ca.ReturnType.Next = 2;
-ca.ReturnType.Search = 3;
-ca.ReturnType.Send = 4;
+ca.CATextField.ReturnType = {};
+ca.CATextField.ReturnType.Done=0,
+ca.CATextField.ReturnType.Go = 1;
+ca.CATextField.ReturnType.Next = 2;
+ca.CATextField.ReturnType.Search = 3;
+ca.CATextField.ReturnType.Send = 4;
 
-ca.ClearButtonMode = {};
-ca.ClearButtonMode.None = 0,
-ca.ClearButtonMode.WhileEditing = 1;
+ca.CATextField.ClearButtonMode = {};
+ca.CATextField.ClearButtonMode.None = 0,
+ca.CATextField.ClearButtonMode.WhileEditing = 1;
 
-ca.TextFieldAlign = {};
-ca.TextFieldAlign.Left = 0;
-ca.TextFieldAlign.Center = 1;
-ca.TextFieldAlign.Right = 2;
+ca.CATextField.Align = {};
+ca.CATextField.Align.Left = 0;
+ca.CATextField.Align.Center = 1;
+ca.CATextField.Align.Right = 2;
 
-ca.TextViewAlign = {};
-ca.TextViewAlign.Left = 0;
-ca.TextViewAlign.Center = 1;
-ca.TextViewAlign.Right = 2;
+ca.CATextView.Align = {};
+ca.CATextView.Align.Left = 0;
+ca.CATextView.Align.Center = 1;
+ca.CATextView.Align.Right = 2;
 
-//CATextVie与CATextField不统一
-//ca.ReturnType.Default=0,
-//ca.ReturnType.Done,
-//ca.ReturnType.Send,
-//ca.ReturnType.Next
+ca.CATextView.ReturnType = {};
+ca.CATextView.ReturnType.Default = 0,
+ca.CATextView.ReturnType.Done =1 ;
+ca.CATextView.ReturnType.Send =2 ;
+ca.CATextView.ReturnType.Next = 3 ;
 
 ca.VPError = {};
 ca.VPError.kErrorNone = 0;
@@ -244,30 +254,30 @@ ca.CALayoutLinearType = {};
 ca.CALayoutLinearType.CALayoutLinearHorizontal = 0;
 ca.CALayoutLinearType.CALayoutLinearVertical = 1;
 
-ca.CAViewAnimationCurve = {};
-ca.CAViewAnimationCurve.CAViewAnimationCurveLinear = 0;
-ca.CAViewAnimationCurve.CAViewAnimationCurveEaseOut = 1;          // slow at end
-ca.CAViewAnimationCurve.CAViewAnimationCurveEaseIn = 2;           // slow at beginning
-ca.CAViewAnimationCurve.CAViewAnimationCurveEaseInOut = 3;         // slow at beginning and end
+ca.CAViewAnimation.Curve = {};
+ca.CAViewAnimation.Curve.Linear = 0;
+ca.CAViewAnimation.Curve.EaseOut = 1;          // slow at end
+ca.CAViewAnimation.Curve.EaseIn = 2;           // slow at beginning
+ca.CAViewAnimation.Curve.EaseInOut = 3;         // slow at beginning and end
 
 ca.CAVerticalTextAlignment = {};
-ca.CAVerticalTextAlignment.CAVerticalTextAlignmentTop = 0;
-ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter = 1;
-ca.CAVerticalTextAlignment.CAVerticalTextAlignmentBottom = 2;
+ca.CAVerticalTextAlignment.Top = 0;
+ca.CAVerticalTextAlignment.Center = 1;
+ca.CAVerticalTextAlignment.Bottom = 2;
 
 ca.CATextAlignment = {};
-ca.CATextAlignment.CATextAlignmentLeft = 0;
-ca.CATextAlignment.CATextAlignmentCenter = 1;
-ca.CATextAlignment.CATextAlignmentRight = 2;
+ca.CATextAlignment.Left = 0;
+ca.CATextAlignment.Center = 1;
+ca.CATextAlignment.Right = 2;
 
 ca.CAStatusBarStyle = {};
-ca.CAStatusBarStyle.CAStatusBarStyleDefault = 0; // Dark content, for use on light backgrounds
-ca.CAStatusBarStyle.CAStatusBarStyleLightContent = 1; // Light content, for use on dark backgrounds
+ca.CAStatusBarStyle.Default = 0; // Dark content, for use on light backgrounds
+ca.CAStatusBarStyle.LightContent = 1; // Light content, for use on dark backgrounds
 
 ca.CAInterfaceOrientation = {};
-ca.CAInterfaceOrientation.CAInterfaceOrientationUnknown  = 0;
-ca.CAInterfaceOrientation.CAInterfaceOrientationPortrait = 1;
-ca.CAInterfaceOrientation.CAInterfaceOrientationLandscape = 2;
+ca.CAInterfaceOrientation.Unknown  = 0;
+ca.CAInterfaceOrientation.Portrait = 1;
+ca.CAInterfaceOrientation.Landscape = 2;
 
 ca.ConversionResult = {};
 ca.ConversionResult.conversionOK = 0;           /* conversion successful */
@@ -296,13 +306,14 @@ ca.GifRecordType.IMAGE_DESC_RECORD_TYPE = 2; /* Begin with ',' */
 ca.GifRecordType.EXTENSION_RECORD_TYPE = 3;  /* Begin with '!' */
 ca.GifRecordType.TERMINATE_RECORD_TYPE = 4;   /* Begin with ';' */
 
-ca.HttpRequestType = {};
-ca.HttpRequestType.kHttpGet = 0;
-ca.HttpRequestType.kHttpPost = 1;
-ca.HttpRequestType.kHttpPostFile = 2;
-ca.HttpRequestType.kHttpPut = 3;
-ca.HttpRequestType.kHttpDelete = 4;
-ca.HttpRequestType.kHttpUnkown = 5;
+ca.CAHttpRequest = {};
+ca.CAHttpRequest.Type = {};
+ca.CAHttpRequest.Type.Get = 0;
+ca.CAHttpRequest.Type.Post = 1;
+ca.CAHttpRequest.Type.PostFile = 2;
+ca.CAHttpRequest.Type.Put = 3;
+ca.CAHttpRequest.Type.Delete = 4;
+ca.CAHttpRequest.Type.Unkown = 5;
 
 ca.NetworkStatus = {};
 ca.NetworkStatus.NotReachable     = 0,
@@ -346,34 +357,34 @@ DHorizontalLayout = function(var1,var2,vtype){
     var vwidth = ca.FLT_MAX;
     var vcenter = ca.FLT_MAX;
     var vnormalizedWidth = ca.FLT_MAX;
-    
+
     switch (vtype)
     {
-        case ca.DHorizontalLayoutType.L_R:
+        case ca.DHorizontalLayout.Type.L_R:
         {
             vleft = var1;
             vright = var2;
         }
             break;
-        case ca.DHorizontalLayoutType.L_W:
+        case ca.DHorizontalLayout.Type.L_W:
         {
             vleft = var1;
             vwidth = var2;
         }
             break;
-        case ca.DHorizontalLayoutType.R_W:
+        case ca.DHorizontalLayout.Type.R_W:
         {
             vright = var1;
             vwidth = var2;
         }
             break;
-        case ca.DHorizontalLayoutType.W_C:
+        case ca.DHorizontalLayout.Type.W_C:
         {
             vwidth = var1;
             vcenter = var2;
         }
             break;
-        case ca.DHorizontalLayoutType.NW_C:
+        case ca.DHorizontalLayout.Type.NW_C:
         {
             vnormalizedWidth = var1;
             vcenter = var2;
@@ -382,45 +393,45 @@ DHorizontalLayout = function(var1,var2,vtype){
         default:
             break;
     }
-    
+
     return {left:vleft,right:vright,width:vwidth,center:vcenter,type:vtype,normalizedWidth:vnormalizedWidth};
 };
 
 DVerticalLayout =function (var1,var2,vtype){
-    
+
     var vtop = ca.FLT_MAX;
     var vbottom = ca.FLT_MAX;
     var vheight = ca.FLT_MAX;
     var vcenter = ca.FLT_MAX;
     var vnormalizedWidth = ca.FLT_MAX;
-    
+
     switch (vtype)
     {
-        case ca.DVerticalLayoutType.T_B:
+        case ca.DVerticalLayout.Type.T_B:
         {
             vtop = var1;
             vbottom = var2;
         }
             break;
-        case ca.DVerticalLayoutType.T_H:
+        case ca.DVerticalLayout.Type.T_H:
         {
             vtop = var1;
             vheight = var2;
         }
             break;
-        case ca.DVerticalLayoutType.B_H:
+        case ca.DVerticalLayout.Type.B_H:
         {
             vbottom = var1;
             vheight = var2;
         }
             break;
-        case ca.DVerticalLayoutType.H_C:
+        case ca.DVerticalLayout.Type.H_C:
         {
             vheight = var1;
             vcenter = var2;
         }
             break;
-        case ca.DVerticalLayoutType.NH_C:
+        case ca.DVerticalLayout.Type.NH_C:
         {
             vbottom = var1;
             vnormalizedWidth = var2;
@@ -429,7 +440,7 @@ DVerticalLayout =function (var1,var2,vtype){
         default:
             break;
     }
-    
+
     return {top:vtop,bottom:vbottom,height:vheight,center:vcenter,type:vtype,normalizedWidth:vnormalizedWidth};
 };
 
@@ -444,58 +455,58 @@ DLayout = function (hor,ver){
 
 
 DHorizontalLayout_L_R = function(left,right){
-   return DHorizontalLayout(left, right, ca.DHorizontalLayoutType.L_R);
+   return DHorizontalLayout(left, right, ca.DHorizontalLayout.Type.L_R);
 };
 
 DHorizontalLayout_L_W = function(left,width){
-    return DHorizontalLayout(left, width, ca.DHorizontalLayoutType.L_W);
+    return DHorizontalLayout(left, width, ca.DHorizontalLayout.Type.L_W);
 };
 
 //DHorizontalLayout_L_C = function(left,center){
-//    return DHorizontalLayout(left, center, ca.DHorizontalLayoutType.L_C);
+//    return DHorizontalLayout(left, center, ca.DHorizontalLayout.Type.L_C);
 //};
 
 DHorizontalLayout_R_W = function(right,width){
-    return DHorizontalLayout(right,width, ca.DHorizontalLayoutType.R_W);
+    return DHorizontalLayout(right,width, ca.DHorizontalLayout.Type.R_W);
 };
 
 //DHorizontalLayout_R_C = function(right,center){
-//    return DHorizontalLayout(right,center, ca.DHorizontalLayoutType.R_C);
+//    return DHorizontalLayout(right,center, ca.DHorizontalLayout.Type.R_C);
 //};
 
 DHorizontalLayout_W_C = function(width,center){
-    return DHorizontalLayout(width, center, ca.DHorizontalLayoutType.W_C);
+    return DHorizontalLayout(width, center, ca.DHorizontalLayout.Type.W_C);
 };
 DHorizontalLayout_NW_C = function(width,center){
-    return DHorizontalLayout(width, center, ca.DHorizontalLayoutType.NW_C);
+    return DHorizontalLayout(width, center, ca.DHorizontalLayout.Type.NW_C);
 };
 
 
 DVerticalLayout_T_B = function(top,bottom){
-    return DVerticalLayout(top,bottom, ca.DVerticalLayoutType.T_B);
+    return DVerticalLayout(top,bottom, ca.DVerticalLayout.Type.T_B);
 };
 
 DVerticalLayout_T_H = function(top,height){
-    return DVerticalLayout(top,height, ca.DVerticalLayoutType.T_H);
+    return DVerticalLayout(top,height, ca.DVerticalLayout.Type.T_H);
 };
 
 //DVerticalLayout_T_C = function(top,center){
-//    return DVerticalLayout(top,center, ca.DVerticalLayoutType.T_C);
+//    return DVerticalLayout(top,center, ca.DVerticalLayout.Type.T_C);
 //};
 
 DVerticalLayout_B_H = function(bottom,height){
-    return DVerticalLayout(bottom,height, ca.DVerticalLayoutType.B_H);
+    return DVerticalLayout(bottom,height, ca.DVerticalLayout.Type.B_H);
 };
 
 //DVerticalLayout_B_C = function(bottom,center){
-//    return DVerticalLayout(bottom,center, ca.DVerticalLayoutType.B_C);
+//    return DVerticalLayout(bottom,center, ca.DVerticalLayout.Type.B_C);
 //};
 
 DVerticalLayout_H_C = function(height,center){
-    return DVerticalLayout(height,center, ca.DVerticalLayoutType.H_C);
+    return DVerticalLayout(height,center, ca.DVerticalLayout.Type.H_C);
 };
 DVerticalLayout_NH_C = function(height,center){
-    return DVerticalLayout(height,center, ca.DVerticalLayoutType.NH_C);
+    return DVerticalLayout(height,center, ca.DVerticalLayout.Type.NH_C);
 };
 
 DHorizontalLayouttZero  = DHorizontalLayout(0,0,0);
@@ -554,7 +565,7 @@ ca.DPoint = function( x, y )
 {
     if( ca._reuse_p_index == ca._reuse_p.length )
         ca._reuse_p_index = 0;
-    
+
     var p = ca._reuse_p[ ca._reuse_p_index];
     ca._reuse_p_index++;
     p.x = x;
@@ -613,16 +624,16 @@ ca.rect = function(x,y,w,h)
     var argLen = arguments.length;
     if (argLen === 0)
         return { x: 0, y: 0, width: 0, height: 0 };
-    
+
     if (argLen === 1)
         return { x: x.x, y: x.y, width: x.width, height: x.height };
-    
+
     if (argLen === 2)
         return { x: x.x, y: x.y, width: y.width, height: y.height };
-    
+
     if (argLen === 4)
         return { x: x, y: y, width: w, height: h };
-    
+
     throw "unknown argument type";
 };
 ca.drect = function(x,y,w,h)

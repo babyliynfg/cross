@@ -27,8 +27,8 @@ var LabelTest = ca.CAViewController.extend({
             var label = ca.CALabel.create();
             label.setText(str);
             label.setFont(Font);
-            label.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            label.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            label.setTextAlignment(ca.CATextAlignment.Center);
+            label.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             label.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.16)));
 
             var Font1 = new CAFont();
@@ -40,8 +40,8 @@ var LabelTest = ca.CAViewController.extend({
             var label1 = ca.CALabel.create();
             label1.setText(str);
             label1.setFont(Font1);
-            label1.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            label1.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            label1.setTextAlignment(ca.CATextAlignment.Center);
+            label1.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             label1.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.32)));
 
             var label2 = ca.CALabel.create();
@@ -52,8 +52,8 @@ var LabelTest = ca.CAViewController.extend({
             Font2.bold = true;
             label2.setText(str);
             label2.setFont(Font2);
-            label2.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            label2.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            label2.setTextAlignment(ca.CATextAlignment.Center);
+            label2.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             label2.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.48)));
 
             var label3 = ca.CALabel.create();
@@ -64,8 +64,8 @@ var LabelTest = ca.CAViewController.extend({
             Font3.italics = true;
             label3.setText(str);
             label3.setFont(Font3);
-            label3.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            label3.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            label3.setTextAlignment(ca.CATextAlignment.Center);
+            label3.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             label3.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.64)));
 
             var label4 = ca.CALabel.create();
@@ -74,8 +74,8 @@ var LabelTest = ca.CAViewController.extend({
             Font4.color = ca.RED;
             label4.setText("Enable Copy");
             label4.setFont(Font4);
-            label4.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            label4.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            label4.setTextAlignment(ca.CATextAlignment.Center);
+            label4.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             label4.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.8)));
 
             var view = ca.CAView.createWithLayout(DLayoutFill);
@@ -101,8 +101,8 @@ var LabelTest = ca.CAViewController.extend({
             label5.setText("Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World");
             label5.setFont(Font5);
             label5.setLineSpacing(20);
-            label5.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            label5.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            label5.setTextAlignment(ca.CATextAlignment.Center);
+            label5.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             label5.setLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_H(300, 300)));
 
             var view1 = ca.CAView.createWithLayout(DLayoutFill);

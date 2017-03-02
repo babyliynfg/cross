@@ -71,8 +71,8 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
             var itemText = ca.CALabel.createWithLayout(DLayoutFill);
             itemText.setTag(100);
             itemText.setFontSize(29);
-            itemText.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            itemText.setTextAlignment(ca.CATextAlignment.Center);
+            itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             p_Cell.getContentView().addSubview(itemText);
         }
 

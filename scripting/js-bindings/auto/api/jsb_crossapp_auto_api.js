@@ -9235,16 +9235,6 @@ caimage
 },
 
 /**
- * @method isTouchClick
- * @return {bool}
- */
-isTouchClick : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setTarget
  * @param {function} arg0
  */
@@ -10329,6 +10319,298 @@ orientation
  * @constructor
  */
 CAStepper : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CACheckbox
+ */
+ca.CACheckbox = {
+
+/**
+ * @method setImageSize
+ * @param {size_object} arg0
+ */
+setImageSize : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setTitleFontSize
+ * @param {float} arg0
+ */
+setTitleFontSize : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTitleColorStateSelected
+ * @param {ca._Color4B} arg0
+ */
+setTitleColorStateSelected : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method setTitleStateSelected
+ * @param {String} arg0
+ */
+setTitleStateSelected : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleTextAlignment
+ * @param {ca.CATextAlignment} arg0
+ */
+setTitleTextAlignment : function (
+catextalignment 
+)
+{
+},
+
+/**
+ * @method setImageColorStateSelected
+ * @param {ca._Color4B} arg0
+ */
+setImageColorStateSelected : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method isOn
+ * @return {bool}
+ */
+isOn : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getImageStateNormal
+ * @return {ca.CAImage}
+ */
+getImageStateNormal : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setImageColorStateNormal
+ * @param {ca._Color4B} arg0
+ */
+setImageColorStateNormal : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method setTitleLabelSize
+ * @param {size_object} arg0
+ */
+setTitleLabelSize : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setImageStateSelected
+ * @param {ca.CAImage} arg0
+ */
+setImageStateSelected : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method setIsOn
+ * @param {bool} arg0
+ */
+setIsOn : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setTarget
+ * @param {function} arg0
+ */
+setTarget : function (
+func 
+)
+{
+},
+
+/**
+ * @method getTitleStateNormal
+ * @return {String}
+ */
+getTitleStateNormal : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setTitleFontName
+ * @param {String} arg0
+ */
+setTitleFontName : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleStateNormal
+ * @param {String} arg0
+ */
+setTitleStateNormal : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleOffset
+ * @param {size_object} arg0
+ */
+setTitleOffset : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setTitleColorStateNormal
+ * @param {ca._Color4B} arg0
+ */
+setTitleColorStateNormal : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method getImageStateSelected
+ * @return {ca.CAImage}
+ */
+getImageStateSelected : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setTitleBold
+ * @param {bool} arg0
+ */
+setTitleBold : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setImageOffset
+ * @param {size_object} arg0
+ */
+setImageOffset : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setImageStateNormal
+ * @param {ca.CAImage} arg0
+ */
+setImageStateNormal : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method getTitleStateSelected
+ * @return {String}
+ */
+getTitleStateSelected : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method create
+ * @return {ca.CACheckbox}
+ */
+create : function (
+)
+{
+    return ca.CACheckbox;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @return {ca.CACheckbox}
+ */
+createWithFrame : function (
+drect 
+)
+{
+    return ca.CACheckbox;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @return {ca.CACheckbox}
+ */
+createWithLayout : function (
+dlayout 
+)
+{
+    return ca.CACheckbox;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @return {ca.CACheckbox}
+ */
+createWithCenter : function (
+drect 
+)
+{
+    return ca.CACheckbox;
+},
+
+/**
+ * @method CACheckbox
+ * @constructor
+ */
+CACheckbox : function (
 )
 {
 },
@@ -14935,14 +15217,14 @@ func
 
 /**
  * @method create
-* @param {char|char} char
-* @param {char|char} char
+* @param {String|String} str
+* @param {String|String} str
 * @param {Array} array
 * @return {ca.CAAlertView|ca.CAAlertView}
 */
 create : function(
-char,
-char,
+str,
+str,
 array 
 )
 {
@@ -16672,6 +16954,2586 @@ drect
  * @constructor
  */
 CATextView : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CGNode
+ */
+ca.CGNode = {
+
+/**
+ * @method addChild
+ * @param {ca.CGNode} arg0
+ */
+addChild : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method getShaderProgram
+ * @return {ca.GLProgram}
+ */
+getShaderProgram : function (
+)
+{
+    return ca.GLProgram;
+},
+
+/**
+ * @method getChildren
+ * @return {Array}
+ */
+getChildren : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setViewToParentTransform
+ * @param {ca.Mat4} arg0
+ */
+setViewToParentTransform : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method setOnExitCallback
+ * @param {function} arg0
+ */
+setOnExitCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method isOpacityModifyRGB
+ * @return {bool}
+ */
+isOpacityModifyRGB : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method updateDisplayedAlpha
+ * @param {float} arg0
+ */
+updateDisplayedAlpha : function (
+float 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getCameraMask
+ * @return {unsigned short}
+ */
+getCameraMask : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setAlpha
+ * @param {float} arg0
+ */
+setAlpha : function (
+float 
+)
+{
+},
+
+/**
+ * @method getWorldToViewAffineTransform
+ * @return {ca.AffineTransform}
+ */
+getWorldToViewAffineTransform : function (
+)
+{
+    return ca.AffineTransform;
+},
+
+/**
+ * @method setZOrder
+ * @param {int} arg0
+ */
+setZOrder : function (
+int 
+)
+{
+},
+
+/**
+ * @method setScaleZ
+ * @param {float} arg0
+ */
+setScaleZ : function (
+float 
+)
+{
+},
+
+/**
+ * @method setScaleY
+ * @param {float} arg0
+ */
+setScaleY : function (
+float 
+)
+{
+},
+
+/**
+ * @method setScaleX
+ * @param {float} arg0
+ */
+setScaleX : function (
+float 
+)
+{
+},
+
+/**
+ * @method processParentFlags
+ * @param {ca.Mat4} arg0
+ * @param {unsigned int} arg1
+ * @return {unsigned int}
+ */
+processParentFlags : function (
+mat4, 
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method visitEve
+ */
+visitEve : function (
+)
+{
+},
+
+/**
+ * @method setonEnterTransitionDidFinishCallback
+ * @param {function} arg0
+ */
+setonEnterTransitionDidFinishCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method convertRectToWorldSpace
+ * @param {rect_object} arg0
+ * @return {rect_object}
+ */
+convertRectToWorldSpace : function (
+drect 
+)
+{
+    return ca.DRect;
+},
+
+/**
+ * @method getonEnterTransitionDidFinishCallback
+ * @return {function}
+ */
+getonEnterTransitionDidFinishCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
+ * @method getNodeToWorldAffineTransform
+ * @return {ca.AffineTransform}
+ */
+getNodeToWorldAffineTransform : function (
+)
+{
+    return ca.AffineTransform;
+},
+
+/**
+ * @method getNodeToWorldTransform
+ * @return {ca.Mat4}
+ */
+getNodeToWorldTransform : function (
+)
+{
+    return ca.Mat4;
+},
+
+/**
+ * @method onExit
+ */
+onExit : function (
+)
+{
+},
+
+/**
+ * @method getPosition3D
+ * @return {point_object}
+ */
+getPosition3D : function (
+)
+{
+    return ca.DPoint3D;
+},
+
+/**
+ * @method removeChild
+ * @param {ca.CGNode} arg0
+ */
+removeChild : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method convertToWorldSpace
+ * @param {point_object} arg0
+ * @return {point_object}
+ */
+convertToWorldSpace : function (
+dpoint 
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method getAlpha
+ * @return {float}
+ */
+getAlpha : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSkewX
+ * @param {float} arg0
+ */
+setSkewX : function (
+float 
+)
+{
+},
+
+/**
+ * @method setSkewY
+ * @param {float} arg0
+ */
+setSkewY : function (
+float 
+)
+{
+},
+
+/**
+ * @method setOnEnterCallback
+ * @param {function} arg0
+ */
+setOnEnterCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method onEnterTransitionDidFinish
+ */
+onEnterTransitionDidFinish : function (
+)
+{
+},
+
+/**
+ * @method getWorldToViewTransform
+ * @return {ca.Mat4}
+ */
+getWorldToViewTransform : function (
+)
+{
+    return ca.Mat4;
+},
+
+/**
+ * @method stopActionsByFlags
+ * @param {unsigned int} arg0
+ */
+stopActionsByFlags : function (
+int 
+)
+{
+},
+
+/**
+ * @method setNormalizedPosition
+ * @param {point_object} arg0
+ */
+setNormalizedPosition : function (
+dpoint 
+)
+{
+},
+
+/**
+ * @method removeChildByTextTag
+ * @param {String} arg0
+ */
+removeChildByTextTag : function (
+str 
+)
+{
+},
+
+/**
+ * @method setonExitTransitionDidStartCallback
+ * @param {function} arg0
+ */
+setonExitTransitionDidStartCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method convertTouchToNodeSpace
+ * @param {ca.CATouch} arg0
+ * @return {point_object}
+ */
+convertTouchToNodeSpace : function (
+catouch 
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method getRotationZ
+ * @return {float}
+ */
+getRotationZ : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method removeAllChildren
+ */
+removeAllChildren : function (
+)
+{
+},
+
+/**
+ * @method getRotationX
+ * @return {float}
+ */
+getRotationX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getRotationY
+ * @return {float}
+ */
+getRotationY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method convertRectToNodeSpace
+ * @param {rect_object} arg0
+ * @return {rect_object}
+ */
+convertRectToNodeSpace : function (
+drect 
+)
+{
+    return ca.DRect;
+},
+
+/**
+ * @method getCAView
+ * @return {ca.CAView}
+ */
+getCAView : function (
+)
+{
+    return ca.CAView;
+},
+
+/**
+ * @method description
+ * @return {char}
+ */
+description : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNodeToParentAffineTransform
+* @param {ca.CGNode} cgnode
+* @return {ca.AffineTransform|ca.AffineTransform}
+*/
+getNodeToParentAffineTransform : function(
+cgnode 
+)
+{
+    return ca.AffineTransform;
+},
+
+/**
+ * @method getonExitTransitionDidStartCallback
+ * @return {function}
+ */
+getonExitTransitionDidStartCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
+ * @method setParent
+ * @param {ca.CGNode} arg0
+ */
+setParent : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method convertToNodeSize
+ * @param {size_object} arg0
+ * @return {size_object}
+ */
+convertToNodeSize : function (
+dsize 
+)
+{
+    return ca.DSize;
+},
+
+/**
+ * @method getRotation3D
+ * @return {point_object}
+ */
+getRotation3D : function (
+)
+{
+    return ca.DPoint3D;
+},
+
+/**
+ * @method getNodeToParentTransform
+* @param {ca.CGNode} cgnode
+* @return {ca.Mat4|ca.Mat4}
+*/
+getNodeToParentTransform : function(
+cgnode 
+)
+{
+    return ca.Mat4;
+},
+
+/**
+ * @method getOnEnterCallback
+ * @return {function}
+ */
+getOnEnterCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
+ * @method setCameraMask
+ * @param {unsigned short} arg0
+ * @param {bool} arg1
+ */
+setCameraMask : function (
+short, 
+bool 
+)
+{
+},
+
+/**
+ * @method setPosition
+ * @param {point_object} arg0
+ */
+setPosition : function (
+dpoint 
+)
+{
+},
+
+/**
+ * @method convertToWorldSize
+ * @param {size_object} arg0
+ * @return {size_object}
+ */
+convertToWorldSize : function (
+dsize 
+)
+{
+    return ca.DSize;
+},
+
+/**
+ * @method stopActionByTag
+ * @param {int} arg0
+ */
+stopActionByTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method reorderChild
+ * @param {ca.CGNode} arg0
+ * @param {int} arg1
+ */
+reorderChild : function (
+cgnode, 
+int 
+)
+{
+},
+
+/**
+ * @method setGLProgramState
+ * @param {ca.GLProgramState} arg0
+ */
+setGLProgramState : function (
+glprogramstate 
+)
+{
+},
+
+/**
+ * @method setPositionZ
+ * @param {float} arg0
+ */
+setPositionZ : function (
+float 
+)
+{
+},
+
+/**
+ * @method setPositionY
+ * @param {float} arg0
+ */
+setPositionY : function (
+float 
+)
+{
+},
+
+/**
+ * @method setPositionX
+ * @param {float} arg0
+ */
+setPositionX : function (
+float 
+)
+{
+},
+
+/**
+ * @method getAnchorPoint
+ * @return {point_object}
+ */
+getAnchorPoint : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method getNumberOfRunningActions
+ * @return {unsigned long}
+ */
+getNumberOfRunningActions : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method updateTransform
+ */
+updateTransform : function (
+)
+{
+},
+
+/**
+ * @method isVisible
+ * @return {bool}
+ */
+isVisible : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getChildrenCount
+ * @return {unsigned int}
+ */
+getChildrenCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setAnchorPoint
+ * @param {point_object} arg0
+ */
+setAnchorPoint : function (
+dpoint 
+)
+{
+},
+
+/**
+ * @method onEnter
+ */
+onEnter : function (
+)
+{
+},
+
+/**
+ * @method getRotationQuat
+ * @return {ca.Quaternion}
+ */
+getRotationQuat : function (
+)
+{
+    return ca.Quaternion;
+},
+
+/**
+ * @method setShaderProgram
+ * @param {ca.GLProgram} arg0
+ */
+setShaderProgram : function (
+glprogram 
+)
+{
+},
+
+/**
+ * @method getZOrder
+ * @return {int}
+ */
+getZOrder : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getAnchorPointInPoints
+ * @return {point_object}
+ */
+getAnchorPointInPoints : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method runAction
+ * @param {ca.Action} arg0
+ * @return {ca.Action}
+ */
+runAction : function (
+action 
+)
+{
+    return ca.Action;
+},
+
+/**
+ * @method transform
+ * @param {ca.Mat4} arg0
+ * @return {ca.Mat4}
+ */
+transform : function (
+mat4 
+)
+{
+    return ca.Mat4;
+},
+
+/**
+ * @method getGLProgramState
+ * @return {ca.GLProgramState}
+ */
+getGLProgramState : function (
+)
+{
+    return ca.GLProgramState;
+},
+
+/**
+ * @method stopAllActions
+ */
+stopAllActions : function (
+)
+{
+},
+
+/**
+ * @method getSkewX
+ * @return {float}
+ */
+getSkewX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSkewY
+ * @return {float}
+ */
+getSkewY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDisplayedColor
+ * @return {ca._Color4B}
+ */
+getDisplayedColor : function (
+)
+{
+    return ca._Color4B;
+},
+
+/**
+ * @method setRotationZ
+ * @param {float} arg0
+ */
+setRotationZ : function (
+float 
+)
+{
+},
+
+/**
+ * @method getActionByTag
+ * @param {int} arg0
+ * @return {ca.Action}
+ */
+getActionByTag : function (
+int 
+)
+{
+    return ca.Action;
+},
+
+/**
+ * @method setRotationX
+ * @param {float} arg0
+ */
+setRotationX : function (
+float 
+)
+{
+},
+
+/**
+ * @method setRotationY
+ * @param {float} arg0
+ */
+setRotationY : function (
+float 
+)
+{
+},
+
+/**
+ * @method setDisplayRange
+ * @param {bool} arg0
+ */
+setDisplayRange : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setAdditionalTransform
+* @param {ca.AffineTransform|ca.Mat4} affinetransform
+*/
+setAdditionalTransform : function(
+mat4 
+)
+{
+},
+
+/**
+ * @method getParentToNodeAffineTransform
+ * @return {ca.AffineTransform}
+ */
+getParentToNodeAffineTransform : function (
+)
+{
+    return ca.AffineTransform;
+},
+
+/**
+ * @method getOrderOfArrival
+ * @return {unsigned int}
+ */
+getOrderOfArrival : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method boundingBox
+ * @return {rect_object}
+ */
+boundingBox : function (
+)
+{
+    return ca.DRect;
+},
+
+/**
+ * @method setContentSize
+ * @param {size_object} arg0
+ */
+setContentSize : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method copy
+ * @return {ca.CGNode}
+ */
+copy : function (
+)
+{
+    return ca.CGNode;
+},
+
+/**
+ * @method getPosition
+ * @return {point_object}
+ */
+getPosition : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method setColor
+ * @param {ca._Color4B} arg0
+ */
+setColor : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method isRunning
+ * @return {bool}
+ */
+isRunning : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getParent
+ * @return {ca.CGNode}
+ */
+getParent : function (
+)
+{
+    return ca.CGNode;
+},
+
+/**
+ * @method getPositionZ
+ * @return {float}
+ */
+getPositionZ : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPositionY
+ * @return {float}
+ */
+getPositionY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPositionX
+ * @return {float}
+ */
+getPositionX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method removeChildByTag
+ * @param {int} arg0
+ */
+removeChildByTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method getQuad
+ * @return {ca._ccV3F_C4B_T2F_Quad}
+ */
+getQuad : function (
+)
+{
+    return ca._ccV3F_C4B_T2F_Quad;
+},
+
+/**
+ * @method visit
+ * @param {ca.Renderer} arg0
+ * @param {ca.Mat4} arg1
+ * @param {unsigned int} arg2
+ */
+visit : function (
+renderer, 
+mat4, 
+int 
+)
+{
+},
+
+/**
+ * @method updateDisplayedColor
+ * @param {ca._Color4B} arg0
+ */
+updateDisplayedColor : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method setVisible
+ * @param {bool} arg0
+ */
+setVisible : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getParentToNodeTransform
+ * @return {ca.Mat4}
+ */
+getParentToNodeTransform : function (
+)
+{
+    return ca.Mat4;
+},
+
+/**
+ * @method getDisplayedAlpha
+ * @return {float}
+ */
+getDisplayedAlpha : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method _setZOrder
+ * @param {int} arg0
+ */
+_setZOrder : function (
+int 
+)
+{
+},
+
+/**
+ * @method setScale
+* @param {float|float} float
+* @param {float} float
+* @param {float} float
+*/
+setScale : function(
+float,
+float,
+float 
+)
+{
+},
+
+/**
+ * @method isDisplayRange
+ * @return {bool}
+ */
+isDisplayRange : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setRotation3D
+ * @param {point_object} arg0
+ */
+setRotation3D : function (
+dpoint3d 
+)
+{
+},
+
+/**
+ * @method getOnExitCallback
+ * @return {function}
+ */
+getOnExitCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
+ * @method getChildByTag
+ * @param {int} arg0
+ * @return {ca.CGNode}
+ */
+getChildByTag : function (
+int 
+)
+{
+    return ca.CGNode;
+},
+
+/**
+ * @method setOrderOfArrival
+ * @param {unsigned int} arg0
+ */
+setOrderOfArrival : function (
+int 
+)
+{
+},
+
+/**
+ * @method getScaleZ
+ * @return {float}
+ */
+getScaleZ : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getScaleY
+ * @return {float}
+ */
+getScaleY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getScaleX
+ * @return {float}
+ */
+getScaleX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method isVisitableByVisitingCamera
+ * @return {bool}
+ */
+isVisitableByVisitingCamera : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setOpacityModifyRGB
+ * @param {bool} arg0
+ */
+setOpacityModifyRGB : function (
+bool 
+)
+{
+},
+
+/**
+ * @method insertChild
+ * @param {ca.CGNode} arg0
+ * @param {int} arg1
+ */
+insertChild : function (
+cgnode, 
+int 
+)
+{
+},
+
+/**
+ * @method getContentSize
+ * @return {size_object}
+ */
+getContentSize : function (
+)
+{
+    return ca.DSize;
+},
+
+/**
+ * @method stopAllActionsByTag
+ * @param {int} arg0
+ */
+stopAllActionsByTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method setCAView
+ * @param {ca.CAView} arg0
+ */
+setCAView : function (
+caview 
+)
+{
+},
+
+/**
+ * @method draw
+ * @param {ca.Renderer} arg0
+ * @param {ca.Mat4} arg1
+ * @param {unsigned int} arg2
+ */
+draw : function (
+renderer, 
+mat4, 
+int 
+)
+{
+},
+
+/**
+ * @method getBlendFunc
+ * @return {ca.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return ca.BlendFunc;
+},
+
+/**
+ * @method getChildByTextTag
+ * @param {String} arg0
+ * @return {ca.CGNode}
+ */
+getChildByTextTag : function (
+str 
+)
+{
+    return ca.CGNode;
+},
+
+/**
+ * @method removeFromParent
+ */
+removeFromParent : function (
+)
+{
+},
+
+/**
+ * @method setPosition3D
+ * @param {point_object} arg0
+ */
+setPosition3D : function (
+dpoint3d 
+)
+{
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method sortAllChildren
+ */
+sortAllChildren : function (
+)
+{
+},
+
+/**
+ * @method convertToNodeSpace
+ * @param {point_object} arg0
+ * @return {point_object}
+ */
+convertToNodeSpace : function (
+dpoint 
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method onExitTransitionDidStart
+ */
+onExitTransitionDidStart : function (
+)
+{
+},
+
+/**
+ * @method getScale
+ * @return {float}
+ */
+getScale : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNormalizedPosition
+ * @return {point_object}
+ */
+getNormalizedPosition : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {ca.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method getColor
+ * @return {ca._Color4B}
+ */
+getColor : function (
+)
+{
+    return ca._Color4B;
+},
+
+/**
+ * @method setRotationQuat
+ * @param {ca.Quaternion} arg0
+ */
+setRotationQuat : function (
+quaternion 
+)
+{
+},
+
+/**
+ * @method stopAction
+ * @param {ca.Action} arg0
+ */
+stopAction : function (
+action 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ca.CGNode}
+ */
+create : function (
+)
+{
+    return ca.CGNode;
+},
+
+/**
+ * @method CGNode
+ * @constructor
+ */
+CGNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CGSprite
+ */
+ca.CGSprite = {
+
+/**
+ * @method setSpriteFrame
+ * @param {ca.CGSpriteFrame} arg0
+ */
+setSpriteFrame : function (
+cgspriteframe 
+)
+{
+},
+
+/**
+ * @method initWithImage
+* @param {ca.CAImage|ca.CAImage|ca.CAImage} caimage
+* @param {rect_object|rect_object} drect
+* @param {bool} bool
+* @return {bool|bool|bool}
+*/
+initWithImage : function(
+caimage,
+drect,
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method isFlipY
+ * @return {bool}
+ */
+isFlipY : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getBatchNode
+ * @return {ca.CGSpriteBatchNode}
+ */
+getBatchNode : function (
+)
+{
+    return ca.CGSpriteBatchNode;
+},
+
+/**
+ * @method getOffsetPosition
+ * @return {point_object}
+ */
+getOffsetPosition : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method isOpacityModifyRGB
+ * @return {bool}
+ */
+isOpacityModifyRGB : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isFlipX
+ * @return {bool}
+ */
+isFlipX : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setOpacityModifyRGB
+ * @param {bool} arg0
+ */
+setOpacityModifyRGB : function (
+bool 
+)
+{
+},
+
+/**
+ * @method initWithSpriteFrameName
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithSpriteFrameName : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method isFrameDisplayed
+ * @param {ca.CGSpriteFrame} arg0
+ * @return {bool}
+ */
+isFrameDisplayed : function (
+cgspriteframe 
+)
+{
+    return false;
+},
+
+/**
+ * @method getImageRect
+ * @return {rect_object}
+ */
+getImageRect : function (
+)
+{
+    return ca.DRect;
+},
+
+/**
+ * @method getAtlasIndex
+ * @return {unsigned int}
+ */
+getAtlasIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setBatchNode
+ * @param {ca.CGSpriteBatchNode} arg0
+ */
+setBatchNode : function (
+cgspritebatchnode 
+)
+{
+},
+
+/**
+ * @method setDisplayFrameWithAnimationName
+ * @param {String} arg0
+ * @param {int} arg1
+ */
+setDisplayFrameWithAnimationName : function (
+str, 
+int 
+)
+{
+},
+
+/**
+ * @method getImageAtlas
+ * @return {ca.CAImageAtlas}
+ */
+getImageAtlas : function (
+)
+{
+    return ca.CAImageAtlas;
+},
+
+/**
+ * @method setFlipY
+ * @param {bool} arg0
+ */
+setFlipY : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setFlipX
+ * @param {bool} arg0
+ */
+setFlipX : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getSpriteFrame
+ * @return {ca.CGSpriteFrame}
+ */
+getSpriteFrame : function (
+)
+{
+    return ca.CGSpriteFrame;
+},
+
+/**
+ * @method isDirty
+ * @return {bool}
+ */
+isDirty : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setAtlasIndex
+ * @param {long} arg0
+ */
+setAtlasIndex : function (
+long 
+)
+{
+},
+
+/**
+ * @method setDirty
+ * @param {bool} arg0
+ */
+setDirty : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setImageRect
+* @param {rect_object|rect_object} drect
+* @param {bool} bool
+* @param {size_object} dsize
+*/
+setImageRect : function(
+drect,
+bool,
+dsize 
+)
+{
+},
+
+/**
+ * @method isTextureRectRotated
+ * @return {bool}
+ */
+isTextureRectRotated : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setImageAtlas
+ * @param {ca.CAImageAtlas} arg0
+ */
+setImageAtlas : function (
+caimageatlas 
+)
+{
+},
+
+/**
+ * @method initWithFile
+* @param {String|String} str
+* @param {rect_object} drect
+* @return {bool|bool}
+*/
+initWithFile : function(
+str,
+drect 
+)
+{
+    return false;
+},
+
+/**
+ * @method setImage
+ * @param {ca.CAImage} arg0
+ */
+setImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method initWithSpriteFrame
+ * @param {ca.CGSpriteFrame} arg0
+ * @return {bool}
+ */
+initWithSpriteFrame : function (
+cgspriteframe 
+)
+{
+    return false;
+},
+
+/**
+ * @method getQuad
+ * @return {ca._ccV3F_C4B_T2F_Quad}
+ */
+getQuad : function (
+)
+{
+    return ca._ccV3F_C4B_T2F_Quad;
+},
+
+/**
+ * @method setVertexRect
+ * @param {rect_object} arg0
+ */
+setVertexRect : function (
+drect 
+)
+{
+},
+
+/**
+ * @method getImage
+ * @return {ca.CAImage}
+ */
+getImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {rect_object} drect
+* @return {ca.CGSprite|ca.CGSprite|ca.CGSprite}
+*/
+create : function(
+str,
+drect 
+)
+{
+    return ca.CGSprite;
+},
+
+/**
+ * @method createWithImage
+* @param {ca.CAImage|ca.CAImage} caimage
+* @param {rect_object} drect
+* @return {ca.CGSprite|ca.CGSprite}
+*/
+createWithImage : function(
+caimage,
+drect 
+)
+{
+    return ca.CGSprite;
+},
+
+/**
+ * @method createWithSpriteFrameName
+ * @param {String} arg0
+ * @return {ca.CGSprite}
+ */
+createWithSpriteFrameName : function (
+str 
+)
+{
+    return ca.CGSprite;
+},
+
+/**
+ * @method createWithSpriteFrame
+ * @param {ca.CGSpriteFrame} arg0
+ * @return {ca.CGSprite}
+ */
+createWithSpriteFrame : function (
+cgspriteframe 
+)
+{
+    return ca.CGSprite;
+},
+
+/**
+ * @method CGSprite
+ * @constructor
+ */
+CGSprite : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CGSpriteFrame
+ */
+ca.CGSpriteFrame = {
+
+/**
+ * @method setRotated
+ * @param {bool} arg0
+ */
+setRotated : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setAnchorPoint
+ * @param {point_object} arg0
+ */
+setAnchorPoint : function (
+dpoint 
+)
+{
+},
+
+/**
+ * @method getOffset
+ * @return {point_object}
+ */
+getOffset : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method getOriginalSize
+ * @return {size_object}
+ */
+getOriginalSize : function (
+)
+{
+    return ca.DSize;
+},
+
+/**
+ * @method getRect
+ * @return {rect_object}
+ */
+getRect : function (
+)
+{
+    return ca.DRect;
+},
+
+/**
+ * @method clone
+ * @return {ca.CGSpriteFrame}
+ */
+clone : function (
+)
+{
+    return ca.CGSpriteFrame;
+},
+
+/**
+ * @method setImage
+ * @param {ca.CAImage} arg0
+ */
+setImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method initWithImage
+* @param {ca.CAImage|ca.CAImage} caimage
+* @param {rect_object|rect_object} drect
+* @param {bool} bool
+* @param {point_object} dpoint
+* @param {size_object} dsize
+* @return {bool|bool}
+*/
+initWithImage : function(
+caimage,
+drect,
+bool,
+dpoint,
+dsize 
+)
+{
+    return false;
+},
+
+/**
+ * @method getAnchorPoint
+ * @return {point_object}
+ */
+getAnchorPoint : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method setOriginalSize
+ * @param {size_object} arg0
+ */
+setOriginalSize : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setOffset
+ * @param {point_object} arg0
+ */
+setOffset : function (
+dpoint 
+)
+{
+},
+
+/**
+ * @method hasAnchorPoint
+ * @return {bool}
+ */
+hasAnchorPoint : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isRotated
+ * @return {bool}
+ */
+isRotated : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getImage
+ * @return {ca.CAImage}
+ */
+getImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setRect
+ * @param {rect_object} arg0
+ */
+setRect : function (
+drect 
+)
+{
+},
+
+/**
+ * @method initWithImageFilename
+* @param {String|String} str
+* @param {rect_object|rect_object} drect
+* @param {bool} bool
+* @param {point_object} dpoint
+* @param {size_object} dsize
+* @return {bool|bool}
+*/
+initWithImageFilename : function(
+str,
+drect,
+bool,
+dpoint,
+dsize 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {rect_object|rect_object} drect
+* @param {bool} bool
+* @param {point_object} dpoint
+* @param {size_object} dsize
+* @return {ca.CGSpriteFrame|ca.CGSpriteFrame}
+*/
+create : function(
+str,
+drect,
+bool,
+dpoint,
+dsize 
+)
+{
+    return ca.CGSpriteFrame;
+},
+
+/**
+ * @method createWithImage
+* @param {ca.CAImage|ca.CAImage} caimage
+* @param {rect_object|rect_object} drect
+* @param {bool} bool
+* @param {point_object} dpoint
+* @param {size_object} dsize
+* @return {ca.CGSpriteFrame|ca.CGSpriteFrame}
+*/
+createWithImage : function(
+caimage,
+drect,
+bool,
+dpoint,
+dsize 
+)
+{
+    return ca.CGSpriteFrame;
+},
+
+/**
+ * @method CGSpriteFrame
+ * @constructor
+ */
+CGSpriteFrame : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CGSpriteFrameCache
+ */
+ca.CGSpriteFrameCache = {
+
+/**
+ * @method getSpriteFrameByName
+ * @param {String} arg0
+ * @return {ca.CGSpriteFrame}
+ */
+getSpriteFrameByName : function (
+str 
+)
+{
+    return ca.CGSpriteFrame;
+},
+
+/**
+ * @method addSpriteFramesWithFile
+* @param {String|String|String} str
+* @param {String|ca.CAImage} str
+*/
+addSpriteFramesWithFile : function(
+str,
+caimage 
+)
+{
+},
+
+/**
+ * @method addSpriteFrame
+ * @param {ca.CGSpriteFrame} arg0
+ * @param {String} arg1
+ */
+addSpriteFrame : function (
+cgspriteframe, 
+str 
+)
+{
+},
+
+/**
+ * @method removeUnusedSpriteFrames
+ */
+removeUnusedSpriteFrames : function (
+)
+{
+},
+
+/**
+ * @method removeSpriteFramesFromFile
+ * @param {String} arg0
+ */
+removeSpriteFramesFromFile : function (
+str 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method removeSpriteFrames
+ */
+removeSpriteFrames : function (
+)
+{
+},
+
+/**
+ * @method removeSpriteFrameByName
+ * @param {String} arg0
+ */
+removeSpriteFrameByName : function (
+str 
+)
+{
+},
+
+/**
+ * @method removeSpriteFramesFromImage
+ * @param {ca.CAImage} arg0
+ */
+removeSpriteFramesFromImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {ca.CGSpriteFrameCache}
+ */
+getInstance : function (
+)
+{
+    return ca.CGSpriteFrameCache;
+},
+
+/**
+ * @method CGSpriteFrameCache
+ * @constructor
+ */
+CGSpriteFrameCache : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CGSpriteBatchNode
+ */
+ca.CGSpriteBatchNode = {
+
+/**
+ * @method setImageAtlas
+ * @param {ca.CAImageAtlas} arg0
+ */
+setImageAtlas : function (
+caimageatlas 
+)
+{
+},
+
+/**
+ * @method reorderBatch
+ * @param {bool} arg0
+ */
+reorderBatch : function (
+bool 
+)
+{
+},
+
+/**
+ * @method initWithFile
+ * @param {String} arg0
+ * @param {unsigned int} arg1
+ * @return {bool}
+ */
+initWithFile : function (
+str, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method getImageAtlas
+ * @return {ca.CAImageAtlas}
+ */
+getImageAtlas : function (
+)
+{
+    return ca.CAImageAtlas;
+},
+
+/**
+ * @method lowestAtlasIndexInChild
+ * @param {ca.CGSprite} arg0
+ * @return {long}
+ */
+lowestAtlasIndexInChild : function (
+cgsprite 
+)
+{
+    return 0;
+},
+
+/**
+ * @method appendChild
+ * @param {ca.CGSprite} arg0
+ */
+appendChild : function (
+cgsprite 
+)
+{
+},
+
+/**
+ * @method atlasIndexForChild
+ * @param {ca.CGSprite} arg0
+ * @param {int} arg1
+ * @return {long}
+ */
+atlasIndexForChild : function (
+cgsprite, 
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method increaseAtlasCapacity
+ */
+increaseAtlasCapacity : function (
+)
+{
+},
+
+/**
+ * @method rebuildIndexInOrder
+ * @param {ca.CGSprite} arg0
+ * @param {long} arg1
+ * @return {long}
+ */
+rebuildIndexInOrder : function (
+cgsprite, 
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithImage
+ * @param {ca.CAImage} arg0
+ * @param {unsigned int} arg1
+ * @return {bool}
+ */
+initWithImage : function (
+caimage, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method getDescendants
+ * @return {Array}
+ */
+getDescendants : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setImage
+ * @param {ca.CAImage} arg0
+ */
+setImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method getBlendFunc
+ * @return {ca.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return ca.BlendFunc;
+},
+
+/**
+ * @method highestAtlasIndexInChild
+ * @param {ca.CGSprite} arg0
+ * @return {long}
+ */
+highestAtlasIndexInChild : function (
+cgsprite 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getImage
+ * @return {ca.CAImage}
+ */
+getImage : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method removeSpriteFromAtlas
+ * @param {ca.CGSprite} arg0
+ */
+removeSpriteFromAtlas : function (
+cgsprite 
+)
+{
+},
+
+/**
+ * @method setBlendFunc
+ * @param {ca.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {unsigned int} int
+* @return {ca.CGSpriteBatchNode|ca.CGSpriteBatchNode}
+*/
+create : function(
+str,
+int 
+)
+{
+    return ca.CGSpriteBatchNode;
+},
+
+/**
+ * @method createWithImage
+* @param {ca.CAImage|ca.CAImage} caimage
+* @param {unsigned int} int
+* @return {ca.CGSpriteBatchNode|ca.CGSpriteBatchNode}
+*/
+createWithImage : function(
+caimage,
+int 
+)
+{
+    return ca.CGSpriteBatchNode;
+},
+
+/**
+ * @method CGSpriteBatchNode
+ * @constructor
+ */
+CGSpriteBatchNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CGProgressTimer
+ */
+ca.CGProgressTimer = {
+
+/**
+ * @method setReverseProgress
+ * @param {bool} arg0
+ */
+setReverseProgress : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isReverseDirection
+ * @return {bool}
+ */
+isReverseDirection : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setBarChangeRate
+ * @param {point_object} arg0
+ */
+setBarChangeRate : function (
+dpoint 
+)
+{
+},
+
+/**
+ * @method setAnchorPoint
+ * @param {point_object} arg0
+ */
+setAnchorPoint : function (
+dpoint 
+)
+{
+},
+
+/**
+ * @method getPercentage
+ * @return {float}
+ */
+getPercentage : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSprite
+ * @param {ca.CGSprite} arg0
+ */
+setSprite : function (
+cgsprite 
+)
+{
+},
+
+/**
+ * @method getType
+ * @return {ca.CGProgressTimer::Type}
+ */
+getType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSprite
+ * @return {ca.CGSprite}
+ */
+getSprite : function (
+)
+{
+    return ca.CGSprite;
+},
+
+/**
+ * @method setMidpoint
+ * @param {point_object} arg0
+ */
+setMidpoint : function (
+dpoint 
+)
+{
+},
+
+/**
+ * @method getMidpoint
+ * @return {point_object}
+ */
+getMidpoint : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method getColor
+ * @return {ca._Color4B}
+ */
+getColor : function (
+)
+{
+    return ca._Color4B;
+},
+
+/**
+ * @method getAlpha
+ * @return {float}
+ */
+getAlpha : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBarChangeRate
+ * @return {point_object}
+ */
+getBarChangeRate : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method setReverseDirection
+ * @param {bool} arg0
+ */
+setReverseDirection : function (
+bool 
+)
+{
+},
+
+/**
+ * @method initWithSprite
+ * @param {ca.CGSprite} arg0
+ * @return {bool}
+ */
+initWithSprite : function (
+cgsprite 
+)
+{
+    return false;
+},
+
+/**
+ * @method setPercentage
+ * @param {float} arg0
+ */
+setPercentage : function (
+float 
+)
+{
+},
+
+/**
+ * @method setType
+ * @param {ca.CGProgressTimer::Type} arg0
+ */
+setType : function (
+type 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {ca.CGSprite} arg0
+ * @return {ca.CGProgressTimer}
+ */
+create : function (
+cgsprite 
+)
+{
+    return ca.CGProgressTimer;
+},
+
+/**
+ * @method CGProgressTimer
+ * @constructor
+ */
+CGProgressTimer : function (
 )
 {
 },

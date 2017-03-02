@@ -122,8 +122,6 @@ protected:
     DSize m_pTitleOffset;
     bool m_bDefineTitleOffset;
         
-    
-    
     std::map<CAButton::Event, std::function<void()>> m_mFunctions;
     
     bool m_bTouchClick;

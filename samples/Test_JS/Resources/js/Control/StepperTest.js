@@ -13,12 +13,12 @@ var StepperTest = ca.CAViewController.extend({
         this.step_value = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_W_C(250, 0.5), DVerticalLayout_H_C(100, 0.25)));
         this.step_value.setText("step_value:0");
         this.step_value.setFontSize(28);
-        this.step_value.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-        this.step_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+        this.step_value.setTextAlignment(ca.CATextAlignment.Center);
+        this.step_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
         this.getView().addSubview(this.step_value);
 
 
-        var step = ca.CAStepper.createWithLayout(DLayout(DHorizontalLayout_W_C(360, 0.5), DVerticalLayout_H_C(60, 0.5)), ca.CAStepperOrientation.Horizontal);
+        var step = ca.CAStepper.createWithLayout(DLayout(DHorizontalLayout_W_C(360, 0.5), DVerticalLayout_H_C(60, 0.5)), ca.CAStepper.Orientation.Horizontal);
         //step.setWraps(true);//是否循环,默认循环
         step.setMinValue(0);
         step.setMaxValue(50);

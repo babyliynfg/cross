@@ -18,7 +18,7 @@
 #include "support/ccUtils.h"
 NS_CC_BEGIN
 
-CASwitch::CASwitch()
+CASwitch::CASwitch(const CASwitch::Type& type)
     : CAControl()
     , m_onImage(nullptr)
     , m_offImage(nullptr)
@@ -27,13 +27,9 @@ CASwitch::CASwitch()
     , m_pOnImageView(nullptr)
     , m_pOffImageView(nullptr)
     , m_pThumbTintImageView(nullptr)
+    , m_eType(type)
 {
     this->setTouchEventScrollHandOverToSuperview(false);
-    
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch");
-    this->setOnImage(CAImage::create(map.at("onImage")));
-    this->setOffImage(CAImage::create(map.at("offImage")));
-    this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
 }
 
 CASwitch::~CASwitch()
@@ -43,9 +39,9 @@ CASwitch::~CASwitch()
 	CC_SAFE_RELEASE_NULL(m_thumbTintImage);
 }
 
-CASwitch* CASwitch::create()
+CASwitch* CASwitch::create(const CASwitch::Type& type)
 {
-    CASwitch* switchControl = new CASwitch();
+    CASwitch* switchControl = new CASwitch(type);
     
     if (switchControl && switchControl->init())
     {
@@ -57,9 +53,9 @@ CASwitch* CASwitch::create()
     return NULL;
 }
 
-CASwitch* CASwitch::createWithFrame(const DRect& rect)
+CASwitch* CASwitch::createWithFrame(const DRect& rect, const CASwitch::Type& type)
 {
-    CASwitch* switchControl = new CASwitch();
+    CASwitch* switchControl = new CASwitch(type);
     
     if (switchControl && switchControl->initWithFrame(rect))
     {
@@ -71,9 +67,9 @@ CASwitch* CASwitch::createWithFrame(const DRect& rect)
     return NULL;
 }
 
-CASwitch* CASwitch::createWithCenter(const DRect& rect)
+CASwitch* CASwitch::createWithCenter(const DRect& rect, const CASwitch::Type& type)
 {
-    CASwitch* switchControl = new CASwitch();
+    CASwitch* switchControl = new CASwitch(type);
     
     if (switchControl && switchControl->initWithCenter(rect))
     {
@@ -85,9 +81,9 @@ CASwitch* CASwitch::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CASwitch* CASwitch::createWithLayout(const CrossApp::DLayout &layout)
+CASwitch* CASwitch::createWithLayout(const CrossApp::DLayout &layout, const CASwitch::Type& type)
 {
-    CASwitch* switchControl = new CASwitch();
+    CASwitch* switchControl = new CASwitch(type);
     
     if (switchControl && switchControl->initWithLayout(layout))
     {
@@ -105,8 +101,28 @@ bool CASwitch::init()
     {
         return false;
     }
-    this->setColor(CAColor_clear);
-
+    
+    switch (m_eType) {
+        case CASwitch::Type::SquareRect:
+        {
+            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_SquareRect");
+            this->setOnImage(CAImage::create(map.at("onImage")));
+            this->setOffImage(CAImage::create(map.at("offImage")));
+            this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
+        }
+            break;
+        case CASwitch::Type::RoundedRect:
+        {
+            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_RoundedRect");
+            this->setOnImage(CAImage::create(map.at("onImage")));
+            this->setOffImage(CAImage::create(map.at("offImage")));
+            this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
+        }
+            break;
+        default:
+            break;
+    }
+    
     m_pOnImageView = CAImageView::createWithImage(m_onImage);
     this->addSubview(m_pOnImageView);
 
@@ -291,9 +307,25 @@ void CASwitch::setContentSize(const DSize & var)
     DSize size = var;
     if (m_bRecSpe)
     {
-        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch");
-        int h = atoi(map.at("height").c_str());
-        int w = atoi(map.at("width").c_str());
+        int h,w;
+        switch (m_eType) {
+            case CASwitch::Type::SquareRect:
+            {
+                const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_SquareRect");
+                h = atoi(map.at("height").c_str());
+                w = atoi(map.at("width").c_str());
+            }
+                break;
+            case CASwitch::Type::RoundedRect:
+            {
+                const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_RoundedRect");
+                h = atoi(map.at("height").c_str());
+                w = atoi(map.at("width").c_str());
+            }
+                break;
+            default:
+                break;
+        }
         size.height = (h == 0) ? size.height : h;
         size.width  = (w == 0) ? size.width : w;
     }

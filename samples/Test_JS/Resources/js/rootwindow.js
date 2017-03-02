@@ -3,8 +3,8 @@ require('js/Control/AlertViewTest.js');
 require('js/Control/AutoCollectionViewHorizontalTest.js');
 require('js/Control/AutoCollectionViewVerticalTest.js');
 require('js/Control/ButtonTest.js');
+require('js/Control/CheckboxTest.js');
 require('js/Control/CollectionViewTest.js');
-require('js/Control/FlashViewTest.js');
 require('js/Control/GifViewTest.js');
 require('js/Control/ImageViewTest.js');
 require('js/Control/LabelTest.js');
@@ -46,6 +46,10 @@ var RootWindow = ca.CAWindow.extend(
             //var buttonTest = new ButtonTest();
             //buttonTest.init();
             //this.setRootViewController(buttonTest);
+
+            // var checkboxTest = new CheckboxTest();
+            // checkboxTest.init();
+            // this.setRootViewController(checkboxTest);
 
             //******
             //var collectionViewTest = new CollectionViewTest();
@@ -136,22 +140,16 @@ var RootWindow = ca.CAWindow.extend(
             //webViewTest.init();
             //this.setRootViewController(webViewTest);
 
-
-
-
         },
         initUIVIew:function(){
             var tabBarController = new CDUIShowAutoCollectionView();
             tabBarController.init();
-            //tabBarController.autorelease();
-
-
             var temp_nav = ca.CANavigationBarItem.create("控件展示");
             var item = ca.CABarButtonItem.create("", ca.CAImage.create("image/ic_category_list.png"), null);
-            //item.setTarget(this, CAControl_selector(RootWindow.buttonCallBack));
+            item.setCallbackFunction(function () {
+            });
             temp_nav.addLeftButtonItem(item);
             tabBarController.setNavigationBarItem(temp_nav);
-
             if (this.m_pRootNavigationController)
             {
                 this.m_pRootNavigationController.replaceViewController(tabBarController, false);
@@ -162,12 +160,9 @@ var RootWindow = ca.CAWindow.extend(
                 this.m_pRootNavigationController.initWithRootViewController(tabBarController);
                 this.m_pRootNavigationController.setNavigationBarBackgroundImage(ca.CAImage.create("image/navbg.jpg"));
             }
-
             this.setRootViewController(this.m_pRootNavigationController);
-
         },
         getRootNavigationController:function(){
-
             return this.m_pRootNavigationController;
         }
     }
