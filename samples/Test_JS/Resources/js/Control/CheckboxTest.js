@@ -3,7 +3,9 @@ var CheckboxTest = ca.CAViewController.extend({
         this._super();
         this.getView().setColor(ca.color._getGray());
 
-        var box = ca.CACheckbox.createWithLayout(DLayout(DHorizontalLayout_W_C(54, 0.5), DVerticalLayout_H_C(54, 0.25)));
+        var box = ca.CACheckbox.createWithLayout(DLayout(DHorizontalLayout_W_C(54, 0.5), DVerticalLayout_H_C(54, 0.25)),ca.CACheckbox.Type.SquareRect);
+        box.setImageStateNormal(ca.CAImage.create("source_material/checkbox1.png"));
+        box.setImageStateSelected(ca.CAImage.create("source_material/checkbox2.png"));
         this.getView().addSubview(box);
         box.setTarget(function ( isSelect) {
           if (isSelect) {
@@ -12,7 +14,7 @@ var CheckboxTest = ca.CAViewController.extend({
             log("取消选中");
           }
         });
-        var box1 = ca.CACheckbox.createWithLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.55)));
+        var box1 = ca.CACheckbox.createWithLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.55)),ca.CACheckbox.Type.RoundedRect);
         box1.setImageStateNormal(ca.CAImage.create("source_material/checkbox_normal.png"));
         box1.setImageStateSelected(ca.CAImage.create("source_material/checkbox_selected.png"));
         box1.setTitleStateNormal("未选中");
