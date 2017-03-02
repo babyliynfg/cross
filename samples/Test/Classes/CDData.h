@@ -31,7 +31,7 @@ static const char* iconTag[30] =
     "image/TabBar.png",
     
     "image/PageView.png",
-    "image/PageView.png",
+    "image/PageControl.png",
     "image/ScrollView.png",
     
     "image/CollectionView.png",
