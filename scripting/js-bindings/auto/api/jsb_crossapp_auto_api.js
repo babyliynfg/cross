@@ -9334,9 +9334,11 @@ caimage
 
 /**
  * @method create
+ * @param {ca.CASwitch::Type} arg0
  * @return {ca.CASwitch}
  */
 create : function (
+type 
 )
 {
     return ca.CASwitch;
@@ -9345,10 +9347,12 @@ create : function (
 /**
  * @method createWithFrame
  * @param {rect_object} arg0
+ * @param {ca.CASwitch::Type} arg1
  * @return {ca.CASwitch}
  */
 createWithFrame : function (
-drect 
+drect, 
+type 
 )
 {
     return ca.CASwitch;
@@ -9357,10 +9361,12 @@ drect
 /**
  * @method createWithLayout
  * @param {layout_object} arg0
+ * @param {ca.CASwitch::Type} arg1
  * @return {ca.CASwitch}
  */
 createWithLayout : function (
-dlayout 
+dlayout, 
+type 
 )
 {
     return ca.CASwitch;
@@ -9369,10 +9375,12 @@ dlayout
 /**
  * @method createWithCenter
  * @param {rect_object} arg0
+ * @param {ca.CASwitch::Type} arg1
  * @return {ca.CASwitch}
  */
 createWithCenter : function (
-drect 
+drect, 
+type 
 )
 {
     return ca.CASwitch;
@@ -9381,8 +9389,10 @@ drect
 /**
  * @method CASwitch
  * @constructor
+ * @param {ca.CASwitch::Type} arg0
  */
 CASwitch : function (
+type 
 )
 {
 },
@@ -10562,9 +10572,11 @@ getTitleStateSelected : function (
 
 /**
  * @method create
+ * @param {ca.CACheckbox::Type} arg0
  * @return {ca.CACheckbox}
  */
 create : function (
+type 
 )
 {
     return ca.CACheckbox;
@@ -10573,10 +10585,12 @@ create : function (
 /**
  * @method createWithFrame
  * @param {rect_object} arg0
+ * @param {ca.CACheckbox::Type} arg1
  * @return {ca.CACheckbox}
  */
 createWithFrame : function (
-drect 
+drect, 
+type 
 )
 {
     return ca.CACheckbox;
@@ -10585,10 +10599,12 @@ drect
 /**
  * @method createWithLayout
  * @param {layout_object} arg0
+ * @param {ca.CACheckbox::Type} arg1
  * @return {ca.CACheckbox}
  */
 createWithLayout : function (
-dlayout 
+dlayout, 
+type 
 )
 {
     return ca.CACheckbox;
@@ -10597,10 +10613,12 @@ dlayout
 /**
  * @method createWithCenter
  * @param {rect_object} arg0
+ * @param {ca.CACheckbox::Type} arg1
  * @return {ca.CACheckbox}
  */
 createWithCenter : function (
-drect 
+drect, 
+type 
 )
 {
     return ca.CACheckbox;
@@ -10609,8 +10627,10 @@ drect
 /**
  * @method CACheckbox
  * @constructor
+ * @param {ca.CACheckbox::Type} arg0
  */
 CACheckbox : function (
+type 
 )
 {
 },

@@ -24079,8 +24079,12 @@ bool js_crossapp_CASwitch_setThumbTintImage(JSContext *cx, uint32_t argc, jsval 
 bool js_crossapp_CASwitch_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CASwitch* ret = CrossApp::CASwitch::create();
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CASwitch::Type arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASwitch_create : Error processing arguments");
+        CrossApp::CASwitch* ret = CrossApp::CASwitch::create(arg0);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -24100,11 +24104,13 @@ bool js_crossapp_CASwitch_createWithFrame(JSContext *cx, uint32_t argc, jsval *v
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 1) {
+    if (argc == 2) {
         CrossApp::DRect arg0;
+        CrossApp::CASwitch::Type arg1;
         ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASwitch_createWithFrame : Error processing arguments");
-        CrossApp::CASwitch* ret = CrossApp::CASwitch::createWithFrame(arg0);
+        CrossApp::CASwitch* ret = CrossApp::CASwitch::createWithFrame(arg0, arg1);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -24124,11 +24130,13 @@ bool js_crossapp_CASwitch_createWithLayout(JSContext *cx, uint32_t argc, jsval *
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 1) {
+    if (argc == 2) {
         CrossApp::DLayout arg0;
+        CrossApp::CASwitch::Type arg1;
         ok &= jsval_to_dlayout(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASwitch_createWithLayout : Error processing arguments");
-        CrossApp::CASwitch* ret = CrossApp::CASwitch::createWithLayout(arg0);
+        CrossApp::CASwitch* ret = CrossApp::CASwitch::createWithLayout(arg0, arg1);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -24148,11 +24156,13 @@ bool js_crossapp_CASwitch_createWithCenter(JSContext *cx, uint32_t argc, jsval *
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 1) {
+    if (argc == 2) {
         CrossApp::DRect arg0;
+        CrossApp::CASwitch::Type arg1;
         ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASwitch_createWithCenter : Error processing arguments");
-        CrossApp::CASwitch* ret = CrossApp::CASwitch::createWithCenter(arg0);
+        CrossApp::CASwitch* ret = CrossApp::CASwitch::createWithCenter(arg0, arg1);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -24172,7 +24182,10 @@ bool js_crossapp_CASwitch_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    CrossApp::CASwitch* cobj = new (std::nothrow) CrossApp::CASwitch();
+    CrossApp::CASwitch::Type arg0;
+    ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+    JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASwitch_constructor : Error processing arguments");
+    CrossApp::CASwitch* cobj = new (std::nothrow) CrossApp::CASwitch(arg0);
     TypeTest<CrossApp::CASwitch> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -24245,10 +24258,10 @@ void js_register_crossapp_CASwitch(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_crossapp_CASwitch_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithFrame", js_crossapp_CASwitch_createWithFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithLayout", js_crossapp_CASwitch_createWithLayout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithCenter", js_crossapp_CASwitch_createWithCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("create", js_crossapp_CASwitch_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithFrame", js_crossapp_CASwitch_createWithFrame, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithLayout", js_crossapp_CASwitch_createWithLayout, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithCenter", js_crossapp_CASwitch_createWithCenter, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -27218,8 +27231,12 @@ bool js_crossapp_CACheckbox_getTitleStateSelected(JSContext *cx, uint32_t argc, 
 bool js_crossapp_CACheckbox_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::create();
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CACheckbox::Type arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_create : Error processing arguments");
+        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::create(arg0);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -27239,11 +27256,13 @@ bool js_crossapp_CACheckbox_createWithFrame(JSContext *cx, uint32_t argc, jsval 
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 1) {
+    if (argc == 2) {
         CrossApp::DRect arg0;
+        CrossApp::CACheckbox::Type arg1;
         ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_createWithFrame : Error processing arguments");
-        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithFrame(arg0);
+        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithFrame(arg0, arg1);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -27263,11 +27282,13 @@ bool js_crossapp_CACheckbox_createWithLayout(JSContext *cx, uint32_t argc, jsval
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 1) {
+    if (argc == 2) {
         CrossApp::DLayout arg0;
+        CrossApp::CACheckbox::Type arg1;
         ok &= jsval_to_dlayout(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_createWithLayout : Error processing arguments");
-        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithLayout(arg0);
+        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithLayout(arg0, arg1);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -27287,11 +27308,13 @@ bool js_crossapp_CACheckbox_createWithCenter(JSContext *cx, uint32_t argc, jsval
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 1) {
+    if (argc == 2) {
         CrossApp::DRect arg0;
+        CrossApp::CACheckbox::Type arg1;
         ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_createWithCenter : Error processing arguments");
-        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithCenter(arg0);
+        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithCenter(arg0, arg1);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -27311,7 +27334,10 @@ bool js_crossapp_CACheckbox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    CrossApp::CACheckbox* cobj = new (std::nothrow) CrossApp::CACheckbox();
+    CrossApp::CACheckbox::Type arg0;
+    ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+    JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_constructor : Error processing arguments");
+    CrossApp::CACheckbox* cobj = new (std::nothrow) CrossApp::CACheckbox(arg0);
     TypeTest<CrossApp::CACheckbox> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -27395,10 +27421,10 @@ void js_register_crossapp_CACheckbox(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_crossapp_CACheckbox_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithFrame", js_crossapp_CACheckbox_createWithFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithLayout", js_crossapp_CACheckbox_createWithLayout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithCenter", js_crossapp_CACheckbox_createWithCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("create", js_crossapp_CACheckbox_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithFrame", js_crossapp_CACheckbox_createWithFrame, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithLayout", js_crossapp_CACheckbox_createWithLayout, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithCenter", js_crossapp_CACheckbox_createWithCenter, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

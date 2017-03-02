@@ -306,6 +306,14 @@ ca.GifRecordType.IMAGE_DESC_RECORD_TYPE = 2; /* Begin with ',' */
 ca.GifRecordType.EXTENSION_RECORD_TYPE = 3;  /* Begin with '!' */
 ca.GifRecordType.TERMINATE_RECORD_TYPE = 4;   /* Begin with ';' */
 
+ca.CASwitch.Type = {};
+ca.CASwitch.Type.SquareRect = 0;
+ca.CASwitch.Type.RoundedRect = 1;
+
+ca.CACheckbox.Type = {};
+ca.CACheckbox.Type.SquareRect = 0;
+ca.CACheckbox.Type.RoundedRect = 1;
+
 ca.CAHttpRequest = {};
 ca.CAHttpRequest.Type = {};
 ca.CAHttpRequest.Type.Get = 0;
