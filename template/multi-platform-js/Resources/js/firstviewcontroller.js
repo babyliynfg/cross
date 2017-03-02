@@ -15,8 +15,8 @@ var FirstViewController = ca.CAViewController.extend({
 
         var labelLayout = DLayout(DHorizontalLayout_L_R(20, 20),DVerticalLayout_T_H(200, 100));
         var lab = ca.CALabel.createWithLayout(labelLayout);
-        lab.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-        lab.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+        lab.setTextAlignment(ca.CATextAlignment.Center);
+        lab.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
         lab.setText("Hello JavaScript");
         lab.setFont(font);
         this.getView().addSubview(lab);
