@@ -21,12 +21,7 @@ protected:
     void viewDidLoad();
     
     void viewDidUnload();
-    
-public:
-    
-    CAStepper* step;
-    CALabel* step_value;
-    
+   
 };
 
 

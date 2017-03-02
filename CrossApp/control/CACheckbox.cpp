@@ -169,7 +169,7 @@ void CACheckbox::onEnterTransitionDidFinish()
 void CACheckbox::setImageStateNormal(CAImage* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RETAIN(m_pImageNormal);
+    CC_SAFE_RELEASE(m_pImageNormal);
     m_pImageNormal = var;
     
     this->updateCheckboxState();
@@ -183,7 +183,7 @@ CAImage* CACheckbox::getImageStateNormal()
 void CACheckbox::setImageStateSelected(CAImage* var)
 {
     CC_SAFE_RETAIN(var);
-    CC_SAFE_RETAIN(m_pImageSelected);
+    CC_SAFE_RELEASE(m_pImageSelected);
     m_pImageSelected = var;
     
     this->updateCheckboxState();

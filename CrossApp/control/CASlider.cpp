@@ -129,7 +129,7 @@ bool CASlider::init()
     
     
     m_pThumbTintImageView = CAImageView::create();
-    this->addSubview(m_pThumbTintImageView);
+    this->insertSubview(m_pThumbTintImageView, 2);
     this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
     
     return true;
@@ -171,8 +171,29 @@ void CASlider::layoutSubViews()
         float centerX = ((totalWidth - thumbDiameter) * percent) + thumbDiameter/2;
         
         m_pThumbTintImageView->setCenter(DRect(centerX, thumbDiameter / 2, thumbDiameter, thumbDiameter));
-        m_pMinTrackTintImageView->setLayout(DLayout(DHorizontalLayout_L_W(0, centerX), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
-        m_pMaxTrackTintImageView->setLayout(DLayout(DHorizontalLayout_L_R(centerX, 0), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
+        
+        DLayout minLayout;
+        minLayout.vertical = DVerticalLayout_H_C(m_fTrackHeight, 0.5f);
+        minLayout.horizontal.left = 0;
+        minLayout.horizontal.width = MAX(centerX, m_pMinTrackTintImage->getContentSize().width);
+        m_pMinTrackTintImageView->setLayout(minLayout);
+        
+        DLayout maxLayout;
+        maxLayout.vertical = DVerticalLayout_H_C(m_fTrackHeight, 0.5f);
+        maxLayout.horizontal.right = 0;
+        maxLayout.horizontal.width = MAX(totalWidth - centerX, m_pMaxTrackTintImage->getContentSize().width);
+        m_pMaxTrackTintImageView->setLayout(maxLayout);
+        
+        if (percent >= 0.5)
+        {
+            m_pMinTrackTintImageView->setZOrder(1);
+            m_pMaxTrackTintImageView->setZOrder(0);
+        }
+        else
+        {
+            m_pMinTrackTintImageView->setZOrder(0);
+            m_pMaxTrackTintImageView->setZOrder(1);
+        }
     }
 }
 
@@ -226,6 +247,10 @@ void CASlider::setMinTrackTintImage(CAImage* image)
         if (m_pMinTrackTintImageView)
         {
             ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pMinTrackTintImage);
+            DRect capInsets;
+            capInsets.size = DSize(2, 2);
+            capInsets.origin = ccpMult(ccpSub(m_pMinTrackTintImage->getContentSize(), capInsets.size), 0.5f);
+            m_pMinTrackTintImageView->setCapInsets(capInsets);
         }
     }
 }
@@ -240,6 +265,10 @@ void CASlider::setMaxTrackTintImage(CAImage* image)
         if (m_pMaxTrackTintImageView)
         {
             ((CAScale9ImageView*)m_pMaxTrackTintImageView)->setImage(m_pMaxTrackTintImage);
+            DRect capInsets;
+            capInsets.size = DSize(2, 2);
+            capInsets.origin = ccpMult(ccpSub(m_pMaxTrackTintImage->getContentSize(), capInsets.size), 0.5f);
+            m_pMaxTrackTintImageView->setCapInsets(capInsets);
         }
     }
 }

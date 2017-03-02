@@ -292,6 +292,7 @@ void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     if (m_bPrevIsOn != m_bIsOn && m_function)
     {
+        this->updateSwitchState(true);
         m_function(m_bIsOn);
     }
 }

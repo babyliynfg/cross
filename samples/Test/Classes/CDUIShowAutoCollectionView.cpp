@@ -18,6 +18,7 @@
 #include "SegmentedControlTest.h"
 #include "TabBarControllerTest.h"
 #include "PageViewTest.h"
+#include "PageControlTest.h"
 #include "TableViewTest.h"
 #include "ListViewTest.h"
 #include "CollectionViewTest.h"
@@ -33,7 +34,7 @@
 #include "AutoCollectionViewVerticalTest.h"
 #include "WaterfallViewTest.h"
 
-CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNavigationBar(0),showSliderNavigationBar(0),showLabelNavigationBar(0),showPickerViewNavigationBar(0),showViewAnimationNavigationBar(0),showAutoCollectionVerticalNavigationBar(0),showAutoCollectionHorizontalNavigationBar(0)
+CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNavigationBar(0),showSliderNavigationBar(0),showStepperNavigationBar(0),showLabelNavigationBar(0),showPickerViewNavigationBar(0),showViewAnimationNavigationBar(0),showAutoCollectionVerticalNavigationBar(0),showAutoCollectionHorizontalNavigationBar(0)
 {
     m_vTitle.push_back("AlertView");
     m_vTitle.push_back("Button");
@@ -56,21 +57,22 @@ CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNa
     m_vTitle.push_back("TabBar");
     
     m_vTitle.push_back("PageView");
+    m_vTitle.push_back("PageControl");
     m_vTitle.push_back("ScrollView");
-    m_vTitle.push_back("AutoCollectionView(Vertical)");
     
+    m_vTitle.push_back("AutoCollectionView(Vertical)");
     m_vTitle.push_back("AutoCollectionView(Horizontal)");
     m_vTitle.push_back("CollectionView");
-    m_vTitle.push_back("WaterfallView");
     
+    m_vTitle.push_back("WaterfallView");
     m_vTitle.push_back("ListView");
     m_vTitle.push_back("TableView");
-    m_vTitle.push_back("PickerView");
     
+    m_vTitle.push_back("PickerView");
     m_vTitle.push_back("WebView");
     m_vTitle.push_back("GifView");
-    m_vTitle.push_back("VideoPlayer");
     
+    m_vTitle.push_back("VideoPlayer");
     m_vTitle.push_back("RenderImage");
     m_vTitle.push_back("Animation");
 }
@@ -242,9 +244,16 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
         }
         case 10:
         {
+            showStepperNavigationBar = 0;
+            StepperNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
+            
+            CABarButtonItem* StepperRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
+            StepperRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::StepperRightBtnRightcallback, this, nullptr));
+            StepperNavigationBar->addRightButtonItem(StepperRightBtn);
+            
             StepperTest* ViewContrllerStepperTest = new StepperTest();
             ViewContrllerStepperTest->init();
-            ViewContrllerStepperTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
+            ViewContrllerStepperTest->setNavigationBarItem(StepperNavigationBar);
             ViewContrllerStepperTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerStepperTest, true);
             break;
@@ -305,6 +314,16 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
         }
         case 16:
         {
+            PageControlTest* ViewContrllerPageViewTest = new PageControlTest();
+            ViewContrllerPageViewTest->init();
+            ViewContrllerPageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
+            ViewContrllerPageViewTest->autorelease();
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerPageViewTest, true);
+            
+            break;
+        }
+        case 17:
+        {
             ScrollViewTest* ViewContrllerScrollViewTest = new ScrollViewTest();
             ViewContrllerScrollViewTest->init();
             ViewContrllerScrollViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
@@ -312,7 +331,8 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerScrollViewTest, true);
             break;
         }
-        case 17:
+            
+        case 18:
         {
             showAutoCollectionVerticalNavigationBar = 0;
             AutoCollectionVerticalNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
@@ -328,8 +348,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAutoCollectionViewVerticalTest, true);
             break;
         }
-            
-        case 18:
+        case 19:
         {
             showAutoCollectionHorizontalNavigationBar = 0;
             AutoCollectionHorizontalNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
@@ -345,7 +364,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAutoCollectionViewHorizontalTest, true);
             break;
         }
-        case 19:
+        case 20:
         {
             CollectionViewTest* ViewContrllerCollectionViewTest = new CollectionViewTest();
             ViewContrllerCollectionViewTest->init();
@@ -354,7 +373,8 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerCollectionViewTest, true);
             break;
         }
-        case 20:
+            
+        case 21:
         {
             WaterfallViewTest* ViewContrllerWaterfallViewTest = new WaterfallViewTest();
             ViewContrllerWaterfallViewTest->init();
@@ -363,8 +383,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerWaterfallViewTest, true);
             break;
         }
-            
-        case 21:
+        case 22:
         {
             ListViewTest* ViewContrllerListViewTest = new ListViewTest();
             ViewContrllerListViewTest->init();
@@ -373,7 +392,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerListViewTest, true);
             break;
         }
-        case 22:
+        case 23:
         {
             TableViewTest* ViewContrllerTableViewTest = new TableViewTest();
             ViewContrllerTableViewTest->init();
@@ -382,7 +401,8 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTableViewTest, true);
             break;
         }
-        case 23:
+            
+        case 24:
         {
             showPickerViewNavigationBar = 0;
             PickerViewNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
@@ -398,8 +418,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerPickerViewTest, true);
             break;
         }
-            
-        case 24:
+        case 25:
         {
             WebViewTest* ViewContrllerWebViewTest = new WebViewTest();
             ViewContrllerWebViewTest->init();
@@ -408,7 +427,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerWebViewTest, true);
             break;
         }
-        case 25:
+        case 26:
         {
             GifViewTest* ViewContrllerGifViewTest = new GifViewTest();
             ViewContrllerGifViewTest->init();
@@ -417,7 +436,8 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerGifViewTest, true);
             break;
         }
-        case 26:
+            
+        case 27:
         {
             VideoPlayerControlViewTest* ViewContrllerVideoPlayerControlViewTest = new VideoPlayerControlViewTest();
             ViewContrllerVideoPlayerControlViewTest->init();
@@ -426,8 +446,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerVideoPlayerControlViewTest, true);
             break;
         }
-            
-        case 27:
+        case 28:
         {
             RenderImageTest* ViewContrllerRenderImageTest = new RenderImageTest();
             ViewContrllerRenderImageTest->init();
@@ -436,7 +455,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerRenderImageTest, true);
             break;
         }
-        case 28:
+        case 29:
         {
             showViewAnimationNavigationBar = 0;
             ViewAnimationNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));

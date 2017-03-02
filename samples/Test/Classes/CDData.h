@@ -1,4 +1,4 @@
-﻿#include "CommonHttpManager.h"
+#include "CommonHttpManager.h"
 
 #define _T(x) L##x
 #define CHAR    wchar_t
@@ -8,7 +8,7 @@ static const CHAR* menuList[4] =
 	_T("CrossApp官网"), _T("9秒官网")
 };
 
-static const char* iconTag[29] =
+static const char* iconTag[30] =
 {
     "image/AlertView.png",
     "image/button.png",
@@ -31,21 +31,22 @@ static const char* iconTag[29] =
     "image/TabBar.png",
     
     "image/PageView.png",
+    "image/PageControl.png",
     "image/ScrollView.png",
-    "image/CollectionView.png",
     
     "image/CollectionView.png",
     "image/CollectionView.png",
     "image/CollectionView.png",
     
+    "image/CollectionView.png",
     "image/ListView.png",
     "image/TableView.png",
-    "image/PickerView.png",
     
+    "image/PickerView.png",
     "image/WebView.png",
     "image/GifView.png",
-    "image/FlashView.png",
     
+    "image/FlashView.png",
     "image/Video.png",
     "image/RenderImage.png",
     

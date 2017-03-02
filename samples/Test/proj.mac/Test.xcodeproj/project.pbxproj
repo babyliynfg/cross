@@ -75,6 +75,7 @@
 		B093DB481CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB441CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp */; };
 		B093DB491CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */; };
 		D410DC391E66629E00F6E25C /* CheckboxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D410DC371E66629E00F6E25C /* CheckboxTest.cpp */; };
+		D44036D41E67F86800B89230 /* PageControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D44036D21E67F86800B89230 /* PageControlTest.cpp */; };
 		D6B033F81D9507AE00388A90 /* CAVideoPlayerControlViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B0322A1D9507AD00388A90 /* CAVideoPlayerControlViewMac.cpp */; };
 		D6B033FA1D9507AE00388A90 /* CAVideoPlayerDecoderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B0322D1D9507AD00388A90 /* CAVideoPlayerDecoderMac.cpp */; };
 		D6B033FC1D9507AE00388A90 /* CAVideoPlayerRenderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B032301D9507AD00388A90 /* CAVideoPlayerRenderMac.cpp */; };
@@ -235,6 +236,8 @@
 		B09B73BB1BD1FA82001D82BC /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../../../CrossApp/the_third_party/SDL/prebuilt/mac/libSDL.a; sourceTree = "<group>"; };
 		D410DC371E66629E00F6E25C /* CheckboxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CheckboxTest.cpp; path = ../Classes/Control/CheckboxTest.cpp; sourceTree = "<group>"; };
 		D410DC381E66629E00F6E25C /* CheckboxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckboxTest.h; path = ../Classes/Control/CheckboxTest.h; sourceTree = "<group>"; };
+		D44036D21E67F86800B89230 /* PageControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PageControlTest.cpp; path = ../Classes/Control/PageControlTest.cpp; sourceTree = "<group>"; };
+		D44036D31E67F86800B89230 /* PageControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageControlTest.h; path = ../Classes/Control/PageControlTest.h; sourceTree = "<group>"; };
 		D6B032291D9507AD00388A90 /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerControlView.h; sourceTree = "<group>"; };
 		D6B0322A1D9507AD00388A90 /* CAVideoPlayerControlViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerControlViewMac.cpp; sourceTree = "<group>"; };
 		D6B0322C1D9507AD00388A90 /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
@@ -445,6 +448,8 @@
 				B063D4811CAD24F300B1FF13 /* ListViewTest.h */,
 				B063D4821CAD24F300B1FF13 /* PageViewTest.cpp */,
 				B063D4831CAD24F300B1FF13 /* PageViewTest.h */,
+				D44036D21E67F86800B89230 /* PageControlTest.cpp */,
+				D44036D31E67F86800B89230 /* PageControlTest.h */,
 				B063D4841CAD24F300B1FF13 /* PickerViewTest.cpp */,
 				B063D4851CAD24F300B1FF13 /* PickerViewTest.h */,
 				B063D4861CAD24F300B1FF13 /* ProgressTest.cpp */,
@@ -655,6 +660,7 @@
 				D6B033FC1D9507AE00388A90 /* CAVideoPlayerRenderMac.cpp in Sources */,
 				B063D4A91CAD24F300B1FF13 /* AlertViewTest.cpp in Sources */,
 				15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */,
+				D44036D41E67F86800B89230 /* PageControlTest.cpp in Sources */,
 				B063D4B51CAD24F300B1FF13 /* RenderImageTest.cpp in Sources */,
 				B063D4C41CAD24F300B1FF13 /* WebViewTest.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
