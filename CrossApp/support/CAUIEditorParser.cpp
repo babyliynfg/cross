@@ -12,6 +12,7 @@
 #include "control/CAButton.h"
 #include "control/CAProgress.h"
 #include "control/CASwitch.h"
+#include "control/CACheckbox.h"
 #include "control/CASlider.h"
 #include "control/CASegmentedControl.h"
 #include "control/CAPageControl.h"
@@ -313,6 +314,16 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         if (const char* value = viewXml->Attribute("fontName"))
         {
             btn->setTitleFontName(value);
+        }
+        
+        if (const char* value = viewXml->Attribute("titleBold"))
+        {
+            btn->setTitleBold((bool)atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("titleTextAlignment"))
+        {
+            btn->setTitleTextAlignment((CATextAlignment)atoi(value));
         }
         
         DSize titleOffSize = DSizeZero;
@@ -684,7 +695,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 	}
     else if (contrlType.compare("CASwitch") == 0)
     {
-        CASwitch* sw = CASwitch::create();
+        CASwitch* sw = CASwitch::create((CASwitch::Type)atoi(viewXml->Attribute("type")));
         superview->addSubview(sw);
         
         const char* key = viewXml->Attribute("textTag");
@@ -729,6 +740,128 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             sw->setThumbTintImage(CAImage::create(value));
         }
+    }
+    else if (contrlType.compare("CACheckbox") == 0)
+    {
+        CACheckbox* sw = CACheckbox::create((CACheckbox::Type)atoi(viewXml->Attribute("type")));
+        superview->addSubview(sw);
+        
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, sw);
+        sw->setTextTag(key);
+        
+        DLayout layout;
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
+                                              (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
+                                          (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
+        sw->setLayout(layout);
+        
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            sw->setZOrder(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("color"))
+        {
+            sw->setColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("imageNormal"))
+        {
+            sw->setImageStateNormal(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("imageSelected"))
+        {
+            sw->setImageStateSelected(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("imageColorNormal"))
+        {
+            sw->setImageColorStateNormal(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("imageColorSelected"))
+        {
+            sw->setImageColorStateSelected(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("titleNormal"))
+        {
+            sw->setTitleStateNormal(value);
+        }
+        
+        if (const char* value = viewXml->Attribute("titleSelected"))
+        {
+            sw->setTitleStateSelected(value);
+        }
+        
+        if (const char* value = viewXml->Attribute("titleColorNormal"))
+        {
+            sw->setTitleColorStateNormal(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("titleColorSelected"))
+        {
+            sw->setTitleColorStateSelected(ccc4Int(atoi(value)));
+        }
+
+        DSize imageOffSize = DSizeZero;
+        if (const char* value1 = viewXml->Attribute("imageOffSizeX"))
+        {
+            imageOffSize.width = atof(value1);
+        }
+        if (const char* value1 = viewXml->Attribute("imageOffSizeY"))
+        {
+            imageOffSize.height = atof(value1);
+        }
+        sw->setImageOffset(imageOffSize);
+        
+        DSize imageSize = DSizeZero;
+        if (const char* value1 = viewXml->Attribute("imageSizeW"))
+        {
+            imageSize.width = atoi(value1);
+        }
+        if (const char* value1 = viewXml->Attribute("imageSizeH"))
+        {
+            imageSize.height = atoi(value1);
+        }
+        sw->setImageSize(imageSize);
+        
+        if (const char* value = viewXml->Attribute("fontSize"))
+        {
+            sw->setTitleFontSize(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("fontName"))
+        {
+            sw->setTitleFontName(value);
+        }
+        
+        if (const char* value = viewXml->Attribute("titleBold"))
+        {
+            sw->setTitleBold((bool)atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("titleTextAlignment"))
+        {
+            sw->setTitleTextAlignment((CATextAlignment)atoi(value));
+        }
+        
+        DSize titleOffSize = DSizeZero;
+        if (const char* value1 = viewXml->Attribute("titleOffSizeX"))
+        {
+            titleOffSize.width = atof(value1);
+        }
+        if (const char* value1 = viewXml->Attribute("titleOffSizeY"))
+        {
+            titleOffSize.height = atof(value1);
+        }
+        sw->setTitleOffset(titleOffSize);
+        
     }
     else if (contrlType.compare("CASegmentedControl") == 0)
     {
