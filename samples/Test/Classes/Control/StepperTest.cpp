@@ -29,7 +29,7 @@ void CDUIShowAutoCollectionView::StepperRightBtnRightcallback(CAButton* btn)
     {
         StepperNum = ++showStepperNavigationBar;
     }
-    CCLog("StepperNum = %d", StepperNum);
+    
     StepperTest* ViewContrllerStepperTest = new StepperTest();
     ViewContrllerStepperTest->init();
     ViewContrllerStepperTest->setNavigationBarItem(StepperNavigationBar);
