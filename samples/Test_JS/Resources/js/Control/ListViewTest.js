@@ -27,14 +27,14 @@ var listViewDataSource = {
 
             var test = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_W(0, 200), DVerticalLayoutFill));
             test.setColor(ca.color(51, 204, 255, 255));
-            test.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            test.setTextAlignment(ca.CATextAlignment.Center);
+            test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             test.setFontSize(28);
             test.setTag(100);
             cell.addSubview(test);
 
-            var btn = ca.CAButton.createWithLayout(DLayout(DHorizontalLayout_W_C(100, 0.85), DVerticalLayout_H_C(50, 0.5)), ca.CAButtonType.SquareRect);
-            btn.setTitleForState(ca.CAControlState.Normal, "btn");
+            var btn = ca.CAButton.createWithLayout(DLayout(DHorizontalLayout_W_C(100, 0.85), DVerticalLayout_H_C(50, 0.5)), ca.CAButton.Type.SquareRect);
+            btn.setTitleForState(ca.CAControl.State.Normal, "btn");
             btn.setTag(200);
             cell.addSubview(btn);
             btn.setTouchEventScrollHandOverToSuperview(false);

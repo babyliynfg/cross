@@ -525,12 +525,12 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             var itemText = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_R(0,0), DVerticalLayout_B_H(5,80)));
             itemText.setTag(100);
             itemText.setFontSize(24);
-            itemText.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            itemText.setTextAlignment(ca.CATextAlignment.Center);
+            itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             p_Cell.addSubview(itemText);
 
             var icon = ca.CAImageView.createWithLayout(DLayout(DHorizontalLayout_L_R(30,30),DVerticalLayout_T_H(20, 123)));
-            icon.setScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside);
+            icon.setScaleType(ca.CAImageView.ScaleType.FitImageInside);
             icon.setTag(101);
             icon.setScale(0.6);
             p_Cell.addSubview(icon);

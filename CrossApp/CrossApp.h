@@ -256,6 +256,7 @@
 #include "game/actions/CGActionTween.h"
 #include "game/actions/CGActionInstant.h"
 #include "game/actions/CGActionManager.h"
+#include "game/actions/CGActionProgressTimer.h"
 #include "game/actions/CGActionInterval.h"
 #include "game/actions/CGTweenFunction.h"
 

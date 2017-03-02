@@ -4,7 +4,6 @@ require('js/Control/AutoCollectionViewHorizontalTest.js');
 require('js/Control/AutoCollectionViewVerticalTest.js');
 require('js/Control/ButtonTest.js');
 require('js/Control/CollectionViewTest.js');
-require('js/Control/FlashViewTest.js');
 require('js/Control/GifViewTest.js');
 require('js/Control/ImageViewTest.js');
 require('js/Control/LabelTest.js');
@@ -148,7 +147,9 @@ var RootWindow = ca.CAWindow.extend(
 
             var temp_nav = ca.CANavigationBarItem.create("控件展示");
             var item = ca.CABarButtonItem.create("", ca.CAImage.create("image/ic_category_list.png"), null);
-            //item.setTarget(this, CAControl_selector(RootWindow.buttonCallBack));
+            item.setCallbackFunction(function () {
+
+            });
             temp_nav.addLeftButtonItem(item);
             tabBarController.setNavigationBarItem(temp_nav);
 

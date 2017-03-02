@@ -12,7 +12,7 @@ var ActivityIndicatorViewTest = ca.CAViewController.extend({
         if (this.ActivityIndicatorNum == 0)
         {
             var idc1 = ca.CAActivityIndicatorView.createWithLayout(DLayoutFill);
-            idc1.setStyle(ca.CAActivityIndicatorViewStyle.WhiteLarge);
+            idc1.setStyle(ca.CAActivityIndicatorView.Style.WhiteLarge);
             idc1.startAnimating();
 
             var view1 = ca.CAView.createWithLayout(DLayoutFill);
@@ -23,7 +23,7 @@ var ActivityIndicatorViewTest = ca.CAViewController.extend({
         else if (this.ActivityIndicatorNum == 1)
         {
             var idc2 = ca.CAActivityIndicatorView.createWithLayout(DLayoutFill);
-            idc2.setStyle(ca.CAActivityIndicatorViewStyle.GrayLarge);
+            idc2.setStyle(ca.CAActivityIndicatorView.Style.GrayLarge);
             idc2.startAnimating();
 
             var view2 = ca.CAView.createWithLayout(DLayoutFill);
@@ -34,7 +34,7 @@ var ActivityIndicatorViewTest = ca.CAViewController.extend({
         else if (this.ActivityIndicatorNum == 2)
         {
             var idc3 = ca.CAActivityIndicatorView.createWithLayout(DLayoutFill);
-            idc3.setStyle(ca.CAActivityIndicatorViewStyle.White);
+            idc3.setStyle(ca.CAActivityIndicatorView.Style.White);
             idc3.setCycleTime(1.0);
             idc3.setTimesOneCycle(12);
             idc3.startAnimating();
@@ -47,7 +47,7 @@ var ActivityIndicatorViewTest = ca.CAViewController.extend({
         else if (this.ActivityIndicatorNum == 3)
         {
             var idc4 = ca.CAActivityIndicatorView.createWithLayout(DLayoutFill);
-            idc4.setStyle(ca.CAActivityIndicatorViewStyle.Gray);
+            idc4.setStyle(ca.CAActivityIndicatorView.Style.Gray);
             idc4.setCycleTime(1.0);
             idc4.setTimesOneCycle(12);
             idc4.startAnimating();
@@ -65,7 +65,7 @@ var ActivityIndicatorViewTest = ca.CAViewController.extend({
             imageView.setImage(image);
 
             var idc5 = ca.CAActivityIndicatorView.createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100,100)));
-            idc5.setStyle(ca.CAActivityIndicatorViewStyle.Image);
+            idc5.setStyle(ca.CAActivityIndicatorView.Style.Image);
             idc5.setActivityIndicatorView(imageView);
             //idc5.startAnimating();
 

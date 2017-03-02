@@ -19,8 +19,8 @@ var SliderTest = ca.CAViewController.extend({
         this.sliderValue.setColor(ca.color(51,204,255,255));
         this.sliderValue.setText("0");
         this.sliderValue.setFontSize(30);
-        this.sliderValue.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-        this.sliderValue.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+        this.sliderValue.setTextAlignment(ca.CATextAlignment.Center);
+        this.sliderValue.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
 
         if (this.sliderNum == 0)
         {

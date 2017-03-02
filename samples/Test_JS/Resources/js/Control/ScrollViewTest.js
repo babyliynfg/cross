@@ -12,7 +12,7 @@ var ScrollViewTest = ca.CAViewController.extend({
         this.p_ScrollView = ca.CAScrollView.createWithLayout(DLayoutFill);
         this.p_ScrollView.setMinimumZoomScale(0.2);
         this.p_ScrollView.setMaximumZoomScale(5.0);
-        this.p_ScrollView.setMultitouchGesture(ca.MultitouchGesture.ZoomAndRotate);
+        this.p_ScrollView.setMultitouchGesture(ca.CAScrollView.MultitouchGesture.ZoomAndRotate);
         this.getView().addSubview(this.p_ScrollView);
         this.p_ScrollView.setViewSize(ca.dsize(2160, 3840));
 
