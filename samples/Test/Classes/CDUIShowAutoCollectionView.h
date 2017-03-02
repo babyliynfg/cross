@@ -31,6 +31,9 @@ public:
     int showSliderNavigationBar;
     CANavigationBarItem* SliderNavigationBar;
     
+    int showStepperNavigationBar;
+    CANavigationBarItem* StepperNavigationBar;
+    
     int showLabelNavigationBar;
     CANavigationBarItem* LabelNavigationBar;
     
@@ -52,6 +55,8 @@ public:
 public:
     
     void SliderRightBtnRightcallback(CAButton* btn);
+    
+    void StepperRightBtnRightcallback(CAButton* btn);
     
     void LabelRightBtnRightcallback(CAButton* btn);
     
