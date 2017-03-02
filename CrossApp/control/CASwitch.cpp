@@ -105,22 +105,23 @@ bool CASwitch::init()
     switch (m_eType) {
         case CASwitch::Type::SquareRect:
         {
-            
+            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_SquareRect");
+            this->setOnImage(CAImage::create(map.at("onImage")));
+            this->setOffImage(CAImage::create(map.at("offImage")));
+            this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
         }
             break;
         case CASwitch::Type::RoundedRect:
         {
-            
+            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_RoundedRect");
+            this->setOnImage(CAImage::create(map.at("onImage")));
+            this->setOffImage(CAImage::create(map.at("offImage")));
+            this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
         }
             break;
         default:
             break;
     }
-    
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch");
-    this->setOnImage(CAImage::create(map.at("onImage")));
-    this->setOffImage(CAImage::create(map.at("offImage")));
-    this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
     
     m_pOnImageView = CAImageView::createWithImage(m_onImage);
     this->addSubview(m_pOnImageView);
@@ -306,9 +307,25 @@ void CASwitch::setContentSize(const DSize & var)
     DSize size = var;
     if (m_bRecSpe)
     {
-        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch");
-        int h = atoi(map.at("height").c_str());
-        int w = atoi(map.at("width").c_str());
+        int h,w;
+        switch (m_eType) {
+            case CASwitch::Type::SquareRect:
+            {
+                const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_SquareRect");
+                h = atoi(map.at("height").c_str());
+                w = atoi(map.at("width").c_str());
+            }
+                break;
+            case CASwitch::Type::RoundedRect:
+            {
+                const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_RoundedRect");
+                h = atoi(map.at("height").c_str());
+                w = atoi(map.at("width").c_str());
+            }
+                break;
+            default:
+                break;
+        }
         size.height = (h == 0) ? size.height : h;
         size.width  = (w == 0) ? size.width : w;
     }
