@@ -39,7 +39,6 @@ public:
 	CC_SYNTHESIZE_READONLY(CAImage*, m_thumbTintImage, ThumbTintImage);
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bIsOn, On);
-	CC_SYNTHESIZE_IS_READONLY(bool, m_bTouchClick, TouchClick);
     
     bool isOn();
     void setIsOn(bool on, bool animated);
@@ -53,13 +52,16 @@ public:
     virtual void onEnterTransitionDidFinish();
     
     bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
     void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
 protected:
-    void updateSwitchState(bool animated, bool callback);
-    void setContentSize(const DSize & var);
+    void updateSwitchState(bool animated);
+    void setContentSize(const DSize& var);
     
 protected:
+    
+    bool m_bPrevIsOn;
     
     CAImageView *m_pOnImageView;
     CAImageView *m_pOffImageView;

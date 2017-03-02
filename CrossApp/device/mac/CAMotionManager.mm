@@ -28,6 +28,7 @@ void CAMotionManager::startGyroscope(const CAMotionManager::Callback& callback)
 
 void CAMotionManager::setGyroInterval(float interval)
 {
+    
 }
 
 void CAMotionManager::stopGyroscope()

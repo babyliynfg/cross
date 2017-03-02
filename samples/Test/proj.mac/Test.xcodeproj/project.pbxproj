@@ -74,6 +74,7 @@
 		B063D4C41CAD24F300B1FF13 /* WebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D4A61CAD24F300B1FF13 /* WebViewTest.cpp */; };
 		B093DB481CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB441CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp */; };
 		B093DB491CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */; };
+		D410DC391E66629E00F6E25C /* CheckboxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D410DC371E66629E00F6E25C /* CheckboxTest.cpp */; };
 		D6B033F81D9507AE00388A90 /* CAVideoPlayerControlViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B0322A1D9507AD00388A90 /* CAVideoPlayerControlViewMac.cpp */; };
 		D6B033FA1D9507AE00388A90 /* CAVideoPlayerDecoderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B0322D1D9507AD00388A90 /* CAVideoPlayerDecoderMac.cpp */; };
 		D6B033FC1D9507AE00388A90 /* CAVideoPlayerRenderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B032301D9507AD00388A90 /* CAVideoPlayerRenderMac.cpp */; };
@@ -232,6 +233,8 @@
 		B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AutoCollectionViewVerticalTest.cpp; path = ../Classes/Control/AutoCollectionViewVerticalTest.cpp; sourceTree = "<group>"; };
 		B093DB471CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutoCollectionViewVerticalTest.h; path = ../Classes/Control/AutoCollectionViewVerticalTest.h; sourceTree = "<group>"; };
 		B09B73BB1BD1FA82001D82BC /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../../../CrossApp/the_third_party/SDL/prebuilt/mac/libSDL.a; sourceTree = "<group>"; };
+		D410DC371E66629E00F6E25C /* CheckboxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CheckboxTest.cpp; path = ../Classes/Control/CheckboxTest.cpp; sourceTree = "<group>"; };
+		D410DC381E66629E00F6E25C /* CheckboxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckboxTest.h; path = ../Classes/Control/CheckboxTest.h; sourceTree = "<group>"; };
 		D6B032291D9507AD00388A90 /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerControlView.h; sourceTree = "<group>"; };
 		D6B0322A1D9507AD00388A90 /* CAVideoPlayerControlViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerControlViewMac.cpp; sourceTree = "<group>"; };
 		D6B0322C1D9507AD00388A90 /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
@@ -422,12 +425,14 @@
 				B093DB451CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.h */,
 				B093DB461CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp */,
 				B093DB471CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.h */,
-				B063D46E1CAD24F300B1FF13 /* ActivityIndicatorViewTest.h */,
 				B063D46F1CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp */,
+				B063D46E1CAD24F300B1FF13 /* ActivityIndicatorViewTest.h */,
 				B063D4701CAD24F300B1FF13 /* AlertViewTest.cpp */,
 				B063D4711CAD24F300B1FF13 /* AlertViewTest.h */,
 				B063D4741CAD24F300B1FF13 /* ButtonTest.cpp */,
 				B063D4751CAD24F300B1FF13 /* ButtonTest.h */,
+				D410DC371E66629E00F6E25C /* CheckboxTest.cpp */,
+				D410DC381E66629E00F6E25C /* CheckboxTest.h */,
 				B063D4761CAD24F300B1FF13 /* CollectionViewTest.cpp */,
 				B063D4771CAD24F300B1FF13 /* CollectionViewTest.h */,
 				B063D47A1CAD24F300B1FF13 /* GifViewTest.cpp */,
@@ -653,6 +658,7 @@
 				B063D4B51CAD24F300B1FF13 /* RenderImageTest.cpp in Sources */,
 				B063D4C41CAD24F300B1FF13 /* WebViewTest.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
+				D410DC391E66629E00F6E25C /* CheckboxTest.cpp in Sources */,
 				B063D4BA1CAD24F300B1FF13 /* StepperTest.cpp in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
