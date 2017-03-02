@@ -131,23 +131,25 @@ bool CACheckbox::init()
     switch (m_eType) {
         case CACheckbox::Type::SquareRect:
         {
-        
+            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACheckbox_SquareRect");
+            this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
+            this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
+            this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
+            this->setTitleColorStateSelected(ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))));
         }
             break;
         case CACheckbox::Type::RoundedRect:
         {
-        
+            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACheckbox_RoundedRect");
+            this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
+            this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
+            this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
+            this->setTitleColorStateSelected(ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))));
         }
             break;
         default:
             break;
     }
-    
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACheckbox");
-    this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
-    this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
-    this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
-    this->setTitleColorStateSelected(ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))));
     
     return true;
 }
