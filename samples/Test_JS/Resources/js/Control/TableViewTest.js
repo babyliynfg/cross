@@ -51,7 +51,6 @@ var TableViewTest = ca.CAViewController.extend({
         this.sectionTitle.push("Z");
 
         showIndex = 0;
-        //VIEWLIST.clear();
 
         var p_TableView = ca.CATableView.createWithLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayoutFill));
         p_TableView.setTableViewDataSource(this);
@@ -96,7 +95,6 @@ var TableViewTest = ca.CAViewController.extend({
         return cell;
 
     }
-
     ,tableViewSectionViewForHeaderInSection: function( table, viewSize ,section)
     {
         var head = this.sectionTitle[section];
