@@ -29,7 +29,7 @@ var ImageViewTest = ca.CAViewController.extend({
             var image2 = ca.CAImageView.createWithLayout(DLayoutFill);
 
             image2.setImage(ca.CAImage.create("image/h1.png"));
-            image2.setScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageXY);
+            image2.setScaleType(ca.CAImageView.ScaleType.FitImageXY);
             var view2 = ca.CAView.createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
             view2.addSubview(image2);
             view2.setColor(ca.color._getGray());
@@ -39,7 +39,7 @@ var ImageViewTest = ca.CAViewController.extend({
         {
             var image3 = ca.CAImageView.createWithLayout(DLayoutFill);
             image3.setImage(ca.CAImage.create("image/h1.png"));
-            image3.setScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageCrop);
+            image3.setScaleType(ca.CAImageView.ScaleType.FitImageCrop);
 
             var view3 = ca.CAView.createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
             view3.addSubview(image3);
@@ -50,7 +50,7 @@ var ImageViewTest = ca.CAViewController.extend({
         {
             var image4 = ca.CAImageView.createWithLayout(DLayoutFill);
             image4.setImage(ca.CAImage.create("image/h1.png"));
-            image4.setScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside);
+            image4.setScaleType(ca.CAImageView.ScaleType.FitImageInside);
 
 
             var view4 = ca.CAView.createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));

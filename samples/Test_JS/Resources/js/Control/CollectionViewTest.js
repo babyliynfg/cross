@@ -17,8 +17,8 @@ var CollectionViewTest = ca.CAViewController.extend({
             this.colorArr.push(ca.color(r, g, b, 255));
         }
 
-        this.headerRefreshView = ca.CAPullToRefreshView.create(ca.PullToRefreshType.Header);
-        this.footerRefreshView = ca.CAPullToRefreshView.create(ca.PullToRefreshType.Footer);
+        this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
+        this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
         this.p_Conllection = ca.CACollectionView.createWithLayout(DLayoutFill);
         this.p_Conllection.setAllowsSelection(true);
@@ -101,8 +101,8 @@ var CollectionViewTest = ca.CAViewController.extend({
             var itemText = ca.CALabel.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(50, 50)));
             itemText.setTag(100);
             itemText.setFontSize(29);
-            itemText.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-            itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            itemText.setTextAlignment(ca.CATextAlignment.Center);
+            itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             p_Cell.getContentView().addSubview(itemText);
         }
 

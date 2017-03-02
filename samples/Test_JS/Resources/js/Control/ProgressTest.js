@@ -18,8 +18,8 @@ var ProgressTest = ca.CAViewController.extend({
         this.progress_value.setText("");
         this.progress_value.setFontSize(30);
         this.progress_value.setColor(ca.color(51, 204, 255, 255));
-        this.progress_value.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-        this.progress_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+        this.progress_value.setTextAlignment(ca.CATextAlignment.Center);
+        this.progress_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
         this.getView().addSubview(this.progress_value);
 
         this.progress = ca.CAProgress.create();

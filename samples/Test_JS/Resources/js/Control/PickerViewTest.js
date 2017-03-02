@@ -60,8 +60,8 @@ var PickerViewTest = ca.CAViewController.extend({
         this.city_value.setText("天津");
         this.city_value.setColor(ca.BLACK);
         this.city_value.setFontSize(28);
-        this.city_value.setTextAlignment(ca.CATextAlignment.CATextAlignmentCenter);
-        this.city_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+        this.city_value.setTextAlignment(ca.CATextAlignment.Center);
+        this.city_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
 
         var view1 = ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view1.addSubview(this.p_pickerView);

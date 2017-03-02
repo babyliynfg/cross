@@ -55,7 +55,7 @@ var RenderImageTest = ca.CAViewController.extend({
         rect.y = 0;
         var imv = ca.CAImageView.createWithLayout(DLayoutFill);
         imv.setImage(image);
-        imv.setScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside);
+        imv.setScaleType(ca.CAImageView.ScaleType.FitImageInside);
         scrollView.addSubview(imv);
 
 

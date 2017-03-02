@@ -87,8 +87,8 @@ var TableViewTest = ca.CAViewController.extend({
             var cellText = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_R(150, 10), DVerticalLayout_T_B(10, 10)));
             cellText.setTag(100);
             cellText.setFontSize(30);
-            cellText.setTextAlignment(ca.CATextAlignment.CATextAlignmentLeft);
-            cellText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+            cellText.setTextAlignment(ca.CATextAlignment.Left);
+            cellText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             cell.addSubview(cellText);
         }
         var cellText = cell.getSubviewByTag(100);
@@ -107,8 +107,8 @@ var TableViewTest = ca.CAViewController.extend({
         header.setText(head);
         header.setFontSize(30);
         header.setColor(ca.WHITE);
-        header.setTextAlignment(ca.CATextAlignment.CATextAlignmentLeft);
-        header.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
+        header.setTextAlignment(ca.CATextAlignment.Left);
+        header.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
         view.addSubview(header);
 
         return view;
