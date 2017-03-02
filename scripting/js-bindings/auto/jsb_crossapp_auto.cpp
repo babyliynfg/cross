@@ -26688,6 +26688,747 @@ void js_register_crossapp_CAStepper(JSContext *cx, JS::HandleObject global) {
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CACheckbox_class;
+JSObject *jsb_CrossApp_CACheckbox_prototype;
+
+bool js_crossapp_CACheckbox_setImageSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setImageSize : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setImageSize : Error processing arguments");
+        cobj->setImageSize(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setImageSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleFontSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleFontSize : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleFontSize : Error processing arguments");
+        cobj->setTitleFontSize(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleColorStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleColorStateSelected : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAColor4B arg0;
+        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleColorStateSelected : Error processing arguments");
+        cobj->setTitleColorStateSelected(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleColorStateSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleStateSelected : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleStateSelected : Error processing arguments");
+        cobj->setTitleStateSelected(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleStateSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleTextAlignment(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleTextAlignment : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CATextAlignment arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleTextAlignment : Error processing arguments");
+        cobj->setTitleTextAlignment(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleTextAlignment : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setImageColorStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setImageColorStateSelected : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAColor4B arg0;
+        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setImageColorStateSelected : Error processing arguments");
+        cobj->setImageColorStateSelected(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setImageColorStateSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_isOn(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_isOn : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isOn();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_isOn : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACheckbox_getImageStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_getImageStateNormal : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAImage* ret = cobj->getImageStateNormal();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_getImageStateNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACheckbox_setImageColorStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setImageColorStateNormal : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAColor4B arg0;
+        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setImageColorStateNormal : Error processing arguments");
+        cobj->setImageColorStateNormal(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setImageColorStateNormal : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleLabelSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleLabelSize : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleLabelSize : Error processing arguments");
+        cobj->setTitleLabelSize(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleLabelSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setImageStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setImageStateSelected : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAImage* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setImageStateSelected : Error processing arguments");
+        cobj->setImageStateSelected(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setImageStateSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setIsOn(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setIsOn : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setIsOn : Error processing arguments");
+        cobj->setIsOn(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setIsOn : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTarget : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (bool)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=](bool larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = BOOLEAN_TO_JSVAL(larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTarget : Error processing arguments");
+        cobj->setTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_getTitleStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_getTitleStateNormal : Invalid Native Object");
+    if (argc == 0) {
+        const std::string& ret = cobj->getTitleStateNormal();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_getTitleStateNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleFontName(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleFontName : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleFontName : Error processing arguments");
+        cobj->setTitleFontName(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleFontName : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleStateNormal : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleStateNormal : Error processing arguments");
+        cobj->setTitleStateNormal(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleStateNormal : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleOffset(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleOffset : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleOffset : Error processing arguments");
+        cobj->setTitleOffset(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleOffset : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleColorStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleColorStateNormal : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAColor4B arg0;
+        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleColorStateNormal : Error processing arguments");
+        cobj->setTitleColorStateNormal(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleColorStateNormal : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_getImageStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_getImageStateSelected : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAImage* ret = cobj->getImageStateSelected();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_getImageStateSelected : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACheckbox_setTitleBold(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleBold : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleBold : Error processing arguments");
+        cobj->setTitleBold(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleBold : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setImageOffset(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setImageOffset : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setImageOffset : Error processing arguments");
+        cobj->setImageOffset(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setImageOffset : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_setImageStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setImageStateNormal : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAImage* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setImageStateNormal : Error processing arguments");
+        cobj->setImageStateNormal(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setImageStateNormal : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_getTitleStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_getTitleStateSelected : Invalid Native Object");
+    if (argc == 0) {
+        const std::string& ret = cobj->getTitleStateSelected();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_getTitleStateSelected : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACheckbox_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACheckbox>(cx, (CrossApp::CACheckbox*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CACheckbox_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CACheckbox_createWithFrame(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::DRect arg0;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_createWithFrame : Error processing arguments");
+        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithFrame(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACheckbox>(cx, (CrossApp::CACheckbox*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CACheckbox_createWithFrame : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CACheckbox_createWithLayout(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::DLayout arg0;
+        ok &= jsval_to_dlayout(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_createWithLayout : Error processing arguments");
+        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithLayout(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACheckbox>(cx, (CrossApp::CACheckbox*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CACheckbox_createWithLayout : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CACheckbox_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::DRect arg0;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_createWithCenter : Error processing arguments");
+        CrossApp::CACheckbox* ret = CrossApp::CACheckbox::createWithCenter(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACheckbox>(cx, (CrossApp::CACheckbox*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CACheckbox_createWithCenter : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CACheckbox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::CACheckbox* cobj = new (std::nothrow) CrossApp::CACheckbox();
+    TypeTest<CrossApp::CACheckbox> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::CACheckbox");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_CAControl_prototype;
+
+void js_CrossApp_CACheckbox_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CACheckbox)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::CACheckbox *nobj = static_cast<CrossApp::CACheckbox *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_CACheckbox(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CACheckbox_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CACheckbox_class->name = "CACheckbox";
+    jsb_CrossApp_CACheckbox_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CACheckbox_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CACheckbox_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CACheckbox_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CACheckbox_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CACheckbox_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CACheckbox_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CACheckbox_class->finalize = js_CrossApp_CACheckbox_finalize;
+    jsb_CrossApp_CACheckbox_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setImageSize", js_crossapp_CACheckbox_setImageSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleFontSize", js_crossapp_CACheckbox_setTitleFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleColorStateSelected", js_crossapp_CACheckbox_setTitleColorStateSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleStateSelected", js_crossapp_CACheckbox_setTitleStateSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleTextAlignment", js_crossapp_CACheckbox_setTitleTextAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageColorStateSelected", js_crossapp_CACheckbox_setImageColorStateSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isOn", js_crossapp_CACheckbox_isOn, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getImageStateNormal", js_crossapp_CACheckbox_getImageStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageColorStateNormal", js_crossapp_CACheckbox_setImageColorStateNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleLabelSize", js_crossapp_CACheckbox_setTitleLabelSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageStateSelected", js_crossapp_CACheckbox_setImageStateSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setIsOn", js_crossapp_CACheckbox_setIsOn, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTarget", js_crossapp_CACheckbox_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTitleStateNormal", js_crossapp_CACheckbox_getTitleStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleFontName", js_crossapp_CACheckbox_setTitleFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleStateNormal", js_crossapp_CACheckbox_setTitleStateNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleOffset", js_crossapp_CACheckbox_setTitleOffset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleColorStateNormal", js_crossapp_CACheckbox_setTitleColorStateNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getImageStateSelected", js_crossapp_CACheckbox_getImageStateSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleBold", js_crossapp_CACheckbox_setTitleBold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageOffset", js_crossapp_CACheckbox_setImageOffset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageStateNormal", js_crossapp_CACheckbox_setImageStateNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTitleStateSelected", js_crossapp_CACheckbox_getTitleStateSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_CACheckbox_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithFrame", js_crossapp_CACheckbox_createWithFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithLayout", js_crossapp_CACheckbox_createWithLayout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithCenter", js_crossapp_CACheckbox_createWithCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CACheckbox_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_CAControl_prototype),
+        jsb_CrossApp_CACheckbox_class,
+        js_crossapp_CACheckbox_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CACheckbox", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CACheckbox> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CACheckbox_class;
+        p->proto = jsb_CrossApp_CACheckbox_prototype;
+        p->parentProto = jsb_CrossApp_CAControl_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CADrawerController_class;
 JSObject *jsb_CrossApp_CADrawerController_prototype;
 
@@ -50535,7 +51276,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAStepper(cx, ns);
     js_register_crossapp_CACell(cx, ns);
     js_register_crossapp_CACollectionViewCell(cx, ns);
-    js_register_crossapp_CATableViewDataSource(cx, ns);
+    js_register_crossapp_CACheckbox(cx, ns);
     js_register_crossapp_CAApplication(cx, ns);
     js_register_crossapp_CAThread(cx, ns);
     js_register_crossapp_CAActivityIndicatorView(cx, ns);
@@ -50547,6 +51288,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAImage(cx, ns);
     js_register_crossapp_CAFont(cx, ns);
     js_register_crossapp_CAWaterfallView(cx, ns);
+    js_register_crossapp_CATableViewDataSource(cx, ns);
     js_register_crossapp_CAPickerView(cx, ns);
     js_register_crossapp_CAScale9ImageView(cx, ns);
     js_register_crossapp_CATouchView(cx, ns);
@@ -50574,12 +51316,12 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAPageView(cx, ns);
     js_register_crossapp_CAGifView(cx, ns);
     js_register_crossapp_CAWebView(cx, ns);
-    js_register_crossapp_CACollectionView(cx, ns);
     js_register_crossapp_CAHttpResponse(cx, ns);
     js_register_crossapp_CASwitch(cx, ns);
     js_register_crossapp_CANavigationBar(cx, ns);
     js_register_crossapp_FileUtils(cx, ns);
     js_register_crossapp_CAAutoCollectionView(cx, ns);
+    js_register_crossapp_CACollectionView(cx, ns);
     js_register_crossapp_CAScheduler(cx, ns);
     js_register_crossapp_CAWaterfallViewCell(cx, ns);
     js_register_crossapp_CASegmentedControl(cx, ns);

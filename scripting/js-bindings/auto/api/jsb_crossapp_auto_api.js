@@ -9235,16 +9235,6 @@ caimage
 },
 
 /**
- * @method isTouchClick
- * @return {bool}
- */
-isTouchClick : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setTarget
  * @param {function} arg0
  */
@@ -10329,6 +10319,298 @@ orientation
  * @constructor
  */
 CAStepper : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CACheckbox
+ */
+ca.CACheckbox = {
+
+/**
+ * @method setImageSize
+ * @param {size_object} arg0
+ */
+setImageSize : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setTitleFontSize
+ * @param {float} arg0
+ */
+setTitleFontSize : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTitleColorStateSelected
+ * @param {ca._Color4B} arg0
+ */
+setTitleColorStateSelected : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method setTitleStateSelected
+ * @param {String} arg0
+ */
+setTitleStateSelected : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleTextAlignment
+ * @param {ca.CATextAlignment} arg0
+ */
+setTitleTextAlignment : function (
+catextalignment 
+)
+{
+},
+
+/**
+ * @method setImageColorStateSelected
+ * @param {ca._Color4B} arg0
+ */
+setImageColorStateSelected : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method isOn
+ * @return {bool}
+ */
+isOn : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getImageStateNormal
+ * @return {ca.CAImage}
+ */
+getImageStateNormal : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setImageColorStateNormal
+ * @param {ca._Color4B} arg0
+ */
+setImageColorStateNormal : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method setTitleLabelSize
+ * @param {size_object} arg0
+ */
+setTitleLabelSize : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setImageStateSelected
+ * @param {ca.CAImage} arg0
+ */
+setImageStateSelected : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method setIsOn
+ * @param {bool} arg0
+ */
+setIsOn : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setTarget
+ * @param {function} arg0
+ */
+setTarget : function (
+func 
+)
+{
+},
+
+/**
+ * @method getTitleStateNormal
+ * @return {String}
+ */
+getTitleStateNormal : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setTitleFontName
+ * @param {String} arg0
+ */
+setTitleFontName : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleStateNormal
+ * @param {String} arg0
+ */
+setTitleStateNormal : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTitleOffset
+ * @param {size_object} arg0
+ */
+setTitleOffset : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setTitleColorStateNormal
+ * @param {ca._Color4B} arg0
+ */
+setTitleColorStateNormal : function (
+_color4b 
+)
+{
+},
+
+/**
+ * @method getImageStateSelected
+ * @return {ca.CAImage}
+ */
+getImageStateSelected : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setTitleBold
+ * @param {bool} arg0
+ */
+setTitleBold : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setImageOffset
+ * @param {size_object} arg0
+ */
+setImageOffset : function (
+dsize 
+)
+{
+},
+
+/**
+ * @method setImageStateNormal
+ * @param {ca.CAImage} arg0
+ */
+setImageStateNormal : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method getTitleStateSelected
+ * @return {String}
+ */
+getTitleStateSelected : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method create
+ * @return {ca.CACheckbox}
+ */
+create : function (
+)
+{
+    return ca.CACheckbox;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @return {ca.CACheckbox}
+ */
+createWithFrame : function (
+drect 
+)
+{
+    return ca.CACheckbox;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @return {ca.CACheckbox}
+ */
+createWithLayout : function (
+dlayout 
+)
+{
+    return ca.CACheckbox;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @return {ca.CACheckbox}
+ */
+createWithCenter : function (
+drect 
+)
+{
+    return ca.CACheckbox;
+},
+
+/**
+ * @method CACheckbox
+ * @constructor
+ */
+CACheckbox : function (
 )
 {
 },

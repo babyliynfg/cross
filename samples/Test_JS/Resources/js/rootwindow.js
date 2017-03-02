@@ -3,6 +3,7 @@ require('js/Control/AlertViewTest.js');
 require('js/Control/AutoCollectionViewHorizontalTest.js');
 require('js/Control/AutoCollectionViewVerticalTest.js');
 require('js/Control/ButtonTest.js');
+require('js/Control/CheckboxTest.js');
 require('js/Control/CollectionViewTest.js');
 require('js/Control/GifViewTest.js');
 require('js/Control/ImageViewTest.js');
@@ -45,6 +46,10 @@ var RootWindow = ca.CAWindow.extend(
             //var buttonTest = new ButtonTest();
             //buttonTest.init();
             //this.setRootViewController(buttonTest);
+
+            // var checkboxTest = new CheckboxTest();
+            // checkboxTest.init();
+            // this.setRootViewController(checkboxTest);
 
             //******
             //var collectionViewTest = new CollectionViewTest();
@@ -163,12 +168,10 @@ var RootWindow = ca.CAWindow.extend(
                 this.m_pRootNavigationController.initWithRootViewController(tabBarController);
                 this.m_pRootNavigationController.setNavigationBarBackgroundImage(ca.CAImage.create("image/navbg.jpg"));
             }
-
             this.setRootViewController(this.m_pRootNavigationController);
 
         },
         getRootNavigationController:function(){
-
             return this.m_pRootNavigationController;
         }
     }

@@ -1270,6 +1270,42 @@ bool js_crossapp_CAStepper_createWithLayout(JSContext *cx, uint32_t argc, jsval 
 bool js_crossapp_CAStepper_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAStepper_CAStepper(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CACheckbox_class;
+extern JSObject *jsb_CrossApp_CACheckbox_prototype;
+
+bool js_crossapp_CACheckbox_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CACheckbox_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CACheckbox(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CACheckbox_setImageSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleFontSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleColorStateSelected(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleStateSelected(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleTextAlignment(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setImageColorStateSelected(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_isOn(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_getImageStateNormal(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setImageColorStateNormal(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleLabelSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setImageStateSelected(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setIsOn(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_getTitleStateNormal(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleFontName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleStateNormal(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleOffset(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleColorStateNormal(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_getImageStateSelected(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setTitleBold(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setImageOffset(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_setImageStateNormal(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_getTitleStateSelected(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_createWithFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_createWithLayout(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACheckbox_CACheckbox(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CADrawerController_class;
 extern JSObject *jsb_CrossApp_CADrawerController_prototype;
 
