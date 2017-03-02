@@ -105,7 +105,7 @@ bool CASwitch::init()
     switch (m_eType) {
         case CASwitch::Type::SquareRect:
         {
-            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_SquareRect");
+            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch_SquareRect");
             this->setOnImage(CAImage::create(map.at("onImage")));
             this->setOffImage(CAImage::create(map.at("offImage")));
             this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
@@ -113,7 +113,7 @@ bool CASwitch::init()
             break;
         case CASwitch::Type::RoundedRect:
         {
-            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_RoundedRect");
+            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch_RoundedRect");
             this->setOnImage(CAImage::create(map.at("onImage")));
             this->setOffImage(CAImage::create(map.at("offImage")));
             this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
@@ -312,14 +312,14 @@ void CASwitch::setContentSize(const DSize & var)
         switch (m_eType) {
             case CASwitch::Type::SquareRect:
             {
-                const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_SquareRect");
+                const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch_SquareRect");
                 h = atoi(map.at("height").c_str());
                 w = atoi(map.at("width").c_str());
             }
                 break;
             case CASwitch::Type::RoundedRect:
             {
-                const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CASwitch_RoundedRect");
+                const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch_RoundedRect");
                 h = atoi(map.at("height").c_str());
                 w = atoi(map.at("width").c_str());
             }

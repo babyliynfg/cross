@@ -131,7 +131,7 @@ bool CACheckbox::init()
     switch (m_eType) {
         case CACheckbox::Type::SquareRect:
         {
-            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACheckbox_SquareRect");
+            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACheckbox_SquareRect");
             this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
             this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
             this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
@@ -140,7 +140,7 @@ bool CACheckbox::init()
             break;
         case CACheckbox::Type::RoundedRect:
         {
-            const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACheckbox_RoundedRect");
+            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACheckbox_RoundedRect");
             this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
             this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
             this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
@@ -520,7 +520,7 @@ void CACheckbox::setContentSize(const DSize & var)
     DSize size = var;
 //    if (m_bRecSpe)
 //    {
-//        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("");
+//        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("");
 //        int h = atoi(map.at("height").c_str());
 //        size.height = (h == 0) ? size.height : h;
 //    }

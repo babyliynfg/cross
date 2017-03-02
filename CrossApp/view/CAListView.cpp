@@ -26,7 +26,7 @@ CAListView::CAListView()
 , m_obSeparatorColor(ccc4Int(0xffefeef4))
 , m_nSeparatorViewHeight(1)
 {
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     m_obSeparatorColor = ccc4Int(CrossApp::hex2Int(map.at("separatorColor")));
 }
 
@@ -718,28 +718,28 @@ CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)
 
 void CAListViewCell::normalCell()
 {
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_normal"))));
 }
 
 void CAListViewCell::highlightedCell()
 {
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_highlighted"))));
 }
 
 void CAListViewCell::selectedCell()
 {
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_selected"))));
 }
 
 void CAListViewCell::disabledCell()
 {
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_disabled"))));
 }

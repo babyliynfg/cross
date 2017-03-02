@@ -86,7 +86,7 @@ bool CANavigationBar::init()
     
     this->enabledBottomShadow(true);
     
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CANavigationBar");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
     
     m_pGoBackBarButtonItem = CABarButtonItem::create("", CAImage::create(map.at("leftButtonImage")), nullptr);
     m_pGoBackBarButtonItem->setItemWidth(80);
@@ -174,7 +174,7 @@ void CANavigationBar::showBackground()
 {
     if (m_pBackgroundView == NULL)
     {
-        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CANavigationBar");
+        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
         m_pBackgroundView = CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView")));
         CC_SAFE_RETAIN(m_pBackgroundView);
     }
@@ -439,7 +439,7 @@ CABadgeView::~CABadgeView()
 
 bool CABadgeView::init()
 {
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CABadgeView");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CABadgeView");
     m_pBackground = CAScale9ImageView::createWithLayout(DLayout(DHorizontalLayout_W_C(46, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
     m_pBackground->setCapInsets(DRect(22.5, 22.5, 1, 1));
     m_pBackground->setImage(CAImage::create(map.at("badgeImage")));
@@ -496,7 +496,7 @@ CATabBar::CATabBar(bool clearance)
 ,m_pDelegate(nullptr)
 ,m_bClearance(clearance)
 {
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CATabBar");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
     m_pBackgroundImage = CAImage::create(map.at("backgroundView_normal"));
     CC_SAFE_RETAIN(m_pBackgroundImage);
     

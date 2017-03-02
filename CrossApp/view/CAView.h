@@ -503,7 +503,6 @@ protected:
     CGNode*                     m_pCGNode;
     CGNode*                     m_pParentCGNode;
     
-    CAThemeManager*             m_pThemeManager;
     CAApplication*              m_pApplication;
     
 protected:
