@@ -20,13 +20,19 @@ class CC_DLL CASwitch : public CAControl
 {
 public:
     
-    CASwitch();
+    enum class Type : int
+    {
+        SquareRect,
+        RoundedRect,
+    };
+    
+    CASwitch(const CASwitch::Type& type);
     virtual ~CASwitch();
     
-    static CASwitch* create();
-    static CASwitch* createWithFrame(const DRect& rect);
-    static CASwitch* createWithCenter(const DRect& rect);
-    static CASwitch* createWithLayout(const DLayout& layout);
+    static CASwitch* create(const CASwitch::Type& type);
+    static CASwitch* createWithFrame(const DRect& rect, const CASwitch::Type& type);
+    static CASwitch* createWithCenter(const DRect& rect, const CASwitch::Type& type);
+    static CASwitch* createWithLayout(const DLayout& layout, const CASwitch::Type& type);
     
     void setTarget(const std::function<void(bool on)>& function);
 
@@ -60,6 +66,8 @@ protected:
     void setContentSize(const DSize& var);
     
 protected:
+    
+    CASwitch::Type m_eType;
     
     bool m_bPrevIsOn;
     

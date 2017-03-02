@@ -21,7 +21,7 @@
 #include "support/ccUtils.h"
 NS_CC_BEGIN
 
-CACheckbox::CACheckbox()
+CACheckbox::CACheckbox(const CACheckbox::Type& type)
 :m_pImageView(nullptr)
 ,m_pLabel(nullptr)
 ,m_sTitleFontName("")
@@ -42,6 +42,7 @@ CACheckbox::CACheckbox()
 ,m_cTitleColorNormal(CAColor_black)
 ,m_cTitleColorSelected(CAColor_black)
 ,m_bIsOn(false)
+,m_eType(type)
 {
     m_pImageView = new CAImageView();
     m_pImageView->init();
@@ -53,12 +54,6 @@ CACheckbox::CACheckbox()
     m_pLabel->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     m_pLabel->setNumberOfLine(1);
     this->insertSubview(m_pLabel, 1);
-    
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACheckbox");
-    this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
-    this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
-    this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
-    this->setTitleColorStateSelected(ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))));
 }
 
 CACheckbox::~CACheckbox(void)
@@ -69,10 +64,10 @@ CACheckbox::~CACheckbox(void)
     CC_SAFE_RELEASE_NULL(m_pImageSelected);
 }
 
-CACheckbox* CACheckbox::create()
+CACheckbox* CACheckbox::create(const CACheckbox::Type& type)
 {
     
-    CACheckbox* btn = new CACheckbox();
+    CACheckbox* btn = new CACheckbox(type);
     
     if (btn && btn->init())
     {
@@ -84,9 +79,9 @@ CACheckbox* CACheckbox::create()
     return NULL;
 }
 
-CACheckbox* CACheckbox::createWithFrame(const DRect& rect)
+CACheckbox* CACheckbox::createWithFrame(const DRect& rect, const CACheckbox::Type& type)
 {
-    CACheckbox* btn = new CACheckbox();
+    CACheckbox* btn = new CACheckbox(type);
     
     if (btn && btn->initWithFrame(rect))
     {
@@ -98,9 +93,9 @@ CACheckbox* CACheckbox::createWithFrame(const DRect& rect)
     return NULL;
 }
 
-CACheckbox* CACheckbox::createWithCenter(const DRect& rect)
+CACheckbox* CACheckbox::createWithCenter(const DRect& rect, const CACheckbox::Type& type)
 {
-    CACheckbox* btn = new CACheckbox();
+    CACheckbox* btn = new CACheckbox(type);
     
     if (btn && btn->initWithCenter(rect))
     {
@@ -112,9 +107,9 @@ CACheckbox* CACheckbox::createWithCenter(const DRect& rect)
     return NULL;
 }
 
-CACheckbox* CACheckbox::createWithLayout(const CrossApp::DLayout &layout)
+CACheckbox* CACheckbox::createWithLayout(const CrossApp::DLayout &layout, const CACheckbox::Type& type)
 {
-    CACheckbox* btn = new CACheckbox();
+    CACheckbox* btn = new CACheckbox(type);
     
     if (btn && btn->initWithLayout(layout))
     {
@@ -133,6 +128,27 @@ bool CACheckbox::init()
         return false;
     }
 
+    switch (m_eType) {
+        case CACheckbox::Type::SquareRect:
+        {
+        
+        }
+            break;
+        case CACheckbox::Type::RoundedRect:
+        {
+        
+        }
+            break;
+        default:
+            break;
+    }
+    
+    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CACheckbox");
+    this->setImageStateNormal(CAImage::create(map.at("checkbox_image_normal")));
+    this->setImageStateSelected(CAImage::create(map.at("checkbox_image_selected")));
+    this->setTitleColorStateNormal(ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))));
+    this->setTitleColorStateSelected(ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))));
+    
     return true;
 }
 

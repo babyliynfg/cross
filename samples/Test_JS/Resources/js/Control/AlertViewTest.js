@@ -5,6 +5,8 @@ var AlertViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
 
+        this.getView().setColor(ca.color._getGray());
+                                               
         var btn1 = ca.CAButton.create(ca.CAButton.Type.RoundedRect);
         btn1.setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.25)));
         btn1.setTag(100);

@@ -21,13 +21,19 @@ class CC_DLL CACheckbox : public CAControl
 {
 public:
     
-    CACheckbox();
+    enum class Type : int
+    {
+        SquareRect,
+        RoundedRect,
+    };
+    
+    CACheckbox(const CACheckbox::Type& type);
     virtual ~CACheckbox(void);
 
-    static CACheckbox* create();
-    static CACheckbox* createWithFrame(const DRect& rect);
-    static CACheckbox* createWithCenter(const DRect& rect);
-    static CACheckbox* createWithLayout(const DLayout& layout);
+    static CACheckbox* create(const CACheckbox::Type& type);
+    static CACheckbox* createWithFrame(const DRect& rect, const CACheckbox::Type& type);
+    static CACheckbox* createWithCenter(const DRect& rect, const CACheckbox::Type& type);
+    static CACheckbox* createWithLayout(const DLayout& layout, const CACheckbox::Type& type);
     
 public:
     
@@ -78,6 +84,8 @@ public:
     
 protected:
 
+    CACheckbox::Type m_eType;
+    
     CAImage* m_pImageNormal;
     CAImage* m_pImageSelected;
     
