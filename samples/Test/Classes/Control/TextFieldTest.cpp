@@ -33,8 +33,6 @@ void TextFieldTest::viewDidLoad()
     textField2->setPlaceHolderText("Input");
     textField2->setKeyboardType(CATextField::KeyboardType::Default);
     textField2->setMarginImageLeft(DSize(60,60),"source_material/search.png");
-//    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
-//    textField2->setMarginImageRight(DSize(100,100), map.at("clearImage"));
     textField2->setClearButtonMode(CATextField::ClearButtonMode::WhileEditing);
     textField2->setAlign(CATextField::Align::Left);
     textField2->setSecureTextEntry(true);
