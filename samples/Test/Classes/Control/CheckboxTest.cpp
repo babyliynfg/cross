@@ -24,14 +24,14 @@ void CheckboxTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor_gray);
     
-    CACheckbox* box = CACheckbox::createWithLayout(DLayout(DHorizontalLayout_W_C(54, 0.5), DVerticalLayout_H_C(54, 0.25f)));
+    CACheckbox* box = CACheckbox::createWithLayout(DLayout(DHorizontalLayout_W_C(54, 0.5), DVerticalLayout_H_C(54, 0.25f)), CACheckbox::Type::RoundedRect);
     this->getView()->addSubview(box);
     box->setTarget([](bool var)
     {
         CCLog("box: %d", var);
     });
     
-    CACheckbox* box1 = CACheckbox::createWithLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.55f)));
+    CACheckbox* box1 = CACheckbox::createWithLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.55f)), CACheckbox::Type::SquareRect);
     box1->setImageStateNormal(CAImage::create("source_material/checkbox_normal.png"));
     box1->setImageStateSelected(CAImage::create("source_material/checkbox_selected.png"));
     box1->setTitleStateNormal("未选中");
