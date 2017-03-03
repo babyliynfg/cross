@@ -22,8 +22,8 @@
  */
 
 
-#ifndef __JS_COCOS2D_X_SPECIFICS_H__
-#define __JS_COCOS2D_X_SPECIFICS_H__
+#ifndef __JS_SPECIFICS_H__
+#define __JS_SPECIFICS_H__
 
 #include "ScriptingCore.h"
 #include "platform/CASAXParser.h"

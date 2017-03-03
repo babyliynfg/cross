@@ -188,7 +188,7 @@ Renderer::Renderer()
     _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESERVED_SIZE);
 
     // default clear color
-    _clearColor = ccc4f(1, 1, 1, 1);
+    _clearColor = CAColor4F(1, 1, 1, 1);
 
     // for the batched TriangleCommand
     _triBatchesToDrawCapacity = 500;
@@ -282,7 +282,6 @@ void Renderer::setupVBO()
     // It's probably because some implementations of OpenGLES driver will
     // copy the whole memory of VBO which initialzied at the first time
     // once glBufferData/glBufferSubData is invoked.
-    // For more discussion, please refer to https://github.com/cocos2d/cocos2d-x/issues/15652
 //    mapBuffers();
 }
 
@@ -377,7 +376,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
             {
                 // XXX: execute() will call bind() and unbind()
                 // but unbind() shouldn't be call if the next command is a MESH_COMMAND with Material.
-                // Once most of cocos2d-x moves to Pass/StateBlock, only bind() should be used.
+                // Once most of CrossApp moves to Pass/StateBlock, only bind() should be used.
                 cmd->execute();
             }
             else

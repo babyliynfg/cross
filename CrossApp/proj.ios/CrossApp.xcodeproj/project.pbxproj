@@ -427,6 +427,8 @@
 		D6B0368F1D95270200388A90 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7D1B21506B004B2B86 /* libssl.a */; };
 		D6B0C63F1D6587DD00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */; };
 		D6B12EB31DC9C7D300944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB21DC9C7D300944576 /* libwebsockets.a */; };
+		D6C513291E691EA600B0BE19 /* CAColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6C513271E691EA600B0BE19 /* CAColor.cpp */; };
+		D6C5132A1E691EA600B0BE19 /* CAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = D6C513281E691EA600B0BE19 /* CAColor.h */; };
 		D6CA51851E604C4D00317AB9 /* CACheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6CA51831E604C4D00317AB9 /* CACheckbox.cpp */; };
 		D6CA51861E604C4D00317AB9 /* CACheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CA51841E604C4D00317AB9 /* CACheckbox.h */; };
 		E0AAB3651CCA3E3A00353011 /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */; };
@@ -923,6 +925,8 @@
 		D6ADC74E1E56A78000750771 /* CANotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CANotificationCenter.h; sourceTree = "<group>"; };
 		D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 		D6B12EB21DC9C7D300944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/ios/libwebsockets.a; sourceTree = "<group>"; };
+		D6C513271E691EA600B0BE19 /* CAColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAColor.cpp; sourceTree = "<group>"; };
+		D6C513281E691EA600B0BE19 /* CAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAColor.h; sourceTree = "<group>"; };
 		D6CA51831E604C4D00317AB9 /* CACheckbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACheckbox.cpp; sourceTree = "<group>"; };
 		D6CA51841E604C4D00317AB9 /* CACheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACheckbox.h; sourceTree = "<group>"; };
 		E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
@@ -1130,6 +1134,8 @@
 		D6ADC43A1E56A72700750771 /* basics */ = {
 			isa = PBXGroup;
 			children = (
+				D6C513271E691EA600B0BE19 /* CAColor.cpp */,
+				D6C513281E691EA600B0BE19 /* CAColor.h */,
 				D6ADC74D1E56A78000750771 /* CANotificationCenter.cpp */,
 				D6ADC74E1E56A78000750771 /* CANotificationCenter.h */,
 				D6ADC43B1E56A72700750771 /* CAApplication.cpp */,
@@ -1902,6 +1908,7 @@
 				1551A73A158F2ADE00E66CFE /* CCLock.h in Headers */,
 				1551A73B158F2ADE00E66CFE /* CCPlatformDefine.h in Headers */,
 				1551A73C158F2ADE00E66CFE /* CCStdC.h in Headers */,
+				D6C5132A1E691EA600B0BE19 /* CAColor.h in Headers */,
 				D6ADC6811E56A72800750771 /* CAAffineTransform.h in Headers */,
 				D6ADC5FE1E56A72800750771 /* CAFPSImages.h in Headers */,
 				1551A73E158F2ADE00E66CFE /* EAGLView.h in Headers */,
@@ -2255,6 +2262,7 @@
 				D6ADC60F1E56A72800750771 /* CAResponder.cpp in Sources */,
 				D6ADC62B1E56A72800750771 /* CAProgress.cpp in Sources */,
 				D6ADC7151E56A72800750771 /* CAActivityIndicatorView.cpp in Sources */,
+				D6C513291E691EA600B0BE19 /* CAColor.cpp in Sources */,
 				D6ADC6571E56A72800750771 /* CGActionProgressTimer.cpp in Sources */,
 				D6ADC6DB1E56A72800750771 /* ConvertUTFWrapper.cpp in Sources */,
 				D6ADC6901E56A72800750771 /* HttpClient.cpp in Sources */,

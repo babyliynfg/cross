@@ -180,7 +180,7 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
     return true;
 }
 
-// cocos2d-x doesn't support Samplers yet. But will be added soon
+// CrossApp doesn't support Samplers yet. But will be added soon
 bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerProperties)
 {
     CCASSERT(samplerProperties->getId(), "Sampler must have an id. The id is the uniform name");

@@ -30,6 +30,7 @@
 #include "basics/CAAutoreleasePool.h"
 #include "basics/CACamera.h"
 #include "basics/CAFPSImages.h"
+#include "basics/CAColor.h"
 #include "basics/CAPoint.h"
 #include "basics/CASize.h"
 #include "basics/CARect.h"

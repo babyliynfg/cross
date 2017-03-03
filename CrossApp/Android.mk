@@ -24,6 +24,7 @@ basics/CAApplication.cpp \
 basics/CAAutoreleasePool.cpp \
 basics/CALayout.cpp \
 basics/CAPoint.cpp \
+basics/CAColor.cpp \
 basics/CASize.cpp \
 basics/CARect.cpp \
 basics/CAPoint3D.cpp \
