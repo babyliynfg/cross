@@ -27,6 +27,7 @@ require('js/Control/VideoPlayerControlViewTest.js');
 require('js/Control/ViewAnimationTest.js');
 require('js/Control/WebViewTest.js');
 require('js/Control/WaterfallViewTest.js');
+require('js/Control/PageControlTest.js');
 
 require('js/CDUIShowAutoCollectionView.js');
 
