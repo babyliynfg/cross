@@ -111,7 +111,6 @@ var TableViewTest = ca.CAViewController.extend({
 
         return view;
     }
-
     ,tableViewSectionViewForFooterInSection: function( table, viewSize ,section)
     {
         var view = ca.CAView.createWithColor(ca.color._getGray());
@@ -121,12 +120,10 @@ var TableViewTest = ca.CAViewController.extend({
     {
         return 2;
     }
-
     ,numberOfSections: function(table)
     {
         return this.sectionTitle.length;
     }
-
     ,tableViewHeightForRowAtIndexPath: function( table,section, row)
     {
         return 130;
