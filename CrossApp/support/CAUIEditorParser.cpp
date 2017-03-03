@@ -559,47 +559,9 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             }
         }
 
-
 		if (const char* value = viewXml->Attribute("controlState"))
 		{
-			CAControl::State state = (CAControl::State)(atoi(value));
-
-			if (state == CAControl::State::Normal)
-			{
-				if (const char* value = viewXml->Attribute("backgroundNormal"))
-				{
-					CAImage* img = CAImage::create(value);
-					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-					btn->setBackgroundViewForState(CAControl::State::Normal, imageView);
-				}
-			}
-			else if (state == CAControl::State::Highlighted)
-			{
-				if (const char* value = viewXml->Attribute("backgroundHighted"))
-				{
-					CAImage* img = CAImage::create(value);
-					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-					btn->setBackgroundViewForState(CAControl::State::Normal, imageView);
-				}
-			}
-			if (state == CAControl::State::Disabled)
-			{
-				if (const char* value = viewXml->Attribute("backgroundDisabled"))
-				{
-					CAImage* img = CAImage::create(value);
-					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-					btn->setBackgroundViewForState(CAControl::State::Normal, imageView);
-				}
-			}
-			else if (state == CAControl::State::Selected)
-			{
-				if (const char* value = viewXml->Attribute("backgroundSelected"))
-				{
-					CAImage* img = CAImage::create(value);
-					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-					btn->setBackgroundViewForState(CAControl::State::Normal, imageView);
-				}
-			}
+            btn->setControlState((CAControl::State)(atoi(value)));
 		}
     }
 	else if (contrlType.compare("CATextField") == 0)
