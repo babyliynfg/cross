@@ -290,7 +290,7 @@ void CANavigationBar::showLeftButton()
                 }
                 else
                 {
-                    button->setImageColorForState(CAControl::State::Highlighted, ccc4(127, 127, 127, 255));
+                    button->setImageColorForState(CAControl::State::Highlighted, CAColor4B(127, 127, 127, 255));
                 }            }
             
             std::string title = m_pGoBackBarButtonItem->getTitle();
@@ -300,7 +300,7 @@ void CANavigationBar::showLeftButton()
                 button->setTitleLabelSize(DSize(m_pGoBackBarButtonItem->getLabelWidth(), 44));
                 button->setTitleOffset(DSize(m_pGoBackBarButtonItem->getLabelOffsetX(), 0));
                 button->setTitleColorForState(CAControl::State::Normal, m_cButtonColor);
-                button->setTitleColorForState(CAControl::State::Highlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
+                button->setTitleColorForState(CAControl::State::Highlighted, CAColor4B(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
             button->addTarget(std::bind(&CANavigationBar::goBack, this), CAButton::Event::TouchUpInSide);
@@ -322,7 +322,7 @@ void CANavigationBar::showLeftButton()
                 }
                 else
                 {
-                    button->setImageColorForState(CAControl::State::Highlighted, ccc4(127, 127, 127, 255));
+                    button->setImageColorForState(CAControl::State::Highlighted, CAColor4B(127, 127, 127, 255));
                 }
             }
             
@@ -335,7 +335,7 @@ void CANavigationBar::showLeftButton()
                 button->setTitleForState(CAControl::State::Normal, item->getTitle());
                 button->setTitleForState(CAControl::State::Highlighted, item->getTitle());
                 button->setTitleColorForState(CAControl::State::Normal, m_cButtonColor);
-                button->setTitleColorForState(CAControl::State::Highlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
+                button->setTitleColorForState(CAControl::State::Highlighted, CAColor4B(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
             button->addTarget(item->getCallbackFunction(), CAButton::Event::TouchUpInSide);
@@ -391,7 +391,7 @@ void CANavigationBar::showRightButton()
                 }
                 else
                 {
-                    button->setImageColorForState(CAControl::State::Highlighted, ccc4(127, 127, 127, 255));
+                    button->setImageColorForState(CAControl::State::Highlighted, CAColor4B(127, 127, 127, 255));
                 }
             }
             
@@ -404,7 +404,7 @@ void CANavigationBar::showRightButton()
                 button->setTitleForState(CAControl::State::Normal, item->getTitle());
                 button->setTitleForState(CAControl::State::Highlighted, item->getTitle());
                 button->setTitleColorForState(CAControl::State::Normal, m_cButtonColor);
-                button->setTitleColorForState(CAControl::State::Highlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
+                button->setTitleColorForState(CAControl::State::Highlighted, CAColor4B(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
             button->addTarget(item->getCallbackFunction(), CAButton::Event::TouchUpInSide);

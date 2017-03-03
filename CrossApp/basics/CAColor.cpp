@@ -1,6 +1,6 @@
 
 
-#include "CAColor.h"
+#include "basics/CAColor.h"
 
 // implementation of DPoint
 NS_CC_BEGIN

@@ -84,7 +84,7 @@ bool CACameraBackgroundDepthBrush::init()
     _quad.tl.vertices = DPoint3D(-1,1,0);
     _quad.tr.vertices = DPoint3D(1,1,0);
     
-    _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = ccc4(0,0,0,1);
+    _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = CAColor4B(0,0,0,1);
     
     _quad.bl.texCoords = tex2(0,0);
     _quad.br.texCoords = tex2(1,0);

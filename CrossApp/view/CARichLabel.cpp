@@ -12,8 +12,8 @@ CARichLabel::CARichLabel()
 	, m_bUpdateImage(false)
 	, m_bAutoLinkMask(true)
 	, m_bLinksClickable(true)
-	, m_linkColor(ccc4(0, 0, 255, 255))
-	, m_linkVisitedColor(ccc4(0, 0, 100, 255))
+	, m_linkColor(CAColor4B(0, 0, 255, 255))
+	, m_linkVisitedColor(CAColor4B(0, 0, 100, 255))
 {
 }
 
@@ -268,7 +268,7 @@ bool CARichLabel::init()
 	{
 		return false;
 	}
-	CAView::setColor(ccc4(255, 255, 255, 255));
+	CAView::setColor(CAColor4B(255, 255, 255, 255));
 	return true;
 }
 

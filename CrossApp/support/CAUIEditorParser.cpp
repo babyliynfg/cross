@@ -326,16 +326,25 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             btn->setTitleTextAlignment((CATextAlignment)atoi(value));
         }
         
-        DSize titleOffSize = DSizeZero;
-        if (const char* value1 = viewXml->Attribute("titleOffSizeX"))
         {
-            titleOffSize.width = atof(value1);
+            bool enabled = false;
+            DSize titleOffSize = DSizeZero;
+            if (const char* value1 = viewXml->Attribute("titleOffSizeX"))
+            {
+                titleOffSize.width = atof(value1);
+                enabled = true;
+            }
+            if (const char* value1 = viewXml->Attribute("titleOffSizeY"))
+            {
+                titleOffSize.height = atof(value1);
+                enabled = true;
+            }
+            if (enabled)
+            {
+                btn->setTitleOffset(titleOffSize);
+            }
         }
-        if (const char* value1 = viewXml->Attribute("titleOffSizeY"))
-        {
-            titleOffSize.height = atof(value1);
-        }
-        btn->setTitleOffset(titleOffSize);
+        
         
         if (const char* value = viewXml->Attribute("titleNormal"))
         {
@@ -377,27 +386,43 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             btn->setTitleColorForState(CAControl::State::Disabled, ccc4Int(atoi(value)));
         }
         
-        DSize imageOffSize = DSizeZero;
-        if (const char* value1 = viewXml->Attribute("imageOffSizeX"))
         {
-            imageOffSize.width = atof(value1);
+            bool enabled = false;
+            DSize imageOffSize = DSizeZero;
+            if (const char* value1 = viewXml->Attribute("imageOffSizeX"))
+            {
+                imageOffSize.width = atof(value1);
+                enabled = true;
+            }
+            if (const char* value1 = viewXml->Attribute("imageOffSizeY"))
+            {
+                imageOffSize.height = atof(value1);
+                enabled = true;
+            }
+            if (enabled)
+            {
+                btn->setImageOffset(imageOffSize);
+            }
         }
-        if (const char* value1 = viewXml->Attribute("imageOffSizeY"))
-        {
-            imageOffSize.height = atof(value1);
-        }
-        btn->setImageOffset(imageOffSize);
         
-        DSize imageSize = DSizeZero;
-        if (const char* value1 = viewXml->Attribute("imageSizeW"))
         {
-            imageSize.width = atoi(value1);
+            bool enabled = false;
+            DSize imageSize = DSizeZero;
+            if (const char* value1 = viewXml->Attribute("imageSizeW"))
+            {
+                imageSize.width = atoi(value1);
+                enabled = true;
+            }
+            if (const char* value1 = viewXml->Attribute("imageSizeH"))
+            {
+                imageSize.height = atoi(value1);
+                enabled = true;
+            }
+            if (enabled)
+            {
+                btn->setImageSize(imageSize);
+            }
         }
-        if (const char* value1 = viewXml->Attribute("imageSizeH"))
-        {
-            imageSize.height = atoi(value1);
-        }
-        btn->setImageSize(imageSize);
         
         if (const char* value = viewXml->Attribute("imageNormal"))
         {
@@ -534,47 +559,9 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             }
         }
 
-
 		if (const char* value = viewXml->Attribute("controlState"))
 		{
-			CAControl::State state = (CAControl::State)(atoi(value));
-
-			if (state == CAControl::State::Normal)
-			{
-				if (const char* value = viewXml->Attribute("backgroundNormal"))
-				{
-					CAImage* img = CAImage::create(value);
-					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-					btn->setBackgroundViewForState(CAControl::State::Normal, imageView);
-				}
-			}
-			else if (state == CAControl::State::Highlighted)
-			{
-				if (const char* value = viewXml->Attribute("backgroundHighted"))
-				{
-					CAImage* img = CAImage::create(value);
-					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-					btn->setBackgroundViewForState(CAControl::State::Normal, imageView);
-				}
-			}
-			if (state == CAControl::State::Disabled)
-			{
-				if (const char* value = viewXml->Attribute("backgroundDisabled"))
-				{
-					CAImage* img = CAImage::create(value);
-					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-					btn->setBackgroundViewForState(CAControl::State::Normal, imageView);
-				}
-			}
-			else if (state == CAControl::State::Selected)
-			{
-				if (const char* value = viewXml->Attribute("backgroundSelected"))
-				{
-					CAImage* img = CAImage::create(value);
-					CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(img);
-					btn->setBackgroundViewForState(CAControl::State::Normal, imageView);
-				}
-			}
+            btn->setControlState((CAControl::State)(atoi(value)));
 		}
     }
 	else if (contrlType.compare("CATextField") == 0)
@@ -809,28 +796,44 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             sw->setTitleColorStateSelected(ccc4Int(atoi(value)));
         }
 
-        DSize imageOffSize = DSizeZero;
-        if (const char* value1 = viewXml->Attribute("imageOffSizeX"))
         {
-            imageOffSize.width = atof(value1);
+            bool enabled = false;
+            DSize imageOffSize = DSizeZero;
+            if (const char* value1 = viewXml->Attribute("imageOffSizeX"))
+            {
+                imageOffSize.width = atof(value1);
+                enabled = true;
+            }
+            if (const char* value1 = viewXml->Attribute("imageOffSizeY"))
+            {
+                imageOffSize.height = atof(value1);
+                enabled = true;
+            }
+            if (enabled)
+            {
+                sw->setImageOffset(imageOffSize);
+            }
         }
-        if (const char* value1 = viewXml->Attribute("imageOffSizeY"))
-        {
-            imageOffSize.height = atof(value1);
-        }
-        sw->setImageOffset(imageOffSize);
         
-        DSize imageSize = DSizeZero;
-        if (const char* value1 = viewXml->Attribute("imageSizeW"))
         {
-            imageSize.width = atoi(value1);
+            bool enabled = false;
+            DSize imageSize = DSizeZero;
+            if (const char* value1 = viewXml->Attribute("imageSizeW"))
+            {
+                imageSize.width = atoi(value1);
+                enabled = true;
+            }
+            if (const char* value1 = viewXml->Attribute("imageSizeH"))
+            {
+                imageSize.height = atoi(value1);
+                enabled = true;
+            }
+            if (enabled)
+            {
+                sw->setImageSize(imageSize);
+            }
         }
-        if (const char* value1 = viewXml->Attribute("imageSizeH"))
-        {
-            imageSize.height = atoi(value1);
-        }
-        sw->setImageSize(imageSize);
-        
+       
         if (const char* value = viewXml->Attribute("fontSize"))
         {
             sw->setTitleFontSize(atoi(value));
@@ -851,17 +854,24 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             sw->setTitleTextAlignment((CATextAlignment)atoi(value));
         }
         
-        DSize titleOffSize = DSizeZero;
-        if (const char* value1 = viewXml->Attribute("titleOffSizeX"))
         {
-            titleOffSize.width = atof(value1);
+            bool enabled = false;
+            DSize titleOffSet = DSizeZero;
+            if (const char* value1 = viewXml->Attribute("titleOffSizeX"))
+            {
+                titleOffSet.width = atof(value1);
+                enabled = true;
+            }
+            if (const char* value1 = viewXml->Attribute("titleOffSizeY"))
+            {
+                titleOffSet.height = atof(value1);
+                enabled = true;
+            }
+            if (enabled)
+            {
+                sw->setTitleOffset(titleOffSet);
+            }
         }
-        if (const char* value1 = viewXml->Attribute("titleOffSizeY"))
-        {
-            titleOffSize.height = atof(value1);
-        }
-        sw->setTitleOffset(titleOffSize);
-        
     }
     else if (contrlType.compare("CASegmentedControl") == 0)
     {
