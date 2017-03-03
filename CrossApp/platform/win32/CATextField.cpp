@@ -53,7 +53,7 @@ public:
 		{
 			return false;
 		}
-		this->m_pTextViewMark = CAView::createWithColor(ccc4(60, 120, 240, 127));
+		this->m_pTextViewMark = CAView::createWithColor(CAColor4B(60, 120, 240, 127));
 		this->addSubview(m_pTextViewMark);
 		m_pTextViewMark->setVisible(false);
 		return true;
@@ -208,7 +208,7 @@ public:
 		if (m_pCursorMark == NULL)
 		{
 			m_pCursorMark = CAView::create();
-			m_pCursorMark->setColor(ccc4(0,0,0,255));
+			m_pCursorMark->setColor(CAColor4B(0,0,0,255));
 			this->addSubview(m_pCursorMark);
 			this->hideCursorMark();
 		}

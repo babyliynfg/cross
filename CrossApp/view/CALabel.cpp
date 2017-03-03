@@ -418,7 +418,7 @@ void CALabel::setColor(const CAColor4B& color)
 {
     m_obFont.color = color;
     updateImage();
-    CAView::setColor(ccc4(255, 255, 255, color.a));
+    CAView::setColor(CAColor4B(255, 255, 255, color.a));
 }
 
 void CALabel::setLineSpacing(int var)

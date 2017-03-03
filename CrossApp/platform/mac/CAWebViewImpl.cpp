@@ -9,7 +9,7 @@ NS_CC_BEGIN
 
 CAWebViewImpl::CAWebViewImpl(CAWebView *webView) : _webView(webView) 
 {
-	_bkHelpView = CAView::createWithColor(ccc4(127, 127, 127, 127));
+	_bkHelpView = CAView::createWithColor(CAColor4B(127, 127, 127, 127));
 	_bkHelpView->retain();
 }
 

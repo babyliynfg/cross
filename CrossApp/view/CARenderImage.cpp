@@ -324,7 +324,7 @@ void CARenderImage::printscreenWithView(CAView* view)
 
 void CARenderImage::printscreenWithView(CAView* view, DPoint offset)
 {
-    this->printscreenWithView(view, offset, ccc4(0, 0, 0, 0));
+    this->printscreenWithView(view, offset, CAColor4B(0, 0, 0, 0));
 }
 
 void CARenderImage::printscreenWithView(CAView* view, const CAColor4B& backgroundColor)

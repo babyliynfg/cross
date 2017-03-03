@@ -1094,7 +1094,7 @@ void CAImage::setGifImageWithIndex(unsigned int index)
     if (m_pGIF->SColorMap != NULL)
     {
         const GifColorType& col = m_pGIF->SColorMap->Colors[m_pGIF->SBackGroundColor];
-        bgColor = ccc4(col.Red, col.Green, col.Blue, 0xFF);
+        bgColor = CAColor4B(col.Red, col.Green, col.Blue, 0xFF);
     }
 
     static char paintingColor[4] = {0, 0, 0, 0};

@@ -6,39 +6,40 @@ var iconTag = new Array(
     "image/AlertView.png",
     "image/button.png",
     "image/Checkbox.png",
-    "image/SegmentedControl.png",
 
+    "image/SegmentedControl.png",
     "image/ImageView.png",
     "image/Scale9ImageView.png",
-    "image/indicatorView.png",
 
+    "image/indicatorView.png",
     "image/Progress.png",
     "image/slider.png",
-    "image/Switch.png",
 
+    "image/Switch.png",
     "image/Stepper.png",
     "image/Label.png",
-    "image/TextField.png",
 
+    "image/TextField.png",
     "image/TextView.png",
     "image/TabBar.png",
+
     "image/PageView.png",
-
+    "image/PageControl.png",
     "image/ScrollView.png",
+
+    "image/CollectionView.png",
     "image/CollectionView.png",
     "image/CollectionView.png",
 
-    "image/CollectionView.png",
     "image/CollectionView.png",
     "image/ListView.png",
-
     "image/TableView.png",
+
     "image/PickerView.png",
     "image/WebView.png",
-
     "image/GifView.png",
-    "image/Video.png",
 
+    "image/Video.png",
 //    "image/RenderImage.png",
     "image/Video.png",
     "image/CollectionView.png"
@@ -55,39 +56,40 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
         this.m_vTitle.push("AlertView");
         this.m_vTitle.push("Button");
         this.m_vTitle.push("Checkbox");
-        this.m_vTitle.push("SegmentedControl");
 
+        this.m_vTitle.push("SegmentedControl");
         this.m_vTitle.push("ImageView");
         this.m_vTitle.push("Scale9ImageView");
-        this.m_vTitle.push("IndicatorView");
 
+        this.m_vTitle.push("IndicatorView");
         this.m_vTitle.push("Progress");
         this.m_vTitle.push("Slider");
-        this.m_vTitle.push("Switch");
 
+        this.m_vTitle.push("Switch");
         this.m_vTitle.push("Stepper");
         this.m_vTitle.push("Label");
-        this.m_vTitle.push("TextField");
 
+        this.m_vTitle.push("TextField");
         this.m_vTitle.push("TextView");
         this.m_vTitle.push("TabBar");
-        this.m_vTitle.push("PageView");
 
+        this.m_vTitle.push("PageView");
+        this.m_vTitle.push("PageControl");
         this.m_vTitle.push("ScrollView");
+
         this.m_vTitle.push("AutoCollectionView(Vertical)");
         this.m_vTitle.push("AutoCollectionView(Horizontal)");
-
         this.m_vTitle.push("CollectionView");
+
         this.m_vTitle.push("WaterfallView");
         this.m_vTitle.push("ListView");
-
         this.m_vTitle.push("TableView");
+
         this.m_vTitle.push("PickerView");
         this.m_vTitle.push("WebView");
-
         this.m_vTitle.push("GifView");
-        this.m_vTitle.push("VideoPlayer");
 
+        this.m_vTitle.push("VideoPlayer");
 //        this.m_vTitle.push("RenderImage");
         this.m_vTitle.push("Animation");
 
@@ -327,8 +329,16 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerPageViewTest, true);
                 break;
             }
-
             case 16:
+            {
+                var ViewContrllerPageControlTest = new PageControlTest();
+                ViewContrllerPageControlTest.init();
+                ViewContrllerPageControlTest.setNavigationBarItem(ca.CANavigationBarItem.create(this.m_vTitle[item]));
+                //ViewContrllerPageViewTest.autorelease();
+                ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerPageControlTest, true);
+                break;
+            }
+            case 17:
             {
                 var ViewContrllerScrollViewTest = new ScrollViewTest();
                 ViewContrllerScrollViewTest.init();
@@ -337,7 +347,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerScrollViewTest, true);
                 break;
             }
-            case 17:
+            case 18:
             {
                 var ViewContrllerAutoCollectionViewVerticalTest = new AutoCollectionViewVerticalTest();
                 ViewContrllerAutoCollectionViewVerticalTest.init();
@@ -346,7 +356,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerAutoCollectionViewVerticalTest, true);
                 break;
             }
-            case 18:
+            case 19:
             {
                 var ViewContrllerAutoCollectionViewHorizontalTest = new AutoCollectionViewHorizontalTest();
                 ViewContrllerAutoCollectionViewHorizontalTest.init();
@@ -355,7 +365,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerAutoCollectionViewHorizontalTest, true);
                 break;
             }
-            case 19:
+            case 20:
             {
                 var ViewContrllerCollectionViewTest = new CollectionViewTest();
                 ViewContrllerCollectionViewTest.init();
@@ -364,7 +374,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerCollectionViewTest, true);
                 break;
             }
-            case 20:
+            case 21:
             {
                 var ViewContrllerWaterfallViewTest = new WaterfallViewTest();
                 ViewContrllerWaterfallViewTest.init();
@@ -373,7 +383,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerWaterfallViewTest, true);
                 break;
             }
-            case 21:
+            case 22:
             {
                 var ViewContrllerListViewTest = new ListViewTest();
                 ViewContrllerListViewTest.init();
@@ -382,7 +392,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerListViewTest, true);
                 break;
             }
-            case 22:
+            case 23:
             {
                 var ViewContrllerTableViewTest = new TableViewTest();
                 ViewContrllerTableViewTest.init();
@@ -391,7 +401,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerTableViewTest, true);
                 break;
             }
-            case 23:
+            case 24:
             {
                 var ViewContrllerPickerViewTest = new PickerViewTest();
                 ViewContrllerPickerViewTest.init();
@@ -400,7 +410,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerPickerViewTest, true);
                 break;
             }
-            case 24:
+            case 25:
             {
                 var ViewContrllerWebViewTest = new WebViewTest();
                 ViewContrllerWebViewTest.init();
@@ -409,7 +419,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerWebViewTest, true);
                 break;
             }
-            case 25:
+            case 26:
             {
                 var ViewContrllerGifViewTest = new GifViewTest();
                 ViewContrllerGifViewTest.init();
@@ -418,7 +428,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerGifViewTest, true);
                 break;
             }
-            case 26:
+            case 27:
             {
                 var ViewContrllerVideoPlayerControlViewTest = new VideoPlayerControlViewTest();
                 ViewContrllerVideoPlayerControlViewTest.init();
@@ -427,7 +437,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerVideoPlayerControlViewTest, true);
                 break;
             }
-            case 27:
+            case 28:
             {
                 var ViewAnimationNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
                 var ViewAnimationRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);

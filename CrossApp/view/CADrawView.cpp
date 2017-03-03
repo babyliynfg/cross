@@ -850,7 +850,7 @@ void CADrawView::drawSolidRect(const Vec2 &origin, const Vec2 &destination, cons
 
 void CADrawView::drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, const CAColor4B &color)
 {
-    drawPolygon(poli, numberOfPoints, color, 0.0, ccc4(0, 0, 0, 0));
+    drawPolygon(poli, numberOfPoints, color, 0.0, CAColor4B(0, 0, 0, 0));
 }
 
 void CADrawView::drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY, const CAColor4B &color)
