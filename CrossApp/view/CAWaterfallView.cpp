@@ -702,27 +702,27 @@ CAWaterfallViewCell* CAWaterfallViewCell::create(const std::string& reuseIdentif
 void CAWaterfallViewCell::normalCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(255, 255, 255, 255));
+	m_pBackgroundView->setColor(CAColor4B(255, 255, 255, 255));
 }
 
 void CAWaterfallViewCell::highlightedCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
+	m_pBackgroundView->setColor(CAColor4B(240, 240, 240, 255));
 }
 
 
 void CAWaterfallViewCell::selectedCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+	m_pBackgroundView->setColor(CAColor4B(50, 193, 255, 255));
 }
 
 
 void CAWaterfallViewCell::disabledCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
+	m_pBackgroundView->setColor(CAColor4B(127, 127, 127, 255));
 }
 
 NS_CC_END

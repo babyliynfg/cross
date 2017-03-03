@@ -16,9 +16,9 @@ CAPickerView::CAPickerView()
 , m_dataSource(nullptr)
 , m_fontSizeNormal(20)
 , m_fontSizeSelected(22)
-, m_fontColorNormal(ccc4(0, 0, 0, 255))
-, m_fontColorSelected(ccc4(0, 0, 0, 255))
-, m_separateColor(ccc4(127, 127, 127, 127))
+, m_fontColorNormal(CAColor4B(0, 0, 0, 255))
+, m_fontColorSelected(CAColor4B(0, 0, 0, 255))
+, m_separateColor(CAColor4B(127, 127, 127, 127))
 , m_displayRow(7)
 {
     setDisplayRange(false);

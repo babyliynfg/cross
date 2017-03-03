@@ -19,7 +19,7 @@ public:
     /** 
      * Changes the color with R,G,B,A bytes
      *
-     * @param color Example: ccc4(255,100,0) means R=255, G=100, B=0
+     * @param color Example: CAColor4B(255,100,0) means R=255, G=100, B=0
      */
     virtual void setColor(const CAColor4B& color) = 0;
 

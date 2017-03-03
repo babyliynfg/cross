@@ -242,7 +242,7 @@ public:
 		if (m_pCursorMark == NULL)
 		{
 			m_pCursorMark = CAView::create();
-			m_pCursorMark->setColor(ccc4(0, 0, 0, 255));
+			m_pCursorMark->setColor(CAColor4B(0, 0, 0, 255));
 			m_pContainerView->addSubview(m_pCursorMark);
 			this->hideCursorMark();
 		}
@@ -512,7 +512,7 @@ public:
 		std::vector<DRect> vt = getZZCRect();
 		for (int i = 0; i < vt.size(); i++)
 		{
-			CAView* pTextMaskView = CAView::createWithColor(ccc4(60, 120, 240, 127));
+			CAView* pTextMaskView = CAView::createWithColor(CAColor4B(60, 120, 240, 127));
 			if (vt[i].origin.y == iFlagTrick)
 			{
 				vt[i].InflateRect(0, -1, 0, -1);

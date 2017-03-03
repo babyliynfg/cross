@@ -560,7 +560,7 @@ void CAViewAnimation::update(float dt)
                     short g = model->startColor.g + model->deltaColor[1] * s;
                     short b = model->startColor.b + model->deltaColor[2] * s;
                     short a = model->startColor.a + model->deltaColor[3] * s;
-                    view->setColor(ccc4(r, g, b, a));
+                    view->setColor(CAColor4B(r, g, b, a));
                 }
                 if (model->bAlpha)
                 {

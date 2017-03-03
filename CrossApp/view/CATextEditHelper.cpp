@@ -107,9 +107,9 @@ void CATextToolBarView::show(CAView* pView)
 	{
         CAButton* btn = CAButton::create(CAButton::Type::Custom);
 		btn->setTitleForState(CAControl::State::Normal, m_CallbackTargets[i].cszButtonText.c_str());
-        btn->setTitleColorForState(CAControl::State::Normal, ccc4(3, 100, 255, 255));
+        btn->setTitleColorForState(CAControl::State::Normal, CAColor4B(3, 100, 255, 255));
         btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
-        btn->setBackgroundViewForState(CAControl::State::Highlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
+        btn->setBackgroundViewForState(CAControl::State::Highlighted, CAView::createWithColor(CAColor4B(226, 226, 226, 225)));
 		btn->setTag(i);
         btn->addTarget([=]()
         {
@@ -146,7 +146,7 @@ bool CATextToolBarView::init()
 		return false;
 	}
 
-	this->setColor(ccc4(135, 135, 135, 190));
+	this->setColor(CAColor4B(135, 135, 135, 190));
 	DRect rect = DRectZero;
 	rect.size = CAApplication::getApplication()->getWinSize();
 	this->setFrame(rect);
@@ -206,7 +206,7 @@ void CATextToolBarView::addGrayLine(int x)
 {
 	DSize size = CAApplication::getApplication()->getWinSize();
 	CAView *line = createWithFrame(DRect(x, 0, 1, size.height));
-	line->setColor(ccc4(206, 206, 211, 255));
+	line->setColor(CAColor4B(206, 206, 211, 255));
 	m_pBackView->addSubview(line);
 }
 

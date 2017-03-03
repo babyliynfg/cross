@@ -796,27 +796,27 @@ CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdent
 void CACollectionViewCell::normalCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(255, 255, 255, 255));
+	m_pBackgroundView->setColor(CAColor4B(255, 255, 255, 255));
 }
 
 void CACollectionViewCell::highlightedCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
+	m_pBackgroundView->setColor(CAColor4B(240, 240, 240, 255));
 }
 
 
 void CACollectionViewCell::selectedCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+	m_pBackgroundView->setColor(CAColor4B(50, 193, 255, 255));
 }
 
 
 void CACollectionViewCell::disabledCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
+	m_pBackgroundView->setColor(CAColor4B(127, 127, 127, 255));
 }
 
 NS_CC_END

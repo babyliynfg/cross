@@ -2021,7 +2021,7 @@ bool TintTo::initWithDuration(float duration, GLubyte red, GLubyte green, GLubyt
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _to = ccc4(red, green, blue, 0.0f);
+        _to = CAColor4B(red, green, blue, 0.0f);
         return true;
     }
 
@@ -2057,7 +2057,7 @@ void TintTo::update(float time)
 {
     if (_target)
     {
-        _target->setColor(ccc4(GLubyte(_from.r + (_to.r - _from.r) * time),
+        _target->setColor(CAColor4B(GLubyte(_from.r + (_to.r - _from.r) * time),
                                (GLubyte)(_from.g + (_to.g - _from.g) * time),
                                (GLubyte)(_from.b + (_to.b - _from.b) * time),
                                _target->getColor().a));
@@ -2117,7 +2117,7 @@ void TintBy::update(float time)
 {
     if (_target)
     {
-        _target->setColor(ccc4((GLubyte)(_fromR + _deltaR * time),
+        _target->setColor(CAColor4B((GLubyte)(_fromR + _deltaR * time),
             (GLubyte)(_fromG + _deltaG * time),
             (GLubyte)(_fromB + _deltaB * time),
             _target->getColor().a));
