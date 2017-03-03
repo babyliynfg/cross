@@ -42,7 +42,7 @@ void PageControlTest::viewDidLoad()
     pageControl2->setCurrentPageIndicatorTintColor(CAColor_green);
     pageControl2->setTarget([=](int index)
     {
-        CCLog("btn_tag===%d",pageControl->getCurrentPage());
+        CCLog("btn_tag===%d",pageControl2->getCurrentPage());
     });
     this->getView()->addSubview(pageControl2);
     
@@ -53,7 +53,7 @@ void PageControlTest::viewDidLoad()
     pageControl3->setCurrentPageIndicatorTintColor(CAColor_green);
     pageControl3->setTarget([=](int index)
     {
-        CCLog("btn_tag===%d",pageControl->getCurrentPage());
+        CCLog("btn_tag===%d",pageControl3->getCurrentPage());
     });
     this->getView()->addSubview(pageControl3);
 }
