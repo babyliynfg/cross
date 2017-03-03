@@ -5,7 +5,6 @@
 
 #include "CAObject.h"
 #include <math.h>
-#include <OpenGL/gltypes.h>
 #include "CCGL.h"
 
 NS_CC_BEGIN
