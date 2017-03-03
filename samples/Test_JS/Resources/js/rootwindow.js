@@ -159,7 +159,6 @@ var RootWindow = ca.CAWindow.extend(
             {
                 this.m_pRootNavigationController = new ca.CANavigationController();
                 this.m_pRootNavigationController.initWithRootViewController(tabBarController);
-                this.m_pRootNavigationController.setNavigationBarBackgroundImage(ca.CAImage.create("image/navbg.jpg"));
             }
             this.setRootViewController(this.m_pRootNavigationController);
         },

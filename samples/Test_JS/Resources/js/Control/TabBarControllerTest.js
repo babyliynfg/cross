@@ -6,6 +6,8 @@ var TabBarControllerTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
 
+        this.getView().setColor(ca.color._getGray());
+
         var item1 = ca.CATabBarItem.create("item1", ca.CAImage.create(""), ca.CAImage.create(""));
         var item2 = ca.CATabBarItem.create("item2", ca.CAImage.create(""), ca.CAImage.create(""));
         var item3 = ca.CATabBarItem.create("item3", ca.CAImage.create(""), ca.CAImage.create(""));
