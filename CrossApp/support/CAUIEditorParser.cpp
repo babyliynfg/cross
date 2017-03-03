@@ -872,6 +872,10 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
                 sw->setTitleOffset(titleOffSet);
             }
         }
+        if (const char* value = viewXml->Attribute("isOn"))
+        {
+            sw->setIsOn(bool(atoi(value)));
+        }
     }
     else if (contrlType.compare("CASegmentedControl") == 0)
     {

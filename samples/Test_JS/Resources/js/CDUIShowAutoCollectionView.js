@@ -222,7 +222,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             case 8:
             {
                 var SliderNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
-                var  SliderRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
+                var SliderRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
                 var sliderNum = this.Num;
                 SliderRightBtn.setCallbackFunction(function()
                 {
@@ -257,9 +257,26 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
 
             case 10:
             {
-                var ViewContrllerStepperTest = new StepperTest();
+                var StepperNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
+                var StepperRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
+                var stepperNum = this.Num;
+                StepperRightBtn.setCallbackFunction(function()
+                {
+                    stepperNum++;
+                    var StepperTestContrllerViewTest = new StepperTest(stepperNum);
+                    StepperTestContrllerViewTest.init();
+                    StepperTestContrllerViewTest.setNavigationBarItem(StepperNavigationBar);
+                    if(stepperNum >= StepperTestContrllerViewTest.maxNum)
+                    {
+                        stepperNum = -1;
+                    }
+                    ca.RootWindow.getRootNavigationController().replaceViewController(StepperTestContrllerViewTest, false);
+                });
+                StepperNavigationBar.addRightButtonItem(StepperRightBtn);
+
+                var ViewContrllerStepperTest = new StepperTest(0);
                 ViewContrllerStepperTest.init();
-                ViewContrllerStepperTest.setNavigationBarItem(ca.CANavigationBarItem.create(this.m_vTitle[item]));
+                ViewContrllerStepperTest.setNavigationBarItem(StepperNavigationBar);
                 //ViewContrllerStepperTest.autorelease();
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerStepperTest, true);
                 break;
@@ -529,6 +546,8 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
 
         this.Num++;
 
+        log("this.item = "+this.item);
+
         var ImageViewNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[this.item]);
 
         var ImageViewRightBtn = ca.CABarButtonItem.create("", ca.CAImage.create("source_material/btn_right_white.png"), null);
@@ -554,11 +573,11 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             }
             case 3:
             {
-                ViewContrllerImageViewTest =  new ImageViewTest(this.Num);
                 break;
             }
             case 4:
             {
+                ViewContrllerImageViewTest =  new ImageViewTest(this.Num);
                 break;
             }
             case 5:
@@ -583,6 +602,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
 
             case 9:
             {
+                ViewContrllerImageViewTest = new StepperTest(this.Num);
                 break;
             }
             case 10:
