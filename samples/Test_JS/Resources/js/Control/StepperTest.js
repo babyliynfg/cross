@@ -40,7 +40,7 @@ var StepperTest = ca.CAViewController.extend({
         }
         else
         {
-            var step = ca.CAStepper.createWithLayout(DLayout(DHorizontalLayout_W_C(360, 0.5), DVerticalLayout_H_C(60, 0.5)), ca.CAStepper.Orientation.Vertical);
+            var step = ca.CAStepper.createWithLayout(DLayout(DHorizontalLayout_W_C(60, 0.5), DVerticalLayout_H_C(360, 0.5)), ca.CAStepper.Orientation.Vertical);
             //step.setWraps(true);//是否循环,默认循环
             step.setMinValue(0);
             step.setMaxValue(50);
