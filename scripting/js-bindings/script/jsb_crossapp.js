@@ -536,15 +536,41 @@ CAFont = function(){
     deleteLine: false,
     };
 }
+ca.CAColor4B = {};
+ca.CAColor4B.WHITE = {r:255, g:255, b:255,a:255};
+ca.CAColor4B.YELLOW = {r:255, g:255, b:0,a:255};
+ca.CAColor4B.GREEN = {r:0, g:255, b:0,a:255};
+ca.CAColor4B.BLUE = {r:0, g:0, b:255,a:255};
+ca.CAColor4B.RED = {r:255, g:0, b:0,a:255};
+ca.CAColor4B.MAGENTA = {r:255, g:0, b:255,a:255};
+ca.CAColor4B.BLACK = {r:0, g:0, b:0,a:255};
+ca.CAColor4B.ORANGE = {r:255, g:127, b:0,a:255};
+ca.CAColor4B.GRAY = {r:166, g:166, b:166,a:255};
+ca.CAColor4B.CLEAR = {r:255, g:255, b:255,a:0};
+
+ca.CAColor4F = {};
+ca.CAColor4F.WHITE = {r:1, g:1, b:1,a:1};
+ca.CAColor4F.YELLOW = {r:1, g:1, b:0,a:1};
+ca.CAColor4F.GREEN = {r:0, g:1, b:0,a:1};
+ca.CAColor4F.BLUE = {r:0, g:0, b:1,a:1};
+ca.CAColor4F.RED = {r:1, g:0, b:0,a:1};
+ca.CAColor4F.MAGENTA = {r:1, g:0, b:1,a:1};
+ca.CAColor4F.BLACK = {r:0, g:0, b:0,a:1};
+ca.CAColor4F.ORANGE = {r:1, g:0.5, b:0,a:1};
+ca.CAColor4F.GRAY = {r:0.65, g:0.65, b:0.65,a:1};
+ca.CAColor4F.CLEAR = {r:1, g:1, b:1,a:0};
 
 
-
-ca.RED = {r:255, g:0, b:0,a:255};
-ca.GREEN = {r:0, g:255, b:0,a:255};
-ca.BLUE = {r:0, g:0, b:255,a:255};
-ca.BLACK = {r:0, g:0, b:0,a:255};
 ca.WHITE = {r:255, g:255, b:255,a:255};
 ca.YELLOW = {r:255, g:255, b:0,a:255};
+ca.GREEN = {r:0, g:255, b:0,a:255};
+ca.BLUE = {r:0, g:0, b:255,a:255};
+ca.RED = {r:255, g:0, b:0,a:255};
+ca.MAGENTA = {r:255, g:0, b:255,a:255};
+ca.BLACK = {r:0, g:0, b:0,a:255};
+ca.ORANGE = {r:255, g:127, b:0,a:255};
+ca.GRAY = {r:166, g:166, b:166,a:255};
+ca.CLEAR = {r:255, g:255, b:255,a:0};
 
 
 
