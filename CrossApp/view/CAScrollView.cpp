@@ -1317,7 +1317,7 @@ bool CAIndicator::init()
     {
         return false;
     }
-    this->setColor(CAColor_clear);
+    this->setColor(CAColor4B::CLEAR);
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CAIndicator");
     CAImage* image = CAImage::create(map.at("backgroundView"));
     
@@ -1486,12 +1486,12 @@ void CAIndicator::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CAIndicator::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
-    m_pIndicator->setColor(CAColor_gray);
+    m_pIndicator->setColor(CAColor4B::GRAY);
 }
 
 void CAIndicator::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
 {
-    m_pIndicator->setColor(CAColor_white);
+    m_pIndicator->setColor(CAColor4B::WHITE);
 }
 
 void CAIndicator::switchPCMode(bool var)

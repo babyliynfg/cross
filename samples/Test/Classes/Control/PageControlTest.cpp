@@ -22,13 +22,13 @@ PageControlTest::~PageControlTest()
 
 void PageControlTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
     
     CAPageControl* pageControl = CAPageControl::createWithLayout(DLayout(DHorizontalLayout_W_C(150, 0.5), DVerticalLayout_H_C(54, 0.25f)));
     pageControl->setNumberOfPages(5);
     pageControl->setStyle(CAPageControl::Style::Dot);
-    pageControl->setPageIndicatorTintColor(CAColor_white);
-    pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
+    pageControl->setPageIndicatorTintColor(CAColor4B::WHITE);
+    pageControl->setCurrentPageIndicatorTintColor(CAColor4B::GREEN);
     pageControl->setTarget([=](int index)
     {
         CCLog("btn_tag===%d",pageControl->getCurrentPage());
@@ -38,8 +38,8 @@ void PageControlTest::viewDidLoad()
     CAPageControl* pageControl2 = CAPageControl::createWithLayout(DLayout(DHorizontalLayout_W_C(150, 0.5), DVerticalLayout_H_C(54, 0.4f)));
     pageControl2->setNumberOfPages(5);
     pageControl2->setStyle(CAPageControl::Style::Round);
-    pageControl2->setPageIndicatorTintColor(CAColor_white);
-    pageControl2->setCurrentPageIndicatorTintColor(CAColor_green);
+    pageControl2->setPageIndicatorTintColor(CAColor4B::WHITE);
+    pageControl2->setCurrentPageIndicatorTintColor(CAColor4B::GREEN);
     pageControl2->setTarget([=](int index)
     {
         CCLog("btn_tag===%d",pageControl2->getCurrentPage());
@@ -49,8 +49,8 @@ void PageControlTest::viewDidLoad()
     CAPageControl* pageControl3 = CAPageControl::createWithLayout(DLayout(DHorizontalLayout_W_C(150, 0.5), DVerticalLayout_H_C(54, 0.55f)));
     pageControl3->setNumberOfPages(5);
     pageControl3->setStyle(CAPageControl::Style::Rectangle);
-    pageControl3->setPageIndicatorTintColor(CAColor_white);
-    pageControl3->setCurrentPageIndicatorTintColor(CAColor_green);
+    pageControl3->setPageIndicatorTintColor(CAColor4B::WHITE);
+    pageControl3->setCurrentPageIndicatorTintColor(CAColor4B::GREEN);
     pageControl3->setTarget([=](int index)
     {
         CCLog("btn_tag===%d",pageControl3->getCurrentPage());

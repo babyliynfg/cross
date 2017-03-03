@@ -22,7 +22,7 @@ CheckboxTest::~CheckboxTest()
 
 void CheckboxTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
     
     CACheckbox* box = CACheckbox::createWithLayout(DLayout(DHorizontalLayout_W_C(54, 0.5), DVerticalLayout_H_C(54, 0.25f)), CACheckbox::Type::RoundedRect);
     this->getView()->addSubview(box);

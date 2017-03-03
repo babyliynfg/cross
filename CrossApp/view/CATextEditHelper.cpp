@@ -108,7 +108,7 @@ void CATextToolBarView::show(CAView* pView)
         CAButton* btn = CAButton::create(CAButton::Type::Custom);
 		btn->setTitleForState(CAControl::State::Normal, m_CallbackTargets[i].cszButtonText.c_str());
         btn->setTitleColorForState(CAControl::State::Normal, CAColor4B(3, 100, 255, 255));
-        btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
+        btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::CLEAR));
         btn->setBackgroundViewForState(CAControl::State::Highlighted, CAView::createWithColor(CAColor4B(226, 226, 226, 225)));
 		btn->setTag(i);
         btn->addTarget([=]()

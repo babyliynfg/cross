@@ -51,12 +51,12 @@ void LabelTest::viewDidLoad()
 	if (LabelNum == 0)
 	{
         CAView* view = CAView::createWithLayout(DLayoutFill);
-        view->setColor(CAColor_gray);
+        view->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view);
         
 		CAFont Font;
 		Font.fontSize = 36;
-		Font.color = CAColor_red;
+		Font.color = CAColor4B::RED;
 
 		CALabel* label = CALabel::create();
 		label->setText(cc);
@@ -69,7 +69,7 @@ void LabelTest::viewDidLoad()
 
 		CAFont Font1;
 		Font1.fontSize = 36;
-		Font1.color = CAColor_red;
+		Font1.color = CAColor4B::RED;
 		Font1.underLine = true;
 
 		CALabel* label1 = CALabel::create();
@@ -84,7 +84,7 @@ void LabelTest::viewDidLoad()
 		CALabel* label2 = CALabel::create();
 		CAFont Font2;
 		Font2.fontSize = 36;
-		Font2.color = CAColor_red;
+		Font2.color = CAColor4B::RED;
 		Font2.bold = true;
 		label2->setText(cc);
 		label2->setFont(Font2);
@@ -97,7 +97,7 @@ void LabelTest::viewDidLoad()
 		CALabel* label3 = CALabel::create();
 		CAFont Font3;
 		Font3.fontSize = 36;
-		Font3.color = CAColor_red;
+		Font3.color = CAColor4B::RED;
 		Font3.italics = true;
 		label3->setText(cc);
 		label3->setFont(Font3);
@@ -110,7 +110,7 @@ void LabelTest::viewDidLoad()
 		CALabel* label4 = CALabel::create();
 		CAFont Font4;
 		Font4.fontSize = 36;
-		Font4.color = CAColor_red;
+		Font4.color = CAColor4B::RED;
 		label4->setText("Enable Copy");
 		label4->setFont(Font4);
         label4->setTextAlignment(CATextAlignment::Center);
@@ -123,7 +123,7 @@ void LabelTest::viewDidLoad()
 		CALabel* label5 = CALabel::create();
 		CAFont Font5;
 		Font5.fontSize = 36;
-		Font5.color = CAColor_red;
+		Font5.color = CAColor4B::RED;
 		Font5.fontName = "c:/x.ttf";
 		Font5.bold = true;
 		Font5.italics = true;
@@ -137,7 +137,7 @@ void LabelTest::viewDidLoad()
 
 		CAView* view1 = CAView::createWithLayout(DLayoutFill);
 		view1->addSubview(label5);
-		view1->setColor(CAColor_gray);
+		view1->setColor(CAColor4B::GRAY);
 
 		this->getView()->addSubview(view1);
 	}
@@ -148,24 +148,24 @@ void LabelTest::viewDidLoad()
 		CAFont RichLabelFont;
 		RichLabelFont.bold = true;
 		RichLabelFont.fontSize = 42;
-		RichLabelFont.color = CAColor_red;
+		RichLabelFont.color = CAColor4B::RED;
 		RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont);
 
 		CAFont RichLabelFont1;
 		RichLabelFont1.italics = true;
 		RichLabelFont1.fontSize = 42;
-		RichLabelFont1.color = CAColor_red;
+		RichLabelFont1.color = CAColor4B::RED;
 		RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont1);
 
 		CAFont RichLabelFont2;
 		RichLabelFont2.underLine = true;
 		RichLabelFont2.fontSize = 42;
-		RichLabelFont2.color = CAColor_red;
+		RichLabelFont2.color = CAColor4B::RED;
 		RichLabel->appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont2);
 
 		CAView* view2 = CAView::createWithLayout(DLayoutFill);
 		view2->addSubview(RichLabel);
-		view2->setColor(CAColor_gray);
+		view2->setColor(CAColor4B::GRAY);
 
 		this->getView()->addSubview(view2);
 	}

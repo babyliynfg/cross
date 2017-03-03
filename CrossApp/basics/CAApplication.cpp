@@ -858,7 +858,7 @@ void CAApplication::createStatsLabel()
     
     m_pFPSLabel = CALabel::createWithFrame(DRect(20, 20, 100, 50));
     m_pFPSLabel->setFontSize(40);
-	m_pFPSLabel->setColor(CAColor_yellow);
+	m_pFPSLabel->setColor(CAColor4B::YELLOW);
     CC_SAFE_RETAIN(m_pFPSLabel);
     m_pFPSLabel->onEnter();
     m_pFPSLabel->onEnterTransitionDidFinish();

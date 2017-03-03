@@ -28,7 +28,7 @@ CAPullToRefreshView::CAPullToRefreshView(CAPullToRefreshView::Type type)
 ,m_sPullToRefreshText("")
 ,m_sReleaseToRefreshText("")
 ,m_sRefreshingText("")
-,m_cLabelColor(CAColor_gray)
+,m_cLabelColor(CAColor4B::GRAY)
 ,m_eState(CAPullToRefreshView::State::None)
 {
     

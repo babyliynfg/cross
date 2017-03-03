@@ -39,12 +39,12 @@ void ECollectionViewVerticalCell::initWithCell()
 
 void ECollectionViewVerticalCell::highlightedCollectionViewCell()
 {
-    this->setBackgroundView(CAView::createWithColor(CAColor_clear));
+    this->setBackgroundView(CAView::createWithColor(CAColor4B::CLEAR));
 }
 
 void ECollectionViewVerticalCell::selectedCollectionViewCell()
 {
-    this->setBackgroundView(CAView::createWithColor(CAColor_clear));
+    this->setBackgroundView(CAView::createWithColor(CAColor4B::CLEAR));
 }
 
 EAutoCollectionViewVertical::EAutoCollectionViewVertical()
@@ -87,7 +87,7 @@ EAutoCollectionViewVertical* EAutoCollectionViewVertical::createWithLayout(const
 void EAutoCollectionViewVertical::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
     //    CAScheduler::schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-    CAView* viewColor = createWithColor(CAColor_blue);
+    CAView* viewColor = createWithColor(CAColor4B::BLUE);
     viewColor->setLayout(DLayoutFill);
     
     this->addSubview(viewColor);
@@ -163,7 +163,7 @@ unsigned int EAutoCollectionViewVertical::numberOfSections(CAAutoCollectionView 
 
 CAView* EAutoCollectionViewVertical::collectionViewSectionViewForHeaderInSection(CAAutoCollectionView *collectionView, const DSize& viewSize, unsigned int section)
 {
-    CAView* view = CAView::createWithColor(CAColor_gray);
+    CAView* view = CAView::createWithColor(CAColor4B::GRAY);
     return view;
 }
 

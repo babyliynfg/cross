@@ -187,7 +187,7 @@ public:
         CC_ASSERT(0);
         return nullptr;
     }
-    virtual FiniteTimeAction* clone() const
+    virtual FiniteTimeAction* clone() const override
     {
         CC_ASSERT(0);
         return nullptr;

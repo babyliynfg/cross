@@ -330,7 +330,7 @@ void ccDrawCardinalSpline(const std::vector<DPoint>& config, float tension,  uns
 
         // border
         if( dt == 1 ) {
-            p = config.size() - 1;
+            p = (unsigned int)config.size() - 1;
             lt = 1;
         } else {
             p = dt / deltaT;

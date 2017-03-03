@@ -17,7 +17,7 @@ RenderImageTest::~RenderImageTest()
 void RenderImageTest::viewDidLoad()
 {
     winSize = this->getView()->getBounds().size;
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
     
     dle_ren_index = 0;
     
@@ -103,7 +103,7 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     scrollView->setContentOffset(DPointZero, false);
     scrollView->setMinimumZoomScale(temp_mini);
     scrollView->setMaximumZoomScale(2.5f);
-    scrollView->setBackgroundColor(CAColor_clear);
+    scrollView->setBackgroundColor(CAColor4B::CLEAR);
     scrollView->setShowsScrollIndicators(false);
     scrollView->setScrollViewDelegate(this);
     scrollView->setDisplayRange(true);

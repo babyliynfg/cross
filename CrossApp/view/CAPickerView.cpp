@@ -226,7 +226,7 @@ void CAPickerView::reloadAllComponents()
             tableView->setTableViewDataSource(this);
             tableView->setScrollViewDelegate(this);
             tableView->setSeparatorViewHeight(0);
-            tableView->setSeparatorColor(CAColor_clear);
+            tableView->setSeparatorColor(CAColor4B::CLEAR);
             tableView->setShowsScrollIndicators(false);
 			m_tableViews.pushBack(tableView);
             

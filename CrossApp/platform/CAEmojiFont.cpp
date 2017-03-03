@@ -114,7 +114,7 @@ CAImage* CAEmojiFont::getEmojiImage(unsigned int codepoint, unsigned long nFontS
 	if (error)
 		return NULL;
 
-	int w = (m_CurFontFace->glyph->advance.x >> 6);
+	int w = (int)(m_CurFontFace->glyph->advance.x >> 6);
 	int h = static_cast<uint32_t>(m_CurFontFace->glyph->metrics.height >> 6);
 
 	int size = w * h * 4;

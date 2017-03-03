@@ -30,7 +30,7 @@ public:
     //
     // Overrides
     //
-    virtual ActionEase* clone() const
+    virtual ActionEase* clone() const override
     {
         CC_ASSERT(0);
         return nullptr;
@@ -93,7 +93,7 @@ public:
     //
     // Overrides
     //
-    virtual EaseRateAction* clone() const
+    virtual EaseRateAction* clone() const override
     {
         CC_ASSERT(0);
         return nullptr;
@@ -423,7 +423,7 @@ public:
     //
     // Overrides
     //
-    virtual EaseElastic* clone() const
+    virtual EaseElastic* clone() const override
     {
         CC_ASSERT(0);
         return nullptr;
@@ -589,7 +589,7 @@ class CC_DLL EaseBounce : public ActionEase
 public:
 
     // Overrides
-    virtual EaseBounce* clone() const
+    virtual EaseBounce* clone() const override
     {
         CC_ASSERT(0);
         return nullptr;

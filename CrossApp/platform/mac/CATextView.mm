@@ -87,7 +87,7 @@
             break;
         }
         
-        location = before.length;
+        location = (unsigned int)before.length;
     }
     
     return location;
@@ -113,7 +113,7 @@
         {
             if (before.length > current.length)
             {
-                lenght = before.length - current.length;
+                lenght = (unsigned int)(before.length - current.length);
             }
             else if (before.length < current.length)
             {
@@ -127,7 +127,7 @@
             break;
         }
         
-        lenght = before.length - location;
+        lenght = (unsigned int)(before.length - location);
     }
     
     return lenght;
@@ -140,7 +140,7 @@
     
     unsigned int location = [self getLocationWithBefore:before Current:current];
     unsigned int lenght = [self getLenghtWithBefore:before Current:current Location:location];
-    unsigned int addLenght = MAX(current.length - (before.length - lenght), 0);;
+    unsigned int addLenght = (unsigned int)MAX(current.length - (before.length - lenght), 0);;
     
     std::string changedText = "";
     
@@ -374,7 +374,7 @@ void CATextView::showImage()
     NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
     
     unsigned char* data = (unsigned char*)malloc([data_MAC length]);
-    [data_MAC getBytes:data];
+    [data_MAC getBytes:data length:[data_MAC length]];
     
     CAImage *image = CAImage::createWithImageDataNoCache(data, data_MAC.length);
     free(data);

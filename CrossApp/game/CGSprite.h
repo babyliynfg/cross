@@ -72,9 +72,9 @@ public:
     
     virtual void sortAllChildren() override;
 
-    virtual void setOpacityModifyRGB(bool modify);
+    virtual void setOpacityModifyRGB(bool modify) override;
     
-    virtual bool isOpacityModifyRGB(void);
+    virtual bool isOpacityModifyRGB() const override;
     
     virtual void updateTransform(void) override;
 
@@ -128,14 +128,14 @@ public:
     
 protected:
     
-    virtual void updateDraw();
+    virtual void updateDraw() override;
     
-    virtual void updateColor(void);
+    virtual void updateColor(void) override;
+    
+    virtual void updateBlendFunc(void) override;
     
     virtual void setImageCoords(const DRect& rect);
-    
-    virtual void updateBlendFunc(void);
-    
+
     virtual void setReorderChildDirtyRecursively(void);
     
     virtual void setDirtyRecursively(bool bValue);
@@ -143,7 +143,7 @@ protected:
     bool                        m_bInsideBounds;
     CAImageAtlas*               m_pobImageAtlas;
     CAImage*                    m_pobImage;
-    unsigned int                m_uAtlasIndex;
+    ssize_t                     m_uAtlasIndex;
     CGSpriteBatchNode*          m_pobBatchNode;
     
     TrianglesCommand            m_obTrianglesCommand;

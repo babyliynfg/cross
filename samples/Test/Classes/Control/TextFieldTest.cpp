@@ -15,7 +15,7 @@ TextFieldTest::~TextFieldTest()
 
 void TextFieldTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
     
     CATextField* textField1 = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(200, 100)));
     textField1->setTag(100);

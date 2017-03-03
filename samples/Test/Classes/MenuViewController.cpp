@@ -22,7 +22,7 @@ MenuViewController::~MenuViewController()
 
 void MenuViewController::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_clear);
+    this->getView()->setColor(CAColor4B::CLEAR);
     
     DLayout tableViewLayout;
     DLayout logoLayout;
@@ -44,7 +44,7 @@ void MenuViewController::viewDidLoad()
     tableView->setAllowsSelection(true);
     tableView->setTableViewDelegate(this);
     tableView->setTableViewDataSource(this);
-    tableView->setBackgroundColor(CAColor_clear);
+    tableView->setBackgroundColor(CAColor4B::CLEAR);
     tableView->setSeparatorColor(ccc4(166, 166, 166,100));
     tableView->setShowsScrollIndicators(false);
     tableView->setScrollEnabled(false);
@@ -121,7 +121,7 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         test->setTextAlignment(CATextAlignment::Left);
         test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         test->setFontSize(32);
-		test->setColor(CAColor_white);
+		test->setColor(CAColor4B::WHITE);
         test->setTag(100);
         cell->addSubview(test);
         

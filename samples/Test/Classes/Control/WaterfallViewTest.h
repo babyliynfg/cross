@@ -255,7 +255,7 @@ public:
  CAImageView* image = CAImageView::createWithImage(CAImage::create("image/WebView.png"));
  CAView* view = CAView::createWithFrame(DRect(0,0,100,100));
  view->addSubview(image);
- //    view->setColor(CAColor_red);
+ //    view->setColor(CAColor4B::RED);
  return view;
  }
  
@@ -269,7 +269,7 @@ public:
  CAImageView* image = CAImageView::createWithImage(CAImage::create("image/WebView.png"));
  CAView* view = CAView::createWithFrame(DRect(0,0,100,100));
  view->addSubview(image);
- //    view->setColor(CAColor_red);
+ //    view->setColor(CAColor4B::RED);
  return view;
  }
  

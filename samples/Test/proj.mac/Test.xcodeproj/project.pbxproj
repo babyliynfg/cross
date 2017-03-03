@@ -751,7 +751,7 @@
 					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/mac\"",
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/mac\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = Test;
 				SDKROOT = macosx;
@@ -802,7 +802,7 @@
 					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/mac\"",
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/mac\"",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = Test;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -821,7 +821,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				SDKROOT = macosx;
 				VALID_ARCHS = "x86_64 i386";
 			};
@@ -837,7 +837,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = macosx;
 				VALID_ARCHS = "x86_64 i386";

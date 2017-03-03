@@ -887,7 +887,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
         glyph->index = glyph_index;
 		if (glyph_index == 0)
 		{
-			if (CAEmojiFont::getInstance()->isEmojiCodePoint(c))
+			if (CAEmojiFont::getInstance()->isEmojiCodePoint((unsigned int)c))
 			{
 				isOpenType = false;
 				glyph->isEmoji = true;
@@ -1128,7 +1128,7 @@ void CAFreeTypeFont::compute_bbox2(TGlyph& glyph, FT_BBox& bbox)
 bool CAFreeTypeFont::initFreeTypeFont(const std::string& pFontName, unsigned long nSize)
 {
 	m_face = initFreeType(pFontName, nSize);
-	m_inFontSize = nSize;
+	m_inFontSize = (int)nSize;
 	return (m_face != NULL);
 }
 

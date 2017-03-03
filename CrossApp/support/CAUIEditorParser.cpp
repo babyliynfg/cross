@@ -478,22 +478,22 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             if (viewXml->Attribute("backgroundColorNormal"))
             {
-                btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
+                btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::CLEAR));
             }
             
             if (viewXml->Attribute("backgroundColorHighted"))
             {
-                btn->setBackgroundViewForState(CAControl::State::Highlighted, CAView::createWithColor(CAColor_clear));
+                btn->setBackgroundViewForState(CAControl::State::Highlighted, CAView::createWithColor(CAColor4B::CLEAR));
             }
             
             if (viewXml->Attribute("backgroundColorSelected"))
             {
-                btn->setBackgroundViewForState(CAControl::State::Selected, CAView::createWithColor(CAColor_clear));
+                btn->setBackgroundViewForState(CAControl::State::Selected, CAView::createWithColor(CAColor4B::CLEAR));
             }
             
             if (viewXml->Attribute("backgroundColorDisabled"))
             {
-                btn->setBackgroundViewForState(CAControl::State::Disabled, CAView::createWithColor(CAColor_clear));
+                btn->setBackgroundViewForState(CAControl::State::Disabled, CAView::createWithColor(CAColor4B::CLEAR));
             }
         }
         else
@@ -1428,7 +1428,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		CAGif* gif = NULL;
 		if (const char* value = viewXml->Attribute("path"))
 		{
-			gif = CAGif::createWithFilePath(value);
+			gif = CAGif::create(value);
 		}
 		
         CAGifView* gifView = CAGifView::createWithGif(gif);

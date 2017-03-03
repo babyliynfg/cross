@@ -98,8 +98,8 @@ protected:
     GLuint       m_uStencilRenderBufffer;
     GLint        m_uOldFBO;
     
-    unsigned int m_uPixelsWide;
-    unsigned int m_uPixelsHigh;
+    unsigned long m_uPixelsWide;
+    unsigned long m_uPixelsHigh;
     CAImage* m_pImage;
     CAImage* m_pImageCopy;
 

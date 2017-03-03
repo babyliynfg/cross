@@ -15,7 +15,7 @@ ButtonTest::~ButtonTest()
 
 void ButtonTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
         
     CAButton* btn1 = CAButton::create(CAButton::Type::Custom);
     //设置tag
@@ -68,7 +68,7 @@ void ButtonTest::viewDidLoad()
     //设置Layout
     btn4->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.64)));
     //设置Button的标题颜色和状态
-    btn4->setTitleColorForState(CAControl::State::Normal,CAColor_white);
+    btn4->setTitleColorForState(CAControl::State::Normal,CAColor4B::WHITE);
     //设置Button的背景View
     btn4->setBackgroundViewForState(CAControl::State::Normal, CAScale9ImageView::createWithImage(CAImage::create("image/button_normal.png")));
     //设置Button的背景View
@@ -84,7 +84,7 @@ void ButtonTest::viewDidLoad()
     btn5->setTag(5);
     btn5->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.8)));
     btn5->setTitleForState(CAControl::State::Normal, "Normal");
-    btn5->setTitleColorForState(CAControl::State::Normal, CAColor_white);
+    btn5->setTitleColorForState(CAControl::State::Normal, CAColor4B::WHITE);
     btn5->setTitleForState(CAControl::State::Highlighted, "Highlighted");
     btn5->setBackgroundViewForState(CAControl::State::Normal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
     btn5->setBackgroundViewForState(CAControl::State::Highlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));

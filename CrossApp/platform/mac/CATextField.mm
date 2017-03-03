@@ -395,8 +395,8 @@ CATextField::CATextField()
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
 , m_bAllowkeyBoardHide(true)
-, m_cTextColor(CAColor_black)
-, m_cPlaceHdolderColor(CAColor_gray)
+, m_cTextColor(CAColor4B::BLACK)
+, m_cPlaceHdolderColor(CAColor4B::GRAY)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)
@@ -519,7 +519,7 @@ void CATextField::showImage()
     NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
     
     unsigned char* data = (unsigned char*)malloc([data_MAC length]);
-    [data_MAC getBytes:data];
+    [data_MAC getBytes:data length:[data_MAC length]];
 
     CAImage *image = CAImage::createWithImageDataNoCache(data, data_MAC.length);
     free(data);

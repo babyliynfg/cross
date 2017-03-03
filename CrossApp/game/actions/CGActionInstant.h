@@ -22,7 +22,7 @@ public:
     //
     // Overrides
     //
-    virtual ActionInstant* clone() const
+    virtual ActionInstant* clone() const override
     {
         CC_ASSERT(0);
         return nullptr;

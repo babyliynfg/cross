@@ -39,13 +39,13 @@ void CDUIShowAutoCollectionView::StepperRightBtnRightcallback(CAButton* btn)
 
 void StepperTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
     
     if (StepperNum == 0)
     {
         CALabel* stepValue = CALabel::createWithLayout(DLayout(DHorizontalLayout_W_C(300, 0.5), DVerticalLayout_H_C(100, 0.25)));
         stepValue->setText("step_value:0");
-        stepValue->setColor(CAColor_black);
+        stepValue->setColor(CAColor4B::BLACK);
         stepValue->setFontSize(28);
         stepValue->setTextAlignment(CATextAlignment::Center);
         stepValue->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
@@ -70,7 +70,7 @@ void StepperTest::viewDidLoad()
     {
         CALabel* stepValue1 = CALabel::createWithLayout(DLayout(DHorizontalLayout_W_C(300, 0.5), DVerticalLayout_H_C(100, 0.25)));
         stepValue1->setText("step_value:0");
-        stepValue1->setColor(CAColor_black);
+        stepValue1->setColor(CAColor4B::BLACK);
         stepValue1->setFontSize(28);
         stepValue1->setTextAlignment(CATextAlignment::Center);
         stepValue1->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);

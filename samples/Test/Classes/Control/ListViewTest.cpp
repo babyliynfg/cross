@@ -41,7 +41,7 @@ bool CDListViewTest::init()
     listView->setOrientation(CAListView::Orientation::Horizontal);
     //listView->setShowsHorizontalScrollIndicator(false);
     listView->setShowsScrollIndicators(false);
-    listView->setSeparatorColor(CAColor_clear);
+    listView->setSeparatorColor(CAColor4B::CLEAR);
     this->addSubview(listView);
     return true;
 }
@@ -117,7 +117,7 @@ void ListViewTest::viewDidLoad()
     CDListViewTest* listview1 = CDListViewTest::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 120)));
     this->getView()->addSubview(listview1);
 
-    this->getView()->addSubview(CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(120, 5)), CAColor_green));
+    this->getView()->addSubview(CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(120, 5)), CAColor4B::GREEN));
 
     p_ListView = CAListView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(130, 0)));
     p_ListView->setListViewDelegate(this);
@@ -127,7 +127,7 @@ void ListViewTest::viewDidLoad()
     p_ListView->setOrientation(CAListView::Orientation::Vertical);
     p_ListView->setShowsScrollIndicators(true);
 
-    p_ListView->setSeparatorColor(CAColor_gray);
+    p_ListView->setSeparatorColor(CAColor4B::GRAY);
     this->getView()->addSubview(p_ListView);
     
 }

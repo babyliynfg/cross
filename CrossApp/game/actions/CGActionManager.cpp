@@ -91,7 +91,7 @@ void ActionManager::removeActionAtIndex(ssize_t index, tHashElement *element)
         element->currentActionSalvaged = true;
     }
 
-    ccArrayRemoveObjectAtIndex(element->actions, index, true);
+    ccArrayRemoveObjectAtIndex(element->actions, (unsigned int)index, true);
 
     // update actionIndex in case we are in tick. looping over the actions
     if (element->actionIndex >= index)

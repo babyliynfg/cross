@@ -55,7 +55,7 @@ public:
 		m_pContainerView->setHorizontalScrollEnabled(false);
 		m_pContainerView->setBounceHorizontal(false);
 		m_pContainerView->setHaveNextResponder(true);
-		m_pContainerView->setBackgroundColor(CAColor_clear);
+		m_pContainerView->setBackgroundColor(CAColor4B::CLEAR);
 		this->addSubview(m_pContainerView);
 
 		m_pImageView = new CAImageView();
@@ -332,7 +332,7 @@ public:
 		{
 			m_vLinesTextView.clear();
 		}
-		m_pImageView->setColor(CAColor_white);
+        m_pImageView->setColor(CAColor4B::WHITE);
 		m_pImageView->setImage(image);
 		DRect rect = DRectZero;
 
@@ -727,7 +727,7 @@ bool CATextView::init()
 	{
 		return false;
 	}
-	this->setColor(CAColor_clear);
+	this->setColor(CAColor4B::CLEAR);
 	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);

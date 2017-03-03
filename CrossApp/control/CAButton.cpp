@@ -38,13 +38,13 @@ CAButton::CAButton(const CAButton::Type& buttonType)
 ,m_bDefineImageOffset(false)
 ,m_bTouchClick(true)
 {
-    m_mImageColors[CAControl::State::Normal] = CAColor_white;
-    m_mImageColors[CAControl::State::Highlighted] = CAColor_white;
-    m_mImageColors[CAControl::State::Disabled] = CAColor_white;
+    m_mImageColors[CAControl::State::Normal] = CAColor4B::WHITE;
+    m_mImageColors[CAControl::State::Highlighted] = CAColor4B::WHITE;
+    m_mImageColors[CAControl::State::Disabled] = CAColor4B::WHITE;
     
-    m_mTitleColors[CAControl::State::Normal] = CAColor_black;
-    m_mTitleColors[CAControl::State::Highlighted] = CAColor_black;
-    m_mTitleColors[CAControl::State::Disabled] = CAColor_black;
+    m_mTitleColors[CAControl::State::Normal] = CAColor4B::BLACK;
+    m_mTitleColors[CAControl::State::Highlighted] = CAColor4B::BLACK;
+    m_mTitleColors[CAControl::State::Disabled] = CAColor4B::BLACK;
     
     m_pImageView = new CAImageView();
     m_pImageView->init();

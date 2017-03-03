@@ -27,7 +27,7 @@
 #include "view/CAView.h"
 NS_CC_BEGIN
 
-static int spriteCount = 0;
+//static int spriteCount = 0;
 
 CGSprite::CGSprite(void)
 : m_bShouldBeHidden(false)
@@ -37,7 +37,7 @@ CGSprite::CGSprite(void)
     memset(&m_sQuad, 0, sizeof(m_sQuad));
     
     // Atlas: Color
-    CAColor4B tmpColor = CAColor_white;
+    CAColor4B tmpColor = CAColor4B::WHITE;
     m_sQuad.bl.colors = tmpColor;
     m_sQuad.br.colors = tmpColor;
     m_sQuad.tl.colors = tmpColor;
@@ -435,7 +435,7 @@ void CGSprite::updateTransform(void)
         
         if (m_pobImageAtlas)
         {
-            m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+            m_pobImageAtlas->updateQuad(&m_sQuad, (unsigned int)m_uAtlasIndex);
         }
         
         m_bRecursiveDirty = false;
@@ -600,7 +600,7 @@ void CGSprite::updateColor(void)
     {
         if (m_uAtlasIndex != UINT_NONE)
         {
-            m_pobImageAtlas->updateQuad(&m_sQuad, m_uAtlasIndex);
+            m_pobImageAtlas->updateQuad(&m_sQuad, (unsigned int)m_uAtlasIndex);
         }
         else
         {
@@ -620,7 +620,7 @@ void CGSprite::setOpacityModifyRGB(bool modify)
     }
 }
 
-bool CGSprite::isOpacityModifyRGB(void)
+bool CGSprite::isOpacityModifyRGB(void) const
 {
     return m_bOpacityModifyRGB;
 }

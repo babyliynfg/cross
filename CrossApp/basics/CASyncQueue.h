@@ -81,7 +81,7 @@ public:
 	int GetCount()
 	{
 		CAAutoLock lock(m_Cs);
-		return m_SyncQueue.size();
+		return (int)(m_SyncQueue.size());
 	}
 	void Clear()
 	{

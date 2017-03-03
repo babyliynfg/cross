@@ -46,7 +46,7 @@ void ImageViewTest::viewDidLoad()
     
         CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
         view1->addSubview(image1);
-        view1->setColor(CAColor_gray);
+        view1->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view1);
     }
     else if (ImageViewNum == 1)
@@ -57,7 +57,7 @@ void ImageViewTest::viewDidLoad()
     
         CAView* view2 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
         view2->addSubview(image2);
-        view2->setColor(CAColor_gray);
+        view2->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view2);
     }
     else if (ImageViewNum == 2)
@@ -68,7 +68,7 @@ void ImageViewTest::viewDidLoad()
     
         CAView* view3 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
         view3->addSubview(image3);
-        view3->setColor(CAColor_gray);
+        view3->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view3);
     }
     else if (ImageViewNum == 3)
@@ -79,7 +79,7 @@ void ImageViewTest::viewDidLoad()
     
         CAView* view4 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
         view4->addSubview(image4);
-        view4->setColor(CAColor_gray);
+        view4->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view4);
     }
     else
@@ -100,7 +100,7 @@ void ImageViewTest::viewDidLoad()
     
         CAView* view7 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
         view7->addSubview(image7);
-        view7->setColor(CAColor_gray);
+        view7->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view7);
     }
 }

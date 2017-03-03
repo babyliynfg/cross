@@ -262,7 +262,7 @@ FT_Error CAFTRichFont::initWordGlyph(const LabelElement& label, std::vector<TGly
 		glyph->index = glyph_index;
 		if (glyph_index == 0)
 		{
-			if (CAEmojiFont::getInstance()->isEmojiCodePoint(c))
+			if (CAEmojiFont::getInstance()->isEmojiCodePoint((unsigned int)c))
 			{
 				isOpenType = false;
 				glyph->isEmoji = true;

@@ -32,7 +32,7 @@
 NS_CC_BEGIN;
 
 
-static int viewCount = 0;
+//static int viewCount = 0;
 
 static int s_globalOrderOfArrival = 1;
 
@@ -65,8 +65,8 @@ CAView::CAView(void)
 , m_bReorderSubviewDirty(false)
 , _displayedAlpha(1.0f)
 , _realAlpha(1.0f)
-, _displayedColor(CAColor_white)
-, _realColor(CAColor_white)
+, _displayedColor(CAColor4B::WHITE)
+, _realColor(CAColor4B::WHITE)
 , m_bOpacityModifyRGB(true)
 , m_bDisplayRange(true)
 , m_bScissorRestored(false)
@@ -93,7 +93,7 @@ CAView::CAView(void)
     m_sBlendFunc = BlendFunc_alpha_non_premultiplied;
     memset(&m_sQuad, 0, sizeof(m_sQuad));
     
-    CAColor4B tmpColor = CAColor_white;
+    CAColor4B tmpColor = CAColor4B::WHITE;
     m_sQuad.bl.colors = tmpColor;
     m_sQuad.br.colors = tmpColor;
     m_sQuad.tl.colors = tmpColor;
@@ -2428,7 +2428,7 @@ void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t 
         quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
         quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
         
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor4B::WHITE;
         
         this->drawShadow(renderer, transform, flags, m_pLeftShadow);
     }
@@ -2455,7 +2455,7 @@ void CAView::drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t
         quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
         quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
         
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor4B::WHITE;
         
         this->drawShadow(renderer, transform, flags, m_pRightShadow);
     }
@@ -2482,7 +2482,7 @@ void CAView::drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t f
         quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
         quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
         
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor4B::WHITE;
         
         this->drawShadow(renderer, transform, flags, m_pTopShadow);
     }
@@ -2509,7 +2509,7 @@ void CAView::drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_
         quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
         quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
         
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor4B::WHITE;
         
         this->drawShadow(renderer, transform, flags, m_pBottomShadow);
     }

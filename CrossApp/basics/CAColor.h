@@ -63,25 +63,6 @@ public:
     static const CAColor4B CLEAR;
 };
 
-#define ccc4(R, G, B, A)                CAColor4B(R, G, B, A)
-#define ccc4Int(RGBA)                   CAColor4B(RGBA)
-#define getUIntFormColor4B(_COLOR_)     _COLOR_.getUInt()
-#define getIntFormColor4B(_COLOR_)      (int)(_COLOR_.getUInt())
-#define ccc4Mult(_COLOR_, _VAR_)        (_COLOR_ * _VAR_)
-#define CAColor4BEqual(_A_, _B_)        (_A_ == _B_)
-
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_white   = {255, 255, 255, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_yellow  = {255, 255,   0, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_green   = {  0, 255,   0, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_blue    = {  0,   0, 255, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_red     = {255,   0,   0, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_magenta = {255,   0, 255, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_black   = {  0,   0,   0, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_orange  = {255, 127,   0, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_gray    = {166, 166, 166, 255};
-CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_clear   = {255, 255, 255,   0};
-
-
 class CC_DLL CAColor4F
 {
 public:
@@ -128,6 +109,24 @@ public:
     static const CAColor4F CLEAR;
 };
 
+
+#define ccc4(R, G, B, A)                CAColor4B(R, G, B, A)
+#define ccc4Int(RGBA)                   CAColor4B(RGBA)
+#define getUIntFormColor4B(_COLOR_)     _COLOR_.getUInt()
+#define getIntFormColor4B(_COLOR_)      (int)(_COLOR_.getUInt())
+#define ccc4Mult(_COLOR_, _VAR_)        (_COLOR_ * _VAR_)
+#define CAColor4BEqual(_A_, _B_)        (_A_ == _B_)
+
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_white   = {255, 255, 255, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_yellow  = {255, 255,   0, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_green   = {  0, 255,   0, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_blue    = {  0,   0, 255, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_red     = {255,   0,   0, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_magenta = {255,   0, 255, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_black   = {  0,   0,   0, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_orange  = {255, 127,   0, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_gray    = {166, 166, 166, 255};
+CC_DEPRECATED_ATTRIBUTE static const CAColor4B  CAColor_clear   = {255, 255, 255,   0};
 
 NS_CC_END
 

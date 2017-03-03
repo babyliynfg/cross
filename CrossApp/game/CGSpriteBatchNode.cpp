@@ -413,7 +413,7 @@ void CGSpriteBatchNode::appendChild(CGSprite* sprite)
     sprite->setAtlasIndex(index);
 
     ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
-    m_pobImageAtlas->insertQuad(&quad, index);
+    m_pobImageAtlas->insertQuad(&quad, (unsigned int)index);
     
     auto& children = sprite->getChildren();
     for(const auto &child: children)
@@ -503,7 +503,7 @@ void CGSpriteBatchNode::insertQuadFromSprite(CGSprite *sprite, ssize_t index)
     sprite->setAtlasIndex(index);
 
     ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
-    m_pobImageAtlas->insertQuad(&quad, index);
+    m_pobImageAtlas->insertQuad(&quad, (unsigned int)index);
 
     sprite->setDirty(true);
     sprite->updateTransform();
@@ -540,7 +540,7 @@ CGSpriteBatchNode * CGSpriteBatchNode::addSpriteWithoutQuad(CGSprite*child, ssiz
 
     m_obDescendants.insert(i, child);
 
-    CGNode::insertChild(child, z);
+    CGNode::insertChild(child, (int)z);
     child->setTag(aTag);
     reorderBatch(false);
 

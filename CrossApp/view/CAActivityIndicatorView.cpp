@@ -91,7 +91,7 @@ bool CAActivityIndicatorView::init()
     {
         return false;
     }
-    this->CAView::setColor(CAColor_clear);
+    this->CAView::setColor(CAColor4B::CLEAR);
     m_style = CAActivityIndicatorView::Style::GrayLarge;
     
     return true;

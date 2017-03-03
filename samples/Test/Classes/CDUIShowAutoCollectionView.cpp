@@ -1,5 +1,5 @@
 
-#define CAColor_blueStyle ccc4(51,204,255,255)
+#define CAColor_blueStyle CAColor4B(51,204,255,255)
 #include "CDUIShowAutoCollectionView.h"
 
 #include "CDWebViewController.h"

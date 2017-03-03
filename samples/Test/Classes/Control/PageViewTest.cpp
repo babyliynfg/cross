@@ -30,8 +30,8 @@ void PageViewTest::viewDidLoad()
     
     pageControl = CAPageControl::createWithLayout(DLayout(DHorizontalLayout_W_C(100, 0.5), DVerticalLayout_T_H(30, 50)));
     pageControl->setNumberOfPages((int)_view.size());
-    pageControl->setPageIndicatorTintColor(CAColor_gray);
-    pageControl->setCurrentPageIndicatorTintColor(CAColor_green);
+    pageControl->setPageIndicatorTintColor(CAColor4B::GRAY);
+    pageControl->setCurrentPageIndicatorTintColor(CAColor4B::GREEN);
     pageControl->setTarget([=](int index)
     {
         CCLog("btn_tag===%d",pageControl->getCurrentPage());

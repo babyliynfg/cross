@@ -32,12 +32,12 @@ ETableViewCell* ETableViewCell::create(const std::string& identifier)
 
 void ETableViewCell::highlightedTableViewCell()
 {
-    this->setBackgroundView(CAView::createWithColor(CAColor_clear));
+    this->setBackgroundView(CAView::createWithColor(CAColor4B::CLEAR));
 }
 
 void ETableViewCell::selectedTableViewCell()
 {
-    this->setBackgroundView(CAView::createWithColor(CAColor_clear));
+    this->setBackgroundView(CAView::createWithColor(CAColor4B::CLEAR));
 }
 
 void ETableViewCell::initWithCell()
@@ -70,7 +70,7 @@ bool ETableView::init(const CrossApp::DRect &rect)
     p_TableView->setShowsScrollIndicators(false);
     p_TableView->setSeparatorViewHeight(0);
     p_TableView->setScrollEnabled(true);
-    p_TableView->setSeparatorColor(CAColor_clear);
+    p_TableView->setSeparatorColor(CAColor4B::CLEAR);
     this->addSubview(p_TableView);
     return true;
 }
@@ -188,7 +188,7 @@ void TableViewTest::viewDidLoad()
     
     showIndex = 0;
     VIEWLIST.clear();
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
 
     p_TableView = CATableView::createWithLayout(DLayout(DHorizontalLayout_L_R(0, 50), DVerticalLayoutFill));
     p_TableView->setTableViewDataSource(this);
@@ -257,13 +257,13 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const DSize
 CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table, const DSize& viewSize, unsigned int section)
 {
     std::string head = sectionTitle.at(section);
-    CAView* view = CAView::createWithColor(CAColor_gray);
+    CAView* view = CAView::createWithColor(CAColor4B::GRAY);
     
     DSize _size = viewSize;
     CALabel* header = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 0), DVerticalLayoutFill));
     header->setText(head);
     header->setFontSize(30);
-    header->setColor(CAColor_white);
+    header->setColor(CAColor4B::WHITE);
     header->setTextAlignment(CATextAlignment::Left);
     header->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     view->addSubview(header);
@@ -273,7 +273,7 @@ CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table
 
 CAView* TableViewTest::tableViewSectionViewForFooterInSection(CATableView* table, const DSize& viewSize, unsigned int section)
 {
-    CAView* view = CAView::createWithColor(CAColor_gray);
+    CAView* view = CAView::createWithColor(CAColor4B::GRAY);
     return view;
 }
 

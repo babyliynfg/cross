@@ -18,7 +18,7 @@ AlertViewTest::~AlertViewTest()
 
 void AlertViewTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
     
     //初始化viewList
     CAButton* btn1 = CAButton::create(CAButton::Type::RoundedRect);

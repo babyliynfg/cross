@@ -340,7 +340,7 @@ int ZipUtils::ccInflateCCZFile(const char *path, unsigned char **out)
         
         // decrypt
         unsigned int* ints = (unsigned int*)(compressed+12);
-        int enclen = (fileLen-12)/4;
+        int enclen = (int)(fileLen-12)/4;
         
         ccDecodeEncodedPvr(ints, enclen);
                 
@@ -551,7 +551,7 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, unsigned long *
         CC_BREAK_IF(UNZ_OK != nRet);
         
         pBuffer = new unsigned char[fileInfo.uncompressed_size];
-        int CC_UNUSED nSize = unzReadCurrentFile(data->zipFile, pBuffer, fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = (int)unzReadCurrentFile(data->zipFile, pBuffer, (unsigned int)fileInfo.uncompressed_size);
         CCAssert(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
         if (pSize)

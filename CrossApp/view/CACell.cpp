@@ -20,7 +20,7 @@ CACell::CACell()
 {
     this->setHaveNextResponder(true);
     this->setDisplayRange(false);
-    this->setColor(CAColor_clear);
+    this->setColor(CAColor4B::CLEAR);
 }
 
 CACell::~CACell()

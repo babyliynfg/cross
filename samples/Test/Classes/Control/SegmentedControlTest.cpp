@@ -15,7 +15,7 @@ SegmentedControlTest::~SegmentedControlTest()
 
 void SegmentedControlTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
     
     CASegmentedControl* segment1 = CASegmentedControl::createWithLayout(DLayout(DHorizontalLayout_W_C(300, 0.5), DVerticalLayout_H_C(54, 0.25)), 3);
     
@@ -39,8 +39,8 @@ void SegmentedControlTest::viewDidLoad()
         sprintf(temstr2, "Page%d", i + 1);
         segment2->setTitleForSegmentAtIndex(temstr2, i);
     }
-    segment2->setTitleColor(CAColor_black);
-    segment2->setTitleSelectedColor(CAColor_white);
+    segment2->setTitleColor(CAColor4B::BLACK);
+    segment2->setTitleSelectedColor(CAColor4B::WHITE);
     segment2->setTarget([=](int index)
     {
         CCLog("segmentCallback");

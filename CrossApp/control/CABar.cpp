@@ -25,8 +25,8 @@ CANavigationBar::CANavigationBar(bool clearance)
 ,m_pTitle(nullptr)
 ,m_pDelegate(nullptr)
 ,m_pBackgroundView(nullptr)
-,m_cTitleColor(CAColor_white)
-,m_cButtonColor(CAColor_white)
+,m_cTitleColor(CAColor4B::WHITE)
+,m_cButtonColor(CAColor4B::WHITE)
 ,m_pItem(nullptr)
 ,m_pGoBackBarButtonItem(nullptr)
 ,m_bClearance(clearance)
@@ -449,7 +449,7 @@ bool CABadgeView::init()
     m_pTextView->setTextAlignment(CATextAlignment::Center);
     m_pTextView->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     m_pTextView->setFontSize(30);
-    m_pTextView->setColor(CAColor_white);
+    m_pTextView->setColor(CAColor4B::WHITE);
     m_pTextView->setBold(true);
     this->addSubview(m_pTextView);
     
@@ -483,11 +483,11 @@ CATabBar::CATabBar(bool clearance)
 ,m_pBackgroundView(nullptr)
 ,m_pSelectedIndicatorView(nullptr)
 ,m_pBackgroundImage(nullptr)
-,m_sBackgroundColor(CAColor_white)
+,m_sBackgroundColor(CAColor4B::WHITE)
 ,m_pSelectedBackgroundImage(nullptr)
-,m_sSelectedBackgroundColor(CAColor_white)
+,m_sSelectedBackgroundColor(CAColor4B::WHITE)
 ,m_pSelectedIndicatorImage(nullptr)
-,m_sSelectedIndicatorColor(CAColor_white)
+,m_sSelectedIndicatorColor(CAColor4B::WHITE)
 ,m_pSelectedItem(nullptr)
 ,m_cItemSize(DSizeZero)
 ,m_nSelectedIndex(-1)
@@ -627,7 +627,7 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
             : m_pItems.at(i)->getImage();
             btn->setImageForState(CAControl::State::Highlighted, selectedImage);
             btn->setImageForState(CAControl::State::Disabled, selectedImage);
-            btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
+            btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::CLEAR));
             if (m_pSelectedBackgroundImage)
             {
                 btn->setBackgroundViewForState(CAControl::State::Highlighted,
@@ -744,7 +744,7 @@ void CATabBar::setBackgroundImage(CrossApp::CAImage *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pBackgroundImage);
     m_pBackgroundImage = var;
-    m_sBackgroundColor = CAColor_white;
+    m_sBackgroundColor = CAColor4B::WHITE;
     this->showBackground();
 }
 
@@ -770,7 +770,7 @@ void CATabBar::setSelectedBackgroundImage(CrossApp::CAImage *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pSelectedBackgroundImage);
     m_pSelectedBackgroundImage = var;
-    m_sSelectedBackgroundColor = CAColor_white;
+    m_sSelectedBackgroundColor = CAColor4B::WHITE;
     
     this->showSelectedBackground();
 }
@@ -797,7 +797,7 @@ void CATabBar::setSelectedIndicatorImage(CrossApp::CAImage *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorImage);
     m_pSelectedIndicatorImage = var;
-    m_sSelectedIndicatorColor = CAColor_white;
+    m_sSelectedIndicatorColor = CAColor4B::WHITE;
     CC_RETURN_IF(var == NULL);
     
     this->showSelectedIndicatorView();
@@ -915,7 +915,7 @@ void CATabBar::showSelectedBackground()
         : m_pItems.at(i)->getImage();
         btn->setImageForState(CAControl::State::Highlighted, selectedImage);
         btn->setImageForState(CAControl::State::Disabled, selectedImage);
-        btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor_clear));
+        btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::CLEAR));
         if (m_pSelectedBackgroundImage)
         {
             btn->setBackgroundViewForState(CAControl::State::Highlighted,

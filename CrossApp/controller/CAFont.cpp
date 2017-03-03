@@ -6,7 +6,7 @@ NS_CC_BEGIN
 CAFont::CAFont()
 : fontSize(24)
 , fontName("")
-, color(CAColor_black)
+, color(CAColor4B::BLACK)
 , italics(false)
 , bold(false)
 , underLine(false)

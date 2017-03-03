@@ -195,19 +195,11 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
         // increment the current layer
         layer++;
         
-        // mask of the current layer (ie: for layer 3: 00000100)
-        GLint mask_layer = 0x1 << layer;
-        // mask of all layers less than the current (ie: for layer 3: 00000011)
-        GLint mask_layer_l = mask_layer - 1;
-        // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
-        GLint mask_layer_le = mask_layer | mask_layer_l;
-        
         GLint currentStencilRef = 0;
         GLboolean currentDepthWriteMask = GL_FALSE;
         
         // manually save the stencil state
         
-        GLboolean currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
         glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&currentStencilWriteMask);
         glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&currentStencilFunc);
         glGetIntegerv(GL_STENCIL_REF, &currentStencilRef);
@@ -313,7 +305,6 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
             // manually save the alpha test state
             GLclampf currentAlphaTestRef = 1;
-            GLboolean currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
             glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&currentAlphaTestFunc);
             glGetFloatv(GL_ALPHA_TEST_REF, &currentAlphaTestRef);
             // enable alpha testing

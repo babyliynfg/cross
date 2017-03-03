@@ -50,7 +50,7 @@ public:
         return nullptr;
     }
 
-    virtual ActionInterval *clone() const
+    virtual ActionInterval *clone() const override
     {
         CC_ASSERT(0);
         return nullptr;

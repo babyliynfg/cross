@@ -40,7 +40,7 @@ void SliderTest::viewDidLoad()
     if (SliderNum == 0)
     {
         CAView* view1 = CAView::createWithLayout(DLayoutFill);
-        view1->setColor(CAColor_gray);
+        view1->setColor(CAColor4B::GRAY);
     
         sliderValue1 = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 50)));
         sliderValue1->setColor(ccc4(51,204,255,255));
@@ -63,7 +63,7 @@ void SliderTest::viewDidLoad()
     else
     {
         CAView* view2 = CAView::createWithLayout(DLayoutFill);
-        view2->setColor(CAColor_gray);
+        view2->setColor(CAColor4B::GRAY);
 
         sliderValue2 = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 50)));
         sliderValue2->setColor(ccc4(51, 204, 255, 255));

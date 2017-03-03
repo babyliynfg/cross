@@ -19,8 +19,8 @@ NS_CC_BEGIN
 
 CAProgress::CAProgress()
 :m_fProgress(0.0f)
-,m_cProgressTintColor(CAColor_white)
-,m_cProgressTrackColor(CAColor_white)
+,m_cProgressTintColor(CAColor4B::WHITE)
+,m_cProgressTrackColor(CAColor4B::WHITE)
 ,m_pProgressTintImage(nullptr)
 ,m_pProgressTrackImage(nullptr)
 ,m_pProgressImageView(nullptr)
@@ -95,7 +95,7 @@ bool CAProgress::init()
     {
         return false;
     }
-    CAView::setColor(CAColor_clear);
+    CAView::setColor(CAColor4B::CLEAR);
     
     m_pTarckImageView = CAScale9ImageView::createWithImage(nullptr);
     m_pTarckImageView->setFrame(this->getBounds());

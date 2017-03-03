@@ -25,7 +25,7 @@ CADrawerController::CADrawerController()
 ,m_bAnimation(false)
 ,m_pBackgroundView(nullptr)
 {
-    this->getView()->setColor(CAColor_clear);
+    this->getView()->setColor(CAColor4B::CLEAR);
     this->setTouchMoved(true);
     this->setVerticalScrollEnabled(false);
     

@@ -88,7 +88,7 @@ void PickerViewTest::viewDidLoad()
         
         city_value = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(100, 40)));
         city_value->setText(UTF8("天津市"));
-        city_value->setColor(CAColor_black);
+        city_value->setColor(CAColor4B::BLACK);
         city_value->setFontSize(28);
         city_value->setTextAlignment(CATextAlignment::Center);
         city_value->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
@@ -96,7 +96,7 @@ void PickerViewTest::viewDidLoad()
         CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view1->addSubview(p_pickerView);
         view1->addSubview(city_value);
-        view1->setColor(CAColor_white);
+        view1->setColor(CAColor4B::WHITE);
         this->getView()->addSubview(view1);
     }
     
@@ -109,7 +109,7 @@ void PickerViewTest::viewDidLoad()
         
         CAView* view2 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view2->addSubview(dpv);
-        view2->setColor(CAColor_white);
+        view2->setColor(CAColor4B::WHITE);
         this->getView()->addSubview(view2);
     }
     else if(PickerViewNum == 2)
@@ -119,7 +119,7 @@ void PickerViewTest::viewDidLoad()
     
         CAView* view3 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view3->addSubview(dpv3);
-        view3->setColor(CAColor_white);
+        view3->setColor(CAColor4B::WHITE);
         this->getView()->addSubview(view3);
     }
     else if(PickerViewNum == 3)
@@ -129,7 +129,7 @@ void PickerViewTest::viewDidLoad()
     
         CAView* view4 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view4->addSubview(dpv4);
-        view4->setColor(CAColor_white);
+        view4->setColor(CAColor4B::WHITE);
         this->getView()->addSubview(view4);
     }
     else
@@ -139,7 +139,7 @@ void PickerViewTest::viewDidLoad()
     
         CAView* view5 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view5->addSubview(dpv5);
-        view5->setColor(CAColor_white);
+        view5->setColor(CAColor4B::WHITE);
         this->getView()->addSubview(view5);
     }
 #endif

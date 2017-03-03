@@ -192,8 +192,8 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
 
         // textures must be power of two squared
-        int powW = 0;
-        int powH = 0;
+        unsigned long powW = 0;
+        unsigned long powH = 0;
         
         if (CAConfiguration::getInstance()->supportsNPOT())
         {

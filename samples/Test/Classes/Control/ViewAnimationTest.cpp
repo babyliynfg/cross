@@ -74,7 +74,7 @@ void ViewAnimationTest::viewDidLoad()
         CAView* view1 = CAView::createWithLayout(DLayoutFill);
         view1->addSubview(btn1);
         view1->addSubview(animation_1_view);
-        view1->setColor(CAColor_gray);
+        view1->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view1);
     }
     else if (AnimationNum == 1)
@@ -117,7 +117,7 @@ void ViewAnimationTest::viewDidLoad()
         animation_2_btn_cancel = CAButton::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 100), DVerticalLayout_H_C(50, 0.5)), CAButton::Type::Custom);
         animation_2_btn_cancel->setTitleForState(CAControl::State::Normal, "Cancel");
         animation_2_btn_cancel->setTag(202);
-        animation_2_btn_cancel->setTitleColorForState(CAControl::State::Normal, CAColor_white);
+        animation_2_btn_cancel->setTitleColorForState(CAControl::State::Normal, CAColor4B::WHITE);
         animation_2_btn_cancel->addTarget([=]()
         {
             CAViewAnimation::beginAnimations("");
@@ -141,7 +141,7 @@ void ViewAnimationTest::viewDidLoad()
         view2->addSubview(animation_2_textfield);
         view2->addSubview(animation_2_btn_search);
         view2->addSubview(animation_2_btn_cancel);
-        view2->setColor(CAColor_gray);
+        view2->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view2);
     }
     else
@@ -172,7 +172,7 @@ void ViewAnimationTest::viewDidLoad()
         CAView* view3 = CAView::createWithLayout(DLayoutFill);
         view3->addSubview(animation_3_imageview);
         view3->addSubview(btn3);
-        view3->setColor(CAColor_gray);
+        view3->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view3);
     }
 

@@ -631,8 +631,8 @@ CATextField::CATextField()
 , m_bUpdateImage(true)
 , m_bSecureTextEntry(false)
 , m_bAllowkeyBoardHide(true)
-, m_cTextColor(CAColor_black)
-, m_cPlaceHdolderColor(CAColor_gray)
+, m_cTextColor(CAColor4B::BLACK)
+, m_cPlaceHdolderColor(CAColor4B::GRAY)
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)
@@ -766,7 +766,7 @@ bool CATextField::init()
 	{
 		return false;
 	}
-	this->setColor(CAColor_clear);
+	this->setColor(CAColor4B::CLEAR);
 
 	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
 	CAImage* image = CAImage::create(map.at("backgroundView_normal"));

@@ -34,7 +34,7 @@ CAViewController::CAViewController()
 ,m_bKeypadEnabled(false)
 ,m_pParser(nullptr)
 {
-    m_pView = CAView::createWithColor(CAColor_white);
+    m_pView = CAView::createWithColor(CAColor4B::WHITE);
     m_pView->retain();
     m_pView->setContentContainer(this);
     m_pView->setLayout(DLayoutFill);
@@ -105,7 +105,7 @@ void CAViewController::viewOnEnterTransitionDidFinish()
         {
             if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, kOnEnterTransitionDidFinish));
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, (int)kOnEnterTransitionDidFinish));
             }
         }
 #endif
@@ -118,7 +118,7 @@ void CAViewController::viewOnEnterTransitionDidFinish()
 
 void CAViewController::viewOnExitTransitionDidStart()
 {
-    CAScheduler::getScheduler()->pauseTarget(this);
+    CAScheduler::getScheduler()->pauseTarget(this);   
 
     do
     {
@@ -128,7 +128,7 @@ void CAViewController::viewOnExitTransitionDidStart()
         {
             if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, kOnExitTransitionDidStart));
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, (int)kOnExitTransitionDidStart));
             }
         }
 #endif
@@ -149,7 +149,7 @@ void CAViewController::viewOnSizeTransitionDidChanged()
         {
             if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, kOnSizeTransitionDidChanged));
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, (int)kOnSizeTransitionDidChanged));
             }
         }
 #endif
@@ -282,14 +282,14 @@ CANavigationController::CANavigationController()
 :m_bNavigationBarHidden(false)
 ,m_bPopViewController(false)
 ,m_pNavigationBarBackgroundImage(nullptr)
-,m_sNavigationBarBackgroundColor(CAColor_white)
-,m_sNavigationBarTitleColor(CAColor_white)
-,m_sNavigationBarButtonColor(CAColor_white)
+,m_sNavigationBarBackgroundColor(CAColor4B::WHITE)
+,m_sNavigationBarTitleColor(CAColor4B::WHITE)
+,m_sNavigationBarButtonColor(CAColor4B::WHITE)
 ,m_pNavigationBarGoBackBarButtonItem(nullptr)
 ,m_fProgress(1.0f)
 ,m_bClearance(false)
 {
-    m_pView->setColor(CAColor_clear);
+    m_pView->setColor(CAColor4B::CLEAR);
     m_pView->setDisplayRange(false);
     this->setTouchMoved(true);
     this->setVerticalScrollEnabled(false);
@@ -312,7 +312,7 @@ void CANavigationController::setNavigationBarBackgroundImage(CrossApp::CAImage *
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pNavigationBarBackgroundImage);
     m_pNavigationBarBackgroundImage = var;
-    m_sNavigationBarBackgroundColor = CAColor_white;
+    m_sNavigationBarBackgroundColor = CAColor4B::WHITE;
     
     if (!m_pNavigationBars.empty())
     {
@@ -1192,18 +1192,18 @@ CATabBarController::CATabBarController()
 ,m_pTabBarBackgroundImage(nullptr)
 ,m_pTabBarSelectedBackgroundImage(nullptr)
 ,m_pTabBarSelectedIndicatorImage(nullptr)
-,m_sTabBarBackgroundColor(CAColor_white)
-,m_sTabBarSelectedBackgroundColor(CAColor_white)
-,m_sTabBarSelectedIndicatorColor(CAColor_white)
+,m_sTabBarBackgroundColor(CAColor4B::WHITE)
+,m_sTabBarSelectedBackgroundColor(CAColor4B::WHITE)
+,m_sTabBarSelectedIndicatorColor(CAColor4B::WHITE)
 ,m_bTabBarSelectedTitleBold(false)
-,m_sTabBarTitleColor(CAColor_white)
+,m_sTabBarTitleColor(CAColor4B::WHITE)
 ,m_sTabBarSelectedTitleColor(CAColor4B(50, 193, 255, 255))
 ,m_bShowTabBarSelectedIndicator(false)
 ,m_fProgress(1.0f)
 ,m_iTabBarHeight(0)
 {
     this->setScrollEnabled(false);
-    m_pView->setColor(CAColor_clear);
+    m_pView->setColor(CAColor4B::CLEAR);
     m_pView->setDisplayRange(false);
     
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATabBar");
@@ -1231,7 +1231,7 @@ void CATabBarController::setTabBarBackgroundImage(CrossApp::CAImage *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pTabBarBackgroundImage);
     m_pTabBarBackgroundImage = var;
-    m_sTabBarBackgroundColor = CAColor_white;
+    m_sTabBarBackgroundColor = CAColor4B::WHITE;
     
     if (m_pTabBar)
     {
@@ -1265,7 +1265,7 @@ void CATabBarController::setTabBarSelectedBackgroundImage(CrossApp::CAImage *var
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedBackgroundImage);
     m_pTabBarSelectedBackgroundImage = var;
-    m_sTabBarSelectedBackgroundColor = CAColor_white;
+    m_sTabBarSelectedBackgroundColor = CAColor4B::WHITE;
     
     if (m_pTabBar)
     {
@@ -1299,7 +1299,7 @@ void CATabBarController::setTabBarSelectedIndicatorImage(CrossApp::CAImage *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedIndicatorImage);
     m_pTabBarSelectedIndicatorImage = var;
-    m_sTabBarSelectedIndicatorColor = CAColor_white;
+    m_sTabBarSelectedIndicatorColor = CAColor4B::WHITE;
     
     if (m_pTabBar)
     {
@@ -1475,7 +1475,7 @@ void CATabBarController::viewDidLoad()
     }
     
     m_pContainer = CAPageView::createWithLayout(containerLayout, CAPageView::Orientation::Horizontal);
-    m_pContainer->setBackgroundColor(CAColor_clear);
+    m_pContainer->setBackgroundColor(CAColor4B::CLEAR);
     m_pContainer->setPageViewDelegate(this);
     m_pContainer->setScrollViewDelegate(this);
     m_pContainer->setScrollEnabled(m_bScrollEnabled);

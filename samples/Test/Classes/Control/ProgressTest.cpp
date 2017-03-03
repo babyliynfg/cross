@@ -15,7 +15,7 @@ ProgressTest::~ProgressTest()
 
 void ProgressTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor_gray);
+    this->getView()->setColor(CAColor4B::GRAY);
     
     progress_value = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 50)));
     progress_value->setTag(100);

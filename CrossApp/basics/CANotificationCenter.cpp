@@ -97,7 +97,7 @@ int CANotificationCenter::removeAllObservers(CAObject *target)
     
     if (m_observers.find(target) != m_observers.end())
     {
-        size = m_observers.size();
+        size = (int)m_observers.size();
         m_observers.erase(target);
     }
 

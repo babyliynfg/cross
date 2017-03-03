@@ -47,7 +47,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
         
         CAView* view1 = CAView::createWithLayout(DLayoutFill);
         view1->addSubview(idc1);
-        view1->setColor(CAColor_gray);
+        view1->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view1);
     }
     else if (ActivityIndicatorNum == 1)
@@ -58,7 +58,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
     
         CAView* view2 = CAView::createWithLayout(DLayoutFill);
         view2->addSubview(idc2);
-        view2->setColor(CAColor_gray);
+        view2->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view2);
     }
     else if (ActivityIndicatorNum == 2)
@@ -71,7 +71,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
     
         CAView* view3 = CAView::createWithLayout(DLayoutFill);
         view3->addSubview(idc3);
-        view3->setColor(CAColor_gray);
+        view3->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view3);
     }
     else if (ActivityIndicatorNum == 3)
@@ -84,7 +84,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
     
         CAView* view4 = CAView::createWithLayout(DLayoutFill);
         view4->addSubview(idc4);
-        view4->setColor(CAColor_gray);
+        view4->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view4);
     }
     else
@@ -101,7 +101,7 @@ void ActivityIndicatorViewTest::viewDidLoad()
     
         CAView* view5 = CAView::createWithLayout(DLayoutFill);
         view5->addSubview(idc5);
-        view5->setColor(CAColor_gray);
+        view5->setColor(CAColor4B::GRAY);
         this->getView()->addSubview(view5);
     }
 
