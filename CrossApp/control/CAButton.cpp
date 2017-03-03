@@ -596,7 +596,7 @@ void CAButton::setTitleLabelSize(const DSize& size)
 void CAButton::setTitleFontSize(float fontSize)
 {
     m_fTitleFontSize = fontSize;
-    m_pLabel->setFontSize(m_fTitleFontSize);
+    this->setControlState(m_eState);
 }
 
 void CAButton::setTitleBold(bool bold)

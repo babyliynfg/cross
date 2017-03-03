@@ -300,7 +300,7 @@ void CACheckbox::setTitleLabelSize(const DSize& size)
 void CACheckbox::setTitleFontSize(float fontSize)
 {
     m_fTitleFontSize = fontSize;
-    m_pLabel->setFontSize(m_fTitleFontSize);
+    this->updateCheckboxState();
 }
 
 void CACheckbox::setTitleBold(bool bold)
