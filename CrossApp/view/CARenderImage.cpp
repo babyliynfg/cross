@@ -26,7 +26,7 @@ CARenderImage::CARenderImage()
 , m_uDepthRenderBufffer(0)
 , m_ePixelFormat(CAImage::PixelFormat::RGBA8888)
 , m_uClearFlags(0)
-, m_sClearColor(ccc4f(0,0,0,1))
+, m_sClearColor(CAColor4F(0,0,0,1))
 , m_fClearDepth(0.0f)
 , m_nClearStencil(0)
 , m_bAutoDraw(false)
@@ -424,7 +424,7 @@ void CARenderImage::beginWithClear(const CAColor4B& backgroundColor, float depth
 
 void CARenderImage::beginWithClear(const CAColor4B& backgroundColor, float depthValue, int stencilValue, GLbitfield flags)
 {
-    setClearColor(ccc4FFromccc4B(backgroundColor));
+    setClearColor(CAColor4F(backgroundColor));
     
     setClearDepth(depthValue);
     

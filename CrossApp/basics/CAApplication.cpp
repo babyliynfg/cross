@@ -716,7 +716,7 @@ void CAApplication::reset()
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     
-    // cocos2d-x specific data structures
+    // CrossApp specific data structures
     CAUserDefault::destroyInstance();
     
     GL::invalidateStateCache();

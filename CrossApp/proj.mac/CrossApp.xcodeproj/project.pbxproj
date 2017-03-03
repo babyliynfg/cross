@@ -418,6 +418,8 @@
 		D69B76921E4B0713007D9771 /* sweep_context.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B76861E4B0713007D9771 /* sweep_context.h */; };
 		D6B0C6411D6587ED00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */; };
 		D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB51DC9C81500944576 /* libwebsockets.a */; };
+		D6C513241E6910C300B0BE19 /* CAColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6C513221E6910C300B0BE19 /* CAColor.cpp */; };
+		D6C513251E6910C300B0BE19 /* CAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = D6C513231E6910C300B0BE19 /* CAColor.h */; };
 		D6CC2DF51DD9BA8F007E8502 /* CAThemeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6CC2DF31DD9BA8F007E8502 /* CAThemeManager.cpp */; };
 		D6CC2DF61DD9BA8F007E8502 /* CAThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */; };
 		D6D8A7821DC2F1EB00A47FC2 /* egif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */; };
@@ -904,6 +906,8 @@
 		D69B76A71E4B091A007D9771 /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
 		D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 		D6B12EB51DC9C81500944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/mac/libwebsockets.a; sourceTree = "<group>"; };
+		D6C513221E6910C300B0BE19 /* CAColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAColor.cpp; sourceTree = "<group>"; };
+		D6C513231E6910C300B0BE19 /* CAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAColor.h; sourceTree = "<group>"; };
 		D6CC2DF31DD9BA8F007E8502 /* CAThemeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThemeManager.cpp; sourceTree = "<group>"; };
 		D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThemeManager.h; sourceTree = "<group>"; };
 		D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = egif_lib.c; sourceTree = "<group>"; };
@@ -983,6 +987,8 @@
 				D69B765B1E4B03A9007D9771 /* CACameraBackgroundBrush.h */,
 				D69B765C1E4B03A9007D9771 /* CAConfiguration.cpp */,
 				D69B765D1E4B03A9007D9771 /* CAConfiguration.h */,
+				D6C513221E6910C300B0BE19 /* CAColor.cpp */,
+				D6C513231E6910C300B0BE19 /* CAColor.h */,
 				D64A8C961D34912200F75021 /* CARect.cpp */,
 				D64A8C971D34912200F75021 /* CARect.h */,
 				D64A8C931D34912200F75021 /* CAPoint.cpp */,
@@ -1938,6 +1944,7 @@
 				04EABA921956D75B00198A8E /* CAUserDefault.h in Headers */,
 				04EABA961956D75B00198A8E /* ioapi.h in Headers */,
 				3E2154511B8180340075448E /* json_batchallocator.h in Headers */,
+				D6C513251E6910C300B0BE19 /* CAColor.h in Headers */,
 				D69B762A1E4AFE12007D9771 /* CCGLProgramStateCache.h in Headers */,
 				04EABA981956D75B00198A8E /* unzip.h in Headers */,
 				D69B76901E4B0713007D9771 /* sweep.h in Headers */,
@@ -2135,6 +2142,7 @@
 				E070BB181E5EEA87000746FA /* CAImagePickerController.mm in Sources */,
 				B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */,
 				D66BCD501D3DC27700587C65 /* CGSpriteFrameCache.cpp in Sources */,
+				D6C513241E6910C300B0BE19 /* CAColor.cpp in Sources */,
 				D69B762B1E4AFE12007D9771 /* ccGLStateCache.cpp in Sources */,
 				D6596E331E57048600A55CF9 /* CAAlertViewImpl.mm in Sources */,
 				D65AFE8B1D3F6ED30067B290 /* CAFileUtils.cpp in Sources */,

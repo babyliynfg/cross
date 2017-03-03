@@ -165,7 +165,7 @@ void CACameraBackgroundDepthBrush::drawBackground(CACamera* camera)
 //////////////////////////////////////////////////////////////////////////////////////////
 
 CACameraBackgroundColorBrush::CACameraBackgroundColorBrush()
-: _color(ccc4f(0.f, 0.f, 0.f, 0.f))
+: _color(CAColor4F(0.f, 0.f, 0.f, 0.f))
 {
     
 }
@@ -184,7 +184,7 @@ bool CACameraBackgroundColorBrush::init()
 
 void CACameraBackgroundColorBrush::setColor(const CAColor4F& color)
 {
-    _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = ccc4BFromccc4F(color);
+    _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = CAColor4B(color);
 }
 
 CACameraBackgroundColorBrush* CACameraBackgroundColorBrush::create(const CAColor4F& color, float depth)

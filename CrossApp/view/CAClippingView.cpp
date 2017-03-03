@@ -274,7 +274,7 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
         int colorLocation = glProgram->getUniformLocation("u_color");
         CHECK_GL_ERROR_DEBUG();
         
-        CAColor4F color = ccc4f(1, 1, 1, 1);
+        CAColor4F color = CAColor4F(1, 1, 1, 1);
         
         glProgram->use();
         glProgram->setUniformsForBuiltins();

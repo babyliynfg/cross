@@ -803,7 +803,7 @@ void GLProgramState::setParameterAutoBinding(const std::string& uniformName, con
 void GLProgramState::applyAutoBinding(const std::string& uniformName, const std::string& autoBinding)
 {
     // This code tries to replace GLProgram::setUniformsForBuiltins. But it is unfinished ATM.
-    // The idea is that users will be able to use variables from cocos2d-x without hardcoding the
+    // The idea is that users will be able to use variables from CrossApp without hardcoding the
     // information on GLProgram and other objects.
     // Instead, the Cocos2d uniform variables will be callbacks.
     // As an example of how bad the current design is, the ModelView matrix is being passed from Node, to the Commands, to the GLProgram.
@@ -819,7 +819,7 @@ void GLProgramState::applyAutoBinding(const std::string& uniformName, const std:
 
     if (!resolved)
     {
-        // add cocos2d-x variables here like:
+        // add CrossApp variables here like:
         // PROJECT_MATRIX
         // MODEL_MATRIX
         // MODEL_VIEW

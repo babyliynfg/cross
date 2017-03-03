@@ -309,19 +309,19 @@ void CAConfiguration::loadConfigFile(const std::string& filename)
     }
     
     //light info
-    std::string name = "cocos2d.x.3d.max_dir_light_in_shader";
+    std::string name = "cross.3d.max_dir_light_in_shader";
 	if (_valueDict.find(name) != _valueDict.end())
         _maxDirLightInShader = _valueDict[name].asInt();
     else
         _valueDict[name] = CAValue(_maxDirLightInShader);
     
-    name = "cocos2d.x.3d.max_point_light_in_shader";
+    name = "cross.3d.max_point_light_in_shader";
 	if (_valueDict.find(name) != _valueDict.end())
         _maxPointLightInShader = _valueDict[name].asInt();
     else
         _valueDict[name] = CAValue(_maxPointLightInShader);
     
-    name = "cocos2d.x.3d.max_spot_light_in_shader";
+    name = "cross.3d.max_spot_light_in_shader";
 	if (_valueDict.find(name) != _valueDict.end())
         _maxSpotLightInShader = _valueDict[name].asInt();
     else
