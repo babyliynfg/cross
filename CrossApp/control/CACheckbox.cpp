@@ -441,7 +441,7 @@ void CACheckbox::updateCheckboxState()
     else if (!image && title.length() > 0)
     {
         labelSize = m_obContentSize.height * 0.8f;
-        labelCenter.size = m_obContentSize;
+        labelCenter.size.height = MAX(m_obContentSize.height, CAImage::getFontHeight(m_sTitleFontName.c_str(), m_fTitleFontSize));
         labelCenter.origin.x = m_obContentSize.width * 0.5f;
         labelCenter.origin.y = m_obContentSize.height * 0.425f;
     }
@@ -460,9 +460,9 @@ void CACheckbox::updateCheckboxState()
         
         labelSize = size.height * 0.8f;
         labelCenter.size.width = m_obContentSize.width - iSize.width - 30;
-        labelCenter.size.height = m_obContentSize.height;
+        labelCenter.size.height = MAX(m_obContentSize.height, CAImage::getFontHeight(m_sTitleFontName.c_str(), m_fTitleFontSize));
         labelCenter.origin.x = iSize.width + 20 + labelCenter.size.width /2;
-        labelCenter.origin.y = size.height * 0.425f;
+        labelCenter.origin.y = size.height * 0.5f;
     }
 
     if (!title.empty())
