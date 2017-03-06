@@ -1042,7 +1042,7 @@ caimage
 /**
  * @method createWithString
  * @param {char} arg0
- * @param {ca._Color4B} arg1
+ * @param {color4b_object} arg1
  * @param {char} arg2
  * @param {float} arg3
  * @param {size_object} arg4
@@ -1058,7 +1058,7 @@ caimage
  */
 createWithString : function (
 char, 
-_color4b, 
+cacolor4b, 
 char, 
 float, 
 dsize, 
@@ -2153,22 +2153,22 @@ glprogramstate
 
 /**
  * @method setColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method getDisplayedColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getDisplayedColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -2693,12 +2693,12 @@ getSubviews : function (
 
 /**
  * @method getColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -2795,11 +2795,11 @@ bool
 
 /**
  * @method initWithColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  * @return {bool}
  */
 initWithColor : function (
-_color4b 
+cacolor4b 
 )
 {
     return false;
@@ -2838,12 +2838,12 @@ create : function (
 /**
  * @method createWithFrame
 * @param {rect_object|rect_object} drect
-* @param {ca._Color4B} _color4b
+* @param {color4b_object} cacolor4b
 * @return {ca.CAView|ca.CAView}
 */
 createWithFrame : function(
 drect,
-_color4b 
+cacolor4b 
 )
 {
     return ca.CAView;
@@ -2851,11 +2851,11 @@ _color4b
 
 /**
  * @method createWithColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  * @return {ca.CAView}
  */
 createWithColor : function (
-_color4b 
+cacolor4b 
 )
 {
     return ca.CAView;
@@ -2864,12 +2864,12 @@ _color4b
 /**
  * @method createWithLayout
 * @param {layout_object|layout_object} dlayout
-* @param {ca._Color4B} _color4b
+* @param {color4b_object} cacolor4b
 * @return {ca.CAView|ca.CAView}
 */
 createWithLayout : function(
 dlayout,
-_color4b 
+cacolor4b 
 )
 {
     return ca.CAView;
@@ -2878,12 +2878,12 @@ _color4b
 /**
  * @method createWithCenter
 * @param {rect_object|rect_object} drect
-* @param {ca._Color4B} _color4b
+* @param {color4b_object} cacolor4b
 * @return {ca.CAView|ca.CAView}
 */
 createWithCenter : function(
 drect,
-_color4b 
+cacolor4b 
 )
 {
     return ca.CAView;
@@ -3193,10 +3193,10 @@ int
 
 /**
  * @method setColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -3295,12 +3295,12 @@ float
 
 /**
  * @method getColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -3865,12 +3865,12 @@ visitEve : function (
 
 /**
  * @method getColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -3995,10 +3995,10 @@ isWordWrap : function (
 
 /**
  * @method setColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -4503,10 +4503,10 @@ castatusbarstyle
 
 /**
  * @method setClearColor
- * @param {ca._Color4F} arg0
+ * @param {color4f_object} arg0
  */
 setClearColor : function (
-_color4f 
+cacolor4f 
 )
 {
 },
@@ -4927,11 +4927,11 @@ caimage
 /**
  * @method setTitleColorForState
  * @param {ca.CAControl::State} arg0
- * @param {ca._Color4B} arg1
+ * @param {color4b_object} arg1
  */
 setTitleColorForState : function (
 state, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -4939,11 +4939,11 @@ _color4b
 /**
  * @method setImageColorForState
  * @param {ca.CAControl::State} arg0
- * @param {ca._Color4B} arg1
+ * @param {color4b_object} arg1
  */
 setImageColorForState : function (
 state, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -5088,10 +5088,10 @@ float
 
 /**
  * @method setImageColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setImageColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -5164,10 +5164,10 @@ getSelectedAtIndex : function (
 
 /**
  * @method setTitleSelectedColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTitleSelectedColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -5196,10 +5196,10 @@ int
 
 /**
  * @method setTitleColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTitleColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -5248,20 +5248,20 @@ str
 
 /**
  * @method getTitleSelectedColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTitleSelectedColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
  * @method setImageSelectedColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setImageSelectedColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -5280,12 +5280,12 @@ int
 
 /**
  * @method getImageSelectedColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getImageSelectedColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -5314,12 +5314,12 @@ int
 
 /**
  * @method getTitleColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTitleColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -5332,10 +5332,10 @@ onExitTransitionDidStart : function (
 
 /**
  * @method setTintColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTintColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -5354,12 +5354,12 @@ int
 
 /**
  * @method getImageColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getImageColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -6030,22 +6030,22 @@ getItem : function (
 
 /**
  * @method setButtonColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setButtonColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method getTitleColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTitleColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -6108,12 +6108,12 @@ canavigationbardelegate
 
 /**
  * @method getButtonColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getButtonColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -6126,10 +6126,10 @@ onEnterTransitionDidFinish : function (
 
 /**
  * @method setTitleColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTitleColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -6236,22 +6236,22 @@ catabbaritem
 
 /**
  * @method getSelectedIndicatorColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getSelectedIndicatorColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
  * @method getBackgroundColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getBackgroundColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -6324,22 +6324,22 @@ caimage
 
 /**
  * @method getTitleColorForNormal
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTitleColorForNormal : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
  * @method getTitleColorForSelected
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTitleColorForSelected : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -6384,20 +6384,20 @@ caimage
 
 /**
  * @method setBackgroundColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setBackgroundColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method setTitleColorForSelected
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTitleColorForSelected : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -6412,30 +6412,30 @@ onExitTransitionDidStart : function (
 
 /**
  * @method setSelectedIndicatorColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setSelectedIndicatorColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method getSelectedBackgroundColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getSelectedBackgroundColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
  * @method setSelectedBackgroundColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setSelectedBackgroundColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -6462,10 +6462,10 @@ getSelectedIndicatorImage : function (
 
 /**
  * @method setTitleColorForNormal
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTitleColorForNormal : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -6614,12 +6614,12 @@ float
 
 /**
  * @method getColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -6842,12 +6842,12 @@ str
 
 /**
  * @method getLabelColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getLabelColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -6882,10 +6882,10 @@ getReleaseToRefreshText : function (
 
 /**
  * @method setLabelColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setLabelColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -7270,10 +7270,10 @@ isBounces : function (
 
 /**
  * @method setBackgroundColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setBackgroundColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -7984,20 +7984,20 @@ ca.CANavigationController = {
 
 /**
  * @method setNavigationBarTitleColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setNavigationBarTitleColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method setNavigationBarButtonColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setNavigationBarButtonColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -8024,12 +8024,12 @@ getBackViewController : function (
 
 /**
  * @method getNavigationBarBackgroundColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getNavigationBarBackgroundColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8154,12 +8154,12 @@ bool
 
 /**
  * @method getNavigationBarButtonColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getNavigationBarButtonColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8174,12 +8174,12 @@ isTouchMoved : function (
 
 /**
  * @method getNavigationBarTitleColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getNavigationBarTitleColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8204,10 +8204,10 @@ isReachBoundaryLeft : function (
 
 /**
  * @method setNavigationBarBackgroundColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setNavigationBarBackgroundColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -8334,10 +8334,10 @@ caimage
 
 /**
  * @method setTabBarTitleColorForSelected
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTabBarTitleColorForSelected : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -8378,10 +8378,10 @@ caviewcontroller
 
 /**
  * @method setTabBarTitleColorForNormal
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTabBarTitleColorForNormal : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -8398,12 +8398,12 @@ caimage
 
 /**
  * @method getTabBarTitleColorForSelected
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTabBarTitleColorForSelected : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8418,12 +8418,12 @@ getSelectedViewControllerAtIndex : function (
 
 /**
  * @method getTabBarSelectedBackgroundColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTabBarSelectedBackgroundColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8460,12 +8460,12 @@ bool
 
 /**
  * @method getTabBarBackgroundColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTabBarBackgroundColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8490,12 +8490,12 @@ getTabBarVerticalAlignment : function (
 
 /**
  * @method getTabBarSelectedIndicatorColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTabBarSelectedIndicatorColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8510,10 +8510,10 @@ getTabBarTitleBoldForSelected : function (
 
 /**
  * @method setTabBarSelectedIndicatorColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTabBarSelectedIndicatorColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -8552,12 +8552,12 @@ cabarverticalalignment
 
 /**
  * @method getTabBarTitleColorForNormal
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTabBarTitleColorForNormal : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8574,20 +8574,20 @@ int
 
 /**
  * @method setTabBarBackgroundColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTabBarBackgroundColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method setTabBarSelectedBackgroundColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTabBarSelectedBackgroundColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -8922,22 +8922,22 @@ bool
 
 /**
  * @method setClearColor
- * @param {ca._Color4F} arg0
+ * @param {color4f_object} arg0
  */
 setClearColor : function (
-_color4f 
+cacolor4f 
 )
 {
 },
 
 /**
  * @method getClearColor
- * @return {ca._Color4F}
+ * @return {color4f_object}
  */
 getClearColor : function (
 )
 {
-    return ca._Color4F;
+    return ca.CAColor4F;
 },
 
 /**
@@ -9036,20 +9036,20 @@ getProgressTintImage : function (
 
 /**
  * @method setProgressTrackColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setProgressTrackColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method setColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -9066,12 +9066,12 @@ caimage
 
 /**
  * @method getProgressTintColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getProgressTintColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -9086,12 +9086,12 @@ getProgressTrackImage : function (
 
 /**
  * @method getProgressTrackColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getProgressTrackColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -9144,10 +9144,10 @@ onEnterTransitionDidFinish : function (
 
 /**
  * @method setProgressTintColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setProgressTintColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -9788,10 +9788,10 @@ bool
 
 /**
  * @method setPageIndicatorTintColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setPageIndicatorTintColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -9840,12 +9840,12 @@ getStyle : function (
 
 /**
  * @method getPageIndicatorTintColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getPageIndicatorTintColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -9870,10 +9870,10 @@ isDefersCurrentPageDisplay : function (
 
 /**
  * @method setCurrentPageIndicatorTintColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setCurrentPageIndicatorTintColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -9908,12 +9908,12 @@ getCurrentPage : function (
 
 /**
  * @method getCurrentPageIndicatorTintColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getCurrentPageIndicatorTintColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -10102,10 +10102,10 @@ init : function (
 
 /**
  * @method setDividerColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setDividerColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -10194,12 +10194,12 @@ onExitTransitionDidStart : function (
 
 /**
  * @method getDividerColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getDividerColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -10362,10 +10362,10 @@ float
 
 /**
  * @method setTitleColorStateSelected
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTitleColorStateSelected : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -10392,10 +10392,10 @@ catextalignment
 
 /**
  * @method setImageColorStateSelected
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setImageColorStateSelected : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -10422,10 +10422,10 @@ getImageStateNormal : function (
 
 /**
  * @method setImageColorStateNormal
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setImageColorStateNormal : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -10512,10 +10512,10 @@ dsize
 
 /**
  * @method setTitleColorStateNormal
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTitleColorStateNormal : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -11220,12 +11220,12 @@ clear : function (
 
 /**
  * @method getLinkVisitedTextColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getLinkVisitedTextColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -11260,12 +11260,12 @@ bool
 
 /**
  * @method getLinkTextColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getLinkTextColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -11631,10 +11631,10 @@ int
 
 /**
  * @method setSeparatorColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setSeparatorColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -11691,12 +11691,12 @@ getListViewDataSource : function (
 
 /**
  * @method getSeparatorColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getSeparatorColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -12142,10 +12142,10 @@ int
 
 /**
  * @method setSeparatorColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setSeparatorColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -12290,12 +12290,12 @@ isAllowsMultipleSelection : function (
 
 /**
  * @method getSeparatorColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getSeparatorColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -15451,12 +15451,12 @@ bool
 
 /**
  * @method getFontColorSelected
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getFontColorSelected : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -15469,20 +15469,20 @@ visitEve : function (
 
 /**
  * @method setBackgroundColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setBackgroundColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method setFontColorNormal
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setFontColorNormal : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15509,12 +15509,12 @@ int
 
 /**
  * @method getSeparateColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getSeparateColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -15543,10 +15543,10 @@ numberOfComponents : function (
 
 /**
  * @method setFontColorSelected
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setFontColorSelected : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15577,22 +15577,22 @@ int
 
 /**
  * @method setSeparateColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setSeparateColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method getFontColorNormal
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getFontColorNormal : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -15817,12 +15817,12 @@ ca.CADrawView = {
  * @method drawLine
  * @param {point_object} arg0
  * @param {point_object} arg1
- * @param {ca._Color4B} arg2
+ * @param {color4b_object} arg2
  */
 drawLine : function (
 dpoint, 
 dpoint, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15831,14 +15831,14 @@ _color4b
  * @method drawPoints
 * @param {point_object|point_object} dpoint
 * @param {unsigned int|unsigned int} int
-* @param {float|ca._Color4B} float
-* @param {ca._Color4B} _color4b
+* @param {float|color4b_object} float
+* @param {color4b_object} cacolor4b
 */
 drawPoints : function(
 dpoint,
 int,
 float,
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15847,16 +15847,16 @@ _color4b
  * @method drawRect
 * @param {point_object|point_object} dpoint
 * @param {point_object|point_object} dpoint
-* @param {point_object|ca._Color4B} dpoint
+* @param {point_object|color4b_object} dpoint
 * @param {point_object} dpoint
-* @param {ca._Color4B} _color4b
+* @param {color4b_object} cacolor4b
 */
 drawRect : function(
 dpoint,
 dpoint,
 dpoint,
 dpoint,
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15867,9 +15867,9 @@ _color4b
 * @param {float|float} float
 * @param {float|float} float
 * @param {unsigned int|unsigned int} int
-* @param {ca._Color4B|float} _color4b
+* @param {color4b_object|float} cacolor4b
 * @param {float} float
-* @param {ca._Color4B} _color4b
+* @param {color4b_object} cacolor4b
 */
 drawSolidCircle : function(
 dpoint,
@@ -15878,7 +15878,7 @@ float,
 int,
 float,
 float,
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15909,16 +15909,16 @@ int
  * @method drawPolygon
  * @param {point_object} arg0
  * @param {int} arg1
- * @param {ca._Color4B} arg2
+ * @param {color4b_object} arg2
  * @param {float} arg3
- * @param {ca._Color4B} arg4
+ * @param {color4b_object} arg4
  */
 drawPolygon : function (
 dpoint, 
 int, 
-_color4b, 
+cacolor4b, 
 float, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15927,12 +15927,12 @@ _color4b
  * @method drawDot
  * @param {point_object} arg0
  * @param {float} arg1
- * @param {ca._Color4B} arg2
+ * @param {color4b_object} arg2
  */
 drawDot : function (
 dpoint, 
 float, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15941,12 +15941,12 @@ _color4b
  * @method drawCatmullRom
  * @param {ca.PointArray} arg0
  * @param {unsigned int} arg1
- * @param {ca._Color4B} arg2
+ * @param {color4b_object} arg2
  */
 drawCatmullRom : function (
 pointarray, 
 int, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15956,13 +15956,13 @@ _color4b
  * @param {point_object} arg0
  * @param {point_object} arg1
  * @param {float} arg2
- * @param {ca._Color4B} arg3
+ * @param {color4b_object} arg3
  */
 drawSegment : function (
 dpoint, 
 dpoint, 
 float, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -15996,9 +15996,9 @@ int
 * @param {float|float} float
 * @param {unsigned int|unsigned int} int
 * @param {bool|bool} bool
-* @param {ca._Color4B|float} _color4b
+* @param {color4b_object|float} cacolor4b
 * @param {float} float
-* @param {ca._Color4B} _color4b
+* @param {color4b_object} cacolor4b
 */
 drawCircle : function(
 dpoint,
@@ -16008,7 +16008,7 @@ int,
 bool,
 float,
 float,
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16019,14 +16019,14 @@ _color4b
  * @param {point_object} arg1
  * @param {point_object} arg2
  * @param {unsigned int} arg3
- * @param {ca._Color4B} arg4
+ * @param {color4b_object} arg4
  */
 drawQuadBezier : function (
 dpoint, 
 dpoint, 
 dpoint, 
 int, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16047,12 +16047,12 @@ int
  * @method drawSolidPoly
  * @param {point_object} arg0
  * @param {unsigned int} arg1
- * @param {ca._Color4B} arg2
+ * @param {color4b_object} arg2
  */
 drawSolidPoly : function (
 dpoint, 
 int, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16062,13 +16062,13 @@ _color4b
  * @param {point_object} arg0
  * @param {point_object} arg1
  * @param {point_object} arg2
- * @param {ca._Color4B} arg3
+ * @param {color4b_object} arg3
  */
 drawTriangle : function (
 dpoint, 
 dpoint, 
 dpoint, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16096,13 +16096,13 @@ clear : function (
  * @param {ca.PointArray} arg0
  * @param {float} arg1
  * @param {unsigned int} arg2
- * @param {ca._Color4B} arg3
+ * @param {color4b_object} arg3
  */
 drawCardinalSpline : function (
 pointarray, 
 float, 
 int, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16111,12 +16111,12 @@ _color4b
  * @method drawSolidRect
  * @param {point_object} arg0
  * @param {point_object} arg1
- * @param {ca._Color4B} arg2
+ * @param {color4b_object} arg2
  */
 drawSolidRect : function (
 dpoint, 
 dpoint, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16136,13 +16136,13 @@ getLineWidth : function (
  * @param {point_object} arg0
  * @param {unsigned int} arg1
  * @param {bool} arg2
- * @param {ca._Color4B} arg3
+ * @param {color4b_object} arg3
  */
 drawPoly : function (
 dpoint, 
 int, 
 bool, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16151,12 +16151,12 @@ _color4b
  * @method drawPoint
  * @param {point_object} arg0
  * @param {float} arg1
- * @param {ca._Color4B} arg2
+ * @param {color4b_object} arg2
  */
 drawPoint : function (
 dpoint, 
 float, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16168,7 +16168,7 @@ _color4b
  * @param {point_object} arg2
  * @param {point_object} arg3
  * @param {unsigned int} arg4
- * @param {ca._Color4B} arg5
+ * @param {color4b_object} arg5
  */
 drawCubicBezier : function (
 dpoint, 
@@ -16176,7 +16176,7 @@ dpoint,
 dpoint, 
 dpoint, 
 int, 
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16397,12 +16397,12 @@ clearbuttonmode
 
 /**
  * @method getTextColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTextColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -16529,12 +16529,12 @@ bool
 
 /**
  * @method getPlaceHolderColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getPlaceHolderColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -16597,20 +16597,20 @@ int
 
 /**
  * @method setPlaceHolderColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setPlaceHolderColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
 
 /**
  * @method setTextColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTextColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -16857,12 +16857,12 @@ onExitTransitionDidStart : function (
 
 /**
  * @method getTextColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getTextColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -16887,10 +16887,10 @@ getText : function (
 
 /**
  * @method setTextColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setTextColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -17771,12 +17771,12 @@ getSkewY : function (
 
 /**
  * @method getDisplayedColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getDisplayedColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -17903,10 +17903,10 @@ getPosition : function (
 
 /**
  * @method setColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 setColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -17997,10 +17997,10 @@ int
 
 /**
  * @method updateDisplayedColor
- * @param {ca._Color4B} arg0
+ * @param {color4b_object} arg0
  */
 updateDisplayedColor : function (
-_color4b 
+cacolor4b 
 )
 {
 },
@@ -18327,12 +18327,12 @@ blendfunc
 
 /**
  * @method getColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -19467,12 +19467,12 @@ getMidpoint : function (
 
 /**
  * @method getColor
- * @return {ca._Color4B}
+ * @return {color4b_object}
  */
 getColor : function (
 )
 {
-    return ca._Color4B;
+    return ca.CAColor4B;
 },
 
 /**
@@ -19554,6 +19554,2751 @@ cgsprite
  * @constructor
  */
 CGProgressTimer : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AnimationCache
+ */
+ca.AnimationCache = {
+
+/**
+ * @method getAnimation
+ * @param {String} arg0
+ * @return {ca.Animation}
+ */
+getAnimation : function (
+str 
+)
+{
+    return ca.Animation;
+},
+
+/**
+ * @method addAnimation
+ * @param {ca.Animation} arg0
+ * @param {String} arg1
+ */
+addAnimation : function (
+animation, 
+str 
+)
+{
+},
+
+/**
+ * @method addAnimationsWithFile
+ * @param {String} arg0
+ */
+addAnimationsWithFile : function (
+str 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method removeAnimation
+ * @param {String} arg0
+ */
+removeAnimation : function (
+str 
+)
+{
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {ca.AnimationCache}
+ */
+getInstance : function (
+)
+{
+    return ca.AnimationCache;
+},
+
+/**
+ * @method AnimationCache
+ * @constructor
+ */
+AnimationCache : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Action
+ */
+ca.Action = {
+
+/**
+ * @method startWithTarget
+ * @param {ca.CGNode} arg0
+ */
+startWithTarget : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method description
+ * @return {String}
+ */
+description : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setOriginalTarget
+ * @param {ca.CGNode} arg0
+ */
+setOriginalTarget : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {ca.Action}
+ */
+clone : function (
+)
+{
+    return ca.Action;
+},
+
+/**
+ * @method getOriginalTarget
+ * @return {ca.CGNode}
+ */
+getOriginalTarget : function (
+)
+{
+    return ca.CGNode;
+},
+
+/**
+ * @method stop
+ */
+stop : function (
+)
+{
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method getTarget
+ * @return {ca.CGNode}
+ */
+getTarget : function (
+)
+{
+    return ca.CGNode;
+},
+
+/**
+ * @method getFlags
+ * @return {unsigned int}
+ */
+getFlags : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method step
+ * @param {float} arg0
+ */
+step : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTag
+ * @param {int} arg0
+ */
+setTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method setFlags
+ * @param {unsigned int} arg0
+ */
+setFlags : function (
+int 
+)
+{
+},
+
+/**
+ * @method getTag
+ * @return {int}
+ */
+getTag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setTarget
+ * @param {ca.CGNode} arg0
+ */
+setTarget : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method isDone
+ * @return {bool}
+ */
+isDone : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method reverse
+ * @return {ca.Action}
+ */
+reverse : function (
+)
+{
+    return ca.Action;
+},
+
+};
+
+/**
+ * @class FiniteTimeAction
+ */
+ca.FiniteTimeAction = {
+
+/**
+ * @method clone
+ * @return {ca.FiniteTimeAction}
+ */
+clone : function (
+)
+{
+    return ca.FiniteTimeAction;
+},
+
+/**
+ * @method setDuration
+ * @param {float} arg0
+ */
+setDuration : function (
+float 
+)
+{
+},
+
+/**
+ * @method getDuration
+ * @return {float}
+ */
+getDuration : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
+ * @class ActionInterval
+ */
+ca.ActionInterval = {
+
+/**
+ * @method getAmplitudeRate
+ * @return {float}
+ */
+getAmplitudeRate : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method clone
+ * @return {ca.ActionInterval}
+ */
+clone : function (
+)
+{
+    return ca.ActionInterval;
+},
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @return {bool}
+ */
+initWithDuration : function (
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method setAmplitudeRate
+ * @param {float} arg0
+ */
+setAmplitudeRate : function (
+float 
+)
+{
+},
+
+/**
+ * @method getElapsed
+ * @return {float}
+ */
+getElapsed : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
+ * @class Sequence
+ */
+ca.Sequence = {
+
+/**
+ * @method init
+ * @param {Array} arg0
+ * @return {bool}
+ */
+init : function (
+array 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithTwoActions
+ * @param {ca.FiniteTimeAction} arg0
+ * @param {ca.FiniteTimeAction} arg1
+ * @return {bool}
+ */
+initWithTwoActions : function (
+finitetimeaction, 
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {Array} arg0
+ * @return {ca.Sequence}
+ */
+create : function (
+array 
+)
+{
+    return ca.Sequence;
+},
+
+/**
+ * @method createWithTwoActions
+ * @param {ca.FiniteTimeAction} arg0
+ * @param {ca.FiniteTimeAction} arg1
+ * @return {ca.Sequence}
+ */
+createWithTwoActions : function (
+finitetimeaction, 
+finitetimeaction 
+)
+{
+    return ca.Sequence;
+},
+
+/**
+ * @method Sequence
+ * @constructor
+ */
+Sequence : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Repeat
+ */
+ca.Repeat = {
+
+/**
+ * @method setInnerAction
+ * @param {ca.FiniteTimeAction} arg0
+ */
+setInnerAction : function (
+finitetimeaction 
+)
+{
+},
+
+/**
+ * @method initWithAction
+ * @param {ca.FiniteTimeAction} arg0
+ * @param {unsigned int} arg1
+ * @return {bool}
+ */
+initWithAction : function (
+finitetimeaction, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method getInnerAction
+ * @return {ca.FiniteTimeAction}
+ */
+getInnerAction : function (
+)
+{
+    return ca.FiniteTimeAction;
+},
+
+/**
+ * @method create
+ * @param {ca.FiniteTimeAction} arg0
+ * @param {unsigned int} arg1
+ * @return {ca.Repeat}
+ */
+create : function (
+finitetimeaction, 
+int 
+)
+{
+    return ca.Repeat;
+},
+
+/**
+ * @method Repeat
+ * @constructor
+ */
+Repeat : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RepeatForever
+ */
+ca.RepeatForever = {
+
+/**
+ * @method setInnerAction
+ * @param {ca.ActionInterval} arg0
+ */
+setInnerAction : function (
+actioninterval 
+)
+{
+},
+
+/**
+ * @method initWithAction
+ * @param {ca.ActionInterval} arg0
+ * @return {bool}
+ */
+initWithAction : function (
+actioninterval 
+)
+{
+    return false;
+},
+
+/**
+ * @method getInnerAction
+ * @return {ca.ActionInterval}
+ */
+getInnerAction : function (
+)
+{
+    return ca.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.RepeatForever}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.RepeatForever;
+},
+
+/**
+ * @method RepeatForever
+ * @constructor
+ */
+RepeatForever : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Spawn
+ */
+ca.Spawn = {
+
+/**
+ * @method init
+ * @param {Array} arg0
+ * @return {bool}
+ */
+init : function (
+array 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithTwoActions
+ * @param {ca.FiniteTimeAction} arg0
+ * @param {ca.FiniteTimeAction} arg1
+ * @return {bool}
+ */
+initWithTwoActions : function (
+finitetimeaction, 
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {Array} arg0
+ * @return {ca.Spawn}
+ */
+create : function (
+array 
+)
+{
+    return ca.Spawn;
+},
+
+/**
+ * @method createWithTwoActions
+ * @param {ca.FiniteTimeAction} arg0
+ * @param {ca.FiniteTimeAction} arg1
+ * @return {ca.Spawn}
+ */
+createWithTwoActions : function (
+finitetimeaction, 
+finitetimeaction 
+)
+{
+    return ca.Spawn;
+},
+
+/**
+ * @method Spawn
+ * @constructor
+ */
+Spawn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RotateTo
+ */
+ca.RotateTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+dpoint3d 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithDurationZ
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithDurationZ : function (
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithDurationY
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithDurationY : function (
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithDurationX
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithDurationX : function (
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method createZ
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {ca.RotateTo}
+ */
+createZ : function (
+float, 
+float 
+)
+{
+    return ca.RotateTo;
+},
+
+/**
+ * @method createY
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {ca.RotateTo}
+ */
+createY : function (
+float, 
+float 
+)
+{
+    return ca.RotateTo;
+},
+
+/**
+ * @method createX
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {ca.RotateTo}
+ */
+createX : function (
+float, 
+float 
+)
+{
+    return ca.RotateTo;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {ca.RotateTo}
+ */
+create : function (
+float, 
+dpoint3d 
+)
+{
+    return ca.RotateTo;
+},
+
+/**
+ * @method RotateTo
+ * @constructor
+ */
+RotateTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RotateBy
+ */
+ca.RotateBy = {
+
+/**
+ * @method initWithDurationZ
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithDurationZ : function (
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithDurationY
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithDurationY : function (
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithDurationX
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithDurationX : function (
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+dpoint3d 
+)
+{
+    return false;
+},
+
+/**
+ * @method createZ
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {ca.RotateBy}
+ */
+createZ : function (
+float, 
+float 
+)
+{
+    return ca.RotateBy;
+},
+
+/**
+ * @method createY
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {ca.RotateBy}
+ */
+createY : function (
+float, 
+float 
+)
+{
+    return ca.RotateBy;
+},
+
+/**
+ * @method createX
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {ca.RotateBy}
+ */
+createX : function (
+float, 
+float 
+)
+{
+    return ca.RotateBy;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {ca.RotateBy}
+ */
+create : function (
+float, 
+dpoint3d 
+)
+{
+    return ca.RotateBy;
+},
+
+/**
+ * @method RotateBy
+ * @constructor
+ */
+RotateBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class MoveBy
+ */
+ca.MoveBy = {
+
+/**
+ * @method initWithDuration
+* @param {float|float} float
+* @param {point_object|point_object} dpoint3d
+* @return {bool|bool}
+*/
+initWithDuration : function(
+float,
+dpoint 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {point_object|point_object} dpoint3d
+* @return {ca.MoveBy|ca.MoveBy}
+*/
+create : function(
+float,
+dpoint 
+)
+{
+    return ca.MoveBy;
+},
+
+/**
+ * @method MoveBy
+ * @constructor
+ */
+MoveBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class MoveTo
+ */
+ca.MoveTo = {
+
+/**
+ * @method initWithDuration
+* @param {float|float} float
+* @param {point_object|point_object} dpoint3d
+* @return {bool|bool}
+*/
+initWithDuration : function(
+float,
+dpoint 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {point_object|point_object} dpoint3d
+* @return {ca.MoveTo|ca.MoveTo}
+*/
+create : function(
+float,
+dpoint 
+)
+{
+    return ca.MoveTo;
+},
+
+/**
+ * @method MoveTo
+ * @constructor
+ */
+MoveTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class SkewTo
+ */
+ca.SkewTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @return {ca.SkewTo}
+ */
+create : function (
+float, 
+float, 
+float 
+)
+{
+    return ca.SkewTo;
+},
+
+/**
+ * @method SkewTo
+ * @constructor
+ */
+SkewTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class SkewBy
+ */
+ca.SkewBy = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @return {ca.SkewBy}
+ */
+create : function (
+float, 
+float, 
+float 
+)
+{
+    return ca.SkewBy;
+},
+
+/**
+ * @method SkewBy
+ * @constructor
+ */
+SkewBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class JumpBy
+ */
+ca.JumpBy = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+dpoint, 
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {ca.JumpBy}
+ */
+create : function (
+float, 
+dpoint, 
+float, 
+int 
+)
+{
+    return ca.JumpBy;
+},
+
+/**
+ * @method JumpBy
+ * @constructor
+ */
+JumpBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class JumpTo
+ */
+ca.JumpTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+dpoint, 
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @param {float} arg2
+ * @param {int} arg3
+ * @return {ca.JumpTo}
+ */
+create : function (
+float, 
+dpoint, 
+float, 
+int 
+)
+{
+    return ca.JumpTo;
+},
+
+/**
+ * @method JumpTo
+ * @constructor
+ */
+JumpTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class BezierBy
+ */
+ca.BezierBy = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {ca._ccBezierConfig} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+_ccbezierconfig 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {ca._ccBezierConfig} arg1
+ * @return {ca.BezierBy}
+ */
+create : function (
+float, 
+_ccbezierconfig 
+)
+{
+    return ca.BezierBy;
+},
+
+/**
+ * @method BezierBy
+ * @constructor
+ */
+BezierBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class BezierTo
+ */
+ca.BezierTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {ca._ccBezierConfig} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+_ccbezierconfig 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {ca._ccBezierConfig} arg1
+ * @return {ca.BezierTo}
+ */
+create : function (
+float, 
+_ccbezierconfig 
+)
+{
+    return ca.BezierTo;
+},
+
+/**
+ * @method BezierTo
+ * @constructor
+ */
+BezierTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ScaleTo
+ */
+ca.ScaleTo = {
+
+/**
+ * @method initWithDuration
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float} float
+* @param {float} float
+* @return {bool|bool|bool}
+*/
+initWithDuration : function(
+float,
+float,
+float,
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float} float
+* @param {float} float
+* @return {ca.ScaleTo|ca.ScaleTo|ca.ScaleTo}
+*/
+create : function(
+float,
+float,
+float,
+float 
+)
+{
+    return ca.ScaleTo;
+},
+
+/**
+ * @method ScaleTo
+ * @constructor
+ */
+ScaleTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ScaleBy
+ */
+ca.ScaleBy = {
+
+/**
+ * @method create
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float} float
+* @param {float} float
+* @return {ca.ScaleBy|ca.ScaleBy|ca.ScaleBy}
+*/
+create : function(
+float,
+float,
+float,
+float 
+)
+{
+    return ca.ScaleBy;
+},
+
+/**
+ * @method ScaleBy
+ * @constructor
+ */
+ScaleBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Blink
+ */
+ca.Blink = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {int} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {int} arg1
+ * @return {ca.Blink}
+ */
+create : function (
+float, 
+int 
+)
+{
+    return ca.Blink;
+},
+
+/**
+ * @method Blink
+ * @constructor
+ */
+Blink : function (
+)
+{
+},
+
+};
+
+/**
+ * @class FadeTo
+ */
+ca.FadeTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {ca.FadeTo}
+ */
+create : function (
+float, 
+float 
+)
+{
+    return ca.FadeTo;
+},
+
+/**
+ * @method FadeTo
+ * @constructor
+ */
+FadeTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class FadeIn
+ */
+ca.FadeIn = {
+
+/**
+ * @method setReverseAction
+ * @param {ca.FadeTo} arg0
+ */
+setReverseAction : function (
+fadeto 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {ca.FadeIn}
+ */
+create : function (
+float 
+)
+{
+    return ca.FadeIn;
+},
+
+/**
+ * @method FadeIn
+ * @constructor
+ */
+FadeIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class FadeOut
+ */
+ca.FadeOut = {
+
+/**
+ * @method setReverseAction
+ * @param {ca.FadeTo} arg0
+ */
+setReverseAction : function (
+fadeto 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {ca.FadeOut}
+ */
+create : function (
+float 
+)
+{
+    return ca.FadeOut;
+},
+
+/**
+ * @method FadeOut
+ * @constructor
+ */
+FadeOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TintTo
+ */
+ca.TintTo = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {unsigned char} arg1
+ * @param {unsigned char} arg2
+ * @param {unsigned char} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+char, 
+char, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {color4b_object|unsigned char} cacolor4b
+* @param {unsigned char} char
+* @param {unsigned char} char
+* @return {ca.TintTo|ca.TintTo}
+*/
+create : function(
+float,
+char,
+char,
+char 
+)
+{
+    return ca.TintTo;
+},
+
+/**
+ * @method TintTo
+ * @constructor
+ */
+TintTo : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TintBy
+ */
+ca.TintBy = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {short} arg1
+ * @param {short} arg2
+ * @param {short} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+short, 
+short, 
+short 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {short} arg1
+ * @param {short} arg2
+ * @param {short} arg3
+ * @return {ca.TintBy}
+ */
+create : function (
+float, 
+short, 
+short, 
+short 
+)
+{
+    return ca.TintBy;
+},
+
+/**
+ * @method TintBy
+ * @constructor
+ */
+TintBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class DelayTime
+ */
+ca.DelayTime = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {ca.DelayTime}
+ */
+create : function (
+float 
+)
+{
+    return ca.DelayTime;
+},
+
+/**
+ * @method DelayTime
+ * @constructor
+ */
+DelayTime : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ReverseTime
+ */
+ca.ReverseTime = {
+
+/**
+ * @method initWithAction
+ * @param {ca.FiniteTimeAction} arg0
+ * @return {bool}
+ */
+initWithAction : function (
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {ca.FiniteTimeAction} arg0
+ * @return {ca.ReverseTime}
+ */
+create : function (
+finitetimeaction 
+)
+{
+    return ca.ReverseTime;
+},
+
+/**
+ * @method ReverseTime
+ * @constructor
+ */
+ReverseTime : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Animate
+ */
+ca.Animate = {
+
+/**
+ * @method initWithAnimation
+ * @param {ca.Animation} arg0
+ * @return {bool}
+ */
+initWithAnimation : function (
+animation 
+)
+{
+    return false;
+},
+
+/**
+ * @method getAnimation
+* @return {ca.Animation|ca.Animation}
+*/
+getAnimation : function(
+)
+{
+    return ca.Animation;
+},
+
+/**
+ * @method getCurrentFrameIndex
+ * @return {int}
+ */
+getCurrentFrameIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setAnimation
+ * @param {ca.Animation} arg0
+ */
+setAnimation : function (
+animation 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {ca.Animation} arg0
+ * @return {ca.Animate}
+ */
+create : function (
+animation 
+)
+{
+    return ca.Animate;
+},
+
+/**
+ * @method Animate
+ * @constructor
+ */
+Animate : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TargetedAction
+ */
+ca.TargetedAction = {
+
+/**
+ * @method getForcedTarget
+* @return {ca.CGNode|ca.CGNode}
+*/
+getForcedTarget : function(
+)
+{
+    return ca.CGNode;
+},
+
+/**
+ * @method initWithTarget
+ * @param {ca.CGNode} arg0
+ * @param {ca.FiniteTimeAction} arg1
+ * @return {bool}
+ */
+initWithTarget : function (
+cgnode, 
+finitetimeaction 
+)
+{
+    return false;
+},
+
+/**
+ * @method setForcedTarget
+ * @param {ca.CGNode} arg0
+ */
+setForcedTarget : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {ca.CGNode} arg0
+ * @param {ca.FiniteTimeAction} arg1
+ * @return {ca.TargetedAction}
+ */
+create : function (
+cgnode, 
+finitetimeaction 
+)
+{
+    return ca.TargetedAction;
+},
+
+/**
+ * @method TargetedAction
+ * @constructor
+ */
+TargetedAction : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ActionFloat
+ */
+ca.ActionFloat = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {function} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+float, 
+float, 
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {function} arg3
+ * @return {ca.ActionFloat}
+ */
+create : function (
+float, 
+float, 
+float, 
+func 
+)
+{
+    return ca.ActionFloat;
+},
+
+/**
+ * @method ActionFloat
+ * @constructor
+ */
+ActionFloat : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ActionCamera
+ */
+ca.ActionCamera = {
+
+/**
+ * @method setEye
+* @param {float|point_object} float
+* @param {float} float
+* @param {float} float
+*/
+setEye : function(
+float,
+float,
+float 
+)
+{
+},
+
+/**
+ * @method getEye
+ * @return {point_object}
+ */
+getEye : function (
+)
+{
+    return ca.DPoint3D;
+},
+
+/**
+ * @method setUp
+ * @param {point_object} arg0
+ */
+setUp : function (
+dpoint3d 
+)
+{
+},
+
+/**
+ * @method getCenter
+ * @return {point_object}
+ */
+getCenter : function (
+)
+{
+    return ca.DPoint3D;
+},
+
+/**
+ * @method setCenter
+ * @param {point_object} arg0
+ */
+setCenter : function (
+dpoint3d 
+)
+{
+},
+
+/**
+ * @method getUp
+ * @return {point_object}
+ */
+getUp : function (
+)
+{
+    return ca.DPoint3D;
+},
+
+/**
+ * @method ActionCamera
+ * @constructor
+ */
+ActionCamera : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ActionEase
+ */
+ca.ActionEase = {
+
+/**
+ * @method clone
+ * @return {ca.ActionEase}
+ */
+clone : function (
+)
+{
+    return ca.ActionEase;
+},
+
+/**
+ * @method getInnerAction
+ * @return {ca.ActionInterval}
+ */
+getInnerAction : function (
+)
+{
+    return ca.ActionInterval;
+},
+
+/**
+ * @method initWithAction
+ * @param {ca.ActionInterval} arg0
+ * @return {bool}
+ */
+initWithAction : function (
+actioninterval 
+)
+{
+    return false;
+},
+
+/**
+ * @method ActionEase
+ * @constructor
+ */
+ActionEase : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseRateAction
+ */
+ca.EaseRateAction = {
+
+/**
+ * @method initWithAction
+ * @param {ca.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithAction : function (
+actioninterval, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method setRate
+ * @param {float} arg0
+ */
+setRate : function (
+float 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {ca.EaseRateAction}
+ */
+clone : function (
+)
+{
+    return ca.EaseRateAction;
+},
+
+/**
+ * @method getRate
+ * @return {float}
+ */
+getRate : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {ca.EaseRateAction}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return ca.EaseRateAction;
+},
+
+/**
+ * @method EaseRateAction
+ * @constructor
+ */
+EaseRateAction : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBezierAction
+ */
+ca.EaseBezierAction = {
+
+/**
+ * @method setBezierParamer
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+setBezierParamer : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseBezierAction}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseBezierAction;
+},
+
+/**
+ * @method EaseBezierAction
+ * @constructor
+ */
+EaseBezierAction : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuadraticActionIn
+ */
+ca.EaseQuadraticActionIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuadraticActionIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuadraticActionIn;
+},
+
+/**
+ * @method EaseQuadraticActionIn
+ * @constructor
+ */
+EaseQuadraticActionIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuadraticActionOut
+ */
+ca.EaseQuadraticActionOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuadraticActionOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuadraticActionOut;
+},
+
+/**
+ * @method EaseQuadraticActionOut
+ * @constructor
+ */
+EaseQuadraticActionOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuadraticActionInOut
+ */
+ca.EaseQuadraticActionInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuadraticActionInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuadraticActionInOut;
+},
+
+/**
+ * @method EaseQuadraticActionInOut
+ * @constructor
+ */
+EaseQuadraticActionInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuarticActionIn
+ */
+ca.EaseQuarticActionIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuarticActionIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuarticActionIn;
+},
+
+/**
+ * @method EaseQuarticActionIn
+ * @constructor
+ */
+EaseQuarticActionIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuarticActionOut
+ */
+ca.EaseQuarticActionOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuarticActionOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuarticActionOut;
+},
+
+/**
+ * @method EaseQuarticActionOut
+ * @constructor
+ */
+EaseQuarticActionOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuarticActionInOut
+ */
+ca.EaseQuarticActionInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuarticActionInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuarticActionInOut;
+},
+
+/**
+ * @method EaseQuarticActionInOut
+ * @constructor
+ */
+EaseQuarticActionInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuinticActionIn
+ */
+ca.EaseQuinticActionIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuinticActionIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuinticActionIn;
+},
+
+/**
+ * @method EaseQuinticActionIn
+ * @constructor
+ */
+EaseQuinticActionIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuinticActionOut
+ */
+ca.EaseQuinticActionOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuinticActionOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuinticActionOut;
+},
+
+/**
+ * @method EaseQuinticActionOut
+ * @constructor
+ */
+EaseQuinticActionOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseQuinticActionInOut
+ */
+ca.EaseQuinticActionInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseQuinticActionInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseQuinticActionInOut;
+},
+
+/**
+ * @method EaseQuinticActionInOut
+ * @constructor
+ */
+EaseQuinticActionInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseCircleActionIn
+ */
+ca.EaseCircleActionIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseCircleActionIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseCircleActionIn;
+},
+
+/**
+ * @method EaseCircleActionIn
+ * @constructor
+ */
+EaseCircleActionIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseCircleActionOut
+ */
+ca.EaseCircleActionOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseCircleActionOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseCircleActionOut;
+},
+
+/**
+ * @method EaseCircleActionOut
+ * @constructor
+ */
+EaseCircleActionOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseCircleActionInOut
+ */
+ca.EaseCircleActionInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseCircleActionInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseCircleActionInOut;
+},
+
+/**
+ * @method EaseCircleActionInOut
+ * @constructor
+ */
+EaseCircleActionInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseCubicActionIn
+ */
+ca.EaseCubicActionIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseCubicActionIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseCubicActionIn;
+},
+
+/**
+ * @method EaseCubicActionIn
+ * @constructor
+ */
+EaseCubicActionIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseCubicActionOut
+ */
+ca.EaseCubicActionOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseCubicActionOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseCubicActionOut;
+},
+
+/**
+ * @method EaseCubicActionOut
+ * @constructor
+ */
+EaseCubicActionOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseCubicActionInOut
+ */
+ca.EaseCubicActionInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseCubicActionInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseCubicActionInOut;
+},
+
+/**
+ * @method EaseCubicActionInOut
+ * @constructor
+ */
+EaseCubicActionInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ActionTween
+ */
+ca.ActionTween = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {String} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+str, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {String} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {ca.ActionTween}
+ */
+create : function (
+float, 
+str, 
+float, 
+float 
+)
+{
+    return ca.ActionTween;
+},
+
+};
+
+/**
+ * @class ActionInstant
+ */
+ca.ActionInstant = {
+
+/**
+ * @method clone
+ * @return {ca.ActionInstant}
+ */
+clone : function (
+)
+{
+    return ca.ActionInstant;
+},
+
+};
+
+/**
+ * @class ActionManager
+ */
+ca.ActionManager = {
+
+/**
+ * @method getActionByTag
+ * @param {int} arg0
+ * @param {ca.CGNode} arg1
+ * @return {ca.Action}
+ */
+getActionByTag : function (
+int, 
+cgnode 
+)
+{
+    return ca.Action;
+},
+
+/**
+ * @method removeActionByTag
+ * @param {int} arg0
+ * @param {ca.CGNode} arg1
+ */
+removeActionByTag : function (
+int, 
+cgnode 
+)
+{
+},
+
+/**
+ * @method removeActionsByFlags
+ * @param {unsigned int} arg0
+ * @param {ca.CGNode} arg1
+ */
+removeActionsByFlags : function (
+int, 
+cgnode 
+)
+{
+},
+
+/**
+ * @method removeAllActions
+ */
+removeAllActions : function (
+)
+{
+},
+
+/**
+ * @method addAction
+ * @param {ca.Action} arg0
+ * @param {ca.CGNode} arg1
+ * @param {bool} arg2
+ */
+addAction : function (
+action, 
+cgnode, 
+bool 
+)
+{
+},
+
+/**
+ * @method resumeTarget
+ * @param {ca.CGNode} arg0
+ */
+resumeTarget : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method pauseTarget
+ * @param {ca.CGNode} arg0
+ */
+pauseTarget : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method getNumberOfRunningActionsInTarget
+ * @param {ca.CGNode} arg0
+ * @return {long}
+ */
+getNumberOfRunningActionsInTarget : function (
+cgnode 
+)
+{
+    return 0;
+},
+
+/**
+ * @method removeAllActionsFromTarget
+ * @param {ca.CGNode} arg0
+ */
+removeAllActionsFromTarget : function (
+cgnode 
+)
+{
+},
+
+/**
+ * @method resumeTargets
+ * @param {Array} arg0
+ */
+resumeTargets : function (
+array 
+)
+{
+},
+
+/**
+ * @method removeAction
+ * @param {ca.Action} arg0
+ */
+removeAction : function (
+action 
+)
+{
+},
+
+/**
+ * @method removeAllActionsByTag
+ * @param {int} arg0
+ * @param {ca.CGNode} arg1
+ */
+removeAllActionsByTag : function (
+int, 
+cgnode 
+)
+{
+},
+
+/**
+ * @method pauseAllRunningActions
+ * @return {Array}
+ */
+pauseAllRunningActions : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method ActionManager
+ * @constructor
+ */
+ActionManager : function (
 )
 {
 },

@@ -52,21 +52,89 @@ var listViewDataSource = {
 };
 
 
+//事件代理
+var CDlistViewDategate = {
+    listViewDidSelectCellAtIndex: function (listView, index) {
+    },
+    listViewDidDeselectCellAtIndex: function (listView, index) {
+    }
+};
+
+//数据代理
+var CDlistViewDataSource = {
+    numberOfIndex: function (listView) {
+        return 20;
+    },
+    listViewHeightForIndex: function (listView, index) {
+        return 150;
+    },
+    listViewCellAtIndex: function (listView, cellSize, index) {
+        var size = cellSize;
+
+        log(cellSize.width + "listViewCellAtIndex");
+        var cell = listView.dequeueReusableCellWithIdentifier("CDListViewCell");
+        if (cell == null) {
+            cell = ca.CAListViewCell.create("CDListViewCell");
+
+            var test = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_W(0, 200), DVerticalLayoutFill));
+            test.setColor(ca.color(51, 204, 255, 255));
+            test.setTextAlignment(ca.CATextAlignment.Center);
+            test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
+            test.setFontSize(28);
+            test.setTag(100);
+            cell.addSubview(test);
+        }
+
+        var test = cell.getSubviewByTag(100);
+        test.setText("cell-"+index);
+        return cell;
+    },
+    listViewWillDisplayCellAtIndex: function (listView, cell, index) {
+        log("listViewWillDisplayCellAtIndex");
+
+        return 0;
+    }
+};
+
+
 var ListViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
 
-        //this.getView().setColor(ca.color._getGray());
-        var p_ListView = ca.CAListView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(130, 0)));
-        p_ListView.setListViewDelegate(listViewDategate);
-        p_ListView.setListViewDataSource(listViewDataSource);
-        p_ListView.setAllowsSelection(true);
-        p_ListView.setAllowsMultipleSelection(false);
-        //p_ListView.setOrientation(ca.CAListView.Vertical);
-        p_ListView.setShowsScrollIndicators(true);
-        p_ListView.setSeparatorViewHeight(30);
+        var cdListView = ca.CAListView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 120)));
+        cdListView.setListViewDelegate(CDlistViewDategate);
+        cdListView.setListViewDataSource(CDlistViewDataSource);
+        cdListView.setAllowsSelection(true);
+        cdListView.setAllowsMultipleSelection(false);
+        cdListView.setOrientation(2); //(ca.CAListView.orientation.horizontal);
+        // cdListView.setShowsScrollIndicators(false);
+        cdListView.setShowsHorizontalScrollIndicator(false);
+        cdListView.setSeparatorColor(ca.CAColor4F.CLEAR);
+        this.getView().addSubview(cdListView);
 
-        p_ListView.setSeparatorColor(ca.color._getGray());
-        this.getView().addSubview(p_ListView);
+
+        // var cdListView = ca.CAListView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 120)));
+        // cdListView.setListViewDelegate(CDlistViewDategate);
+        // cdListView.setListViewDataSource(CDlistViewDataSource);
+        // cdListView.setAllowsSelection(true);
+        // cdListView.setAllowsMultipleSelection(false);
+        // cdListView.setOrientation(ca.CAListView.Orientation.Horizontal);
+        // //cdListView.setShowsHorizontalScrollIndicator(false);
+        // cdListView.setShowsScrollIndicators(false);
+        // // cdListView.setSeparatorColor(ca.color.clear);
+        // this.getView().addSubview(cdListView);
+
+        this.getView().addSubview(ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(120, 5)), ca.color._getGreen()));
+
+        var ListView = ca.CAListView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(130, 0)));
+        ListView.setListViewDelegate(listViewDategate);
+        ListView.setListViewDataSource(listViewDataSource);
+        ListView.setAllowsSelection(true);
+        ListView.setAllowsMultipleSelection(false);
+        // ListView.setOrientation(ca.CAListView.Vertical);
+        ListView.setShowsScrollIndicators(true);
+        ListView.setSeparatorViewHeight(30);
+        ListView.setSeparatorColor(ca.color._getGray());
+        this.getView().addSubview(ListView);
     },
 });

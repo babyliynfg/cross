@@ -50300,6 +50300,10415 @@ void js_register_crossapp_CGProgressTimer(JSContext *cx, JS::HandleObject global
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_AnimationCache_class;
+JSObject *jsb_CrossApp_AnimationCache_prototype;
+
+bool js_crossapp_AnimationCache_getAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::AnimationCache* cobj = (CrossApp::AnimationCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_AnimationCache_getAnimation : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AnimationCache_getAnimation : Error processing arguments");
+        CrossApp::Animation* ret = cobj->getAnimation(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Animation>(cx, (CrossApp::Animation*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_AnimationCache_getAnimation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_AnimationCache_addAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::AnimationCache* cobj = (CrossApp::AnimationCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_AnimationCache_addAnimation : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::Animation* arg0 = nullptr;
+        std::string arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::Animation*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AnimationCache_addAnimation : Error processing arguments");
+        cobj->addAnimation(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_AnimationCache_addAnimation : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_AnimationCache_addAnimationsWithFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::AnimationCache* cobj = (CrossApp::AnimationCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_AnimationCache_addAnimationsWithFile : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AnimationCache_addAnimationsWithFile : Error processing arguments");
+        cobj->addAnimationsWithFile(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_AnimationCache_addAnimationsWithFile : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_AnimationCache_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::AnimationCache* cobj = (CrossApp::AnimationCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_AnimationCache_init : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->init();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_AnimationCache_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_AnimationCache_removeAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::AnimationCache* cobj = (CrossApp::AnimationCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_AnimationCache_removeAnimation : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AnimationCache_removeAnimation : Error processing arguments");
+        cobj->removeAnimation(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_AnimationCache_removeAnimation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_AnimationCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::AnimationCache::destroyInstance();
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_AnimationCache_destroyInstance : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_AnimationCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::AnimationCache* ret = CrossApp::AnimationCache::getInstance();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::AnimationCache>(cx, (CrossApp::AnimationCache*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_AnimationCache_getInstance : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_AnimationCache_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::AnimationCache* cobj = new (std::nothrow) CrossApp::AnimationCache();
+    TypeTest<CrossApp::AnimationCache> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::AnimationCache");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_AnimationCache_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::AnimationCache *nobj = new (std::nothrow) CrossApp::AnimationCache();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::AnimationCache");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+void js_CrossApp_AnimationCache_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (AnimationCache)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::AnimationCache *nobj = static_cast<CrossApp::AnimationCache *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_AnimationCache(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_AnimationCache_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_AnimationCache_class->name = "AnimationCache";
+    jsb_CrossApp_AnimationCache_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_AnimationCache_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_AnimationCache_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_AnimationCache_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_AnimationCache_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_AnimationCache_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_AnimationCache_class->convert = JS_ConvertStub;
+    jsb_CrossApp_AnimationCache_class->finalize = js_CrossApp_AnimationCache_finalize;
+    jsb_CrossApp_AnimationCache_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getAnimation", js_crossapp_AnimationCache_getAnimation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addAnimation", js_crossapp_AnimationCache_addAnimation, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addAnimationsWithFile", js_crossapp_AnimationCache_addAnimationsWithFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_crossapp_AnimationCache_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAnimation", js_crossapp_AnimationCache_removeAnimation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_AnimationCache_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("destroyInstance", js_crossapp_AnimationCache_destroyInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getInstance", js_crossapp_AnimationCache_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_AnimationCache_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_CrossApp_AnimationCache_class,
+        js_crossapp_AnimationCache_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "AnimationCache", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::AnimationCache> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_AnimationCache_class;
+        p->proto = jsb_CrossApp_AnimationCache_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.AnimationCache.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_Action_class;
+JSObject *jsb_CrossApp_Action_prototype;
+
+bool js_crossapp_Action_startWithTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_startWithTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CGNode* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_startWithTarget : Error processing arguments");
+        cobj->startWithTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_startWithTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Action_description(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_description : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->description();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_description : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Action_setOriginalTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_setOriginalTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CGNode* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_setOriginalTarget : Error processing arguments");
+        cobj->setOriginalTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_setOriginalTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Action_clone(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_clone : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::Action* ret = cobj->clone();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Action>(cx, (CrossApp::Action*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Action_getOriginalTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_getOriginalTarget : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CGNode* ret = cobj->getOriginalTarget();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_getOriginalTarget : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Action_stop(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_stop : Invalid Native Object");
+    if (argc == 0) {
+        cobj->stop();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_stop : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Action_update(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_update : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_update : Error processing arguments");
+        cobj->update(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_update : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Action_getTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_getTarget : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CGNode* ret = cobj->getTarget();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_getTarget : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Action_getFlags(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_getFlags : Invalid Native Object");
+    if (argc == 0) {
+        unsigned int ret = cobj->getFlags();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_getFlags : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Action_step(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_step : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_step : Error processing arguments");
+        cobj->step(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_step : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Action_setTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_setTag : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_setTag : Error processing arguments");
+        cobj->setTag(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_setTag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Action_setFlags(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_setFlags : Invalid Native Object");
+    if (argc == 1) {
+        unsigned int arg0 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_setFlags : Error processing arguments");
+        cobj->setFlags(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_setFlags : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Action_getTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_getTag : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getTag();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_getTag : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Action_setTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_setTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CGNode* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_setTarget : Error processing arguments");
+        cobj->setTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_setTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Action_isDone(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_isDone : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isDone();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_isDone : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Action_reverse(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_reverse : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::Action* ret = cobj->reverse();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Action>(cx, (CrossApp::Action*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Action_reverse : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+
+void js_CrossApp_Action_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (Action)", obj);
+}
+void js_register_crossapp_Action(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_Action_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_Action_class->name = "Action";
+    jsb_CrossApp_Action_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_Action_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_Action_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_Action_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_Action_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_Action_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_Action_class->convert = JS_ConvertStub;
+    jsb_CrossApp_Action_class->finalize = js_CrossApp_Action_finalize;
+    jsb_CrossApp_Action_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("startWithTarget", js_crossapp_Action_startWithTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("description", js_crossapp_Action_description, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setOriginalTarget", js_crossapp_Action_setOriginalTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("clone", js_crossapp_Action_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getOriginalTarget", js_crossapp_Action_getOriginalTarget, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stop", js_crossapp_Action_stop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("update", js_crossapp_Action_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTarget", js_crossapp_Action_getTarget, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getFlags", js_crossapp_Action_getFlags, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("step", js_crossapp_Action_step, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTag", js_crossapp_Action_setTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setFlags", js_crossapp_Action_setFlags, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTag", js_crossapp_Action_getTag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTarget", js_crossapp_Action_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isDone", js_crossapp_Action_isDone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reverse", js_crossapp_Action_reverse, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    jsb_CrossApp_Action_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_CrossApp_Action_class,
+        empty_constructor, 0,
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "Action", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::Action> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_Action_class;
+        p->proto = jsb_CrossApp_Action_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_FiniteTimeAction_class;
+JSObject *jsb_CrossApp_FiniteTimeAction_prototype;
+
+bool js_crossapp_FiniteTimeAction_clone(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::FiniteTimeAction* cobj = (CrossApp::FiniteTimeAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_FiniteTimeAction_clone : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::FiniteTimeAction* ret = cobj->clone();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::FiniteTimeAction>(cx, (CrossApp::FiniteTimeAction*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_FiniteTimeAction_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_FiniteTimeAction_setDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::FiniteTimeAction* cobj = (CrossApp::FiniteTimeAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_FiniteTimeAction_setDuration : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FiniteTimeAction_setDuration : Error processing arguments");
+        cobj->setDuration(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_FiniteTimeAction_setDuration : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_FiniteTimeAction_getDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::FiniteTimeAction* cobj = (CrossApp::FiniteTimeAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_FiniteTimeAction_getDuration : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getDuration();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_FiniteTimeAction_getDuration : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+
+extern JSObject *jsb_CrossApp_Action_prototype;
+
+void js_CrossApp_FiniteTimeAction_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (FiniteTimeAction)", obj);
+}
+void js_register_crossapp_FiniteTimeAction(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_FiniteTimeAction_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_FiniteTimeAction_class->name = "FiniteTimeAction";
+    jsb_CrossApp_FiniteTimeAction_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_FiniteTimeAction_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_FiniteTimeAction_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_FiniteTimeAction_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_FiniteTimeAction_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_FiniteTimeAction_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_FiniteTimeAction_class->convert = JS_ConvertStub;
+    jsb_CrossApp_FiniteTimeAction_class->finalize = js_CrossApp_FiniteTimeAction_finalize;
+    jsb_CrossApp_FiniteTimeAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("clone", js_crossapp_FiniteTimeAction_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDuration", js_crossapp_FiniteTimeAction_setDuration, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDuration", js_crossapp_FiniteTimeAction_getDuration, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    jsb_CrossApp_FiniteTimeAction_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_Action_prototype),
+        jsb_CrossApp_FiniteTimeAction_class,
+        empty_constructor, 0,
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "FiniteTimeAction", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::FiniteTimeAction> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_FiniteTimeAction_class;
+        p->proto = jsb_CrossApp_FiniteTimeAction_prototype;
+        p->parentProto = jsb_CrossApp_Action_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_ActionInterval_class;
+JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+bool js_crossapp_ActionInterval_getAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionInterval* cobj = (CrossApp::ActionInterval *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_getAmplitudeRate : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getAmplitudeRate();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionInterval_getAmplitudeRate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionInterval_clone(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionInterval* cobj = (CrossApp::ActionInterval *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_clone : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::ActionInterval* ret = cobj->clone();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ActionInterval>(cx, (CrossApp::ActionInterval*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionInterval_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionInterval_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionInterval* cobj = (CrossApp::ActionInterval *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_initWithDuration : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionInterval_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionInterval_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionInterval_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionInterval* cobj = (CrossApp::ActionInterval *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_setAmplitudeRate : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionInterval_setAmplitudeRate : Error processing arguments");
+        cobj->setAmplitudeRate(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionInterval_setAmplitudeRate : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionInterval_getElapsed(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionInterval* cobj = (CrossApp::ActionInterval *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_getElapsed : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getElapsed();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionInterval_getElapsed : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+
+extern JSObject *jsb_CrossApp_FiniteTimeAction_prototype;
+
+void js_CrossApp_ActionInterval_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ActionInterval)", obj);
+}
+void js_register_crossapp_ActionInterval(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ActionInterval_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ActionInterval_class->name = "ActionInterval";
+    jsb_CrossApp_ActionInterval_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionInterval_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ActionInterval_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionInterval_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ActionInterval_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ActionInterval_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ActionInterval_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ActionInterval_class->finalize = js_CrossApp_ActionInterval_finalize;
+    jsb_CrossApp_ActionInterval_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getAmplitudeRate", js_crossapp_ActionInterval_getAmplitudeRate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("clone", js_crossapp_ActionInterval_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithDuration", js_crossapp_ActionInterval_initWithDuration, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAmplitudeRate", js_crossapp_ActionInterval_setAmplitudeRate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getElapsed", js_crossapp_ActionInterval_getElapsed, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    jsb_CrossApp_ActionInterval_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_FiniteTimeAction_prototype),
+        jsb_CrossApp_ActionInterval_class,
+        empty_constructor, 0,
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ActionInterval", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ActionInterval> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ActionInterval_class;
+        p->proto = jsb_CrossApp_ActionInterval_prototype;
+        p->parentProto = jsb_CrossApp_FiniteTimeAction_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_Sequence_class;
+JSObject *jsb_CrossApp_Sequence_prototype;
+
+bool js_crossapp_Sequence_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Sequence* cobj = (CrossApp::Sequence *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Sequence_init : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAVector<CrossApp::FiniteTimeAction *> arg0;
+        ok &= jsval_to_cavector(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Sequence_init : Error processing arguments");
+        bool ret = cobj->init(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Sequence_init : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Sequence_initWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Sequence* cobj = (CrossApp::Sequence *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Sequence_initWithTwoActions : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        CrossApp::FiniteTimeAction* arg1 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Sequence_initWithTwoActions : Error processing arguments");
+        bool ret = cobj->initWithTwoActions(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Sequence_initWithTwoActions : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_Sequence_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CAVector<CrossApp::FiniteTimeAction *> arg0;
+        ok &= jsval_to_cavector(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Sequence_create : Error processing arguments");
+        CrossApp::Sequence* ret = CrossApp::Sequence::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Sequence>(cx, (CrossApp::Sequence*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_Sequence_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_Sequence_createWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        CrossApp::FiniteTimeAction* arg1 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Sequence_createWithTwoActions : Error processing arguments");
+        CrossApp::Sequence* ret = CrossApp::Sequence::createWithTwoActions(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Sequence>(cx, (CrossApp::Sequence*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_Sequence_createWithTwoActions : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_Sequence_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::Sequence* cobj = new (std::nothrow) CrossApp::Sequence();
+    TypeTest<CrossApp::Sequence> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Sequence");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_Sequence_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::Sequence *nobj = new (std::nothrow) CrossApp::Sequence();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Sequence");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_Sequence_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (Sequence)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::Sequence *nobj = static_cast<CrossApp::Sequence *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_Sequence(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_Sequence_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_Sequence_class->name = "Sequence";
+    jsb_CrossApp_Sequence_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_Sequence_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_Sequence_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_Sequence_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_Sequence_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_Sequence_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_Sequence_class->convert = JS_ConvertStub;
+    jsb_CrossApp_Sequence_class->finalize = js_CrossApp_Sequence_finalize;
+    jsb_CrossApp_Sequence_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("init", js_crossapp_Sequence_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithTwoActions", js_crossapp_Sequence_initWithTwoActions, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_Sequence_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_Sequence_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithTwoActions", js_crossapp_Sequence_createWithTwoActions, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_Sequence_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_Sequence_class,
+        js_crossapp_Sequence_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "Sequence", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::Sequence> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_Sequence_class;
+        p->proto = jsb_CrossApp_Sequence_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.Sequence.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_Repeat_class;
+JSObject *jsb_CrossApp_Repeat_prototype;
+
+bool js_crossapp_Repeat_setInnerAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Repeat* cobj = (CrossApp::Repeat *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Repeat_setInnerAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Repeat_setInnerAction : Error processing arguments");
+        cobj->setInnerAction(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Repeat_setInnerAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Repeat_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Repeat* cobj = (CrossApp::Repeat *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Repeat_initWithAction : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        unsigned int arg1 = 0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Repeat_initWithAction : Error processing arguments");
+        bool ret = cobj->initWithAction(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Repeat_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_Repeat_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Repeat* cobj = (CrossApp::Repeat *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Repeat_getInnerAction : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::FiniteTimeAction* ret = cobj->getInnerAction();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::FiniteTimeAction>(cx, (CrossApp::FiniteTimeAction*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Repeat_getInnerAction : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Repeat_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        unsigned int arg1 = 0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Repeat_create : Error processing arguments");
+        CrossApp::Repeat* ret = CrossApp::Repeat::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Repeat>(cx, (CrossApp::Repeat*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_Repeat_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_Repeat_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::Repeat* cobj = new (std::nothrow) CrossApp::Repeat();
+    TypeTest<CrossApp::Repeat> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Repeat");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_Repeat_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::Repeat *nobj = new (std::nothrow) CrossApp::Repeat();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Repeat");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_Repeat_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (Repeat)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::Repeat *nobj = static_cast<CrossApp::Repeat *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_Repeat(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_Repeat_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_Repeat_class->name = "Repeat";
+    jsb_CrossApp_Repeat_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_Repeat_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_Repeat_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_Repeat_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_Repeat_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_Repeat_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_Repeat_class->convert = JS_ConvertStub;
+    jsb_CrossApp_Repeat_class->finalize = js_CrossApp_Repeat_finalize;
+    jsb_CrossApp_Repeat_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setInnerAction", js_crossapp_Repeat_setInnerAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithAction", js_crossapp_Repeat_initWithAction, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getInnerAction", js_crossapp_Repeat_getInnerAction, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_Repeat_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_Repeat_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_Repeat_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_Repeat_class,
+        js_crossapp_Repeat_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "Repeat", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::Repeat> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_Repeat_class;
+        p->proto = jsb_CrossApp_Repeat_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.Repeat.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_RepeatForever_class;
+JSObject *jsb_CrossApp_RepeatForever_prototype;
+
+bool js_crossapp_RepeatForever_setInnerAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RepeatForever* cobj = (CrossApp::RepeatForever *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RepeatForever_setInnerAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RepeatForever_setInnerAction : Error processing arguments");
+        cobj->setInnerAction(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RepeatForever_setInnerAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_RepeatForever_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RepeatForever* cobj = (CrossApp::RepeatForever *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RepeatForever_initWithAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RepeatForever_initWithAction : Error processing arguments");
+        bool ret = cobj->initWithAction(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RepeatForever_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_RepeatForever_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RepeatForever* cobj = (CrossApp::RepeatForever *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RepeatForever_getInnerAction : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::ActionInterval* ret = cobj->getInnerAction();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ActionInterval>(cx, (CrossApp::ActionInterval*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RepeatForever_getInnerAction : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_RepeatForever_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RepeatForever_create : Error processing arguments");
+        CrossApp::RepeatForever* ret = CrossApp::RepeatForever::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RepeatForever>(cx, (CrossApp::RepeatForever*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RepeatForever_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RepeatForever_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::RepeatForever* cobj = new (std::nothrow) CrossApp::RepeatForever();
+    TypeTest<CrossApp::RepeatForever> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::RepeatForever");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_RepeatForever_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::RepeatForever *nobj = new (std::nothrow) CrossApp::RepeatForever();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::RepeatForever");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_RepeatForever_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (RepeatForever)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::RepeatForever *nobj = static_cast<CrossApp::RepeatForever *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_RepeatForever(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_RepeatForever_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_RepeatForever_class->name = "RepeatForever";
+    jsb_CrossApp_RepeatForever_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_RepeatForever_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_RepeatForever_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_RepeatForever_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_RepeatForever_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_RepeatForever_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_RepeatForever_class->convert = JS_ConvertStub;
+    jsb_CrossApp_RepeatForever_class->finalize = js_CrossApp_RepeatForever_finalize;
+    jsb_CrossApp_RepeatForever_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setInnerAction", js_crossapp_RepeatForever_setInnerAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithAction", js_crossapp_RepeatForever_initWithAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getInnerAction", js_crossapp_RepeatForever_getInnerAction, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_RepeatForever_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_RepeatForever_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_RepeatForever_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_RepeatForever_class,
+        js_crossapp_RepeatForever_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "RepeatForever", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::RepeatForever> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_RepeatForever_class;
+        p->proto = jsb_CrossApp_RepeatForever_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.RepeatForever.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_Spawn_class;
+JSObject *jsb_CrossApp_Spawn_prototype;
+
+bool js_crossapp_Spawn_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Spawn* cobj = (CrossApp::Spawn *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Spawn_init : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAVector<CrossApp::FiniteTimeAction *> arg0;
+        ok &= jsval_to_cavector(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Spawn_init : Error processing arguments");
+        bool ret = cobj->init(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Spawn_init : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Spawn_initWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Spawn* cobj = (CrossApp::Spawn *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Spawn_initWithTwoActions : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        CrossApp::FiniteTimeAction* arg1 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Spawn_initWithTwoActions : Error processing arguments");
+        bool ret = cobj->initWithTwoActions(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Spawn_initWithTwoActions : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_Spawn_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CAVector<CrossApp::FiniteTimeAction *> arg0;
+        ok &= jsval_to_cavector(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Spawn_create : Error processing arguments");
+        CrossApp::Spawn* ret = CrossApp::Spawn::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Spawn>(cx, (CrossApp::Spawn*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_Spawn_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_Spawn_createWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        CrossApp::FiniteTimeAction* arg1 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Spawn_createWithTwoActions : Error processing arguments");
+        CrossApp::Spawn* ret = CrossApp::Spawn::createWithTwoActions(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Spawn>(cx, (CrossApp::Spawn*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_Spawn_createWithTwoActions : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_Spawn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::Spawn* cobj = new (std::nothrow) CrossApp::Spawn();
+    TypeTest<CrossApp::Spawn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Spawn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_Spawn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::Spawn *nobj = new (std::nothrow) CrossApp::Spawn();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Spawn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_Spawn_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (Spawn)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::Spawn *nobj = static_cast<CrossApp::Spawn *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_Spawn(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_Spawn_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_Spawn_class->name = "Spawn";
+    jsb_CrossApp_Spawn_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_Spawn_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_Spawn_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_Spawn_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_Spawn_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_Spawn_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_Spawn_class->convert = JS_ConvertStub;
+    jsb_CrossApp_Spawn_class->finalize = js_CrossApp_Spawn_finalize;
+    jsb_CrossApp_Spawn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("init", js_crossapp_Spawn_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithTwoActions", js_crossapp_Spawn_initWithTwoActions, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_Spawn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_Spawn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithTwoActions", js_crossapp_Spawn_createWithTwoActions, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_Spawn_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_Spawn_class,
+        js_crossapp_Spawn_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "Spawn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::Spawn> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_Spawn_class;
+        p->proto = jsb_CrossApp_Spawn_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.Spawn.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_RotateTo_class;
+JSObject *jsb_CrossApp_RotateTo_prototype;
+
+bool js_crossapp_RotateTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RotateTo* cobj = (CrossApp::RotateTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RotateTo_initWithDuration : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::DPoint3D arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_dpoint3d(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateTo_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RotateTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_RotateTo_initWithDurationZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RotateTo* cobj = (CrossApp::RotateTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RotateTo_initWithDurationZ : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateTo_initWithDurationZ : Error processing arguments");
+        bool ret = cobj->initWithDurationZ(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RotateTo_initWithDurationZ : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_RotateTo_initWithDurationY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RotateTo* cobj = (CrossApp::RotateTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RotateTo_initWithDurationY : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateTo_initWithDurationY : Error processing arguments");
+        bool ret = cobj->initWithDurationY(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RotateTo_initWithDurationY : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_RotateTo_initWithDurationX(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RotateTo* cobj = (CrossApp::RotateTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RotateTo_initWithDurationX : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateTo_initWithDurationX : Error processing arguments");
+        bool ret = cobj->initWithDurationX(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RotateTo_initWithDurationX : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_RotateTo_createZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateTo_createZ : Error processing arguments");
+        CrossApp::RotateTo* ret = CrossApp::RotateTo::createZ(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RotateTo>(cx, (CrossApp::RotateTo*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RotateTo_createZ : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RotateTo_createY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateTo_createY : Error processing arguments");
+        CrossApp::RotateTo* ret = CrossApp::RotateTo::createY(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RotateTo>(cx, (CrossApp::RotateTo*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RotateTo_createY : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RotateTo_createX(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateTo_createX : Error processing arguments");
+        CrossApp::RotateTo* ret = CrossApp::RotateTo::createX(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RotateTo>(cx, (CrossApp::RotateTo*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RotateTo_createX : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RotateTo_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::DPoint3D arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_dpoint3d(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateTo_create : Error processing arguments");
+        CrossApp::RotateTo* ret = CrossApp::RotateTo::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RotateTo>(cx, (CrossApp::RotateTo*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RotateTo_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RotateTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::RotateTo* cobj = new (std::nothrow) CrossApp::RotateTo();
+    TypeTest<CrossApp::RotateTo> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::RotateTo");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_RotateTo_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::RotateTo *nobj = new (std::nothrow) CrossApp::RotateTo();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::RotateTo");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_RotateTo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (RotateTo)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::RotateTo *nobj = static_cast<CrossApp::RotateTo *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_RotateTo(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_RotateTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_RotateTo_class->name = "RotateTo";
+    jsb_CrossApp_RotateTo_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_RotateTo_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_RotateTo_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_RotateTo_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_RotateTo_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_RotateTo_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_RotateTo_class->convert = JS_ConvertStub;
+    jsb_CrossApp_RotateTo_class->finalize = js_CrossApp_RotateTo_finalize;
+    jsb_CrossApp_RotateTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_RotateTo_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithDurationZ", js_crossapp_RotateTo_initWithDurationZ, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithDurationY", js_crossapp_RotateTo_initWithDurationY, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithDurationX", js_crossapp_RotateTo_initWithDurationX, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_RotateTo_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("createZ", js_crossapp_RotateTo_createZ, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createY", js_crossapp_RotateTo_createY, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createX", js_crossapp_RotateTo_createX, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("create", js_crossapp_RotateTo_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_RotateTo_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_RotateTo_class,
+        js_crossapp_RotateTo_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "RotateTo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::RotateTo> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_RotateTo_class;
+        p->proto = jsb_CrossApp_RotateTo_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.RotateTo.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_RotateBy_class;
+JSObject *jsb_CrossApp_RotateBy_prototype;
+
+bool js_crossapp_RotateBy_initWithDurationZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RotateBy* cobj = (CrossApp::RotateBy *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RotateBy_initWithDurationZ : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateBy_initWithDurationZ : Error processing arguments");
+        bool ret = cobj->initWithDurationZ(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RotateBy_initWithDurationZ : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_RotateBy_initWithDurationY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RotateBy* cobj = (CrossApp::RotateBy *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RotateBy_initWithDurationY : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateBy_initWithDurationY : Error processing arguments");
+        bool ret = cobj->initWithDurationY(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RotateBy_initWithDurationY : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_RotateBy_initWithDurationX(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RotateBy* cobj = (CrossApp::RotateBy *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RotateBy_initWithDurationX : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateBy_initWithDurationX : Error processing arguments");
+        bool ret = cobj->initWithDurationX(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RotateBy_initWithDurationX : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_RotateBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::RotateBy* cobj = (CrossApp::RotateBy *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RotateBy_initWithDuration : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::DPoint3D arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_dpoint3d(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateBy_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_RotateBy_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_RotateBy_createZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateBy_createZ : Error processing arguments");
+        CrossApp::RotateBy* ret = CrossApp::RotateBy::createZ(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RotateBy>(cx, (CrossApp::RotateBy*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RotateBy_createZ : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RotateBy_createY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateBy_createY : Error processing arguments");
+        CrossApp::RotateBy* ret = CrossApp::RotateBy::createY(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RotateBy>(cx, (CrossApp::RotateBy*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RotateBy_createY : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RotateBy_createX(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateBy_createX : Error processing arguments");
+        CrossApp::RotateBy* ret = CrossApp::RotateBy::createX(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RotateBy>(cx, (CrossApp::RotateBy*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RotateBy_createX : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RotateBy_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::DPoint3D arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_dpoint3d(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_RotateBy_create : Error processing arguments");
+        CrossApp::RotateBy* ret = CrossApp::RotateBy::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::RotateBy>(cx, (CrossApp::RotateBy*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_RotateBy_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_RotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::RotateBy* cobj = new (std::nothrow) CrossApp::RotateBy();
+    TypeTest<CrossApp::RotateBy> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::RotateBy");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_RotateBy_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::RotateBy *nobj = new (std::nothrow) CrossApp::RotateBy();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::RotateBy");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_RotateBy_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (RotateBy)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::RotateBy *nobj = static_cast<CrossApp::RotateBy *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_RotateBy(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_RotateBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_RotateBy_class->name = "RotateBy";
+    jsb_CrossApp_RotateBy_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_RotateBy_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_RotateBy_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_RotateBy_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_RotateBy_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_RotateBy_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_RotateBy_class->convert = JS_ConvertStub;
+    jsb_CrossApp_RotateBy_class->finalize = js_CrossApp_RotateBy_finalize;
+    jsb_CrossApp_RotateBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDurationZ", js_crossapp_RotateBy_initWithDurationZ, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithDurationY", js_crossapp_RotateBy_initWithDurationY, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithDurationX", js_crossapp_RotateBy_initWithDurationX, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithDuration", js_crossapp_RotateBy_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_RotateBy_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("createZ", js_crossapp_RotateBy_createZ, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createY", js_crossapp_RotateBy_createY, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createX", js_crossapp_RotateBy_createX, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("create", js_crossapp_RotateBy_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_RotateBy_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_RotateBy_class,
+        js_crossapp_RotateBy_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "RotateBy", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::RotateBy> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_RotateBy_class;
+        p->proto = jsb_CrossApp_RotateBy_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.RotateBy.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_MoveBy_class;
+JSObject *jsb_CrossApp_MoveBy_prototype;
+
+bool js_crossapp_MoveBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    bool ok = true;
+    CrossApp::MoveBy* cobj = nullptr;
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (CrossApp::MoveBy *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_MoveBy_initWithDuration : Invalid Native Object");
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DPoint3D arg1;
+            ok &= jsval_to_dpoint3d(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->initWithDuration(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DPoint arg1;
+            ok &= jsval_to_dpoint(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->initWithDuration(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_crossapp_MoveBy_initWithDuration : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_MoveBy_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DPoint3D arg1;
+            ok &= jsval_to_dpoint3d(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::MoveBy* ret = CrossApp::MoveBy::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::MoveBy>(cx, (CrossApp::MoveBy*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DPoint arg1;
+            ok &= jsval_to_dpoint(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::MoveBy* ret = CrossApp::MoveBy::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::MoveBy>(cx, (CrossApp::MoveBy*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_crossapp_MoveBy_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_MoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::MoveBy* cobj = new (std::nothrow) CrossApp::MoveBy();
+    TypeTest<CrossApp::MoveBy> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::MoveBy");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_MoveBy_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::MoveBy *nobj = new (std::nothrow) CrossApp::MoveBy();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::MoveBy");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_MoveBy_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (MoveBy)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::MoveBy *nobj = static_cast<CrossApp::MoveBy *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_MoveBy(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_MoveBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_MoveBy_class->name = "MoveBy";
+    jsb_CrossApp_MoveBy_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_MoveBy_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_MoveBy_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_MoveBy_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_MoveBy_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_MoveBy_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_MoveBy_class->convert = JS_ConvertStub;
+    jsb_CrossApp_MoveBy_class->finalize = js_CrossApp_MoveBy_finalize;
+    jsb_CrossApp_MoveBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_MoveBy_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_MoveBy_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_MoveBy_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_MoveBy_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_MoveBy_class,
+        js_crossapp_MoveBy_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "MoveBy", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::MoveBy> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_MoveBy_class;
+        p->proto = jsb_CrossApp_MoveBy_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.MoveBy.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_MoveTo_class;
+JSObject *jsb_CrossApp_MoveTo_prototype;
+
+bool js_crossapp_MoveTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    bool ok = true;
+    CrossApp::MoveTo* cobj = nullptr;
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (CrossApp::MoveTo *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_MoveTo_initWithDuration : Invalid Native Object");
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DPoint3D arg1;
+            ok &= jsval_to_dpoint3d(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->initWithDuration(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DPoint arg1;
+            ok &= jsval_to_dpoint(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->initWithDuration(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_crossapp_MoveTo_initWithDuration : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_MoveTo_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DPoint3D arg1;
+            ok &= jsval_to_dpoint3d(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::MoveTo* ret = CrossApp::MoveTo::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::MoveTo>(cx, (CrossApp::MoveTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DPoint arg1;
+            ok &= jsval_to_dpoint(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::MoveTo* ret = CrossApp::MoveTo::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::MoveTo>(cx, (CrossApp::MoveTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_crossapp_MoveTo_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_MoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::MoveTo* cobj = new (std::nothrow) CrossApp::MoveTo();
+    TypeTest<CrossApp::MoveTo> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::MoveTo");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_MoveTo_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::MoveTo *nobj = new (std::nothrow) CrossApp::MoveTo();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::MoveTo");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_MoveBy_prototype;
+
+void js_CrossApp_MoveTo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (MoveTo)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::MoveTo *nobj = static_cast<CrossApp::MoveTo *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_MoveTo(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_MoveTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_MoveTo_class->name = "MoveTo";
+    jsb_CrossApp_MoveTo_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_MoveTo_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_MoveTo_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_MoveTo_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_MoveTo_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_MoveTo_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_MoveTo_class->convert = JS_ConvertStub;
+    jsb_CrossApp_MoveTo_class->finalize = js_CrossApp_MoveTo_finalize;
+    jsb_CrossApp_MoveTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_MoveTo_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_MoveTo_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_MoveTo_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_MoveTo_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_MoveBy_prototype),
+        jsb_CrossApp_MoveTo_class,
+        js_crossapp_MoveTo_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "MoveTo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::MoveTo> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_MoveTo_class;
+        p->proto = jsb_CrossApp_MoveTo_prototype;
+        p->parentProto = jsb_CrossApp_MoveBy_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.MoveTo.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_SkewTo_class;
+JSObject *jsb_CrossApp_SkewTo_prototype;
+
+bool js_crossapp_SkewTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::SkewTo* cobj = (CrossApp::SkewTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_SkewTo_initWithDuration : Invalid Native Object");
+    if (argc == 3) {
+        double arg0 = 0;
+        double arg1 = 0;
+        double arg2 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_SkewTo_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_SkewTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
+bool js_crossapp_SkewTo_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 3) {
+        double arg0 = 0;
+        double arg1 = 0;
+        double arg2 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_SkewTo_create : Error processing arguments");
+        CrossApp::SkewTo* ret = CrossApp::SkewTo::create(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::SkewTo>(cx, (CrossApp::SkewTo*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_SkewTo_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_SkewTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::SkewTo* cobj = new (std::nothrow) CrossApp::SkewTo();
+    TypeTest<CrossApp::SkewTo> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::SkewTo");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_SkewTo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (SkewTo)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::SkewTo *nobj = static_cast<CrossApp::SkewTo *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_SkewTo(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_SkewTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_SkewTo_class->name = "SkewTo";
+    jsb_CrossApp_SkewTo_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_SkewTo_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_SkewTo_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_SkewTo_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_SkewTo_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_SkewTo_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_SkewTo_class->convert = JS_ConvertStub;
+    jsb_CrossApp_SkewTo_class->finalize = js_CrossApp_SkewTo_finalize;
+    jsb_CrossApp_SkewTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_SkewTo_initWithDuration, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_SkewTo_create, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_SkewTo_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_SkewTo_class,
+        js_crossapp_SkewTo_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "SkewTo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::SkewTo> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_SkewTo_class;
+        p->proto = jsb_CrossApp_SkewTo_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_SkewBy_class;
+JSObject *jsb_CrossApp_SkewBy_prototype;
+
+bool js_crossapp_SkewBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::SkewBy* cobj = (CrossApp::SkewBy *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_SkewBy_initWithDuration : Invalid Native Object");
+    if (argc == 3) {
+        double arg0 = 0;
+        double arg1 = 0;
+        double arg2 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_SkewBy_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_SkewBy_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
+bool js_crossapp_SkewBy_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 3) {
+        double arg0 = 0;
+        double arg1 = 0;
+        double arg2 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_SkewBy_create : Error processing arguments");
+        CrossApp::SkewBy* ret = CrossApp::SkewBy::create(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::SkewBy>(cx, (CrossApp::SkewBy*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_SkewBy_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_SkewBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::SkewBy* cobj = new (std::nothrow) CrossApp::SkewBy();
+    TypeTest<CrossApp::SkewBy> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::SkewBy");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_SkewTo_prototype;
+
+void js_CrossApp_SkewBy_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (SkewBy)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::SkewBy *nobj = static_cast<CrossApp::SkewBy *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_SkewBy(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_SkewBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_SkewBy_class->name = "SkewBy";
+    jsb_CrossApp_SkewBy_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_SkewBy_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_SkewBy_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_SkewBy_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_SkewBy_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_SkewBy_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_SkewBy_class->convert = JS_ConvertStub;
+    jsb_CrossApp_SkewBy_class->finalize = js_CrossApp_SkewBy_finalize;
+    jsb_CrossApp_SkewBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_SkewBy_initWithDuration, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_SkewBy_create, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_SkewBy_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_SkewTo_prototype),
+        jsb_CrossApp_SkewBy_class,
+        js_crossapp_SkewBy_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "SkewBy", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::SkewBy> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_SkewBy_class;
+        p->proto = jsb_CrossApp_SkewBy_prototype;
+        p->parentProto = jsb_CrossApp_SkewTo_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_JumpBy_class;
+JSObject *jsb_CrossApp_JumpBy_prototype;
+
+bool js_crossapp_JumpBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::JumpBy* cobj = (CrossApp::JumpBy *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_JumpBy_initWithDuration : Invalid Native Object");
+    if (argc == 4) {
+        double arg0 = 0;
+        CrossApp::DPoint arg1;
+        double arg2 = 0;
+        int arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_dpoint(cx, args.get(1), &arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_JumpBy_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_JumpBy_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_JumpBy_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 4) {
+        double arg0 = 0;
+        CrossApp::DPoint arg1;
+        double arg2 = 0;
+        int arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_dpoint(cx, args.get(1), &arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_JumpBy_create : Error processing arguments");
+        CrossApp::JumpBy* ret = CrossApp::JumpBy::create(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::JumpBy>(cx, (CrossApp::JumpBy*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_JumpBy_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_JumpBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::JumpBy* cobj = new (std::nothrow) CrossApp::JumpBy();
+    TypeTest<CrossApp::JumpBy> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::JumpBy");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_JumpBy_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (JumpBy)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::JumpBy *nobj = static_cast<CrossApp::JumpBy *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_JumpBy(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_JumpBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_JumpBy_class->name = "JumpBy";
+    jsb_CrossApp_JumpBy_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_JumpBy_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_JumpBy_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_JumpBy_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_JumpBy_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_JumpBy_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_JumpBy_class->convert = JS_ConvertStub;
+    jsb_CrossApp_JumpBy_class->finalize = js_CrossApp_JumpBy_finalize;
+    jsb_CrossApp_JumpBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_JumpBy_initWithDuration, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_JumpBy_create, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_JumpBy_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_JumpBy_class,
+        js_crossapp_JumpBy_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "JumpBy", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::JumpBy> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_JumpBy_class;
+        p->proto = jsb_CrossApp_JumpBy_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_JumpTo_class;
+JSObject *jsb_CrossApp_JumpTo_prototype;
+
+bool js_crossapp_JumpTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::JumpTo* cobj = (CrossApp::JumpTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_JumpTo_initWithDuration : Invalid Native Object");
+    if (argc == 4) {
+        double arg0 = 0;
+        CrossApp::DPoint arg1;
+        double arg2 = 0;
+        int arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_dpoint(cx, args.get(1), &arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_JumpTo_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_JumpTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_JumpTo_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 4) {
+        double arg0 = 0;
+        CrossApp::DPoint arg1;
+        double arg2 = 0;
+        int arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_dpoint(cx, args.get(1), &arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_JumpTo_create : Error processing arguments");
+        CrossApp::JumpTo* ret = CrossApp::JumpTo::create(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::JumpTo>(cx, (CrossApp::JumpTo*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_JumpTo_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_JumpTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::JumpTo* cobj = new (std::nothrow) CrossApp::JumpTo();
+    TypeTest<CrossApp::JumpTo> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::JumpTo");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_JumpBy_prototype;
+
+void js_CrossApp_JumpTo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (JumpTo)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::JumpTo *nobj = static_cast<CrossApp::JumpTo *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_JumpTo(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_JumpTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_JumpTo_class->name = "JumpTo";
+    jsb_CrossApp_JumpTo_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_JumpTo_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_JumpTo_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_JumpTo_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_JumpTo_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_JumpTo_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_JumpTo_class->convert = JS_ConvertStub;
+    jsb_CrossApp_JumpTo_class->finalize = js_CrossApp_JumpTo_finalize;
+    jsb_CrossApp_JumpTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_JumpTo_initWithDuration, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_JumpTo_create, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_JumpTo_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_JumpBy_prototype),
+        jsb_CrossApp_JumpTo_class,
+        js_crossapp_JumpTo_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "JumpTo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::JumpTo> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_JumpTo_class;
+        p->proto = jsb_CrossApp_JumpTo_prototype;
+        p->parentProto = jsb_CrossApp_JumpBy_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_BezierBy_class;
+JSObject *jsb_CrossApp_BezierBy_prototype;
+
+bool js_crossapp_BezierBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::BezierBy* cobj = (CrossApp::BezierBy *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_BezierBy_initWithDuration : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::_ccBezierConfig arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        #pragma warning NO CONVERSION TO NATIVE FOR _ccBezierConfig
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_BezierBy_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_BezierBy_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_BezierBy_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::_ccBezierConfig arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        #pragma warning NO CONVERSION TO NATIVE FOR _ccBezierConfig
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_BezierBy_create : Error processing arguments");
+        CrossApp::BezierBy* ret = CrossApp::BezierBy::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::BezierBy>(cx, (CrossApp::BezierBy*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_BezierBy_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_BezierBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::BezierBy* cobj = new (std::nothrow) CrossApp::BezierBy();
+    TypeTest<CrossApp::BezierBy> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::BezierBy");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_BezierBy_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (BezierBy)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::BezierBy *nobj = static_cast<CrossApp::BezierBy *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_BezierBy(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_BezierBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_BezierBy_class->name = "BezierBy";
+    jsb_CrossApp_BezierBy_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_BezierBy_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_BezierBy_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_BezierBy_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_BezierBy_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_BezierBy_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_BezierBy_class->convert = JS_ConvertStub;
+    jsb_CrossApp_BezierBy_class->finalize = js_CrossApp_BezierBy_finalize;
+    jsb_CrossApp_BezierBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_BezierBy_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_BezierBy_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_BezierBy_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_BezierBy_class,
+        js_crossapp_BezierBy_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "BezierBy", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::BezierBy> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_BezierBy_class;
+        p->proto = jsb_CrossApp_BezierBy_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_BezierTo_class;
+JSObject *jsb_CrossApp_BezierTo_prototype;
+
+bool js_crossapp_BezierTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::BezierTo* cobj = (CrossApp::BezierTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_BezierTo_initWithDuration : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::_ccBezierConfig arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        #pragma warning NO CONVERSION TO NATIVE FOR _ccBezierConfig
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_BezierTo_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_BezierTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_BezierTo_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::_ccBezierConfig arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        #pragma warning NO CONVERSION TO NATIVE FOR _ccBezierConfig
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_BezierTo_create : Error processing arguments");
+        CrossApp::BezierTo* ret = CrossApp::BezierTo::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::BezierTo>(cx, (CrossApp::BezierTo*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_BezierTo_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_BezierTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::BezierTo* cobj = new (std::nothrow) CrossApp::BezierTo();
+    TypeTest<CrossApp::BezierTo> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::BezierTo");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_BezierBy_prototype;
+
+void js_CrossApp_BezierTo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (BezierTo)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::BezierTo *nobj = static_cast<CrossApp::BezierTo *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_BezierTo(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_BezierTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_BezierTo_class->name = "BezierTo";
+    jsb_CrossApp_BezierTo_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_BezierTo_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_BezierTo_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_BezierTo_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_BezierTo_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_BezierTo_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_BezierTo_class->convert = JS_ConvertStub;
+    jsb_CrossApp_BezierTo_class->finalize = js_CrossApp_BezierTo_finalize;
+    jsb_CrossApp_BezierTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_BezierTo_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_BezierTo_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_BezierTo_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_BezierBy_prototype),
+        jsb_CrossApp_BezierTo_class,
+        js_crossapp_BezierTo_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "BezierTo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::BezierTo> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_BezierTo_class;
+        p->proto = jsb_CrossApp_BezierTo_prototype;
+        p->parentProto = jsb_CrossApp_BezierBy_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_ScaleTo_class;
+JSObject *jsb_CrossApp_ScaleTo_prototype;
+
+bool js_crossapp_ScaleTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    bool ok = true;
+    CrossApp::ScaleTo* cobj = nullptr;
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (CrossApp::ScaleTo *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ScaleTo_initWithDuration : Invalid Native Object");
+    do {
+        if (argc == 3) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->initWithDuration(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->initWithDuration(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 4) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            double arg3 = 0;
+            ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->initWithDuration(arg0, arg1, arg2, arg3);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_crossapp_ScaleTo_initWithDuration : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_ScaleTo_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 3) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            CrossApp::ScaleTo* ret = CrossApp::ScaleTo::create(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ScaleTo>(cx, (CrossApp::ScaleTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::ScaleTo* ret = CrossApp::ScaleTo::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ScaleTo>(cx, (CrossApp::ScaleTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 4) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            double arg3 = 0;
+            ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+            if (!ok) { ok = true; break; }
+            CrossApp::ScaleTo* ret = CrossApp::ScaleTo::create(arg0, arg1, arg2, arg3);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ScaleTo>(cx, (CrossApp::ScaleTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_crossapp_ScaleTo_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_ScaleTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::ScaleTo* cobj = new (std::nothrow) CrossApp::ScaleTo();
+    TypeTest<CrossApp::ScaleTo> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ScaleTo");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_ScaleTo_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::ScaleTo *nobj = new (std::nothrow) CrossApp::ScaleTo();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ScaleTo");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_ScaleTo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ScaleTo)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::ScaleTo *nobj = static_cast<CrossApp::ScaleTo *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_ScaleTo(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ScaleTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ScaleTo_class->name = "ScaleTo";
+    jsb_CrossApp_ScaleTo_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ScaleTo_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ScaleTo_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ScaleTo_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ScaleTo_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ScaleTo_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ScaleTo_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ScaleTo_class->finalize = js_CrossApp_ScaleTo_finalize;
+    jsb_CrossApp_ScaleTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_ScaleTo_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_ScaleTo_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_ScaleTo_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_ScaleTo_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_ScaleTo_class,
+        js_crossapp_ScaleTo_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ScaleTo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ScaleTo> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ScaleTo_class;
+        p->proto = jsb_CrossApp_ScaleTo_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.ScaleTo.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_ScaleBy_class;
+JSObject *jsb_CrossApp_ScaleBy_prototype;
+
+bool js_crossapp_ScaleBy_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 3) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            CrossApp::ScaleBy* ret = CrossApp::ScaleBy::create(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ScaleBy>(cx, (CrossApp::ScaleBy*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::ScaleBy* ret = CrossApp::ScaleBy::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ScaleBy>(cx, (CrossApp::ScaleBy*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 4) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            double arg3 = 0;
+            ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+            if (!ok) { ok = true; break; }
+            CrossApp::ScaleBy* ret = CrossApp::ScaleBy::create(arg0, arg1, arg2, arg3);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ScaleBy>(cx, (CrossApp::ScaleBy*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_crossapp_ScaleBy_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_ScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::ScaleBy* cobj = new (std::nothrow) CrossApp::ScaleBy();
+    TypeTest<CrossApp::ScaleBy> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ScaleBy");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_ScaleBy_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::ScaleBy *nobj = new (std::nothrow) CrossApp::ScaleBy();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ScaleBy");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ScaleTo_prototype;
+
+void js_CrossApp_ScaleBy_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ScaleBy)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::ScaleBy *nobj = static_cast<CrossApp::ScaleBy *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_ScaleBy(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ScaleBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ScaleBy_class->name = "ScaleBy";
+    jsb_CrossApp_ScaleBy_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ScaleBy_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ScaleBy_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ScaleBy_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ScaleBy_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ScaleBy_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ScaleBy_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ScaleBy_class->finalize = js_CrossApp_ScaleBy_finalize;
+    jsb_CrossApp_ScaleBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_ScaleBy_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_ScaleBy_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_ScaleBy_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ScaleTo_prototype),
+        jsb_CrossApp_ScaleBy_class,
+        js_crossapp_ScaleBy_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ScaleBy", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ScaleBy> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ScaleBy_class;
+        p->proto = jsb_CrossApp_ScaleBy_prototype;
+        p->parentProto = jsb_CrossApp_ScaleTo_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.ScaleBy.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_Blink_class;
+JSObject *jsb_CrossApp_Blink_prototype;
+
+bool js_crossapp_Blink_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Blink* cobj = (CrossApp::Blink *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Blink_initWithDuration : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        int arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Blink_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Blink_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_Blink_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        int arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Blink_create : Error processing arguments");
+        CrossApp::Blink* ret = CrossApp::Blink::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Blink>(cx, (CrossApp::Blink*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_Blink_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_Blink_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::Blink* cobj = new (std::nothrow) CrossApp::Blink();
+    TypeTest<CrossApp::Blink> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Blink");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_Blink_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::Blink *nobj = new (std::nothrow) CrossApp::Blink();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Blink");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_Blink_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (Blink)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::Blink *nobj = static_cast<CrossApp::Blink *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_Blink(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_Blink_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_Blink_class->name = "Blink";
+    jsb_CrossApp_Blink_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_Blink_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_Blink_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_Blink_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_Blink_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_Blink_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_Blink_class->convert = JS_ConvertStub;
+    jsb_CrossApp_Blink_class->finalize = js_CrossApp_Blink_finalize;
+    jsb_CrossApp_Blink_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_Blink_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_Blink_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_Blink_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_Blink_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_Blink_class,
+        js_crossapp_Blink_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "Blink", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::Blink> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_Blink_class;
+        p->proto = jsb_CrossApp_Blink_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.Blink.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_FadeTo_class;
+JSObject *jsb_CrossApp_FadeTo_prototype;
+
+bool js_crossapp_FadeTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::FadeTo* cobj = (CrossApp::FadeTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_FadeTo_initWithDuration : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FadeTo_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_FadeTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_FadeTo_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        double arg1 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FadeTo_create : Error processing arguments");
+        CrossApp::FadeTo* ret = CrossApp::FadeTo::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::FadeTo>(cx, (CrossApp::FadeTo*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_FadeTo_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_FadeTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::FadeTo* cobj = new (std::nothrow) CrossApp::FadeTo();
+    TypeTest<CrossApp::FadeTo> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::FadeTo");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_FadeTo_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::FadeTo *nobj = new (std::nothrow) CrossApp::FadeTo();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::FadeTo");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_FadeTo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (FadeTo)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::FadeTo *nobj = static_cast<CrossApp::FadeTo *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_FadeTo(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_FadeTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_FadeTo_class->name = "FadeTo";
+    jsb_CrossApp_FadeTo_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_FadeTo_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_FadeTo_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_FadeTo_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_FadeTo_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_FadeTo_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_FadeTo_class->convert = JS_ConvertStub;
+    jsb_CrossApp_FadeTo_class->finalize = js_CrossApp_FadeTo_finalize;
+    jsb_CrossApp_FadeTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_FadeTo_initWithDuration, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_FadeTo_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_FadeTo_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_FadeTo_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_FadeTo_class,
+        js_crossapp_FadeTo_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "FadeTo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::FadeTo> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_FadeTo_class;
+        p->proto = jsb_CrossApp_FadeTo_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.FadeTo.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_FadeIn_class;
+JSObject *jsb_CrossApp_FadeIn_prototype;
+
+bool js_crossapp_FadeIn_setReverseAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::FadeIn* cobj = (CrossApp::FadeIn *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_FadeIn_setReverseAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::FadeTo* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FadeTo*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FadeIn_setReverseAction : Error processing arguments");
+        cobj->setReverseAction(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_FadeIn_setReverseAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_FadeIn_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FadeIn_create : Error processing arguments");
+        CrossApp::FadeIn* ret = CrossApp::FadeIn::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::FadeIn>(cx, (CrossApp::FadeIn*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_FadeIn_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_FadeIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::FadeIn* cobj = new (std::nothrow) CrossApp::FadeIn();
+    TypeTest<CrossApp::FadeIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::FadeIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_FadeIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::FadeIn *nobj = new (std::nothrow) CrossApp::FadeIn();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::FadeIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_FadeTo_prototype;
+
+void js_CrossApp_FadeIn_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (FadeIn)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::FadeIn *nobj = static_cast<CrossApp::FadeIn *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_FadeIn(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_FadeIn_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_FadeIn_class->name = "FadeIn";
+    jsb_CrossApp_FadeIn_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_FadeIn_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_FadeIn_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_FadeIn_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_FadeIn_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_FadeIn_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_FadeIn_class->convert = JS_ConvertStub;
+    jsb_CrossApp_FadeIn_class->finalize = js_CrossApp_FadeIn_finalize;
+    jsb_CrossApp_FadeIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setReverseAction", js_crossapp_FadeIn_setReverseAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_FadeIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_FadeIn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_FadeIn_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_FadeTo_prototype),
+        jsb_CrossApp_FadeIn_class,
+        js_crossapp_FadeIn_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "FadeIn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::FadeIn> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_FadeIn_class;
+        p->proto = jsb_CrossApp_FadeIn_prototype;
+        p->parentProto = jsb_CrossApp_FadeTo_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.FadeIn.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_FadeOut_class;
+JSObject *jsb_CrossApp_FadeOut_prototype;
+
+bool js_crossapp_FadeOut_setReverseAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::FadeOut* cobj = (CrossApp::FadeOut *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_FadeOut_setReverseAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::FadeTo* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FadeTo*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FadeOut_setReverseAction : Error processing arguments");
+        cobj->setReverseAction(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_FadeOut_setReverseAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_FadeOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FadeOut_create : Error processing arguments");
+        CrossApp::FadeOut* ret = CrossApp::FadeOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::FadeOut>(cx, (CrossApp::FadeOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_FadeOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_FadeOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::FadeOut* cobj = new (std::nothrow) CrossApp::FadeOut();
+    TypeTest<CrossApp::FadeOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::FadeOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_FadeOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::FadeOut *nobj = new (std::nothrow) CrossApp::FadeOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::FadeOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_FadeTo_prototype;
+
+void js_CrossApp_FadeOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (FadeOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::FadeOut *nobj = static_cast<CrossApp::FadeOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_FadeOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_FadeOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_FadeOut_class->name = "FadeOut";
+    jsb_CrossApp_FadeOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_FadeOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_FadeOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_FadeOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_FadeOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_FadeOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_FadeOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_FadeOut_class->finalize = js_CrossApp_FadeOut_finalize;
+    jsb_CrossApp_FadeOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setReverseAction", js_crossapp_FadeOut_setReverseAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_FadeOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_FadeOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_FadeOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_FadeTo_prototype),
+        jsb_CrossApp_FadeOut_class,
+        js_crossapp_FadeOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "FadeOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::FadeOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_FadeOut_class;
+        p->proto = jsb_CrossApp_FadeOut_prototype;
+        p->parentProto = jsb_CrossApp_FadeTo_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.FadeOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_TintTo_class;
+JSObject *jsb_CrossApp_TintTo_prototype;
+
+bool js_crossapp_TintTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::TintTo* cobj = (CrossApp::TintTo *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_TintTo_initWithDuration : Invalid Native Object");
+    if (argc == 4) {
+        double arg0 = 0;
+        uint16_t arg1;
+        uint16_t arg2;
+        uint16_t arg3;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_uint16(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+        ok &= jsval_to_uint16(cx, args.get(3), &arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_TintTo_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_TintTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_TintTo_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 2) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAColor4B arg1;
+            ok &= jsval_to_cacolor4b(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::TintTo* ret = CrossApp::TintTo::create(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::TintTo>(cx, (CrossApp::TintTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 4) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            uint16_t arg1;
+            ok &= jsval_to_uint16(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            uint16_t arg2;
+            ok &= jsval_to_uint16(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            uint16_t arg3;
+            ok &= jsval_to_uint16(cx, args.get(3), &arg3);
+            if (!ok) { ok = true; break; }
+            CrossApp::TintTo* ret = CrossApp::TintTo::create(arg0, arg1, arg2, arg3);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::TintTo>(cx, (CrossApp::TintTo*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_crossapp_TintTo_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_TintTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::TintTo* cobj = new (std::nothrow) CrossApp::TintTo();
+    TypeTest<CrossApp::TintTo> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::TintTo");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_TintTo_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::TintTo *nobj = new (std::nothrow) CrossApp::TintTo();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::TintTo");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_TintTo_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (TintTo)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::TintTo *nobj = static_cast<CrossApp::TintTo *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_TintTo(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_TintTo_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_TintTo_class->name = "TintTo";
+    jsb_CrossApp_TintTo_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_TintTo_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_TintTo_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_TintTo_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_TintTo_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_TintTo_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_TintTo_class->convert = JS_ConvertStub;
+    jsb_CrossApp_TintTo_class->finalize = js_CrossApp_TintTo_finalize;
+    jsb_CrossApp_TintTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_TintTo_initWithDuration, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_TintTo_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_TintTo_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_TintTo_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_TintTo_class,
+        js_crossapp_TintTo_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "TintTo", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::TintTo> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_TintTo_class;
+        p->proto = jsb_CrossApp_TintTo_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.TintTo.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_TintBy_class;
+JSObject *jsb_CrossApp_TintBy_prototype;
+
+bool js_crossapp_TintBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::TintBy* cobj = (CrossApp::TintBy *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_TintBy_initWithDuration : Invalid Native Object");
+    if (argc == 4) {
+        double arg0 = 0;
+        int32_t arg1 = 0;
+        int32_t arg2 = 0;
+        int32_t arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_int32(cx, args.get(1), &arg1);
+        ok &= jsval_to_int32(cx, args.get(2), &arg2);
+        ok &= jsval_to_int32(cx, args.get(3), &arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_TintBy_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_TintBy_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_TintBy_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 4) {
+        double arg0 = 0;
+        int32_t arg1 = 0;
+        int32_t arg2 = 0;
+        int32_t arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_int32(cx, args.get(1), &arg1);
+        ok &= jsval_to_int32(cx, args.get(2), &arg2);
+        ok &= jsval_to_int32(cx, args.get(3), &arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_TintBy_create : Error processing arguments");
+        CrossApp::TintBy* ret = CrossApp::TintBy::create(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::TintBy>(cx, (CrossApp::TintBy*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_TintBy_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_TintBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::TintBy* cobj = new (std::nothrow) CrossApp::TintBy();
+    TypeTest<CrossApp::TintBy> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::TintBy");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_TintBy_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::TintBy *nobj = new (std::nothrow) CrossApp::TintBy();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::TintBy");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_TintBy_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (TintBy)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::TintBy *nobj = static_cast<CrossApp::TintBy *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_TintBy(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_TintBy_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_TintBy_class->name = "TintBy";
+    jsb_CrossApp_TintBy_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_TintBy_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_TintBy_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_TintBy_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_TintBy_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_TintBy_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_TintBy_class->convert = JS_ConvertStub;
+    jsb_CrossApp_TintBy_class->finalize = js_CrossApp_TintBy_finalize;
+    jsb_CrossApp_TintBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_TintBy_initWithDuration, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_TintBy_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_TintBy_create, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_TintBy_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_TintBy_class,
+        js_crossapp_TintBy_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "TintBy", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::TintBy> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_TintBy_class;
+        p->proto = jsb_CrossApp_TintBy_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.TintBy.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_DelayTime_class;
+JSObject *jsb_CrossApp_DelayTime_prototype;
+
+bool js_crossapp_DelayTime_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_DelayTime_create : Error processing arguments");
+        CrossApp::DelayTime* ret = CrossApp::DelayTime::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::DelayTime>(cx, (CrossApp::DelayTime*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_DelayTime_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_DelayTime_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::DelayTime* cobj = new (std::nothrow) CrossApp::DelayTime();
+    TypeTest<CrossApp::DelayTime> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::DelayTime");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_DelayTime_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (DelayTime)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::DelayTime *nobj = static_cast<CrossApp::DelayTime *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_DelayTime(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_DelayTime_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_DelayTime_class->name = "DelayTime";
+    jsb_CrossApp_DelayTime_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_DelayTime_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_DelayTime_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_DelayTime_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_DelayTime_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_DelayTime_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_DelayTime_class->convert = JS_ConvertStub;
+    jsb_CrossApp_DelayTime_class->finalize = js_CrossApp_DelayTime_finalize;
+    jsb_CrossApp_DelayTime_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_DelayTime_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_DelayTime_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_DelayTime_class,
+        js_crossapp_DelayTime_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "DelayTime", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::DelayTime> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_DelayTime_class;
+        p->proto = jsb_CrossApp_DelayTime_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_ReverseTime_class;
+JSObject *jsb_CrossApp_ReverseTime_prototype;
+
+bool js_crossapp_ReverseTime_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ReverseTime* cobj = (CrossApp::ReverseTime *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ReverseTime_initWithAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ReverseTime_initWithAction : Error processing arguments");
+        bool ret = cobj->initWithAction(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ReverseTime_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ReverseTime_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::FiniteTimeAction* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ReverseTime_create : Error processing arguments");
+        CrossApp::ReverseTime* ret = CrossApp::ReverseTime::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ReverseTime>(cx, (CrossApp::ReverseTime*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_ReverseTime_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_ReverseTime_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::ReverseTime* cobj = new (std::nothrow) CrossApp::ReverseTime();
+    TypeTest<CrossApp::ReverseTime> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ReverseTime");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_ReverseTime_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::ReverseTime *nobj = new (std::nothrow) CrossApp::ReverseTime();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ReverseTime");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_ReverseTime_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ReverseTime)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::ReverseTime *nobj = static_cast<CrossApp::ReverseTime *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_ReverseTime(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ReverseTime_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ReverseTime_class->name = "ReverseTime";
+    jsb_CrossApp_ReverseTime_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ReverseTime_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ReverseTime_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ReverseTime_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ReverseTime_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ReverseTime_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ReverseTime_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ReverseTime_class->finalize = js_CrossApp_ReverseTime_finalize;
+    jsb_CrossApp_ReverseTime_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithAction", js_crossapp_ReverseTime_initWithAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_ReverseTime_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_ReverseTime_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_ReverseTime_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_ReverseTime_class,
+        js_crossapp_ReverseTime_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ReverseTime", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ReverseTime> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ReverseTime_class;
+        p->proto = jsb_CrossApp_ReverseTime_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.ReverseTime.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_Animate_class;
+JSObject *jsb_CrossApp_Animate_prototype;
+
+bool js_crossapp_Animate_initWithAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Animate* cobj = (CrossApp::Animate *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Animate_initWithAnimation : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::Animation* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::Animation*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Animate_initWithAnimation : Error processing arguments");
+        bool ret = cobj->initWithAnimation(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Animate_initWithAnimation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Animate_getAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    bool ok = true;
+    CrossApp::Animate* cobj = nullptr;
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (CrossApp::Animate *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Animate_getAnimation : Invalid Native Object");
+    do {
+        if (argc == 0) {
+            const CrossApp::Animation* ret = cobj->getAnimation();
+            jsval jsret = JSVAL_NULL;
+            do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Animation>(cx, (CrossApp::Animation*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            CrossApp::Animation* ret = cobj->getAnimation();
+            jsval jsret = JSVAL_NULL;
+            do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Animation>(cx, (CrossApp::Animation*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_crossapp_Animate_getAnimation : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_Animate_getCurrentFrameIndex(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Animate* cobj = (CrossApp::Animate *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Animate_getCurrentFrameIndex : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getCurrentFrameIndex();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Animate_getCurrentFrameIndex : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_Animate_setAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::Animate* cobj = (CrossApp::Animate *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Animate_setAnimation : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::Animation* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::Animation*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Animate_setAnimation : Error processing arguments");
+        cobj->setAnimation(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_Animate_setAnimation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_Animate_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::Animation* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::Animation*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Animate_create : Error processing arguments");
+        CrossApp::Animate* ret = CrossApp::Animate::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Animate>(cx, (CrossApp::Animate*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_Animate_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_Animate_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::Animate* cobj = new (std::nothrow) CrossApp::Animate();
+    TypeTest<CrossApp::Animate> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::Animate");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_Animate_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (Animate)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::Animate *nobj = static_cast<CrossApp::Animate *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_Animate(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_Animate_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_Animate_class->name = "Animate";
+    jsb_CrossApp_Animate_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_Animate_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_Animate_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_Animate_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_Animate_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_Animate_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_Animate_class->convert = JS_ConvertStub;
+    jsb_CrossApp_Animate_class->finalize = js_CrossApp_Animate_finalize;
+    jsb_CrossApp_Animate_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithAnimation", js_crossapp_Animate_initWithAnimation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnimation", js_crossapp_Animate_getAnimation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCurrentFrameIndex", js_crossapp_Animate_getCurrentFrameIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnimation", js_crossapp_Animate_setAnimation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_Animate_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_Animate_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_Animate_class,
+        js_crossapp_Animate_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "Animate", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::Animate> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_Animate_class;
+        p->proto = jsb_CrossApp_Animate_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_TargetedAction_class;
+JSObject *jsb_CrossApp_TargetedAction_prototype;
+
+bool js_crossapp_TargetedAction_getForcedTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    bool ok = true;
+    CrossApp::TargetedAction* cobj = nullptr;
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (CrossApp::TargetedAction *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_TargetedAction_getForcedTarget : Invalid Native Object");
+    do {
+        if (argc == 0) {
+            const CrossApp::CGNode* ret = cobj->getForcedTarget();
+            jsval jsret = JSVAL_NULL;
+            do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            CrossApp::CGNode* ret = cobj->getForcedTarget();
+            jsval jsret = JSVAL_NULL;
+            do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_crossapp_TargetedAction_getForcedTarget : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_TargetedAction_initWithTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::TargetedAction* cobj = (CrossApp::TargetedAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_TargetedAction_initWithTarget : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::FiniteTimeAction* arg1 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_TargetedAction_initWithTarget : Error processing arguments");
+        bool ret = cobj->initWithTarget(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_TargetedAction_initWithTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_TargetedAction_setForcedTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::TargetedAction* cobj = (CrossApp::TargetedAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_TargetedAction_setForcedTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CGNode* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_TargetedAction_setForcedTarget : Error processing arguments");
+        cobj->setForcedTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_TargetedAction_setForcedTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_TargetedAction_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::FiniteTimeAction* arg1 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::FiniteTimeAction*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_TargetedAction_create : Error processing arguments");
+        CrossApp::TargetedAction* ret = CrossApp::TargetedAction::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::TargetedAction>(cx, (CrossApp::TargetedAction*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_TargetedAction_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_TargetedAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::TargetedAction* cobj = new (std::nothrow) CrossApp::TargetedAction();
+    TypeTest<CrossApp::TargetedAction> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::TargetedAction");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_TargetedAction_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::TargetedAction *nobj = new (std::nothrow) CrossApp::TargetedAction();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::TargetedAction");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_TargetedAction_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (TargetedAction)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::TargetedAction *nobj = static_cast<CrossApp::TargetedAction *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_TargetedAction(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_TargetedAction_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_TargetedAction_class->name = "TargetedAction";
+    jsb_CrossApp_TargetedAction_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_TargetedAction_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_TargetedAction_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_TargetedAction_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_TargetedAction_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_TargetedAction_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_TargetedAction_class->convert = JS_ConvertStub;
+    jsb_CrossApp_TargetedAction_class->finalize = js_CrossApp_TargetedAction_finalize;
+    jsb_CrossApp_TargetedAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getForcedTarget", js_crossapp_TargetedAction_getForcedTarget, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithTarget", js_crossapp_TargetedAction_initWithTarget, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setForcedTarget", js_crossapp_TargetedAction_setForcedTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_TargetedAction_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_TargetedAction_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_TargetedAction_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_TargetedAction_class,
+        js_crossapp_TargetedAction_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "TargetedAction", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::TargetedAction> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_TargetedAction_class;
+        p->proto = jsb_CrossApp_TargetedAction_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.TargetedAction.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_ActionFloat_class;
+JSObject *jsb_CrossApp_ActionFloat_prototype;
+
+bool js_crossapp_ActionFloat_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionFloat* cobj = (CrossApp::ActionFloat *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionFloat_initWithDuration : Invalid Native Object");
+    if (argc == 4) {
+        double arg0 = 0;
+        double arg1 = 0;
+        double arg2 = 0;
+        std::function<void (float)> arg3;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        do {
+		    if(JS_TypeOfValue(cx, args.get(3)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(3)));
+		        auto lambda = [=](float larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = DOUBLE_TO_JSVAL(larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg3 = lambda;
+		    }
+		    else
+		    {
+		        arg3 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionFloat_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionFloat_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_ActionFloat_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 4) {
+        double arg0 = 0;
+        double arg1 = 0;
+        double arg2 = 0;
+        std::function<void (float)> arg3;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        do {
+		    if(JS_TypeOfValue(cx, args.get(3)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(3)));
+		        auto lambda = [=](float larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = DOUBLE_TO_JSVAL(larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg3 = lambda;
+		    }
+		    else
+		    {
+		        arg3 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionFloat_create : Error processing arguments");
+        CrossApp::ActionFloat* ret = CrossApp::ActionFloat::create(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ActionFloat>(cx, (CrossApp::ActionFloat*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_ActionFloat_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_ActionFloat_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::ActionFloat* cobj = new (std::nothrow) CrossApp::ActionFloat();
+    TypeTest<CrossApp::ActionFloat> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ActionFloat");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_ActionFloat_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::ActionFloat *nobj = new (std::nothrow) CrossApp::ActionFloat();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ActionFloat");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_ActionFloat_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ActionFloat)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::ActionFloat *nobj = static_cast<CrossApp::ActionFloat *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_ActionFloat(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ActionFloat_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ActionFloat_class->name = "ActionFloat";
+    jsb_CrossApp_ActionFloat_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionFloat_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ActionFloat_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionFloat_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ActionFloat_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ActionFloat_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ActionFloat_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ActionFloat_class->finalize = js_CrossApp_ActionFloat_finalize;
+    jsb_CrossApp_ActionFloat_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_ActionFloat_initWithDuration, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_ActionFloat_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_ActionFloat_create, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_ActionFloat_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_ActionFloat_class,
+        js_crossapp_ActionFloat_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ActionFloat", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ActionFloat> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ActionFloat_class;
+        p->proto = jsb_CrossApp_ActionFloat_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.ActionFloat.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_ActionCamera_class;
+JSObject *jsb_CrossApp_ActionCamera_prototype;
+
+bool js_crossapp_ActionCamera_setEye(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    bool ok = true;
+    CrossApp::ActionCamera* cobj = nullptr;
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (CrossApp::ActionCamera *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionCamera_setEye : Invalid Native Object");
+    do {
+        if (argc == 3) {
+            double arg0 = 0;
+            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            cobj->setEye(arg0, arg1, arg2);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            CrossApp::DPoint3D arg0;
+            ok &= jsval_to_dpoint3d(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setEye(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_crossapp_ActionCamera_setEye : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_ActionCamera_getEye(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionCamera* cobj = (CrossApp::ActionCamera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionCamera_getEye : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::DPoint3D& ret = cobj->getEye();
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint3d_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionCamera_getEye : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionCamera_setUp(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionCamera* cobj = (CrossApp::ActionCamera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionCamera_setUp : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint3D arg0;
+        ok &= jsval_to_dpoint3d(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionCamera_setUp : Error processing arguments");
+        cobj->setUp(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionCamera_setUp : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionCamera_getCenter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionCamera* cobj = (CrossApp::ActionCamera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionCamera_getCenter : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::DPoint3D& ret = cobj->getCenter();
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint3d_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionCamera_getCenter : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionCamera_setCenter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionCamera* cobj = (CrossApp::ActionCamera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionCamera_setCenter : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint3D arg0;
+        ok &= jsval_to_dpoint3d(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionCamera_setCenter : Error processing arguments");
+        cobj->setCenter(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionCamera_setCenter : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionCamera_getUp(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionCamera* cobj = (CrossApp::ActionCamera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionCamera_getUp : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::DPoint3D& ret = cobj->getUp();
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint3d_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionCamera_getUp : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionCamera_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::ActionCamera* cobj = new (std::nothrow) CrossApp::ActionCamera();
+    TypeTest<CrossApp::ActionCamera> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ActionCamera");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_ActionCamera_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::ActionCamera *nobj = new (std::nothrow) CrossApp::ActionCamera();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ActionCamera");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_ActionCamera_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ActionCamera)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::ActionCamera *nobj = static_cast<CrossApp::ActionCamera *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_ActionCamera(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ActionCamera_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ActionCamera_class->name = "ActionCamera";
+    jsb_CrossApp_ActionCamera_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionCamera_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ActionCamera_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionCamera_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ActionCamera_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ActionCamera_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ActionCamera_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ActionCamera_class->finalize = js_CrossApp_ActionCamera_finalize;
+    jsb_CrossApp_ActionCamera_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setEye", js_crossapp_ActionCamera_setEye, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getEye", js_crossapp_ActionCamera_getEye, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setUp", js_crossapp_ActionCamera_setUp, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCenter", js_crossapp_ActionCamera_getCenter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCenter", js_crossapp_ActionCamera_setCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getUp", js_crossapp_ActionCamera_getUp, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_ActionCamera_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    jsb_CrossApp_ActionCamera_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_ActionCamera_class,
+        js_crossapp_ActionCamera_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ActionCamera", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ActionCamera> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ActionCamera_class;
+        p->proto = jsb_CrossApp_ActionCamera_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.ActionCamera.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_ActionEase_class;
+JSObject *jsb_CrossApp_ActionEase_prototype;
+
+bool js_crossapp_ActionEase_clone(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionEase* cobj = (CrossApp::ActionEase *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionEase_clone : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::ActionEase* ret = cobj->clone();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ActionEase>(cx, (CrossApp::ActionEase*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionEase_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionEase_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionEase* cobj = (CrossApp::ActionEase *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionEase_getInnerAction : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::ActionInterval* ret = cobj->getInnerAction();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ActionInterval>(cx, (CrossApp::ActionInterval*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionEase_getInnerAction : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionEase_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionEase* cobj = (CrossApp::ActionEase *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionEase_initWithAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionEase_initWithAction : Error processing arguments");
+        bool ret = cobj->initWithAction(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionEase_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionEase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::ActionEase* cobj = new (std::nothrow) CrossApp::ActionEase();
+    TypeTest<CrossApp::ActionEase> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ActionEase");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_ActionEase_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::ActionEase *nobj = new (std::nothrow) CrossApp::ActionEase();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ActionEase");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_ActionEase_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ActionEase)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::ActionEase *nobj = static_cast<CrossApp::ActionEase *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_ActionEase(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ActionEase_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ActionEase_class->name = "ActionEase";
+    jsb_CrossApp_ActionEase_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionEase_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ActionEase_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionEase_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ActionEase_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ActionEase_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ActionEase_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ActionEase_class->finalize = js_CrossApp_ActionEase_finalize;
+    jsb_CrossApp_ActionEase_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("clone", js_crossapp_ActionEase_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getInnerAction", js_crossapp_ActionEase_getInnerAction, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithAction", js_crossapp_ActionEase_initWithAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_ActionEase_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    jsb_CrossApp_ActionEase_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_ActionEase_class,
+        js_crossapp_ActionEase_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ActionEase", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ActionEase> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ActionEase_class;
+        p->proto = jsb_CrossApp_ActionEase_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.ActionEase.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseRateAction_class;
+JSObject *jsb_CrossApp_EaseRateAction_prototype;
+
+bool js_crossapp_EaseRateAction_initWithAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::EaseRateAction* cobj = (CrossApp::EaseRateAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_EaseRateAction_initWithAction : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        double arg1 = 0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseRateAction_initWithAction : Error processing arguments");
+        bool ret = cobj->initWithAction(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_EaseRateAction_initWithAction : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_EaseRateAction_setRate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::EaseRateAction* cobj = (CrossApp::EaseRateAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_EaseRateAction_setRate : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseRateAction_setRate : Error processing arguments");
+        cobj->setRate(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_EaseRateAction_setRate : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_EaseRateAction_clone(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::EaseRateAction* cobj = (CrossApp::EaseRateAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_EaseRateAction_clone : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::EaseRateAction* ret = cobj->clone();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseRateAction>(cx, (CrossApp::EaseRateAction*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_EaseRateAction_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_EaseRateAction_getRate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::EaseRateAction* cobj = (CrossApp::EaseRateAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_EaseRateAction_getRate : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getRate();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_EaseRateAction_getRate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_EaseRateAction_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        double arg1 = 0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseRateAction_create : Error processing arguments");
+        CrossApp::EaseRateAction* ret = CrossApp::EaseRateAction::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseRateAction>(cx, (CrossApp::EaseRateAction*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseRateAction_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseRateAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseRateAction* cobj = new (std::nothrow) CrossApp::EaseRateAction();
+    TypeTest<CrossApp::EaseRateAction> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseRateAction");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseRateAction_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseRateAction *nobj = new (std::nothrow) CrossApp::EaseRateAction();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseRateAction");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseRateAction_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseRateAction)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseRateAction *nobj = static_cast<CrossApp::EaseRateAction *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseRateAction(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseRateAction_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseRateAction_class->name = "EaseRateAction";
+    jsb_CrossApp_EaseRateAction_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseRateAction_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseRateAction_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseRateAction_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseRateAction_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseRateAction_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseRateAction_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseRateAction_class->finalize = js_CrossApp_EaseRateAction_finalize;
+    jsb_CrossApp_EaseRateAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithAction", js_crossapp_EaseRateAction_initWithAction, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setRate", js_crossapp_EaseRateAction_setRate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("clone", js_crossapp_EaseRateAction_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRate", js_crossapp_EaseRateAction_getRate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_EaseRateAction_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseRateAction_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseRateAction_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseRateAction_class,
+        js_crossapp_EaseRateAction_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseRateAction", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseRateAction> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseRateAction_class;
+        p->proto = jsb_CrossApp_EaseRateAction_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseRateAction.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseBezierAction_class;
+JSObject *jsb_CrossApp_EaseBezierAction_prototype;
+
+bool js_crossapp_EaseBezierAction_setBezierParamer(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::EaseBezierAction* cobj = (CrossApp::EaseBezierAction *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_EaseBezierAction_setBezierParamer : Invalid Native Object");
+    if (argc == 4) {
+        double arg0 = 0;
+        double arg1 = 0;
+        double arg2 = 0;
+        double arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseBezierAction_setBezierParamer : Error processing arguments");
+        cobj->setBezierParamer(arg0, arg1, arg2, arg3);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_EaseBezierAction_setBezierParamer : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_EaseBezierAction_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseBezierAction_create : Error processing arguments");
+        CrossApp::EaseBezierAction* ret = CrossApp::EaseBezierAction::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseBezierAction>(cx, (CrossApp::EaseBezierAction*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseBezierAction_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseBezierAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseBezierAction* cobj = new (std::nothrow) CrossApp::EaseBezierAction();
+    TypeTest<CrossApp::EaseBezierAction> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseBezierAction");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseBezierAction_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseBezierAction *nobj = new (std::nothrow) CrossApp::EaseBezierAction();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseBezierAction");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseBezierAction_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseBezierAction)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseBezierAction *nobj = static_cast<CrossApp::EaseBezierAction *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseBezierAction(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseBezierAction_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseBezierAction_class->name = "EaseBezierAction";
+    jsb_CrossApp_EaseBezierAction_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseBezierAction_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseBezierAction_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseBezierAction_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseBezierAction_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseBezierAction_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseBezierAction_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseBezierAction_class->finalize = js_CrossApp_EaseBezierAction_finalize;
+    jsb_CrossApp_EaseBezierAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setBezierParamer", js_crossapp_EaseBezierAction_setBezierParamer, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_EaseBezierAction_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseBezierAction_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseBezierAction_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseBezierAction_class,
+        js_crossapp_EaseBezierAction_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseBezierAction", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseBezierAction> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseBezierAction_class;
+        p->proto = jsb_CrossApp_EaseBezierAction_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseBezierAction.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuadraticActionIn_class;
+JSObject *jsb_CrossApp_EaseQuadraticActionIn_prototype;
+
+bool js_crossapp_EaseQuadraticActionIn_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuadraticActionIn_create : Error processing arguments");
+        CrossApp::EaseQuadraticActionIn* ret = CrossApp::EaseQuadraticActionIn::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuadraticActionIn>(cx, (CrossApp::EaseQuadraticActionIn*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuadraticActionIn_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuadraticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuadraticActionIn* cobj = new (std::nothrow) CrossApp::EaseQuadraticActionIn();
+    TypeTest<CrossApp::EaseQuadraticActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuadraticActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuadraticActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuadraticActionIn *nobj = new (std::nothrow) CrossApp::EaseQuadraticActionIn();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuadraticActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuadraticActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuadraticActionIn)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuadraticActionIn *nobj = static_cast<CrossApp::EaseQuadraticActionIn *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuadraticActionIn(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuadraticActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuadraticActionIn_class->name = "EaseQuadraticActionIn";
+    jsb_CrossApp_EaseQuadraticActionIn_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuadraticActionIn_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuadraticActionIn_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuadraticActionIn_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuadraticActionIn_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuadraticActionIn_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuadraticActionIn_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuadraticActionIn_class->finalize = js_CrossApp_EaseQuadraticActionIn_finalize;
+    jsb_CrossApp_EaseQuadraticActionIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuadraticActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuadraticActionIn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuadraticActionIn_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuadraticActionIn_class,
+        js_crossapp_EaseQuadraticActionIn_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuadraticActionIn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuadraticActionIn> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuadraticActionIn_class;
+        p->proto = jsb_CrossApp_EaseQuadraticActionIn_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuadraticActionIn.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuadraticActionOut_class;
+JSObject *jsb_CrossApp_EaseQuadraticActionOut_prototype;
+
+bool js_crossapp_EaseQuadraticActionOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuadraticActionOut_create : Error processing arguments");
+        CrossApp::EaseQuadraticActionOut* ret = CrossApp::EaseQuadraticActionOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuadraticActionOut>(cx, (CrossApp::EaseQuadraticActionOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuadraticActionOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuadraticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuadraticActionOut* cobj = new (std::nothrow) CrossApp::EaseQuadraticActionOut();
+    TypeTest<CrossApp::EaseQuadraticActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuadraticActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuadraticActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuadraticActionOut *nobj = new (std::nothrow) CrossApp::EaseQuadraticActionOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuadraticActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuadraticActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuadraticActionOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuadraticActionOut *nobj = static_cast<CrossApp::EaseQuadraticActionOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuadraticActionOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuadraticActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuadraticActionOut_class->name = "EaseQuadraticActionOut";
+    jsb_CrossApp_EaseQuadraticActionOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuadraticActionOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuadraticActionOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuadraticActionOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuadraticActionOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuadraticActionOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuadraticActionOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuadraticActionOut_class->finalize = js_CrossApp_EaseQuadraticActionOut_finalize;
+    jsb_CrossApp_EaseQuadraticActionOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuadraticActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuadraticActionOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuadraticActionOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuadraticActionOut_class,
+        js_crossapp_EaseQuadraticActionOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuadraticActionOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuadraticActionOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuadraticActionOut_class;
+        p->proto = jsb_CrossApp_EaseQuadraticActionOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuadraticActionOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuadraticActionInOut_class;
+JSObject *jsb_CrossApp_EaseQuadraticActionInOut_prototype;
+
+bool js_crossapp_EaseQuadraticActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuadraticActionInOut_create : Error processing arguments");
+        CrossApp::EaseQuadraticActionInOut* ret = CrossApp::EaseQuadraticActionInOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuadraticActionInOut>(cx, (CrossApp::EaseQuadraticActionInOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuadraticActionInOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuadraticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuadraticActionInOut* cobj = new (std::nothrow) CrossApp::EaseQuadraticActionInOut();
+    TypeTest<CrossApp::EaseQuadraticActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuadraticActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuadraticActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuadraticActionInOut *nobj = new (std::nothrow) CrossApp::EaseQuadraticActionInOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuadraticActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuadraticActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuadraticActionInOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuadraticActionInOut *nobj = static_cast<CrossApp::EaseQuadraticActionInOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuadraticActionInOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuadraticActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuadraticActionInOut_class->name = "EaseQuadraticActionInOut";
+    jsb_CrossApp_EaseQuadraticActionInOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuadraticActionInOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuadraticActionInOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuadraticActionInOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuadraticActionInOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuadraticActionInOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuadraticActionInOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuadraticActionInOut_class->finalize = js_CrossApp_EaseQuadraticActionInOut_finalize;
+    jsb_CrossApp_EaseQuadraticActionInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuadraticActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuadraticActionInOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuadraticActionInOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuadraticActionInOut_class,
+        js_crossapp_EaseQuadraticActionInOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuadraticActionInOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuadraticActionInOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuadraticActionInOut_class;
+        p->proto = jsb_CrossApp_EaseQuadraticActionInOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuadraticActionInOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuarticActionIn_class;
+JSObject *jsb_CrossApp_EaseQuarticActionIn_prototype;
+
+bool js_crossapp_EaseQuarticActionIn_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuarticActionIn_create : Error processing arguments");
+        CrossApp::EaseQuarticActionIn* ret = CrossApp::EaseQuarticActionIn::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuarticActionIn>(cx, (CrossApp::EaseQuarticActionIn*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuarticActionIn_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuarticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuarticActionIn* cobj = new (std::nothrow) CrossApp::EaseQuarticActionIn();
+    TypeTest<CrossApp::EaseQuarticActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuarticActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuarticActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuarticActionIn *nobj = new (std::nothrow) CrossApp::EaseQuarticActionIn();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuarticActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuarticActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuarticActionIn)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuarticActionIn *nobj = static_cast<CrossApp::EaseQuarticActionIn *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuarticActionIn(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuarticActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuarticActionIn_class->name = "EaseQuarticActionIn";
+    jsb_CrossApp_EaseQuarticActionIn_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuarticActionIn_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuarticActionIn_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuarticActionIn_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuarticActionIn_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuarticActionIn_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuarticActionIn_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuarticActionIn_class->finalize = js_CrossApp_EaseQuarticActionIn_finalize;
+    jsb_CrossApp_EaseQuarticActionIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuarticActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuarticActionIn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuarticActionIn_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuarticActionIn_class,
+        js_crossapp_EaseQuarticActionIn_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuarticActionIn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuarticActionIn> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuarticActionIn_class;
+        p->proto = jsb_CrossApp_EaseQuarticActionIn_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuarticActionIn.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuarticActionOut_class;
+JSObject *jsb_CrossApp_EaseQuarticActionOut_prototype;
+
+bool js_crossapp_EaseQuarticActionOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuarticActionOut_create : Error processing arguments");
+        CrossApp::EaseQuarticActionOut* ret = CrossApp::EaseQuarticActionOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuarticActionOut>(cx, (CrossApp::EaseQuarticActionOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuarticActionOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuarticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuarticActionOut* cobj = new (std::nothrow) CrossApp::EaseQuarticActionOut();
+    TypeTest<CrossApp::EaseQuarticActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuarticActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuarticActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuarticActionOut *nobj = new (std::nothrow) CrossApp::EaseQuarticActionOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuarticActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuarticActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuarticActionOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuarticActionOut *nobj = static_cast<CrossApp::EaseQuarticActionOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuarticActionOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuarticActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuarticActionOut_class->name = "EaseQuarticActionOut";
+    jsb_CrossApp_EaseQuarticActionOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuarticActionOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuarticActionOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuarticActionOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuarticActionOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuarticActionOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuarticActionOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuarticActionOut_class->finalize = js_CrossApp_EaseQuarticActionOut_finalize;
+    jsb_CrossApp_EaseQuarticActionOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuarticActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuarticActionOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuarticActionOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuarticActionOut_class,
+        js_crossapp_EaseQuarticActionOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuarticActionOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuarticActionOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuarticActionOut_class;
+        p->proto = jsb_CrossApp_EaseQuarticActionOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuarticActionOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuarticActionInOut_class;
+JSObject *jsb_CrossApp_EaseQuarticActionInOut_prototype;
+
+bool js_crossapp_EaseQuarticActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuarticActionInOut_create : Error processing arguments");
+        CrossApp::EaseQuarticActionInOut* ret = CrossApp::EaseQuarticActionInOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuarticActionInOut>(cx, (CrossApp::EaseQuarticActionInOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuarticActionInOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuarticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuarticActionInOut* cobj = new (std::nothrow) CrossApp::EaseQuarticActionInOut();
+    TypeTest<CrossApp::EaseQuarticActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuarticActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuarticActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuarticActionInOut *nobj = new (std::nothrow) CrossApp::EaseQuarticActionInOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuarticActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuarticActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuarticActionInOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuarticActionInOut *nobj = static_cast<CrossApp::EaseQuarticActionInOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuarticActionInOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuarticActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuarticActionInOut_class->name = "EaseQuarticActionInOut";
+    jsb_CrossApp_EaseQuarticActionInOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuarticActionInOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuarticActionInOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuarticActionInOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuarticActionInOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuarticActionInOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuarticActionInOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuarticActionInOut_class->finalize = js_CrossApp_EaseQuarticActionInOut_finalize;
+    jsb_CrossApp_EaseQuarticActionInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuarticActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuarticActionInOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuarticActionInOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuarticActionInOut_class,
+        js_crossapp_EaseQuarticActionInOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuarticActionInOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuarticActionInOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuarticActionInOut_class;
+        p->proto = jsb_CrossApp_EaseQuarticActionInOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuarticActionInOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuinticActionIn_class;
+JSObject *jsb_CrossApp_EaseQuinticActionIn_prototype;
+
+bool js_crossapp_EaseQuinticActionIn_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuinticActionIn_create : Error processing arguments");
+        CrossApp::EaseQuinticActionIn* ret = CrossApp::EaseQuinticActionIn::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuinticActionIn>(cx, (CrossApp::EaseQuinticActionIn*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuinticActionIn_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuinticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuinticActionIn* cobj = new (std::nothrow) CrossApp::EaseQuinticActionIn();
+    TypeTest<CrossApp::EaseQuinticActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuinticActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuinticActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuinticActionIn *nobj = new (std::nothrow) CrossApp::EaseQuinticActionIn();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuinticActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuinticActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuinticActionIn)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuinticActionIn *nobj = static_cast<CrossApp::EaseQuinticActionIn *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuinticActionIn(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuinticActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuinticActionIn_class->name = "EaseQuinticActionIn";
+    jsb_CrossApp_EaseQuinticActionIn_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuinticActionIn_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuinticActionIn_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuinticActionIn_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuinticActionIn_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuinticActionIn_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuinticActionIn_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuinticActionIn_class->finalize = js_CrossApp_EaseQuinticActionIn_finalize;
+    jsb_CrossApp_EaseQuinticActionIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuinticActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuinticActionIn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuinticActionIn_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuinticActionIn_class,
+        js_crossapp_EaseQuinticActionIn_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuinticActionIn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuinticActionIn> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuinticActionIn_class;
+        p->proto = jsb_CrossApp_EaseQuinticActionIn_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuinticActionIn.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuinticActionOut_class;
+JSObject *jsb_CrossApp_EaseQuinticActionOut_prototype;
+
+bool js_crossapp_EaseQuinticActionOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuinticActionOut_create : Error processing arguments");
+        CrossApp::EaseQuinticActionOut* ret = CrossApp::EaseQuinticActionOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuinticActionOut>(cx, (CrossApp::EaseQuinticActionOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuinticActionOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuinticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuinticActionOut* cobj = new (std::nothrow) CrossApp::EaseQuinticActionOut();
+    TypeTest<CrossApp::EaseQuinticActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuinticActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuinticActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuinticActionOut *nobj = new (std::nothrow) CrossApp::EaseQuinticActionOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuinticActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuinticActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuinticActionOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuinticActionOut *nobj = static_cast<CrossApp::EaseQuinticActionOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuinticActionOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuinticActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuinticActionOut_class->name = "EaseQuinticActionOut";
+    jsb_CrossApp_EaseQuinticActionOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuinticActionOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuinticActionOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuinticActionOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuinticActionOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuinticActionOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuinticActionOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuinticActionOut_class->finalize = js_CrossApp_EaseQuinticActionOut_finalize;
+    jsb_CrossApp_EaseQuinticActionOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuinticActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuinticActionOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuinticActionOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuinticActionOut_class,
+        js_crossapp_EaseQuinticActionOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuinticActionOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuinticActionOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuinticActionOut_class;
+        p->proto = jsb_CrossApp_EaseQuinticActionOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuinticActionOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseQuinticActionInOut_class;
+JSObject *jsb_CrossApp_EaseQuinticActionInOut_prototype;
+
+bool js_crossapp_EaseQuinticActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseQuinticActionInOut_create : Error processing arguments");
+        CrossApp::EaseQuinticActionInOut* ret = CrossApp::EaseQuinticActionInOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseQuinticActionInOut>(cx, (CrossApp::EaseQuinticActionInOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseQuinticActionInOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseQuinticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseQuinticActionInOut* cobj = new (std::nothrow) CrossApp::EaseQuinticActionInOut();
+    TypeTest<CrossApp::EaseQuinticActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuinticActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseQuinticActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseQuinticActionInOut *nobj = new (std::nothrow) CrossApp::EaseQuinticActionInOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseQuinticActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseQuinticActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseQuinticActionInOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseQuinticActionInOut *nobj = static_cast<CrossApp::EaseQuinticActionInOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseQuinticActionInOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseQuinticActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseQuinticActionInOut_class->name = "EaseQuinticActionInOut";
+    jsb_CrossApp_EaseQuinticActionInOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuinticActionInOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseQuinticActionInOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseQuinticActionInOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseQuinticActionInOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseQuinticActionInOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseQuinticActionInOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseQuinticActionInOut_class->finalize = js_CrossApp_EaseQuinticActionInOut_finalize;
+    jsb_CrossApp_EaseQuinticActionInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseQuinticActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseQuinticActionInOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseQuinticActionInOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseQuinticActionInOut_class,
+        js_crossapp_EaseQuinticActionInOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseQuinticActionInOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseQuinticActionInOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseQuinticActionInOut_class;
+        p->proto = jsb_CrossApp_EaseQuinticActionInOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseQuinticActionInOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseCircleActionIn_class;
+JSObject *jsb_CrossApp_EaseCircleActionIn_prototype;
+
+bool js_crossapp_EaseCircleActionIn_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseCircleActionIn_create : Error processing arguments");
+        CrossApp::EaseCircleActionIn* ret = CrossApp::EaseCircleActionIn::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseCircleActionIn>(cx, (CrossApp::EaseCircleActionIn*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseCircleActionIn_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseCircleActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseCircleActionIn* cobj = new (std::nothrow) CrossApp::EaseCircleActionIn();
+    TypeTest<CrossApp::EaseCircleActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCircleActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseCircleActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseCircleActionIn *nobj = new (std::nothrow) CrossApp::EaseCircleActionIn();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCircleActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseCircleActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseCircleActionIn)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseCircleActionIn *nobj = static_cast<CrossApp::EaseCircleActionIn *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseCircleActionIn(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseCircleActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseCircleActionIn_class->name = "EaseCircleActionIn";
+    jsb_CrossApp_EaseCircleActionIn_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCircleActionIn_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseCircleActionIn_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCircleActionIn_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseCircleActionIn_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseCircleActionIn_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseCircleActionIn_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseCircleActionIn_class->finalize = js_CrossApp_EaseCircleActionIn_finalize;
+    jsb_CrossApp_EaseCircleActionIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseCircleActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseCircleActionIn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseCircleActionIn_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseCircleActionIn_class,
+        js_crossapp_EaseCircleActionIn_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseCircleActionIn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseCircleActionIn> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseCircleActionIn_class;
+        p->proto = jsb_CrossApp_EaseCircleActionIn_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseCircleActionIn.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseCircleActionOut_class;
+JSObject *jsb_CrossApp_EaseCircleActionOut_prototype;
+
+bool js_crossapp_EaseCircleActionOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseCircleActionOut_create : Error processing arguments");
+        CrossApp::EaseCircleActionOut* ret = CrossApp::EaseCircleActionOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseCircleActionOut>(cx, (CrossApp::EaseCircleActionOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseCircleActionOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseCircleActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseCircleActionOut* cobj = new (std::nothrow) CrossApp::EaseCircleActionOut();
+    TypeTest<CrossApp::EaseCircleActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCircleActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseCircleActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseCircleActionOut *nobj = new (std::nothrow) CrossApp::EaseCircleActionOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCircleActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseCircleActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseCircleActionOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseCircleActionOut *nobj = static_cast<CrossApp::EaseCircleActionOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseCircleActionOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseCircleActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseCircleActionOut_class->name = "EaseCircleActionOut";
+    jsb_CrossApp_EaseCircleActionOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCircleActionOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseCircleActionOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCircleActionOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseCircleActionOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseCircleActionOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseCircleActionOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseCircleActionOut_class->finalize = js_CrossApp_EaseCircleActionOut_finalize;
+    jsb_CrossApp_EaseCircleActionOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseCircleActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseCircleActionOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseCircleActionOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseCircleActionOut_class,
+        js_crossapp_EaseCircleActionOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseCircleActionOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseCircleActionOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseCircleActionOut_class;
+        p->proto = jsb_CrossApp_EaseCircleActionOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseCircleActionOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseCircleActionInOut_class;
+JSObject *jsb_CrossApp_EaseCircleActionInOut_prototype;
+
+bool js_crossapp_EaseCircleActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseCircleActionInOut_create : Error processing arguments");
+        CrossApp::EaseCircleActionInOut* ret = CrossApp::EaseCircleActionInOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseCircleActionInOut>(cx, (CrossApp::EaseCircleActionInOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseCircleActionInOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseCircleActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseCircleActionInOut* cobj = new (std::nothrow) CrossApp::EaseCircleActionInOut();
+    TypeTest<CrossApp::EaseCircleActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCircleActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseCircleActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseCircleActionInOut *nobj = new (std::nothrow) CrossApp::EaseCircleActionInOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCircleActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseCircleActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseCircleActionInOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseCircleActionInOut *nobj = static_cast<CrossApp::EaseCircleActionInOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseCircleActionInOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseCircleActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseCircleActionInOut_class->name = "EaseCircleActionInOut";
+    jsb_CrossApp_EaseCircleActionInOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCircleActionInOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseCircleActionInOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCircleActionInOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseCircleActionInOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseCircleActionInOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseCircleActionInOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseCircleActionInOut_class->finalize = js_CrossApp_EaseCircleActionInOut_finalize;
+    jsb_CrossApp_EaseCircleActionInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseCircleActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseCircleActionInOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseCircleActionInOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseCircleActionInOut_class,
+        js_crossapp_EaseCircleActionInOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseCircleActionInOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseCircleActionInOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseCircleActionInOut_class;
+        p->proto = jsb_CrossApp_EaseCircleActionInOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseCircleActionInOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseCubicActionIn_class;
+JSObject *jsb_CrossApp_EaseCubicActionIn_prototype;
+
+bool js_crossapp_EaseCubicActionIn_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseCubicActionIn_create : Error processing arguments");
+        CrossApp::EaseCubicActionIn* ret = CrossApp::EaseCubicActionIn::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseCubicActionIn>(cx, (CrossApp::EaseCubicActionIn*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseCubicActionIn_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseCubicActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseCubicActionIn* cobj = new (std::nothrow) CrossApp::EaseCubicActionIn();
+    TypeTest<CrossApp::EaseCubicActionIn> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCubicActionIn");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseCubicActionIn_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseCubicActionIn *nobj = new (std::nothrow) CrossApp::EaseCubicActionIn();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCubicActionIn");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseCubicActionIn_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseCubicActionIn)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseCubicActionIn *nobj = static_cast<CrossApp::EaseCubicActionIn *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseCubicActionIn(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseCubicActionIn_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseCubicActionIn_class->name = "EaseCubicActionIn";
+    jsb_CrossApp_EaseCubicActionIn_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCubicActionIn_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseCubicActionIn_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCubicActionIn_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseCubicActionIn_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseCubicActionIn_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseCubicActionIn_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseCubicActionIn_class->finalize = js_CrossApp_EaseCubicActionIn_finalize;
+    jsb_CrossApp_EaseCubicActionIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseCubicActionIn_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseCubicActionIn_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseCubicActionIn_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseCubicActionIn_class,
+        js_crossapp_EaseCubicActionIn_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseCubicActionIn", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseCubicActionIn> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseCubicActionIn_class;
+        p->proto = jsb_CrossApp_EaseCubicActionIn_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseCubicActionIn.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseCubicActionOut_class;
+JSObject *jsb_CrossApp_EaseCubicActionOut_prototype;
+
+bool js_crossapp_EaseCubicActionOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseCubicActionOut_create : Error processing arguments");
+        CrossApp::EaseCubicActionOut* ret = CrossApp::EaseCubicActionOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseCubicActionOut>(cx, (CrossApp::EaseCubicActionOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseCubicActionOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseCubicActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseCubicActionOut* cobj = new (std::nothrow) CrossApp::EaseCubicActionOut();
+    TypeTest<CrossApp::EaseCubicActionOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCubicActionOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseCubicActionOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseCubicActionOut *nobj = new (std::nothrow) CrossApp::EaseCubicActionOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCubicActionOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseCubicActionOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseCubicActionOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseCubicActionOut *nobj = static_cast<CrossApp::EaseCubicActionOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseCubicActionOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseCubicActionOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseCubicActionOut_class->name = "EaseCubicActionOut";
+    jsb_CrossApp_EaseCubicActionOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCubicActionOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseCubicActionOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCubicActionOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseCubicActionOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseCubicActionOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseCubicActionOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseCubicActionOut_class->finalize = js_CrossApp_EaseCubicActionOut_finalize;
+    jsb_CrossApp_EaseCubicActionOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseCubicActionOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseCubicActionOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseCubicActionOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseCubicActionOut_class,
+        js_crossapp_EaseCubicActionOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseCubicActionOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseCubicActionOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseCubicActionOut_class;
+        p->proto = jsb_CrossApp_EaseCubicActionOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseCubicActionOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_EaseCubicActionInOut_class;
+JSObject *jsb_CrossApp_EaseCubicActionInOut_prototype;
+
+bool js_crossapp_EaseCubicActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::ActionInterval* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::ActionInterval*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EaseCubicActionInOut_create : Error processing arguments");
+        CrossApp::EaseCubicActionInOut* ret = CrossApp::EaseCubicActionInOut::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::EaseCubicActionInOut>(cx, (CrossApp::EaseCubicActionInOut*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_EaseCubicActionInOut_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_EaseCubicActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::EaseCubicActionInOut* cobj = new (std::nothrow) CrossApp::EaseCubicActionInOut();
+    TypeTest<CrossApp::EaseCubicActionInOut> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCubicActionInOut");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_EaseCubicActionInOut_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::EaseCubicActionInOut *nobj = new (std::nothrow) CrossApp::EaseCubicActionInOut();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::EaseCubicActionInOut");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+void js_CrossApp_EaseCubicActionInOut_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (EaseCubicActionInOut)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::EaseCubicActionInOut *nobj = static_cast<CrossApp::EaseCubicActionInOut *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_EaseCubicActionInOut(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_EaseCubicActionInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_EaseCubicActionInOut_class->name = "EaseCubicActionInOut";
+    jsb_CrossApp_EaseCubicActionInOut_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCubicActionInOut_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_EaseCubicActionInOut_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_EaseCubicActionInOut_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_EaseCubicActionInOut_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_EaseCubicActionInOut_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_EaseCubicActionInOut_class->convert = JS_ConvertStub;
+    jsb_CrossApp_EaseCubicActionInOut_class->finalize = js_CrossApp_EaseCubicActionInOut_finalize;
+    jsb_CrossApp_EaseCubicActionInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_crossapp_EaseCubicActionInOut_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_EaseCubicActionInOut_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_EaseCubicActionInOut_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionEase_prototype),
+        jsb_CrossApp_EaseCubicActionInOut_class,
+        js_crossapp_EaseCubicActionInOut_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "EaseCubicActionInOut", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::EaseCubicActionInOut> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_EaseCubicActionInOut_class;
+        p->proto = jsb_CrossApp_EaseCubicActionInOut_prototype;
+        p->parentProto = jsb_CrossApp_ActionEase_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.EaseCubicActionInOut.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_ActionTween_class;
+JSObject *jsb_CrossApp_ActionTween_prototype;
+
+bool js_crossapp_ActionTween_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionTween* cobj = (CrossApp::ActionTween *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionTween_initWithDuration : Invalid Native Object");
+    if (argc == 4) {
+        double arg0 = 0;
+        std::string arg1;
+        double arg2 = 0;
+        double arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionTween_initWithDuration : Error processing arguments");
+        bool ret = cobj->initWithDuration(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionTween_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_ActionTween_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 4) {
+        double arg0 = 0;
+        std::string arg1;
+        double arg2 = 0;
+        double arg3 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionTween_create : Error processing arguments");
+        CrossApp::ActionTween* ret = CrossApp::ActionTween::create(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ActionTween>(cx, (CrossApp::ActionTween*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_ActionTween_create : wrong number of arguments");
+    return false;
+}
+
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+void js_CrossApp_ActionTween_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ActionTween)", obj);
+}
+void js_register_crossapp_ActionTween(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ActionTween_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ActionTween_class->name = "ActionTween";
+    jsb_CrossApp_ActionTween_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionTween_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ActionTween_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionTween_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ActionTween_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ActionTween_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ActionTween_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ActionTween_class->finalize = js_CrossApp_ActionTween_finalize;
+    jsb_CrossApp_ActionTween_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithDuration", js_crossapp_ActionTween_initWithDuration, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_ActionTween_create, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_ActionTween_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_ActionInterval_prototype),
+        jsb_CrossApp_ActionTween_class,
+        dummy_constructor<CrossApp::ActionTween>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ActionTween", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ActionTween> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ActionTween_class;
+        p->proto = jsb_CrossApp_ActionTween_prototype;
+        p->parentProto = jsb_CrossApp_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.ActionTween.extend = ca.Class.extend; })()");
+}
+JSClass  *jsb_CrossApp_ActionInstant_class;
+JSObject *jsb_CrossApp_ActionInstant_prototype;
+
+bool js_crossapp_ActionInstant_clone(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionInstant* cobj = (CrossApp::ActionInstant *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInstant_clone : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::ActionInstant* ret = cobj->clone();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::ActionInstant>(cx, (CrossApp::ActionInstant*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionInstant_clone : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+
+extern JSObject *jsb_CrossApp_FiniteTimeAction_prototype;
+
+void js_CrossApp_ActionInstant_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ActionInstant)", obj);
+}
+void js_register_crossapp_ActionInstant(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ActionInstant_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ActionInstant_class->name = "ActionInstant";
+    jsb_CrossApp_ActionInstant_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionInstant_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ActionInstant_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionInstant_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ActionInstant_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ActionInstant_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ActionInstant_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ActionInstant_class->finalize = js_CrossApp_ActionInstant_finalize;
+    jsb_CrossApp_ActionInstant_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("clone", js_crossapp_ActionInstant_clone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    jsb_CrossApp_ActionInstant_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_FiniteTimeAction_prototype),
+        jsb_CrossApp_ActionInstant_class,
+        empty_constructor, 0,
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ActionInstant", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ActionInstant> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ActionInstant_class;
+        p->proto = jsb_CrossApp_ActionInstant_prototype;
+        p->parentProto = jsb_CrossApp_FiniteTimeAction_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_ActionManager_class;
+JSObject *jsb_CrossApp_ActionManager_prototype;
+
+bool js_crossapp_ActionManager_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_getActionByTag : Invalid Native Object");
+    if (argc == 2) {
+        int arg0 = 0;
+        const CrossApp::CGNode* arg1 = nullptr;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (const CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_getActionByTag : Error processing arguments");
+        CrossApp::Action* ret = cobj->getActionByTag(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Action>(cx, (CrossApp::Action*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_getActionByTag : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_ActionManager_removeActionByTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeActionByTag : Invalid Native Object");
+    if (argc == 2) {
+        int arg0 = 0;
+        CrossApp::CGNode* arg1 = nullptr;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeActionByTag : Error processing arguments");
+        cobj->removeActionByTag(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_removeActionByTag : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_ActionManager_removeActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeActionsByFlags : Invalid Native Object");
+    if (argc == 2) {
+        unsigned int arg0 = 0;
+        CrossApp::CGNode* arg1 = nullptr;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeActionsByFlags : Error processing arguments");
+        cobj->removeActionsByFlags(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_removeActionsByFlags : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_ActionManager_removeAllActions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeAllActions : Invalid Native Object");
+    if (argc == 0) {
+        cobj->removeAllActions();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_removeAllActions : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionManager_addAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_addAction : Invalid Native Object");
+    if (argc == 3) {
+        CrossApp::Action* arg0 = nullptr;
+        CrossApp::CGNode* arg1 = nullptr;
+        bool arg2;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::Action*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        arg2 = JS::ToBoolean(args.get(2));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_addAction : Error processing arguments");
+        cobj->addAction(arg0, arg1, arg2);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_addAction : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
+bool js_crossapp_ActionManager_resumeTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_resumeTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CGNode* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_resumeTarget : Error processing arguments");
+        cobj->resumeTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_resumeTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionManager_update(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_update : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_update : Error processing arguments");
+        cobj->update(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_update : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionManager_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_pauseTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CGNode* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_pauseTarget : Error processing arguments");
+        cobj->pauseTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_pauseTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionManager_getNumberOfRunningActionsInTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_getNumberOfRunningActionsInTarget : Invalid Native Object");
+    if (argc == 1) {
+        const CrossApp::CGNode* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (const CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_getNumberOfRunningActionsInTarget : Error processing arguments");
+        ssize_t ret = cobj->getNumberOfRunningActionsInTarget(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = ssize_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_getNumberOfRunningActionsInTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionManager_removeAllActionsFromTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeAllActionsFromTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CGNode* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeAllActionsFromTarget : Error processing arguments");
+        cobj->removeAllActionsFromTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_removeAllActionsFromTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionManager_resumeTargets(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_resumeTargets : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAVector<CrossApp::CGNode *> arg0;
+        ok &= jsval_to_cavector(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_resumeTargets : Error processing arguments");
+        cobj->resumeTargets(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_resumeTargets : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionManager_removeAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::Action* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::Action*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeAction : Error processing arguments");
+        cobj->removeAction(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_removeAction : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_ActionManager_removeAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeAllActionsByTag : Invalid Native Object");
+    if (argc == 2) {
+        int arg0 = 0;
+        CrossApp::CGNode* arg1 = nullptr;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeAllActionsByTag : Error processing arguments");
+        cobj->removeAllActionsByTag(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_removeAllActionsByTag : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_ActionManager_pauseAllRunningActions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_pauseAllRunningActions : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAVector<CrossApp::CGNode *> ret = cobj->pauseAllRunningActions();
+        jsval jsret = JSVAL_NULL;
+        jsret = cavector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_ActionManager_pauseAllRunningActions : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_ActionManager_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::ActionManager* cobj = new (std::nothrow) CrossApp::ActionManager();
+    TypeTest<CrossApp::ActionManager> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ActionManager");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_crossapp_ActionManager_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::ActionManager *nobj = new (std::nothrow) CrossApp::ActionManager();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::ActionManager");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+
+void js_CrossApp_ActionManager_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (ActionManager)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::ActionManager *nobj = static_cast<CrossApp::ActionManager *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+    
+void js_register_crossapp_ActionManager(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_ActionManager_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_ActionManager_class->name = "ActionManager";
+    jsb_CrossApp_ActionManager_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionManager_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_ActionManager_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_ActionManager_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_ActionManager_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_ActionManager_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_ActionManager_class->convert = JS_ConvertStub;
+    jsb_CrossApp_ActionManager_class->finalize = js_CrossApp_ActionManager_finalize;
+    jsb_CrossApp_ActionManager_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getActionByTag", js_crossapp_ActionManager_getActionByTag, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeActionByTag", js_crossapp_ActionManager_removeActionByTag, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeActionsByFlags", js_crossapp_ActionManager_removeActionsByFlags, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllActions", js_crossapp_ActionManager_removeAllActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addAction", js_crossapp_ActionManager_addAction, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("resumeTarget", js_crossapp_ActionManager_resumeTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("update", js_crossapp_ActionManager_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("pauseTarget", js_crossapp_ActionManager_pauseTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getNumberOfRunningActionsInTarget", js_crossapp_ActionManager_getNumberOfRunningActionsInTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllActionsFromTarget", js_crossapp_ActionManager_removeAllActionsFromTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("resumeTargets", js_crossapp_ActionManager_resumeTargets, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAction", js_crossapp_ActionManager_removeAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllActionsByTag", js_crossapp_ActionManager_removeAllActionsByTag, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("pauseAllRunningActions", js_crossapp_ActionManager_pauseAllRunningActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_ActionManager_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    jsb_CrossApp_ActionManager_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_CrossApp_ActionManager_class,
+        js_crossapp_ActionManager_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "ActionManager", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::ActionManager> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_ActionManager_class;
+        p->proto = jsb_CrossApp_ActionManager_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ca.ActionManager.extend = ca.Class.extend; })()");
+}
 JSClass  *jsb_CocosDenshion_SimpleAudioEngine_class;
 JSObject *jsb_CocosDenshion_SimpleAudioEngine_prototype;
 
@@ -51291,82 +61700,135 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     JS::RootedObject ns(cx);
     get_or_create_js_obj(cx, obj, "ca", &ns);
 
+    js_register_crossapp_SimpleAudioEngine(cx, ns);
+    js_register_crossapp_CAApplication(cx, ns);
     js_register_crossapp_CAResponder(cx, ns);
     js_register_crossapp_CAView(cx, ns);
-    js_register_crossapp_CAScrollView(cx, ns);
-    js_register_crossapp_CGNode(cx, ns);
-    js_register_crossapp_CGSpriteBatchNode(cx, ns);
-    js_register_crossapp_CAVideoPlayerControlView(cx, ns);
-    js_register_crossapp_CAEvent(cx, ns);
     js_register_crossapp_CAControl(cx, ns);
-    js_register_crossapp_CAStepper(cx, ns);
+    js_register_crossapp_Action(cx, ns);
+    js_register_crossapp_FiniteTimeAction(cx, ns);
+    js_register_crossapp_ActionInterval(cx, ns);
+    js_register_crossapp_ActionCamera(cx, ns);
+    js_register_crossapp_CATabBar(cx, ns);
+    js_register_crossapp_MoveBy(cx, ns);
+    js_register_crossapp_MoveTo(cx, ns);
+    js_register_crossapp_JumpBy(cx, ns);
+    js_register_crossapp_CAPullToRefreshView(cx, ns);
+    js_register_crossapp_CGNode(cx, ns);
+    js_register_crossapp_CGSprite(cx, ns);
+    js_register_crossapp_CAWaterfallViewDataSource(cx, ns);
+    js_register_crossapp_CABarItem(cx, ns);
+    js_register_crossapp_CABarButtonItem(cx, ns);
+    js_register_crossapp_ActionEase(cx, ns);
+    js_register_crossapp_EaseQuarticActionInOut(cx, ns);
+    js_register_crossapp_CATabBarItem(cx, ns);
+    js_register_crossapp_CAWindow(cx, ns);
+    js_register_crossapp_CATouchView(cx, ns);
+    js_register_crossapp_CALabel(cx, ns);
+    js_register_crossapp_SkewTo(cx, ns);
+    js_register_crossapp_SkewBy(cx, ns);
+    js_register_crossapp_CAScrollView(cx, ns);
+    js_register_crossapp_CAPageView(cx, ns);
+    js_register_crossapp_FadeTo(cx, ns);
+    js_register_crossapp_FadeIn(cx, ns);
+    js_register_crossapp_AnimationCache(cx, ns);
+    js_register_crossapp_CAScheduler(cx, ns);
+    js_register_crossapp_CAProgress(cx, ns);
+    js_register_crossapp_CAAlertView(cx, ns);
+    js_register_crossapp_FadeOut(cx, ns);
+    js_register_crossapp_CAViewController(cx, ns);
+    js_register_crossapp_CATabBarController(cx, ns);
+    js_register_crossapp_CAAutoCollectionViewDataSource(cx, ns);
     js_register_crossapp_CACell(cx, ns);
-    js_register_crossapp_CACollectionViewCell(cx, ns);
-    js_register_crossapp_CACheckbox(cx, ns);
-    js_register_crossapp_CAApplication(cx, ns);
+    js_register_crossapp_CAWaterfallViewCell(cx, ns);
+    js_register_crossapp_CGSpriteFrameCache(cx, ns);
+    js_register_crossapp_CAPickerViewDataSource(cx, ns);
+    js_register_crossapp_CADatePickerView(cx, ns);
+    js_register_crossapp_CAClippingView(cx, ns);
+    js_register_crossapp_CARenderImage(cx, ns);
+    js_register_crossapp_CANavigationBarItem(cx, ns);
+    js_register_crossapp_EaseCircleActionInOut(cx, ns);
+    js_register_crossapp_CATextField(cx, ns);
+    js_register_crossapp_EaseQuarticActionOut(cx, ns);
+    js_register_crossapp_EaseCubicActionIn(cx, ns);
+    js_register_crossapp_ActionTween(cx, ns);
+    js_register_crossapp_CAWebView(cx, ns);
+    js_register_crossapp_CACollectionView(cx, ns);
+    js_register_crossapp_RepeatForever(cx, ns);
+    js_register_crossapp_CASwitch(cx, ns);
+    js_register_crossapp_CGSpriteBatchNode(cx, ns);
+    js_register_crossapp_CAAutoCollectionView(cx, ns);
+    js_register_crossapp_CAPageControl(cx, ns);
+    js_register_crossapp_ActionFloat(cx, ns);
+    js_register_crossapp_EaseCircleActionIn(cx, ns);
+    js_register_crossapp_CATableView(cx, ns);
+    js_register_crossapp_CATableViewDataSource(cx, ns);
+    js_register_crossapp_CAPickerView(cx, ns);
+    js_register_crossapp_Blink(cx, ns);
+    js_register_crossapp_JumpTo(cx, ns);
+    js_register_crossapp_CATouch(cx, ns);
+    js_register_crossapp_RotateBy(cx, ns);
+    js_register_crossapp_CAVideoPlayerControlView(cx, ns);
+    js_register_crossapp_CAGifView(cx, ns);
+    js_register_crossapp_EaseQuinticActionIn(cx, ns);
     js_register_crossapp_CAThread(cx, ns);
     js_register_crossapp_CAActivityIndicatorView(cx, ns);
     js_register_crossapp_CAImageView(cx, ns);
     js_register_crossapp_CASlider(cx, ns);
-    js_register_crossapp_CATextField(cx, ns);
-    js_register_crossapp_CAWindow(cx, ns);
-    js_register_crossapp_CARenderImage(cx, ns);
-    js_register_crossapp_CAImage(cx, ns);
+    js_register_crossapp_EaseRateAction(cx, ns);
     js_register_crossapp_CAFont(cx, ns);
-    js_register_crossapp_CAWaterfallView(cx, ns);
-    js_register_crossapp_CATableViewDataSource(cx, ns);
-    js_register_crossapp_CAPickerView(cx, ns);
-    js_register_crossapp_CAScale9ImageView(cx, ns);
-    js_register_crossapp_CATouchView(cx, ns);
-    js_register_crossapp_CABarItem(cx, ns);
-    js_register_crossapp_CANavigationBarItem(cx, ns);
+    js_register_crossapp_Repeat(cx, ns);
+    js_register_crossapp_CASegmentedControl(cx, ns);
+    js_register_crossapp_TintTo(cx, ns);
     js_register_crossapp_CADrawView(cx, ns);
+    js_register_crossapp_ActionInstant(cx, ns);
     js_register_crossapp_CGSpriteFrame(cx, ns);
-    js_register_crossapp_CAViewController(cx, ns);
-    js_register_crossapp_CATabBarController(cx, ns);
-    js_register_crossapp_CAPullToRefreshView(cx, ns);
-    js_register_crossapp_CATabBar(cx, ns);
+    js_register_crossapp_TargetedAction(cx, ns);
     js_register_crossapp_CADrawerController(cx, ns);
+    js_register_crossapp_RotateTo(cx, ns);
+    js_register_crossapp_ScaleTo(cx, ns);
+    js_register_crossapp_BezierBy(cx, ns);
+    js_register_crossapp_BezierTo(cx, ns);
+    js_register_crossapp_ActionManager(cx, ns);
+    js_register_crossapp_CATableViewCell(cx, ns);
+    js_register_crossapp_EaseQuinticActionInOut(cx, ns);
+    js_register_crossapp_EaseQuadraticActionInOut(cx, ns);
+    js_register_crossapp_Spawn(cx, ns);
+    js_register_crossapp_CAHttpResponse(cx, ns);
+    js_register_crossapp_EaseCircleActionOut(cx, ns);
+    js_register_crossapp_DelayTime(cx, ns);
+    js_register_crossapp_TintBy(cx, ns);
+    js_register_crossapp_Animate(cx, ns);
+    js_register_crossapp_ReverseTime(cx, ns);
+    js_register_crossapp_EaseQuarticActionIn(cx, ns);
+    js_register_crossapp_CAEvent(cx, ns);
+    js_register_crossapp_CAStepper(cx, ns);
+    js_register_crossapp_CACollectionViewCell(cx, ns);
+    js_register_crossapp_ScaleBy(cx, ns);
+    js_register_crossapp_CAListViewCell(cx, ns);
+    js_register_crossapp_CATouchController(cx, ns);
+    js_register_crossapp_CACheckbox(cx, ns);
+    js_register_crossapp_EaseQuinticActionOut(cx, ns);
+    js_register_crossapp_CAImage(cx, ns);
+    js_register_crossapp_CANavigationController(cx, ns);
+    js_register_crossapp_CAWaterfallView(cx, ns);
+    js_register_crossapp_CAScale9ImageView(cx, ns);
+    js_register_crossapp_CARichLabel(cx, ns);
+    js_register_crossapp_EaseQuadraticActionOut(cx, ns);
+    js_register_crossapp_EaseCubicActionInOut(cx, ns);
     js_register_crossapp_CATextView(cx, ns);
-    js_register_crossapp_CAWaterfallViewDataSource(cx, ns);
-    js_register_crossapp_CABarButtonItem(cx, ns);
     js_register_crossapp_CACollectionViewDataSource(cx, ns);
     js_register_crossapp_CAButton(cx, ns);
-    js_register_crossapp_CAListViewDataSource(cx, ns);
+    js_register_crossapp_EaseBezierAction(cx, ns);
     js_register_crossapp_CAGif(cx, ns);
-    js_register_crossapp_CATabBarItem(cx, ns);
-    js_register_crossapp_CATouchController(cx, ns);
     js_register_crossapp_CAViewAnimation(cx, ns);
-    js_register_crossapp_CALabel(cx, ns);
-    js_register_crossapp_CAListView(cx, ns);
-    js_register_crossapp_CAPageView(cx, ns);
-    js_register_crossapp_CAGifView(cx, ns);
-    js_register_crossapp_CAWebView(cx, ns);
-    js_register_crossapp_CAHttpResponse(cx, ns);
-    js_register_crossapp_CASwitch(cx, ns);
     js_register_crossapp_CANavigationBar(cx, ns);
     js_register_crossapp_FileUtils(cx, ns);
-    js_register_crossapp_CAAutoCollectionView(cx, ns);
-    js_register_crossapp_CACollectionView(cx, ns);
-    js_register_crossapp_CAScheduler(cx, ns);
-    js_register_crossapp_CAWaterfallViewCell(cx, ns);
-    js_register_crossapp_CASegmentedControl(cx, ns);
-    js_register_crossapp_SimpleAudioEngine(cx, ns);
-    js_register_crossapp_CAPageControl(cx, ns);
-    js_register_crossapp_CAPickerViewDataSource(cx, ns);
-    js_register_crossapp_CAProgress(cx, ns);
-    js_register_crossapp_CAAlertView(cx, ns);
-    js_register_crossapp_CARichLabel(cx, ns);
-    js_register_crossapp_CATableView(cx, ns);
-    js_register_crossapp_CAListViewCell(cx, ns);
-    js_register_crossapp_CANavigationController(cx, ns);
-    js_register_crossapp_CATouch(cx, ns);
-    js_register_crossapp_CAAutoCollectionViewDataSource(cx, ns);
-    js_register_crossapp_CGSprite(cx, ns);
-    js_register_crossapp_CAClippingView(cx, ns);
-    js_register_crossapp_CATableViewCell(cx, ns);
+    js_register_crossapp_CAListView(cx, ns);
+    js_register_crossapp_Sequence(cx, ns);
+    js_register_crossapp_EaseCubicActionOut(cx, ns);
+    js_register_crossapp_CAListViewDataSource(cx, ns);
+    js_register_crossapp_EaseQuadraticActionIn(cx, ns);
     js_register_crossapp_CGProgressTimer(cx, ns);
-    js_register_crossapp_CGSpriteFrameCache(cx, ns);
-    js_register_crossapp_CADatePickerView(cx, ns);
 }
 

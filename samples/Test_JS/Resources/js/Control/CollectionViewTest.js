@@ -9,6 +9,7 @@ var CollectionViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
         this.colorArr = new Array();
+
         for (var i = 0; i < 40; i++)
         {
             var r = Math.floor(Math.random()*255);
@@ -22,10 +23,10 @@ var CollectionViewTest = ca.CAViewController.extend({
 
         this.p_Conllection = ca.CACollectionView.createWithLayout(DLayoutFill);
         this.p_Conllection.setAllowsSelection(true);
-//    this.p_Conllection.setAllowsMultipleSelection(true);
+        // this.p_Conllection.setAllowsMultipleSelection(true);
         this.p_Conllection.setCollectionViewDelegate(this);
         this.p_Conllection.setCollectionViewDataSource(this);
-        // this.p_Conllection.setScrollViewDelegate(this);
+        this.p_Conllection.setScrollViewDelegate(this);
         this.p_Conllection.setHeaderRefreshView(this.headerRefreshView);
         this.p_Conllection.setFooterRefreshView(this.footerRefreshView);
         this.p_Conllection.setHoriInterval(20);
@@ -36,17 +37,7 @@ var CollectionViewTest = ca.CAViewController.extend({
         this.p_Conllection.startPullToHeaderRefreshView();
 
     },
-    refreshData1: function( interval){
-        this.colorArr.clear();
-        for (var i = 0; i < 40; i++)
-        {
-            var r = Math.floor(Math.random()*255);
-            var g = Math.floor(Math.random()*255);
-            var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
-        }
-        this.p_Conllection.reloadData();
-    },
+
     refreshData2: function(interval){
         for (var i = 0; i < 40; i++)
         {
@@ -59,8 +50,21 @@ var CollectionViewTest = ca.CAViewController.extend({
     },
     scrollViewHeaderBeginRefreshing: function(view)
     {
+        log("asdasdasdasd");
         //CAScheduler.schedule(schedule_selector(CollectionViewTest.refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this.refreshData1,this,0.01);
+        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.refreshData1,0.01);
+    },
+    refreshData1: function( interval){
+        log("asdasdasdasd");
+        this.colorArr.clear();
+        for (var i = 0; i < 40; i++)
+        {
+            var r = Math.floor(Math.random()*255);
+            var g = Math.floor(Math.random()*255);
+            var b = Math.floor(Math.random()*255);
+            this.colorArr.push(ca.color(r, g, b, 255));
+        }
+        this.p_Conllection.reloadData();
     },
     scrollViewFooterBeginRefreshing: function( view)
     {
