@@ -35,15 +35,6 @@ public:
     /**
      * @js ctor
      */
-    static ActionManager* getInstance();
-    /**
-     * @js ctor
-     */
-    static void destroyInstance();
-    
-    /**
-     * @js ctor
-     */
     ActionManager(void);
 
     /**
