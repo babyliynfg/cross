@@ -2407,6 +2407,634 @@ bool js_crossapp_CGProgressTimer_setType(JSContext *cx, uint32_t argc, jsval *vp
 bool js_crossapp_CGProgressTimer_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGProgressTimer_CGProgressTimer(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_AnimationCache_class;
+extern JSObject *jsb_CrossApp_AnimationCache_prototype;
+
+bool js_crossapp_AnimationCache_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_AnimationCache_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_AnimationCache(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_AnimationCache_getAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_AnimationCache_addAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_AnimationCache_addAnimationsWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_AnimationCache_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_AnimationCache_removeAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_AnimationCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_AnimationCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_AnimationCache_AnimationCache(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Action_class;
+extern JSObject *jsb_CrossApp_Action_prototype;
+
+bool js_crossapp_Action_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Action_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Action(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Action_startWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_description(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_setOriginalTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_getOriginalTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_stop(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_update(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_getTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_getFlags(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_step(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_setTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_setFlags(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_getTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_isDone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Action_reverse(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_FiniteTimeAction_class;
+extern JSObject *jsb_CrossApp_FiniteTimeAction_prototype;
+
+bool js_crossapp_FiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_FiniteTimeAction_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_FiniteTimeAction(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_FiniteTimeAction_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FiniteTimeAction_setDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FiniteTimeAction_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ActionInterval_class;
+extern JSObject *jsb_CrossApp_ActionInterval_prototype;
+
+bool js_crossapp_ActionInterval_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ActionInterval_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ActionInterval(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ActionInterval_getAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionInterval_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionInterval_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionInterval_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionInterval_getElapsed(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Sequence_class;
+extern JSObject *jsb_CrossApp_Sequence_prototype;
+
+bool js_crossapp_Sequence_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Sequence_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Sequence(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Sequence_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Sequence_initWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Sequence_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Sequence_createWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Sequence_Sequence(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Repeat_class;
+extern JSObject *jsb_CrossApp_Repeat_prototype;
+
+bool js_crossapp_Repeat_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Repeat_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Repeat(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Repeat_setInnerAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Repeat_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Repeat_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Repeat_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Repeat_Repeat(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_RepeatForever_class;
+extern JSObject *jsb_CrossApp_RepeatForever_prototype;
+
+bool js_crossapp_RepeatForever_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_RepeatForever_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_RepeatForever(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_RepeatForever_setInnerAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RepeatForever_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RepeatForever_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RepeatForever_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RepeatForever_RepeatForever(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Spawn_class;
+extern JSObject *jsb_CrossApp_Spawn_prototype;
+
+bool js_crossapp_Spawn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Spawn_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Spawn(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Spawn_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Spawn_initWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Spawn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Spawn_createWithTwoActions(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Spawn_Spawn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_RotateTo_class;
+extern JSObject *jsb_CrossApp_RotateTo_prototype;
+
+bool js_crossapp_RotateTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_RotateTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_RotateTo(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_RotateTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateTo_initWithDurationZ(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateTo_initWithDurationY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateTo_initWithDurationX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateTo_createZ(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateTo_createY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateTo_createX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateTo_RotateTo(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_RotateBy_class;
+extern JSObject *jsb_CrossApp_RotateBy_prototype;
+
+bool js_crossapp_RotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_RotateBy_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_RotateBy(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_RotateBy_initWithDurationZ(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateBy_initWithDurationY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateBy_initWithDurationX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateBy_createZ(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateBy_createY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateBy_createX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateBy_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RotateBy_RotateBy(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_MoveBy_class;
+extern JSObject *jsb_CrossApp_MoveBy_prototype;
+
+bool js_crossapp_MoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_MoveBy_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_MoveBy(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_MoveBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_MoveBy_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_MoveBy_MoveBy(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_MoveTo_class;
+extern JSObject *jsb_CrossApp_MoveTo_prototype;
+
+bool js_crossapp_MoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_MoveTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_MoveTo(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_MoveTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_MoveTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_MoveTo_MoveTo(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_SkewTo_class;
+extern JSObject *jsb_CrossApp_SkewTo_prototype;
+
+bool js_crossapp_SkewTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_SkewTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_SkewTo(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_SkewTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_SkewTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_SkewTo_SkewTo(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_SkewBy_class;
+extern JSObject *jsb_CrossApp_SkewBy_prototype;
+
+bool js_crossapp_SkewBy_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_SkewBy_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_SkewBy(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_SkewBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_SkewBy_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_SkewBy_SkewBy(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_JumpBy_class;
+extern JSObject *jsb_CrossApp_JumpBy_prototype;
+
+bool js_crossapp_JumpBy_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_JumpBy_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_JumpBy(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_JumpBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_JumpBy_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_JumpBy_JumpBy(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_JumpTo_class;
+extern JSObject *jsb_CrossApp_JumpTo_prototype;
+
+bool js_crossapp_JumpTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_JumpTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_JumpTo(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_JumpTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_JumpTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_JumpTo_JumpTo(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_BezierBy_class;
+extern JSObject *jsb_CrossApp_BezierBy_prototype;
+
+bool js_crossapp_BezierBy_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_BezierBy_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_BezierBy(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_BezierBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_BezierBy_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_BezierBy_BezierBy(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_BezierTo_class;
+extern JSObject *jsb_CrossApp_BezierTo_prototype;
+
+bool js_crossapp_BezierTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_BezierTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_BezierTo(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_BezierTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_BezierTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_BezierTo_BezierTo(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ScaleTo_class;
+extern JSObject *jsb_CrossApp_ScaleTo_prototype;
+
+bool js_crossapp_ScaleTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ScaleTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ScaleTo(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ScaleTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ScaleTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ScaleTo_ScaleTo(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ScaleBy_class;
+extern JSObject *jsb_CrossApp_ScaleBy_prototype;
+
+bool js_crossapp_ScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ScaleBy_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ScaleBy(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ScaleBy_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ScaleBy_ScaleBy(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Blink_class;
+extern JSObject *jsb_CrossApp_Blink_prototype;
+
+bool js_crossapp_Blink_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Blink_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Blink(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Blink_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Blink_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Blink_Blink(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_FadeTo_class;
+extern JSObject *jsb_CrossApp_FadeTo_prototype;
+
+bool js_crossapp_FadeTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_FadeTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_FadeTo(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_FadeTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FadeTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FadeTo_FadeTo(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_FadeIn_class;
+extern JSObject *jsb_CrossApp_FadeIn_prototype;
+
+bool js_crossapp_FadeIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_FadeIn_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_FadeIn(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_FadeIn_setReverseAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FadeIn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FadeIn_FadeIn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_FadeOut_class;
+extern JSObject *jsb_CrossApp_FadeOut_prototype;
+
+bool js_crossapp_FadeOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_FadeOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_FadeOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_FadeOut_setReverseAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FadeOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FadeOut_FadeOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_TintTo_class;
+extern JSObject *jsb_CrossApp_TintTo_prototype;
+
+bool js_crossapp_TintTo_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_TintTo_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_TintTo(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_TintTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_TintTo_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_TintTo_TintTo(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_TintBy_class;
+extern JSObject *jsb_CrossApp_TintBy_prototype;
+
+bool js_crossapp_TintBy_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_TintBy_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_TintBy(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_TintBy_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_TintBy_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_TintBy_TintBy(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_DelayTime_class;
+extern JSObject *jsb_CrossApp_DelayTime_prototype;
+
+bool js_crossapp_DelayTime_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_DelayTime_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_DelayTime(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_DelayTime_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_DelayTime_DelayTime(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ReverseTime_class;
+extern JSObject *jsb_CrossApp_ReverseTime_prototype;
+
+bool js_crossapp_ReverseTime_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ReverseTime_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ReverseTime(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ReverseTime_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ReverseTime_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ReverseTime_ReverseTime(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Animate_class;
+extern JSObject *jsb_CrossApp_Animate_prototype;
+
+bool js_crossapp_Animate_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Animate_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Animate(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Animate_initWithAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animate_getAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animate_getCurrentFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animate_setAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animate_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animate_Animate(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_TargetedAction_class;
+extern JSObject *jsb_CrossApp_TargetedAction_prototype;
+
+bool js_crossapp_TargetedAction_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_TargetedAction_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_TargetedAction(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_TargetedAction_getForcedTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_TargetedAction_initWithTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_TargetedAction_setForcedTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_TargetedAction_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_TargetedAction_TargetedAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ActionFloat_class;
+extern JSObject *jsb_CrossApp_ActionFloat_prototype;
+
+bool js_crossapp_ActionFloat_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ActionFloat_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ActionFloat(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ActionFloat_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionFloat_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionFloat_ActionFloat(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ActionCamera_class;
+extern JSObject *jsb_CrossApp_ActionCamera_prototype;
+
+bool js_crossapp_ActionCamera_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ActionCamera_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ActionCamera(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ActionCamera_setEye(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionCamera_getEye(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionCamera_setUp(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionCamera_getCenter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionCamera_setCenter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionCamera_getUp(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionCamera_ActionCamera(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ActionEase_class;
+extern JSObject *jsb_CrossApp_ActionEase_prototype;
+
+bool js_crossapp_ActionEase_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ActionEase_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ActionEase(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ActionEase_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionEase_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionEase_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionEase_ActionEase(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseRateAction_class;
+extern JSObject *jsb_CrossApp_EaseRateAction_prototype;
+
+bool js_crossapp_EaseRateAction_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseRateAction_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseRateAction(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseRateAction_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseRateAction_setRate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseRateAction_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseRateAction_getRate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseRateAction_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseRateAction_EaseRateAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseBezierAction_class;
+extern JSObject *jsb_CrossApp_EaseBezierAction_prototype;
+
+bool js_crossapp_EaseBezierAction_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseBezierAction_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseBezierAction(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseBezierAction_setBezierParamer(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseBezierAction_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseBezierAction_EaseBezierAction(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuadraticActionIn_class;
+extern JSObject *jsb_CrossApp_EaseQuadraticActionIn_prototype;
+
+bool js_crossapp_EaseQuadraticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuadraticActionIn_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuadraticActionIn(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuadraticActionIn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuadraticActionIn_EaseQuadraticActionIn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuadraticActionOut_class;
+extern JSObject *jsb_CrossApp_EaseQuadraticActionOut_prototype;
+
+bool js_crossapp_EaseQuadraticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuadraticActionOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuadraticActionOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuadraticActionOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuadraticActionOut_EaseQuadraticActionOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuadraticActionInOut_class;
+extern JSObject *jsb_CrossApp_EaseQuadraticActionInOut_prototype;
+
+bool js_crossapp_EaseQuadraticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuadraticActionInOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuadraticActionInOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuadraticActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuadraticActionInOut_EaseQuadraticActionInOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuarticActionIn_class;
+extern JSObject *jsb_CrossApp_EaseQuarticActionIn_prototype;
+
+bool js_crossapp_EaseQuarticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuarticActionIn_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuarticActionIn(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuarticActionIn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuarticActionIn_EaseQuarticActionIn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuarticActionOut_class;
+extern JSObject *jsb_CrossApp_EaseQuarticActionOut_prototype;
+
+bool js_crossapp_EaseQuarticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuarticActionOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuarticActionOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuarticActionOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuarticActionOut_EaseQuarticActionOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuarticActionInOut_class;
+extern JSObject *jsb_CrossApp_EaseQuarticActionInOut_prototype;
+
+bool js_crossapp_EaseQuarticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuarticActionInOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuarticActionInOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuarticActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuarticActionInOut_EaseQuarticActionInOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuinticActionIn_class;
+extern JSObject *jsb_CrossApp_EaseQuinticActionIn_prototype;
+
+bool js_crossapp_EaseQuinticActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuinticActionIn_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuinticActionIn(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuinticActionIn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuinticActionIn_EaseQuinticActionIn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuinticActionOut_class;
+extern JSObject *jsb_CrossApp_EaseQuinticActionOut_prototype;
+
+bool js_crossapp_EaseQuinticActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuinticActionOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuinticActionOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuinticActionOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuinticActionOut_EaseQuinticActionOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseQuinticActionInOut_class;
+extern JSObject *jsb_CrossApp_EaseQuinticActionInOut_prototype;
+
+bool js_crossapp_EaseQuinticActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseQuinticActionInOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseQuinticActionInOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseQuinticActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseQuinticActionInOut_EaseQuinticActionInOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseCircleActionIn_class;
+extern JSObject *jsb_CrossApp_EaseCircleActionIn_prototype;
+
+bool js_crossapp_EaseCircleActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseCircleActionIn_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseCircleActionIn(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseCircleActionIn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseCircleActionIn_EaseCircleActionIn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseCircleActionOut_class;
+extern JSObject *jsb_CrossApp_EaseCircleActionOut_prototype;
+
+bool js_crossapp_EaseCircleActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseCircleActionOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseCircleActionOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseCircleActionOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseCircleActionOut_EaseCircleActionOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseCircleActionInOut_class;
+extern JSObject *jsb_CrossApp_EaseCircleActionInOut_prototype;
+
+bool js_crossapp_EaseCircleActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseCircleActionInOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseCircleActionInOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseCircleActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseCircleActionInOut_EaseCircleActionInOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseCubicActionIn_class;
+extern JSObject *jsb_CrossApp_EaseCubicActionIn_prototype;
+
+bool js_crossapp_EaseCubicActionIn_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseCubicActionIn_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseCubicActionIn(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseCubicActionIn_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseCubicActionIn_EaseCubicActionIn(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseCubicActionOut_class;
+extern JSObject *jsb_CrossApp_EaseCubicActionOut_prototype;
+
+bool js_crossapp_EaseCubicActionOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseCubicActionOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseCubicActionOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseCubicActionOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseCubicActionOut_EaseCubicActionOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_EaseCubicActionInOut_class;
+extern JSObject *jsb_CrossApp_EaseCubicActionInOut_prototype;
+
+bool js_crossapp_EaseCubicActionInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_EaseCubicActionInOut_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_EaseCubicActionInOut(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_EaseCubicActionInOut_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseCubicActionInOut_EaseCubicActionInOut(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ActionTween_class;
+extern JSObject *jsb_CrossApp_ActionTween_prototype;
+
+bool js_crossapp_ActionTween_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ActionTween_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ActionTween(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ActionTween_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionTween_create(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ActionInstant_class;
+extern JSObject *jsb_CrossApp_ActionInstant_prototype;
+
+bool js_crossapp_ActionInstant_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ActionInstant_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ActionInstant(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ActionInstant_clone(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ActionManager_class;
+extern JSObject *jsb_CrossApp_ActionManager_prototype;
+
+bool js_crossapp_ActionManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ActionManager_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ActionManager(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ActionManager_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_removeActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_removeActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_removeAllActions(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_addAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_resumeTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_update(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_getNumberOfRunningActionsInTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_removeAllActionsFromTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_resumeTargets(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_removeAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_removeAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_pauseAllRunningActions(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionManager_ActionManager(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CocosDenshion_SimpleAudioEngine_class;
 extern JSObject *jsb_CocosDenshion_SimpleAudioEngine_prototype;
 
