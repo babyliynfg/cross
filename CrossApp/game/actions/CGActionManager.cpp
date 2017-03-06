@@ -23,26 +23,6 @@ typedef struct _hashElement
     UT_hash_handle      hh;
 } tHashElement;
 
-static ActionManager* s_pActionManager = nullptr;
-
-ActionManager* ActionManager::getInstance()
-{
-    if (s_pActionManager == nullptr)
-    {
-        s_pActionManager = new (std::nothrow) ActionManager();
-    }
-    return s_pActionManager;
-}
-
-void ActionManager::destroyInstance()
-{
-    if (s_pActionManager)
-    {
-        CAScheduler::getScheduler()->unscheduleUpdate(s_pActionManager);
-        CC_SAFE_RELEASE_NULL(s_pActionManager);
-    }
-}
-
 ActionManager::ActionManager()
 : _targets(nullptr),
   _currentTarget(nullptr),

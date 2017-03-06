@@ -92,7 +92,7 @@ CGNode::~CGNode(void)
 {
     CC_SAFE_RELEASE_NULL(m_pGlProgramState);
     
-    ActionManager::getInstance()->removeAllActionsFromTarget(this);
+    CAApplication::getApplication()->getActionManager()->removeAllActionsFromTarget(this);
     
     if(!m_obChildren.empty())
     {
@@ -915,7 +915,7 @@ void CGNode::onEnter()
 {
     m_bRunning = true;
     CAScheduler::getScheduler()->resumeTarget(this);
-    ActionManager::getInstance()->resumeTarget(this);
+    CAApplication::getApplication()->getActionManager()->resumeTarget(this);
     
     if (!m_obChildren.empty())
     {
@@ -977,7 +977,7 @@ void CGNode::onExit()
 {
     m_bRunning = false;
     CAScheduler::getScheduler()->pauseTarget(this);
-    ActionManager::getInstance()->pauseTarget(this);
+    CAApplication::getApplication()->getActionManager()->pauseTarget(this);
     
     if (!m_obChildren.empty())
     {
@@ -1442,49 +1442,49 @@ void CGNode::updateBlendFunc(void)
 Action * CGNode::runAction(Action* action)
 {
     CCAssert( action != nullptr, "Argument must be non-nil");
-    ActionManager::getInstance()->addAction(action, this, !m_bRunning);
+    CAApplication::getApplication()->getActionManager()->addAction(action, this, !m_bRunning);
     return action;
 }
 
 void CGNode::stopAllActions()
 {
-    ActionManager::getInstance()->removeAllActionsFromTarget(this);
+    CAApplication::getApplication()->getActionManager()->removeAllActionsFromTarget(this);
 }
 
 void CGNode::stopAction(Action* action)
 {
-    ActionManager::getInstance()->removeAction(action);
+    CAApplication::getApplication()->getActionManager()->removeAction(action);
 }
 
 void CGNode::stopActionByTag(int tag)
 {
     CCAssert( tag != Action::INVALID_TAG, "Invalid tag");
-    ActionManager::getInstance()->removeActionByTag(tag, this);
+    CAApplication::getApplication()->getActionManager()->removeActionByTag(tag, this);
 }
 
 void CGNode::stopAllActionsByTag(int tag)
 {
     CCAssert( tag != Action::INVALID_TAG, "Invalid tag");
-    ActionManager::getInstance()->removeAllActionsByTag(tag, this);
+    CAApplication::getApplication()->getActionManager()->removeAllActionsByTag(tag, this);
 }
 
 void CGNode::stopActionsByFlags(unsigned int flags)
 {
     if (flags > 0)
     {
-        ActionManager::getInstance()->removeActionsByFlags(flags, this);
+        CAApplication::getApplication()->getActionManager()->removeActionsByFlags(flags, this);
     }
 }
 
 Action * CGNode::getActionByTag(int tag)
 {
     CCAssert( tag != Action::INVALID_TAG, "Invalid tag");
-    return ActionManager::getInstance()->getActionByTag(tag, this);
+    return CAApplication::getApplication()->getActionManager()->getActionByTag(tag, this);
 }
 
 size_t CGNode::getNumberOfRunningActions() const
 {
-    return ActionManager::getInstance()->getNumberOfRunningActionsInTarget(this);
+    return CAApplication::getApplication()->getActionManager()->getNumberOfRunningActionsInTarget(this);
 }
 
 
