@@ -1465,7 +1465,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAScrollView* scrollView = CAScrollView::createWithLayout(layout);
         superview->addSubview(scrollView);
-        
+        view = scrollView;
         const char* key = viewXml->Attribute("textTag");
         map.insert(key, scrollView);
         scrollView->setTextTag(key);
