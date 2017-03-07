@@ -1207,12 +1207,12 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("increntmentSelectedImage"))
         {
-			stepper->setDecrementImage(CAControl::State::Highlighted, CAImage::create(value));
+			stepper->setIncrementImage(CAControl::State::Highlighted, CAImage::create(value));
         }
 
 		if (const char* value = viewXml->Attribute("decrentmentImage"))
 		{
-			stepper->setIncrementImage(CAControl::State::Normal, CAImage::create(value));
+			stepper->setDecrementImage(CAControl::State::Normal, CAImage::create(value));
 		}
 
 		if (const char* value = viewXml->Attribute("decrentmentSelectedImage"))
@@ -1223,6 +1223,46 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         if (const char* value = viewXml->Attribute("background"))
         {
 			stepper->setBackgroundImage(CAControl::State::Normal, CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("minValue"))
+        {
+            stepper->setMinValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("maxValue"))
+        {
+            stepper->setMaxValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("value"))
+        {
+            stepper->setValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("stepValue"))
+        {
+            stepper->setStepValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("tintColor"))
+        {
+            stepper->setDividerColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("continuous"))
+        {
+            stepper->setContinuous(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("autoRepeat"))
+        {
+            stepper->setAutoRepeat(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("wraps"))
+        {
+            stepper->setWraps(bool(atoi(value)));
         }
         
         //error 缺少 backgroundSelected
@@ -1465,7 +1505,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAScrollView* scrollView = CAScrollView::createWithLayout(layout);
         superview->addSubview(scrollView);
-        
+        view = scrollView;
         const char* key = viewXml->Attribute("textTag");
         map.insert(key, scrollView);
         scrollView->setTextTag(key);
