@@ -4,11 +4,14 @@
 var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
         HorizontalcolorArr:null,
         AutoCollectionViewHorizontalNum:null,
+        footerRefreshView:null,
+        headerRefreshView:null,
+        p_AutoCollection:null,
         ctor: function () {
             this._super();
 
-            this.getView().setColor(ca.color._getGray());
             this.HorizontalcolorArr = new Array();
+
             for (var i = 0; i < 60; i++)
             {
                 var r = Math.floor(Math.random()*255);
@@ -17,19 +20,26 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
 
                 this.HorizontalcolorArr.push(ca.color(r, g, b, 255));
             }
+
             this.AutoCollectionViewHorizontalNum = 0;
+
+            this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
+            this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
+
             if (this.AutoCollectionViewHorizontalNum == 0)
             {
-                var p_AutoCollection = ca.CAAutoCollectionView.createWithLayout(DLayoutFill);
-                p_AutoCollection.setAllowsSelection(true);
-                p_AutoCollection.setAllowsMultipleSelection(true);
-                p_AutoCollection.setCollectionViewDelegate(this);
-                p_AutoCollection.setCollectionViewDataSource(this);
-                p_AutoCollection.setOrientation(1);
-                //p_AutoCollection.setScrollViewDelegate(this);
-                p_AutoCollection.setHoriCellInterval(20);
-                p_AutoCollection.setVertCellInterval(20);
-                this.getView().addSubview(p_AutoCollection);
+                this.p_AutoCollection = ca.CAAutoCollectionView.createWithLayout(DLayoutFill);
+                this.p_AutoCollection.setAllowsSelection(true);
+                this.p_AutoCollection.setAllowsMultipleSelection(true);
+                this.p_AutoCollection.setCollectionViewDelegate(this);
+                this.p_AutoCollection.setCollectionViewDataSource(this);
+                this.p_AutoCollection.setOrientation(1);
+                // this.p_AutoCollection.setHeaderRefreshView(this.headerRefreshView);
+                // this.p_AutoCollection.setFooterRefreshView(this.footerRefreshView);
+                // this.p_AutoCollection.setScrollViewDelegate(this);
+                this.p_AutoCollection.setHoriCellInterval(20);
+                this.p_AutoCollection.setVertCellInterval(20);
+                this.getView().addSubview(this.p_AutoCollection);
             }
             else
             {
@@ -39,6 +49,35 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
                 //this.getView().addSubview(p_AutoCollection1);
             }
 
+        },
+        refreshData1: function( interval){
+            this.colorArr = [];
+            for (var i = 0; i < 40; i++)
+            {
+                var r = Math.floor(Math.random()*255);
+                var g = Math.floor(Math.random()*255);
+                var b = Math.floor(Math.random()*255);
+                this.HorizontalcolorArr.push(ca.color(r, g, b, 255));
+            }
+            this.p_AutoCollection.reloadData();
+        },
+        refreshData2: function(interval){
+            for (var i = 0; i < 40; i++)
+            {
+                var r = Math.floor(Math.random()*255);
+                var g = Math.floor(Math.random()*255);
+                var b = Math.floor(Math.random()*255);
+                this.HorizontalcolorArr.push(ca.color(r, g, b, 255));
+            }
+            this.p_Conllection.reloadData();
+        },
+        scrollViewHeaderBeginRefreshing: function( view)
+        {
+            ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData1, 0.5, 0, 0);
+        },
+        scrollViewFooterBeginRefreshing: function( view)
+        {
+            ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData2, 0.5, 0, 0);
         },
         collectionViewDidSelectCellAtIndexPath: function(collectionView, section, item)
         {
