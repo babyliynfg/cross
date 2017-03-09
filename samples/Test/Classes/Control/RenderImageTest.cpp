@@ -52,7 +52,7 @@ CADrawView* getStencil(const DSize& size, int index)
         ver[2] = DPoint(size.width, size.height);
         ver[3] = DPoint(size.width, 0);
         CADrawView* stencil = CADrawView::create();
-        stencil->drawPolygon(ver, 4, ccc4(255, 0, 0, 0), 2, ccc4(255, 0, 0, 0));
+        stencil->drawPolygon(ver, 4, CAColor4B::WHITE, 2, CAColor4B::CLEAR);
         stencil->setFrameOrigin(DPoint(0, size.height));
         return stencil;
     }
@@ -66,7 +66,7 @@ CADrawView* getStencil(const DSize& size, int index)
             cir[i] = DPoint(x, y);
         }
         CADrawView* stencil = CADrawView::create();
-        stencil->drawPolygon(cir, 720, ccc4(255, 255, 255, 127), 0, ccc4(255, 255, 255, 0));
+        stencil->drawPolygon(cir, 720, CAColor4B(255, 255, 255, 127), 0, CAColor4B::CLEAR);
         stencil->setCenterOrigin(DPoint(size.width/2, size.height/2));
         return stencil;
     }
@@ -123,7 +123,6 @@ void RenderImageTest::getSelectedImage(CAImage *image)
     m_clv->setFrame(scrollRect);
     m_clv->setTouchEnabled(false);
     m_clv->setInverted(false);
-    m_clv->setClippingEnabled(true);
     this->getView()->addSubview(m_clv);
     
     DRect ivRect;

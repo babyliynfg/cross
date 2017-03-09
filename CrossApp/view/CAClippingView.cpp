@@ -20,7 +20,7 @@ static void setProgram(CAView *n, GLProgram *p)
 {
     n->setShaderProgram(p);
     CC_RETURN_IF(n->getSubviews().empty());
-
+    
     
     auto& subviews = n->getSubviews();
     for(const auto &subview : subviews)
@@ -86,7 +86,7 @@ bool CAClippingView::init(CAView *pStencil)
     this->setStencil(pStencil);
     
     m_fAlphaThreshold = 1.0f;
-
+    
     static bool once = true;
     if (once)
     {
@@ -187,7 +187,7 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
     GLboolean currentAlphaTestEnabled = GL_FALSE;
     GLenum currentAlphaTestFunc = GL_ALWAYS;
     GLclampf currentAlphaTestRef = 1;
-
+    
     
     m_obBeforeVisitCmd.init(m_nZOrder);
     m_obBeforeVisitCmd.func = [=]()
@@ -195,11 +195,19 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
         // increment the current layer
         layer++;
         
+        // mask of the current layer (ie: for layer 3: 00000100)
+        GLint mask_layer = 0x1 << layer;
+        // mask of all layers less than the current (ie: for layer 3: 00000011)
+        GLint mask_layer_l = mask_layer - 1;
+        // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
+        GLint mask_layer_le = mask_layer | mask_layer_l;
+        
         GLint currentStencilRef = 0;
         GLboolean currentDepthWriteMask = GL_FALSE;
         
         // manually save the stencil state
         
+        GLboolean currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
         glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&currentStencilWriteMask);
         glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&currentStencilFunc);
         glGetIntegerv(GL_STENCIL_REF, &currentStencilRef);
@@ -283,7 +291,7 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
         application->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         ///////////////////////////////////
         // DRAW CLIPPING STENCIL
-         // setup the stencil test func like this:
+        // setup the stencil test func like this:
         // for each pixel in the stencil node
         //     never draw it into the frame buffer
         //     if not in inverted mode: set the current layer value to 1 in the stencil buffer
@@ -305,6 +313,7 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
             // manually save the alpha test state
             GLclampf currentAlphaTestRef = 1;
+            GLboolean currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
             glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&currentAlphaTestFunc);
             glGetFloatv(GL_ALPHA_TEST_REF, &currentAlphaTestRef);
             // enable alpha testing
@@ -378,7 +387,7 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
         glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
     };
     renderer->addCommand(&m_obAfterDrawStencilCmd);
-
+    
     int i = 0;
     bool visibleByCamera = isVisitableByVisitingCamera();
     
@@ -391,16 +400,16 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
             auto view = m_obSubviews.at(i);
             
             if ( view && view->getZOrder() < 0 )
-                view->visit(renderer, m_tModelViewTransform, flags);
+            view->visit(renderer, m_tModelViewTransform, flags);
             else
-                break;
+            break;
         }
         // self draw
         if (visibleByCamera)
-            this->draw(renderer, m_tModelViewTransform, flags);
+        this->draw(renderer, m_tModelViewTransform, flags);
         
         for(auto it=m_obSubviews.begin()+i; it != m_obSubviews.end(); ++it)
-            (*it)->visit(renderer, m_tModelViewTransform, flags);
+        (*it)->visit(renderer, m_tModelViewTransform, flags);
     }
     else if (visibleByCamera)
     {
