@@ -8,6 +8,7 @@ var CollectionViewTest = ca.CAViewController.extend({
     p_Conllection:null,
     ctor: function () {
         this._super();
+
         this.colorArr = new Array();
 
         for (var i = 0; i < 40; i++)
@@ -37,7 +38,17 @@ var CollectionViewTest = ca.CAViewController.extend({
         this.p_Conllection.startPullToHeaderRefreshView();
 
     },
-
+    refreshData1: function( interval){
+        this.colorArr = [];
+        for (var i = 0; i < 40; i++)
+        {
+            var r = Math.floor(Math.random()*255);
+            var g = Math.floor(Math.random()*255);
+            var b = Math.floor(Math.random()*255);
+            this.colorArr.push(ca.color(r, g, b, 255));
+        }
+        this.p_Conllection.reloadData();
+    },
     refreshData2: function(interval){
         for (var i = 0; i < 40; i++)
         {
@@ -48,28 +59,13 @@ var CollectionViewTest = ca.CAViewController.extend({
         }
         this.p_Conllection.reloadData();
     },
-    scrollViewHeaderBeginRefreshing: function(view)
+    scrollViewHeaderBeginRefreshing: function( view)
     {
-        log("asdasdasdasd");
-        //CAScheduler.schedule(schedule_selector(CollectionViewTest.refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.refreshData1,0.01);
-    },
-    refreshData1: function( interval){
-        log("asdasdasdasd");
-        this.colorArr.clear();
-        for (var i = 0; i < 40; i++)
-        {
-            var r = Math.floor(Math.random()*255);
-            var g = Math.floor(Math.random()*255);
-            var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
-        }
-        this.p_Conllection.reloadData();
+        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData1, 0.5, 0, 0);
     },
     scrollViewFooterBeginRefreshing: function( view)
     {
-        //CAScheduler.schedule(schedule_selector(CollectionViewTest.refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this.refreshData2,this,0.01);
+        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData2, 0.5, 0, 0);
     },
     collectionViewDidSelectCellAtIndexPath: function(collectionView, section, row, item)
     {

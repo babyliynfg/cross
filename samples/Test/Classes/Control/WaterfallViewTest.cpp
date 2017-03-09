@@ -48,6 +48,7 @@ void WaterfallViewTest::viewDidUnload()
 
 void WaterfallViewTest::refreshData1(float interval)
 {
+    colorArr.clear();
     for (int i = 0; i < 12; i++)
     {
         char r = CCRANDOM_0_1() * 255;

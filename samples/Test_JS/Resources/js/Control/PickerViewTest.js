@@ -68,6 +68,15 @@ var PickerViewTest = ca.CAViewController.extend({
         view1.addSubview(this.city_value);
         view1.setColor(ca.WHITE);
         this.getView().addSubview(view1);
+
+        // var dpv = ca.CADatePickerView.createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)), ca.CADatePickerView.Mode.Date);
+        // //dpv->setDate(2004, 2, 16, false);
+        // dpv.setDelegate(this);
+        //
+        // var view2 = ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
+        // view2.addSubview(dpv);
+        // view2.setColor(ca.CAColor4B.WHITE);
+        // this.getView().addSubview(view2);
     },
     didSelectRow: function (pickerView, row, component) {
         this.city_value.setText(adressTag[row]);

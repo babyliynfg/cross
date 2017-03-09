@@ -76,7 +76,7 @@ var CDlistViewDataSource = {
         if (cell == null) {
             cell = ca.CAListViewCell.create("CDListViewCell");
 
-            var test = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_W(0, 200), DVerticalLayoutFill));
+            var test = ca.CALabel.createWithLayout(DLayoutFill);
             test.setColor(ca.color(51, 204, 255, 255));
             test.setTextAlignment(ca.CATextAlignment.Center);
             test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
