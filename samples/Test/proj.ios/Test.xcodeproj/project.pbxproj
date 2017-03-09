@@ -77,6 +77,8 @@
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		D609D6521E7123C700F82D5A /* CheckboxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D609D64E1E7123C700F82D5A /* CheckboxTest.cpp */; };
+		D609D6531E7123C700F82D5A /* PageControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D609D6501E7123C700F82D5A /* PageControlTest.cpp */; };
 		D6B036B11D95273200388A90 /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036A51D95273200388A90 /* CAVideoPlayerControlView.cpp */; };
 		D6B036B31D95273200388A90 /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036A81D95273200388A90 /* CAVideoPlayerDecoder.cpp */; };
 		D6B036B51D95273200388A90 /* CAVideoPlayerRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036AB1D95273200388A90 /* CAVideoPlayerRender.cpp */; };
@@ -235,6 +237,10 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		D609D64E1E7123C700F82D5A /* CheckboxTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CheckboxTest.cpp; path = ../Classes/Control/CheckboxTest.cpp; sourceTree = "<group>"; };
+		D609D64F1E7123C700F82D5A /* CheckboxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckboxTest.h; path = ../Classes/Control/CheckboxTest.h; sourceTree = "<group>"; };
+		D609D6501E7123C700F82D5A /* PageControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PageControlTest.cpp; path = ../Classes/Control/PageControlTest.cpp; sourceTree = "<group>"; };
+		D609D6511E7123C700F82D5A /* PageControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageControlTest.h; path = ../Classes/Control/PageControlTest.h; sourceTree = "<group>"; };
 		D6B036A51D95273200388A90 /* CAVideoPlayerControlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerControlView.cpp; path = video/CAVideoPlayerControlView.cpp; sourceTree = "<group>"; };
 		D6B036A61D95273200388A90 /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerControlView.h; path = video/CAVideoPlayerControlView.h; sourceTree = "<group>"; };
 		D6B036A81D95273200388A90 /* CAVideoPlayerDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerDecoder.cpp; path = video/CAVideoPlayerDecoder.cpp; sourceTree = "<group>"; };
@@ -450,6 +456,10 @@
 		3EA1531A1C9F8B3800984D91 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				D609D64E1E7123C700F82D5A /* CheckboxTest.cpp */,
+				D609D64F1E7123C700F82D5A /* CheckboxTest.h */,
+				D609D6501E7123C700F82D5A /* PageControlTest.cpp */,
+				D609D6511E7123C700F82D5A /* PageControlTest.h */,
 				B093DB4B1CBCDECD00E98AD6 /* AutoCollectionViewHorizontalTest.cpp */,
 				B093DB4C1CBCDECD00E98AD6 /* AutoCollectionViewHorizontalTest.h */,
 				B093DB4D1CBCDECD00E98AD6 /* AutoCollectionViewVerticalTest.cpp */,
@@ -675,9 +685,11 @@
 				B0CF18D41CA236A1007AA1B0 /* TableViewTest.cpp in Sources */,
 				D6B036B11D95273200388A90 /* CAVideoPlayerControlView.cpp in Sources */,
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
+				D609D6531E7123C700F82D5A /* PageControlTest.cpp in Sources */,
 				B0CF18C81CA236A1007AA1B0 /* ListViewTest.cpp in Sources */,
 				B0DB98911B1452EC00710982 /* MenuViewController.cpp in Sources */,
 				B0CF18D81CA236A1007AA1B0 /* ViewAnimationTest.cpp in Sources */,
+				D609D6521E7123C700F82D5A /* CheckboxTest.cpp in Sources */,
 				B0CF18CE1CA236A1007AA1B0 /* ScrollViewTest.cpp in Sources */,
 				B0FFB61D1CA53ABF00A5CDBE /* CDUIShowAutoCollectionView.cpp in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
