@@ -69,7 +69,7 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
                 var b = Math.floor(Math.random()*255);
                 this.HorizontalcolorArr.push(ca.color(r, g, b, 255));
             }
-            this.p_Conllection.reloadData();
+            this.p_AutoCollection.reloadData();
         },
         scrollViewHeaderBeginRefreshing: function( view)
         {
