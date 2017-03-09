@@ -4,7 +4,6 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="crossapp_js_api" level="project" />
-    <orderEntry type="library" name="script" level="project" />
+    <orderEntry type="library" name="cross" level="project" />
   </component>
 </module>
