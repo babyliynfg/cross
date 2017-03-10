@@ -30,6 +30,17 @@
 {
     
 }
+
+- (instancetype)initWithFrame:(NSRect)frameRect
+{
+    if ([super initWithFrame:frameRect])
+    {
+        [self setBackgroundColor:[NSColor clearColor]];
+        return self;
+    }
+    return nil;
+}
+
 -(void)setText:(NSString* )value
 {
     self.stringValue = value;
