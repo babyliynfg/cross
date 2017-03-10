@@ -166,9 +166,7 @@ static EAGLView *view;
     }
     
 	// avoid flicker
-	CrossApp::CAApplication::getApplication()->drawScene();
 //	[self setNeedsDisplay:YES];
-	
 	[self unlockOpenGLContext];
 }
 

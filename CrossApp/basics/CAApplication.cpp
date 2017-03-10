@@ -584,7 +584,7 @@ void CAApplication::reshapeProjection(const DSize& newWindowSize)
         m_pRootWindow->setFrame(rect);
         m_pRootWindow->getDefaultCamera()->initDefault();
     }
-
+    this->updateDraw();
 }
 
 void CAApplication::setStatusBarStyle(const CAStatusBarStyle &var)
