@@ -293,6 +293,7 @@ bool VPFrameRender::loadShaders()
         pProgram = GLProgram::createWithByteArrays(vertexShaderString, yuvFragmentShaderString);
         pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
         pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+        pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
         pProgram->link();
         pProgram->updateUniforms();
         GLProgramCache::getInstance()->addGLProgram(pProgram, "CAVideoPlayerRenderYUV");

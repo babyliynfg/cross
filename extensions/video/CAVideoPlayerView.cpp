@@ -288,12 +288,22 @@ void CAVideoPlayerView::visit(Renderer* renderer, const Mat4 &transform, uint32_
 
 void CAVideoPlayerView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    long offset = (long)&m_sQuad;
-    
-	if (m_pCurVideoFrame && m_pRenderer) 
-	{
-		m_pRenderer->draw(m_pCurVideoFrame, offset);
-	}
+    if(m_bInsideBounds)
+    {
+        m_obCustomCommand.init(0, transform, flags);
+        
+        m_obCustomCommand.func = [=]()
+        {
+            long offset = (long)&m_sQuad;
+            
+            if (m_pCurVideoFrame && m_pRenderer)
+            {
+                m_pRenderer->draw(m_pCurVideoFrame, offset);
+            }
+        };
+        
+        renderer->addCommand(&m_obCustomCommand);
+    }
 }
 
 void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)

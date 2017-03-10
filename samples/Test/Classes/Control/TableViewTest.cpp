@@ -118,7 +118,7 @@ CATableViewCell* ETableView::tableCellAtIndex(CATableView* table, const DSize& c
 
 unsigned int ETableView::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    return sectionTitle.size();
+    return (unsigned int)sectionTitle.size();
 }
 
 unsigned int ETableView::numberOfSections(CATableView *table)
@@ -302,7 +302,7 @@ unsigned int TableViewTest::numberOfRowsInSection(CATableView *table, unsigned i
 
 unsigned int TableViewTest::numberOfSections(CATableView *table)
 {
-    return sectionTitle.size();
+    return (unsigned int)sectionTitle.size();
 }
 
 unsigned int TableViewTest::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

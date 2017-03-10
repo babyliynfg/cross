@@ -118,11 +118,11 @@ void CAVideoPlayerControlView::buildCtrlViews()
     this->addSubview(m_glView);
     // Bottom Panel Back
     CAImageView* bottomPanel = CAImageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 188)));
-    bottomPanel->setImage(CAImage::create("source_material/vdo_panel_bottom_bg.png"));
+    bottomPanel->setImage(CAImage::create("source_material/vdo/vdo_panel_bottom_bg.png"));
     m_glView->addSubview(bottomPanel);
     
     // Slider
-    CAImage* barImage = CAImage::create("source_material/grayvdo_progress_bar.png");
+    CAImage* barImage = CAImage::create("source_material/vdo/grayvdo_progress_bar.png");
     m_playSlider = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(32, 32), DVerticalLayout_T_H(25, 56)));
     m_playSlider->setThumbTintImage(barImage);
     bottomPanel->addSubview(m_playSlider);
@@ -148,8 +148,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
     
     
     // Play Pause Button
-    CAImage* backImage = CAImage::create("source_material/vdo_play.png");
-    CAImage* backImage_h = CAImage::create("source_material/vdo_play_down.png");
+    CAImage* backImage = CAImage::create("source_material/vdo/vdo_play.png");
+    CAImage* backImage_h = CAImage::create("source_material/vdo/vdo_play_down.png");
     m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButton::Type::Custom);
     m_playButton->setImageForState(CAControl::State::Normal, backImage);
     m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
@@ -194,15 +194,15 @@ void CAVideoPlayerControlView::updatePlayButton()
 
 	if (m_glView && m_glView->isPlaying()) 
 	{
-		CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
-		CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
+		CAImage* backImage = CAImage::create("source_material/vdo/vdo_pause.png");
+		CAImage* backImage_h = CAImage::create("source_material/vdo/vdo_pause_down.png");
         m_playButton->setImageForState(CAControl::State::Normal, backImage);
         m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
 	} 
 	else 
 	{
-		CAImage* backImage = CAImage::create("source_material/vdo_play.png");
-		CAImage* backImage_h = CAImage::create("source_material/vdo_play_down.png");
+		CAImage* backImage = CAImage::create("source_material/vdo/vdo_play.png");
+		CAImage* backImage_h = CAImage::create("source_material/vdo/vdo_play_down.png");
         m_playButton->setImageForState(CAControl::State::Normal, backImage);
         m_playButton->setImageForState(CAControl::State::Highlighted, backImage_h);
 	}

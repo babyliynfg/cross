@@ -78,6 +78,8 @@ private:
 	void audioCallback(unsigned char *stream, int len, int channels);
 
 private:
+    CustomCommand m_obCustomCommand;
+    
 	VPDecoder *m_pDecoder;
 	VPFrameRender *m_pRenderer;
 

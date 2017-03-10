@@ -13,8 +13,6 @@ AppDelegate::~AppDelegate()
     
 }
 
-
-
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
