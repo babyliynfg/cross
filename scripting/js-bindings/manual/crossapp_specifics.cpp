@@ -591,7 +591,7 @@ void JSScheduleWrapper::setTargetForSchedule(JS::HandleValue sched, JSScheduleWr
             targetArray = new CrossApp::CAVector<CAObject*>();
             targetArray->init();
             schedFunc_proxy_t *p = (schedFunc_proxy_t *)malloc(sizeof(schedFunc_proxy_t));
-            assert(p);
+            CCAssert(p, "");
             p->jsfuncObj = jsfunc;
             p->targets = targetArray;
             HASH_ADD_PTR(_schedFunc_target_ht, jsfuncObj, p);
@@ -618,7 +618,7 @@ void JSScheduleWrapper::setTargetForJSObject(JS::HandleObject jsTargetObj, JSSch
         targetArray = new CrossApp::CAVector<CAObject*>();
         targetArray->init();
         schedTarget_proxy_t *p = (schedTarget_proxy_t *)malloc(sizeof(schedTarget_proxy_t));
-        assert(p);
+        CCAssert(p, "");
         p->jsTargetObj = jsTargetObj;
         p->targets = targetArray;
         HASH_ADD_PTR(_schedObj_target_ht, jsTargetObj, p);
