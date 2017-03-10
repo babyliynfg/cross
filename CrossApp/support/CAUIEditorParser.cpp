@@ -301,6 +301,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             btn->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            btn->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             btn->setColor(ccc4Int(atoi(value)));
@@ -907,6 +912,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             segmentControl->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            segmentControl->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             segmentControl->setColor(ccc4Int(atoi(value)));
@@ -1036,6 +1046,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             progress->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            progress->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             progress->setColor(ccc4Int(atoi(value)));
@@ -1137,6 +1152,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             slider->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            slider->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             slider->setColor(ccc4Int(atoi(value)));
@@ -1198,6 +1218,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         if (const char* value = viewXml->Attribute("z"))
         {
             stepper->setZOrder(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            stepper->setRecSpe(bool(atoi(value)));
         }
         
         if (const char* value = viewXml->Attribute("color"))
