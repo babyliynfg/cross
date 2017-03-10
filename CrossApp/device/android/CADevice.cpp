@@ -142,7 +142,7 @@ namespace CADevice
             }
         }
         
-        void JAVAOpenURL(const std::string &url)
+        void JAVAOpenUrl(const std::string &url)
         {
             JniMethodInfo jmi;
             if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "browserOpenURL" , "(Ljava/lang/String;)V"))
@@ -222,9 +222,9 @@ namespace CADevice
         JAVAsendLocalNotification(title,content,time);
     }
 
-    void OpenURL(const std::string &url)
+    void openUrl(const std::string &url)
     {
-        JAVAOpenURL(url);
+        JAVAOpenUrl(url);
     }
 
     void setIdleTimerDisabled(bool isIdleTimerDisabled)

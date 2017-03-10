@@ -151,7 +151,7 @@ namespace CADevice
         }
     }
     
-    void OpenURL(const std::string &url)
+    void openUrl(const std::string &url)
     {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];
