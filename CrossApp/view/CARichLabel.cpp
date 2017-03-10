@@ -131,7 +131,7 @@ void CARichLabel::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 		{
 			if (v[j].containsPoint(point))
 			{
-				CADevice::OpenURL(m_vLabelFontVect[i].cszText);
+				CADevice::openUrl(m_vLabelFontVect[i].cszText);
 				m_vLabelFontVect[i].nHyperlink = 2;
 				return;
 			}

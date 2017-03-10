@@ -70,7 +70,7 @@ namespace CADevice
         
     void sendLocalNotification(const char* title, const char* content,int time);
         
-    void OpenURL(const std::string &url);
+    void openUrl(const std::string &url);
         
     void setIdleTimerDisabled(bool isIdleTimerDisabled);
 };
