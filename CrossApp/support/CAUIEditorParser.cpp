@@ -1438,6 +1438,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             pickerView->setSeparateColor(ccc4Int(atoi(value)));
         }
+        
+        if (const char* value = viewXml->Attribute("backgroundColor"))
+        {
+            pickerView->setColor(ccc4Int(atoi(value)));
+        }
     }
 	else if (contrlType.compare("CADatePickerView") == 0)
 	{
