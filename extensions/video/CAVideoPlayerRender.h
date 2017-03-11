@@ -33,7 +33,7 @@ public:
     virtual DRect updateVertices(float width, float height, float screen_w, float screen_h);
     virtual bool loadShaders();
 	virtual const char* key();
-    virtual void draw(VPVideoFrame* frame, long offset);
+    virtual void draw(VPVideoFrame* frame, const ccV3F_C4B_T2F_Quad& quad, const Mat4 &transform, uint32_t flags);
     
 protected:
 

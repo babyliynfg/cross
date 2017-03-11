@@ -46,6 +46,7 @@
 #include "basics/CASyncQueue.h"
 #include "basics/CANotificationCenter.h"
 #include "basics/CAPointExtension.h"
+#include "basics/CAConfiguration.h"
 
 //control
 #include "control/CABar.h"
