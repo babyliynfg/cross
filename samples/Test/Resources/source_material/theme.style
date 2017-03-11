@@ -42,14 +42,14 @@
         <Size name="trackHeight" path="0" value="12"/>
         <Size name="height" path="0" value="40"/>
     </CASlider>
-    <CASwitch name="CASwitch_SquareRect">
+    <CASwitch name="CASwitch_RoundedRect">
         <Image name="onImage" path="1" value="switch_on.png"/>
         <Image name="offImage" path="1" value="switch_off.png"/>
         <Image name="thumbTintImage" path="1" value="switch_indicator.png"/>
         <Size name="width" path="0" value="102"/>
         <Size name="height" path="0" value="56"/>
     </CASwitch>
-    <CASwitch name="CASwitch_RoundedRect">
+    <CASwitch name="CASwitch_SquareRect">
         <Image name="onImage" path="1" value="switch_on_r.png"/>
         <Image name="offImage" path="1" value="switch_off_r.png"/>
         <Image name="thumbTintImage" path="1" value="switch_indicator_r.png"/>
