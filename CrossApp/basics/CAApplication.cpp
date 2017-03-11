@@ -719,6 +719,8 @@ void CAApplication::reset()
     // CrossApp specific data structures
     CAUserDefault::destroyInstance();
     
+    ccDrawFree();
+    
     GL::invalidateStateCache();
     
     RenderState::finalize();
