@@ -252,8 +252,10 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
         	FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
  	        params.leftMargin = 0; 
  	        params.topMargin = 0;
- 	    	params.width = pNewSurfaceWidth;
- 	    	params.height = pNewSurfaceHeight;
+            params.rightMargin = 0;
+            params.bottomMargin = 0;
+// 	    	params.width = pNewSurfaceWidth;
+// 	    	params.height = pNewSurfaceHeight;
             setLayoutParams(params);
             mRenderer.handleOnResume();
         	mRenderer.setScreenWidthAndHeight(pNewSurfaceWidth, pNewSurfaceHeight);
