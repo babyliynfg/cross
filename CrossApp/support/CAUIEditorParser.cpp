@@ -1862,13 +1862,129 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
                                           atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
-        CAAutoCollectionView* collectionView = CAAutoCollectionView::createWithLayout(layout);
-        superview->addSubview(collectionView);
+        CAAutoCollectionView* autoCollectionView = CAAutoCollectionView::createWithLayout(layout);
+        superview->addSubview(autoCollectionView);
         
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, autoCollectionView);
+        autoCollectionView->setTextTag(key);
+  
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            autoCollectionView->setZOrder(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundColor"))
+        {
+            autoCollectionView->setBackgroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundImage"))
+        {
+            autoCollectionView->setBackgroundImage(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("orientation"))
+        {
+            autoCollectionView->setOrientation((CAAutoCollectionView::Orientation)atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("horiCellInterval"))
+        {
+            autoCollectionView->setHoriCellInterval(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("vertCellInterval"))
+        {
+            autoCollectionView->setVertCellInterval(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("horiMargins"))
+        {
+            autoCollectionView->setHoriMargins(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("vertMargins"))
+        {
+            autoCollectionView->setVertMargins(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerHeight"))
+        {
+            autoCollectionView->setCollectionHeaderHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("footerHeight"))
+        {
+            autoCollectionView->setCollectionFooterHeight(atoi(value));
+        }
+
+        if (const char* value = viewXml->Attribute("bounce"))
+        {
+            autoCollectionView->CAScrollView::setBounces(bool(atoi(value)));
+        }
+
+        if (const char* value = viewXml->Attribute("showsScrollIndicator"))
+        {
+            autoCollectionView->setShowsScrollIndicators(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerRefreshView"))
+        {
+            if(bool(atoi(value)))
+            {
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Header);
+                autoCollectionView->setHeaderRefreshView(pullview);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("footerRefreshView"))
+        {
+            if(bool(atoi(value)))
+            {
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Footer);
+                autoCollectionView->setFooterRefreshView(pullview);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysTopSectionHeader"))
+        {
+            autoCollectionView->setAlwaysTopSectionHeader(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysBottomSectionFooter"))
+        {
+            autoCollectionView->setAlwaysBottomSectionFooter(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsSelection"))
+        {
+            autoCollectionView->setAllowsSelection(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsMultipleSelection"))
+        {
+            autoCollectionView->setAllowsMultipleSelection(bool(atoi(value)));
+        }
+    }
+
+    else if (contrlType.compare("CACollectionView") == 0)
+    {
+        DLayout layout;
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
+                                              (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
+                                          (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
+        
+        CACollectionView* collectionView = CACollectionView::createWithLayout(layout);
+        superview->addSubview(collectionView);
+
         const char* key = viewXml->Attribute("textTag");
         map.insert(key, collectionView);
         collectionView->setTextTag(key);
-  
+        
         if (const char* value = viewXml->Attribute("z"))
         {
             collectionView->setZOrder(atoi(value));
@@ -1883,30 +1999,15 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             collectionView->setBackgroundImage(CAImage::create(value));
         }
-        
-        if (const char* value = viewXml->Attribute("orientation"))
+
+        if (const char* value = viewXml->Attribute("horiInterval"))
         {
-            collectionView->setOrientation((CAAutoCollectionView::Orientation)atoi(value));
+            collectionView->setHoriInterval(atoi(value));
         }
         
-        if (const char* value = viewXml->Attribute("horiCellInterval"))
+        if (const char* value = viewXml->Attribute("vertInterval"))
         {
-            collectionView->setHoriCellInterval(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("vertCellInterval"))
-        {
-            collectionView->setVertCellInterval(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("horiMargins"))
-        {
-            collectionView->setHoriMargins(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("vertMargins"))
-        {
-            collectionView->setVertMargins(atoi(value));
+            collectionView->setVertInterval(atoi(value));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -1918,22 +2019,12 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             collectionView->setCollectionFooterHeight(atoi(value));
         }
-        
-        if (const char* value = viewXml->Attribute("horiCellInterval"))
-        {
-            collectionView->setHoriCellInterval(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("vertCellInterval"))
-        {
-            collectionView->setVertCellInterval(atoi(value));
-        }
 
         if (const char* value = viewXml->Attribute("bounce"))
         {
             collectionView->CAScrollView::setBounces(bool(atoi(value)));
         }
-
+        
         if (const char* value = viewXml->Attribute("showsScrollIndicator"))
         {
             collectionView->setShowsScrollIndicators(bool(atoi(value)));
@@ -1977,6 +2068,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             collectionView->setAllowsMultipleSelection(bool(atoi(value)));
         }
     }
+    
     else if (contrlType.compare("CAWaterfallView") == 0)
     {
         DLayout layout;
