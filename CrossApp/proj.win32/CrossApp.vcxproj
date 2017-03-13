@@ -173,6 +173,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\basics\CAAutoreleasePool.cpp" />
     <ClCompile Include="..\basics\CACamera.cpp" />
     <ClCompile Include="..\basics\CACameraBackgroundBrush.cpp" />
+    <ClCompile Include="..\basics\CAColor.cpp" />
     <ClCompile Include="..\basics\CAConfiguration.cpp" />
     <ClCompile Include="..\basics\CAFPSImages.c" />
     <ClCompile Include="..\basics\CAIndexPath.cpp" />
@@ -364,6 +365,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\basics\CAAutoreleasePool.h" />
     <ClInclude Include="..\basics\CACamera.h" />
     <ClInclude Include="..\basics\CACameraBackgroundBrush.h" />
+    <ClInclude Include="..\basics\CAColor.h" />
     <ClInclude Include="..\basics\CAConfiguration.h" />
     <ClInclude Include="..\basics\CAFPSImages.h" />
     <ClInclude Include="..\basics\CAIndexPath.h" />
