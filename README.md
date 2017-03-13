@@ -13,13 +13,13 @@ CrossApp
 
 支持的平台：
 
-iOS：7.0 ~ 9.X SDK
+iOS：8.0 ~ 10.X SDK
 
-android：4.4 ~ 6.X SDK
+android：4.4 ~ 7.X SDK
 
 windows：windows XP、windows Vista、windows 7、windows 8.0、 windows 8.1、 windows 10
 
-MAC OSX：10.7.X ~ 10.12 SDK
+MAC OSX：10.9.X ~ 11.0.X SDK
 
 
 -------------------
@@ -39,5 +39,5 @@ QQ群：   1群：345156390
 
 官网：http://crossapp.9miao.com
 源码：
-github：https://github.com/babyliynfg/nano-CrossApp
-oschina: http://git.oschina.net/liyuanfeng/nano-CrossApp
+github：https://github.com/babyliynfg/cross
+oschina: http://git.oschina.net/liyuanfeng/cross
