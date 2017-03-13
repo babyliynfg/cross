@@ -118,7 +118,7 @@ const char* GLProgram::ATTRIBUTE_NAME_BINORMAL = "a_binormal";
 
 
 
-static const char * COCOS2D_SHADER_UNIFORMS =
+static const char * CossApp_SHADER_UNIFORMS =
         "uniform mat4 CC_PMatrix;\n"
         "uniform mat4 CC_MVMatrix;\n"
         "uniform mat4 CC_MVPMatrix;\n"
@@ -224,7 +224,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     {
         if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray, replacedDefines))
         {
-            CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
+            CCLOG("CossApp: ERROR: Failed to compile vertex shader");
             return false;
        }
     }
@@ -234,7 +234,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     {
         if (!compileShader(&_fragShader, GL_FRAGMENT_SHADER, fShaderByteArray, replacedDefines))
         {
-            CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
+            CCLOG("CossApp: ERROR: Failed to compile fragment shader");
             return false;
         }
     }
@@ -435,7 +435,7 @@ bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source,
 #elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n"),
 #endif
-        COCOS2D_SHADER_UNIFORMS,
+        CossApp_SHADER_UNIFORMS,
         convertedDefines.c_str(),
         source};
 
@@ -452,15 +452,15 @@ bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source,
         GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
 
         glGetShaderSource(*shader, length, nullptr, src);
-        CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
+        CCLOG("CossApp: ERROR: Failed to compile shader:\n%s", src);
 
         if (type == GL_VERTEX_SHADER)
         {
-            CCLOG("cocos2d: %s", getVertexShaderLog().c_str());
+            CCLOG("CossApp: %s", getVertexShaderLog().c_str());
         }
         else
         {
-            CCLOG("cocos2d: %s", getFragmentShaderLog().c_str());
+            CCLOG("CossApp: %s", getFragmentShaderLog().c_str());
         }
         free(src);
 
@@ -547,7 +547,7 @@ bool GLProgram::link()
 
     if (status == GL_FALSE)
     {
-        CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
+        CCLOG("CossApp: ERROR: Failed to link program: %i", _program);
         GL::deleteProgram(_program);
         _program = 0;
     }
@@ -884,7 +884,7 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 
     if (_flags.usesTime) {
         // This doesn't give the most accurate global time value.
-        // Cocos2D doesn't store a high precision time value, so this will have to do.
+        // CossApp doesn't store a high precision time value, so this will have to do.
         // Getting Mach time per frame per shader using time could be extremely expensive.
         float time = _application->getTotalFrames() * _application->getAnimationInterval();
 

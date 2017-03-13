@@ -111,4 +111,4 @@ void CCEGLView::setMultiTouchMask(bool mask)
 	//glView.multipleTouchEnabled = mask ? YES : NO;
 }
 
-NS_CC_END // end of namespace cocos2d;
+NS_CC_END // end of namespace CossApp;

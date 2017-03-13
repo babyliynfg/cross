@@ -247,7 +247,7 @@ static EAGLView *view = 0;
     
      if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
         {
-//         //CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+//         //CCLOG(@"CossApp: Failed to swap renderbuffer in %s\n", __FUNCTION__);
         }
 
 #if CROSSAPP_DEBUG

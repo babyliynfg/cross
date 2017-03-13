@@ -24,5 +24,5 @@ void GLToCGAffine(const GLfloat *m, AffineTransform *t)
     t->b = m[1]; t->d = m[5]; t->ty = m[13];
 }
 
-}//namespace   cocos2d 
+}//namespace   CossApp 
 

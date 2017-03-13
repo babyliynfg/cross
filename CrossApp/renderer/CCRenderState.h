@@ -1,7 +1,7 @@
 
 
-#ifndef __cocos2d_libs__CCRenderState__
-#define __cocos2d_libs__CCRenderState__
+#ifndef __CossApp_libs__CCRenderState__
+#define __CossApp_libs__CCRenderState__
 
 #include <string>
 #include <functional>
@@ -443,4 +443,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__cocos2d_libs__CCRenderState__) */
+#endif /* defined(__CossApp_libs__CCRenderState__) */
