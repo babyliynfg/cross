@@ -5,7 +5,7 @@ NS_CC_EXT_BEGIN
 
 CAVideoPlayerView::CAVideoPlayerView()
 : m_pPlayerViewDelegate(NULL)
-, m_pRenderer(NULL)
+, m_pVPFRenderer(NULL)
 , m_pDecoder(NULL)
 , m_isPlaying(false)
 , m_isBuffered(false)
