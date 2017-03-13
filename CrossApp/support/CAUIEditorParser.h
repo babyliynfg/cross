@@ -16,7 +16,7 @@
 
 NS_CC_BEGIN
 class CAViewController;
-CC_DLL class CAUIEditorParser : public CAObject
+class CC_DLL CAUIEditorParser : public CAObject
 {
 public:
     
