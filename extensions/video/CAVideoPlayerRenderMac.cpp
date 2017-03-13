@@ -218,7 +218,7 @@ const char* VPFrameRender::key()
 	return _key.c_str();
 }
 
-void VPFrameRender::draw(VPVideoFrame *frame, long offset)
+void VPFrameRender::draw(extension::VPVideoFrame *frame, const ccV3F_C4B_T2F_Quad &quad, const CrossApp::Mat4 &transform, uint32_t flags)
 {
 
 }
