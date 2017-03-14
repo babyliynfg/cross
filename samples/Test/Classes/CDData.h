@@ -1,4 +1,4 @@
-#include "CommonHttpManager.h"
+﻿#include "CommonHttpManager.h"
 
 #define _T(x) L##x
 #define CHAR    wchar_t
@@ -49,6 +49,5 @@ static const char* iconTag[30] =
     "image/FlashView.png",
     "image/Video.png",
     "image/RenderImage.png",
-    
 };
 
