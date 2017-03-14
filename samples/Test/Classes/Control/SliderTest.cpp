@@ -75,9 +75,10 @@ void SliderTest::viewDidLoad()
     
         CASlider* slider2 = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(120, 120), DVerticalLayout_T_H(500, 56)));
         slider2->setTag(101);
-        slider2->setMaxTrackTintImage(CAImage::create("source_material/ex1.png"));
-        slider2->setMinTrackTintImage(CAImage::create("source_material/ex3.png"));
-        slider2->setThumbTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
+        slider2->setTrackHeight(6);
+        slider2->setMaxTrackTintImage(CAImage::create("image/slider_max_track.png"));
+        slider2->setMinTrackTintImage(CAImage::create("image/slider_min_track.png"));
+        slider2->setThumbTintImage(CAImage::create("image/slider_indicator.png"));
         slider2->setTarget([=](float v)
         {
             char value[20] = "";
