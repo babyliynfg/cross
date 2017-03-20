@@ -275,7 +275,7 @@ ca.Class.extend = function (prop) {
             this.__instanceId = ClassManager.getNewInstanceId();
             if (!this.ctor) {
                 if (this.__nativeObj)
-                    ca.log("No ctor function found! Please check whether `classes_need_extend` section in `ini` file like which in `tools/tojs/cocos2dx.ini`");
+                    ca.log("No ctor function found! Please check whether `classes_need_extend` section in `ini` file like which in `tools/tojs/crossapp.ini`");
             }
             else {
                 this.ctor.apply(this, arguments);

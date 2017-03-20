@@ -804,7 +804,7 @@ ca.screen = {
  * @type {Object}
  * @name jsb.fileUtils
  * jsb.fileUtils is the native file utils singleton object,
- * please refer to Cocos2d-x API to know how to use it.
+ * please refer to CrossApp API to know how to use it.
  * Only available in JSB
  */
 jsb.fileUtils = ca.fileUtils;
@@ -815,7 +815,7 @@ delete ca.fileUtils;
  * @type {Object}
  * @name jsb.reflection
  * jsb.reflection is a bridge to let you invoke Java static functions.
- * please refer to this document to know how to use it: http://www.cocos2d-x.org/docs/manual/framework/html5/v3/reflection/en
+ * please refer to this document to know how to use it: http://www.CrossApp.org/docs/manual/framework/html5/v3/reflection/en
  * Only available on Android platform
  */
 jsb.reflection = {
@@ -1680,7 +1680,7 @@ ca.app = /** @lends ca.app# */{
     
         this.config = config;
     
-        ca.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
+//        ca.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
 //        ca.director.setAnimationInterval(1.0/this.config[CONFIG_KEY.frameRate]);
     }
 };
