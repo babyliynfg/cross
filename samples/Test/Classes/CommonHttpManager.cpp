@@ -632,9 +632,9 @@ void CommonUrlImageView::setUrl(const std::string& url)
     
     m_sUrl = CrossApp::base64Decode(url);
     
-    CommonHttpManager::getInstance()->get_image(m_sUrl, [=](CAImage* image, const std::string& url)
+    CommonHttpManager::getInstance()->get_image(url, [=](CAImage* image, const std::string& url)
     {
-        this->onRequestFinished(image, url);
+        this->onRequestFinished(image, m_sUrl);
     }, m_eType);
 }
 
