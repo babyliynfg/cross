@@ -139,11 +139,13 @@
     <ClCompile Include="..\Classes\Control\AutoCollectionViewHorizontalTest.cpp" />
     <ClCompile Include="..\Classes\Control\AutoCollectionViewVerticalTest.cpp" />
     <ClCompile Include="..\Classes\Control\ButtonTest.cpp" />
+    <ClCompile Include="..\Classes\Control\CheckboxTest.cpp" />
     <ClCompile Include="..\Classes\Control\CollectionViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\GifViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\ImageViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\LabelTest.cpp" />
     <ClCompile Include="..\Classes\Control\ListViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\PageControlTest.cpp" />
     <ClCompile Include="..\Classes\Control\PageViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\PickerViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\ProgressTest.cpp" />
@@ -178,11 +180,13 @@
     <ClInclude Include="..\Classes\Control\AutoCollectionViewHorizontalTest.h" />
     <ClInclude Include="..\Classes\Control\AutoCollectionViewVerticalTest.h" />
     <ClInclude Include="..\Classes\Control\ButtonTest.h" />
+    <ClInclude Include="..\Classes\Control\CheckboxTest.h" />
     <ClInclude Include="..\Classes\Control\CollectionViewTest.h" />
     <ClInclude Include="..\Classes\Control\GifViewTest.h" />
     <ClInclude Include="..\Classes\Control\ImageViewTest.h" />
     <ClInclude Include="..\Classes\Control\LabelTest.h" />
     <ClInclude Include="..\Classes\Control\ListViewTest.h" />
+    <ClInclude Include="..\Classes\Control\PageControlTest.h" />
     <ClInclude Include="..\Classes\Control\PageViewTest.h" />
     <ClInclude Include="..\Classes\Control\PickerViewTest.h" />
     <ClInclude Include="..\Classes\Control\ProgressTest.h" />

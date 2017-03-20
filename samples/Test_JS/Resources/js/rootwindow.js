@@ -39,9 +39,9 @@ var RootWindow = ca.CAWindow.extend(
 
             this.initUIVIew();
 
-            //var alertViewTest = new AlertViewTest();
-            //alertViewTest.init();
-            //this.setRootViewController(alertViewTest);
+            // var alertViewTest = new AlertViewTest();
+            // alertViewTest.init();
+            // this.setRootViewController(alertViewTest);
 
 
             //var buttonTest = new ButtonTest();

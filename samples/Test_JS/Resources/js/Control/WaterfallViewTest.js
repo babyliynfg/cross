@@ -4,10 +4,13 @@
 var WaterfallViewTest = ca.CAViewController.extend({
     colorArr:null,
     Waterfall:null,
+    footerRefreshView:null,
+    headerRefreshView:null,
     ctor: function () {
         this._super();
 
         this.colorArr = new Array();
+
         for (var i = 0; i < 12; i++)
         {
             var r = Math.floor(Math.random()*255);
@@ -16,23 +19,27 @@ var WaterfallViewTest = ca.CAViewController.extend({
             this.colorArr.push(ca.color(r, g, b, 255));
         }
 
-        //headerRefreshView = CAPullToRefreshView.create(CAPullToRefreshView.CAPullToRefreshTypeHeader);
-        //footerRefreshView = CAPullToRefreshView.create(CAPullToRefreshView.CAPullToRefreshTypeFooter);
+        this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
+        this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
         this.Waterfall = ca.CAWaterfallView.createWithLayout(DLayoutFill);
         this.Waterfall.setItemMargin(10);
         this.Waterfall.setColumnMargin(10);
         this.Waterfall.setColumnCount(2);
         this.Waterfall.setAllowsSelection(true);
-        //this.Waterfall.setScrollViewDelegate(this);
+        // this.Waterfall.setScrollViewDelegate(this);
         this.Waterfall.setWaterfallViewDelegate(this);
         this.Waterfall.setWaterfallViewDataSource(this);
-        //this.Waterfall.setHeaderRefreshView(headerRefreshView);
-        //this.Waterfall.setFooterRefreshView(footerRefreshView);
+        // this.Waterfall.setHeaderRefreshView(this.headerRefreshView);
+        // this.Waterfall.setFooterRefreshView(this.footerRefreshView);
         this.getView().addSubview(this.Waterfall);
+
+        // this.Waterfall.reloadData();
+        // this.Waterfall.startPullToHeaderRefreshView();
     },
-        refreshData1: function ( interval)
+    refreshData1: function ( interval)
     {
+        this.colorArr = [];
         for (var i = 0; i < 12; i++)
         {
             var r = Math.floor(Math.random()*255);
@@ -41,8 +48,8 @@ var WaterfallViewTest = ca.CAViewController.extend({
             this.colorArr.push(ca.color(r, g, b, 255));
         }
         this.Waterfall.reloadData();
-    }
-    ,refreshData2: function ( interval)
+    },
+    refreshData2: function ( interval)
     {
 
         for (var i = 0; i < 12; i++)
@@ -54,20 +61,14 @@ var WaterfallViewTest = ca.CAViewController.extend({
         }
         this.Waterfall.reloadData();
     }
-
     ,scrollViewHeaderBeginRefreshing: function ( view)
     {
-        //CAScheduler.schedule(schedule_selector(WaterfallViewTest.refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
-
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.refreshData1,0.01);
+        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData1, 0.5, 0, 0);
     }
-
     ,scrollViewFooterBeginRefreshing: function ( view)
     {
-        //CAScheduler.schedule(schedule_selector: function (WaterfallViewTest.refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.refreshData1,0.01);
+        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData2, 0.5, 0, 0);
     }
-
     ,waterfallViewDidSelectCellAtIndexPath: function (waterfallView, itemIndex)
     {
         //选中
@@ -80,12 +81,10 @@ var WaterfallViewTest = ca.CAViewController.extend({
         ca.CAViewAnimation.commitAnimations();
         log("选中");
     }
-
     ,waterfallViewDidDeselectCellAtIndexPath: function (waterfallView, itemIndex)
     {
         log("取消选中");
     },
-
     //Necessary
    waterfallCellAtIndex: function (waterfallView,  cellSize, itemIndex)
     {
@@ -127,22 +126,18 @@ var WaterfallViewTest = ca.CAViewController.extend({
     {
         return this.colorArr.length;
     },
-
    waterfallViewSectionViewForHeader: function (waterfallView,  viewSize)
     {
         return null;
     }
-
     ,waterfallViewHeightForHeader: function (waterfallView)
     {
         return 0;
     },
-
     waterfallViewSectionViewForFooter: function (waterfallView,  viewSize)
     {
         return null;
     }
-
     ,waterfallViewHeightForFooter: function (waterfallView)
     {
         return 0;

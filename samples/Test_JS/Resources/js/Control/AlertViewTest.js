@@ -13,8 +13,11 @@ var AlertViewTest = ca.CAViewController.extend({
         btn1.setTitleForState(ca.CAControl.State.Normal, "Click-1");
         btn1.setTitleColorForState(ca.CAControl.State.Normal, ca.color(51,204,255,255));
         btn1.addTarget(function () {
-          var alertView = ca.CAAlertView.createWithText("Alert","this is a alert!","close",null);
-          alertView.show(this.alerCallback);
+            var alertView = ca.CAAlertView.createWithText("Alert","this is a alert!","close",null);
+            alertView.show(function (btnIndex)
+            {
+                log("btnIndex=="+btnIndex);
+            });
         }, ca.CAButton.Event.TouchUpInSide);
         this.getView().addSubview(btn1);
 
@@ -24,8 +27,11 @@ var AlertViewTest = ca.CAViewController.extend({
         btn2.setTitleForState(ca.CAControl.State.Normal, "Click-2");
         btn2.setTitleColorForState(ca.CAControl.State.Normal, ca.color(51,204,255,255));
         btn2.addTarget(function () {
-          var alertView = ca.CAAlertView.createWithText("Alert", "this is a alert!", "ok","close",null);
-          alertView.show(this.alerCallback);
+            var alertView = ca.CAAlertView.createWithText("Alert", "this is a alert!", "ok","close",null);
+            alertView.show(function (btnIndex)
+            {
+                log("btnIndex=="+btnIndex);
+            });
         },ca.CAButton.Event.TouchUpInSide);
         this.getView().addSubview(btn2);
 
@@ -36,7 +42,10 @@ var AlertViewTest = ca.CAViewController.extend({
         btn3.setTitleColorForState(ca.CAControl.State.Normal, ca.color(51,204,255,255));
         btn3.addTarget(function () {
           var alertView = ca.CAAlertView.createWithText("Alert", "message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,message is so long,!", "ok","close","button3","button4","button5","button6","button7",null);
-          alertView.show(this.alerCallback);
+          alertView.show(function (btnIndex)
+          {
+              log("btnIndex=="+btnIndex);
+          });
         }, ca.CAButton.Event.TouchUpInSide);
         this.getView().addSubview(btn3);
 

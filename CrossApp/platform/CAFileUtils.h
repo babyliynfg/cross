@@ -131,7 +131,7 @@ public:
 
      If the new file can't be found on the file system, it will return the parameter filename directly.
 
-     This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
+     This method was added to simplify multiplatform support. Whether you are using CossApp-js or any cross-compilation toolchain like StellaSDK or Apportable,
      you might need to load different resources for a given file in the different platforms.
 
      @since v2.1

@@ -1,7 +1,7 @@
 
 
-#ifndef __cocos2d_libs__CCMaterial__
-#define __cocos2d_libs__CCMaterial__
+#ifndef __CossApp_libs__CCMaterial__
+#define __CossApp_libs__CCMaterial__
 
 #include <string>
 
@@ -127,4 +127,4 @@ protected:
 NS_CC_END
 
 
-#endif /* defined(__cocos2d_libs__CCMaterial__) */
+#endif /* defined(__CossApp_libs__CCMaterial__) */

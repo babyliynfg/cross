@@ -301,6 +301,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             btn->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            btn->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             btn->setColor(ccc4Int(atoi(value)));
@@ -587,6 +592,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             textField->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            textField->setRecSpe(bool(atoi(value)));
+        }
+        
 		if (const char* value = viewXml->Attribute("textColor"))
 		{
 			textField->setTextColor(ccc4Int(atoi(value)));
@@ -630,11 +640,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		if (const char* value = viewXml->Attribute("maginLeftImage"))
 		{
 			DSize leftSize = DSizeZero;
-			if (const char* value = viewXml->Attribute("maginLeftImageSize_w"))
+			if (const char* value = viewXml->Attribute("maginLeftImageSizeW"))
 			{
 				leftSize.width = atoi(value);
 			}
-			if (const char* value = viewXml->Attribute("maginLeftImageSize_h"))
+			if (const char* value = viewXml->Attribute("maginLeftImageSizeH"))
 			{
 				leftSize.height= atoi(value);
 			}
@@ -649,15 +659,15 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		if (const char* value = viewXml->Attribute("maginRightImage"))
 		{
 			DSize rightSize = DSizeZero;
-			if (const char* value = viewXml->Attribute("maginRightImageSize_w"))
+			if (const char* value = viewXml->Attribute("maginRightImageSizeW"))
 			{
 				rightSize.width = atoi(value);
 			}
-			if (const char* value = viewXml->Attribute("maginRightImageSize_h"))
+			if (const char* value = viewXml->Attribute("maginRightImageSizeH"))
 			{
 				rightSize.height = atoi(value);
 			}
-			textField->setMarginImageLeft(rightSize, value);
+			textField->setMarginImageRight(rightSize, value);
 		}
 
 		if (const char* value = viewXml->Attribute("placeGolderColor"))
@@ -902,6 +912,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             segmentControl->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            segmentControl->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             segmentControl->setColor(ccc4Int(atoi(value)));
@@ -1031,6 +1046,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             progress->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            progress->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             progress->setColor(ccc4Int(atoi(value)));
@@ -1132,6 +1152,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             slider->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            slider->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             slider->setColor(ccc4Int(atoi(value)));
@@ -1195,6 +1220,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             stepper->setZOrder(atoi(value));
         }
         
+        if (const char* value = viewXml->Attribute("isRecSpe"))
+        {
+            stepper->setRecSpe(bool(atoi(value)));
+        }
+        
         if (const char* value = viewXml->Attribute("color"))
         {
             stepper->setColor(ccc4Int(atoi(value)));
@@ -1207,12 +1237,12 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("increntmentSelectedImage"))
         {
-			stepper->setDecrementImage(CAControl::State::Highlighted, CAImage::create(value));
+			stepper->setIncrementImage(CAControl::State::Highlighted, CAImage::create(value));
         }
 
 		if (const char* value = viewXml->Attribute("decrentmentImage"))
 		{
-			stepper->setIncrementImage(CAControl::State::Normal, CAImage::create(value));
+			stepper->setDecrementImage(CAControl::State::Normal, CAImage::create(value));
 		}
 
 		if (const char* value = viewXml->Attribute("decrentmentSelectedImage"))
@@ -1223,6 +1253,46 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         if (const char* value = viewXml->Attribute("background"))
         {
 			stepper->setBackgroundImage(CAControl::State::Normal, CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("minValue"))
+        {
+            stepper->setMinValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("maxValue"))
+        {
+            stepper->setMaxValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("value"))
+        {
+            stepper->setValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("stepValue"))
+        {
+            stepper->setStepValue(atof(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("tintColor"))
+        {
+            stepper->setDividerColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("continuous"))
+        {
+            stepper->setContinuous(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("autoRepeat"))
+        {
+            stepper->setAutoRepeat(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("wraps"))
+        {
+            stepper->setWraps(bool(atoi(value)));
         }
         
         //error 缺少 backgroundSelected
@@ -1368,6 +1438,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             pickerView->setSeparateColor(ccc4Int(atoi(value)));
         }
+        
+        if (const char* value = viewXml->Attribute("backgroundColor"))
+        {
+            pickerView->setColor(ccc4Int(atoi(value)));
+        }
     }
 	else if (contrlType.compare("CADatePickerView") == 0)
 	{
@@ -1465,7 +1540,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         CAScrollView* scrollView = CAScrollView::createWithLayout(layout);
         superview->addSubview(scrollView);
-        
+        view = scrollView;
         const char* key = viewXml->Attribute("textTag");
         map.insert(key, scrollView);
         scrollView->setTextTag(key);
@@ -1787,13 +1862,129 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
                                           atof(viewXml->Attribute("v_var2")),
                                           (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
         
-        CAAutoCollectionView* collectionView = CAAutoCollectionView::createWithLayout(layout);
-        superview->addSubview(collectionView);
+        CAAutoCollectionView* autoCollectionView = CAAutoCollectionView::createWithLayout(layout);
+        superview->addSubview(autoCollectionView);
         
+        const char* key = viewXml->Attribute("textTag");
+        map.insert(key, autoCollectionView);
+        autoCollectionView->setTextTag(key);
+  
+        if (const char* value = viewXml->Attribute("z"))
+        {
+            autoCollectionView->setZOrder(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundColor"))
+        {
+            autoCollectionView->setBackgroundColor(ccc4Int(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("backgroundImage"))
+        {
+            autoCollectionView->setBackgroundImage(CAImage::create(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("orientation"))
+        {
+            autoCollectionView->setOrientation((CAAutoCollectionView::Orientation)atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("horiCellInterval"))
+        {
+            autoCollectionView->setHoriCellInterval(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("vertCellInterval"))
+        {
+            autoCollectionView->setVertCellInterval(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("horiMargins"))
+        {
+            autoCollectionView->setHoriMargins(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("vertMargins"))
+        {
+            autoCollectionView->setVertMargins(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerHeight"))
+        {
+            autoCollectionView->setCollectionHeaderHeight(atoi(value));
+        }
+        
+        if (const char* value = viewXml->Attribute("footerHeight"))
+        {
+            autoCollectionView->setCollectionFooterHeight(atoi(value));
+        }
+
+        if (const char* value = viewXml->Attribute("bounce"))
+        {
+            autoCollectionView->CAScrollView::setBounces(bool(atoi(value)));
+        }
+
+        if (const char* value = viewXml->Attribute("showsScrollIndicator"))
+        {
+            autoCollectionView->setShowsScrollIndicators(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("headerRefreshView"))
+        {
+            if(bool(atoi(value)))
+            {
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Header);
+                autoCollectionView->setHeaderRefreshView(pullview);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("footerRefreshView"))
+        {
+            if(bool(atoi(value)))
+            {
+                CrossApp::CAPullToRefreshView *pullview = CAPullToRefreshView::create(CrossApp::CAPullToRefreshView::Type::Footer);
+                autoCollectionView->setFooterRefreshView(pullview);
+            }
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysTopSectionHeader"))
+        {
+            autoCollectionView->setAlwaysTopSectionHeader(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("alwaysBottomSectionFooter"))
+        {
+            autoCollectionView->setAlwaysBottomSectionFooter(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsSelection"))
+        {
+            autoCollectionView->setAllowsSelection(bool(atoi(value)));
+        }
+        
+        if (const char* value = viewXml->Attribute("allowsMultipleSelection"))
+        {
+            autoCollectionView->setAllowsMultipleSelection(bool(atoi(value)));
+        }
+    }
+
+    else if (contrlType.compare("CACollectionView") == 0)
+    {
+        DLayout layout;
+        layout.horizontal = DHorizontalLayout(atof(viewXml->Attribute("h_var1")),
+                                              atof(viewXml->Attribute("h_var2")),
+                                              (DHorizontalLayout::Type)atoi(viewXml->Attribute("HLayoutType")));
+        layout.vertical = DVerticalLayout(atof(viewXml->Attribute("v_var1")),
+                                          atof(viewXml->Attribute("v_var2")),
+                                          (DVerticalLayout::Type)atoi(viewXml->Attribute("VLayoutType")));
+        
+        CACollectionView* collectionView = CACollectionView::createWithLayout(layout);
+        superview->addSubview(collectionView);
+
         const char* key = viewXml->Attribute("textTag");
         map.insert(key, collectionView);
         collectionView->setTextTag(key);
-  
+        
         if (const char* value = viewXml->Attribute("z"))
         {
             collectionView->setZOrder(atoi(value));
@@ -1808,30 +1999,15 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             collectionView->setBackgroundImage(CAImage::create(value));
         }
-        
-        if (const char* value = viewXml->Attribute("orientation"))
+
+        if (const char* value = viewXml->Attribute("horiInterval"))
         {
-            collectionView->setOrientation((CAAutoCollectionView::Orientation)atoi(value));
+            collectionView->setHoriInterval(atoi(value));
         }
         
-        if (const char* value = viewXml->Attribute("horiCellInterval"))
+        if (const char* value = viewXml->Attribute("vertInterval"))
         {
-            collectionView->setHoriCellInterval(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("vertCellInterval"))
-        {
-            collectionView->setVertCellInterval(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("horiMargins"))
-        {
-            collectionView->setHoriMargins(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("vertMargins"))
-        {
-            collectionView->setVertMargins(atoi(value));
+            collectionView->setVertInterval(atoi(value));
         }
         
         if (const char* value = viewXml->Attribute("headerHeight"))
@@ -1843,22 +2019,12 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             collectionView->setCollectionFooterHeight(atoi(value));
         }
-        
-        if (const char* value = viewXml->Attribute("horiCellInterval"))
-        {
-            collectionView->setHoriCellInterval(atoi(value));
-        }
-        
-        if (const char* value = viewXml->Attribute("vertCellInterval"))
-        {
-            collectionView->setVertCellInterval(atoi(value));
-        }
 
         if (const char* value = viewXml->Attribute("bounce"))
         {
             collectionView->CAScrollView::setBounces(bool(atoi(value)));
         }
-
+        
         if (const char* value = viewXml->Attribute("showsScrollIndicator"))
         {
             collectionView->setShowsScrollIndicators(bool(atoi(value)));
@@ -1902,6 +2068,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
             collectionView->setAllowsMultipleSelection(bool(atoi(value)));
         }
     }
+    
     else if (contrlType.compare("CAWaterfallView") == 0)
     {
         DLayout layout;

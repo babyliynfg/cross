@@ -1,7 +1,7 @@
 
 
-#ifndef __cocos2d_libs__CCTechnique__
-#define __cocos2d_libs__CCTechnique__
+#ifndef __CossApp_libs__CCTechnique__
+#define __CossApp_libs__CCTechnique__
 
 #include <string>
 #include "renderer/CCRenderState.h"
@@ -65,4 +65,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__cocos2d_libs__CCTechnique__) */
+#endif /* defined(__CossApp_libs__CCTechnique__) */

@@ -15,11 +15,11 @@
 
 NS_CC_BEGIN
 
-CC_DLL class CAThemeManager : public CAObject
+class CC_DLL CAThemeManager : public CAObject
 {
 public:
     
-    struct stringMap
+	struct stringMap
     {
         stringMap(std::map<std::string, std::string> var)
         {

@@ -53,7 +53,7 @@ namespace CADevice
     {
     }
 
-    void OpenURL(const std::string &url)
+    void openUrl(const std::string &url)
     {
 		::ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOW);
     }

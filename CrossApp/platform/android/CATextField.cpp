@@ -490,7 +490,7 @@ bool CATextField::becomeFirstResponder()
     
 	if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
 	{
-        const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CATextField");
+        const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATextField");
         CAImageView* ima = (CAImageView*)this->getSubviewByTextTag("ImageRight");
         ima->setImage(CAImage::create(map.at("clearImage")));
 	}
@@ -574,7 +574,7 @@ CATextField* CATextField::createWithLayout(const DLayout& layout)
 
 bool CATextField::init()
 {
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATextField");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
@@ -606,7 +606,7 @@ void CATextField::update(float dt)
 void CATextField::setContentSize(const DSize& contentSize)
 {
     DSize size = contentSize;
-    const CAThemeManager::stringMap& map = m_pThemeManager->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATextField");
     if (m_bRecSpe)
     {
         int h = atoi(map.at("height").c_str());

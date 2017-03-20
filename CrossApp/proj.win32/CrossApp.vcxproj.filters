@@ -661,6 +661,9 @@
     <ClCompile Include="..\images\CAImageCube.cpp">
       <Filter>images</Filter>
     </ClCompile>
+    <ClCompile Include="..\basics\CAColor.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1299,6 +1302,9 @@
     </ClInclude>
     <ClInclude Include="..\images\CAImageCube.h">
       <Filter>images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAColor.h">
+      <Filter>basics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

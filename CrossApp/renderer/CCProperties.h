@@ -1,7 +1,7 @@
 
 
-#ifndef __cocos2d_libs__CCProperties__
-#define __cocos2d_libs__CCProperties__
+#ifndef __CossApp_libs__CCProperties__
+#define __CossApp_libs__CCProperties__
 
 #include <string>
 #include <functional>
@@ -435,7 +435,7 @@ private:
      * Reads the next character from the Data. Returns EOF if the end of the Data is reached.
      */
 
-    // XXX: hack in order to simulate GamePlay's Stream with Cocos2d's Data
+    // XXX: hack in order to simulate GamePlay's Stream with CossApp's Data
     ssize_t *       _dataIdx;
     unsigned char*  _data;
     unsigned long   _dataLenght;
@@ -454,4 +454,4 @@ private:
 
 }
 
-#endif // __cocos2d_libs__CCProperties__
+#endif // __CossApp_libs__CCProperties__

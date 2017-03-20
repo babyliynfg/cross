@@ -703,12 +703,12 @@ void CATabBar::setContentSize(const DSize & var)
     
     if (m_pSelectedIndicatorView)
     {
-        DRect rect;
-        rect.size.width = m_cItemSize.width;
-        rect.size.height = 8;
-        rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
-        rect.origin.y = m_cItemSize.height - rect.size.height;
-        m_pSelectedIndicatorView->setFrame(rect);
+        DLayout layout;
+        layout.vertical.height = 8;
+        layout.vertical.bottom = 0;
+        layout.horizontal.width = m_cItemSize.width;
+        layout.horizontal.left = m_nSelectedIndex * m_cItemSize.width;
+        m_pSelectedIndicatorView->setLayout(layout);
     }
 }
 
@@ -954,12 +954,12 @@ void CATabBar::showSelectedIndicatorView()
         m_pSelectedIndicatorView = CAView::createWithColor(m_sSelectedIndicatorColor);
     }
     
-    DRect rect;
-    rect.size.width = m_cItemSize.width;
-    rect.size.height = 8;
-    rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
-    rect.origin.y = m_cItemSize.height - rect.size.height;
-    m_pSelectedIndicatorView->setFrame(rect);
+    DLayout layout;
+    layout.vertical.height = 8;
+    layout.vertical.bottom = 0;
+    layout.horizontal.width = m_cItemSize.width;
+    layout.horizontal.left = m_nSelectedIndex * m_cItemSize.width;
+    m_pSelectedIndicatorView->setLayout(layout);
     m_pContentView->insertSubview(m_pSelectedIndicatorView, 1);
     m_pSelectedIndicatorView->setVisible(m_bShowIndicator);
 }
@@ -1004,16 +1004,17 @@ void CATabBar::setSelectedAtIndex(int index)
         if (m_pSelectedIndicatorView)
         {
             m_pSelectedIndicatorView->setVisible(m_bShowIndicator);
-            DRect rect;
-            rect.size.width = m_cItemSize.width;
-            rect.size.height = 8;
-            rect.origin.x = m_nSelectedIndex * m_cItemSize.width;
-            rect.origin.y = m_cItemSize.height - rect.size.height;
+            
+            DLayout layout;
+            layout.vertical.height = 8;
+            layout.vertical.bottom = 0;
+            layout.horizontal.width = m_cItemSize.width;
+            layout.horizontal.left = m_nSelectedIndex * m_cItemSize.width;
             
             CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(0.3f);
             CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
-            m_pSelectedIndicatorView->setFrame(rect);
+            m_pSelectedIndicatorView->setLayout(layout);
             CAViewAnimation::commitAnimations();
         }
     }

@@ -20,9 +20,9 @@ public:
     
     struct Date
     {
-        double x{0};
-        double y{0};
-        double z{0};
+        double x{0.f};
+        double y{0.f};
+        double z{0.f};
         float timestamp{0.f};
     };
     

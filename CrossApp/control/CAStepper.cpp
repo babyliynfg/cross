@@ -491,17 +491,9 @@ void CAStepper::setContentSize(const DSize & var)
         const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CAStepper");
         int w = atoi(map.at("width").c_str());
         int h = atoi(map.at("height").c_str());
-        if (m_pOrientation == CAStepper::Orientation::Horizontal)
-        {
-            size.width = (w == 0) ? size.width : w;
-            size.height = (h == 0) ? size.height : h;
-        }
-        else
-        {
-            size.width = (h == 0) ? size.width : h;
-            size.height = (w == 0) ? size.height : w;
-        }
-
+        
+        size.width = (w == 0) ? size.width : w;
+        size.height = (h == 0) ? size.height : h;
     }
     CAControl::setContentSize(size);
     if (m_pBackgroundImageView)

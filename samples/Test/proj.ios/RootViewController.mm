@@ -83,7 +83,7 @@
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
     return UIInterfaceOrientationUnknown;
-    //return UIInterfaceOrientationLandscapeRight;
+    //return UIInterfaceOrientationPortrait;
 }
 
 - (BOOL) shouldAutorotate

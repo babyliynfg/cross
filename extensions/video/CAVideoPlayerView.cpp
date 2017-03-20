@@ -20,7 +20,7 @@ typedef struct DecodeFramesMsg
 
 CAVideoPlayerView::CAVideoPlayerView()
 : m_pPlayerViewDelegate(NULL)
-, m_pRenderer(NULL)
+, m_pVPFRenderer(NULL)
 , m_pDecoder(NULL)
 , m_iDecoderInited(-1)
 , m_isShowFirstFrame(false)
@@ -51,7 +51,7 @@ CAVideoPlayerView::~CAVideoPlayerView()
 	CC_SAFE_DELETE(m_pCurVideoFrame);
 	CC_SAFE_DELETE(m_pCurAudioFrame);
 
-	CC_SAFE_DELETE(m_pRenderer);
+	CC_SAFE_DELETE(m_pVPFRenderer);
 	CC_SAFE_DELETE(m_pDecoder);
 }
 
@@ -172,22 +172,22 @@ void CAVideoPlayerView::update(float fDelta)
 
 		if (m_pDecoder->setupVideoFrameFormat(kVideoFrameFormatYUV))
 		{
-			m_pRenderer = new VPFrameRenderYUV();
+			m_pVPFRenderer = new VPFrameRenderYUV();
 		}
 		else
 		{
-			m_pRenderer = new VPFrameRenderRGB();
+			m_pVPFRenderer = new VPFrameRenderRGB();
 		}
 
-        m_viewRect = m_pRenderer->updateVertices(m_pDecoder->getFrameWidth(),
+        m_viewRect = m_pVPFRenderer->updateVertices(m_pDecoder->getFrameWidth(),
                                                  m_pDecoder->getFrameHeight(),
                                                  m_obContentSize.width,
                                                  m_obContentSize.height);
         setImageRect(m_viewRect);
         
-		if (!m_pRenderer->loadShaders())
+		if (!m_pVPFRenderer->loadShaders())
 		{
-			CC_SAFE_DELETE(m_pRenderer);
+			CC_SAFE_DELETE(m_pVPFRenderer);
 			CC_SAFE_DELETE(m_pDecoder);
 			m_iDecoderInited = -1;
 		}
@@ -204,9 +204,9 @@ void CAVideoPlayerView::setContentSize(const DSize& size)
 {
     CAView::setContentSize(size);
     
-	if (m_pRenderer)
+	if (m_pVPFRenderer)
 	{
-		m_viewRect = m_pRenderer->updateVertices(m_pDecoder->getFrameWidth(),
+		m_viewRect = m_pVPFRenderer->updateVertices(m_pDecoder->getFrameWidth(),
                                                  m_pDecoder->getFrameHeight(),
                                                  m_obContentSize.width,
                                                  m_obContentSize.height);
@@ -288,12 +288,20 @@ void CAVideoPlayerView::visit(Renderer* renderer, const Mat4 &transform, uint32_
 
 void CAVideoPlayerView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    long offset = (long)&m_sQuad;
-    
-	if (m_pCurVideoFrame && m_pRenderer) 
-	{
-		m_pRenderer->draw(m_pCurVideoFrame, offset);
-	}
+    if(m_bInsideBounds)
+    {
+        m_obCustomCommand.init(0, transform, flags);
+        
+        m_obCustomCommand.func = [=]()
+        {
+            if (m_pCurVideoFrame && m_pVPFRenderer)
+            {
+                m_pVPFRenderer->draw(m_pCurVideoFrame, m_sQuad, transform, flags);
+            }
+        };
+        
+        renderer->addCommand(&m_obCustomCommand);
+    }
 }
 
 void CAVideoPlayerView::setCurrentFrame(VPVideoFrame *frame)
@@ -599,7 +607,7 @@ void CAVideoPlayerView::tick(float dt)
 	if (!isDecoderInited())
 		return;
 
-	if (m_pDecoder == NULL || m_pRenderer == NULL)
+	if (m_pDecoder == NULL || m_pVPFRenderer == NULL)
 		return;
 
 	if (m_isBuffered && ((m_fBufferedDuration > m_fMaxBufferedDuration) || m_pDecoder->isEOF())) {

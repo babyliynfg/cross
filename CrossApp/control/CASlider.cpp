@@ -163,7 +163,9 @@ void CASlider::layoutSubViews()
         && m_fValue <= m_fMaxValue
         && m_pThumbTintImageView
         && m_pMinTrackTintImageView
-        && m_pMaxTrackTintImageView)
+        && m_pMaxTrackTintImageView
+        && m_pMinTrackTintImage
+        && m_pMaxTrackTintImage)
     {
         float thumbDiameter = m_obContentSize.height;
         float totalWidth = m_obContentSize.width;
@@ -247,10 +249,13 @@ void CASlider::setMinTrackTintImage(CAImage* image)
         if (m_pMinTrackTintImageView)
         {
             ((CAScale9ImageView*)m_pMinTrackTintImageView)->setImage(m_pMinTrackTintImage);
-            DRect capInsets;
-            capInsets.size = DSize(2, 2);
-            capInsets.origin = ccpMult(ccpSub(m_pMinTrackTintImage->getContentSize(), capInsets.size), 0.5f);
-            m_pMinTrackTintImageView->setCapInsets(capInsets);
+            if (m_pMinTrackTintImage)
+            {
+                DRect capInsets;
+                capInsets.size = DSize(2, 2);
+                capInsets.origin = ccpMult(ccpSub(m_pMinTrackTintImage->getContentSize(), capInsets.size), 0.5f);
+                m_pMinTrackTintImageView->setCapInsets(capInsets);
+            }
         }
     }
 }
@@ -265,10 +270,13 @@ void CASlider::setMaxTrackTintImage(CAImage* image)
         if (m_pMaxTrackTintImageView)
         {
             ((CAScale9ImageView*)m_pMaxTrackTintImageView)->setImage(m_pMaxTrackTintImage);
-            DRect capInsets;
-            capInsets.size = DSize(2, 2);
-            capInsets.origin = ccpMult(ccpSub(m_pMaxTrackTintImage->getContentSize(), capInsets.size), 0.5f);
-            m_pMaxTrackTintImageView->setCapInsets(capInsets);
+            if (m_pMaxTrackTintImage)
+            {
+                DRect capInsets;
+                capInsets.size = DSize(2, 2);
+                capInsets.origin = ccpMult(ccpSub(m_pMaxTrackTintImage->getContentSize(), capInsets.size), 0.5f);
+                m_pMaxTrackTintImageView->setCapInsets(capInsets);
+            }
         }
     }
 }

@@ -118,7 +118,7 @@ CATableViewCell* ETableView::tableCellAtIndex(CATableView* table, const DSize& c
 
 unsigned int ETableView::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    return sectionTitle.size();
+    return (unsigned int)sectionTitle.size();
 }
 
 unsigned int ETableView::numberOfSections(CATableView *table)
@@ -237,19 +237,37 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const DSize
         cell = CATableViewCell::create("CrossApp");
         CAImageView* image = CAImageView::createWithLayout(DLayoutFill);
         image->setImage(CAImage::create("source_material/second_2.png"));
-        cell->addSubview(image);
+        cell->getContentView()->addSubview(image);
         
         CALabel* cellText = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(150, 10), DVerticalLayout_T_B(10, 10)));
         cellText->setTag(100);
         cellText->setFontSize(30);
         cellText->setTextAlignment(CATextAlignment::Left);
         cellText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-        cell->addSubview(cellText);
+        cell->getContentView()->addSubview(cellText);
+        
+        CAButton* cellBtn = CAButton::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 180), DVerticalLayoutFill), CAButton::Type::Custom);
+        cellBtn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::BLUE));
+        cellBtn->setTitleForState(CAControl::State::Normal, "Btn");
+        cellBtn->setTitleFontSize(32);
+        cellBtn->setTitleColorForState(CAControl::State::Normal, CAColor4B::WHITE);
+        cellBtn->setTag(101);
+        cell->insertSubview(cellBtn, -1);
     }
+    
+    cell->setDraggingLength(180);
+    
     char order[20] = "";
     sprintf(order, "%s-%d", sectionTitle.at(section).c_str(),row);
-    CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
+    CALabel* cellText = (CALabel*)cell->getContentView()->getSubviewByTag(100);
     cellText->setText(order);
+    
+    CAButton* cellBtn = (CAButton*)cell->getSubviewByTag(101);
+    cellBtn->addTarget([=]()
+    {
+        CCLog("btn_section===%d,row===%d", section, row);
+    }, CAButton::Event::TouchUpInSide);
+    
     return cell;
     
 }
@@ -284,7 +302,7 @@ unsigned int TableViewTest::numberOfRowsInSection(CATableView *table, unsigned i
 
 unsigned int TableViewTest::numberOfSections(CATableView *table)
 {
-    return sectionTitle.size();
+    return (unsigned int)sectionTitle.size();
 }
 
 unsigned int TableViewTest::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)

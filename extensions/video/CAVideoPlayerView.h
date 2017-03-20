@@ -78,8 +78,10 @@ private:
 	void audioCallback(unsigned char *stream, int len, int channels);
 
 private:
+    CustomCommand m_obCustomCommand;
+    
 	VPDecoder *m_pDecoder;
-	VPFrameRender *m_pRenderer;
+	VPFrameRender *m_pVPFRenderer;
 
 	CASyncQueue<VPFrame*> m_vVideoFrames;
 	CASyncQueue<VPFrame*> m_vAudioFrames;

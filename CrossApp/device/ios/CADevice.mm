@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by 秦乐 on 2017/2/21.
-//  Copyright © 2017年 cocos2d-x. All rights reserved.
+//  Copyright © 2017年 CossApp-x. All rights reserved.
 //
 
 #include "CADevice.h"
@@ -151,7 +151,7 @@ namespace CADevice
         }
     }
     
-    void OpenURL(const std::string &url)
+    void openUrl(const std::string &url)
     {
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];

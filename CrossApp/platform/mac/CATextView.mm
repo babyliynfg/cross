@@ -30,6 +30,18 @@
 {
     
 }
+
+-(id)initWithFrame:(NSRect)frameRect
+{
+    if ([super initWithFrame:frameRect])
+    {
+        [self setBackgroundColor:[NSColor clearColor]];
+        [self setBezeled:NO];
+        return self;
+    }
+    return nil;
+}
+
 -(void)setText:(NSString* )value
 {
     self.stringValue = value;
@@ -211,7 +223,6 @@ CATextView::CATextView()
     EAGLView * eaglview = [EAGLView sharedEGLView];
     [eaglview addSubview:textView_Mac];
     textView_Mac.textView = this;
-    [textView_Mac setBackgroundColor:[NSColor clearColor]];
     [textView_Mac setText:@""];
     [textView_Mac release];
     

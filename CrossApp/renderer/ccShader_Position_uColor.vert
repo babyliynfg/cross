@@ -1,5 +1,5 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * CossApp for iPhone: http://www.CossApp-iphone.org
  *
  * Copyright (c) 2011 Ricardo Quesada
  * Copyright (c) 2012 Zynga Inc.

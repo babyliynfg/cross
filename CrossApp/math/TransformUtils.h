@@ -23,7 +23,7 @@ struct AffineTransform;
 CC_DLL void CGAffineToGL(const AffineTransform &t, GLfloat *m);
 CC_DLL void GLToCGAffine(const GLfloat *m, AffineTransform *t);
 /**@}*/
-}//namespace   cocos2d 
+}//namespace   CossApp 
 /**
  end of base group
  @}

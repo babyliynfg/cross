@@ -344,11 +344,11 @@ Action* ActionManager::getActionByTag(int tag, const CGNode *target) const
                 }
             }
         }
-        //CCLOG("cocos2d : getActionByTag(tag = %d): Action not found", tag);
+        //CCLOG("CossApp : getActionByTag(tag = %d): Action not found", tag);
     }
     else
     {
-        // CCLOG("cocos2d : getActionByTag: Target not found");
+        // CCLOG("CossApp : getActionByTag: Target not found");
     }
 
     return nullptr;

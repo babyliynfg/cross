@@ -1,7 +1,7 @@
 
 
-#ifndef __cocos2d_libs__CCPass__
-#define __cocos2d_libs__CCPass__
+#ifndef __CossApp_libs__CCPass__
+#define __CossApp_libs__CCPass__
 
 #include <stdio.h>
 
@@ -60,4 +60,4 @@ NS_CC_END
 
 
 
-#endif /* defined(__cocos2d_libs__CCPass__) */
+#endif /* defined(__CossApp_libs__CCPass__) */

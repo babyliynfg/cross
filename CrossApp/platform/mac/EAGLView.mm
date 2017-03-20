@@ -91,26 +91,6 @@ static EAGLView *view;
     return self;
 }
 
--(void) setFrame:(NSRect)frame
-{
-    [super setFrame:frame];
-    
-    NSRect bounds = frame;
-    bounds.origin = CGPointZero;
-    
-    if (NSTrackingArea* trackingArea = [self.trackingAreas objectAtIndex:0])
-    {
-        [self removeTrackingArea:trackingArea];
-        trackingArea = [[NSTrackingArea alloc]
-                        initWithRect:bounds
-                        options: NSTrackingMouseMoved | NSTrackingActiveAlways
-                        owner:self userInfo:nil];
-        [self addTrackingArea:trackingArea];
-    }
-    
-    CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frame.size.width, frame.size.height);
-}
-
 - (void) update
 {
 	// XXX: Should I do something here ?
@@ -172,15 +152,21 @@ static EAGLView *view;
 	[self lockOpenGLContext];
 	//NO_FINISH
 	NSRect rect = [self bounds];
-	CrossApp::CAApplication *application = CrossApp::CAApplication::getApplication();
 	CGSize size = NSSizeToCGSize(rect.size);
-	CrossApp::DSize DSize = CrossApp::DSize(size.width, size.height) * CrossApp::s_px_to_dip(1);
-	application->reshapeProjection(DSize);
+    CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(size.width, size.height);
 	
+    if (NSTrackingArea* trackingArea = [self.trackingAreas objectAtIndex:0])
+    {
+        [self removeTrackingArea:trackingArea];
+        trackingArea = [[NSTrackingArea alloc]
+                        initWithRect:rect
+                        options: NSTrackingMouseMoved | NSTrackingActiveAlways
+                        owner:self userInfo:nil];
+        [self addTrackingArea:trackingArea];
+    }
+    
 	// avoid flicker
-	application->drawScene();
 //	[self setNeedsDisplay:YES];
-	
 	[self unlockOpenGLContext];
 }
 

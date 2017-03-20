@@ -3,7 +3,7 @@
 //  CrossApp
 //
 //  Created by 秦乐 on 2017/2/21.
-//  Copyright © 2017年 cocos2d-x. All rights reserved.
+//  Copyright © 2017年 CossApp-x. All rights reserved.
 //
 
 #include "CAImagePickerController.h"
@@ -68,8 +68,12 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    self.callback(NULL);
+    if (self.callback)
+    {
+        self.callback(nullptr);
+    }
 }
+
 
 - (void) image: (UIImage *) image didFinishSavingWithError: (NSError *)error contextInfo: (void *) contextInfo
 {
@@ -251,9 +255,7 @@ void CAImagePickerController::open(const std::function<void(CrossApp::CAImage*)>
     }
 
     this->retain();
-    
-    UIWindow * window = [UIApplication sharedApplication].keyWindow;
-    
+
     __picker_callback* c = ((__picker_callback*)convert(m_pOriginal).delegate);
 
     c.callback = [=](CAImage* image)
@@ -262,20 +264,36 @@ void CAImagePickerController::open(const std::function<void(CrossApp::CAImage*)>
         {
             callback(image);
         }
-        
-        [window.rootViewController dismissViewControllerAnimated:YES completion:^
+
+        [UIView animateWithDuration:0.3 delay: 0 options:UIViewAnimationOptionCurveEaseOut animations:
+        ^{
+            CGRect rect = convert(m_pOriginal).view.frame;
+            rect.origin.y = rect.size.height;
+            [convert(m_pOriginal).view setFrame:rect];
+        }
+        completion:^(BOOL finished)
         {
             CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(true);
+            [convert(m_pOriginal).view removeFromSuperview];
+            this->release();
         }];
         
-        this->release();
+        
     };
     
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(false);
+    [[EAGLView sharedEGLView] addSubview:convert(m_pOriginal).view];
     
-    [window.rootViewController presentViewController:convert(m_pOriginal) animated:YES completion:^
-    {
-        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(false);
-    }];
+    CGRect rect = convert(m_pOriginal).view.frame;
+    rect.origin.y = rect.size.height;
+    [convert(m_pOriginal).view setFrame:rect];
+    
+    [UIView animateWithDuration:0.3 delay: 0 options:UIViewAnimationOptionCurveEaseOut animations:
+    ^{
+        CGRect rect = convert(m_pOriginal).view.frame;
+        rect.origin.y = 0;
+        [convert(m_pOriginal).view setFrame:rect];
+    } completion:nil];
 }
 
 void CAImagePickerController::writeImageToPhoto(CAImage* image, const std::function<void(bool)>& finishCallback, const std::string &imageName)

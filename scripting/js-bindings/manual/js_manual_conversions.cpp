@@ -175,7 +175,7 @@ bool jsval_to_opaque( JSContext *cx, JS::HandleValue vp, void **r)
     ret |= arg_array[1];
 
 #else
-    assert( sizeof(int)==4);
+    CCAssert( sizeof(int)==4, "");
     int32_t ret;
     if( ! jsval_to_int32(cx, vp, &ret ) )
       return false;
@@ -209,7 +209,7 @@ jsval opaque_to_jsval( JSContext *cx, void *opaque )
     buffer[1] = number & 0xffffffff;
     return OBJECT_TO_JSVAL(typedArray);
 #else
-    assert(sizeof(int)==4);
+    CCAssert(sizeof(int)==4, "");
     int32_t number = (int32_t) opaque;
     return INT_TO_JSVAL(number);
 #endif
@@ -500,7 +500,7 @@ bool jsval_to_long( JSContext *cx, JS::HandleValue vp, long *r )
     
 #else
     // compatibility check
-    assert( sizeof(int)==4);
+    CCAssert( sizeof(int)==4, "");
     long ret = vp.toInt32();
 #endif
     

@@ -294,7 +294,7 @@ GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string& 
     if( glProgram )
         return getOrCreateWithGLProgram(glProgram);
 
-    CCLOG("cocos2d: warning: GLProgram '%s' not found", glProgramName.c_str());
+    CCLOG("CossApp: warning: GLProgram '%s' not found", glProgramName.c_str());
     return nullptr;
 }
 
@@ -530,7 +530,7 @@ void GLProgramState::setVertexAttribCallback(const std::string& name, const std:
     }
     else
     {
-		CCLOG("cocos2d: warning: Attribute not found: %s", name.c_str());
+		CCLOG("CossApp: warning: Attribute not found: %s", name.c_str());
 	}
 }
 
@@ -543,7 +543,7 @@ void GLProgramState::setVertexAttribPointer(const std::string& name, GLint size,
     }
     else
     {
-		CCLOG("cocos2d: warning: Attribute not found: %s", name.c_str());
+		CCLOG("CossApp: warning: Attribute not found: %s", name.c_str());
     }
 }
 
@@ -555,7 +555,7 @@ void GLProgramState::setUniformCallback(const std::string& uniformName, const st
     if (v)
         v->setCallback(callback);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback)
@@ -564,7 +564,7 @@ void GLProgramState::setUniformCallback(GLint uniformLocation, const std::functi
     if (v)
         v->setCallback(callback);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformFloat(const std::string& uniformName, float value)
@@ -573,7 +573,7 @@ void GLProgramState::setUniformFloat(const std::string& uniformName, float value
     if (v)
         v->setFloat(value);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformFloat(GLint uniformLocation, float value)
@@ -582,7 +582,7 @@ void GLProgramState::setUniformFloat(GLint uniformLocation, float value)
     if (v)
         v->setFloat(value);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformInt(const std::string& uniformName, int value)
@@ -591,7 +591,7 @@ void GLProgramState::setUniformInt(const std::string& uniformName, int value)
     if(v)
         v->setInt(value);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformInt(GLint uniformLocation, int value)
@@ -600,7 +600,7 @@ void GLProgramState::setUniformInt(GLint uniformLocation, int value)
     if (v)
         v->setInt(value);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 
 }
 
@@ -610,7 +610,7 @@ void GLProgramState::setUniformFloatv(const std::string& uniformName, ssize_t si
     if (v)
         v->setFloatv(size, pointer);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformFloatv(GLint uniformLocation, ssize_t size, const float* pointer)
@@ -619,7 +619,7 @@ void GLProgramState::setUniformFloatv(GLint uniformLocation, ssize_t size, const
     if (v)
         v->setFloatv(size, pointer);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformVec2(const std::string& uniformName, const Vec2& value)
@@ -628,7 +628,7 @@ void GLProgramState::setUniformVec2(const std::string& uniformName, const Vec2& 
     if (v)
         v->setVec2(value);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec2(GLint uniformLocation, const Vec2& value)
@@ -637,7 +637,7 @@ void GLProgramState::setUniformVec2(GLint uniformLocation, const Vec2& value)
     if (v)
         v->setVec2(value);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformVec2v(const std::string& uniformName, ssize_t size, const Vec2* pointer)
@@ -646,7 +646,7 @@ void GLProgramState::setUniformVec2v(const std::string& uniformName, ssize_t siz
     if (v)
         v->setVec2v(size, pointer);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec2v(GLint uniformLocation, ssize_t size, const Vec2* pointer)
@@ -655,7 +655,7 @@ void GLProgramState::setUniformVec2v(GLint uniformLocation, ssize_t size, const 
     if (v)
         v->setVec2v(size, pointer);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformVec3(const std::string& uniformName, const Vec3& value)
@@ -664,7 +664,7 @@ void GLProgramState::setUniformVec3(const std::string& uniformName, const Vec3& 
     if (v)
         v->setVec3(value);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec3(GLint uniformLocation, const Vec3& value)
@@ -673,7 +673,7 @@ void GLProgramState::setUniformVec3(GLint uniformLocation, const Vec3& value)
     if (v)
         v->setVec3(value);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformVec3v(const std::string& uniformName, ssize_t size, const Vec3* pointer)
@@ -682,7 +682,7 @@ void GLProgramState::setUniformVec3v(const std::string& uniformName, ssize_t siz
     if (v)
         v->setVec3v(size, pointer);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec3v(GLint uniformLocation, ssize_t size, const Vec3* pointer)
@@ -691,7 +691,7 @@ void GLProgramState::setUniformVec3v(GLint uniformLocation, ssize_t size, const 
     if (v)
         v->setVec3v(size, pointer);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformVec4(const std::string& uniformName, const Vec4& value)
@@ -700,7 +700,7 @@ void GLProgramState::setUniformVec4(const std::string& uniformName, const Vec4& 
     if (v)
         v->setVec4(value);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec4(GLint uniformLocation, const Vec4& value)
@@ -709,7 +709,7 @@ void GLProgramState::setUniformVec4(GLint uniformLocation, const Vec4& value)
     if (v)
         v->setVec4(value);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformVec4v(const std::string& uniformName, ssize_t size, const Vec4* value)
@@ -718,7 +718,7 @@ void GLProgramState::setUniformVec4v(const std::string& uniformName, ssize_t siz
     if (v)
         v->setVec4v(size, value);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformVec4v(GLint uniformLocation, ssize_t size, const Vec4* pointer)
@@ -727,7 +727,7 @@ void GLProgramState::setUniformVec4v(GLint uniformLocation, ssize_t size, const 
     if (v)
         v->setVec4v(size, pointer);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 
@@ -737,7 +737,7 @@ void GLProgramState::setUniformMat4(const std::string& uniformName, const Mat4& 
     if (v)
         v->setMat4(value);
     else
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
 }
 
 void GLProgramState::setUniformMat4(GLint uniformLocation, const Mat4& value)
@@ -746,7 +746,7 @@ void GLProgramState::setUniformMat4(GLint uniformLocation, const Mat4& value)
     if (v)
         v->setMat4(value);
     else
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
 }
 
 void GLProgramState::setUniformTexture(const std::string& uniformName, GLuint textureId)
@@ -766,7 +766,7 @@ void GLProgramState::setUniformTexture(const std::string& uniformName, GLuint te
     }
     else
     {
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+        CCLOG("CossApp: warning: Uniform not found: %s", uniformName.c_str());
     }
 }
 
@@ -787,7 +787,7 @@ void GLProgramState::setUniformTexture(GLint uniformLocation, GLuint textureId)
     }
     else
     {
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+        CCLOG("CossApp: warning: Uniform at location not found: %i", uniformLocation);
     }
 }
 
@@ -805,7 +805,7 @@ void GLProgramState::applyAutoBinding(const std::string& uniformName, const std:
     // This code tries to replace GLProgram::setUniformsForBuiltins. But it is unfinished ATM.
     // The idea is that users will be able to use variables from CrossApp without hardcoding the
     // information on GLProgram and other objects.
-    // Instead, the Cocos2d uniform variables will be callbacks.
+    // Instead, the CossApp uniform variables will be callbacks.
     // As an example of how bad the current design is, the ModelView matrix is being passed from Node, to the Commands, to the GLProgram.
     // Instead, the GLProgramState should obtain it from its target.
 

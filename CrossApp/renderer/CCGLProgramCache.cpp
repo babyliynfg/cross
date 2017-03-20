@@ -557,7 +557,7 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureGray_frag);
             break;
         default:
-            CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
+            CCLOG("CossApp: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;
     }
 

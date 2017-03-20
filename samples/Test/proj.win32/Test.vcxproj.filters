@@ -117,6 +117,12 @@
     <ClCompile Include="..\Classes\Control\AutoCollectionViewVerticalTest.cpp">
       <Filter>Classes\Controls</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Control\CheckboxTest.cpp">
+      <Filter>Classes\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Control\PageControlTest.cpp">
+      <Filter>Classes\Controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -228,6 +234,12 @@
       <Filter>Classes\Controls</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Control\AutoCollectionViewVerticalTest.h">
+      <Filter>Classes\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Control\CheckboxTest.h">
+      <Filter>Classes\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Control\PageControlTest.h">
       <Filter>Classes\Controls</Filter>
     </ClInclude>
   </ItemGroup>

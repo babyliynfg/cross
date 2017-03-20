@@ -186,4 +186,4 @@ private:
 NS_CC_END
 
 
-#endif /* defined(__cocos2d_libs__CCCAValue__) */
+#endif /* defined(__CossApp_libs__CCCAValue__) */

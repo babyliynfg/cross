@@ -168,14 +168,11 @@ void VPFrameRenderRGB::setFrame(VPVideoFrame* frame)
 
 bool VPFrameRenderRGB::prepareRender()
 {
-    if (_texture == 0) {
+    if (_texture == 0)
         return false;
-    }
     
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture);
+    GL::bindTexture2DN(0, _texture);
     glUniform1i(_uniformSampler, 0);
-    
     return true;
 }
 
@@ -260,14 +257,14 @@ bool VPFrameRenderYUV::prepareRender()
     if (_textures[0] == 0)
         return false;
     
-    for (int i = 0; i < 3; ++i) {
-        glActiveTexture(GL_TEXTURE0 + i);
-        glBindTexture(GL_TEXTURE_2D, _textures[i]);
+    for (int i = 0; i < 3; ++i)
+    {
+        GL::bindTexture2DN(i, _textures[i]);
         glUniform1i(_uniformSamplers[i], i);
     }
-    
     return true;
 }
+    
 
 VPFrameRender::VPFrameRender()
 {
@@ -287,29 +284,34 @@ VPFrameRender::~VPFrameRender()
 
 bool VPFrameRender::loadShaders()
 {
-	GLProgram* pProgram = GLProgramCache::getInstance()->getGLProgram("CAVideoPlayerRenderYUV");
+    GLProgram* pProgram = GLProgramCache::getInstance()->getGLProgram("CAVideoPlayerRenderRGB");
     if (!pProgram)
     {
-        pProgram = GLProgram::createWithByteArrays(vertexShaderString, yuvFragmentShaderString);
-        pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-        pProgram->link();
-        pProgram->updateUniforms();
-        GLProgramCache::getInstance()->addGLProgram(pProgram, "CAVideoPlayerRenderYUV");
-    }
-    
-	pProgram = GLProgramCache::getInstance()->getGLProgram("CAVideoPlayerRenderRGB");
-    if (!pProgram)
-    {
-        pProgram = GLProgram::createWithByteArrays(vertexShaderString, rgbFragmentShaderString);
+        pProgram = new GLProgram();
+        pProgram->initWithByteArrays(vertexShaderString, rgbFragmentShaderString);
         pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
         pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
         pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
         pProgram->link();
         pProgram->updateUniforms();
         GLProgramCache::getInstance()->addGLProgram(pProgram, "CAVideoPlayerRenderRGB");
+        pProgram->release();
     }
     
+	pProgram = GLProgramCache::getInstance()->getGLProgram("CAVideoPlayerRenderYUV");
+    if (!pProgram)
+    {
+        pProgram = new GLProgram();
+        pProgram->initWithByteArrays(vertexShaderString, yuvFragmentShaderString);
+        pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+        pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+        pProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD);
+        pProgram->link();
+        pProgram->updateUniforms();
+        GLProgramCache::getInstance()->addGLProgram(pProgram, "CAVideoPlayerRenderYUV");
+        pProgram->release();
+    }
+
 	pProgram = GLProgramCache::getInstance()->getGLProgram(key());
     if (pProgram)
     {
@@ -323,38 +325,33 @@ const char* VPFrameRender::key()
 	return _key.c_str();
 }
 
-void VPFrameRender::draw(VPVideoFrame *frame, long offset)
+void VPFrameRender::draw(VPVideoFrame *frame, const ccV3F_C4B_T2F_Quad& quad, const Mat4 &transform, uint32_t flags)
 {
 	GLProgram* pProgram = GLProgramCache::getInstance()->getGLProgram(key());
     pProgram->use();
-    pProgram->setUniformsForBuiltins();
+    pProgram->setUniformsForBuiltins(transform);
     
-    if (frame) {
-        setFrame(frame);
-    } else {
-        return;
-    }
-    
-    if (prepareRender()) {
+    do
+    {
+        CC_BREAK_IF(!frame);
+        this->setFrame(frame);
+        CC_BREAK_IF(!prepareRender());
         
-    #define kQuadSize sizeof(ccV3F_C4B_T2F)
+        GLshort indices[6] = {0, 1, 2, 3, 2, 1};
         
-        GL::enableVertexAttribs(GLProgram::VERTEX_ATTRIB_POSITION | GLProgram::VERTEX_ATTRIB_TEX_COORD | GLProgram::VERTEX_ATTRIB_COLOR);
-        
-        // vertex
-        int diff = offsetof( ccV3F_C4B_T2F, vertices);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-        
-        // texCoods
-        diff = offsetof( ccV3F_C4B_T2F, texCoords);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-        
-        // color
-        diff = offsetof( ccV3F_C4B_T2F, colors);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
+        glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F) , &quad.tl.vertices);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV3F_C4B_T2F), &quad.tl.colors);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), &quad.tl.texCoords);
+        
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+        
+        GL::bindVAO(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+    while (0);
 }
 
 DRect VPFrameRender::updateVertices(float width, float height, float screen_w, float screen_h)
