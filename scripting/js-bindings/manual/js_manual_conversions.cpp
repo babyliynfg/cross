@@ -602,6 +602,11 @@ bool jsval_to_dpoint3d(JSContext *cx, JS::HandleValue v, CrossApp::DPoint3D* ret
     JS::ToNumber(cx, jsy, &y) &&
     JS::ToNumber(cx, jsz, &z);
     
+    if (!ok) {
+        return false;
+    }
+    CCLog("x:%lf,y:%lf,z:%lf",x,y,z);
+    
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
     ret->x = (float)x;
