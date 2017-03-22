@@ -100,8 +100,8 @@ protected:
     
     unsigned long m_uPixelsWide;
     unsigned long m_uPixelsHigh;
-    CAImage* m_pImage;
-    CAImage* m_pImageCopy;
+    GLuint m_uName;
+    GLuint m_uNameCopy;
 
     CAImage::PixelFormat m_ePixelFormat;
     

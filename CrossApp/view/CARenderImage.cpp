@@ -19,8 +19,8 @@ NS_CC_BEGIN
 // implementation CARenderImage
 CARenderImage::CARenderImage()
 : m_pImageView(nullptr)
-, m_pImage(nullptr)
-, m_pImageCopy(nullptr)
+, m_uName(0)
+, m_uNameCopy(0)
 , m_uFBO(0)
 , m_uOldFBO(0)
 , m_uDepthRenderBufffer(0)
@@ -66,8 +66,6 @@ CARenderImage::CARenderImage()
 CARenderImage::~CARenderImage()
 {
     CC_SAFE_RELEASE(m_pImageView);
-    CC_SAFE_RELEASE(m_pImage);
-    CC_SAFE_RELEASE(m_pImageCopy);
     glDeleteFramebuffers(1, &m_uFBO);
     if (m_uDepthRenderBufffer)
     {
@@ -206,33 +204,35 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
             powH = ccNextPOT(h);
         }
         
-        auto dataLen = powW * powH * 4;
-        data = (unsigned char *)malloc(dataLen);
+        data = (unsigned char *)malloc((unsigned long)(powW * powH * 4));
         CC_BREAK_IF(! data);
-
-        memset(data, 0, dataLen);
+        
+        memset(data, 0, (unsigned long)(powW * powH * 4));
+        
         m_ePixelFormat = eFormat;
         m_uPixelsWide = powW;
         m_uPixelsHigh = powH;
         
-        m_pImage = new (std::nothrow) CAImage();
-        m_pImage->initWithRawData(data, m_ePixelFormat, m_uPixelsWide, m_uPixelsHigh);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+        glGenTextures(1, &m_uName);
+        GL::bindTexture2D(m_uName);
+        
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)m_uPixelsWide, (GLsizei)m_uPixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
         
-        if (CAConfiguration::getInstance()->checkForGLExtension("GL_QCOM"))
-        {
-            m_pImageCopy = new (std::nothrow) CAImage();
-            m_pImageCopy->initWithRawData(data, m_ePixelFormat, m_uPixelsWide, m_uPixelsHigh);
-        }
-        
+
         // generate FBO
         glGenFramebuffers(1, &m_uFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
 
         // associate Image with FBO
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uName, 0);
 
         if (uDepthStencilFormat != 0)
         {
@@ -293,13 +293,9 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
 //        // check if it worked (probably worth doing :) )
         CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach Image to framebuffer");
 
-        m_pImage->setAliasTexParameters();
-
         CAImageView* imageView = CAImageView::createWithFrame(DRect(0, 0, m_uPixelsWide, m_uPixelsHigh));
-        imageView->setImage(m_pImage);
         imageView->setBlendFunc(BlendFunc_alpha_premultiplied);
         imageView->setOpacityModifyRGB(true);
-        imageView->setFlipY(true);
         this->addSubview(imageView);
         this->setImageView(imageView);
         
@@ -529,10 +525,10 @@ void CARenderImage::onBegin()
     if (CAConfiguration::getInstance()->checkForGLExtension("GL_QCOM"))
     {
         // -- bind a temporary texture so we can clear the render buffer without losing our texture
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImageCopy->getName(), 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uNameCopy, 0);
         CHECK_GL_ERROR_DEBUG();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uName, 0);
     }
 }
 
@@ -550,6 +546,41 @@ void CARenderImage::onEnd()
     application->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, m_tOldProjMatrix);
     application->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, m_tOldProjMatrix);
     
+    
+    
+    GLubyte *buffer = nullptr;
+    CAImage* image = new (std::nothrow) CAImage();
+    
+    do
+    {
+        CC_BREAK_IF(! (buffer = new (std::nothrow) GLubyte[m_uPixelsWide * m_uPixelsHigh * 4]));
+        
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
+        
+        // TODO: move this to configuration, so we don't check it every time
+        /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+         */
+        if (CAConfiguration::getInstance()->checkForGLExtension("GL_QCOM"))
+        {
+            // -- bind a temporary texture so we can clear the render buffer without losing our texture
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uNameCopy, 0);
+            CHECK_GL_ERROR_DEBUG();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uName, 0);
+        }
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);
+        glReadPixels(0, 0, (GLsizei)m_uPixelsWide, (GLsizei)m_uPixelsHigh, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_uOldFBO);
+        
+        image->initWithRawData(buffer, m_ePixelFormat, (unsigned int)m_uPixelsWide, (unsigned int)m_uPixelsHigh);
+
+    } while (0);
+    
+    CC_SAFE_DELETE_ARRAY(buffer);
+    
+    m_pImageView->setImage(image);
+    image->release();
 }
 
 void CARenderImage::onClear()
