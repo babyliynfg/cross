@@ -40,36 +40,47 @@ NS_CC_BEGIN
 CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
 {
     CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
+    
+    CAApplication::getApplication()->getRenderer()->clean();
+    experimental::FrameBuffer::clearAllFBOs();
+    
     renderImage->begin();
-    
-    GLfloat    coordinates[] =
-    {
-        0.0f,                   0.0f,
-        image->getMaxS(),       0.0f,
-        0.0f,                   image->getMaxT(),
-        image->getMaxS(),       image->getMaxT()
-    };
-    
-    GLfloat    vertices[] =
-    {
-        0,            0,               /*0.0f,*/
-        size.width,   0,                    /*0.0f,*/
-        0,            size.height,     /*0.0f,*/
-        size.width,   size.height           /*0.0f*/
-    };
-    
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
-    image->getShaderProgram()->use();
-    image->getShaderProgram()->setUniformsForBuiltins();
-    
-    GL::bindTexture2D(image->getName());
 
-    
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    static CustomCommand _customCommand;
+    _customCommand.init(0);
+    _customCommand.func = [=]()
+    {
+        GLfloat    coordinates[] =
+        {
+            0.0f,                   0.0f,
+            image->getMaxS(),       0.0f,
+            0.0f,                   image->getMaxT(),
+            image->getMaxS(),       image->getMaxT()
+        };
+        
+        GLfloat    vertices[] =
+        {
+            0,            0,               /*0.0f,*/
+            size.width,   0,                    /*0.0f,*/
+            0,            size.height,     /*0.0f,*/
+            size.width,   size.height           /*0.0f*/
+        };
+        
+        GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
+        image->getShaderProgram()->use();
+        image->getShaderProgram()->setUniformsForBuiltins();
+        
+        GL::bindTexture2D(image->getName());
+        
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    };
+    CAApplication::getApplication()->getRenderer()->addCommand(&_customCommand);
     
     renderImage->end();
+    CAApplication::getApplication()->getRenderer()->render();
     return renderImage->getImageView()->getImage();
 }
 

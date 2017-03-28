@@ -60,6 +60,8 @@ namespace CADevice
         
     CADevice::NetWorkData getNetWorkType();
     
+    CADevice::WifiDate getWifiConnectionInfo();
+        
     bool isNetWorkAvailble();
         
     void setVolume(float sender, CADevice::VolumeData type);
