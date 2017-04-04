@@ -379,12 +379,12 @@ void CATextView::showTextView()
 
 void CATextView::hideNativeTextView()
 {
-
+    CAScheduler::getScheduler()->unschedule(schedule_selector(CATextView::update), this);
 }
 
 void CATextView::showNativeTextView()
 {
-
+    CAScheduler::getScheduler()->schedule(schedule_selector(CATextView::update), this, 1/60.0f);
 }
 
 void CATextView::delayShowImage()

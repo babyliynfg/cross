@@ -51,10 +51,10 @@ CARenderImage::CARenderImage()
         glGenFramebuffers(1, &m_uFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
         
-        //    m_pImage->setAliasTexParameters();
-        if (m_pImage)
+        //    m_pImageView->getImage()->setAliasTexParameters();
+        if (m_pImageView->getImage())
         {
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImageView->getImage()->getName(), 0);
         }
         
         glBindFramebuffer(GL_FRAMEBUFFER, m_uOldFBO);
