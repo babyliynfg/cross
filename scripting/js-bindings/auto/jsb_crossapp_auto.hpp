@@ -2041,6 +2041,54 @@ bool js_crossapp_CAHttpResponse_getResponseData(JSContext *cx, uint32_t argc, js
 bool js_crossapp_CAHttpResponse_setResponseCode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_CAHttpResponse(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CAHttpClient_class;
+extern JSObject *jsb_CrossApp_CAHttpClient_prototype;
+
+bool js_crossapp_CAHttpClient_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAHttpClient_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAHttpClient(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAHttpClient_setTimeoutForConnect(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_setTimeoutForRead(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_send(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_getTimeoutForRead(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_setSSLVerification(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_getRequestCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_getTimeoutForConnect(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_destroyAllInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CADownloadManager_class;
+extern JSObject *jsb_CrossApp_CADownloadManager_prototype;
+
+bool js_crossapp_CADownloadManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CADownloadManager_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CADownloadManager(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CADownloadManager_getDownloadMaxCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_setDownloadManagerDelegate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_setDownloadMaxCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getLocalFileSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_enqueueDownload(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_clearOnSuccessDownloadAllRecord(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_eraseDownload(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_enqueueDownloadEx(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_isDownloading(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_clearOnSuccessDownloadRecord(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getDownloadUrl(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_resumeDownload(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getDownloadManagerDelegate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getTotalFileSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getFilePath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getDownloadHeader(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_pauseDownload(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_isFinished(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getDownloadAllTextTags(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getStartTime(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CATextField_class;
 extern JSObject *jsb_CrossApp_CATextField_prototype;
 
@@ -2271,12 +2319,10 @@ void js_register_crossapp_CGSprite(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CGSprite_setSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_initWithImage(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CGSprite_isFlipY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_getBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_getOffsetPosition(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CGSprite_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_isFlipX(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CGSprite_setOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CGSprite_isFlipY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_initWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_isFrameDisplayed(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_getImageRect(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2454,7 +2500,6 @@ bool js_crossapp_FiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsva
 void js_crossapp_FiniteTimeAction_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_FiniteTimeAction(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_FiniteTimeAction_clone(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FiniteTimeAction_setDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FiniteTimeAction_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -2466,7 +2511,6 @@ void js_crossapp_ActionInterval_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_ActionInterval(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_ActionInterval_getAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_ActionInterval_clone(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_ActionInterval_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_ActionInterval_setAmplitudeRate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_ActionInterval_getElapsed(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2813,9 +2857,8 @@ bool js_crossapp_ActionEase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void js_crossapp_ActionEase_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_ActionEase(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_ActionEase_clone(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_ActionEase_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_ActionEase_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ActionEase_getInnerAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_ActionEase_ActionEase(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_EaseRateAction_class;
@@ -2825,9 +2868,8 @@ bool js_crossapp_EaseRateAction_constructor(JSContext *cx, uint32_t argc, jsval 
 void js_crossapp_EaseRateAction_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_EaseRateAction(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_EaseRateAction_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_EaseRateAction_setRate(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_EaseRateAction_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_EaseRateAction_initWithAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_EaseRateAction_getRate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_EaseRateAction_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_EaseRateAction_EaseRateAction(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3010,7 +3052,6 @@ bool js_crossapp_ActionInstant_constructor(JSContext *cx, uint32_t argc, jsval *
 void js_crossapp_ActionInstant_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_ActionInstant(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_ActionInstant_clone(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_ActionManager_class;
 extern JSObject *jsb_CrossApp_ActionManager_prototype;

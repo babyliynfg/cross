@@ -418,7 +418,7 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
-
+void jsb_remove_proxy(js_proxy_t* nativeProxy);
 template <class T>
 jsval getJSObject(JSContext* cx, T* nativeObj)
 {

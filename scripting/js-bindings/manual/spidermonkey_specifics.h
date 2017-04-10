@@ -33,6 +33,11 @@ typedef struct js_proxy {
     void *ptr;
     JS::Heap<JSObject*> obj;
     UT_hash_handle hh;
+    /** This is the raw pointer. The same as the "obj", but 'raw'. This is needed
+     because under certain circumstances JS::RemoveRootObject will be called on "obj"
+     and "obj" will became NULL. Which is not Ok if we need to use "obj" later for other stuff
+     */
+    JSObject* _jsobj;
 } js_proxy_t;
 
 extern js_proxy_t *_native_js_global_ht;

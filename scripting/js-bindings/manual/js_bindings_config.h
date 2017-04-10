@@ -43,8 +43,8 @@
 #else
 #define JSB_PRECONDITION( condition, ...) do {                          \
     if( ! (condition) ) {                                                       \
-        cocos2d::log("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );         \
-        cocos2d::log(__VA_ARGS__);                                        \
+        CrossApp::CCLog("jsb: ERROR: File %s: Line: %d, Function: %s", __FILE__, __LINE__, __FUNCTION__ );         \
+        CrossApp::CCLog(__VA_ARGS__);                                        \
         JSContext* globalContext = ScriptingCore::getInstance()->getGlobalContext();    \
         if( ! JS_IsExceptionPending( globalContext ) ) {                        \
             JS_ReportError( globalContext, __VA_ARGS__ );                           \

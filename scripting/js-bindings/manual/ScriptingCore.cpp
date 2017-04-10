@@ -55,6 +55,9 @@ js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
 
 std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
+static std::unordered_map<void*, js_proxy_t*> _native_js_global_map;
+static std::unordered_map<JSObject*, js_proxy_t*> _js_native_global_map;
+static std::unordered_map<JSObject*, JSObject*> _js_hook_owner_map;
 
 static char *_js_log_buf = NULL;
 
@@ -1509,4 +1512,38 @@ js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
 {
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
+}
+
+void jsb_remove_proxy(js_proxy_t* proxy)
+{
+    void* nativeKey = proxy->ptr;
+    JSObject* jsKey = proxy->_jsobj;
+//
+    CC_ASSERT(nativeKey && "Invalid nativeKey");
+    CC_ASSERT(jsKey && "Invalid JSKey");
+//
+    auto it_nat = _native_js_global_map.find(nativeKey);
+    auto it_js = _js_native_global_map.find(jsKey);
+//
+#if 0
+    // XXX FIXME: sanity check. Remove me once it is tested that it works Ok
+    if (it_nat != _native_js_global_map.end() && it_js != _js_native_global_map.end())
+    {
+        CC_ASSERT(it_nat->second == it_js->second && "BUG. Different enties");
+    }
+#endif
+
+    if (it_nat != _native_js_global_map.end())
+    {
+        _native_js_global_map.erase(it_nat);
+    }
+    else CCLOG("jsb_remove_proxy: failed. Native key not found");
+    
+    if (it_js != _js_native_global_map.end())
+    {
+        // Free it once, since we only have one proxy alloced entry
+        free(it_js->second);
+        _js_native_global_map.erase(it_js);
+    }
+    else CCLOG("jsb_remove_proxy: failed. JS key not found");
 }

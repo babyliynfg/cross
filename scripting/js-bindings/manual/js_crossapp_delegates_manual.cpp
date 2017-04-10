@@ -22,6 +22,10 @@ public:
     {
         _JSDelegate = nullptr;
     }
+    virtual ~JSB_TextFieldDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
     
     virtual bool textFieldShouldBeginEditing(CATextField* sender) override
     {
@@ -158,6 +162,10 @@ class JSB_TextViewDelegate:public CAObject, public CATextViewDelegate
 {
 public:
     JSB_TextViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_TextViewDelegate()
     {
         _JSDelegate = nullptr;
     }
@@ -329,6 +337,10 @@ public:
     {
         _JSDelegate = nullptr;
     }
+    virtual ~JSB_VideoPlayerControlViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
     void setJSDelegate(JS::HandleObject pJSDelegate)
     {
         _JSDelegate = pJSDelegate;
@@ -350,6 +362,10 @@ class JSB_ScrollViewDelegate : public CAObject , public CAScrollViewDelegate
 {
 public:
     JSB_ScrollViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_ScrollViewDelegate()
     {
         _JSDelegate = nullptr;
     }
@@ -492,6 +508,10 @@ public:
     {
         _JSDelegate = nullptr;
     }
+    virtual ~JSB_PageViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
     void setJSDelegate(JS::HandleObject pJSDelegate)
     {
         _JSDelegate = pJSDelegate;
@@ -589,6 +609,10 @@ class JSB_ListViewDelegate: public CAObject,public CAListViewDelegate
 {
 public:
     JSB_ListViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_ListViewDelegate()
     {
         _JSDelegate = nullptr;
     }
@@ -814,6 +838,10 @@ public:
     {
         _JSDelegate = nullptr;
     }
+    virtual ~JSB_TableViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
     void setJSDelegate(JS::HandleObject pJSDelegate)
     {
         _JSDelegate = pJSDelegate;
@@ -890,6 +918,10 @@ class JSB_TableViewDataSource: public CAObject,public CATableViewDataSource
 {
 public:
     JSB_TableViewDataSource()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_TableViewDataSource()
     {
         _JSDelegate = nullptr;
     }
@@ -1152,6 +1184,10 @@ public:
     {
         _JSDelegate = nullptr;
     }
+    virtual ~JSB_CollectionViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
     void setJSDelegate(JS::HandleObject pJSDelegate)
     {
         _JSDelegate = pJSDelegate;
@@ -1232,6 +1268,10 @@ class JSB_CollectionViewDataSource: public CAObject,public CACollectionViewDataS
 {
 public:
     JSB_CollectionViewDataSource()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_CollectionViewDataSource()
     {
         _JSDelegate = nullptr;
     }
@@ -1515,6 +1555,10 @@ public:
     {
         _JSDelegate = nullptr;
     }
+    virtual ~JSB_WaterfallViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
     void setJSDelegate(JS::HandleObject pJSDelegate)
     {
         _JSDelegate = pJSDelegate;
@@ -1587,6 +1631,10 @@ class JSB_WaterfallViewDataSource: public CAObject,public CAWaterfallViewDataSou
 {
 public:
     JSB_WaterfallViewDataSource()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_WaterfallViewDataSource()
     {
         _JSDelegate = nullptr;
     }
@@ -1816,6 +1864,10 @@ public:
     {
         _JSDelegate = nullptr;
     }
+    virtual ~JSB_AutoCollectionViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
     void setJSDelegate(JS::HandleObject pJSDelegate)
     {
         _JSDelegate = pJSDelegate;
@@ -1890,6 +1942,10 @@ class JSB_AutoCollectionViewDataSource: public CAObject,public CAAutoCollectionV
 {
 public:
     JSB_AutoCollectionViewDataSource()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_AutoCollectionViewDataSource()
     {
         _JSDelegate = nullptr;
     }
@@ -2152,6 +2208,10 @@ public:
     {
         _JSDelegate = nullptr;
     }
+    virtual ~JSB_PickerViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
     void setJSDelegate(JS::HandleObject pJSDelegate)
     {
         _JSDelegate = pJSDelegate;
@@ -2215,6 +2275,10 @@ class JSB_PickerViewDataSource: public CAObject,public CAPickerViewDataSource
 {
 public:
     JSB_PickerViewDataSource()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_PickerViewDataSource()
     {
         _JSDelegate = nullptr;
     }

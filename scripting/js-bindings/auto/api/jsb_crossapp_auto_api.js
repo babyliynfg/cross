@@ -16351,6 +16351,364 @@ cahttprequest
 };
 
 /**
+ * @class CAHttpClient
+ */
+ca.CAHttpClient = {
+
+/**
+ * @method setTimeoutForConnect
+ * @param {int} arg0
+ */
+setTimeoutForConnect : function (
+int 
+)
+{
+},
+
+/**
+ * @method setTimeoutForRead
+ * @param {int} arg0
+ */
+setTimeoutForRead : function (
+int 
+)
+{
+},
+
+/**
+ * @method send
+ * @param {ca.CAHttpRequest} arg0
+ */
+send : function (
+cahttprequest 
+)
+{
+},
+
+/**
+ * @method getTimeoutForRead
+ * @return {int}
+ */
+getTimeoutForRead : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSSLVerification
+ * @param {String} arg0
+ */
+setSSLVerification : function (
+str 
+)
+{
+},
+
+/**
+ * @method getRequestCount
+ * @return {unsigned long}
+ */
+getRequestCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTimeoutForConnect
+ * @return {int}
+ */
+getTimeoutForConnect : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method destroyAllInstance
+ */
+destroyAllInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {ca.CAHttpClient}
+ */
+getInstance : function (
+)
+{
+    return ca.CAHttpClient;
+},
+
+};
+
+/**
+ * @class CADownloadManager
+ */
+ca.CADownloadManager = {
+
+/**
+ * @method getDownloadMaxCount
+ * @return {int}
+ */
+getDownloadMaxCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setDownloadManagerDelegate
+ * @param {ca.CADownloadManagerDelegate} arg0
+ */
+setDownloadManagerDelegate : function (
+cadownloadmanagerdelegate 
+)
+{
+},
+
+/**
+ * @method setDownloadMaxCount
+ * @param {int} arg0
+ */
+setDownloadMaxCount : function (
+int 
+)
+{
+},
+
+/**
+ * @method getLocalFileSize
+ * @param {unsigned long} arg0
+ * @return {unsigned long}
+ */
+getLocalFileSize : function (
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method enqueueDownload
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @return {unsigned long}
+ */
+enqueueDownload : function (
+str, 
+str, 
+str, 
+str 
+)
+{
+    return 0;
+},
+
+/**
+ * @method clearOnSuccessDownloadAllRecord
+ */
+clearOnSuccessDownloadAllRecord : function (
+)
+{
+},
+
+/**
+ * @method eraseDownload
+ * @param {unsigned long} arg0
+ */
+eraseDownload : function (
+long 
+)
+{
+},
+
+/**
+ * @method enqueueDownloadEx
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @return {unsigned long}
+ */
+enqueueDownloadEx : function (
+str, 
+str, 
+str, 
+str 
+)
+{
+    return 0;
+},
+
+/**
+ * @method isDownloading
+ * @param {unsigned long} arg0
+ * @return {bool}
+ */
+isDownloading : function (
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method clearOnSuccessDownloadRecord
+ * @param {unsigned long} arg0
+ */
+clearOnSuccessDownloadRecord : function (
+long 
+)
+{
+},
+
+/**
+ * @method getDownloadUrl
+ * @param {unsigned long} arg0
+ * @return {char}
+ */
+getDownloadUrl : function (
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method resumeDownload
+ * @param {unsigned long} arg0
+ */
+resumeDownload : function (
+long 
+)
+{
+},
+
+/**
+ * @method getDownloadManagerDelegate
+ * @return {ca.CADownloadManagerDelegate}
+ */
+getDownloadManagerDelegate : function (
+)
+{
+    return ca.CADownloadManagerDelegate;
+},
+
+/**
+ * @method getTotalFileSize
+ * @param {unsigned long} arg0
+ * @return {unsigned long}
+ */
+getTotalFileSize : function (
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFilePath
+ * @param {unsigned long} arg0
+ * @return {char}
+ */
+getFilePath : function (
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDownloadHeader
+ * @param {unsigned long} arg0
+ * @return {char}
+ */
+getDownloadHeader : function (
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method pauseDownload
+ * @param {unsigned long} arg0
+ */
+pauseDownload : function (
+long 
+)
+{
+},
+
+/**
+ * @method isFinished
+ * @param {unsigned long} arg0
+ * @return {bool}
+ */
+isFinished : function (
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method getDownloadAllTextTags
+ * @return {Array}
+ */
+getDownloadAllTextTags : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getStartTime
+ * @param {unsigned long} arg0
+ * @return {char}
+ */
+getStartTime : function (
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {ca.CADownloadManager}
+ */
+getInstance : function (
+)
+{
+    return ca.CADownloadManager;
+},
+
+};
+
+/**
  * @class CATextField
  */
 ca.CATextField = {
@@ -18408,16 +18766,6 @@ bool
 },
 
 /**
- * @method isFlipY
- * @return {bool}
- */
-isFlipY : function (
-)
-{
-    return false;
-},
-
-/**
  * @method getBatchNode
  * @return {ca.CGSpriteBatchNode}
  */
@@ -18438,16 +18786,6 @@ getOffsetPosition : function (
 },
 
 /**
- * @method isOpacityModifyRGB
- * @return {bool}
- */
-isOpacityModifyRGB : function (
-)
-{
-    return false;
-},
-
-/**
  * @method isFlipX
  * @return {bool}
  */
@@ -18458,13 +18796,13 @@ isFlipX : function (
 },
 
 /**
- * @method setOpacityModifyRGB
- * @param {bool} arg0
+ * @method isFlipY
+ * @return {bool}
  */
-setOpacityModifyRGB : function (
-bool 
+isFlipY : function (
 )
 {
+    return false;
 },
 
 /**
@@ -19819,16 +20157,6 @@ reverse : function (
 ca.FiniteTimeAction = {
 
 /**
- * @method clone
- * @return {ca.FiniteTimeAction}
- */
-clone : function (
-)
-{
-    return ca.FiniteTimeAction;
-},
-
-/**
  * @method setDuration
  * @param {float} arg0
  */
@@ -19863,16 +20191,6 @@ getAmplitudeRate : function (
 )
 {
     return 0;
-},
-
-/**
- * @method clone
- * @return {ca.ActionInterval}
- */
-clone : function (
-)
-{
-    return ca.ActionInterval;
 },
 
 /**
@@ -21495,13 +21813,15 @@ ActionCamera : function (
 ca.ActionEase = {
 
 /**
- * @method clone
- * @return {ca.ActionEase}
+ * @method initWithAction
+ * @param {ca.ActionInterval} arg0
+ * @return {bool}
  */
-clone : function (
+initWithAction : function (
+actioninterval 
 )
 {
-    return ca.ActionEase;
+    return false;
 },
 
 /**
@@ -21512,18 +21832,6 @@ getInnerAction : function (
 )
 {
     return ca.ActionInterval;
-},
-
-/**
- * @method initWithAction
- * @param {ca.ActionInterval} arg0
- * @return {bool}
- */
-initWithAction : function (
-actioninterval 
-)
-{
-    return false;
 },
 
 /**
@@ -21543,6 +21851,16 @@ ActionEase : function (
 ca.EaseRateAction = {
 
 /**
+ * @method setRate
+ * @param {float} arg0
+ */
+setRate : function (
+float 
+)
+{
+},
+
+/**
  * @method initWithAction
  * @param {ca.ActionInterval} arg0
  * @param {float} arg1
@@ -21554,26 +21872,6 @@ float
 )
 {
     return false;
-},
-
-/**
- * @method setRate
- * @param {float} arg0
- */
-setRate : function (
-float 
-)
-{
-},
-
-/**
- * @method clone
- * @return {ca.EaseRateAction}
- */
-clone : function (
-)
-{
-    return ca.EaseRateAction;
 },
 
 /**
@@ -22122,16 +22420,6 @@ float
  * @class ActionInstant
  */
 ca.ActionInstant = {
-
-/**
- * @method clone
- * @return {ca.ActionInstant}
- */
-clone : function (
-)
-{
-    return ca.ActionInstant;
-},
 
 };
 

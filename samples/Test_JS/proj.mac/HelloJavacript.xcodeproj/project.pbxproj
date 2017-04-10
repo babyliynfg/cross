@@ -38,6 +38,7 @@
 		480EDE261D953A4E00C758DA /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE251D953A4E00C758DA /* VideoDecodeAcceleration.framework */; };
 		480EDE281D953A5B00C758DA /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE271D953A5B00C758DA /* CoreVideo.framework */; };
 		480EDE2A1D953A9B00C758DA /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE291D953A9B00C758DA /* libbz2.1.0.tbd */; };
+		483B3C1F1E9B7BCC00065B02 /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 483B3C1D1E9B7BCC00065B02 /* jsb_websocket.cpp */; };
 		4851EDAF1D81714500863BD1 /* image in Resources */ = {isa = PBXBuildFile; fileRef = 4851EDAD1D81714500863BD1 /* image */; };
 		4851EDB01D81714500863BD1 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = 4851EDAE1D81714500863BD1 /* animation */; };
 		4851EDB31D81717E00863BD1 /* crossapp_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4851EDB11D81717E00863BD1 /* crossapp_specifics.cpp */; };
@@ -123,6 +124,8 @@
 		480EDE251D953A4E00C758DA /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
 		480EDE271D953A5B00C758DA /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		480EDE291D953A9B00C758DA /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
+		483B3C1D1E9B7BCC00065B02 /* jsb_websocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_websocket.cpp; sourceTree = "<group>"; };
+		483B3C1E1E9B7BCC00065B02 /* jsb_websocket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_websocket.hpp; sourceTree = "<group>"; };
 		4851EDAD1D81714500863BD1 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
 		4851EDAE1D81714500863BD1 /* animation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animation; sourceTree = "<group>"; };
 		4851EDB11D81717E00863BD1 /* crossapp_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crossapp_specifics.cpp; sourceTree = "<group>"; };
@@ -372,6 +375,8 @@
 				48E141181CED67970029BABC /* ScriptingCore.cpp */,
 				48E141191CED67970029BABC /* ScriptingCore.h */,
 				48E1411A1CED67970029BABC /* spidermonkey_specifics.h */,
+				483B3C1D1E9B7BCC00065B02 /* jsb_websocket.cpp */,
+				483B3C1E1E9B7BCC00065B02 /* jsb_websocket.hpp */,
 			);
 			path = manual;
 			sourceTree = "<group>";
@@ -493,6 +498,7 @@
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
 				48E144391CED67980029BABC /* ScriptingCore.cpp in Sources */,
 				480EDE161D95397800C758DA /* CAVideoPlayerControlViewMac.cpp in Sources */,
+				483B3C1F1E9B7BCC00065B02 /* jsb_websocket.cpp in Sources */,
 				15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
 				480EDE1A1D95397800C758DA /* CAVideoPlayerRenderMac.cpp in Sources */,
@@ -556,7 +562,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
 					CC_TARGET_OS_MAC,
-					"CROSSAPP_DEBUG=1",
+					"CROSSAPP_DEBUG=0",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
