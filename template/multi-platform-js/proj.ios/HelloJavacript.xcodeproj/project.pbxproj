@@ -26,6 +26,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		4800E4581E9CA23D00E4B8D9 /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4800E4561E9CA23D00E4B8D9 /* jsb_websocket.cpp */; };
 		480EDE2E1D953BC400C758DA /* crossapp_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE2C1D953BC400C758DA /* crossapp_specifics.cpp */; };
 		480EDE3D1D953C0300C758DA /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE311D953C0300C758DA /* CAVideoPlayerControlView.cpp */; };
 		480EDE3F1D953C0300C758DA /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE341D953C0300C758DA /* CAVideoPlayerDecoder.cpp */; };
@@ -118,6 +119,8 @@
 		1D6058910D05DD3D006BFB54 /* HelloJavacript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloJavacript.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4800E4561E9CA23D00E4B8D9 /* jsb_websocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_websocket.cpp; sourceTree = "<group>"; };
+		4800E4571E9CA23D00E4B8D9 /* jsb_websocket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_websocket.hpp; sourceTree = "<group>"; };
 		480EDE2C1D953BC400C758DA /* crossapp_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crossapp_specifics.cpp; sourceTree = "<group>"; };
 		480EDE2D1D953BC400C758DA /* crossapp_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = crossapp_specifics.hpp; sourceTree = "<group>"; };
 		480EDE311D953C0300C758DA /* CAVideoPlayerControlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerControlView.cpp; path = video/CAVideoPlayerControlView.cpp; sourceTree = "<group>"; };
@@ -431,6 +434,8 @@
 		487514541CC0E10C00FF2062 /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				4800E4561E9CA23D00E4B8D9 /* jsb_websocket.cpp */,
+				4800E4571E9CA23D00E4B8D9 /* jsb_websocket.hpp */,
 				480EDE2C1D953BC400C758DA /* crossapp_specifics.cpp */,
 				480EDE2D1D953BC400C758DA /* crossapp_specifics.hpp */,
 				48173D3B1CC5CE5700209A95 /* component */,
@@ -567,6 +572,7 @@
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
 				480EDE431D953C0300C758DA /* CAVideoPlayerView.cpp in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
+				4800E4581E9CA23D00E4B8D9 /* jsb_websocket.cpp in Sources */,
 				480EDE3F1D953C0300C758DA /* CAVideoPlayerDecoder.cpp in Sources */,
 				48114A9C1CC7784A00A85EAA /* jsb_crossapp_auto.cpp in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
