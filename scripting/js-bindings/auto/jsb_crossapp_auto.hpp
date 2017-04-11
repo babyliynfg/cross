@@ -2067,7 +2067,6 @@ void js_crossapp_CADownloadManager_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CADownloadManager(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CADownloadManager_getDownloadMaxCount(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CADownloadManager_setDownloadManagerDelegate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADownloadManager_setDownloadMaxCount(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADownloadManager_getLocalFileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADownloadManager_enqueueDownload(JSContext *cx, uint32_t argc, jsval *vp);

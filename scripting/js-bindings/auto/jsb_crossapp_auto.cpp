@@ -42454,35 +42454,6 @@ bool js_crossapp_CADownloadManager_getDownloadMaxCount(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_crossapp_CADownloadManager_getDownloadMaxCount : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CADownloadManager_setDownloadManagerDelegate(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CADownloadManager* cobj = (CrossApp::CADownloadManager *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADownloadManager_setDownloadManagerDelegate : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CADownloadManagerDelegate* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CADownloadManagerDelegate*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADownloadManager_setDownloadManagerDelegate : Error processing arguments");
-        cobj->setDownloadManagerDelegate(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CADownloadManager_setDownloadManagerDelegate : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CADownloadManager_setDownloadMaxCount(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -42999,7 +42970,6 @@ void js_register_crossapp_CADownloadManager(JSContext *cx, JS::HandleObject glob
 
     static JSFunctionSpec funcs[] = {
         JS_FN("getDownloadMaxCount", js_crossapp_CADownloadManager_getDownloadMaxCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDownloadManagerDelegate", js_crossapp_CADownloadManager_setDownloadManagerDelegate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDownloadMaxCount", js_crossapp_CADownloadManager_setDownloadMaxCount, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLocalFileSize", js_crossapp_CADownloadManager_getLocalFileSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("enqueueDownload", js_crossapp_CADownloadManager_enqueueDownload, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),

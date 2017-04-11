@@ -16469,16 +16469,6 @@ getDownloadMaxCount : function (
 },
 
 /**
- * @method setDownloadManagerDelegate
- * @param {ca.CADownloadManagerDelegate} arg0
- */
-setDownloadManagerDelegate : function (
-cadownloadmanagerdelegate 
-)
-{
-},
-
-/**
  * @method setDownloadMaxCount
  * @param {int} arg0
  */
