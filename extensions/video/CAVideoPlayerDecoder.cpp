@@ -480,7 +480,7 @@ VPError VPDecoder::openAudioStream(int audioStream)
     }
     wanted_spec.format = AUDIO_S16SYS;
     wanted_spec.silence = 0;
-    wanted_spec.samples = 1024;
+    wanted_spec.samples =  codecCtx->frame_size;;
     wanted_spec.callback = audio_callback;
     wanted_spec.userdata = this;
 
