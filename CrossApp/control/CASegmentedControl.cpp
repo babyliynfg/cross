@@ -16,6 +16,7 @@
 #include "platform/CADensityDpi.h"
 #include "support/CAThemeManager.h"
 #include "support/ccUtils.h"
+#include "basics/CAPointExtension.h"
 
 NS_CC_BEGIN
 
@@ -246,7 +247,31 @@ void CASegmentedControl::setContentSize(const CrossApp::DSize &var)
         m_vSeparateViews.at(i)->setCenter(rect);
     }
     
-    
+    for (int index = 0; index < m_vSegmentItemsTitles.size(); index++)
+    {
+        CC_CONTINUE_IF(!m_vNormalImages.at(index) && !m_vSelectedImages.at(index));
+        DRect center = m_vSegmentItemsTitles.at(index)->getCenter();
+        
+        if (!m_obContentSize.equals(DSizeZero) && m_vItemImageSizes.at(index).equals(DSizeZero))
+        {
+            DSize size = m_obContentSize;
+            DSize iSize = m_vNormalImages.at(index) ? m_vNormalImages.at(index)->getContentSize() : m_vSelectedImages.at(index)->getContentSize();
+            float scaleX = size.width / iSize.width * 0.75f;
+            float scaleY = size.height / iSize.height * 0.75f;
+            float scale = MIN(scaleX, scaleY);
+            iSize = ccpMult(iSize, scale);
+            
+            center.size = iSize;
+            
+            m_vSegmentItemsTitles.at(index)->setCenter(center);
+        }
+        else if (!m_vItemImageSizes.at(index).equals(DSizeZero))
+        {
+            center.size = m_vItemImageSizes.at(index);
+            m_vSegmentItemsTitles.at(index)->setCenter(center);
+        }
+    }
+
     for (size_t i=0; i<(size_t)m_nItemsCount; i++)
     {
         m_vItemSelectedBackgrounds.at(i)->setFrame(m_vSegmentItems.at(i)->getFrame());
@@ -432,8 +457,23 @@ void CASegmentedControl::setImageForSegmentAtIndex(CAImage* image, int index, CA
     m_vSegmentItems.at(index)->removeAllSubviews();
     DRect center = m_vSegmentItems.at(index)->getBounds();
     center.origin = center.size/2 + m_vItemContentOffsets.at(index);
-    center.size = m_vItemImageSizes.at(index).equals(DSizeZero) ? image->getContentSize() : m_vItemImageSizes.at(index);
-    CAImageView* imageView = CAImageView::createWithCenter(center);
+    
+    if (!m_obContentSize.equals(DSizeZero) && m_vItemImageSizes.at(index).equals(DSizeZero))
+    {
+        DSize size = m_obContentSize;
+        DSize iSize = image->getContentSize();
+        float scaleX = size.width / iSize.width * 0.75f;
+        float scaleY = size.height / iSize.height * 0.75f;
+        float scale = MIN(scaleX, scaleY);
+        iSize = ccpMult(iSize, scale);
+        
+        center.size = iSize;
+    }
+    
+    center.size = m_vItemImageSizes.at(index);
+    
+    CAImageView* imageView = CAImageView::create();
+    imageView->setCenter(center);
     imageView->setColor(m_iSelectedIndex == index ? m_cImageSelectedColor : m_cImageColor);
     m_vSegmentItems.at(index)->addSubview(imageView);
     m_vSegmentItemsTitles.replace(index, imageView);

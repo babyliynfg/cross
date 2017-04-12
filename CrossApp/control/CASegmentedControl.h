@@ -90,6 +90,8 @@ public:
     
 protected:
     
+    void reSizeImage();
+    
     void setContentSize(const DSize & var);
     
     void callFunc(CAObject* object, int index);
