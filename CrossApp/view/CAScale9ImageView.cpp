@@ -340,10 +340,9 @@ void CAScale9ImageView::setInsetLeft(float insetLeft)
 {
     this->m_fInsetLeft = insetLeft;
     m_bAutoCapInsets = false;
-    DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
-        insets = DRect(m_fInsetLeft,
+        m_obCapInsets = DRect(m_fInsetLeft,
                         m_fInsetTop,
                         m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
                         m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
@@ -355,10 +354,9 @@ void CAScale9ImageView::setInsetTop(float insetTop)
 {
     this->m_fInsetTop = insetTop;
     m_bAutoCapInsets = false;
-    DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
-        insets = DRect(m_fInsetLeft,
+        m_obCapInsets = DRect(m_fInsetLeft,
                         m_fInsetTop,
                         m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
                         m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
@@ -370,10 +368,9 @@ void CAScale9ImageView::setInsetRight(float insetRight)
 {
     this->m_fInsetRight = insetRight;
     m_bAutoCapInsets = false;
-    DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
-        insets = DRect(m_fInsetLeft,
+        m_obCapInsets = DRect(m_fInsetLeft,
                         m_fInsetTop,
                         m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
                         m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
@@ -385,10 +382,9 @@ void CAScale9ImageView::setInsetBottom(float insetBottom)
 {
     this->m_fInsetBottom = insetBottom;
     m_bAutoCapInsets = false;
-    DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
-        insets = DRect(m_fInsetLeft,
+        m_obCapInsets = DRect(m_fInsetLeft,
                         m_fInsetTop,
                         m_obOriginalSize.width-m_fInsetLeft-m_fInsetRight,
                         m_obOriginalSize.height-m_fInsetTop-m_fInsetBottom);
