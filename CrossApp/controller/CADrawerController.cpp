@@ -61,18 +61,22 @@ bool CADrawerController::initWithController(CAViewController* leftViewController
 
 void CADrawerController::replaceRightViewController(CAViewController* rightViewController)
 {
-
+    this->setRightViewController(rightViewController);
 }
 
 void CADrawerController::setLeftViewController(CrossApp::CAViewController *leftViewController)
 {
+    if (m_pLeftViewController)
+    {
+        m_pLeftViewController->removeViewFromSuperview();
+    }
     CC_SAFE_RETAIN(leftViewController);
     CC_SAFE_RELEASE(m_pLeftViewController);
     m_pLeftViewController = leftViewController;
     
     if (this->isViewRunning())
     {
-        
+        m_pLeftViewController->addViewFromSuperview(m_pContainer[0]);
     }
 }
 
@@ -83,6 +87,10 @@ CAViewController* CADrawerController::getLeftViewController()
 
 void CADrawerController::setRightViewController(CrossApp::CAViewController *rightViewController)
 {
+    if (m_pRightViewController)
+    {
+        m_pRightViewController->removeViewFromSuperview();
+    }
     CC_SAFE_RETAIN(rightViewController);
     CC_SAFE_RELEASE(m_pRightViewController);
     m_pRightViewController = rightViewController;
@@ -90,7 +98,7 @@ void CADrawerController::setRightViewController(CrossApp::CAViewController *righ
     m_pRightViewController->getView()->enabledBottomShadow(true);
     if (this->isViewRunning())
     {
-        
+        m_pRightViewController->addViewFromSuperview(m_pContainer[1]);
     }
 }
 
