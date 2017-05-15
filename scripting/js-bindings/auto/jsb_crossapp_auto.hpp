@@ -1911,6 +1911,8 @@ void js_crossapp_CAAlertView_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAAlertView(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAAlertView_show(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAAlertView_setButtonTitles(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAAlertView_addButtonTitle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAlertView_create(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAPickerViewDataSource_class;

@@ -39269,6 +39269,48 @@ bool js_crossapp_CAAlertView_show(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAAlertView_show : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CAAlertView_setButtonTitles(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAlertView* cobj = (CrossApp::CAAlertView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAlertView_setButtonTitles : Invalid Native Object");
+    if (argc == 1) {
+        std::vector<std::string> arg0;
+        ok &= jsval_to_std_vector_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAlertView_setButtonTitles : Error processing arguments");
+        cobj->setButtonTitles(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAlertView_setButtonTitles : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAAlertView_addButtonTitle(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAlertView* cobj = (CrossApp::CAAlertView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAlertView_addButtonTitle : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAlertView_addButtonTitle : Error processing arguments");
+        cobj->addButtonTitle(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAlertView_addButtonTitle : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAAlertView_create(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -39349,6 +39391,8 @@ void js_register_crossapp_CAAlertView(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("show", js_crossapp_CAAlertView_show, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setButtonTitles", js_crossapp_CAAlertView_setButtonTitles, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addButtonTitle", js_crossapp_CAAlertView_addButtonTitle, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

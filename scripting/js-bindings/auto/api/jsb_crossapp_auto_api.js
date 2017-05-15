@@ -15236,6 +15236,26 @@ func
 },
 
 /**
+ * @method setButtonTitles
+ * @param {Array} arg0
+ */
+setButtonTitles : function (
+array 
+)
+{
+},
+
+/**
+ * @method addButtonTitle
+ * @param {String} arg0
+ */
+addButtonTitle : function (
+str 
+)
+{
+},
+
+/**
  * @method create
 * @param {String|String} str
 * @param {String|String} str
@@ -18913,10 +18933,10 @@ isDirty : function (
 
 /**
  * @method setAtlasIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 setAtlasIndex : function (
-long 
+int 
 )
 {
 },
@@ -19508,7 +19528,7 @@ getImageAtlas : function (
 /**
  * @method lowestAtlasIndexInChild
  * @param {ca.CGSprite} arg0
- * @return {long}
+ * @return {int}
  */
 lowestAtlasIndexInChild : function (
 cgsprite 
@@ -19531,7 +19551,7 @@ cgsprite
  * @method atlasIndexForChild
  * @param {ca.CGSprite} arg0
  * @param {int} arg1
- * @return {long}
+ * @return {int}
  */
 atlasIndexForChild : function (
 cgsprite, 
@@ -19552,12 +19572,12 @@ increaseAtlasCapacity : function (
 /**
  * @method rebuildIndexInOrder
  * @param {ca.CGSprite} arg0
- * @param {long} arg1
- * @return {long}
+ * @param {int} arg1
+ * @return {int}
  */
 rebuildIndexInOrder : function (
 cgsprite, 
-long 
+int 
 )
 {
     return 0;
@@ -19610,7 +19630,7 @@ getBlendFunc : function (
 /**
  * @method highestAtlasIndexInChild
  * @param {ca.CGSprite} arg0
- * @return {long}
+ * @return {int}
  */
 highestAtlasIndexInChild : function (
 cgsprite 
@@ -22511,7 +22531,7 @@ cgnode
 /**
  * @method getNumberOfRunningActionsInTarget
  * @param {ca.CGNode} arg0
- * @return {long}
+ * @return {int}
  */
 getNumberOfRunningActionsInTarget : function (
 cgnode 
