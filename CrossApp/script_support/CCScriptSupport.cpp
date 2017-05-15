@@ -38,18 +38,18 @@ CCScriptHandlerEntry::~CCScriptHandlerEntry(void)
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 // #pragma mark -
-// #pragma mark CCSchedulerScriptHandlerEntry
+// #pragma mark CASchedulerScriptHandlerEntry
 #endif
 
-CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
+CASchedulerScriptHandlerEntry* CASchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
 {
-    CCSchedulerScriptHandlerEntry* pEntry = new CCSchedulerScriptHandlerEntry(nHandler);
+    CASchedulerScriptHandlerEntry* pEntry = new CASchedulerScriptHandlerEntry(nHandler);
     pEntry->init(fInterval, bPaused);
     pEntry->autorelease();
     return pEntry;
 }
 
-bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
+bool CASchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 {
 //    m_pTimer = new TimerScriptHandler();
 //    m_pTimer->initWithScriptHandler(m_nHandler, fInterval);
@@ -59,7 +59,7 @@ bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
     return true;
 }
 
-CCSchedulerScriptHandlerEntry::~CCSchedulerScriptHandlerEntry(void)
+CASchedulerScriptHandlerEntry::~CASchedulerScriptHandlerEntry(void)
 {
 //    m_pTimer->release();
 }

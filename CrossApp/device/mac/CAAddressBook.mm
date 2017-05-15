@@ -20,7 +20,7 @@ CAAddressBook::~CAAddressBook()
 {
 }
 
-void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Date>&)>& callback)
+void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Data>&)>& callback)
 {
 
 }

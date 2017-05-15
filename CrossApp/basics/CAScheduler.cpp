@@ -357,7 +357,7 @@ void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::str
             
             if (timer && callbackName == timer->getCallbackName())
             {
-                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
+                CCLOG("CAScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);
                 return;
             }
@@ -405,7 +405,7 @@ void CAScheduler::schedule(SEL_Schedule selector, CAObject *target, float interv
             
             if (timer && selector == timer->getSelector())
             {
-                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
+                CCLOG("CAScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);
                 return;
             }
@@ -693,7 +693,7 @@ void CAScheduler::unscheduleAllWithMinPriority(int minPriority)
 
 unsigned int CAScheduler::scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
 {
-    CCSchedulerScriptHandlerEntry* pEntry = CCSchedulerScriptHandlerEntry::create(nHandler, fInterval, bPaused);
+    CASchedulerScriptHandlerEntry* pEntry = CASchedulerScriptHandlerEntry::create(nHandler, fInterval, bPaused);
     m_obScriptHandlerEntries.pushBack(pEntry);
     return pEntry->getEntryId();
 }
@@ -703,7 +703,7 @@ void CAScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 #if CC_ENABLE_SCRIPT_BINDING
     for (auto &obj : m_obScriptHandlerEntries)
     {
-        CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(obj);
+        CASchedulerScriptHandlerEntry* pEntry = static_cast<CASchedulerScriptHandlerEntry*>(obj);
         if (pEntry->getEntryId() == (int)uScheduleScriptEntryID)
         {
             pEntry->markedForDeletion();
@@ -967,7 +967,7 @@ void CAScheduler::update(float dt)
     {
         for (auto& obj : m_obScriptHandlerEntries)
         {
-            CCSchedulerScriptHandlerEntry* pEntry = static_cast<CCSchedulerScriptHandlerEntry*>(obj);
+            CASchedulerScriptHandlerEntry* pEntry = static_cast<CASchedulerScriptHandlerEntry*>(obj);
             if (pEntry->isMarkedForDeletion())
             {
                 m_obScriptHandlerEntries.eraseObject(obj);

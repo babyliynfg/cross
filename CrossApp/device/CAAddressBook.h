@@ -18,7 +18,7 @@ class CC_DLL CAAddressBook : public CAObject
 {
 public:
     
-    struct Date
+    struct Data
     {
         std::string firstName{""};
         std::string lastName{""};
@@ -46,13 +46,13 @@ public:
         std::string fullname{""};
     };
     
-    typedef std::function<void(const std::vector<CAAddressBook::Date>&)> Callback;
+    typedef std::function<void(const std::vector<CAAddressBook::Data>&)> Callback;
     
 public:
     
     CREATE_FUNC(CAAddressBook);
     
-    void getAddressBook(const std::function<void(const std::vector<CAAddressBook::Date>&)>& callback);
+    void getAddressBook(const CAAddressBook::Callback& callback);
     
 private:
     

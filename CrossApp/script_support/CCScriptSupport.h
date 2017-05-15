@@ -61,12 +61,12 @@ protected:
  * @lua NA
  */
 
-class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
+class CASchedulerScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
     
-    static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
-    ~CCSchedulerScriptHandlerEntry(void);
+    static CASchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
+    ~CASchedulerScriptHandlerEntry(void);
     
     CrossApp::Timer* getTimer(void) {
         return m_pTimer;
@@ -85,7 +85,7 @@ public:
     }
     
 private:
-    CCSchedulerScriptHandlerEntry(int nHandler)
+    CASchedulerScriptHandlerEntry(int nHandler)
     : CCScriptHandlerEntry(nHandler)
     , m_pTimer(nullptr)
     , m_bPaused(false)

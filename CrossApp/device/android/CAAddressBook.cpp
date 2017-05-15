@@ -36,11 +36,11 @@ CAAddressBook::~CAAddressBook()
 {
 }
 
-std::function<void(const std::vector<CAAddressBook::Date>&)> _bookCallBack;
+std::function<void(const std::vector<CAAddressBook::Data>&)> _bookCallBack;
 
-std::vector<CAAddressBook::Date> _addressBookVec;
+std::vector<CAAddressBook::Data> _addressBookVec;
 
-void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Date>&)>& callback)
+void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Data>&)>& callback)
 {
     _bookCallBack = callback;
     
@@ -67,7 +67,7 @@ extern "C"
             {
                 CSJson::Value person;
                 person = personlist[i];
-                CAAddressBook::Date addrec;
+                CAAddressBook::Data addrec;
                 
                 addrec.fullname = person["name"].asString();
                 

@@ -18,13 +18,10 @@ CAAddressBook::~CAAddressBook()
 {
 }
 
-std::function<void(const std::vector<CAAddressBook::Date>&)> _bookCallBack;
 
-std::vector<CAAddressBook::Date> _addressBookVec;
-
-void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Date>&)>& callback)
+void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Data>&)>& callback)
 {
-    _bookCallBack = callback;
+
 }
 
 NS_CC_END

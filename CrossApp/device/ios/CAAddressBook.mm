@@ -21,7 +21,7 @@ CAAddressBook::~CAAddressBook()
 {
 }
 
-void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Date>&)>& callback)
+void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CAAddressBook::Data>&)>& callback)
 {
     
     CFErrorRef *error = nil;
@@ -50,7 +50,7 @@ void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CA
         accessGranted = YES;
     }
     
-    std::vector<CAAddressBook::Date> arr;
+    std::vector<CAAddressBook::Data> arr;
     
     if (accessGranted)
     {
@@ -61,7 +61,7 @@ void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CA
         {
             
             ABRecordRef person = CFArrayGetValueAtIndex(results, i);
-            CAAddressBook::Date address;
+            CAAddressBook::Data address;
             
             NSString *firstName = (NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
             
