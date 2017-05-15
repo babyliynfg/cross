@@ -1031,55 +1031,6 @@ bool js_crossapp_CASegmentedControl_addTarget(JSContext *cx, uint32_t argc, jsva
     return false;
 }
 
-bool js_crossapp_CAAlertView_createWithText(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc >= 3) {
-        std::string jsTitle;
-        ok &= jsval_to_std_string(cx, args.get(0), &jsTitle);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAlertView_createWithText : Error processing arguments");
-        
-        std::string jsAlertMsg;
-        ok &= jsval_to_std_string(cx, args.get(1), &jsAlertMsg);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAlertView_createWithText : Error processing arguments");
-
-        std::string jsBtnText;
-        ok &= jsval_to_std_string(cx, args.get(1), &jsBtnText);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAlertView_createWithText : Error processing arguments");
-        
-        
-        CrossApp::CAAlertView* ret = CrossApp::CAAlertView::create(jsTitle.c_str(),jsAlertMsg.c_str(),jsBtnText.c_str(),NULL);
-        
-        if (argc > 3) {
-            while (ok) {
-                std::string jsNextBtnText;
-                ok &= jsval_to_std_string(cx, args.get(0), &jsNextBtnText);
-
-                if (ok)
-                {
-                }
-                
-            }
-           
-        }
-        
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAlertView>(cx, (CrossApp::CAAlertView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAAlertView_create : wrong number of arguments");
-    return false;
-}
 
 bool js_crossapp_CABarButtonItem_setTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1930,7 +1881,6 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj.set(jsb_CrossApp_CASegmentedControl_prototype);
     JS_DefineFunction(cx, tmpObj, "addTarget", js_crossapp_CASegmentedControl_addTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     tmpObj.set(jsb_CrossApp_CAAlertView_prototype);
-    JS_DefineFunction(cx, tmpObj, "createWithText", js_crossapp_CAAlertView_createWithText, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     tmpObj.set(jsb_CrossApp_CABarButtonItem_prototype);
     JS_DefineFunction(cx, tmpObj, "setTarget", js_crossapp_CABarButtonItem_setTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_GetProperty(cx, ccObj, "CAViewAnimation", &tmpVal);

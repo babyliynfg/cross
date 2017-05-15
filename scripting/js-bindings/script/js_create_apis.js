@@ -365,54 +365,6 @@ _p._ctor = function(width, height, format, depthStencilFormat){
     }
 };
 
-/************************  Tile Map  *************************/
-_p = cc.TileMapAtlas.prototype;
-_p._ctor = function(tile, mapFile, tileWidth, tileHeight){
-    if(tileHeight !== undefined)
-        this.initWithTileFile(tile, mapFile, tileWidth, tileHeight);
-};
-
-_p = cc.TMXLayer.prototype;
-_p._ctor = function(tilesetInfo, layerInfo, mapInfo){
-    if(mapInfo !== undefined)
-        this.initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo);
-};
-
-_p = cc.TMXTiledMap.prototype;
-_p._ctor = function(tmxFile,resourcePath){
-    if(resourcePath !== undefined){
-        this.initWithXML(tmxFile,resourcePath);
-    }else if(tmxFile !== undefined){
-        this.initWithTMXFile(tmxFile);
-    }
-};
-
-_p = cc.TMXMapInfo.prototype;
-_p._ctor = function(tmxFile, resourcePath){
-    if (resourcePath !== undefined) {
-        this.initWithXML(tmxFile,resourcePath);
-    }else if(tmxFile !== undefined){
-        this.initWithTMXFile(tmxFile);
-    }
-};
-
-/************************  TransitionScene  *************************/
-_p = cc.TransitionScene.prototype;
-_p._ctor = function(t, scene){
-    if(t !== undefined && scene !== undefined)
-        this.initWithDuration(t, scene);
-};
-
-_p = cc.TransitionSceneOriented.prototype;
-_p._ctor = function(t, scene, orientation){
-    orientation != undefined && this.initWithDuration(t, scene, orientation);
-};
-
-_p = cc.TransitionPageTurn.prototype;
-_p._ctor = function(t, scene, backwards){
-    backwards != undefined && this.initWithDuration(t, scene, backwards);
-};
-
 /************************  Actions  *************************/
 
 cc.Speed.prototype._ctor = function(action, speed) {
@@ -1055,84 +1007,6 @@ cc.ParticleBatchNode.create = function(fileImage, capacity){
     return null;
 };
 
-
-cc.TMXTiledMap._create = cc.TMXTiledMap.create;
-/**
- * Creates a TMX Tiled Map with a TMX file  or content string.
- * Implementation cc.TMXTiledMap
- * @param {String} tmxFile tmxFile fileName or content string
- * @param {String} resourcePath   If tmxFile is a file name ,it is not required.If tmxFile is content string ,it is must required.
- * @return {cc.TMXTiledMap|undefined}
- * @example
- * //example
- * 1.
- * //create a TMXTiledMap with file name
- * var tmxTiledMap = cc.TMXTiledMap.create("res/orthogonal-test1.tmx");
- * 2.
- * //create a TMXTiledMap with content string and resource path
- * var resources = "res/TileMaps";
- * var filePath = "res/TileMaps/orthogonal-test1.tmx";
- * var xmlStr = cc.loader.getRes(filePath);
- * var tmxTiledMap = cc.TMXTiledMap.create(xmlStr, resources);
- */
-cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
-    if(resourcePath != undefined){
-        return cc.TMXTiledMap.createWithXML(tmxFile, resourcePath);
-    } else if (tmxFile != undefined) {
-        return cc.TMXTiledMap._create(tmxFile);
-    }
-    return null;
-};
-
-
-// MenuItemImage
-cc.MenuItemImage.create = function(normalImage, selectedImage, three, four, five) {
-    return new cc.MenuItemImage(normalImage, selectedImage, three, four, five);
-}
-
-
-// MenuItemToggle
-cc.MenuItemToggle.create = function(/* var args */) {
-    var n = arguments.length;
-    
-    if (typeof arguments[n-2] === 'function' || typeof arguments[n-1] === 'function')   {
-        var args = Array.prototype.slice.call(arguments);
-        var obj = null;
-        if( typeof arguments[n-2] === 'function' )
-            obj = args.pop();
-        
-        var func = args.pop();
-        
-        // create it with arguments,
-        var item = cc.MenuItemToggle._create.apply(this, args);
-        
-        // then set the callback
-        if( obj !== null )
-            item.setCallback(func, obj);
-        else
-            item.setCallback(func);
-        return item;
-    } else {
-        return cc.MenuItemToggle._create.apply(this, arguments);
-    }
-};
-
-
-// LabelAtlas
-cc.LabelAtlas.create = function( a,b,c,d,e ) {
-    
-    var n = arguments.length;
-    
-    if ( n == 5) {
-        return cc.LabelAtlas._create(a,b,c,d,e.charCodeAt(0));
-    } else {
-        return cc.LabelAtlas._create.apply(this, arguments);
-    }
-};
-
-
-// LayerMultiplex
-cc.LayerMultiplex.create = cc.LayerMultiplex.createWithArray;
 
 /**
  * Creates an animation.

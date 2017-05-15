@@ -54,7 +54,7 @@ This formula prevents artifacts by using 99% of the texture.
 The "correct" way to prevent artifacts is by using the spritesheet-artifact-fixer.py or a similar tool.
 
 Affected nodes:
-- CAImageView / CCSpriteBatchNode and subclasses: CCLabelBMFont, CCTMXTiledMap
+- CAImageView / CCSpriteBatchNode
 - CCLabelAtlas
 - CCQuadParticleSystem
 - CCTileMap
