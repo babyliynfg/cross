@@ -9,6 +9,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -270,6 +275,96 @@ public class CrossAppHelper {
 		}
 		return -1.0f;
     }
+    
+    public static int dip2px(Context context, float dpValue) {
+    	final float scale = context.getResources().getDisplayMetrics().density;
+    	return (int) (dpValue * scale + 0.5f);
+    }
+    	 
+    public static int px2dip(Context context, float pxValue) {
+    	final float scale = context.getResources().getDisplayMetrics().density;
+    	return (int) (pxValue / scale + 0.5f);
+    }
+    
+    
+    /**
+	 * 生成正方形圆角的shape
+	 * @param context
+	 * @param colorresid
+	 * @param ridous
+	 * @return
+	 */
+	public static Drawable getCornerRectAngle(Context context ,int colorresid,int ridous,Rect rect){
+		return getCorlorRectAngleContaionColor(context, context.getResources().getColor(colorresid), ridous, rect) ; 
+	}
+	
+	public static Drawable getCorlorRectAngle(Context context ,String colorHex,int ridous,Rect rect){
+		return getCorlorRectAngleContaionColor(context, Color.parseColor(colorHex), ridous, rect) ; 
+	}
+	
+	public static Drawable getCorlorRectAngleContaionColor(Context context ,int color,int ridous,Rect rect){
+		GradientDrawable mGradientDrawable = new GradientDrawable() ; 
+		mGradientDrawable.setCornerRadius(ridous);
+		mGradientDrawable.setBounds(rect== null ? new Rect() : rect) ; 
+		mGradientDrawable.setColor(color);
+		return mGradientDrawable ; 
+	}
+	
+	/**
+	 * @param context
+	 * @param colorHex
+	 * @param ridous
+	 * @param rect
+	 * @param which  0 : top-left , 1 : top-right , 2 : bottom-right , 3 : bottom-left
+	 * @return
+	 */
+	public static Drawable getColorRectAngleInCorner(Context context , String colorHex  , int ridous , Rect rect , int which){
+		
+		int l = which == 0 ? ridous : 0 ;
+		int t = which  ==1 ? ridous : 0  ; 
+		int r = which == 2 ? ridous : 0 ; 
+		int b = which == 3 ? ridous : 0  ; 
+		
+		float[] radii = new float[]{l,l ,t , t , r , t, b , b};
+		
+		GradientDrawable drawable = new GradientDrawable();
+		drawable.setCornerRadii(radii);
+		drawable.setBounds(rect== null ? new Rect() : rect);
+		drawable.setColor(Color.parseColor(colorHex));
+		
+		return drawable ; 
+	}
+	
+	/**
+	 * 代码生成Selector
+	 * @param context
+	 * @param normal
+	 * @param pressed
+	 * @return
+	 */
+	 public static StateListDrawable setSelector(Context context,Drawable normal ,Drawable pressed){
+	        StateListDrawable bg=new StateListDrawable();
+	        bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, pressed);
+	        bg.addState(new int[] { android.R.attr.state_enabled }, normal);
+	        bg.addState(new int[] {}, normal);
+	        return bg;
+	  }
+	
+	/**
+	 * 得到某种颜色的矩形
+	 * @param context
+	 * @param colorresid
+	 * @return
+	 */
+	public static Drawable getRectAngle(Context context ,int colorresid,Rect rect){
+		GradientDrawable mGradientDrawable = new GradientDrawable() ; 
+		mGradientDrawable.setAlpha(100);
+		mGradientDrawable.setBounds(rect) ; 
+		mGradientDrawable.setColor(context.getResources().getColor(colorresid));
+		return mGradientDrawable ; 
+	}
+    
+	
     
     // ===========================================================
  	// Functions for CCUserDefault
