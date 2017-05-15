@@ -2534,7 +2534,7 @@ public:
                 args[0] = OBJECT_TO_JSVAL(tmp);
             }
         }
-        bool ok =ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "didSelectRow", 1, args,&retval);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "didSelectRow", 1, args,&retval);
     }
 private:
     JS::Heap<JSObject*> _JSDelegate;

@@ -1075,7 +1075,7 @@ bool js_crossapp_CAViewAnimation_setAnimationWillStartSelector_2(JSContext *cx, 
     return false;
 }
 
-bool js_crossapp_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -1112,7 +1112,7 @@ bool js_crossapp_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint
     return false;
 }
 
-bool js_CCScheduler_scheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_CAScheduler_scheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 2) {
         bool ok = true;
@@ -1200,7 +1200,7 @@ bool js_CCScheduler_scheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsva
     return false;
 }
 
-bool js_CCScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_CAScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -1235,107 +1235,6 @@ bool js_CCScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, js
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-
-bool js_crossapp_CCScheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
-    if (argc == 0) {
-        cobj->unscheduleAll();
-        JSScheduleWrapper::removeAllTargets();
-        args.rval().setUndefined();
-        return true;
-    }
-    
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-
-
-bool js_crossapp_CCScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler *sched = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    
-    if (argc == 1) {
-        do {
-            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
-            CrossApp::CAVector<CAObject*> *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
-            if(! arr) return true;
-            for(ssize_t i = 0; i < arr->size(); ++i) {
-                if(arr->at(i)) {
-                    sched->pauseTarget(arr->at(i));
-                }
-            }
-
-        } while (0);
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-
-bool js_crossapp_CCScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler *sched = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    
-    if (argc == 1) {
-        do {
-            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
-            auto arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
-            if(! arr) return true;
-            for(ssize_t i = 0; i < arr->size(); ++i) {
-                if(arr->at(i)) {
-                    sched->resumeTarget(arr->at(i));
-                }
-            }
-            
-        } while (0);
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-
-bool js_crossapp_CCScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
-    if (argc == 1) {
-        bool ret = false;
-        do {
-            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
-            CrossApp::CAVector<CAObject*> *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
-            if(! arr) return true;
-            for(ssize_t i = 0; i < arr->size(); ++i) {
-                if(arr->at(i)) {
-                    ret = cobj->isTargetPaused(arr->at(i)) ? true : false;
-                    // break directly since all targets have the same `pause` status.
-                    break;
-                }
-            }
-        } while (0);
-        
-        args.rval().set(BOOLEAN_TO_JSVAL(ret));
-        return true;
-    }
-    
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
@@ -1476,15 +1375,11 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj.set(jsb_CrossApp_CAScheduler_prototype);
     JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "resumeTarget", js_crossapp_CCScheduler_resumeTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "pauseTarget", js_crossapp_CCScheduler_pauseTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "schedule", js_CCScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "scheduleCallbackForTarget", js_CCScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unschedule", js_CCScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleCallbackForTarget", js_CCScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleAllForTarget", js_crossapp_CCScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacks", js_crossapp_CCScheduler_unscheduleAll, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "isTargetPaused", js_crossapp_CCScheduler_isTargetPaused, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "schedule", js_CAScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "scheduleCallbackForTarget", js_CAScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unschedule", js_CAScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleCallbackForTarget", js_CAScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleAllForTarget", js_crossapp_CAScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     tmpObj.set(jsb_CrossApp_CAButton_prototype);
     tmpObj.set(jsb_CrossApp_CASlider_prototype);
     JS_DefineFunction(cx, tmpObj, "addTarget", js_crossapp_CASlider_addTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
