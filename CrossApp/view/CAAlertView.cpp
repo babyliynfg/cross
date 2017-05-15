@@ -20,29 +20,22 @@ CAAlertView* CAAlertView::create(const std::string& title, const std::string& me
     return box;
 }
 
-CAAlertView* CAAlertView::create(const char* title, const char* message, const char* buttonTitle, ...)
-{
-    CAAlertView* box = new CAAlertView(title, message);
-    {
-        va_list args;
-        va_start(args, buttonTitle);
-        while (buttonTitle)
-        {
-            box->m_vButtonTitles.push_back(buttonTitle);
-            buttonTitle = va_arg(args, const char*);
-        }
-        va_end(args);
-    }
-    box->autorelease();
-    return box;
-}
-
 CAAlertView::CAAlertView(const std::string& title, const std::string& message)
 :m_sTitle(title)
 ,m_sMessage(message)
 ,m_callback(nullptr)
 {
     
+}
+
+void CAAlertView::setButtonTitles(const std::vector<std::string>& buttonTitles)
+{
+    m_vButtonTitles = buttonTitles;
+}
+
+void CAAlertView::addButtonTitle(const std::string& buttonTitle)
+{
+    m_vButtonTitles.push_back(buttonTitle);
 }
 
 void CAAlertView::show()
