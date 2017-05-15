@@ -2,25 +2,38 @@
 
 package org.CrossApp.lib;
 
-import java.lang.ref.WeakReference;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Handler;
-import android.os.Message;
+import android.content.DialogInterface.OnDismissListener;
+import android.graphics.Color;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
-public class CrossAppAlertView
+
+public final class CrossAppAlertView
 {
 	private static CrossAppActivity context = null;
-
+	
 	private static HashMap<Integer, AlertView> dict = null;
 	
 	public final static int HANDLER_SHOW_DIALOG = 1;
 	public final static int HANDLER_SHOW_EDITBOX_DIALOG = 2;
-	 
+	
+	
 	public static class AlertView
 	{
 		public String titile;
@@ -40,6 +53,21 @@ public class CrossAppAlertView
 		}
 	}
 	
+	public static void checkAliveAlertView(){
+		if (dict != null && dict.size() >0) {
+			Set<Integer> keys = dict.keySet() ; 
+			
+			Iterator<Integer> iterator = keys.iterator();
+			while (iterator.hasNext()) {
+				Integer key = iterator.next() ; 
+				show(key);
+			}
+		}
+		
+	}
+	
+	
+	
 	public static void createAlert(final String pTitle, final String pMessage, final int key)
 	{
 		if (dict == null)
@@ -49,6 +77,7 @@ public class CrossAppAlertView
     	}
 		
 		AlertView alertView = new AlertView(pTitle, pMessage);
+		
 		dict.put(key, alertView);
 	}
 	
@@ -62,86 +91,115 @@ public class CrossAppAlertView
 	}
 	
 	private static native void onClick(int index, int key);
-	public static void show(final int key) 
-	{
-		final AlertView alertView = dict.get(key);
-		context.runOnUiThread(new Runnable() 
-    	{
-            @Override
-            public void run()
-            {
-            	AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            	builder.setTitle(alertView.titile);
-            	builder.setMessage(alertView.message);
-            	
-        		ArrayList<String> bottonTitles = alertView.bottonTitles;
-				for (int i = 0; i < bottonTitles.size(); i++) 
-				{
-					String title = bottonTitles.get(i);
-					final int index = i;
+	
+	public static void show(final int key){
+		context.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				AlertView alertView =  dict.get(key) ; 
+				final Dialog dialog = new Dialog(context) ; 
+				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+				dialog.getWindow().getDecorView().setBackgroundColor(Color.TRANSPARENT);
+				dialog.setCanceledOnTouchOutside(false);
+				
+				
+				int dimi_dialog_min_width = CrossAppHelper.dip2px(context, 250) ; 
+				int dimi_msg_horizental_margin = CrossAppHelper.dip2px(context, 10) ; 
+				int dimi_title_vertical_margin = CrossAppHelper.dip2px(context, 5) ;
+				int dimi_btn_hei = CrossAppHelper.dip2px(context, 38);
+				int txt_size_title = CrossAppHelper.dip2px(context, 18) ; 
+				int txt_size_msg = CrossAppHelper.dip2px(context, 14) ; 
+				String btn_txt_color_hex = "#417bf9";
+				
+				//initial Dialog contentview 
+				LinearLayout container = new LinearLayout(context) ; 
+				container.setOrientation(LinearLayout.VERTICAL);
+				
+				container.setBackgroundResource(R.drawable.img_cross_alert_def_05);
+				
+				//add titleview to contentview
+				TextView titleView = new TextView(context) ; 
+				titleView.setGravity(Gravity.CENTER);
+				titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, txt_size_title);
+				titleView.setSingleLine(true);
+				titleView.setText(alertView.titile);
+				
+				LinearLayout.LayoutParams title_param = new LinearLayout.LayoutParams(dimi_dialog_min_width, LayoutParams.WRAP_CONTENT) ; 
+				title_param.topMargin = (dimi_title_vertical_margin * 2);
+				
+				title_param.gravity = Gravity.CENTER_HORIZONTAL ; 
+				container.addView(titleView,title_param);	
+				
+				
+				//add msgview to contentview
+				TextView msgView = new TextView(context) ; 
+				msgView.setTextSize(TypedValue.COMPLEX_UNIT_PX,txt_size_msg);
+				msgView.setText(alertView.message);
+				
+				
+				LinearLayout.LayoutParams msg_param = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT) ; 
+				msg_param.gravity = Gravity.CENTER_HORIZONTAL ; 
+				msg_param.leftMargin= dimi_msg_horizental_margin ; 
+				msg_param.rightMargin = dimi_msg_horizental_margin ; 
+				container.addView(msgView,msg_param);	
+				
+				CAFrameLayout rConerLayout = new CAFrameLayout(context) ; 
+				container.addView(rConerLayout);
+				//initial button view container
+				ScrollView scrollView = new ScrollView(context) ; 
+				scrollView.setVerticalScrollBarEnabled(false);
+				FrameLayout.LayoutParams scroll_param = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT) ; 
+				scroll_param.topMargin = dimi_title_vertical_margin * 2 ; 
+				scroll_param.gravity = Gravity.CENTER_HORIZONTAL ; 
+				rConerLayout.addView(scrollView,scroll_param);	
+				
+				//add buttons 
+				LinearLayout buttons_container = new LinearLayout(context) ; 
+				buttons_container.setOrientation(alertView.bottonTitles.size() <= 3 ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
+				for (int i = 0; i < alertView.bottonTitles.size(); i++) {
+					final int position = i ; 
+					TextView textView = new TextView(context) ; 
+					textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,txt_size_msg);
+					textView.setGravity(Gravity.CENTER);
+					textView.setText(alertView.bottonTitles.get(i));
+					textView.setClickable(true);
+					textView.setTextColor(Color.parseColor(btn_txt_color_hex));
+					LinearLayout.LayoutParams txt_params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, dimi_btn_hei) ; 
 					
-					if (index == 0)
-					{
-						builder.setPositiveButton(title, new DialogInterface.OnClickListener() 
-	            		{
-	            			@Override
-	    					public void onClick(DialogInterface dialog, int which)
-	    					{
-	            				context.runOnGLThread(new Runnable() 
-	            		    	{
-	            		            @Override
-	            		            public void run()
-	            		            {
-	            		            	CrossAppAlertView.onClick(index, key);
-	            		            }
-	            		    	});
-	    						// TODO Auto-generated method stub
-	    					}
-	            		});
+					
+					if (alertView.bottonTitles.size()==1) {
+						textView.setBackgroundResource(R.drawable.selector_crossapp_alert_02);
+					}else if (alertView.bottonTitles.size()==2) {
+						txt_params.weight = 1 ;
+						textView.setBackgroundResource(i == 0 ? R.drawable.selector_crossapp_alert_03: R.drawable.selector_crossapp_alert_04);
+					}else if (alertView.bottonTitles.size()==3) {
+						textView.setBackgroundResource(i==0 ? R.drawable.selector_crossapp_alert_03 : (i== 3 ? R.drawable.selector_crossapp_alert_04 : R.drawable.selector_crossapp_alert_01));
+						txt_params.weight = 1 ;
+					}else {
+						textView.setBackgroundResource((i==alertView.bottonTitles.size()-1) ? R.drawable.selector_crossapp_alert_02 : R.drawable.selector_crossapp_alert_01);
 					}
-					else if (index == 1)
-					{
-						builder.setNeutralButton(title, new DialogInterface.OnClickListener() 
-	            		{
-	            			@Override
-	    					public void onClick(DialogInterface dialog, int which)
-	    					{
-	            				context.runOnGLThread(new Runnable() 
-	            		    	{
-	            		            @Override
-	            		            public void run()
-	            		            {
-	            		            	CrossAppAlertView.onClick(index, key);
-	            		            }
-	            		    	});
-	    						// TODO Auto-generated metho
-	    					}
-	            		});
-					}
-					else if (index == 2)
-					{
-						builder.setNegativeButton(title, new DialogInterface.OnClickListener() 
-	            		{
-	            			@Override
-	    					public void onClick(DialogInterface dialog, int which)
-	    					{
-	            				context.runOnGLThread(new Runnable() 
-	            		    	{
-	            		            @Override
-	            		            public void run()
-	            		            {
-	            		            	CrossAppAlertView.onClick(index, key);
-	            		            }
-	            		    	});
-	    						// TODO Auto-generated method stub
-	    					}
-	            		});
-					}
+					buttons_container.addView(textView, txt_params);
+					
+					textView.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();  
+							dict.remove(key) ; 
+							CrossAppAlertView.onClick(position, key);
+						}
+					});
+					
 				}
-        		builder.create().show();
-            }
-        });
+				scrollView.addView(buttons_container); 
+				
+				dialog.setContentView(container);
+				dialog.show(); 
+				
+			}
+		});
+		
 	}
+	
 
 	public static void showEditTextDialog(final String pTitle, final String pContent, final int pInputMode, final int pInputFlag, final int pReturnType, final int pMaxLength) 
 	{

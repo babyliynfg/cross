@@ -100,6 +100,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		
 		s_pActivity = this;
 
     	CrossAppVolumeControl.setContext(s_pActivity);
@@ -109,6 +110,8 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		CrossAppHelper.init(this, this);
 
 		CrossAppNetWorkManager.setContext(this);
+		
+		CrossAppAlertView.checkAliveAlertView();
 		
 		new CrossAppDevice(this) {};
 		
@@ -339,7 +342,7 @@ public void init()
     	  }
     	  return result;
     }
-	
+	/**
 	public void onConfigurationChanged(Configuration newConfiguration)
 	{
 		super.onConfigurationChanged(newConfiguration);
@@ -369,17 +372,12 @@ public void init()
             	CrossAppRenderer.nativeChanged(screenWidth, screenHeight);
             	CrossAppRenderer.nativeChangedOrientation(orientation);
          		
-//            	s_pActivity.runOnUiThread(new Runnable() 
-//             	{
-//                     @Override
-//                     public void run()
-//                     {
-//                 		//mWebViewHelper.setAllWebviews(mWebViewHelper.getAllWebviews());
-//                     }
-//             	});
             }
         });  
-	}
+        
+        CrossAppAlertView.checkAliveAlertView();
+        
+	}**/
 	
    private final static boolean isAndroidEmulator() {
 	   
