@@ -2680,41 +2680,6 @@ static bool js_crossapp_CADownloadManager_setDownloadManagerDelegate(JSContext *
     
     JS_ReportError(cx, "js_crossapp_CADownloadManager_setDownloadManagerDelegate : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
-
-//
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    CrossApp::CADownloadManager * cobj = (CrossApp::CADownloadManager *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
-//    if (argc == 1)
-//    {
-//        JSB_DownloadManagerDelegate* pNativeSource = new (std::nothrow) JSB_DownloadManagerDelegate();
-//        JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
-//        pNativeSource->setJSDataSource(jsdata);
-//        
-//        JS_SetProperty(cx, obj, "m_pDelegate", args.get(0));
-//        
-//        CAMap<std::string,CAObject*>* userDict = static_cast<CAMap<std::string,CAObject*>*>(cobj->getUserObject());
-//        if (NULL == userDict)
-//        {
-//            userDict = new (std::nothrow) CAMap<std::string,CAObject*>();
-//            cobj->setUserObject(userDict);
-//            userDict->release();
-//        }
-//        
-//        userDict->insert(KEY_DOWNLOAD_MANAGER_DELEGATE,pNativeSource);
-//        
-//        cobj->setDownloadManagerDelegate(pNativeSource);
-//        
-//        pNativeSource->release();
-//        
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
 }
 
 
@@ -2726,20 +2691,7 @@ void register_all_crossapp_delegates_manual(JSContext* cx, JS::HandleObject glob
     JS::RootedObject tmpObj(cx);
     get_or_create_js_obj(cx, global, "ca", &ccObj);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
-//
-//    tmpObj.set(jsb_cocos2d_extension_AssetsManagerEx_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    tmpObj.set(jsb_cocos2d_extension_Manifest_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    
-//    JS_GetProperty(cx, ccObj, "EventListenerAssetsManager", &tmpVal);
-//    tmpObj.set(tmpVal.toObjectOrNull());
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_extension_EventListenerAssetsManagerEx_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-//    tmpObj.set(jsb_cocos2d_extension_EventListenerAssetsManagerEx_prototype);
-//    JS_DefineFunction(cx, tmpObj, "init", js_cocos2dx_extension_EventListenerAssetsManagerEx_init, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    
+
     tmpObj.set(jsb_CrossApp_CAScrollView_prototype);
     JS_DefineFunction(cx, tmpObj, "setScrollViewDelegate", js_crossapp_CAScrollView_setScrollViewDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     tmpObj.set(jsb_CAPageView_prototype);

@@ -1,10 +1,4 @@
-//
-//  jsb_websocket.hpp
-//  HelloJavacript
-//
-//  Created by zhanglei on 17/4/10.
-//
-//
+
 
 #ifndef jsb_websocket_hpp
 #define jsb_websocket_hpp

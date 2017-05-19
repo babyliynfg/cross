@@ -32,7 +32,7 @@ public:
     
     CREATE_FUNC(CAMotionManager);
     
-    void startGyroscope(const std::function<void(const CAMotionManager::Date&)>& callback);
+    void startGyroscope(const CAMotionManager::Callback& callback);
     
     void setGyroInterval(float interval);
     

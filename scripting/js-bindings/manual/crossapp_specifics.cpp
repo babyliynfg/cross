@@ -4,7 +4,7 @@
 #include <typeinfo>
 #include "js_bindings_config.h"
 #include "jsb_crossapp_auto.hpp"
-
+#include "jsapi.h"
 
 using namespace CrossApp;
 
@@ -894,225 +894,7 @@ void JSKeypadDelegate::keyMenuClicked() {
      ScriptingCore::getInstance()->executeCustomKeyMenuClicked(_obj.ref());
 }
 
-bool js_crossapp_CASlider_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CASlider* cobj = (CrossApp::CASlider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASlider_addTarget : Invalid Native Object");
-    if (argc == 2) {
-        
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsvalue(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASlider_addTarget : Error processing arguments");
-        
-        auto function = [&jsobj,&jsvalue](float value)
-        {
-            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-            
-            JSContext* jscontext = ScriptingCore::getInstance()->getGlobalContext();
-            JS::RootedValue outval(jscontext);
-            jsval jsret[1];
-            jsret[0] = int32_to_jsval(jscontext,int(value));
-            JS::RootedValue callback(jscontext, jsvalue.get());
-            
-            if(!callback.isNullOrUndefined()) {
-                JS::RootedObject thisObj(jscontext, jsobj.get().toObjectOrNull());
-                JS_CallFunctionValue(jscontext,thisObj,callback, JS::HandleValueArray::fromMarkedLocation(1, jsret), &outval);
-            }
-        };
-        cobj->setTarget(function);
-        
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_crossapp_CASlider_addTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-
-bool js_crossapp_CAStepper_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAStepper* cobj = (CrossApp::CAStepper *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAStepper_addTarget : Invalid Native Object");
-    if (argc == 2) {
-        
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsval(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAStepper_addTarget : Error processing arguments");
-
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_crossapp_CAStepper_addTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-
-bool js_crossapp_CASwitch_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CASwitch* cobj = (CrossApp::CASwitch *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASwitch_addTarget : Invalid Native Object");
-    if (argc == 2) {
-        
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsval(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASwitch_addTarget : Error processing arguments");
-
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_crossapp_CASwitch_addTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-
-bool js_crossapp_CAPageControl_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPageControl* cobj = (CrossApp::CAPageControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageControl_addTarget : Invalid Native Object");
-    if (argc == 2) {
-        
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsval(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPageControl_addTarget : Error processing arguments");
-
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_crossapp_CAPageControl_addTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-
-bool js_crossapp_CASegmentedControl_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_addTarget : Invalid Native Object");
-    if (argc == 2) {
-        
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsval(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_addTarget : Error processing arguments");
-
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_addTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-
-
-bool js_crossapp_CABarButtonItem_setTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CABarButtonItem* cobj = (CrossApp::CABarButtonItem *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CABarButtonItem_setTarget : Invalid Native Object");
-    
-    if (argc == 2) {
-        
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsval(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CABarButtonItem_setTarget : Error processing arguments");
-
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_crossapp_CABarButtonItem_setTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-    
-}
-
-bool js_crossapp_CAViewAnimation_setAnimationWillStartSelector_2(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 2) {
-        JS::RootedValue jsobj(cx, args.get(0));
-        
-        JS::RootedValue jsval(cx, args.get(1));
-        
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAViewAnimation_setAnimationWillStartSelector_2 : Error processing arguments");
-
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAViewAnimation_setAnimationWillStartSelector_2 : wrong number of arguments");
-    return false;
-}
-
-bool js_crossapp_CAScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    TEST_NATIVE_OBJECT(cx, cobj)
-    
-    if (argc == 1) {
-        do {
-            JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
-            
-            CrossApp::CAVector<CAObject*> *arr = JSScheduleWrapper::getTargetForJSObject(tmpObj);
-            // If there aren't any targets, just return true.
-            // Otherwise, the for loop will break immediately.
-            // It will lead to logic errors.
-            // For details to reproduce it, please refer to SchedulerTest/SchedulerUpdate.
-            if(! arr) return true;
-            
-            JSScheduleWrapper* wrapper = NULL;
-            for(ssize_t i = 0; i < arr->size(); ++i) {
-                wrapper = (JSScheduleWrapper*)arr->at(i);
-                if(wrapper) {
-                    cobj->unscheduleAllForTarget(wrapper);
-                }
-            }
-            JSScheduleWrapper::removeAllTargetsForJSObject(tmpObj);
-            
-        } while (0);
-        
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-
-bool js_CAScheduler_scheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_CAScheduler_scheduleForTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc >= 2) {
         bool ok = true;
@@ -1121,7 +903,6 @@ bool js_CAScheduler_scheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsva
         JS::RootedObject obj(cx);
         obj = args.thisv().toObjectOrNull();
         js_proxy_t *proxy = jsb_get_js_proxy(obj);
-        CrossApp::CAScheduler *sched = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
         
         JSScheduleWrapper *tmpCObj = NULL;
         
@@ -1375,28 +1156,11 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj.set(jsb_CrossApp_CAScheduler_prototype);
     JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "schedule", js_CAScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "scheduleCallbackForTarget", js_CAScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "schedule", js_CAScheduler_scheduleForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "scheduleCallbackForTarget", js_CAScheduler_scheduleForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "unschedule", js_CAScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "unscheduleCallbackForTarget", js_CAScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleAllForTarget", js_crossapp_CAScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    tmpObj.set(jsb_CrossApp_CAButton_prototype);
-    tmpObj.set(jsb_CrossApp_CASlider_prototype);
-    JS_DefineFunction(cx, tmpObj, "addTarget", js_crossapp_CASlider_addTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    tmpObj.set(jsb_CrossApp_CAStepper_prototype);
-    JS_DefineFunction(cx, tmpObj, "addTarget", js_crossapp_CAStepper_addTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    tmpObj.set(jsb_CrossApp_CASwitch_prototype);
-    JS_DefineFunction(cx, tmpObj, "addTarget", js_crossapp_CASwitch_addTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    tmpObj.set(jsb_CrossApp_CAPageControl_prototype);
-    JS_DefineFunction(cx, tmpObj, "addTarget", js_crossapp_CAPageControl_addTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    tmpObj.set(jsb_CrossApp_CASegmentedControl_prototype);
-    JS_DefineFunction(cx, tmpObj, "addTarget", js_crossapp_CASegmentedControl_addTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    tmpObj.set(jsb_CrossApp_CAAlertView_prototype);
-    tmpObj.set(jsb_CrossApp_CABarButtonItem_prototype);
-    JS_DefineFunction(cx, tmpObj, "setTarget", js_crossapp_CABarButtonItem_setTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_GetProperty(cx, ccObj, "CAViewAnimation", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "setAnimationWillStartSelector_2", js_crossapp_CAViewAnimation_setAnimationWillStartSelector_2, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ccObj, "addTouchView", js_crossapp_JSTouchView_addTouchView, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ccObj, "removeTouchView", js_crossapp_JSTouchView_removeTouchView, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
@@ -1409,20 +1173,132 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "log", js_console_log, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    
-#if CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS
-    tmpObj.set(jsb_cocos2d_Scene_prototype);
-    JS_DefineFunction(cx, tmpObj, "setPhysics3DDebugCamera", js_crossapp_Scene_setPhysics3DDebugCamera, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "initWithPhysics", js_crossapp_Scene_initWithPhysics, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "getPhysics3DWorld", js_crossapp_Scene_getPhysics3DWorld, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-#endif //CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS
-
-#if CC_USE_NAVMESH
-	tmpObj.set(jsb_cocos2d_Scene_prototype);
-	JS_DefineFunction(cx, tmpObj, "getNavMesh", js_crossapp_Scene_getNavMesh, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, tmpObj, "setNavMeshDebugCamera", js_crossapp_Scene_setNavMeshDebugCamera, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, tmpObj, "setNavMesh", js_crossapp_Scene_setNavMesh, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-#endif //CC_USE_NAVMESH
 }
 
+void js_add_object_reference(JS::HandleValue owner, JS::HandleValue target)
+{
+    if (target.isPrimitive())
+    {
+        return;
+    }
+    
+    ScriptingCore *engine = ScriptingCore::getInstance();
+    JSContext *cx = engine->getGlobalContext();
+    JS::RootedObject global(cx, engine->getGlobalObject());
+    JS::RootedObject jsbObj(cx);
+    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
+    if (jsbVal.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    JS::RootedValue retval(cx);
+    jsval valArr[2];
+    valArr[0] = owner;
+    valArr[1] = target;
+    
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+    engine->executeFunctionWithOwner(jsbVal, "registerNativeRef", args, &retval);
+}
+void js_remove_object_reference(JS::HandleValue owner, JS::HandleValue target)
+{
+    if (target.isPrimitive())
+    {
+        return;
+    }
+    ScriptingCore *engine = ScriptingCore::getInstance();
+    JSContext *cx = engine->getGlobalContext();
+    JS::RootedObject ownerObj(cx, owner.toObjectOrNull());
+    JS::RootedObject targetObj(cx, target.toObjectOrNull());
+    js_proxy_t *pOwner = jsb_get_js_proxy(ownerObj);
+    js_proxy_t *pTarget = jsb_get_js_proxy(targetObj);
+    if (!pOwner || !pTarget)
+    {
+        return;
+    }
+    
+    JS::RootedObject global(cx, engine->getGlobalObject());
+    JS::RootedObject jsbObj(cx);
+    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
+    if (jsbVal.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    JS::RootedValue retval(cx);
+    jsval valArr[2];
+    valArr[0] = owner;
+    valArr[1] = target;
+    
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+    engine->executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
+}
+void js_add_object_root(JS::HandleValue target)
+{
+    if (target.isPrimitive())
+    {
+        return;
+    }
+    
+    ScriptingCore *engine = ScriptingCore::getInstance();
+    JSContext *cx = engine->getGlobalContext();
+    JS::RootedObject global(cx, engine->getGlobalObject());
+    JS::RootedObject jsbObj(cx);
+    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
+    if (jsbVal.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    JS::RootedObject root(cx);
+    get_or_create_js_obj(cx, jsbObj, "jsb._root", &root);
+    JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
+    
+    JS::RootedValue retval(cx);
+    jsval valArr[2];
+    valArr[0] = valRoot;
+    valArr[1] = target;
+    
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+    engine->executeFunctionWithOwner(jsbVal, "registerNativeRef", args, &retval);
+}
+void js_remove_object_root(JS::HandleValue target)
+{
+    if (target.isPrimitive())
+    {
+        return;
+    }
+    ScriptingCore *engine = ScriptingCore::getInstance();
+    JSContext *cx = engine->getGlobalContext();
+    JS::RootedObject targetObj(cx, target.toObjectOrNull());
+    js_proxy_t *pTarget = jsb_get_js_proxy(targetObj);
+    if (!pTarget)
+    {
+        return;
+    }
+    
+    JS::RootedObject global(cx, engine->getGlobalObject());
+    JS::RootedObject jsbObj(cx);
+    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
+    if (jsbVal.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    JS::RootedObject root(cx);
+    get_or_create_js_obj(cx, jsbObj, "_root", &root);
+    JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
+    
+    JS::RootedValue retval(cx);
+    jsval valArr[2];
+    valArr[0] = valRoot;
+    valArr[1] = target;
+    
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+    engine->executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
+}
 

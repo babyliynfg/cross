@@ -21,8 +21,6 @@ struct lws_protocols;
 
 NS_CC_BEGIN
 
-namespace network {
-
 class WsThreadHelper;
 
 /**
@@ -214,8 +212,6 @@ private:
     int _SSLConnection;
     struct lws_protocols* _wsProtocols;
 };
-
-}
 
 NS_CC_END
 

@@ -15,7 +15,7 @@
 #include "spidermonkey_specifics.h"
 
 
-using namespace CrossApp::network;
+using namespace CrossApp;
 
 /*
  [Constructor(in DOMString url, in optional DOMString protocols)]
@@ -188,14 +188,14 @@ private:
     mozilla::Maybe<JS::PersistentRootedObject> _JSDelegate;
 };
 
-JSClass  *js_cocos2dx_websocket_class;
-JSObject *js_cocos2dx_websocket_prototype;
+JSClass  *js_crossapp_websocket_class;
+JSObject *js_crossapp_websocket_prototype;
 
-void js_cocos2dx_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_crossapp_WebSocket_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (WebSocket)", obj);
 }
 
-bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs argv = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, argv.thisv().toObjectOrNull());
@@ -254,7 +254,7 @@ bool js_cocos2dx_extension_WebSocket_send(JSContext *cx, uint32_t argc, jsval *v
     return true;
 }
 
-bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
+bool js_crossapp_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *vp){
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
@@ -270,7 +270,7 @@ bool js_cocos2dx_extension_WebSocket_close(JSContext *cx, uint32_t argc, jsval *
     return false;
 }
 
-bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     
@@ -283,9 +283,9 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
-        JS::RootedObject proto(cx, js_cocos2dx_websocket_prototype);
-        JS::RootedObject obj(cx, JS_NewObject(cx, js_cocos2dx_websocket_class, proto, JS::NullPtr()));
-        //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_cocos2dx_websocket_class, args));
+        JS::RootedObject proto(cx, js_crossapp_websocket_prototype);
+        JS::RootedObject obj(cx, JS_NewObject(cx, js_crossapp_websocket_class, proto, JS::NullPtr()));
+        //JS::RootedObject obj(cx, JS_NewObjectForConstructor(cx, js_crossapp_websocket_class, args));
         
         WebSocket* cobj = nullptr;
         if (argc == 2)
@@ -355,7 +355,7 @@ bool js_cocos2dx_extension_WebSocket_constructor(JSContext *cx, uint32_t argc, j
     return false;
 }
 
-static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_crossapp_extension_WebSocket_get_readyState(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject jsobj(cx, args.thisv().toObjectOrNull());
@@ -374,26 +374,26 @@ static bool js_cocos2dx_extension_WebSocket_get_readyState(JSContext *cx, uint32
 
 void register_jsb_websocket(JSContext *cx, JS::HandleObject global)
 {
-    js_cocos2dx_websocket_class = (JSClass *)calloc(1, sizeof(JSClass));
-    js_cocos2dx_websocket_class->name = "WebSocket";
-    js_cocos2dx_websocket_class->addProperty = JS_PropertyStub;
-    js_cocos2dx_websocket_class->delProperty = JS_DeletePropertyStub;
-    js_cocos2dx_websocket_class->getProperty = JS_PropertyStub;
-    js_cocos2dx_websocket_class->setProperty = JS_StrictPropertyStub;
-    js_cocos2dx_websocket_class->enumerate = JS_EnumerateStub;
-    js_cocos2dx_websocket_class->resolve = JS_ResolveStub;
-    js_cocos2dx_websocket_class->convert = JS_ConvertStub;
-    js_cocos2dx_websocket_class->finalize = js_cocos2dx_WebSocket_finalize;
-    js_cocos2dx_websocket_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+    js_crossapp_websocket_class = (JSClass *)calloc(1, sizeof(JSClass));
+    js_crossapp_websocket_class->name = "WebSocket";
+    js_crossapp_websocket_class->addProperty = JS_PropertyStub;
+    js_crossapp_websocket_class->delProperty = JS_DeletePropertyStub;
+    js_crossapp_websocket_class->getProperty = JS_PropertyStub;
+    js_crossapp_websocket_class->setProperty = JS_StrictPropertyStub;
+    js_crossapp_websocket_class->enumerate = JS_EnumerateStub;
+    js_crossapp_websocket_class->resolve = JS_ResolveStub;
+    js_crossapp_websocket_class->convert = JS_ConvertStub;
+    js_crossapp_websocket_class->finalize = js_crossapp_WebSocket_finalize;
+    js_crossapp_websocket_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
     
     static JSPropertySpec properties[] = {
-        JS_PSG("readyState", js_cocos2dx_extension_WebSocket_get_readyState, JSPROP_ENUMERATE | JSPROP_PERMANENT),
+        JS_PSG("readyState", js_crossapp_extension_WebSocket_get_readyState, JSPROP_ENUMERATE | JSPROP_PERMANENT),
         JS_PS_END
     };
     
     static JSFunctionSpec funcs[] = {
-        JS_FN("send",js_cocos2dx_extension_WebSocket_send, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("close",js_cocos2dx_extension_WebSocket_close, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("send",js_crossapp_extension_WebSocket_send, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("close",js_crossapp_extension_WebSocket_close, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
     
@@ -401,11 +401,11 @@ void register_jsb_websocket(JSContext *cx, JS::HandleObject global)
         JS_FS_END
     };
     
-    js_cocos2dx_websocket_prototype = JS_InitClass(
+    js_crossapp_websocket_prototype = JS_InitClass(
                                                    cx, global,
                                                    JS::NullPtr(),
-                                                   js_cocos2dx_websocket_class,
-                                                   js_cocos2dx_extension_WebSocket_constructor, 0, // constructor
+                                                   js_crossapp_websocket_class,
+                                                   js_crossapp_extension_WebSocket_constructor, 0, // constructor
                                                    properties,
                                                    funcs,
                                                    NULL, // no static properties

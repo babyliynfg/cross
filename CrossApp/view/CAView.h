@@ -46,15 +46,6 @@ class CGSprite;
 class CAApplication;
 class CAThemeManager;
 
-//script
-enum {
-    kNodeOnEnter,
-    kNodeOnExit,
-    kNodeOnEnterTransitionDidFinish,
-    kNodeOnExitTransitionDidStart,
-    kNodeOnCleanup
-};
-
 class CC_DLL CAView
 :public CAResponder
 ,public CARGBAProtocol

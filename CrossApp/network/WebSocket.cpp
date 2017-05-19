@@ -64,8 +64,6 @@ static void printWebSocketLog(int level, const char *line)
 
 NS_CC_BEGIN
 
-namespace network {
-
 class WsMessage
 {
 public:
@@ -922,8 +920,6 @@ int WebSocket::onSocketCallback(struct lws *wsi,
     }
 
     return 0;
-}
-
 }
 
 NS_CC_END

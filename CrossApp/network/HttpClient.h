@@ -1,79 +1,183 @@
 
 
-#ifndef __CAHttpRequest_H__
-#define __CAHttpRequest_H__
+#ifndef __CAHttpClient_H__
+#define __CAHttpClient_H__
 
-#include "basics/CAObject.h"
+#include <thread>
+#include <condition_variable>
 #include "basics/CASTLContainer.h"
-#include "HttpRequest.h"
-#include "HttpResponse.h"
-#include <queue>
-#include <pthread.h>
-#include <errno.h>
-
+#include "basics/CAScheduler.h"
+#include "network/HttpRequest.h"
+#include "network/HttpResponse.h"
+#include "network/HttpCookie.h"
 
 NS_CC_BEGIN
 
-class CC_DLL CAHttpClient : public CAObject
+class CC_DLL CAHttpClient
 {
 public:
-
-    static CAHttpClient *getInstance(ssize_t thread = 0);
+    /**
+     * The buffer size of _responseMessage
+     */
+    static const int RESPONSE_BUFFER_SIZE = 256;
     
-    static void destroyInstance(ssize_t thread = 0);
-
+    /**
+     * Get instance of CAHttpClient.
+     *
+     * @return the instance of CAHttpClient.
+     */
+    static CAHttpClient *getInstance(ssize_t thread_id);
+    
+    /**
+     * Release the instance of CAHttpClient.
+     */
+    static void destroyInstance(ssize_t thread_id);
+    
+    /**
+     * Release the instance of All CAHttpClient.
+     */
     static void destroyAllInstance();
     
+    /**
+     * Enable cookie support.
+     *
+     * @param cookieFile the filepath of cookie file.
+     */
+    void enableCookies(const char* cookieFile);
+    
+    /**
+     * Get the cookie filename
+     *
+     * @return the cookie filename
+     */
+    const std::string& getCookieFilename();
+    
+    /**
+     * Set root certificate path for SSL verification.
+     *
+     * @param caFile a full path of root certificate.if it is empty, SSL verification is disabled.
+     */
+    void setSSLVerification(const std::string& caFile);
+    
+    /**
+     * Get the ssl CA filename
+     *
+     * @return the ssl CA filename
+     */
+    const std::string& getSSLVerification();
+    
+    /**
+     * Add a get request to task queue
+     *
+     * @param request a CAHttpRequest object, which includes url, response callback etc.
+     please make sure request->_requestData is clear before calling "send" here.
+     */
     void send(CAHttpRequest* request);
-
-    inline void setTimeoutForConnect(int value) {_timeoutForConnect = value;};
-
-    inline int getTimeoutForConnect() {return _timeoutForConnect;}
-
-    inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
-
-    inline int getTimeoutForRead() {return _timeoutForRead;};
     
-    inline void setSSLVerification(const std::string& str) {_sslCaFilename = str;}
+    /**
+     * Immediate send a request
+     *
+     * @param request a CAHttpRequest object, which includes url, response callback etc.
+     please make sure request->_requestData is clear before calling "sendImmediate" here.
+     */
+    void sendImmediate(CAHttpRequest* request);
     
-    inline unsigned long getRequestCount() {return _asyncRequestCount;}
+    /**
+     * Set the timeout value for connecting.
+     *
+     * @param value the timeout value for connecting.
+     */
+    void setTimeoutForConnect(int value);
     
+    /**
+     * Get the timeout value for connecting.
+     *
+     * @return int the timeout value for connecting.
+     */
+    int getTimeoutForConnect();
+    
+    /**
+     * Set the timeout value for reading.
+     *
+     * @param value the timeout value for reading.
+     */
+    void setTimeoutForRead(int value);
+    
+    /**
+     * Get the timeout value for reading.
+     *
+     * @return int the timeout value for reading.
+     */
+    int getTimeoutForRead();
+    
+    CAHttpCookie* getCookie() const {return _cookie; }
+    
+    size_t getRequestCount() {return _requestQueue.size();}
+    
+//    std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
+//    
+//    std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
 private:
-    
-    CAHttpClient(ssize_t thread);
-    
+    CAHttpClient(ssize_t thread_id);
     virtual ~CAHttpClient();
+    bool init();
     
-    bool init(void);
-    
+    /**
+     * Init pthread mutex, semaphore, and create new thread for http requests
+     * @return bool
+     */
     bool lazyInitThreadSemphore();
+    void networkThread();
+    void networkThreadAlone(CAHttpRequest* request, CAHttpResponse* response);
+    /** Poll function called from main thread to dispatch callbacks when http requests finished **/
+    void dispatchResponseCallbacks();
     
-    void dispatchResponseCallbacks(float delta);
+    void processResponse(CAHttpResponse* response, char* responseMessage);
+    void increaseThreadCount();
+    void decreaseThreadCountAndMayDeleteThis();
     
 private:
+    ssize_t _thread_id;
+    
+    bool _isInited;
+    
     int _timeoutForConnect;
+    std::mutex _timeoutForConnectMutex;
+    
     int _timeoutForRead;
-    ssize_t _threadID;
-
-public:
-    unsigned long               _asyncRequestCount;
-    std::string                 _sslCaFilename;
-    pthread_t                   s_networkThread;
-    pthread_mutex_t             s_requestQueueMutex;
-    pthread_mutex_t             s_responseQueueMutex;
-    pthread_mutex_t             s_SleepMutex;
-    pthread_cond_t              s_SleepCondition;
-    bool                        need_quit;
-    char                        s_errorBuffer[256];
-    CADeque<CAHttpRequest*>     s_requestQueue;
-    CADeque<CAHttpResponse*>    s_responseQueue;
-
+    std::mutex _timeoutForReadMutex;
+    
+    int  _threadCount;
+    std::mutex _threadCountMutex;
+    
+    CAScheduler* _scheduler;
+    std::mutex _schedulerMutex;
+    
+    CAVector<CAHttpRequest*>  _requestQueue;
+    std::mutex _requestQueueMutex;
+    
+    CAVector<CAHttpResponse*> _responseQueue;
+    std::mutex _responseQueueMutex;
+    
+    std::string _cookieFilename;
+    std::mutex _cookieFileMutex;
+    
+    std::string _sslCaFilename;
+    std::mutex _sslCaFileMutex;
+    
+    CAHttpCookie* _cookie;
+    
+    std::condition_variable_any _sleepCondition;
+    
+    char _responseMessage[RESPONSE_BUFFER_SIZE];
+    
+    CAHttpRequest* _requestSentinel;
 };
 
-
-CC_DEPRECATED_ATTRIBUTE typedef CAHttpClient CCHttpClient;
-CC_DEPRECATED_ATTRIBUTE typedef CAHttpResponse CCHttpResponse;
-CC_DEPRECATED_ATTRIBUTE typedef CAHttpRequest CCHttpRequest;
 NS_CC_END
 
-#endif //__CAHttpRequest_H__
+// end group
+/// @}
+
+#endif //__CAHttpClient_H__
+

@@ -1,22 +1,25 @@
 
-
-#include "HttpClient.h"
+#include "network/HttpClient.h"
+#include <queue>
+#include <errno.h>
 #include <curl/curl.h>
-#define MAX_THREAD 32
-
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
-#include <unistd.h>
-#endif
-
-
+#include "basics/CAApplication.h"
+#include "platform/CAFileUtils.h"
+#include "support/ccUtils.h"
 
 NS_CC_BEGIN
 
-static std::map<ssize_t, CAHttpClient*> s_pHttpClientMaps;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+typedef int int32_t;
+#endif
+
+static std::map<ssize_t, CAHttpClient*> s_mHttpClient; // pointer to singleton
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
-static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 
+// Callback function used by libcurl for collect response data
+static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
     size_t sizes = size * nmemb;
@@ -28,6 +31,7 @@ static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
     return sizes;
 }
 
+// Callback function used by libcurl for collect header data
 static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream)
 {
     std::vector<char> *recvBuffer = (std::vector<char>*)stream;
@@ -41,181 +45,136 @@ static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream
 }
 
 
-static int processGetTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processPostTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processPutTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processDeleteTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processPostFileTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-//static int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
+static int processGetTask(CAHttpClient* client, CAHttpRequest* request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char* errorBuffer);
+static int processPostTask(CAHttpClient* client, CAHttpRequest* request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char* errorBuffer);
+static int processPutTask(CAHttpClient* client,  CAHttpRequest* request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char* errorBuffer);
+static int processDeleteTask(CAHttpClient* client,  CAHttpRequest* request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char* errorBuffer);
+static int processPostFileTask(CAHttpClient* client,  CAHttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char* errorBuffer);
+// int processDownloadTask(CAHttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
-
-static void* networkThread(void *data)
+// Worker thread
+void CAHttpClient::networkThread()
 {
-    CAHttpClient* httpClient = (CAHttpClient*)data;
+    increaseThreadCount();
     
-    CAHttpRequest *request = nullptr;
-    
-    while (true) 
+    while (true)
     {
-        if (httpClient->need_quit)
+        CAHttpRequest *request;
+        
+        // step 1: send http request if the requestQueue isn't empty
         {
+            std::lock_guard<std::mutex> lock(_requestQueueMutex);
+            while (_requestQueue.empty())
+            {
+                _sleepCondition.wait(_requestQueueMutex);
+            }
+            request = _requestQueue.at(0);
+            _requestQueue.erase(0);
+        }
+        
+        if (request == _requestSentinel) {
             break;
         }
         
-        request = nullptr;
+        // step 2: libcurl sync access
         
-        pthread_mutex_lock(&httpClient->s_requestQueueMutex);
-        if (!httpClient->s_requestQueue.empty())
+        // Create a CAHttpResponse object, the default setting is http access failed
+        CAHttpResponse *response = new (std::nothrow) CAHttpResponse(request);
+        
+        processResponse(response, _responseMessage);
+        
+        
+        // add response packet into queue
+        _responseQueueMutex.lock();
+        _responseQueue.pushBack(response);
+        _responseQueueMutex.unlock();
+        
+        _schedulerMutex.lock();
+        if (nullptr != _scheduler)
         {
-            request = httpClient->s_requestQueue.front();
-            httpClient->s_requestQueue.popFront();
+            _scheduler->performFunctionInUIThread([=]
+            {
+                this->dispatchResponseCallbacks();
+            });
         }
-        pthread_mutex_unlock(&httpClient->s_requestQueueMutex);
-        
-        if (nullptr == request)
-        {
-        	pthread_cond_wait(&httpClient->s_SleepCondition, &httpClient->s_SleepMutex);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-			Sleep(100);
-#else
-			usleep(100000);
-#endif
-            continue;
-        }
-        
-       
-        CAHttpResponse *response = new CAHttpResponse(request);
-        
-        
-        int32_t responseCode = -1;
-        int retValue = 0;
-
-        switch (request->getRequestType())
-        {
-            case CAHttpRequest::Type::Get: // HTTP GET
-                retValue = processGetTask(request,
-                                          writeData, 
-                                          response->getResponseData(), 
-                                          &responseCode,
-                                          writeHeaderData,
-                                          response->getResponseHeader());
-                break;
-            
-            case CAHttpRequest::Type::Post: // HTTP POST
-                retValue = processPostTask(request,
-                                           writeData, 
-                                           response->getResponseData(), 
-                                           &responseCode,
-                                           writeHeaderData,
-                                           response->getResponseHeader());
-                break;
-
-            case CAHttpRequest::Type::Put:
-                retValue = processPutTask(request,
-                                          writeData,
-                                          response->getResponseData(),
-                                          &responseCode,
-                                          writeHeaderData,
-                                          response->getResponseHeader());
-                break;
-
-            case CAHttpRequest::Type::Delete:
-                retValue = processDeleteTask(request,
-                                             writeData,
-                                             response->getResponseData(),
-                                             &responseCode,
-                                             writeHeaderData,
-                                             response->getResponseHeader());
-                break;
-
-			case CAHttpRequest::Type::PostFile:
-				retValue = processPostFileTask(request,
-											writeData,
-											response->getResponseData(),
-											&responseCode,
-											writeHeaderData,
-											response->getResponseHeader());
-				break;
-
-            default:
-                CCAssert(true, "CAHttpClient: unkown request type, only GET and POSt are supported");
-                break;
-        }
-
-        response->setResponseCode(responseCode);
-        if (retValue != 0)
-        {
-            response->setSucceed(false);
-            response->setErrorBuffer(httpClient->s_errorBuffer);
-        }
-        else
-        {
-            response->setSucceed(true);
-        }
-
-        
-        pthread_mutex_lock(&httpClient->s_responseQueueMutex);
-        httpClient->s_responseQueue.pushBack(response);
-        pthread_mutex_unlock(&httpClient->s_responseQueueMutex);
-        
-        CAScheduler::getScheduler()->resumeTarget(httpClient);
+        _schedulerMutex.unlock();
     }
     
-    pthread_mutex_lock(&httpClient->s_requestQueueMutex);
-    httpClient->s_requestQueue.clear();
-    pthread_mutex_unlock(&httpClient->s_requestQueueMutex);
-    httpClient->_asyncRequestCount -= httpClient->s_requestQueue.size();
+    // cleanup: if worker thread received quit signal, clean up un-completed request queue
+    _requestQueueMutex.lock();
+    _requestQueue.clear();
+    _requestQueueMutex.unlock();
     
-    if (!httpClient->s_requestQueue.empty())
-    {
-        
-        pthread_mutex_destroy(&httpClient->s_requestQueueMutex);
-        pthread_mutex_destroy(&httpClient->s_responseQueueMutex);
-        
-        pthread_mutex_destroy(&httpClient->s_SleepMutex);
-        pthread_cond_destroy(&httpClient->s_SleepCondition);
-
-        httpClient->s_requestQueue.clear();
-        httpClient->s_responseQueue.clear();
-    }
-
-    pthread_exit(nullptr);
+    _responseQueueMutex.lock();
+    _responseQueue.clear();
+    _responseQueueMutex.unlock();
     
-    return 0;
+    decreaseThreadCountAndMayDeleteThis();
 }
 
-static bool configureCURL(CURL *handle, CAHttpClient* httpClient)
+// Worker thread
+void CAHttpClient::networkThreadAlone(CAHttpRequest* request, CAHttpResponse* response)
+{
+    increaseThreadCount();
+    
+    char responseMessage[RESPONSE_BUFFER_SIZE] = { 0 };
+    processResponse(response, responseMessage);
+    
+    _schedulerMutex.lock();
+    if (nullptr != _scheduler)
+    {
+        _scheduler->performFunctionInUIThread([this, response, request]{
+            const CAHttpRequest::Callback& callback = request->getCallback();
+
+            if (callback != nullptr)
+            {
+                callback(this, response);
+            }
+            response->release();
+            // do not release in other thread
+            request->release();
+        });
+    }
+    _schedulerMutex.unlock();
+    
+    decreaseThreadCountAndMayDeleteThis();
+}
+
+//Configure curl's timeout property
+static bool configureCURL(CAHttpClient* client, CURL* handle, char* errorBuffer)
 {
     if (!handle) {
         return false;
     }
     
     int32_t code;
-    code = curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, httpClient->s_errorBuffer);
+    code = curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, errorBuffer);
     if (code != CURLE_OK) {
         return false;
     }
-    code = curl_easy_setopt(handle, CURLOPT_TIMEOUT, CAHttpClient::getInstance()->getTimeoutForRead());
+    code = curl_easy_setopt(handle, CURLOPT_TIMEOUT, client->getTimeoutForRead());
     if (code != CURLE_OK) {
         return false;
     }
-    code = curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, CAHttpClient::getInstance()->getTimeoutForConnect());
+    code = curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, client->getTimeoutForConnect());
     if (code != CURLE_OK) {
         return false;
-    }
-    if (httpClient->_sslCaFilename.empty())
-    {
-        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
-        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
-    }
-    else
-    {
-        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1L);
-        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 2L);
-        curl_easy_setopt(handle, CURLOPT_CAINFO, httpClient->_sslCaFilename.c_str());
     }
     
+    std::string sslCaFilename = client->getSSLVerification();
+    if (sslCaFilename.empty()) {
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
+    } else {
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 2L);
+        curl_easy_setopt(handle, CURLOPT_CAINFO, sslCaFilename.c_str());
+    }
+    
+    // FIXED #3224: The subthread of CCCAHttpClient interrupts main thread if timeout comes.
+    // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL
     curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1L);
+    
     curl_easy_setopt(handle, CURLOPT_ACCEPT_ENCODING, "");
     
     return true;
@@ -223,290 +182,500 @@ static bool configureCURL(CURL *handle, CAHttpClient* httpClient)
 
 class CURLRaii
 {
-    CURL *m_curl;
-    
-    curl_slist *m_headers;
-    
+    /// Instance of CURL
+    CURL *_curl;
+    /// Keeps custom header data
+    curl_slist *_headers;
 public:
     CURLRaii()
-        : m_curl(curl_easy_init())
-        , m_headers(nullptr)
+    : _curl(curl_easy_init())
+    , _headers(nullptr)
     {
     }
-
+    
     ~CURLRaii()
     {
-        if (m_curl)
-            curl_easy_cleanup(m_curl);
-
-        if (m_headers)
-            curl_slist_free_all(m_headers);
+        if (_curl)
+            curl_easy_cleanup(_curl);
+        /* free the linked list for header data */
+        if (_headers)
+            curl_slist_free_all(_headers);
     }
-
+    
     template <class T>
     bool setOption(CURLoption option, T data)
     {
-        return CURLE_OK == curl_easy_setopt(m_curl, option, data);
+        return CURLE_OK == curl_easy_setopt(_curl, option, data);
     }
-
-
-    bool init(CAHttpRequest *request, write_callback callback, void *stream, write_callback headerCallback, void *headerStream)
+    
+    /**
+     * @brief Inits CURL instance for common usage
+     * @param request Null not allowed
+     * @param callback Response write callback
+     * @param stream Response write stream
+     */
+    bool init(CAHttpClient* client, CAHttpRequest* request, write_callback callback, void* stream, write_callback headerCallback, void* headerStream, char* errorBuffer)
     {
-        if (!m_curl)
+        if (!_curl)
             return false;
-        if (!configureCURL(m_curl, s_pHttpClientMaps[request->getThreadID()]))
+        if (!configureCURL(client, _curl, errorBuffer))
             return false;
+        
         /* get custom header data (if set) */
-       	std::vector<std::string> headers=request->getHeaders();
+        std::vector<std::string> headers=request->getHeaders();
         if(!headers.empty())
         {
             /* append custom headers one by one */
             for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
-                m_headers = curl_slist_append(m_headers,it->c_str());
+                _headers = curl_slist_append(_headers,it->c_str());
             /* set custom headers for curl */
-            if (!setOption(CURLOPT_HTTPHEADER, m_headers))
+            if (!setOption(CURLOPT_HTTPHEADER, _headers))
                 return false;
         }
-
-        return setOption(CURLOPT_URL, request->getUrl().c_str())
-                && setOption(CURLOPT_WRITEFUNCTION, callback)
-                && setOption(CURLOPT_WRITEDATA, stream)
-                && setOption(CURLOPT_HEADERFUNCTION, headerCallback)
-                && setOption(CURLOPT_HEADERDATA, headerStream);
+        std::string cookieFilename = client->getCookieFilename();
+        if (!cookieFilename.empty()) {
+            if (!setOption(CURLOPT_COOKIEFILE, cookieFilename.c_str())) {
+                return false;
+            }
+            if (!setOption(CURLOPT_COOKIEJAR, cookieFilename.c_str())) {
+                return false;
+            }
+        }
+        
+        return setOption(CURLOPT_URL, request->getUrl())
+        && setOption(CURLOPT_WRITEFUNCTION, callback)
+        && setOption(CURLOPT_WRITEDATA, stream)
+        && setOption(CURLOPT_HEADERFUNCTION, headerCallback)
+        && setOption(CURLOPT_HEADERDATA, headerStream);
         
     }
-
-    bool perform(int *responseCode)
+    
+    /// @param responseCode Null not allowed
+    bool perform(long *responseCode)
     {
-        if (CURLE_OK != curl_easy_perform(m_curl))
+        if (CURLE_OK != curl_easy_perform(_curl))
             return false;
-        CURLcode code = curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE, responseCode);
-        if (code != CURLE_OK || !(*responseCode >= 200 && *responseCode < 300))
+        CURLcode code = curl_easy_getinfo(_curl, CURLINFO_RESPONSE_CODE, responseCode);
+        if (code != CURLE_OK || !(*responseCode >= 200 && *responseCode < 300)) {
+            CCLOG("ERROR!!! Curl curl_easy_getinfo failed: %s", curl_easy_strerror(code));
             return false;
+        }
+        // Get some mor data.
         
         return true;
     }
 };
 
-static int processGetTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+//Process Get Request
+static int processGetTask(CAHttpClient* client, CAHttpRequest* request, write_callback callback, void* stream, long* responseCode, write_callback headerCallback, void* headerStream, char* errorBuffer)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
-            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
-            && curl.perform(responseCode);
+    bool ok = curl.init(client, request, callback, stream, headerCallback, headerStream, errorBuffer)
+    && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
+    && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
 
-static int processPostTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+//Process POST Request
+static int processPostTask(CAHttpClient* client, CAHttpRequest* request, write_callback callback, void* stream, long* responseCode, write_callback headerCallback, void* headerStream, char* errorBuffer)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
-            && curl.setOption(CURLOPT_POST, 1)
-            && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
-            && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
-            && curl.perform(responseCode);
+    bool ok = curl.init(client, request, callback, stream, headerCallback, headerStream, errorBuffer)
+    && curl.setOption(CURLOPT_POST, 1)
+    && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
+    && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
+    && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
 
-static int processPutTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+//Process PUT Request
+static int processPutTask(CAHttpClient* client, CAHttpRequest* request, write_callback callback, void* stream, long* responseCode, write_callback headerCallback, void* headerStream, char* errorBuffer)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
-            && curl.setOption(CURLOPT_CUSTOMREQUEST, "PUT")
-            && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
-            && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
-            && curl.perform(responseCode);
+    bool ok = curl.init(client, request, callback, stream, headerCallback, headerStream, errorBuffer)
+    && curl.setOption(CURLOPT_CUSTOMREQUEST, "PUT")
+    && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
+    && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
+    && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
 
-static int processDeleteTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+//Process DELETE Request
+static int processDeleteTask(CAHttpClient* client, CAHttpRequest* request, write_callback callback, void* stream, long* responseCode, write_callback headerCallback, void* headerStream, char* errorBuffer)
 {
     CURLRaii curl;
-    bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
-            && curl.setOption(CURLOPT_CUSTOMREQUEST, "DELETE")
-            && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
-            && curl.perform(responseCode);
+    bool ok = curl.init(client, request, callback, stream, headerCallback, headerStream, errorBuffer)
+    && curl.setOption(CURLOPT_CUSTOMREQUEST, "DELETE")
+    && curl.setOption(CURLOPT_FOLLOWLOCATION, true)
+    && curl.perform(responseCode);
     return ok ? 0 : 1;
 }
 
-static int processPostFileTask(CAHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+//Process POSTFILE Request
+static int processPostFileTask(CAHttpClient* client,  CAHttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char* errorBuffer)
 {
-	CURLRaii curl;
-	bool ok = curl.init(request, callback, stream, headerCallback, headerStream);
-	if (!ok)
-		return 1;
-
-	curl_httppost* pFormPost = nullptr;
-	curl_httppost* pLastElem = nullptr;
-
-	curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "filepath", CURLFORM_FILE, 
-		request->getFileNameToPost(), CURLFORM_CONTENTTYPE, "application/octet-stream", CURLFORM_END);
-
-	int requestDataSize = request->getRequestDataSize();
-	if (requestDataSize>0)
-	{
-		std::string strReq = request->getRequestData();
+    CURLRaii curl;
+    bool ok = curl.init(client, request, callback, stream, headerCallback, headerStream, errorBuffer);
+    if (!ok)
+        return 1;
+    
+    curl_httppost* pFormPost = NULL;
+    curl_httppost* pLastElem = NULL;
+    
+    curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "filepath", CURLFORM_FILE,
+                 request->getFileNameToPost(), CURLFORM_CONTENTTYPE, "application/octet-stream", CURLFORM_END);
+    
+    ssize_t requestDataSize = request->getRequestDataSize();
+    if (requestDataSize>0)
+    {
+        std::string strReq = request->getRequestData();
         strReq.resize(request->getRequestDataSize());
-		std::vector<std::string> vv = CrossApp::Parse2StrVector(strReq, "&");
-		for (int i = 0; i < vv.size(); i++)
-		{
-			std::vector<std::string> v = CrossApp::Parse2StrVector(vv[i], "=", true);
-			if (v.size() == 2)
-			{
-				curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, v[0].c_str(), CURLFORM_COPYCONTENTS, v[1].c_str(), CURLFORM_END);
-			}
-		}
-		curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "act", CURLFORM_COPYCONTENTS, "end", CURLFORM_END);
-	}
-	
-	ok = curl.setOption(CURLOPT_HTTPPOST, pFormPost)
-		&& curl.perform(responseCode);
-
-	if (pFormPost)
-	{
-		curl_formfree(pFormPost);
-		pFormPost = nullptr;
-	}
-	return ok ? 0 : 1;
-}
-
-
-CAHttpClient* CAHttpClient::getInstance(ssize_t thread)
-{
-    if (thread >= MAX_THREAD)
-    {
-        return nullptr;
+        std::vector<std::string> vv = CrossApp::Parse2StrVector(strReq, "&");
+        for (int i = 0; i < vv.size(); i++)
+        {
+            std::vector<std::string> v = CrossApp::Parse2StrVector(vv[i], "=", true);
+            if (v.size() == 2)
+            {
+                curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, v[0].c_str(), CURLFORM_COPYCONTENTS, v[1].c_str(), CURLFORM_END);
+            }
+        }
+        curl_formadd(&pFormPost, &pLastElem, CURLFORM_COPYNAME, "act", CURLFORM_COPYCONTENTS, "end", CURLFORM_END);
     }
     
-    if (s_pHttpClientMaps.find(thread) == s_pHttpClientMaps.end())
-    {
-        s_pHttpClientMaps.insert(std::make_pair(thread, new CAHttpClient(thread)));
-    }
+    ok = curl.setOption(CURLOPT_HTTPPOST, pFormPost)
+    && curl.perform(responseCode);
     
-    return s_pHttpClientMaps[thread];
+    if (pFormPost)
+    {
+        curl_formfree(pFormPost);
+        pFormPost = NULL;
+    }
+    return ok ? 0 : 1;
 }
 
-void CAHttpClient::destroyInstance(ssize_t thread)
+// CAHttpClient implementation
+CAHttpClient* CAHttpClient::getInstance(ssize_t thread_id)
 {
-    if (s_pHttpClientMaps.find(thread) != s_pHttpClientMaps.end())
+    if (s_mHttpClient.find(thread_id) == s_mHttpClient.end())
     {
-        CAScheduler::getScheduler()->unschedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), s_pHttpClientMaps[thread]);
-        CC_SAFE_DELETE(s_pHttpClientMaps[thread]);
-        s_pHttpClientMaps.erase(thread);
+        s_mHttpClient[thread_id] = new (std::nothrow) CAHttpClient(thread_id);
     }
+    
+    return s_mHttpClient.at(thread_id);
+}
+
+void CAHttpClient::destroyInstance(ssize_t thread_id)
+{
+    if (s_mHttpClient.find(thread_id) == s_mHttpClient.end())
+    {
+        CCLOG("CAHttpClient singleton is nullptr");
+        return;
+    }
+    
+    CCLOG("CAHttpClient::destroyInstance begin");
+    auto thiz = s_mHttpClient.at(thread_id);
+    s_mHttpClient.erase(thread_id);
+    
+    thiz->_scheduler->unscheduleAllForTarget(thiz);
+    thiz->_schedulerMutex.lock();
+    thiz->_scheduler = nullptr;
+    thiz->_schedulerMutex.unlock();
+    
+    thiz->_requestQueueMutex.lock();
+    thiz->_requestQueue.pushBack(thiz->_requestSentinel);
+    thiz->_requestQueueMutex.unlock();
+    
+    thiz->_sleepCondition.notify_one();
+    thiz->decreaseThreadCountAndMayDeleteThis();
+    
+    CCLOG("CAHttpClient::destroyInstance() finished!");
 }
 
 void CAHttpClient::destroyAllInstance()
 {
-    for (int i=0; i<MAX_THREAD; i++)
+    for (auto& var : s_mHttpClient)
     {
-        CAHttpClient::destroyInstance(i);
+        auto thiz = var.second;
+        
+        thiz->_scheduler->unscheduleAllForTarget(thiz);
+        thiz->_schedulerMutex.lock();
+        thiz->_scheduler = nullptr;
+        thiz->_schedulerMutex.unlock();
+        
+        thiz->_requestQueueMutex.lock();
+        thiz->_requestQueue.pushBack(thiz->_requestSentinel);
+        thiz->_requestQueueMutex.unlock();
+        
+        thiz->_sleepCondition.notify_one();
+        thiz->decreaseThreadCountAndMayDeleteThis();
+    }
+    s_mHttpClient.clear();
+}
+
+void CAHttpClient::enableCookies(const char* cookieFile)
+{
+    std::lock_guard<std::mutex> lock(_cookieFileMutex);
+    if (cookieFile)
+    {
+        _cookieFilename = std::string(cookieFile);
+    }
+    else
+    {
+        _cookieFilename = (FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
     }
 }
 
-CAHttpClient::CAHttpClient(ssize_t thread)
-: _timeoutForConnect(30)
-, _timeoutForRead(60)
-, _threadID(thread)
-, _asyncRequestCount(0)
-, need_quit(0)
-, s_networkThread(pthread_t())
-, s_requestQueueMutex(pthread_mutex_t())
-, s_responseQueueMutex(pthread_mutex_t())
-, s_SleepMutex(pthread_mutex_t())
-, s_SleepCondition(pthread_cond_t())
+void CAHttpClient::setSSLVerification(const std::string& caFile)
 {
-    CAScheduler::getScheduler()->schedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), this, 0);
-    CAScheduler::getScheduler()->pauseTarget(this);
-    lazyInitThreadSemphore();
+    std::lock_guard<std::mutex> lock(_sslCaFileMutex);
+    _sslCaFilename = caFile;
+}
+
+CAHttpClient::CAHttpClient(ssize_t thread_id)
+: _thread_id(thread_id)
+,_timeoutForConnect(30)
+, _timeoutForRead(60)
+, _isInited(false)
+, _threadCount(0)
+, _requestSentinel(new CAHttpRequest())
+, _cookie(nullptr)
+{
+    CCLOG("In the constructor of CAHttpClient!");
+    memset(_responseMessage, 0, RESPONSE_BUFFER_SIZE * sizeof(char));
+    _scheduler = CAApplication::getApplication()->getScheduler();
+    increaseThreadCount();
 }
 
 CAHttpClient::~CAHttpClient()
 {
-    need_quit = true;
-    
-    if (!s_requestQueue.empty())
-    {
-        pthread_cond_signal(&s_SleepCondition);
-    }
+    CC_SAFE_RELEASE(_requestSentinel);
+    CCLOG("CAHttpClient destructor");
 }
 
+//Lazy create semaphore & mutex & thread
 bool CAHttpClient::lazyInitThreadSemphore()
 {
-    if (!s_requestQueue.empty())
+    if (_isInited)
     {
         return true;
     }
     else
     {
-        pthread_mutex_init(&s_requestQueueMutex, nullptr);
-        pthread_mutex_init(&s_responseQueueMutex, nullptr);
-        
-        pthread_mutex_init(&s_SleepMutex, nullptr);
-        pthread_cond_init(&s_SleepCondition, nullptr);
-
-        pthread_create(&s_networkThread, nullptr, networkThread, this);
-        pthread_detach(s_networkThread);
-        
-        need_quit = false;
+        auto t = std::thread([=]
+        {
+            this->networkThread();
+        });
+        t.detach();
+        _isInited = true;
     }
     
     return true;
 }
 
+//Add a get task to queue
 void CAHttpClient::send(CAHttpRequest* request)
 {
-    CC_RETURN_IF(!request);
-        
-    ++_asyncRequestCount;
+    if (false == lazyInitThreadSemphore())
+    {
+        return;
+    }
     
-    request->setThreadID(_threadID);
+    if (!request)
+    {
+        return;
+    }
+    request->setThreadID(_thread_id);
     request->retain();
-        
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue.pushBack(request);
-    pthread_mutex_unlock(&s_requestQueueMutex);
     
-    pthread_cond_signal(&s_SleepCondition);
+    _requestQueueMutex.lock();
+    _requestQueue.pushBack(request);
+    _requestQueueMutex.unlock();
+    
+    // Notify thread start to work
+    _sleepCondition.notify_one();
+}
+
+void CAHttpClient::sendImmediate(CAHttpRequest* request)
+{
+    if(!request)
+    {
+        return;
+    }
+    
+    request->retain();
+    // Create a CAHttpResponse object, the default setting is http access failed
+    CAHttpResponse *response = new (std::nothrow) CAHttpResponse(request);
+    
+    auto t = std::thread(&CAHttpClient::networkThreadAlone, this, request, response);
+    t.detach();
 }
 
 // Poll and notify main thread if responses exists in queue
-void CAHttpClient::dispatchResponseCallbacks(float delta)
+void CAHttpClient::dispatchResponseCallbacks()
 {
+    // log("CCCAHttpClient::dispatchResponseCallbacks is running");
+    //occurs when cocos thread fires but the network thread has already quited
     CAHttpResponse* response = nullptr;
     
-    pthread_mutex_lock(&s_responseQueueMutex);
-    if (!s_responseQueue.empty())
+    _responseQueueMutex.lock();
+    if (!_responseQueue.empty())
     {
-        response = s_responseQueue.front();
-        s_responseQueue.popFront();
+        response = _responseQueue.at(0);
+        _responseQueue.erase(0);
     }
-    pthread_mutex_unlock(&s_responseQueueMutex);
+    _responseQueueMutex.unlock();
     
     if (response)
     {
-        --_asyncRequestCount;
-        
         CAHttpRequest *request = response->getHttpRequest();
-        CC_RETURN_IF(request == nullptr);
         const CAHttpRequest::Callback& callback = request->getCallback();
-        
+
         if (callback != nullptr)
         {
             callback(this, response);
         }
 
         response->release();
+        // do not release in other thread
         request->release();
     }
-    
-    if (0 == _asyncRequestCount)
-    {
-        CAScheduler::getScheduler()->pauseTarget(this);
-    }
-    
 }
 
+// Process Response
+void CAHttpClient::processResponse(CAHttpResponse* response, char* responseMessage)
+{
+    auto request = response->getHttpRequest();
+    long responseCode = -1;
+    int retValue = 0;
+    
+    // Process the request -> get response packet
+    switch (request->getRequestType())
+    {
+        case CAHttpRequest::Type::Get: // HTTP GET
+            retValue = processGetTask(this, request,
+                                      writeData,
+                                      response->getResponseData(),
+                                      &responseCode,
+                                      writeHeaderData,
+                                      response->getResponseHeader(),
+                                      responseMessage);
+            break;
+            
+        case CAHttpRequest::Type::Post: // HTTP POST
+            retValue = processPostTask(this, request,
+                                       writeData,
+                                       response->getResponseData(),
+                                       &responseCode,
+                                       writeHeaderData,
+                                       response->getResponseHeader(),
+                                       responseMessage);
+            break;
+            
+        case CAHttpRequest::Type::Put:
+            retValue = processPutTask(this, request,
+                                      writeData,
+                                      response->getResponseData(),
+                                      &responseCode,
+                                      writeHeaderData,
+                                      response->getResponseHeader(),
+                                      responseMessage);
+            break;
+            
+        case CAHttpRequest::Type::Delete:
+            retValue = processDeleteTask(this, request,
+                                         writeData,
+                                         response->getResponseData(),
+                                         &responseCode,
+                                         writeHeaderData,
+                                         response->getResponseHeader(),
+                                         responseMessage);
+            break;
+        case CAHttpRequest::Type::PostFile:
+            retValue = processPostFileTask(this, request,
+                                           writeData,
+                                           response->getResponseData(),
+                                           &responseCode,
+                                           writeHeaderData,
+                                           response->getResponseHeader(),
+                                           responseMessage);
+            break;
+        default:
+            CCASSERT(true, "CCCAHttpClient: unknown request type, only GET and POSt are supported");
+            break;
+    }
+    
+    // write data to CAHttpResponse
+    response->setResponseCode(responseCode);
+    if (retValue != 0)
+    {
+        response->setSucceed(false);
+        response->setErrorBuffer(responseMessage);
+    }
+    else
+    {
+        response->setSucceed(true);
+    }
+}
+
+void CAHttpClient::increaseThreadCount()
+{
+    _threadCountMutex.lock();
+    ++_threadCount;
+    _threadCountMutex.unlock();
+}
+
+void CAHttpClient::decreaseThreadCountAndMayDeleteThis()
+{
+    bool needDeleteThis = false;
+    _threadCountMutex.lock();
+    --_threadCount;
+    if (0 == _threadCount)
+    {
+        needDeleteThis = true;
+    }
+    
+    _threadCountMutex.unlock();
+    if (needDeleteThis)
+    {
+        delete this;
+    }
+}
+
+void CAHttpClient::setTimeoutForConnect(int value)
+{
+    std::lock_guard<std::mutex> lock(_timeoutForConnectMutex);
+    _timeoutForConnect = value;
+}
+
+int CAHttpClient::getTimeoutForConnect()
+{
+    std::lock_guard<std::mutex> lock(_timeoutForConnectMutex);
+    return _timeoutForConnect;
+}
+
+void CAHttpClient::setTimeoutForRead(int value)
+{
+    std::lock_guard<std::mutex> lock(_timeoutForReadMutex);
+    _timeoutForRead = value;
+}
+
+int CAHttpClient::getTimeoutForRead()
+{
+    std::lock_guard<std::mutex> lock(_timeoutForReadMutex);
+    return _timeoutForRead;
+}
+
+const std::string& CAHttpClient::getCookieFilename()
+{
+    std::lock_guard<std::mutex> lock(_cookieFileMutex);
+    return _cookieFilename;
+}
+
+const std::string& CAHttpClient::getSSLVerification()
+{
+    std::lock_guard<std::mutex> lock(_sslCaFileMutex);
+    return _sslCaFilename;
+}
 
 NS_CC_END
 

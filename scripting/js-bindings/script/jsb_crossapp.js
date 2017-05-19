@@ -13,6 +13,15 @@ ca.LANGUAGE_HUNGARIAN  = 9;
 ca.LANGUAGE_PORTUGUESE = 10;
 ca.LANGUAGE_ARABIC     = 11;
 
+ca.CAHttpRequest.Type = {};
+ca.CAHttpRequest.Type.Get = 0;
+ca.CAHttpRequest.Type.Post = 1;
+ca.CAHttpRequest.Type.PostFile = 2;
+ca.CAHttpRequest.Type.Put = 3;
+ca.CAHttpRequest.Type.Delete = 4;
+ca.CAHttpRequest.Type.Unkown = 5;
+
+
 ca.CAActivityIndicatorView.Style = {};
 ca.CAActivityIndicatorView.Style.WhiteLarge = 0;
 ca.CAActivityIndicatorView.Style.GrayLarge = 1;
@@ -313,15 +322,6 @@ ca.CASwitch.Type.RoundedRect = 1;
 ca.CACheckbox.Type = {};
 ca.CACheckbox.Type.SquareRect = 0;
 ca.CACheckbox.Type.RoundedRect = 1;
-
-ca.CAHttpRequest = {};
-ca.CAHttpRequest.Type = {};
-ca.CAHttpRequest.Type.Get = 0;
-ca.CAHttpRequest.Type.Post = 1;
-ca.CAHttpRequest.Type.PostFile = 2;
-ca.CAHttpRequest.Type.Put = 3;
-ca.CAHttpRequest.Type.Delete = 4;
-ca.CAHttpRequest.Type.Unkown = 5;
 
 ca.NetworkStatus = {};
 ca.NetworkStatus.NotReachable     = 0,

@@ -4,6 +4,7 @@
 #include "basics/CAAutoreleasePool.h"
 #include "CAFPSImages.h"
 #include "basics/CAPointExtension.h"
+#include "basics/CACamera.h"
 #include "CANotificationCenter.h"
 #include "cocoa/CCNS.h"
 #include "images/CAImageCache.h"
@@ -18,16 +19,20 @@
 #include "platform/CAFileUtils.h"
 #include "CCApplication.h"
 #include "CCEGLView.h"
+#include "CAAccelerometer.h"
 #include "dispatcher/CATouchDispatcher.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "dispatcher/CATouch.h"
 #include "support/user_default/CAUserDefault.h"
 #include "support/CAProfiling.h"
 #include "support/CAThemeManager.h"
+#include "game/CGSpriteFrameCache.h"
 #include "game/actions/CGActionManager.h"
+#include "game/actions/CGAnimationCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCFrameBuffer.h"
+
 
 NS_CC_BEGIN
 

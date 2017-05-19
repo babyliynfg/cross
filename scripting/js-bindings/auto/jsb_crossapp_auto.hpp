@@ -2021,6 +2021,55 @@ bool js_crossapp_CADrawView_drawCubicBezier(JSContext *cx, uint32_t argc, jsval 
 bool js_crossapp_CADrawView_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADrawView_CADrawView(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CAUserDefault_class;
+extern JSObject *jsb_CrossApp_CAUserDefault_prototype;
+
+bool js_crossapp_CAUserDefault_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAUserDefault_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAUserDefault(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAUserDefault_setIntegerForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_getFloatForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_getBoolForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_setDoubleForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_setFloatForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_getStringForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_setStringForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_flush(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_getIntegerForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_getDoubleForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_setBoolForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_getXMLFilePath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_isXMLFileExist(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAUserDefault_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CAHttpRequest_class;
+extern JSObject *jsb_CrossApp_CAHttpRequest_prototype;
+
+bool js_crossapp_CAHttpRequest_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAHttpRequest_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAHttpRequest(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAHttpRequest_getUrl(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_setResponseCallback(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_getThreadID(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_getRequestData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_setUrl(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_autorelease(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_getHeaders(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_getRequestType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_setThreadID(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_setRequestData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_getRequestDataSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_setRequestType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_setFileNameToPost(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_setHeaders(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_getFileNameToPost(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpRequest_CAHttpRequest(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CAHttpResponse_class;
 extern JSObject *jsb_CrossApp_CAHttpResponse_prototype;
 
@@ -2028,16 +2077,17 @@ bool js_crossapp_CAHttpResponse_constructor(JSContext *cx, uint32_t argc, jsval 
 void js_crossapp_CAHttpResponse_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAHttpResponse(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAHttpResponse_getRequest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_setErrorBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_getErrorBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_isSucceed(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_getResponseCode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_getHttpRequest(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpResponse_getResponseDataString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_setResponseData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_autorelease(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_setResponseHeader(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_setSucceed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpResponse_setResponseDataString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_getResponseHeader(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_getResponseData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_setResponseCode(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2050,13 +2100,18 @@ bool js_crossapp_CAHttpClient_constructor(JSContext *cx, uint32_t argc, jsval *v
 void js_crossapp_CAHttpClient_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAHttpClient(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAHttpClient_sendImmediate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_getSSLVerification(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_getCookie(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_setTimeoutForConnect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_setTimeoutForRead(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_send(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAHttpClient_getTimeoutForRead(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_enableCookies(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_setSSLVerification(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_getRequestCount(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_getTimeoutForConnect(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_getTimeoutForRead(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_getCookieFilename(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_destroyAllInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_getInstance(JSContext *cx, uint32_t argc, jsval *vp);

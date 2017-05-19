@@ -226,16 +226,22 @@ enum class CAInterfaceOrientation
     Landscape      = 2,
 };
 
-enum
-{
-    OnEnter,
-    OnExit,
-    OnEnterTransitioDidFinish,
-    OnExitTransitionDidStart,
-    OnCleanup
-};
-
 static const char* CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
+
+//script
+namespace script
+{
+    static int onEnter = 0x1;
+    static int onExit = 0x2;
+    static int onEnterTransitionDidFinish = 0x3;
+    static int onExitTransitionDidStart = 0x4;
+    
+    static int viewDidLoad = 0x11;
+    static int viewDidUnload = 0x12;
+    static int viewSizeDidChanged = 0x13;
+}
+
+
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #ifdef _WIN64

@@ -28,7 +28,7 @@ void AlertViewTest::viewDidLoad()
     btn1->addTarget([=]()
     {
         
-        CAAlertView* alert = CAAlertView::create("Alert", "this is a alert!", "close", nullptr);
+        CAAlertView* alert = CAAlertView::create("Alert", "this is a alert!");
         alert->show([=](int index)
         {
             this->alertCallBack(index);
@@ -63,7 +63,9 @@ void AlertViewTest::viewDidLoad()
         
         std::string message = "This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.";
         
-        CAAlertView::create("Alert", message.c_str(), "button1", "button2", "button3", "button4", "button5", "button6", "button7", "button8", "button9", "button10", nullptr)->show([=](int index)
+        CAAlertView* alert = CAAlertView::create("Alert", message.c_str());
+        alert->setButtonTitles({"button1", "button2", "button3", "button4", "button5", "button6", "button7", "button8", "button9", "button10"});
+        alert->show([=](int index)
         {
             this->alertCallBack(index);
         });

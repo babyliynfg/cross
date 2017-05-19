@@ -337,6 +337,8 @@
 		D673AC081E52E2A0007E7A5B /* CCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D673AB9F1E52E2A0007E7A5B /* CCWindow.m */; };
 		D673AC091E52E2A0007E7A5B /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = D673ABA01E52E2A0007E7A5B /* EAGLView.h */; };
 		D673AC0A1E52E2A0007E7A5B /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673ABA11E52E2A0007E7A5B /* EAGLView.mm */; };
+		D674DCFF1ECC4C2900D25BFC /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D674DCFD1ECC4C2900D25BFC /* HttpCookie.cpp */; };
+		D674DD001ECC4C2900D25BFC /* HttpCookie.h in Headers */ = {isa = PBXBuildFile; fileRef = D674DCFE1ECC4C2900D25BFC /* HttpCookie.h */; };
 		D67ECD761E5EBEC800C9CA49 /* CACheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D67ECD741E5EBEC800C9CA49 /* CACheckbox.cpp */; };
 		D67ECD771E5EBEC800C9CA49 /* CACheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = D67ECD751E5EBEC800C9CA49 /* CACheckbox.h */; };
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
@@ -781,6 +783,8 @@
 		D673AB9F1E52E2A0007E7A5B /* CCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCWindow.m; sourceTree = "<group>"; };
 		D673ABA01E52E2A0007E7A5B /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		D673ABA11E52E2A0007E7A5B /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
+		D674DCFD1ECC4C2900D25BFC /* HttpCookie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpCookie.cpp; sourceTree = "<group>"; };
+		D674DCFE1ECC4C2900D25BFC /* HttpCookie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpCookie.h; sourceTree = "<group>"; };
 		D67ECD741E5EBEC800C9CA49 /* CACheckbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACheckbox.cpp; sourceTree = "<group>"; };
 		D67ECD751E5EBEC800C9CA49 /* CACheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACheckbox.h; sourceTree = "<group>"; };
 		D693E7C51D34F75F003D97A4 /* CAVec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVec4.h; sourceTree = "<group>"; };
@@ -1516,6 +1520,8 @@
 			children = (
 				D6596E131E57040B00A55CF9 /* DownloadManager.cpp */,
 				D6596E141E57040B00A55CF9 /* DownloadManager.h */,
+				D674DCFD1ECC4C2900D25BFC /* HttpCookie.cpp */,
+				D674DCFE1ECC4C2900D25BFC /* HttpCookie.h */,
 				D6596E151E57040B00A55CF9 /* HttpClient.cpp */,
 				D6596E161E57040B00A55CF9 /* HttpClient.h */,
 				D6596E171E57040B00A55CF9 /* HttpRequest.h */,
@@ -1836,6 +1842,7 @@
 				04EAB0B91956D75600198A8E /* CAImageCache.h in Headers */,
 				B0B05FC41BB1483200B891CE /* CATableView.h in Headers */,
 				3E2154501B8180340075448E /* forwards.h in Headers */,
+				D674DD001ECC4C2900D25BFC /* HttpCookie.h in Headers */,
 				B08F4BB619C7D2EF008DE306 /* ConvertUTF.h in Headers */,
 				D649B2AC1D3CD6A80020414A /* CGActionCamera.h in Headers */,
 				B0B05F9E1BB1483200B891CE /* CAAlertView.h in Headers */,
@@ -2083,6 +2090,7 @@
 				D69B76871E4B0713007D9771 /* shapes.cc in Sources */,
 				D66BCD4E1D3DC27700587C65 /* CGSpriteFrame.cpp in Sources */,
 				D66BCD421D3DBB6E00587C65 /* CGAnimation.cpp in Sources */,
+				D674DCFF1ECC4C2900D25BFC /* HttpCookie.cpp in Sources */,
 				D69B76391E4AFE12007D9771 /* CCProperties.cpp in Sources */,
 				022CAAEB1BF1C41500ED015B /* sqlite3.c in Sources */,
 				B0B05FC31BB1483200B891CE /* CATableView.cpp in Sources */,

@@ -16223,19 +16223,380 @@ CADrawView : function (
 };
 
 /**
- * @class CAHttpResponse
+ * @class CAUserDefault
  */
-ca.CAHttpResponse = {
+ca.CAUserDefault = {
 
 /**
- * @method getRequest
+ * @method setIntegerForKey
+ * @param {char} arg0
+ * @param {int} arg1
+ */
+setIntegerForKey : function (
+char, 
+int 
+)
+{
+},
+
+/**
+ * @method getFloatForKey
+* @param {char|char} char
+* @param {float} float
+* @return {float|float}
+*/
+getFloatForKey : function(
+char,
+float 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBoolForKey
+* @param {char|char} char
+* @param {bool} bool
+* @return {bool|bool}
+*/
+getBoolForKey : function(
+char,
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method setDoubleForKey
+ * @param {char} arg0
+ * @param {double} arg1
+ */
+setDoubleForKey : function (
+char, 
+double 
+)
+{
+},
+
+/**
+ * @method setFloatForKey
+ * @param {char} arg0
+ * @param {float} arg1
+ */
+setFloatForKey : function (
+char, 
+float 
+)
+{
+},
+
+/**
+ * @method getStringForKey
+* @param {char|char} char
+* @param {String} str
+* @return {String|String}
+*/
+getStringForKey : function(
+char,
+str 
+)
+{
+    return ;
+},
+
+/**
+ * @method setStringForKey
+ * @param {char} arg0
+ * @param {String} arg1
+ */
+setStringForKey : function (
+char, 
+str 
+)
+{
+},
+
+/**
+ * @method flush
+ */
+flush : function (
+)
+{
+},
+
+/**
+ * @method getIntegerForKey
+* @param {char|char} char
+* @param {int} int
+* @return {int|int}
+*/
+getIntegerForKey : function(
+char,
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDoubleForKey
+* @param {char|char} char
+* @param {double} double
+* @return {double|double}
+*/
+getDoubleForKey : function(
+char,
+double 
+)
+{
+    return 0;
+},
+
+/**
+ * @method setBoolForKey
+ * @param {char} arg0
+ * @param {bool} arg1
+ */
+setBoolForKey : function (
+char, 
+bool 
+)
+{
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getXMLFilePath
+ * @return {String}
+ */
+getXMLFilePath : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method isXMLFileExist
+ * @return {bool}
+ */
+isXMLFileExist : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getInstance
+ * @return {ca.CAUserDefault}
+ */
+getInstance : function (
+)
+{
+    return ca.CAUserDefault;
+},
+
+};
+
+/**
+ * @class CAHttpRequest
+ */
+ca.CAHttpRequest = {
+
+/**
+ * @method getUrl
+ * @return {char}
+ */
+getUrl : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setResponseCallback
+ * @param {function} arg0
+ */
+setResponseCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method getCallback
+ * @return {function}
+ */
+getCallback : function (
+)
+{
+    return std::function<void (CrossApp::CAHttpClient , CrossApp::CAHttpResponse )>;
+},
+
+/**
+ * @method getThreadID
+ * @return {int}
+ */
+getThreadID : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getRequestData
+ * @return {char}
+ */
+getRequestData : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setUrl
+ * @param {String} arg0
+ */
+setUrl : function (
+str 
+)
+{
+},
+
+/**
+ * @method autorelease
+ * @return {ca.CAObject}
+ */
+autorelease : function (
+)
+{
+    return ca.CAObject;
+},
+
+/**
+ * @method getHeaders
+ * @return {Array}
+ */
+getHeaders : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getRequestType
+ * @return {ca.CAHttpRequest::Type}
+ */
+getRequestType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setThreadID
+ * @param {int} arg0
+ */
+setThreadID : function (
+int 
+)
+{
+},
+
+/**
+ * @method setRequestData
+ * @param {char} arg0
+ * @param {unsigned long} arg1
+ */
+setRequestData : function (
+char, 
+long 
+)
+{
+},
+
+/**
+ * @method getRequestDataSize
+ * @return {int}
+ */
+getRequestDataSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setRequestType
+ * @param {ca.CAHttpRequest::Type} arg0
+ */
+setRequestType : function (
+type 
+)
+{
+},
+
+/**
+ * @method setFileNameToPost
+ * @param {String} arg0
+ */
+setFileNameToPost : function (
+str 
+)
+{
+},
+
+/**
+ * @method setHeaders
+ * @param {Array} arg0
+ */
+setHeaders : function (
+array 
+)
+{
+},
+
+/**
+ * @method getFileNameToPost
+ * @return {char}
+ */
+getFileNameToPost : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
  * @return {ca.CAHttpRequest}
  */
-getRequest : function (
+create : function (
 )
 {
     return ca.CAHttpRequest;
 },
+
+/**
+ * @method CAHttpRequest
+ * @constructor
+ */
+CAHttpRequest : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAHttpResponse
+ */
+ca.CAHttpResponse = {
 
 /**
  * @method setErrorBuffer
@@ -16269,7 +16630,7 @@ isSucceed : function (
 
 /**
  * @method getResponseCode
- * @return {int}
+ * @return {long}
  */
 getResponseCode : function (
 )
@@ -16285,6 +16646,16 @@ getHttpRequest : function (
 )
 {
     return ca.CAHttpRequest;
+},
+
+/**
+ * @method getResponseDataString
+ * @return {char}
+ */
+getResponseDataString : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -16323,6 +16694,18 @@ array
  */
 setSucceed : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setResponseDataString
+ * @param {char} arg0
+ * @param {unsigned long} arg1
+ */
+setResponseDataString : function (
+char, 
+long 
 )
 {
 },
@@ -16376,6 +16759,36 @@ cahttprequest
 ca.CAHttpClient = {
 
 /**
+ * @method sendImmediate
+ * @param {ca.CAHttpRequest} arg0
+ */
+sendImmediate : function (
+cahttprequest 
+)
+{
+},
+
+/**
+ * @method getSSLVerification
+ * @return {String}
+ */
+getSSLVerification : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getCookie
+ * @return {CAHttpCookie}
+ */
+getCookie : function (
+)
+{
+    return CAHttpCookie;
+},
+
+/**
  * @method setTimeoutForConnect
  * @param {int} arg0
  */
@@ -16406,13 +16819,13 @@ cahttprequest
 },
 
 /**
- * @method getTimeoutForRead
- * @return {int}
+ * @method enableCookies
+ * @param {char} arg0
  */
-getTimeoutForRead : function (
+enableCookies : function (
+char 
 )
 {
-    return 0;
 },
 
 /**
@@ -16446,9 +16859,31 @@ getTimeoutForConnect : function (
 },
 
 /**
+ * @method getTimeoutForRead
+ * @return {int}
+ */
+getTimeoutForRead : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getCookieFilename
+ * @return {String}
+ */
+getCookieFilename : function (
+)
+{
+    return ;
+},
+
+/**
  * @method destroyInstance
+ * @param {int} arg0
  */
 destroyInstance : function (
+int 
 )
 {
 },
@@ -16463,9 +16898,11 @@ destroyAllInstance : function (
 
 /**
  * @method getInstance
+ * @param {int} arg0
  * @return {ca.CAHttpClient}
  */
 getInstance : function (
+int 
 )
 {
     return ca.CAHttpClient;

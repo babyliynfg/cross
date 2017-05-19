@@ -116,45 +116,8 @@ bool jsval_cacolor_to_opacity(JSContext *cx, JS::HandleValue v, int32_t* ret);
 bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, CrossApp::CAAcceleration* ret);
 bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, CrossApp::Quaternion* ret);
 
-//bool jsval_to_cccolor3b(JSContext *cx, JS::HandleValue v, cocos2d::Color3B* ret);//**
-//bool jsval_to_ccarray_of_CCPoint(JSContext* cx, JS::HandleValue v, cocos2d::Point **points, int *numPoints);//**
-//bool jsval_to_ccarray(JSContext* cx, JS::HandleValue v, cocos2d::__Array** ret);//**
-//bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, cocos2d::__Dictionary** ret);//**
-//bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__Array**
-//bool jsval_to_obb(JSContext *cx, JS::HandleValue vp, cocos2d::OBB* ret);//**cocos3d
-//bool jsval_to_ray(JSContext *cx, JS::HandleValue vp, cocos2d::Ray* ret);//**cocos3d
-//
 // forward declaration
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
-
-//template <class T> 
-//bool jsvals_variadic_to_ccvector( JSContext *cx, /*jsval *vp, int argc,*/const JS::CallArgs& args, CrossApp::CAVector<T>* ret)
-//{
-//    bool ok = true;
-//
-//    for (int i = 0; i < args.length(); i++)
-//    {
-//        js_proxy_t* p;
-//        JSObject* obj = JS::RootedValue(cx, args.get(i)).toObjectOrNull();
-//
-//        p = jsb_get_js_proxy(obj);
-//        CCASSERT(p, "Native object not found!");
-//        if (p) {
-//            ret->pushBack((T)p->ptr);
-//        }
-//
-//    }
-//
-//    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-//    return ok;
-//}
-
-//bool jsvals_variadic_to_ccvaluevector( JSContext *cx, jsval *vp, int argc, cocos2d::ValueVector* ret);//**
-//
-//bool jsval_to_ccaffinetransform(JSContext* cx, JS::HandleValue v, cocos2d::AffineTransform* ret);//**
-//bool jsval_to_FontDefinition( JSContext *cx, JS::HandleValue vp, cocos2d::FontDefinition* ret );//**
-//
-
 
 template <class T>
 bool jsval_to_cavector(JSContext* cx, JS::HandleValue v, CrossApp::CAVector<T>* ret)
@@ -190,24 +153,22 @@ bool jsval_to_cavector(JSContext* cx, JS::HandleValue v, CrossApp::CAVector<T>* 
 }
 
 //
-//bool jsval_to_ccvalue(JSContext* cx, JS::HandleValue v, cocos2d::Value* ret);//**
-//bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, cocos2d::ValueMap* ret);//**
-//bool jsval_to_ccvaluemapintkey(JSContext* cx, JS::HandleValue v, cocos2d::ValueMapIntKey* ret);//**
-//bool jsval_to_ccvaluevector(JSContext* cx, JS::HandleValue v, cocos2d::ValueVector* ret);//**
+//bool jsval_to_ccvalue(JSContext* cx, JS::HandleValue v, CrossApp::CAValue* ret);//**
+//bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, CrossApp::CAValueMap* ret);//**
+//bool jsval_to_ccvaluemapintkey(JSContext* cx, JS::HandleValue v, CrossApp::CAValueMapIntKey* ret);//**
+//bool jsval_to_ccvaluevector(JSContext* cx, JS::HandleValue v, CrossApp::CAValueVector* ret);//**
 bool jsval_to_ssize( JSContext *cx, JS::HandleValue vp, ssize_t* ret);
 bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret);//**
 bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int>* ret);//**
 bool jsval_to_std_vector_float( JSContext *cx, JS::HandleValue vp, std::vector<float>* ret);//**
 bool jsval_to_matrix(JSContext *cx, JS::HandleValue vp, CrossApp::Mat4* ret);
 bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, CrossApp::DPoint* ret);
-//bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret);//**
-//bool jsval_to_vector4(JSContext *cx, JS::HandleValue vp, cocos2d::Vec4* ret);//**
-//bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, cocos2d::BlendFunc* ret);
+bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, CrossApp::BlendFunc* ret);
 bool jsval_to_vector_vec2(JSContext* cx, JS::HandleValue v, std::vector<CrossApp::DPoint>* ret);
-//bool jsval_to_cctex2f(JSContext* cx, JS::HandleValue vp, cocos2d::Tex2F* ret);//**
-//bool jsval_to_v3fc4bt2f(JSContext* cx, JS::HandleValue v, cocos2d::V3F_C4B_T2F* ret);//**
-//bool jsval_to_v3fc4bt2f_quad(JSContext* cx, JS::HandleValue v, cocos2d::V3F_C4B_T2F_Quad* ret);//**
-//bool jsval_to_vector_v3fc4bt2f(JSContext* cx, JS::HandleValue v, std::vector<cocos2d::V3F_C4B_T2F>* ret);//**
+//bool jsval_to_cctex2f(JSContext* cx, JS::HandleValue vp, CrossApp::ccTex2F* ret);//**
+//bool jsval_to_v3fc4bt2f(JSContext* cx, JS::HandleValue v, CrossApp::ccV3F_C4B_T2F* ret);//**
+//bool jsval_to_v3fc4bt2f_quad(JSContext* cx, JS::HandleValue v, CrossApp::ccV3F_C4B_T2F_Quad* ret);//**
+//bool jsval_to_vector_v3fc4bt2f(JSContext* cx, JS::HandleValue v, std:vector<CrossApp::ccV3F_C4B_T2F>* ret);//**
 bool jsval_to_std_map_string_string(JSContext* cx, JS::HandleValue v, std::map<std::string, std::string>* ret);
 
 
@@ -360,7 +321,7 @@ jsval ulong_to_jsval(JSContext* cx, unsigned long v);
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval std_string_to_jsval(JSContext* cx, const std::string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
-//jsval tm_to_jsval(JSContext* cx, const struct tm& v);
+jsval tm_to_jsval(JSContext* cx, const struct tm& v);
 jsval dpoint_to_jsval(JSContext* cx, const CrossApp::DPoint& v);
 jsval dpoint3d_to_jsval(JSContext* cx, const CrossApp::DPoint3D& v);
 
@@ -373,16 +334,8 @@ jsval dlayout_to_jsval(JSContext *cx, const CrossApp::DLayout& v);
 jsval cafont_to_jsval(JSContext *cx, const CrossApp::CAFont& v);
 jsval cacolor4b_to_jsval(JSContext* cx, const CrossApp::CAColor4B& v);
 jsval cacolor4f_to_jsval(JSContext* cx, const CrossApp::CAColor4F& v);
-//jsval cccolor3b_to_jsval(JSContext* cx, const cocos2d::Color3B& v);//**
-//jsval ccdictionary_to_jsval(JSContext* cx, cocos2d::__Dictionary *dict);//**
-//jsval ccarray_to_jsval(JSContext* cx, cocos2d::__Array *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, const CrossApp::CAAcceleration& v);
-
-//jsval ccaffinetransform_to_jsval(JSContext* cx, const cocos2d::AffineTransform& t);
-//jsval FontDefinition_to_jsval(JSContext* cx, const cocos2d::FontDefinition& t);
 jsval quaternion_to_jsval(JSContext* cx, const CrossApp::Quaternion& q);
-//jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& q);
-//jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform);
 
 template<class T>
 js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj);
@@ -494,20 +447,18 @@ jsval ccmap_string_key_to_jsval(JSContext* cx, const CrossApp::CAMap<std::string
     return OBJECT_TO_JSVAL(jsRet);
 }
 
-//jsval ccvalue_to_jsval(JSContext* cx, const cocos2d::Value& v);
-//jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v);
-//jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v);
-//jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v);
+//jsval ccvalue_to_jsval(JSContext* cx, const CrossApp::CAValue& v);
+//jsval ccvaluemap_to_jsval(JSContext* cx, const CrossApp::CAValueMap& v);
+//jsval ccvaluemapintkey_to_jsval(JSContext* cx, const CrossApp::CAValueMapIntKey& v);
+//jsval ccvaluevector_to_jsval(JSContext* cx, const CrossApp::CAValueVector& v);
 jsval ssize_to_jsval(JSContext *cx, ssize_t v);
 jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v);
+jsval std_vector_char_to_jsval( JSContext *cx, const std::vector<char>& v);
 jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v);
 jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v);
 jsval matrix_to_jsval(JSContext *cx, const CrossApp::Mat4& v);
 jsval vector2_to_jsval(JSContext *cx, const CrossApp::DPoint& v);
-//jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vec3& v);
-//jsval vector4_to_jsval(JSContext *cx, const cocos2d::Vec4& v);
-//jsval blendfunc_to_jsval(JSContext *cx, const cocos2d::BlendFunc& v);
-//jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v);
+jsval blendfunc_to_jsval(JSContext *cx, const CrossApp::BlendFunc& v);
 jsval std_map_string_string_to_jsval(JSContext* cx, const std::map<std::string, std::string>& v);
 
 

@@ -1032,6 +1032,26 @@ bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, CrossApp::DPoint* ret)
     return true;
 }
 
+bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, CrossApp::BlendFunc* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jssrc(cx);
+    JS::RootedValue jsdst(cx);
+    double src, dst;
+    bool ok = vp.isObject() &&
+    JS_ValueToObject(cx, vp, &tmp) &&
+    JS_GetProperty(cx, tmp, "src", &jssrc) &&
+    JS_GetProperty(cx, tmp, "dst", &jsdst) &&
+    JS::ToNumber(cx, jssrc, &src) &&
+    JS::ToNumber(cx, jsdst, &dst);
+    
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    
+    ret->src = (unsigned int)src;
+    ret->dst = (unsigned int)dst;
+    return true;
+}
+
 bool jsval_to_vector_vec2(JSContext* cx, JS::HandleValue v, std::vector<CrossApp::DPoint>* ret)
 {
     JS::RootedObject jsArr(cx);
@@ -1112,6 +1132,11 @@ bool jsval_to_std_map_string_string(JSContext* cx, JS::HandleValue v, std::map<s
 }
 
 //// From native type to jsval
+jsval int8_to_jsval( JSContext *cx, int8_t number )
+{
+    return INT_TO_JSVAL(number);
+}
+
 jsval int32_to_jsval( JSContext *cx, int32_t number )
 {
     return INT_TO_JSVAL(number);
@@ -1391,6 +1416,24 @@ jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>&
     return OBJECT_TO_JSVAL(jsretArr);
 }
 
+jsval std_vector_char_to_jsval( JSContext *cx, const std::vector<char>& v)
+{
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
+    
+    int i = 0;
+    for (const char obj : v)
+    {
+        JS::RootedValue arrElement(cx);
+        arrElement = int8_to_jsval(cx, obj);
+        
+        if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
+            break;
+        }
+        ++i;
+    }
+    return OBJECT_TO_JSVAL(jsretArr);
+}
+
 jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
@@ -1451,6 +1494,20 @@ jsval vector2_to_jsval(JSContext *cx, const CrossApp::DPoint& v)
     if (!tmp) return JSVAL_NULL;
     bool ok = JS_DefineProperty(cx, tmp, "x", v.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "y", v.y, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+jsval blendfunc_to_jsval(JSContext *cx, const CrossApp::BlendFunc& v)
+{
+    JS::RootedObject proto(cx);
+    JS::RootedObject parent(cx);
+    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    if (!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "src", (uint32_t)v.src, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "dst", (uint32_t)v.dst, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

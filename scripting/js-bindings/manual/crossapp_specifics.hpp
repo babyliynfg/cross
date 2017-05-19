@@ -1,26 +1,3 @@
-/*
- * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 
 #ifndef __JS_SPECIFICS_H__
 #define __JS_SPECIFICS_H__
@@ -121,6 +98,14 @@ JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* stri
 void register_crossapp_js_core(JSContext* cx, JS::HandleObject obj);
 
 
+void js_add_object_reference(JS::HandleValue owner, JS::HandleValue target);
+void js_remove_object_reference(JS::HandleValue owner, JS::HandleValue target);
+void js_add_object_root(JS::HandleValue target);
+void js_remove_object_root(JS::HandleValue target);
+
+JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);
+void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject obj);
+
 class JSCallbackWrapper: public CrossApp::CAObject {
 public:
     JSCallbackWrapper();
@@ -137,40 +122,6 @@ protected:
     mozilla::Maybe<JS::PersistentRootedValue> _jsThisObj;
     mozilla::Maybe<JS::PersistentRootedValue> _extraData;
 };
-
-
-
-//class JSControlCallback : public CrossApp::CAObject{
-//public:
-//    JSControlCallback();
-//    virtual ~JSControlCallback();
-//
-//    SEL_CAControl getTarget(JS::HandleValue obj,JS::HandleValue fun);
-//    
-//    SEL_CAAlertBtnEvent getAlertViewTarger(JS::HandleValue obj,JS::HandleValue fun);
-//    
-//    SEL_CASegmentedControl getCASegmentedTarget(JS::HandleValue obj,JS::HandleValue fun);
-//    
-//    SEL_CAViewAnimation0 getViewAnimation0(JS::HandleValue obj,JS::HandleValue fun);
-//    
-//    SEL_CAViewAnimation2 getViewAnimation2(JS::HandleValue obj,JS::HandleValue fun);
-//    
-//    void callbackJSFun(CAControl* control, DPoint point);
-//    
-//    void callbackJSSegmented(CASegmentedControl* control, int index);
-//    
-//    void callbackJSViewAnimation0();
-//    
-//    void callbackJSViewAnimation2(const std::string& id, void* v);
-//    
-//    void callAlertViewTarget(int index);
-//    
-//    
-//private:
-//    mozilla::Maybe<JS::PersistentRootedValue> _obj;
-//    mozilla::Maybe<JS::PersistentRootedValue> _jsCallback;
-//    
-//};
 
 class JSScheduleWrapper: public JSCallbackWrapper {
     
@@ -343,7 +294,6 @@ bool js_crossapp_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 

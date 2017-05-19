@@ -155,7 +155,7 @@ void ScriptingCore::restartVM()
 {
     cleanup();
     initRegister();
-//    Application::getInstance()->applicationDidFinishLaunching(); 
+    CCApplication::sharedApplication()->applicationDidFinishLaunching();
 }
 
 ScriptingCore::~ScriptingCore(){}
@@ -628,7 +628,7 @@ void ScriptingCore::cleanup()
 void ScriptingCore::reset()
 {
   
-//    Director::getInstance()->restart();
+    CAApplication::getApplication()->restart();
     
 }
 
@@ -1319,19 +1319,12 @@ void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
 {
     JS::RootedObject obj(_cx, p->obj.get());
     CrossApp::CAVector<CAObject*>* arr = JSScheduleWrapper::getTargetForJSObject(obj);
-    if (arr) {
-//        CAView* node = (CAView*)p->ptr;
-//        CAScheduler* pScheduler = node->getScheduler();
-        CAObject* pObj = nullptr;
-//        CCARRAY_FOREACH(arr, pObj)
-        if (arr) {
-            for (int i =0; i < arr->size(); i++) {
-                pObj = arr->at(i);
-                CAScheduler::getScheduler()->unscheduleAllForTarget(pObj);
-            }
+    if (arr)
+    {
+        for (auto&& target : *arr)
+        {
+            CAScheduler::getScheduler()->unscheduleAllForTarget(target);
         }
-       
-        
         JSScheduleWrapper::removeAllTargetsForJSObject(obj);
     }
 }
@@ -1372,47 +1365,35 @@ int ScriptingCore::handleNodeEvent(void* data)
     
     JS::RootedObject jstarget(_cx, p->obj);
     
-    if (action == kNodeOnEnter)
+    if (action == script::onEnter)
     {
         if (isFunctionOverridedInJS(jstarget, "onEnter", js_crossapp_Node_onEnter))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
         }
-//        resumeSchedulesAndActions(p);
     }
-    else if (action == kNodeOnExit)
+    else if (action == script::onExit)
     {
-//        cleanupSchedulesAndActions(p);
         if (isFunctionOverridedInJS(jstarget, "onExit", js_crossapp_Node_onExit))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
         }
-//        pauseSchedulesAndActions(p);
-
     }
-    else if (action == kNodeOnEnterTransitionDidFinish)
+    else if (action == script::onEnterTransitionDidFinish)
     {
         if (isFunctionOverridedInJS(jstarget, "onEnterTransitionDidFinish", js_crossapp_Node_onEnterTransitionDidFinish))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 0, &dataVal, &retval);
         }
     }
-    else if (action == kNodeOnExitTransitionDidStart)
+    else if (action == script::onExitTransitionDidStart)
     {
         if (isFunctionOverridedInJS(jstarget, "onExitTransitionDidStart", js_crossapp_Node_onExitTransitionDidStart))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 0, &dataVal, &retval);
         }
     }
-    else if (action == kNodeOnCleanup) {
-//        cleanupSchedulesAndActions(p);
-        
-//        if (isFunctionOverridedInJS(jstarget, "cleanup", js_cocos2dx_Node_cleanup))
-//        {
-//            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "cleanup", 1, &dataVal, &retval);
-//        }
-    }
-    
+
     return ret;
 }
 int ScriptingCore::handleViewControllerEvent(void* data)
@@ -1437,28 +1418,28 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     
     JS::RootedObject jstarget(_cx, p->obj);
     
-    if (action == kOnExitTransitionDidStart)
+    if (action == script::viewDidUnload)
     {
 //        if (isFunctionOverridedInJS(jstarget, "viewOnExitTransitionDidStart", js_cocos2dx_Node_onEnter))
 //        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewOnExitTransitionDidStart", 1, &dataVal, &retval);
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidUnload", 1, &dataVal, &retval);
 //        }
          cleanupSchedulesAndActions(p);
     }
-    else if (action == kOnEnterTransitionDidFinish)
+    else if (action == script::viewDidLoad)
     {
         //        cleanupSchedulesAndActions(p);
 //        if (isFunctionOverridedInJS(jstarget, "viewOnEnterTransitionDidFinish", js_cocos2dx_Node_onExit))
 //        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewOnEnterTransitionDidFinish", 1, &dataVal, &retval);
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidLoad", 1, &dataVal, &retval);
 //        }
         
     }
-    else if (action == kOnSizeTransitionDidChanged)
+    else if (action == script::viewSizeDidChanged)
     {
 //        if (isFunctionOverridedInJS(jstarget, "viewOnSizeTransitionDidChanged", js_cocos2dx_Node_onEnterTransitionDidFinish))
 //        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewOnSizeTransitionDidChanged", 0, &dataVal, &retval);
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewSizeDidChanged", 0, &dataVal, &retval);
 //        }
     }
     

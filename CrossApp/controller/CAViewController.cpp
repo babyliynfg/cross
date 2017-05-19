@@ -100,17 +100,17 @@ void CAViewController::viewOnEnterTransitionDidFinish()
     do
     {
         CC_BREAK_IF(m_bLifeLock);
+        m_bLifeLock = true;
+        this->viewDidLoad();
 #if CC_ENABLE_SCRIPT_BINDING
         if(CCScriptEngineManager::sharedManager()->getScriptEngine())
         {
             if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, (int)kOnEnterTransitionDidFinish));
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidLoad));
             }
         }
 #endif
-        m_bLifeLock = true;
-        this->viewDidLoad();
     }
     while (0);
 
@@ -123,17 +123,17 @@ void CAViewController::viewOnExitTransitionDidStart()
     do
     {
         CC_BREAK_IF(m_bLifeLock);
+        m_bLifeLock = true;
+        this->viewDidUnload();
 #if CC_ENABLE_SCRIPT_BINDING
         if(CCScriptEngineManager::sharedManager()->getScriptEngine())
         {
             if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, (int)kOnExitTransitionDidStart));
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidUnload));
             }
         }
 #endif
-        m_bLifeLock = true;
-        this->viewDidUnload();
         m_pView->removeAllSubviews();
     }
     while (0);
@@ -144,16 +144,16 @@ void CAViewController::viewOnSizeTransitionDidChanged()
 {
     if (m_bLifeLock)
     {
+        this->viewSizeDidChanged();
 #if CC_ENABLE_SCRIPT_BINDING
         if(CCScriptEngineManager::sharedManager()->getScriptEngine())
         {
             if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, (int)kOnSizeTransitionDidChanged));
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, script::viewSizeDidChanged));
             }
         }
 #endif
-        this->viewSizeDidChanged();
     }
 }
 
