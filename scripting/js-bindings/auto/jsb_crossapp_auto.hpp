@@ -5,6 +5,31 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
+extern JSClass  *jsb_CrossApp_CAObject_class;
+extern JSObject *jsb_CrossApp_CAObject_prototype;
+
+bool js_crossapp_CAObject_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAObject_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAObject(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAObject_getUID(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_setUserObject(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_getUserObject(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_update(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_isEqual(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_isSingleReference(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_autorelease(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_setTextTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_setTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_release(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_retain(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_getTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_retainCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_getStrID(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_getTextTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAObject_CAObject(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CAScheduler_class;
 extern JSObject *jsb_CrossApp_CAScheduler_prototype;
 
@@ -498,6 +523,7 @@ void js_crossapp_CAApplication_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAApplication_setDefaultValues(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAApplication_setCrossAppCCLogNotification(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getStatusBarOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getImageCache(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getDeltaTime(JSContext *cx, uint32_t argc, jsval *vp);
@@ -534,6 +560,7 @@ bool js_crossapp_CAApplication_resume(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_isStatusBarHidden(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_isNextDeltaTimeZero(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setImageCache(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAApplication_isCrossAppCCLogNotification(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setStatusBarStyle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setClearColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setOpenGLView(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1062,24 +1089,28 @@ bool js_crossapp_CAWindow_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *
 bool js_crossapp_CAWindow_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWindow_CAWindow(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_CrossApp_CAThread_class;
-extern JSObject *jsb_CrossApp_CAThread_prototype;
+extern JSClass  *jsb_CrossApp_CANotificationCenter_class;
+extern JSObject *jsb_CrossApp_CANotificationCenter_prototype;
 
-bool js_crossapp_CAThread_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CAThread_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CAThread(JSContext *cx, JS::HandleObject global);
+bool js_crossapp_CANotificationCenter_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CANotificationCenter_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CANotificationCenter(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAThread_setMaxMsgCount(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_closeAtOnce(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_isRunning(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_OnRunning(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_clear(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_OnExitInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_start(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_OnInitInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_close(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_notifyRun(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAThread_CAThread(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_postNotificationWithIntValue(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_postNotification(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_postNotificationWithStringValue(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_removeObserver(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_getObserverHandlerByName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_removeAllObservers(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_postNotificationWithDoubleValue(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_unregisterScriptObserver(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_postNotificationWithFloatValue(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_getScriptHandler(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_addObserver(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_registerScriptObserver(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_CANotificationCenter(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CARenderImage_class;
 extern JSObject *jsb_CrossApp_CARenderImage_prototype;
@@ -1089,6 +1120,7 @@ void js_crossapp_CARenderImage_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CARenderImage(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CARenderImage_getImageView(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CARenderImage_printscreenWithView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_getClearStencil(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_setClearStencil(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1822,6 +1854,7 @@ bool js_crossapp_FileUtils_removeFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_purgeCachedEntries(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_isAbsolutePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_renameFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FileUtils_getDefaultResourceRootPath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_isPopupNotify(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_removeDirectory(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_getFileString(JSContext *cx, uint32_t argc, jsval *vp);

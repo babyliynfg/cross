@@ -1171,7 +1171,6 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, ccObj, "removeKeypadDelegate", js_crossapp_removeKeypadDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     get_or_create_js_obj(cx, global, "console", &tmpObj);
     JS_DefineFunction(cx, tmpObj, "log", js_console_log, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    
     JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
@@ -1302,3 +1301,39 @@ void js_remove_object_root(JS::HandleValue target)
     engine->executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
 }
 
+bool _____js_crossapp_CAHttpResponse_getResponseHeader(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAHttpResponse* cobj = (CrossApp::CAHttpResponse *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAHttpResponse_getResponseHeader : Invalid Native Object");
+    if (argc == 0) {
+        std::vector<char, std::allocator<char> >* ret = cobj->getResponseHeader();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_vector_char_to_jsval(cx, *ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_crossapp_CAHttpResponse_getResponseHeader : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool _____js_crossapp_CAHttpResponse_getResponseData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAHttpResponse* cobj = (CrossApp::CAHttpResponse *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAHttpResponse_getResponseData : Invalid Native Object");
+    if (argc == 0) {
+        std::vector<char, std::allocator<char> >* ret = cobj->getResponseData();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_vector_char_to_jsval(cx, *ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_crossapp_CAHttpResponse_getResponseData : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}

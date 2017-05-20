@@ -700,7 +700,7 @@ register: function (extNames, loader) {
      * Release the cache of resource by url.
      * @param url
      */
-release: function (url) {
+jsRelease: function (url) {
     var cache = this.cache;
     delete cache[url];
 },
@@ -708,7 +708,7 @@ release: function (url) {
     /**
      * Resource cache of all resources.
      */
-releaseAll: function () {
+jsReleaseAll: function () {
     var locCache = this.cache;
     for (var key in locCache)
         delete locCache[key];
@@ -1418,30 +1418,52 @@ ca._initDebugSetting = function (mode) {
     var caApp = ca.app;
     var bakLog = ca._cocosplayerLog || ca.log || log;
     ca.log = ca.warn = ca.error = ca.assert = function(){};
-    if(mode == caApp.DEBUG_MODE_NONE){
-    }else{
-        ca.error = function(){
-            bakLog.call(this, "ERROR :  " + ca.formatStr.apply(ca, arguments));
-        };
-        ca.assert = function(cond, msg) {
-            if (!cond && msg) {
-                var args = [];
-                for (var i = 1; i < arguments.length; i++)
-                    args.push(arguments[i]);
-                bakLog("Assert: " + ca.formatStr.apply(ca, args));
-            }
-        };
-        if(mode != ccGame.DEBUG_MODE_ERROR && mode != caApp.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            ca.warn = function(){
-                bakLog.call(this, "WARN :  " + ca.formatStr.apply(ca, arguments));
-            };
+    
+    ca.log = function(){
+        
+        var string = ca.formatStr.apply(ca, arguments);
+        bakLog.call(this, string);
+        
+        if (ca.CAApplication.getApplication().isCrossAppCCLogNotification() == true)
+        {
+            ca.CANotificationCenter.getInstance().postNotificationWithStringValue(ca.CROSSAPP_CCLOG_NOTIFICATION, string);
         }
-        if(mode == ccGame.DEBUG_MODE_INFO || mode == caApp.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            ca.log = function(){
-                bakLog.call(this, ca.formatStr.apply(ca, arguments));
-            };
+        
+    };
+    ca.assert = function(cond, msg) {
+        if (!cond && msg) {
+            var args = [];
+            for (var i = 1; i < arguments.length; i++)
+                args.push(arguments[i]);
+            bakLog("Assert: " + ca.formatStr.apply(ca, args));
         }
-    }
+    };
+    ca.error = function(){
+        bakLog.call(this, "ERROR :  " + ca.formatStr.apply(ca, arguments));
+    };
+    
+//    if(mode == caApp.DEBUG_MODE_NONE){
+//    }else{
+//        ca.error = function(){
+//            bakLog.call(this, "ERROR :  " + ca.formatStr.apply(ca, arguments));
+//        };
+//        ca.assert = function(cond, msg) {
+//            if (!cond && msg) {
+//                var args = [];
+//                for (var i = 1; i < arguments.length; i++)
+//                    args.push(arguments[i]);
+//                bakLog("Assert: " + ca.formatStr.apply(ca, args));
+//            }
+//        };
+//        if(mode != ccGame.DEBUG_MODE_ERROR && mode != caApp.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
+//            ca.warn = function(){
+//                bakLog.call(this, "WARN :  " + ca.formatStr.apply(ca, arguments));
+//            };
+//        }
+//        if(mode == ccGame.DEBUG_MODE_INFO || mode == caApp.DEBUG_MODE_INFO_FOR_WEB_PAGE){
+//            
+//        }
+//    }
 };
 
 ca._engineLoaded = false;

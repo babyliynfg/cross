@@ -304,8 +304,16 @@ public:
      */
     virtual bool isCalledFromScript() { return false; };
     
-    
+    /**
+     * Reflect the release relationship to script scope
+     */
     virtual void releaseScriptObject(CrossApp::CAObject* owner, CrossApp::CAObject* target) = 0;
+    
+    /**
+     * Release all children in script scope
+     */
+    virtual void releaseAllSubviewsRecursive(CrossApp::CAView* view) = 0;
+    
     
     virtual void releaseThis() = 0;
     

@@ -5,7 +5,7 @@
 #include "animation/CAViewAnimation.h"
 #include "dispatcher/CATouchDispatcher.h"
 #include "basics/CACamera.h"
-
+#include "script_support/CCScriptSupport.h"
 
 NS_CC_BEGIN
 
@@ -26,6 +26,10 @@ CAWindow::~CAWindow()
 {
     CC_SAFE_RELEASE_NULL(m_pRootViewController);
     CC_SAFE_RELEASE_NULL(m_pModalViewController);
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->releaseAllSubviewsRecursive(this);
+#endif
 }
 
 bool CAWindow::init()

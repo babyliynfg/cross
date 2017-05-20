@@ -404,7 +404,15 @@ public:
      */
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
 
+    /**
+     * Reflect the release relationship to script scope
+     */
     virtual void releaseScriptObject(CrossApp::CAObject* owner, CrossApp::CAObject* target) override;
+    
+    /**
+     * Release all children in script scope
+     */
+    virtual void releaseAllSubviewsRecursive(CrossApp::CAView* view) override;
     
     /**
      * Calls the Garbage Collector

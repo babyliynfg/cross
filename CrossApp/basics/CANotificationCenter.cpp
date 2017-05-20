@@ -1,7 +1,7 @@
 
 
 #include "CANotificationCenter.h"
-
+#include "CAValue.h"
 NS_CC_BEGIN
 
 static CANotificationCenter *s_sharedNotifCenter = nullptr;
@@ -163,6 +163,30 @@ void CANotificationCenter::postNotification(const std::string& name, CAObject *o
 void CANotificationCenter::postNotification(const std::string& name)
 {
     this->postNotification(name, nullptr);
+}
+
+void CANotificationCenter::postNotificationWithIntValue(const std::string& name, int value)
+{
+    CAValue v = CAValue(value);
+    this->postNotification(name, &v);
+}
+
+void CANotificationCenter::postNotificationWithFloatValue(const std::string& name, float value)
+{
+    CAValue v = CAValue(value);
+    this->postNotification(name, &v);
+}
+
+void CANotificationCenter::postNotificationWithDoubleValue(const std::string& name, double value)
+{
+    CAValue v = CAValue(value);
+    this->postNotification(name, &v);
+}
+
+void CANotificationCenter::postNotificationWithStringValue(const std::string& name, const std::string& value)
+{
+    CAValue v = CAValue(value);
+    this->postNotification(name, &v);
 }
 
 int CANotificationCenter::getObserverHandlerByName(const std::string& name)

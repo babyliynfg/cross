@@ -94,7 +94,7 @@ void js_log(const char *format, ...) {
     va_end(vl);
     if (len > 0)
     {
-        CCLOG("JS: %s", _js_log_buf);
+        CCLog("JS: %s", _js_log_buf);
     }
 }
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -1429,27 +1429,16 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     
     if (action == script::viewDidUnload)
     {
-//        if (isFunctionOverridedInJS(jstarget, "viewOnExitTransitionDidStart", js_crpssapp_Node_onEnter))
-//        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidUnload", 1, &dataVal, &retval);
-//        }
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidUnload", 0, &dataVal, &retval);
          cleanupSchedulesAndActions(p);
     }
     else if (action == script::viewDidLoad)
     {
-        //        cleanupSchedulesAndActions(p);
-//        if (isFunctionOverridedInJS(jstarget, "viewOnEnterTransitionDidFinish", js_crpssapp_Node_onExit))
-//        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidLoad", 1, &dataVal, &retval);
-//        }
-        
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidLoad", 0, &dataVal, &retval);
     }
     else if (action == script::viewSizeDidChanged)
     {
-//        if (isFunctionOverridedInJS(jstarget, "viewOnSizeTransitionDidChanged", js_crpssapp_Node_onEnterTransitionDidFinish))
-//        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewSizeDidChanged", 0, &dataVal, &retval);
-//        }
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewSizeDidChanged", 0, &dataVal, &retval);
     }
     
     return ret;
@@ -1518,7 +1507,17 @@ void ScriptingCore::releaseScriptObject(CrossApp::CAObject* owner, CrossApp::CAO
     valArr[1] = valTarget;
     
     JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
-    executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
+    executeFunctionWithOwner(jsbVal, "unregisterNativeObject", args, &retval);
+}
+
+void ScriptingCore::releaseAllSubviewsRecursive(CrossApp::CAView* view)
+{
+    const CAVector<CAView*>& subviews = view->getSubviews();
+    for (auto subview : subviews)
+    {
+        releaseScriptObject(view, subview);
+        releaseAllSubviewsRecursive(subview);
+    }
 }
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)

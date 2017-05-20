@@ -546,7 +546,7 @@ protected:
     friend class                CAViewAnimation;
 };
 
-class CC_DLL CAContentContainer: public CAResponder
+class CC_DLL CAContentContainer
 {
 public:
     

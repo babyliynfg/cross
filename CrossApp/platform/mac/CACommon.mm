@@ -24,8 +24,7 @@ void CCLog(const char * pszFormat, ...)
     {
         if (application->isCrossAppCCLogNotification() == true)
         {
-            CAValue value = CAValue(szBuf);
-            CANotificationCenter::getInstance()->postNotification(CROSSAPP_CCLOG_NOTIFICATION, &value);
+            CANotificationCenter::getInstance()->postNotificationWithStringValue(CROSSAPP_CCLOG_NOTIFICATION, szBuf);
         }
     }
 }

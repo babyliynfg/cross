@@ -41,7 +41,7 @@ public:
     CACamera* getDefaultCamera() const { return m_pDefaultCamera; }
     
     void setCameraOrderDirty() { m_bCameraOrderDirty = true; }
-    
+
 protected:
     
     CC_PROPERTY(CAViewController*, m_pRootViewController, RootViewController);

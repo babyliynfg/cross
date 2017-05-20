@@ -560,20 +560,6 @@ ca.CAColor4F.ORANGE = {r:1, g:0.5, b:0,a:1};
 ca.CAColor4F.GRAY = {r:0.65, g:0.65, b:0.65,a:1};
 ca.CAColor4F.CLEAR = {r:1, g:1, b:1,a:0};
 
-
-ca.WHITE = {r:255, g:255, b:255,a:255};
-ca.YELLOW = {r:255, g:255, b:0,a:255};
-ca.GREEN = {r:0, g:255, b:0,a:255};
-ca.BLUE = {r:0, g:0, b:255,a:255};
-ca.RED = {r:255, g:0, b:0,a:255};
-ca.MAGENTA = {r:255, g:0, b:255,a:255};
-ca.BLACK = {r:0, g:0, b:0,a:255};
-ca.ORANGE = {r:255, g:127, b:0,a:255};
-ca.GRAY = {r:166, g:166, b:166,a:255};
-ca.CLEAR = {r:255, g:255, b:255,a:0};
-
-
-
 //
 // Reusable objects
 //
@@ -583,18 +569,9 @@ ca._reuse_size = {width:0, height:0};
 ca._reuse_rect = {x:0, y:0, width:0, height:0};
 ca._reuse_color3b = {r:255, g:255, b:255 };
 ca._reuse_color4b = {r:255, g:255, b:255, a:255 };
-
 //
 // Basic sturcture : Point
 //
-ca.p = function( x, y )
-{
-    if (x == undefined)
-        return {x: 0, y: 0};
-    if (y == undefined)
-        return {x: x.x, y: x.y};
-    return {x:x, y:y};
-};
 ca.DPoint = function( x, y )
 {
     if( ca._reuse_p_index == ca._reuse_p.length )
@@ -607,7 +584,7 @@ ca.DPoint = function( x, y )
     return p;
 };
 
-ca.dpointEqualToDPoint = function (point1, point2) {
+ca.DPointEqualToDPoint = function (point1, point2) {
     return ((point1.x == point2.x) && (point1.y == point2.y));
 };
 
@@ -618,11 +595,7 @@ ca.DPointZero = function () {
 //
 // Basic sturcture : Size
 //
-ca.size = function(w,h)
-{
-    return {width:w, height:h};
-};
-ca.dsize = function(w,h)
+ca.DSize = function(w,h)
 {
     ca._reuse_size.width = w;
     ca._reuse_size.height = h;
@@ -635,7 +608,7 @@ ca.DRect= function(w,h)
     return ca._reuse_size;
 };
 
-ca.dsizeEqualToDSize = function (size1, size2)
+ca.DSizeEqualToDSize = function (size1, size2)
 {
     return ((size1.width == size2.width) && (size1.height == size2.height));
 };
@@ -670,7 +643,7 @@ ca.rect = function(x,y,w,h)
 
     throw "unknown argument type";
 };
-ca.drect = function(x,y,w,h)
+ca.DRect = function(x,y,w,h)
 {
     ca._reuse_rect.x = x;
     ca._reuse_rect.y = y;
@@ -678,11 +651,11 @@ ca.drect = function(x,y,w,h)
     ca._reuse_rect.height = h;
     return ca._reuse_rect;
 };
-ca.rectEqualToRect = function (rect1, rect2) {
+ca.RectEqualToRect = function (rect1, rect2) {
     return ( rect1.x==rect2.x && rect1.y==rect2.y && rect1.width==rect2.width && rect1.height==rect2.height);
 };
 
-ca.rectContainsRect = function (rect1, rect2) {
+ca.RectContainsRect = function (rect1, rect2) {
     if ((rect1.x >= rect2.x) || (rect1.y >= rect2.y) ||
         ( rect1.x + rect1.width <= rect2.x + rect2.width) ||
         ( rect1.y + rect1.height <= rect2.y + rect2.height))
@@ -773,87 +746,6 @@ ca.colorToHex = function (color) {
     return hex;
 };
 
-/**
- * White color (255, 255, 255, 255)
- * @returns {ca.Color}
- * @private
- */
-ca.color._getWhite = function(){
-    return ca.color(255, 255, 255, 255);
-};
-
-/**
- *  Yellow color (255, 255, 0, 255)
- * @returns {ca.Color}
- * @private
- */
-ca.color._getYellow = function () {
-    return ca.color(255, 255, 0, 255);
-};
-
-/**
- *  Blue color (0, 0, 255, 255)
- * @type {ca.Color}
- * @private
- */
-ca.color._getBlue = function () {
-    return  ca.color(0, 0, 255, 255);
-};
-
-/**
- *  Green Color (0, 255, 0, 255)
- * @type {ca.Color}
- * @private
- */
-ca.color._getGreen = function () {
-    return ca.color(0, 255, 0, 255);
-};
-
-/**
- *  Red Color (255, 0, 0, 255)
- * @type {ca.Color}
- * @private
- */
-ca.color._getRed = function () {
-    return ca.color(255, 0, 0, 255);
-};
-
-/**
- *  Magenta Color (255, 0, 255, 255)
- * @type {ca.Color}
- * @private
- */
-ca.color._getMagenta = function () {
-    return ca.color(255, 0, 255, 255);
-};
-
-/**
- *  Black Color (0, 0, 0, 255)
- * @type {ca.Color}
- * @private
- */
-ca.color._getBlack = function () {
-    return ca.color(0, 0, 0, 255);
-};
-
-/**
- *  Orange Color (255, 127, 0, 255)
- * @type {ca.Color}
- * @private
- */
-ca.color._getOrange = function () {
-    return ca.color(255, 127, 0, 255);
-};
-
-/**
- *  Gray Color (166, 166, 166, 255)
- * @type {ca.Color}
- * @private
- */
-ca.color._getGray = function () {
-    return ca.color(166, 166, 166, 255);
-};
-
 var _proto = ca.color;
 /** @expose */
 _proto.WHITE;
@@ -883,6 +775,9 @@ ca.defineGetterSetter(_proto, "ORANGE", _proto._getOrange);
 _proto.GRAY;
 ca.defineGetterSetter(_proto, "GRAY", _proto._getGray);
 
+ca.CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
+ca.CROSSAPP_CCLOG_NOTIFICATION = "CROSSAPP_CCLOG_NOTIFICATION";
+
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
 ca.Loader = ca.Class.extend({
@@ -903,7 +798,6 @@ ca.Loader.preload = function (resources, selector, target) {
     return this._instance;
 };
 
-ca.LoaderScene = ca.Loader;
 
 var ConfigType = {
 NONE: 0,

@@ -4,6 +4,182 @@
 var ca = ca || {};
 
 /**
+ * @class CAObject
+ */
+ca.CAObject = {
+
+/**
+ * @method getUID
+ * @return {unsigned int}
+ */
+getUID : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setUserObject
+ * @param {ca.CAObject} arg0
+ */
+setUserObject : function (
+caobject 
+)
+{
+},
+
+/**
+ * @method getUserObject
+ * @return {ca.CAObject}
+ */
+getUserObject : function (
+)
+{
+    return ca.CAObject;
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method isEqual
+ * @param {ca.CAObject} arg0
+ * @return {bool}
+ */
+isEqual : function (
+caobject 
+)
+{
+    return false;
+},
+
+/**
+ * @method isSingleReference
+ * @return {bool}
+ */
+isSingleReference : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method autorelease
+ * @return {ca.CAObject}
+ */
+autorelease : function (
+)
+{
+    return ca.CAObject;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setTextTag
+ * @param {String} arg0
+ */
+setTextTag : function (
+str 
+)
+{
+},
+
+/**
+ * @method setTag
+ * @param {int} arg0
+ */
+setTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method release
+ */
+release : function (
+)
+{
+},
+
+/**
+ * @method retain
+ * @return {ca.CAObject}
+ */
+retain : function (
+)
+{
+    return ca.CAObject;
+},
+
+/**
+ * @method getTag
+ * @return {int}
+ */
+getTag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method retainCount
+ * @return {unsigned int}
+ */
+retainCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getStrID
+ * @return {String}
+ */
+getStrID : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getTextTag
+ * @return {String}
+ */
+getTextTag : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method CAObject
+ * @constructor
+ */
+CAObject : function (
+)
+{
+},
+
+};
+
+/**
  * @class CAScheduler
  */
 ca.CAScheduler = {
@@ -4142,6 +4318,16 @@ setDefaultValues : function (
 },
 
 /**
+ * @method setCrossAppCCLogNotification
+ * @param {bool} arg0
+ */
+setCrossAppCCLogNotification : function (
+bool 
+)
+{
+},
+
+/**
  * @method getStatusBarOrientation
  * @return {ca.CAInterfaceOrientation}
  */
@@ -4489,6 +4675,16 @@ setImageCache : function (
 caimagecache 
 )
 {
+},
+
+/**
+ * @method isCrossAppCCLogNotification
+ * @return {bool}
+ */
+isCrossAppCCLogNotification : function (
+)
+{
+    return false;
 },
 
 /**
@@ -8724,101 +8920,179 @@ CAWindow : function (
 };
 
 /**
- * @class CAThread
+ * @class CANotificationCenter
  */
-ca.CAThread = {
+ca.CANotificationCenter = {
 
 /**
- * @method setMaxMsgCount
- * @param {int} arg0
+ * @method postNotificationWithIntValue
+ * @param {String} arg0
+ * @param {int} arg1
  */
-setMaxMsgCount : function (
+postNotificationWithIntValue : function (
+str, 
 int 
 )
 {
 },
 
 /**
- * @method closeAtOnce
- */
-closeAtOnce : function (
+ * @method postNotification
+* @param {String|String} str
+* @param {ca.CAObject} caobject
+*/
+postNotification : function(
+str,
+caobject 
 )
 {
 },
 
 /**
- * @method isRunning
- * @return {bool}
+ * @method postNotificationWithStringValue
+ * @param {String} arg0
+ * @param {String} arg1
  */
-isRunning : function (
-)
-{
-    return false;
-},
-
-/**
- * @method OnRunning
- */
-OnRunning : function (
+postNotificationWithStringValue : function (
+str, 
+str 
 )
 {
 },
 
 /**
- * @method clear
+ * @method removeObserver
+ * @param {ca.CAObject} arg0
+ * @param {String} arg1
  */
-clear : function (
+removeObserver : function (
+caobject, 
+str 
 )
 {
 },
 
 /**
- * @method OnExitInstance
+ * @method getObserverHandlerByName
+ * @param {String} arg0
+ * @return {int}
  */
-OnExitInstance : function (
+getObserverHandlerByName : function (
+str 
+)
+{
+    return 0;
+},
+
+/**
+ * @method removeAllObservers
+ * @param {ca.CAObject} arg0
+ * @return {int}
+ */
+removeAllObservers : function (
+caobject 
+)
+{
+    return 0;
+},
+
+/**
+ * @method postNotificationWithDoubleValue
+ * @param {String} arg0
+ * @param {double} arg1
+ */
+postNotificationWithDoubleValue : function (
+str, 
+double 
 )
 {
 },
 
 /**
- * @method start
+ * @method unregisterScriptObserver
+ * @param {ca.CAObject} arg0
+ * @param {String} arg1
  */
-start : function (
+unregisterScriptObserver : function (
+caobject, 
+str 
 )
 {
 },
 
 /**
- * @method OnInitInstance
+ * @method postNotificationWithFloatValue
+ * @param {String} arg0
+ * @param {float} arg1
  */
-OnInitInstance : function (
+postNotificationWithFloatValue : function (
+str, 
+float 
 )
 {
 },
 
 /**
- * @method close
+ * @method getScriptHandler
+ * @return {int}
  */
-close : function (
+getScriptHandler : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addObserver
+ * @param {function} arg0
+ * @param {ca.CAObject} arg1
+ * @param {String} arg2
+ */
+addObserver : function (
+func, 
+caobject, 
+str 
 )
 {
 },
 
 /**
- * @method notifyRun
- * @param {void} arg0
+ * @method registerScriptObserver
+ * @param {ca.CAObject} arg0
+ * @param {String} arg1
+ * @param {int} arg2
  */
-notifyRun : function (
-void 
+registerScriptObserver : function (
+caobject, 
+str, 
+int 
 )
 {
 },
 
 /**
- * @method CAThread
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {ca.CANotificationCenter}
+ */
+getInstance : function (
+)
+{
+    return ca.CANotificationCenter;
+},
+
+/**
+ * @method CANotificationCenter
  * @constructor
  */
-CAThread : function (
+CANotificationCenter : function (
 )
 {
 },
@@ -8838,6 +9112,20 @@ getImageView : function (
 )
 {
     return ca.CAImageView;
+},
+
+/**
+ * @method printscreenWithView
+* @param {ca.CAView|ca.CAView|ca.CAView|ca.CAView} caview
+* @param {point_object|color4b_object|point_object} dpoint
+* @param {color4b_object} cacolor4b
+*/
+printscreenWithView : function(
+caview,
+dpoint,
+cacolor4b 
+)
+{
 },
 
 /**
@@ -14529,6 +14817,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method getDefaultResourceRootPath
+ * @return {String}
+ */
+getDefaultResourceRootPath : function (
+)
+{
+    return ;
 },
 
 /**

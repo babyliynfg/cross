@@ -108,7 +108,7 @@ CAView::CAView(void)
     
     s_gViews[m_u__ID] = this;
     
-    CCLog("CAView = %lu\n", s_gViews.size());
+    //CCLog("CAView = %lu\n", s_gViews.size());
 }
 
 CAView::~CAView(void)
@@ -145,7 +145,7 @@ CAView::~CAView(void)
     
     s_gViews.erase(m_u__ID);
     
-    CCLog("~CAView = %lu\n", s_gViews.size());
+    //CCLog("~CAView = %lu\n", s_gViews.size());
 }
 
 CAView * CAView::create(void)

@@ -51,6 +51,11 @@ public:
 
     void postNotification(const std::string& name, CAObject *object);
 
+    void postNotificationWithIntValue(const std::string& name, int value);
+    void postNotificationWithFloatValue(const std::string& name, float value);
+    void postNotificationWithDoubleValue(const std::string& name, double value);
+    void postNotificationWithStringValue(const std::string& name, const std::string& value);
+    
     inline int getScriptHandler() { return m_scriptHandler; };
 
     int getObserverHandlerByName(const std::string& name);

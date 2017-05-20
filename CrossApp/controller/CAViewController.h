@@ -14,7 +14,7 @@
 #include "view/CAPageView.h"
 #include "dispatcher/CAKeypadDelegate.h"
 #include "dispatcher/CAKeypadDispatcher.h"
-
+#include "basics/CAResponder.h"
 NS_CC_BEGIN
 
 class CAWindow;
@@ -24,7 +24,8 @@ class CADrawerController;
 class CAUIEditorParser;
 
 class CC_DLL CAViewController
-: public CAContentContainer
+: public CAResponder
+, public CAContentContainer
 , public CAKeypadDelegate
 {
     
