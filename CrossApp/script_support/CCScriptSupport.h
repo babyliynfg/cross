@@ -304,6 +304,11 @@ public:
      */
     virtual bool isCalledFromScript() { return false; };
     
+    
+    virtual void releaseScriptObject(CrossApp::CAObject* owner, CrossApp::CAObject* target) = 0;
+    
+    virtual void releaseThis() = 0;
+    
     /**
      *
      */
@@ -334,6 +339,7 @@ public:
     void removeScriptEngine(void);
     
     static CCScriptEngineManager* sharedManager(void);
+    static CCScriptEngineManager* getScriptEngineManager(void);
     static void purgeSharedManager(void);
     
     /**

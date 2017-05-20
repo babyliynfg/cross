@@ -19,23 +19,22 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CAApplication* pDirector = CAApplication::getApplication();
+    CAApplication* applicationn = CAApplication::getApplication();
     
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
-
-    pDirector->setOpenGLView(pEGLView);
+    
+    applicationn->setOpenGLView(pEGLView);
     
     ScriptingCore* sc = ScriptingCore::getInstance();
-  
+    
     sc->addRegisterCallback(register_all_crossapp);
     sc->addRegisterCallback(register_crossapp_js_core);
     sc->addRegisterCallback(register_all_crossapp_delegates_manual);
-
+    sc->addRegisterCallback(register_jsb_websocket);
     sc->start();
     sc->enableDebugger();
     
     sc->runScript("script/jsb_boot.js");
-    
     sc->runScript("script/jsb_crossapp.js");
     
     CCScriptEngineManager::sharedManager()->setScriptEngine(sc);

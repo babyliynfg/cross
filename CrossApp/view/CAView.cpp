@@ -36,6 +36,8 @@ NS_CC_BEGIN;
 
 static int s_globalOrderOfArrival = 1;
 
+static std::map<int, CAView*> s_gViews;
+
 CAView::CAView(void)
 : m_fRotationX(0.0f)
 , m_fRotationY(0.0f)
@@ -104,7 +106,9 @@ CAView::CAView(void)
     this->updateRotationQuat();
     this->setAnchorPoint(DPoint(0.5f, 0.5f));
     
-    //CCLog("CAView = %d\n", ++viewCount);
+    s_gViews[m_u__ID] = this;
+    
+    CCLog("CAView = %lu\n", s_gViews.size());
 }
 
 CAView::~CAView(void)
@@ -137,7 +141,11 @@ CAView::~CAView(void)
         m_pCGNode->m_pSuperviewCAView = nullptr;
         m_pCGNode->release();
     }
-    //CCLog("~CAView = %d\n", --viewCount);
+    
+    
+    s_gViews.erase(m_u__ID);
+    
+    CCLog("~CAView = %lu\n", s_gViews.size());
 }
 
 CAView * CAView::create(void)

@@ -61,6 +61,8 @@ bool CAApplication::init(void)
 {
 	setDefaultValues();
 
+    m_bCrossAppCCLogNotification = false;
+    
     // scenes
     m_pRootWindow = nullptr;
 
@@ -671,18 +673,15 @@ void CAApplication::restart()
 
 void CAApplication::reset()
 {
-#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    
     if (m_pRootWindow)
     {
-#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-        if (sEngine)
+#if CC_ENABLE_SCRIPT_BINDING
+        if (CCScriptEngineManager::getScriptEngineManager())
         {
-            sEngine->releaseScriptObject(this, m_pRootWindow);
+            CCScriptEngineManager::getScriptEngineManager()->getScriptEngine()->releaseScriptObject(this, m_pRootWindow);
         }
-#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#endif
+        
         m_pRootWindow->onExitTransitionDidStart();
         m_pRootWindow->onExit();
         m_pRootWindow->release();
@@ -752,6 +751,8 @@ void CAApplication::purgeApplication()
 
 void CAApplication::restartApplication()
 {
+    std::string rootPath = FileUtils::getInstance()->getDefaultResourceRootPath();
+    
     reset();
     
     // RenderState need to be reinitialized
@@ -768,11 +769,13 @@ void CAApplication::restartApplication()
     // Restart animation
     this->startAnimation();
     
+    FileUtils::getInstance()->setDefaultResourceRootPath(rootPath);
+    
 // Real restart in script level
-//#if CC_ENABLE_SCRIPT_BINDING
-//    ScriptEvent scriptEvent(kRestartGame, nullptr);
-//    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-//#endif
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEvent scriptEvent(kRestartGame, nullptr);
+    CCScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+#endif
 }
 
 void CAApplication::pause(void)

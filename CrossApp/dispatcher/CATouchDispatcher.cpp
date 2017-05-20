@@ -94,7 +94,7 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
     
     std::vector<CAResponder*> vector;
     
-    do
+    while (responder)
     {
 //        CCLog("------ %s", typeid(*responder).name());
         vector.push_back(responder);
@@ -107,8 +107,7 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
         {
             responder = getLastResponder(touch, viewController->getView()->CAView::getSubviews());
         }
-    }
-    while (responder);
+    };
     
     return vector;
 }
@@ -183,23 +182,26 @@ void CATouchController::touchBegan()
             vector = this->getEventListener(m_pTouch, CAApplication::getApplication()->getRootWindow());
         }
         
-        std::vector<CAResponder*>::iterator itr;
-        for (itr=vector.begin(); itr!=vector.end(); itr++)
+        if (!vector.empty())
         {
-            CC_CONTINUE_IF(!(*itr)->isPriorityScroll());
-            CC_CONTINUE_IF(!(*itr)->isScrollEnabled());
-            CC_CONTINUE_IF(!(*itr)->isHorizontalScrollEnabled() && !(*itr)->isVerticalScrollEnabled());
-            m_vTouchMovedsViewCache.pushBack((*itr));
-        }
-        m_vTouchesViews.pushBack(vector.back());
-        
-        if (!m_vTouchMovedsViewCache.empty())
-        {
-            CAScheduler::getScheduler()->schedule(schedule_selector(CATouchController::passingTouchesViews), this, 0, 0, 0.05f);
-        }
-        else
-        {
-            this->passingTouchesViews();
+            std::vector<CAResponder*>::iterator itr;
+            for (itr=vector.begin(); itr!=vector.end(); itr++)
+            {
+                CC_CONTINUE_IF(!(*itr)->isPriorityScroll());
+                CC_CONTINUE_IF(!(*itr)->isScrollEnabled());
+                CC_CONTINUE_IF(!(*itr)->isHorizontalScrollEnabled() && !(*itr)->isVerticalScrollEnabled());
+                m_vTouchMovedsViewCache.pushBack((*itr));
+            }
+            m_vTouchesViews.pushBack(vector.back());
+            
+            if (!m_vTouchMovedsViewCache.empty())
+            {
+                CAScheduler::getScheduler()->schedule(schedule_selector(CATouchController::passingTouchesViews), this, 0, 0, 0.05f);
+            }
+            else
+            {
+                this->passingTouchesViews();
+            }
         }
     }
 }

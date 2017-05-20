@@ -122,7 +122,6 @@ void CCScriptEngineManager::removeScriptEngine(void)
 {
     if (m_pScriptEngine)
     {
-        delete m_pScriptEngine;
         m_pScriptEngine = NULL;
     }
 }
@@ -133,6 +132,11 @@ CCScriptEngineManager* CCScriptEngineManager::sharedManager(void)
     {
         s_pSharedScriptEngineManager = new CCScriptEngineManager();
     }
+    return s_pSharedScriptEngineManager;
+}
+
+CCScriptEngineManager* CCScriptEngineManager::getScriptEngineManager(void)
+{
     return s_pSharedScriptEngineManager;
 }
 

@@ -40,10 +40,14 @@ CAObject::~CAObject(void)
         CAPoolManager::getInstance()->removeObject(this);
     }
     
-    CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-    if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
+    CCScriptEngineManager* pEngineManager = CCScriptEngineManager::getScriptEngineManager();
+    if (pEngineManager)
     {
-        pEngine->removeScriptObjectByObject(this);
+        CCScriptEngineProtocol* pEngine = pEngineManager->getScriptEngine();
+        if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
+        {
+            pEngine->removeScriptObjectByObject(this);
+        }
     }
 }
 

@@ -227,7 +227,7 @@ enum class CAInterfaceOrientation
 };
 
 static const char* CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
-
+static const char* CROSSAPP_CCLOG_NOTIFICATION = "CROSSAPP_CCLOG_NOTIFICATION";
 //script
 namespace script
 {

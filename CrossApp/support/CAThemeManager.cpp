@@ -77,15 +77,15 @@ CAThemeManager::CAThemeManager(const std::string& filePath)
         return;
     }
     
-    for (auto& var : m_mPathss)
-    {
-        std::map<std::string, std::string>& map = var.second.map;
-        for (auto& it : map)
-        {
-            CCLog("name: %s, value: %s", it.first.c_str(), it.second.c_str());
-        }
-        CCLog("control   name: %s", var.first.c_str());
-    }
+//    for (auto& var : m_mPathss)
+//    {
+//        std::map<std::string, std::string>& map = var.second.map;
+//        for (auto& it : map)
+//        {
+//            CCLog("name: %s, value: %s", it.first.c_str(), it.second.c_str());
+//        }
+//        CCLog("control   name: %s", var.first.c_str());
+//    }
 }
 
 CAThemeManager::~CAThemeManager()

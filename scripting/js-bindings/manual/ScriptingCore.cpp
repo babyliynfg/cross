@@ -36,7 +36,7 @@
 #define  LOGD(...) js_log(__VA_ARGS__)
 #endif
 
-#if COCOS2D_DEBUG
+#if CrossApp_DEBUG
 #define TRACE_DEBUGGER_SERVER(...) CCLOG(__VA_ARGS__)
 #else
 #define TRACE_DEBUGGER_SERVER(...)
@@ -142,13 +142,15 @@ ScriptingCore::ScriptingCore()
 ,_cx(nullptr)
 ,_jsInited(false)
 ,_needCleanup(false)
+,_global(nullptr)
+,_debugGlobal(nullptr)
 ,_callFromScript(false)
 {
     initRegister();
 }
 void ScriptingCore::initRegister(){
     this->addRegisterCallback(registerDefaultClasses);
-    this->_runLoop = new SimpleRunLoop();
+    this->_runLoop = new (std::nothrow) SimpleRunLoop();
 }
 
 void ScriptingCore::restartVM()
@@ -158,7 +160,10 @@ void ScriptingCore::restartVM()
     CCApplication::sharedApplication()->applicationDidFinishLaunching();
 }
 
-ScriptingCore::~ScriptingCore(){}
+ScriptingCore::~ScriptingCore()
+{
+    cleanup();
+}
 
 bool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -323,6 +328,14 @@ ScriptingCore* ScriptingCore::getInstance()
     }
     return instance;
 }
+
+void ScriptingCore::releaseThis()
+{
+    instance = nullptr;
+    CCScriptEngineManager::getScriptEngineManager()->setScriptEngine(nullptr);
+    delete this;
+}
+
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
     registrationList.push_back(callback);
 }
@@ -336,25 +349,27 @@ static JSSecurityCallbacks securityCallbacks = {
     NULL
 };
 
-void ScriptingCore::createGlobalContext(){
-    if (_cx && _rt) {
-        ScriptingCore::removeAllRoots(_cx);
-        JS_DestroyContext(_cx);
-        JS_DestroyRuntime(_rt);
-        _cx = nullptr;
-        _cx = nullptr;
-    }
+void ScriptingCore::createGlobalContext()
+{
+//    if (_cx && _rt)
+//    {
+//        ScriptingCore::removeAllRoots(_cx);
+//        JS_DestroyContext(_cx);
+//        JS_DestroyRuntime(_rt);
+//        _cx = nullptr;
+//        _rt = nullptr;
+//    }
     
-    
-    if (!JS_Init()) {
+    if (!_jsInited && !JS_Init())
+    {
         return;
-    } else
+    }
+    else
     {
         _jsInited = true;
     }
     
     _rt = JS_NewRuntime(8L * 1024L * 1024L);
-    
     JS_SetGCParameter(_rt, JSGC_MAX_BYTES, 0xffffffff);
     
     JS_SetTrustedPrincipals(_rt, &shellTrustedPrincipals);
@@ -369,19 +384,20 @@ void ScriptingCore::createGlobalContext(){
     
     JS_SetErrorReporter(_cx, ScriptingCore::reportError);
     
-    _global.construct(_cx);
-    _global.ref() = NewGlobalObject(_cx);
+    _global = new (std::nothrow) JS::PersistentRootedObject(_rt, NewGlobalObject(_cx));
+    JS::RootedObject global(_cx, _global->get());
     
-    js::SetDefaultObjectForContext(_cx, _global.ref());
+    // Removed in Firefox v34
+    js::SetDefaultObjectForContext(_cx, global);
     
-    JSAutoCompartment ac(_cx,_global.ref());
+    JSAutoCompartment ac(_cx, _global->get());
     
     runScript("script/jsb_prepare.js");
 
     
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
-        callback(_cx, _global.ref());
+        callback(_cx, *_global);
     }
     _needCleanup = true;
 }
@@ -392,7 +408,7 @@ bool ScriptingCore::evalString(const char *string,JS::RootedValue *outVal, const
     }
     
     if (global == NULL) {
-        global = _global.ref().get();
+        global = _global->get();
     }
     JSAutoCompartment ac(cx,global);
     JS::RootedObject cc(cx, global);
@@ -443,7 +459,7 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
     FileUtils * futil = FileUtils::getInstance();
     
     if (global == NULL) {
-        global = _global.ref().get();
+        global = *_global;
     }
     if (cx == NULL) {
         cx = _cx;
@@ -459,17 +475,14 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
     
     // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
     if (futil->isFileExist(byteCodePath)) {
-        /*cocos
-        Data data = futil->getDataFromFile(byteCodePath);
-        if (!data.isNull())
-        {
-            script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr);
-        }
-        */
         
-        std::string data = futil->getFileString(byteCodePath.c_str());
-        if (data.empty()) {
-            script = JS_DecodeScript(cx, data.c_str(), static_cast<uint32_t>(data.size()), nullptr);
+        
+        unsigned long size = 0;
+        unsigned char* data = futil->getFileData(byteCodePath.c_str(), "rb", &size);
+        
+        if (size > 0)
+        {
+            script = JS_DecodeScript(cx, data, static_cast<uint32_t>(size), nullptr);
         }
     }
     
@@ -505,7 +518,7 @@ void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext*
 }
 
 bool ScriptingCore::runScript(const char *path){
-    return runScript(path, _global.ref(), _cx);
+    return runScript(path, *_global, _cx);
 }
 bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSContext* cx)
 {
@@ -519,12 +532,13 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
         JS::RootedValue rval(cx);
         JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
-        if (false == evaluatedOK) {
+        if (false == evaluatedOK)
+        {
             CCLog("Evaluating %s failed (evaluatedOK == JS_FALSE)", path);
             JS_ReportPendingException(cx);
         }
-//        else {
-           
+//        else
+//        {
 //            JSString *str = rval.toString();
 //            printf("Runscript:-->%s",JS_EncodeString(cx, str));
 //        }
@@ -535,7 +549,7 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
 
 bool ScriptingCore::requireScript(const char *path, JS::MutableHandleValue jsvalRet)
 {
-    return requireScript(path, _global.ref(), _cx, jsvalRet);
+    return requireScript(path, *_global, _cx, jsvalRet);
 }
 
 bool ScriptingCore::requireScript(const char *path, JS::HandleObject global, JSContext* cx, JS::MutableHandleValue jsvalRet)
@@ -597,17 +611,22 @@ void ScriptingCore::cleanup()
     }
     localStorageFree();
     removeAllRoots(_cx);
+    garbageCollect();
     if (_cx)
     {
         JS_DestroyContext(_cx);
-        _cx = NULL;
+        _cx = nullptr;
     }
     if (_rt)
     {
         JS_DestroyRuntime(_rt);
-        _rt = NULL;
+        _rt = nullptr;
     }
-    JS_ShutDown();
+    CC_SAFE_DELETE(_global);
+    CC_SAFE_DELETE(_debugGlobal);
+    _global = nullptr;
+    _debugGlobal = nullptr;
+    
     if (_js_log_buf) {
         free(_js_log_buf);
         _js_log_buf = NULL;
@@ -627,9 +646,7 @@ void ScriptingCore::cleanup()
 }
 void ScriptingCore::reset()
 {
-  
     CAApplication::getApplication()->restart();
-    
 }
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
@@ -725,7 +742,7 @@ bool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
     // JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
     // Mac and Simulator versions were compiled with DEBUG.
-#if COCOS2D_DEBUG
+#if CrossApp_DEBUG
     //    JSContext *_cx = ScriptingCore::getInstance()->getGlobalContext();
     //    JSRuntime *rt = JS_GetRuntime(_cx);
     //    JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
@@ -772,7 +789,7 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
         return 0;
     }
     
-    JSAutoCompartment ac(_cx, _global.ref().get());
+    JSAutoCompartment ac(_cx, _global->get());
     
     switch (evt->type)
     {
@@ -823,7 +840,7 @@ bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
     jsval args[2];
     args[0] = int32_to_jsval(_cx, static_cast<int>(type));
     args[1] = std_string_to_jsval(_cx, str);
-    return (true == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global.ref().get()), "__onParseConfig", 2, args));
+    return (true == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global->get()), "__onParseConfig", 2, args));
 }
 bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -846,13 +863,13 @@ bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
 }
 void ScriptingCore::debugProcessInput(const std::string& str)
 {
-    JSAutoCompartment ac(_cx, _debugGlobal.ref());
+    JSAutoCompartment ac(_cx, *_debugGlobal);
     
     JSString* jsstr = JS_NewStringCopyZ(_cx, str.c_str());
     jsval argv = STRING_TO_JSVAL(jsstr);
     JS::RootedValue outval(_cx);
     
-    JS_CallFunctionName(_cx, JS::RootedObject(_cx, _debugGlobal.ref()), "processInput", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
+    JS_CallFunctionName(_cx, JS::RootedObject(_cx, *_debugGlobal), "processInput", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
 }
 //#pragma mark - Debugger
 /*
@@ -1055,18 +1072,17 @@ static void serverEntryPoint(unsigned int port)
 */
 void ScriptingCore::enableDebugger(unsigned int port)
 {
-    if (_debugGlobal.empty())
+    if (!_debugGlobal)
     {
-        JSAutoCompartment ac0(_cx, _global.ref().get());
+        JSAutoCompartment ac0(_cx, _global->get());
         
         JS_SetDebugMode(_cx, true);
         
-        _debugGlobal.construct(_cx);
-        _debugGlobal.ref() = NewGlobalObject(_cx, true);
+        _debugGlobal = new (std::nothrow) JS::PersistentRootedObject(_cx, NewGlobalObject(_cx, true));
         // Adds the debugger object to root, otherwise it may be collected by GC.
-        //AddObjectRoot(_cx, &_debugGlobal.ref()); no need, it's persistent rooted now
-        //JS_WrapObject(_cx, &_debugGlobal.ref()); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
-        JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref().get());
+        //AddObjectRoot(_cx, &*_debugGlobal); no need, it's persistent rooted now
+        //JS_WrapObject(_cx, &*_debugGlobal); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
+        JS::RootedObject rootedDebugObj(_cx, _debugGlobal->get());
         JSAutoCompartment ac(_cx, rootedDebugObj);
         // these are used in the debug program
         JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -1077,7 +1093,7 @@ void ScriptingCore::enableDebugger(unsigned int port)
         
         runScript("script/jsb_debugger.js", rootedDebugObj);
         
-        JS::RootedObject globalObj(_cx, _global.ref().get());
+        JS::RootedObject globalObj(_cx, _global->get());
         JS_WrapObject(_cx, &globalObj);
         // prepare the debugger
         jsval argv = OBJECT_TO_JSVAL(globalObj);
@@ -1113,32 +1129,25 @@ void ScriptingCore::removeAllRoots(JSContext *cx) {
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
 {
     JS::CompartmentOptions options;
-    
     options.setVersion(JSVERSION_LATEST);
     
     JS::RootedObject glob(cx, JS_NewGlobalObject(cx, &global_class, &shellTrustedPrincipals, JS::DontFireOnNewGlobalHook, options));
-    
     if (!glob) {
-        return NULL;
+        return nullptr;
     }
-    
-    JSAutoCompartment ac(cx,glob);
+    JSAutoCompartment ac(cx, glob);
     bool ok = true;
     ok = JS_InitStandardClasses(cx, glob);
-    if (ok) {
+    if (ok)
         JS_InitReflect(cx, glob);
-    }
-    if (ok && debug) {
+    if (ok && debug)
         ok = JS_DefineDebuggerObject(cx, glob);
-    }
-    if (!ok) {
-        return NULL;
-    }
+    if (!ok)
+        return nullptr;
     
     JS_FireOnNewGlobalObject(cx, glob);
     
     return glob;
-    
 }
 
 bool ScriptingCore::executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp)
@@ -1357,7 +1366,7 @@ int ScriptingCore::handleNodeEvent(void* data)
     js_proxy_t * p = jsb_get_native_proxy(node);
     if (!p) return 0;
     
-    JSAutoCompartment ac(_cx, _global.ref());
+    JSAutoCompartment ac(_cx, *_global);
     
     int ret = 0;
     JS::RootedValue retval(_cx);
@@ -1410,7 +1419,7 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     js_proxy_t * p = jsb_get_native_proxy(viewController);
     if (!p) return 0;
     
-    JSAutoCompartment ac(_cx, _global.ref());
+    JSAutoCompartment ac(_cx, *_global);
     
     int ret = 0;
     JS::RootedValue retval(_cx);
@@ -1420,7 +1429,7 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     
     if (action == script::viewDidUnload)
     {
-//        if (isFunctionOverridedInJS(jstarget, "viewOnExitTransitionDidStart", js_cocos2dx_Node_onEnter))
+//        if (isFunctionOverridedInJS(jstarget, "viewOnExitTransitionDidStart", js_crpssapp_Node_onEnter))
 //        {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidUnload", 1, &dataVal, &retval);
 //        }
@@ -1429,7 +1438,7 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     else if (action == script::viewDidLoad)
     {
         //        cleanupSchedulesAndActions(p);
-//        if (isFunctionOverridedInJS(jstarget, "viewOnEnterTransitionDidFinish", js_cocos2dx_Node_onExit))
+//        if (isFunctionOverridedInJS(jstarget, "viewOnEnterTransitionDidFinish", js_crpssapp_Node_onExit))
 //        {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidLoad", 1, &dataVal, &retval);
 //        }
@@ -1437,7 +1446,7 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     }
     else if (action == script::viewSizeDidChanged)
     {
-//        if (isFunctionOverridedInJS(jstarget, "viewOnSizeTransitionDidChanged", js_cocos2dx_Node_onEnterTransitionDidFinish))
+//        if (isFunctionOverridedInJS(jstarget, "viewOnSizeTransitionDidChanged", js_crpssapp_Node_onEnterTransitionDidFinish))
 //        {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewSizeDidChanged", 0, &dataVal, &retval);
 //        }
@@ -1446,7 +1455,17 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     return ret;
 }
 
-
+void ScriptingCore::garbageCollect()
+{
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
+    auto runtime = JS_GetRuntime(_cx);
+    // twice: yep, call it twice since this is a generational GC
+    // and we want to collect as much as possible when this is being called
+    // from replaceScene().
+    JS_GC(runtime);
+    JS_GC(runtime);
+#endif
+}
 
 #pragma mark - Debug
 
@@ -1467,6 +1486,39 @@ void SimpleRunLoop::update(float dt)
         
         ScriptingCore::getInstance()->debugProcessInput(str);
     }
+}
+
+void ScriptingCore::releaseScriptObject(CrossApp::CAObject* owner, CrossApp::CAObject* target)
+{
+    JS::RootedObject global(_cx, _global->get());
+    JS::RootedObject jsbObj(_cx);
+    get_or_create_js_obj(_cx, global, "jsb", &jsbObj);
+    JS::RootedValue jsbVal(_cx, OBJECT_TO_JSVAL(jsbObj));
+    if (jsbVal.isNullOrUndefined())
+    {
+        return;
+    }
+    
+    js_proxy_t *pOwner = jsb_get_native_proxy(owner);
+    js_proxy_t *pTarget = jsb_get_native_proxy(target);
+    if (!pOwner || !pTarget)
+    {
+        return;
+    }
+    JS::RootedValue valOwner(_cx, OBJECT_TO_JSVAL(pOwner->obj));
+    JS::RootedValue valTarget(_cx, OBJECT_TO_JSVAL(pTarget->obj));
+    if (valTarget.isPrimitive())
+    {
+        return;
+    }
+    
+    JS::RootedValue retval(_cx);
+    jsval valArr[2];
+    valArr[0] = valOwner;
+    valArr[1] = valTarget;
+    
+    JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+    executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
 }
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)

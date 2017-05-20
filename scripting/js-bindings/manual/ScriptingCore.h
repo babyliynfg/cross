@@ -39,8 +39,8 @@ class ScriptingCore : public CCScriptEngineProtocol
 private:
     JSRuntime *_rt;
     JSContext *_cx;
-    mozilla::Maybe<JS::PersistentRootedObject> _global; 
-    mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal; 
+    JS::PersistentRootedObject *_global;
+    JS::PersistentRootedObject *_debugGlobal;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
     bool _needCleanup;
@@ -54,9 +54,11 @@ public:
      */
     static ScriptingCore* getInstance();
     
+    virtual void releaseThis();
+    
     /**@~english
-     * Gets the script type, for ScriptingCore, it will return `cocos2d::kScriptTypeJavascript`
-     * @return `cocos2d::kScriptTypeJavascript`
+     * Gets the script type, for ScriptingCore, it will return `CrossApp::kScriptTypeJavascript`
+     * @return `CrossApp::kScriptTypeJavascript`
      */
     virtual CrossApp::ccScriptType getScriptType() override { return CrossApp::kScriptTypeJavascript; };
     
@@ -386,12 +388,12 @@ public:
      * Gets the debug environment's global object
      * @return @~english The debug environment's global object
      */
-    JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
+    JSObject* getDebugGlobal() { return _debugGlobal->get(); }
     /**@~english
      * Gets the global object
      * @return @~english The global object
      */
-    JSObject* getGlobalObject() { return _global.ref().get(); }
+    JSObject* getGlobalObject() { return _global->get(); }
     
     /**@~english
      * Checks whether a C++ function is overrided in js prototype chain
@@ -402,8 +404,15 @@ public:
      */
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
 
+    virtual void releaseScriptObject(CrossApp::CAObject* owner, CrossApp::CAObject* target) override;
     
-     void restartVM();
+    /**
+     * Calls the Garbage Collector
+     */
+    virtual void garbageCollect();
+    
+    void restartVM();
+    
 private:
     void initRegister();
 public:

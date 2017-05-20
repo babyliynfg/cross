@@ -245,6 +245,11 @@ public:
      * Set default resource root path.
      */
     void setDefaultResourceRootPath(const std::string& path);
+    
+    /**
+     * Get default resource root path.
+     */
+    const std::string& getDefaultResourceRootPath() const;
 
     /**
       * Add search path.

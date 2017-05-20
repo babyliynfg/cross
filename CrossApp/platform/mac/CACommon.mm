@@ -2,7 +2,9 @@
 #include "platform/CACommon.h"
 #include <stdarg.h>
 #include <stdio.h>
-
+#include "basics/CAApplication.h"
+#include "basics/CANotificationCenter.h"
+#include "basics/CAValue.h"
 NS_CC_BEGIN
 
 void CCLog(const char * pszFormat, ...)
@@ -17,6 +19,15 @@ void CCLog(const char * pszFormat, ...)
     printf("%s", szBuf);
     printf("\n");
     fflush(stdout);
+    
+    if (CAApplication* application = CAApplication::getApplication())
+    {
+        if (application->isCrossAppCCLogNotification() == true)
+        {
+            CAValue value = CAValue(szBuf);
+            CANotificationCenter::getInstance()->postNotification(CROSSAPP_CCLOG_NOTIFICATION, &value);
+        }
+    }
 }
 
 NS_CC_END

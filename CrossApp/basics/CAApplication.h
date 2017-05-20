@@ -208,6 +208,10 @@ public:
 
     const std::thread::id& getCrossAppThreadId() const { return m_uCrossAppThreadID; }
     
+    void setCrossAppCCLogNotification(bool var) { m_bCrossAppCCLogNotification = var; }
+    
+    bool isCrossAppCCLogNotification() const { return m_bCrossAppCCLogNotification; }
+    
 public:
 
     CC_PROPERTY(CATouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
@@ -309,6 +313,8 @@ protected:
     CAThemeManager* m_pThemeManager;
     
     int m_nDrawCount;
+    
+    bool m_bCrossAppCCLogNotification;
     
     friend class CCEGLViewProtocol;
 };

@@ -7,7 +7,7 @@
 #include "support/ccUtils.h"
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/zip_support/unzip.h"
-
+#include "support/CAThemeManager.h"
 #include <sys/stat.h>
 
 NS_CC_BEGIN
@@ -809,6 +809,25 @@ void FileUtils::setWritablePath(const std::string& writablePath)
 void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
     _defaultResRootPath = path;
+    size_t pos = _defaultResRootPath.find_last_of("/");
+    if (pos != std::string::npos)
+    {
+        _defaultResRootPath += "/";
+    }
+    _fullPathCache.clear();
+    _searchPathArray.clear();
+    _searchPathArray.push_back(_defaultResRootPath);
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    CAApplication::getApplication()->setThemeManager(CAThemeManager::create("../../Resources/source_material"));
+#else
+    CAApplication::getApplication()->setThemeManager(CAThemeManager::create("source_material"));
+#endif
+}
+
+const std::string& FileUtils::getDefaultResourceRootPath() const
+{
+    return _defaultResRootPath;
 }
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
