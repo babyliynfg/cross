@@ -2,9 +2,9 @@ require('js/rootwindow.js');
 
 ca.app.run();
 
-var caapplication = ca.CAApplication.getApplication();
-var window = new RootWindow()
+var application = ca.CAApplication.getApplication();
+var window = new RootWindow();
 window.init();
-caapplication.runWindow(window);
-
+application.runWindow(window);
+window.release();
 ca.RootWindow = window;

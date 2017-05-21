@@ -382,8 +382,8 @@ ca.loader = {
      * Get XMLHttpRequest.
      * @returns {XMLHttpRequest}
      */
-    getXMLHttpRequest : function () {
-        return new XMLHttpRequest();
+    getXMLHttpRequest : function (thread_id) {
+        return new XMLHttpRequest(thread_id);
     },
     
     
@@ -391,26 +391,26 @@ ca.loader = {
     
     _jsCache : {},//cache for js
     
-    _getArgs4Js: function (args) {
-        var a0 = args[0], a1 = args[1], a2 = args[2], results = ["", null, null];
+_getArgs4Js: function (args) {
+    var a0 = args[0], a1 = args[1], a2 = args[2], results = ["", null, null];
     
-        if (args.length === 1) {
+    if (args.length === 1) {
+        results[1] = a0 instanceof Array ? a0 : [a0];
+    } else if (args.length === 2) {
+        if (typeof a1 === "function") {
             results[1] = a0 instanceof Array ? a0 : [a0];
-        } else if (args.length === 2) {
-            if (typeof a1 === "function") {
-                results[1] = a0 instanceof Array ? a0 : [a0];
-                results[2] = a1;
-            } else {
-                results[0] = a0 || "";
-                results[1] = a1 instanceof Array ? a1 : [a1];
-            }
-        } else if (args.length === 3) {
+            results[2] = a1;
+        } else {
             results[0] = a0 || "";
             results[1] = a1 instanceof Array ? a1 : [a1];
-            results[2] = a2;
-        } else throw new Error("arguments error to load js!");
-        return results;
-    },
+        }
+    } else if (args.length === 3) {
+        results[0] = a0 || "";
+        results[1] = a1 instanceof Array ? a1 : [a1];
+        results[2] = a2;
+    } else throw new Error("arguments error to load js!");
+    return results;
+},
     
     /**
      * Load js files.
@@ -422,16 +422,14 @@ ca.loader = {
      * @returns {*}
      */
 loadJs: function (baseDir, jsList, cb) {
-    console.log("----+++++++0000000");
     var self = this, localJsCache = self._jsCache,
     args = self._getArgs4Js(arguments);
     baseDir = args[0];
     jsList = args[1];
     cb = args[2];
-    var caPath = ca.path;
+    var ccPath = ca.path;
     for(var i = 0, li = jsList.length; i < li; ++i){
-                console.log(caPath.join(baseDir, jsList[i]));
-        require(caPath.join(baseDir, jsList[i]));
+        require(ccPath.join(baseDir, jsList[i]));
     }
     if(cb) cb();
 },
@@ -484,8 +482,8 @@ loadImg: function (url, option, cb){
         cb && cb(null, cachedTex);
     }
     else if (url.match(jsb.urlRegExp)) {
-        jsb.loadRemoteImg(url, function(sucaeed, tex) {
-                          if (sucaeed) {
+        jsb.loadRemoteImg(url, function(succeed, tex) {
+                          if (succeed) {
                           cb && cb(null, tex);
                           }
                           else {
@@ -702,19 +700,19 @@ register: function (extNames, loader) {
      * Release the cache of resource by url.
      * @param url
      */
-    release: function (url) {
+jsRelease: function (url) {
     var cache = this.cache;
     delete cache[url];
-    },
+},
     
     /**
      * Resource cache of all resources.
      */
-    releaseAll: function () {
-        var locCache = this.cache;
-        for (var key in locCache)
-            delete locCache[key];
-    }
+jsReleaseAll: function () {
+    var locCache = this.cache;
+    for (var key in locCache)
+        delete locCache[key];
+}
 };
 ca.defineGetterSetter(ca.loader, "resPath", function(){
                       return this._resPath;
@@ -1420,30 +1418,52 @@ ca._initDebugSetting = function (mode) {
     var caApp = ca.app;
     var bakLog = ca._cocosplayerLog || ca.log || log;
     ca.log = ca.warn = ca.error = ca.assert = function(){};
-    if(mode == caApp.DEBUG_MODE_NONE){
-    }else{
-        ca.error = function(){
-            bakLog.call(this, "ERROR :  " + ca.formatStr.apply(ca, arguments));
-        };
-        ca.assert = function(cond, msg) {
-            if (!cond && msg) {
-                var args = [];
-                for (var i = 1; i < arguments.length; i++)
-                    args.push(arguments[i]);
-                bakLog("Assert: " + ca.formatStr.apply(ca, args));
-            }
-        };
-        if(mode != ccGame.DEBUG_MODE_ERROR && mode != caApp.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-            ca.warn = function(){
-                bakLog.call(this, "WARN :  " + ca.formatStr.apply(ca, arguments));
-            };
+    
+    ca.log = function(){
+        
+        var string = ca.formatStr.apply(ca, arguments);
+        bakLog.call(this, string);
+        
+        if (ca.CAApplication.getApplication().isCrossAppCCLogNotification() == true)
+        {
+            ca.CANotificationCenter.getInstance().postNotificationWithStringValue(ca.CROSSAPP_CCLOG_NOTIFICATION, string);
         }
-        if(mode == ccGame.DEBUG_MODE_INFO || mode == caApp.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-            ca.log = function(){
-                bakLog.call(this, ca.formatStr.apply(ca, arguments));
-            };
+        
+    };
+    ca.assert = function(cond, msg) {
+        if (!cond && msg) {
+            var args = [];
+            for (var i = 1; i < arguments.length; i++)
+                args.push(arguments[i]);
+            bakLog("Assert: " + ca.formatStr.apply(ca, args));
         }
-    }
+    };
+    ca.error = function(){
+        bakLog.call(this, "ERROR :  " + ca.formatStr.apply(ca, arguments));
+    };
+    
+//    if(mode == caApp.DEBUG_MODE_NONE){
+//    }else{
+//        ca.error = function(){
+//            bakLog.call(this, "ERROR :  " + ca.formatStr.apply(ca, arguments));
+//        };
+//        ca.assert = function(cond, msg) {
+//            if (!cond && msg) {
+//                var args = [];
+//                for (var i = 1; i < arguments.length; i++)
+//                    args.push(arguments[i]);
+//                bakLog("Assert: " + ca.formatStr.apply(ca, args));
+//            }
+//        };
+//        if(mode != ccGame.DEBUG_MODE_ERROR && mode != caApp.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
+//            ca.warn = function(){
+//                bakLog.call(this, "WARN :  " + ca.formatStr.apply(ca, arguments));
+//            };
+//        }
+//        if(mode == ccGame.DEBUG_MODE_INFO || mode == caApp.DEBUG_MODE_INFO_FOR_WEB_PAGE){
+//            
+//        }
+//    }
 };
 
 ca._engineLoaded = false;
