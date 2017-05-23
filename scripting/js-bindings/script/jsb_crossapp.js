@@ -29,6 +29,12 @@ ca.CAActivityIndicatorView.Style.White = 2;
 ca.CAActivityIndicatorView.Style.Gray = 3;
 ca.CAActivityIndicatorView.Style.Image = 4;
 
+ca.CAScrollView.MultitouchGesture = {};
+ca.CAScrollView.MultitouchGesture.Zoom = 0;
+ca.CAScrollView.MultitouchGesture.Rotate = 1;
+ca.CAScrollView.MultitouchGesture.ZoomAndRotate = 2;
+ca.CAScrollView.MultitouchGesture.None = 3;
+
 //CAAutoCollectionView
 ca.CAAutoCollectionView.Orientation = {};
 ca.CAAutoCollectionView.Orientation.Horizontal = 0;
@@ -187,11 +193,7 @@ ca.CAPullToRefreshView.Type.Header = 0;
 ca.CAPullToRefreshView.Type.Footer = 1;
 ca.CAPullToRefreshView.Type.Custom = 2;
 
-ca.CAScrollView.MultitouchGesture = {};
-ca.CAScrollView.MultitouchGesture.Zoom = 0;
-ca.CAScrollView.MultitouchGesture.Rotate = 1;
-ca.CAScrollView.MultitouchGesture.ZoomAndRotate = 2;
-ca.CAScrollView.MultitouchGesture.None = 3;
+
 
 ca.CAIndicatorType = {};
 ca.CAIndicatorType.Orientation = {};
@@ -470,17 +472,9 @@ DHorizontalLayout_L_W = function(left,width){
     return DHorizontalLayout(left, width, ca.DHorizontalLayout.Type.L_W);
 };
 
-//DHorizontalLayout_L_C = function(left,center){
-//    return DHorizontalLayout(left, center, ca.DHorizontalLayout.Type.L_C);
-//};
-
 DHorizontalLayout_R_W = function(right,width){
     return DHorizontalLayout(right,width, ca.DHorizontalLayout.Type.R_W);
 };
-
-//DHorizontalLayout_R_C = function(right,center){
-//    return DHorizontalLayout(right,center, ca.DHorizontalLayout.Type.R_C);
-//};
 
 DHorizontalLayout_W_C = function(width,center){
     return DHorizontalLayout(width, center, ca.DHorizontalLayout.Type.W_C);
@@ -488,7 +482,6 @@ DHorizontalLayout_W_C = function(width,center){
 DHorizontalLayout_NW_C = function(width,center){
     return DHorizontalLayout(width, center, ca.DHorizontalLayout.Type.NW_C);
 };
-
 
 DVerticalLayout_T_B = function(top,bottom){
     return DVerticalLayout(top,bottom, ca.DVerticalLayout.Type.T_B);
@@ -498,17 +491,9 @@ DVerticalLayout_T_H = function(top,height){
     return DVerticalLayout(top,height, ca.DVerticalLayout.Type.T_H);
 };
 
-//DVerticalLayout_T_C = function(top,center){
-//    return DVerticalLayout(top,center, ca.DVerticalLayout.Type.T_C);
-//};
-
 DVerticalLayout_B_H = function(bottom,height){
     return DVerticalLayout(bottom,height, ca.DVerticalLayout.Type.B_H);
 };
-
-//DVerticalLayout_B_C = function(bottom,center){
-//    return DVerticalLayout(bottom,center, ca.DVerticalLayout.Type.B_C);
-//};
 
 DVerticalLayout_H_C = function(height,center){
     return DVerticalLayout(height,center, ca.DVerticalLayout.Type.H_C);

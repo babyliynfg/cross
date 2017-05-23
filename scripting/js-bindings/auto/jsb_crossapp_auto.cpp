@@ -9640,7 +9640,20 @@ bool js_crossapp_CAControl_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
+}static bool js_crossapp_CAControl_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::CAControl *nobj = new (std::nothrow) CrossApp::CAControl();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::CAControl");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
 }
+
 
 extern JSObject *jsb_CrossApp_CAView_prototype;
 
@@ -9660,6 +9673,7 @@ void js_CrossApp_CAControl_finalize(JSFreeOp *fop, JSObject *obj) {
         else jsb_remove_proxy(nullptr, jsproxy);
     }
 }
+    
 void js_register_crossapp_CAControl(JSContext *cx, JS::HandleObject global) {
     jsb_CrossApp_CAControl_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_CrossApp_CAControl_class->name = "CAControl";
@@ -9688,6 +9702,7 @@ void js_register_crossapp_CAControl(JSContext *cx, JS::HandleObject global) {
         JS_FN("setControlStateNormal", js_crossapp_CAControl_setControlStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setRecSpe", js_crossapp_CAControl_setRecSpe, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setControlStateDisabled", js_crossapp_CAControl_setControlStateDisabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_CAControl_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -9719,6 +9734,7 @@ void js_register_crossapp_CAControl(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_CrossApp_CAView_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { ca.CAControl.extend = ca.Class.extend; })()");
 }
 JSClass  *jsb_CrossApp_CATouchView_class;
 JSObject *jsb_CrossApp_CATouchView_prototype;
