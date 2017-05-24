@@ -19,10 +19,10 @@ JSViewController::~JSViewController()
 }
 void JSViewController::viewDidLoad()
 {
-//     CrossApp::CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, 1);
+//     CrossApp::CAScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, 1);
 }
 
 void JSViewController::viewDidUnload()
 {
-//    CrossApp::CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, 2);
+//    CrossApp::CAScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, 2);
 }

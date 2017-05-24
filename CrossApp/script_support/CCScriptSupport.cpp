@@ -3,43 +3,23 @@
 #include "script_support/CCScriptSupport.h"
 #include "basics/CAScheduler.h"
 
-bool CC_DLL cc_assert_script_compatible(const char *msg)
-{
-    CrossApp::CCScriptEngineProtocol* pEngine = CrossApp::CCScriptEngineManager::sharedManager()->getScriptEngine();
-    if (pEngine && pEngine->handleAssert(msg))
-    {
-        return true;
-    }
-    return false;
-}
-
 NS_CC_BEGIN
 
- #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark CCScriptHandlerEntry
-#endif
-
-CCScriptHandlerEntry* CCScriptHandlerEntry::create(int nHandler)
+CAScriptHandlerEntry* CAScriptHandlerEntry::create(int nHandler)
 {
-    CCScriptHandlerEntry* entry = new CCScriptHandlerEntry(nHandler);
+    CAScriptHandlerEntry* entry = new CAScriptHandlerEntry(nHandler);
     entry->autorelease();
     return entry;
 }
 
-CCScriptHandlerEntry::~CCScriptHandlerEntry(void)
+CAScriptHandlerEntry::~CAScriptHandlerEntry(void)
 {
 	if (m_nHandler != 0)
 	{
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
+        CAScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
         m_nHandler = 0;
     }
 }
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark CASchedulerScriptHandlerEntry
-#endif
 
 CASchedulerScriptHandlerEntry* CASchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
 {
@@ -51,45 +31,36 @@ CASchedulerScriptHandlerEntry* CASchedulerScriptHandlerEntry::create(int nHandle
 
 bool CASchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 {
-//    m_pTimer = new TimerScriptHandler();
-//    m_pTimer->initWithScriptHandler(m_nHandler, fInterval);
-//    m_pTimer->autorelease();
-//    m_pTimer->retain();
     m_bPaused = bPaused;
     return true;
 }
 
 CASchedulerScriptHandlerEntry::~CASchedulerScriptHandlerEntry(void)
 {
-//    m_pTimer->release();
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark CCTouchScriptHandlerEntry
-#endif
 
-CCTouchScriptHandlerEntry* CCTouchScriptHandlerEntry::create(int nHandler,
+CATouchScriptHandlerEntry* CATouchScriptHandlerEntry::create(int nHandler,
                                                              bool bIsMultiTouches,
                                                              int nPriority,
                                                              bool bSwallowsTouches)
 {
-    CCTouchScriptHandlerEntry* pEntry = new CCTouchScriptHandlerEntry(nHandler);
+    CATouchScriptHandlerEntry* pEntry = new CATouchScriptHandlerEntry(nHandler);
     pEntry->init(bIsMultiTouches, nPriority, bSwallowsTouches);
     pEntry->autorelease();
     return pEntry;
 }
 
-CCTouchScriptHandlerEntry::~CCTouchScriptHandlerEntry(void)
+CATouchScriptHandlerEntry::~CATouchScriptHandlerEntry(void)
 {
     if (m_nHandler != 0)
     {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
+        CAScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
         m_nHandler = 0;
     }
 }
 
-bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
+bool CATouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches)
 {
     m_bIsMultiTouches = bIsMultiTouches;
     m_nPriority = nPriority;
@@ -98,27 +69,20 @@ bool CCTouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool b
     return true;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-// #pragma mark -
-// #pragma mark CCScriptEngineManager
-#endif
+static CAScriptEngineManager* s_pSharedScriptEngineManager = NULL;
 
-static CCScriptEngineManager* s_pSharedScriptEngineManager = NULL;
-
-
-CCScriptEngineManager::~CCScriptEngineManager(void)
+CAScriptEngineManager::~CAScriptEngineManager(void)
 {
     removeScriptEngine();
 }
 
-void CCScriptEngineManager::setScriptEngine(CCScriptEngineProtocol *pScriptEngine)
+void CAScriptEngineManager::setScriptEngine(CAScriptEngineProtocol *pScriptEngine)
 {
     removeScriptEngine();
-    CCLog("setScriptEngine");
     m_pScriptEngine = pScriptEngine;
 }
 
-void CCScriptEngineManager::removeScriptEngine(void)
+void CAScriptEngineManager::removeScriptEngine(void)
 {
     if (m_pScriptEngine)
     {
@@ -126,21 +90,21 @@ void CCScriptEngineManager::removeScriptEngine(void)
     }
 }
 
-CCScriptEngineManager* CCScriptEngineManager::sharedManager(void)
+CAScriptEngineManager* CAScriptEngineManager::sharedManager(void)
 {
     if (!s_pSharedScriptEngineManager)
     {
-        s_pSharedScriptEngineManager = new CCScriptEngineManager();
+        s_pSharedScriptEngineManager = new CAScriptEngineManager();
     }
     return s_pSharedScriptEngineManager;
 }
 
-CCScriptEngineManager* CCScriptEngineManager::getScriptEngineManager(void)
+CAScriptEngineManager* CAScriptEngineManager::getScriptEngineManager(void)
 {
     return s_pSharedScriptEngineManager;
 }
 
-void CCScriptEngineManager::purgeSharedManager(void)
+void CAScriptEngineManager::purgeSharedManager(void)
 {
     if (s_pSharedScriptEngineManager)
     {
@@ -149,7 +113,7 @@ void CCScriptEngineManager::purgeSharedManager(void)
     }
 }
 
-bool CCScriptEngineManager::sendNodeEventToJS(CAView* node, int action)
+bool CAScriptEngineManager::sendNodeEventToJS(CAView* node, int action)
 {
     auto scriptEngine = sharedManager()->getScriptEngine();
     
@@ -169,7 +133,7 @@ bool CCScriptEngineManager::sendNodeEventToJS(CAView* node, int action)
     return false;
 }
 
-bool CCScriptEngineManager::sendViewControllerEventToJS(CAViewController* node, int action)
+bool CAScriptEngineManager::sendViewControllerEventToJS(CAViewController* node, int action)
 {
     auto scriptEngine = sharedManager()->getScriptEngine();
     

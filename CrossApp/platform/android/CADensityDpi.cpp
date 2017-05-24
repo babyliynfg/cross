@@ -4,13 +4,19 @@
 #include <jni.h>
 
 NS_CC_BEGIN
+
+static float s_fDPI = -1.f;
+
+void CADensityDpi::setDensityDpi(float dpi)
+{
+    s_fDPI = dpi;
+}
+
 float CADensityDpi::getDensityDpi()
 {
-    static float ret = -1;
-    
-    if (ret != -1)
+    if (s_fDPI != -1.f)
     {
-        return ret;
+        return s_fDPI;
     }
     
     JniMethodInfo jni;
@@ -19,10 +25,10 @@ float CADensityDpi::getDensityDpi()
         return DPI_STANDARD;
     }
     
-    ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID , jni.methodID);
+    s_fDPI = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID , jni.methodID);
     jni.env->DeleteLocalRef(jni.classID);
 
-    return ret;
+    return s_fDPI;
 }
 
 CADeviceIdiom CADensityDpi::getIdiom()

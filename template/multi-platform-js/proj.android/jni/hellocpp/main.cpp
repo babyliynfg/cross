@@ -23,10 +23,11 @@ void Java_org_CrossApp_lib_CrossAppRenderer_nativeInit(JNIEnv*  env, jobject thi
 {
     if (!CAApplication::getApplication()->getOpenGLView())
     {
+        AppDelegate *pAppDelegate = new AppDelegate();
+        
         CCEGLView *view = CCEGLView::sharedOpenGLView();
         view->setFrameSize(w, h);
 
-        AppDelegate *pAppDelegate = new AppDelegate();
         CCApplication::sharedApplication()->run();
     }
     else

@@ -11,33 +11,34 @@ using namespace CrossApp;
 
 extern "C"
 {
-
-jint JNI_OnLoad(JavaVM *vm, void *reserved)
-{
-    JniHelper::setJavaVM(vm);
-
-    return JNI_VERSION_1_4;
-}
-
-void Java_org_CrossApp_lib_CrossAppRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
-{
-    if (!CAApplication::getApplication()->getOpenGLView())
+    
+    jint JNI_OnLoad(JavaVM *vm, void *reserved)
     {
-        CCEGLView *view = CCEGLView::sharedOpenGLView();
-        view->setFrameSize(w, h);
-
-        AppDelegate *pAppDelegate = new AppDelegate();
-        CCApplication::sharedApplication()->run();
+        JniHelper::setJavaVM(vm);
+        
+        return JNI_VERSION_1_4;
     }
-    else
+    
+    void Java_org_CrossApp_lib_CrossAppRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
     {
-    	GL::invalidateStateCache();
-    	GLProgramCache::getInstance()->reloadDefaultGLPrograms();
-    	ccDrawInit();
-        CAImageCache::reloadAllImages();
-        CANotificationCenter::getInstance()->postNotification(EVENT_COME_TO_FOREGROUND);
-        CAApplication::getApplication()->setGLDefaultValues();
+        if (!CAApplication::getApplication()->getOpenGLView())
+        {
+            AppDelegate *pAppDelegate = new AppDelegate();
+            
+            CCEGLView *view = CCEGLView::sharedOpenGLView();
+            view->setFrameSize(w, h);
+            
+            CCApplication::sharedApplication()->run();
+        }
+        else
+        {
+            GL::invalidateStateCache();
+            GLProgramCache::getInstance()->reloadDefaultGLPrograms();
+            ccDrawInit();
+            CAImageCache::reloadAllImages();
+            CANotificationCenter::getInstance()->postNotification(EVENT_COME_TO_FOREGROUND);
+            CAApplication::getApplication()->setGLDefaultValues();
+        }
     }
-}
-
+    
 }

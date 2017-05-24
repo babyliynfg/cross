@@ -2,7 +2,10 @@
 #ifndef __CC_APPLICATION_PROTOCOL_H__
 #define __CC_APPLICATION_PROTOCOL_H__
 
+#include "basics/CASize.h"
+
 NS_CC_BEGIN
+
 
 enum TargetPlatform
 {
@@ -36,6 +39,8 @@ public:
     
     virtual void applicationDidExitFullScreen(){};
 
+    virtual DSize applicationScreenSize(){return DSizeZero;};
+    
     virtual void setAnimationInterval(double interval) = 0;
 
     virtual LanguageType getCurrentLanguage() = 0;

@@ -101,16 +101,20 @@ void CAViewController::viewOnEnterTransitionDidFinish()
     {
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
-        this->viewDidLoad();
-#if CC_ENABLE_SCRIPT_BINDING
-        if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+
+        if(CAScriptEngineManager::sharedManager()->getScriptEngine())
         {
-            if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+#if CC_ENABLE_SCRIPT_BINDING
+            if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidLoad));
+                if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidLoad));
             }
-        }
 #endif
+        }
+        else
+        {
+            this->viewDidLoad();
+        }
     }
     while (0);
 
@@ -124,16 +128,21 @@ void CAViewController::viewOnExitTransitionDidStart()
     {
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
-        this->viewDidUnload();
-#if CC_ENABLE_SCRIPT_BINDING
-        if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+        
+        if(CAScriptEngineManager::sharedManager()->getScriptEngine())
         {
-            if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+#if CC_ENABLE_SCRIPT_BINDING
+            if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidUnload));
+                if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidUnload));
             }
-        }
 #endif
+        }
+        else
+        {
+            this->viewDidUnload();
+        }
+        
         m_pView->removeAllSubviews();
     }
     while (0);
@@ -144,16 +153,21 @@ void CAViewController::viewOnSizeTransitionDidChanged()
 {
     if (m_bLifeLock)
     {
-        this->viewSizeDidChanged();
-#if CC_ENABLE_SCRIPT_BINDING
-        if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+        
+
+        if(CAScriptEngineManager::sharedManager()->getScriptEngine())
         {
-            if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+#if CC_ENABLE_SCRIPT_BINDING
+            if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CCScriptEngineManager::sendViewControllerEventToJS(this, script::viewSizeDidChanged));
+                if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewSizeDidChanged));
             }
-        }
 #endif
+        }
+        else
+        {
+        this->viewSizeDidChanged();
+        }
     }
 }
 

@@ -28,7 +28,7 @@ CAWindow::~CAWindow()
     CC_SAFE_RELEASE_NULL(m_pModalViewController);
     
 #if CC_ENABLE_SCRIPT_BINDING
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->releaseAllSubviewsRecursive(this);
+    CAScriptEngineManager::sharedManager()->getScriptEngine()->releaseAllSubviewsRecursive(this);
 #endif
 }
 

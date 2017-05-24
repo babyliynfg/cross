@@ -57,7 +57,6 @@ void CCApplication::setAnimationInterval(double interval)
 //////////////////////////////////////////////////////////////////////////
 CCApplication* CCApplication::sharedApplication()
 {
-    CCAssert(sm_pSharedApplication, "");
     return sm_pSharedApplication;
 }
 

@@ -36,7 +36,7 @@ NS_CC_BEGIN;
 
 static int s_globalOrderOfArrival = 1;
 
-static std::map<int, CAView*> s_gViews;
+//static std::map<int, CAView*> s_gViews;
 
 CAView::CAView(void)
 : m_fRotationX(0.0f)
@@ -106,7 +106,7 @@ CAView::CAView(void)
     this->updateRotationQuat();
     this->setAnchorPoint(DPoint(0.5f, 0.5f));
     
-    s_gViews[m_u__ID] = this;
+    //s_gViews[m_u__ID] = this;
     
     //CCLog("CAView = %lu\n", s_gViews.size());
 }
@@ -143,7 +143,7 @@ CAView::~CAView(void)
     }
     
     
-    s_gViews.erase(m_u__ID);
+    //s_gViews.erase(m_u__ID);
     
     //CCLog("~CAView = %lu\n", s_gViews.size());
 }
@@ -1447,11 +1447,11 @@ CAResponder* CAView::nextResponder()
 void CAView::onEnter()
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+    if(CAScriptEngineManager::sharedManager()->getScriptEngine())
     {
-        if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
         {
-            if (CCScriptEngineManager::sendNodeEventToJS(this, script::onEnter))
+            if (CAScriptEngineManager::sendNodeEventToJS(this, script::onEnter))
                 return;
         }
     }
@@ -1487,11 +1487,11 @@ void CAView::onEnter()
 void CAView::onEnterTransitionDidFinish()
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+    if(CAScriptEngineManager::sharedManager()->getScriptEngine())
     {
-        if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
         {
-            if (CCScriptEngineManager::sendNodeEventToJS(this, script::onEnterTransitionDidFinish))
+            if (CAScriptEngineManager::sendNodeEventToJS(this, script::onEnterTransitionDidFinish))
                 return;
         }
     }
@@ -1522,11 +1522,11 @@ void CAView::onEnterTransitionDidFinish()
 void CAView::onExitTransitionDidStart()
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+    if(CAScriptEngineManager::sharedManager()->getScriptEngine())
     {
-        if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
         {
-            if (CCScriptEngineManager::sendNodeEventToJS(this, script::onExitTransitionDidStart))
+            if (CAScriptEngineManager::sendNodeEventToJS(this, script::onExitTransitionDidStart))
                 return;
         }
     }
@@ -1556,11 +1556,11 @@ void CAView::onExitTransitionDidStart()
 void CAView::onExit()
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+    if(CAScriptEngineManager::sharedManager()->getScriptEngine())
     {
-        if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
         {
-            if (CCScriptEngineManager::sendNodeEventToJS(this, script::onExit))
+            if (CAScriptEngineManager::sendNodeEventToJS(this, script::onExit))
                 return;
         }
     }

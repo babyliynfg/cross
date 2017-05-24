@@ -52,19 +52,16 @@ public:
 	explicit CAVector<T>(size_t capacity)
 		: _data()
 	{
-		CCLOG("In the default constructor with capacity of Vector.");
 		reserve(capacity);
 	}
 
 	~CAVector<T>()
 	{
-		CCLOG("In the destructor of Vector.");
 		clear();
 	}
 
 	CAVector<T>(const CAVector<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
@@ -83,21 +80,18 @@ public:
     
     CAVector<T>(const std::vector<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
     
     CAVector<T>(const std::deque<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
     
     CAVector<T>(const std::list<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
@@ -106,7 +100,6 @@ public:
 	{
 		if (this != &other)
 		{
-			CCLOG("In the copy assignment operator!");
 			clear();
 			_data = other._data;
 			addRefForAllObjects();
@@ -389,35 +382,30 @@ public:
 
     CAList<T>(const CAVector<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
     
     CAList<T>(const CADeque<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
     
     CAList<T>(const std::vector<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
     
     CAList<T>(const std::deque<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
     
     CAList<T>(const std::list<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
@@ -641,7 +629,6 @@ public:
 
 	CAPair<T1, T2>(const CAPair<T1, T2>& other)
 	{
-		CCLOG("In the copy constructor!");
 		clear();
 		_cpair = other;
 		CC_SAFE_RETAIN(_cpair.first);
@@ -729,21 +716,18 @@ public:
     
     CADeque<T>(const std::vector<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
     
     CADeque<T>(const std::deque<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
     
     CADeque<T>(const std::list<T>& other)
 	{
-		CCLOG("In the copy constructor!");
 		_data.insert(_data.begin(), other.begin(), other.end());
 		addRefForAllObjects();
 	}
@@ -752,7 +736,6 @@ public:
 	{
 		if (this != &other)
 		{
-			CCLOG("In the copy assignment operator!");
 			clear();
 			_data = other._data;
 			addRefForAllObjects();
@@ -1060,7 +1043,6 @@ public:
 	{
 		if (this != &other)
 		{
-			CCLOG("In the copy assignment operator!");
 			clear();
 			_data = other._data;
 			addRefForAllObjects();

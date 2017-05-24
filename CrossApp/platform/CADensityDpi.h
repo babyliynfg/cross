@@ -29,6 +29,8 @@ public:
     static float getDensityDpi();
     
     static CADeviceIdiom getIdiom();
+    
+    static void setDensityDpi(float dpi);
 };
 
 

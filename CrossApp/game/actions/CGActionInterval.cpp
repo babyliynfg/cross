@@ -82,7 +82,7 @@ bool ActionInterval::sendUpdateEventToScript(float dt, Action *actionObject)
 #if CC_ENABLE_SCRIPT_BINDING
 //    if (_scriptType == kScriptTypeJavascript)
 //    {
-//        if (CCScriptEngineManager::sendActionEventToJS(actionObject, kActionUpdate, (void *)&dt))
+//        if (CAScriptEngineManager::sendActionEventToJS(actionObject, kActionUpdate, (void *)&dt))
 //            return true;
 //    }
 #endif

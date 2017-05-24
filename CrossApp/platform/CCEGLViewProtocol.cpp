@@ -6,6 +6,7 @@
 #include "basics/CACamera.h"
 #include "basics/CAApplication.h"
 #include "basics/CANotificationCenter.h"
+#include "CCApplication.h"
 NS_CC_BEGIN
 
 static CATouch* s_pTouches[CC_MAX_TOUCHES] = { NULL };
@@ -70,12 +71,24 @@ void CCEGLViewProtocol::setFrameSize(float width, float height)
 {
     m_obScreenSize = DSize(width, height);
     
-    m_obDesignResolutionSize.setSize(s_px_to_dip(width), s_px_to_dip(height));
+    CCApplication* nativeApp = CCApplication::sharedApplication();
     
-    m_fScale = s_dip_to_px(1.0f);
+    if (nativeApp && !nativeApp->applicationScreenSize().equals(DSizeZero))
+    {
+        DSize customScreenSize = nativeApp->applicationScreenSize();
+        float x = customScreenSize.width > 0 ? width / customScreenSize.width : 0;
+        float y = customScreenSize.height > 0 ? height / customScreenSize.height : 0;
+        m_fScale = MAX(x, y);
+        CADensityDpi::setDensityDpi(m_fScale * DPI_STANDARD);
+        m_obDesignResolutionSize.setSize(customScreenSize.width, customScreenSize.height);
+    }
+    else
+    {
+        m_obDesignResolutionSize.setSize(s_px_to_dip(width), s_px_to_dip(height));
+        m_fScale = s_dip_to_px(1.0f);
+    }
     
     m_obViewPortRect.setRect(0, 0, m_obScreenSize.width, m_obScreenSize.height);
-    
     CAApplication::getApplication()->reshapeProjection(m_obDesignResolutionSize);
 }
 

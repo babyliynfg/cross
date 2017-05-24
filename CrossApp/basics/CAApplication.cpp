@@ -676,9 +676,9 @@ void CAApplication::reset()
     if (m_pRootWindow)
     {
 #if CC_ENABLE_SCRIPT_BINDING
-        if (CCScriptEngineManager::getScriptEngineManager())
+        if (CAScriptEngineManager::getScriptEngineManager())
         {
-            CCScriptEngineManager::getScriptEngineManager()->getScriptEngine()->releaseScriptObject(this, m_pRootWindow);
+            CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->releaseScriptObject(this, m_pRootWindow);
         }
 #endif
         
@@ -774,7 +774,7 @@ void CAApplication::restartApplication()
 // Real restart in script level
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEvent scriptEvent(kRestartGame, nullptr);
-    CCScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    CAScriptEngineManager::sharedManager()->getScriptEngine()->sendEvent(&scriptEvent);
 #endif
 }
 
