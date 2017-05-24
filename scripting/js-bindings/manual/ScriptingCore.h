@@ -34,7 +34,7 @@ public:
     void update(float d);
 };
 
-class ScriptingCore : public CCScriptEngineProtocol
+class ScriptingCore : public CAScriptEngineProtocol
 {
 private:
     JSRuntime *_rt;
@@ -105,10 +105,7 @@ public:
      */
     virtual int executeGlobalFunction(const char* functionName) override { return 0; } //
     
-
     virtual int sendEvent(ScriptEvent* message) override;
-    
-    virtual bool parseConfig(ConfigType type, const std::string& str) override;
     
     /**
      * @brief @~english Useless in ScriptingCore

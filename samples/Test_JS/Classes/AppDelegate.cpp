@@ -39,7 +39,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->enableDebugger();
     sc->runScript("script/jsb_crossapp.js");
     
-    CCScriptEngineManager::sharedManager()->setScriptEngine(sc);
+    CAScriptEngineManager::sharedManager()->setScriptEngine(sc);
     sc->runScript("js/main.js");
 
     
