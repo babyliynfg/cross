@@ -332,7 +332,7 @@ ScriptingCore* ScriptingCore::getInstance()
 void ScriptingCore::releaseThis()
 {
     instance = nullptr;
-    CCScriptEngineManager::getScriptEngineManager()->setScriptEngine(nullptr);
+    CAScriptEngineManager::getScriptEngineManager()->setScriptEngine(nullptr);
     delete this;
 }
 
