@@ -41,15 +41,15 @@ Properties::Properties(const Properties& copy)
     rewind();
 }
 
-Properties::Properties(unsigned char* data, unsigned long dataLenght, ssize_t* dataIdx)
-    : _variables(nullptr), _dirPath(nullptr), _parent(nullptr), _dataIdx(dataIdx), _data(nullptr), _dataLenght(0)
+Properties::Properties(unsigned char* data, unsigned long dataLength, ssize_t* dataIdx)
+    : _variables(nullptr), _dirPath(nullptr), _parent(nullptr), _dataIdx(dataIdx), _data(nullptr), _dataLength(0)
 {
     readProperties();
     rewind();
 }
 
-Properties::Properties(unsigned char* data, unsigned long dataLenght, ssize_t* dataIdx, const std::string& name, const char* id, const char* parentID, Properties* parent)
-    : _namespace(name), _variables(nullptr), _dirPath(nullptr), _parent(parent), _dataIdx(dataIdx), _data(data), _dataLenght(dataLenght)
+Properties::Properties(unsigned char* data, unsigned long dataLength, ssize_t* dataIdx, const std::string& name, const char* id, const char* parentID, Properties* parent)
+    : _namespace(name), _variables(nullptr), _dirPath(nullptr), _parent(parent), _dataIdx(dataIdx), _data(data), _dataLength(dataLength)
 {
     if (id)
     {
@@ -80,10 +80,10 @@ Properties* Properties::createNonRefCounted(const std::string& url)
 
     // data will be released automatically when 'data' goes out of scope
     // so we pass data as weak pointer
-    unsigned long dataLenght = 0;
-    unsigned char*  data = FileUtils::getInstance()->getFileData(fileString, "rb", &dataLenght);
+    unsigned long dataLength = 0;
+    unsigned char*  data = FileUtils::getInstance()->getFileData(fileString, "rb", &dataLength);
     ssize_t dataIdx = 0;
-    Properties* properties = new (std::nothrow) Properties(data, dataLenght, &dataIdx);
+    Properties* properties = new (std::nothrow) Properties(data, dataLength, &dataIdx);
     properties->resolveInheritance();
 
     // Get the specified properties object.
@@ -126,7 +126,7 @@ static bool isVariable(const char* str, char* outName, size_t outSize)
 
 void Properties::readProperties()
 {
-    CCASSERT(_dataLenght > 0, "Invalid data");
+    CCASSERT(_dataLength > 0, "Invalid data");
 
     char line[2048];
     char variable[256];
@@ -285,7 +285,7 @@ void Properties::readProperties()
                     }
 
                     // New namespace without an ID.
-                    Properties* space = new (std::nothrow) Properties(_data, _dataLenght, _dataIdx, name, NULL, parentID, this);
+                    Properties* space = new (std::nothrow) Properties(_data, _dataLength, _dataIdx, name, NULL, parentID, this);
                     _namespaces.push_back(space);
 
                     // If the namespace ends on this line, seek to right after the '}' character.
@@ -327,7 +327,7 @@ void Properties::readProperties()
                         }
 
                         // Create new namespace.
-                        Properties* space = new (std::nothrow) Properties(_data, _dataLenght, _dataIdx, name, value, parentID, this);
+                        Properties* space = new (std::nothrow) Properties(_data, _dataLength, _dataIdx, name, value, parentID, this);
                         _namespaces.push_back(space);
 
                         // If the namespace ends on this line, seek to right after the '}' character.
@@ -348,7 +348,7 @@ void Properties::readProperties()
                         if (c == '{')
                         {
                             // Create new namespace.
-                            Properties* space = new (std::nothrow) Properties(_data, _dataLenght, _dataIdx, name, value, parentID, this);
+                            Properties* space = new (std::nothrow) Properties(_data, _dataLength, _dataIdx, name, value, parentID, this);
                             _namespaces.push_back(space);
                         }
                         else
@@ -404,7 +404,7 @@ char* Properties::readLine(char* output, int num)
     const ssize_t dataIdx = *_dataIdx;
     unsigned long i;
 
-    for (i=0; i<num && dataIdx+i < _dataLenght; i++)
+    for (i=0; i<num && dataIdx+i < _dataLength; i++)
     {
         auto c = _data[dataIdx+i];
         if (c == '\n')
@@ -429,7 +429,7 @@ bool Properties::seekFromCurrent(int offset)
 
 bool Properties::eof()
 {
-    return (*_dataIdx >= _dataLenght);
+    return (*_dataIdx >= _dataLength);
 }
 
 void Properties::skipWhiteSpace()

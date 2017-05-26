@@ -201,25 +201,25 @@ void CAScale9ImageView::updatePositions()
     
     if (size.width > m_obOriginalSize.width)
     {
-        const float lenghtX1 = m_rFrame[0].size.width;
-        const float lenghtX3 = m_rFrame[2].size.width;
-        const float lenghtX2 = size.width - lenghtX1 - lenghtX3;
+        const float lengthX1 = m_rFrame[0].size.width;
+        const float lengthX3 = m_rFrame[2].size.width;
+        const float lengthX2 = size.width - lengthX1 - lengthX3;
         
-        newRect[1].origin.x = lenghtX1;
-        newRect[4].origin.x = lenghtX1;
-        newRect[7].origin.x = lenghtX1;
+        newRect[1].origin.x = lengthX1;
+        newRect[4].origin.x = lengthX1;
+        newRect[7].origin.x = lengthX1;
         
-        newRect[1].size.width = lenghtX2;
-        newRect[4].size.width = lenghtX2;
-        newRect[7].size.width = lenghtX2;
+        newRect[1].size.width = lengthX2;
+        newRect[4].size.width = lengthX2;
+        newRect[7].size.width = lengthX2;
         
-        newRect[2].origin.x = lenghtX1 + lenghtX2;
-        newRect[5].origin.x = lenghtX1 + lenghtX2;
-        newRect[8].origin.x = lenghtX1 + lenghtX2;
+        newRect[2].origin.x = lengthX1 + lengthX2;
+        newRect[5].origin.x = lengthX1 + lengthX2;
+        newRect[8].origin.x = lengthX1 + lengthX2;
         
-        newRect[2].size.width = lenghtX3;
-        newRect[5].size.width = lenghtX3;
-        newRect[8].size.width = lenghtX3;
+        newRect[2].size.width = lengthX3;
+        newRect[5].size.width = lengthX3;
+        newRect[8].size.width = lengthX3;
     }
     else
     {
@@ -233,25 +233,25 @@ void CAScale9ImageView::updatePositions()
     
     if (size.height > m_obOriginalSize.height)
     {
-        const float lenghtY1 = m_rFrame[0].size.height;
-        const float lenghtY3 = m_rFrame[6].size.height;
-        const float lenghtY2 = size.height - lenghtY1 - lenghtY3;
+        const float lengthY1 = m_rFrame[0].size.height;
+        const float lengthY3 = m_rFrame[6].size.height;
+        const float lengthY2 = size.height - lengthY1 - lengthY3;
         
-        newRect[3].origin.y = lenghtY1;
-        newRect[4].origin.y = lenghtY1;
-        newRect[5].origin.y = lenghtY1;
+        newRect[3].origin.y = lengthY1;
+        newRect[4].origin.y = lengthY1;
+        newRect[5].origin.y = lengthY1;
         
-        newRect[3].size.height = lenghtY2;
-        newRect[4].size.height = lenghtY2;
-        newRect[5].size.height = lenghtY2;
+        newRect[3].size.height = lengthY2;
+        newRect[4].size.height = lengthY2;
+        newRect[5].size.height = lengthY2;
         
-        newRect[6].origin.y = lenghtY1 + lenghtY2;
-        newRect[7].origin.y = lenghtY1 + lenghtY2;
-        newRect[8].origin.y = lenghtY1 + lenghtY2;
+        newRect[6].origin.y = lengthY1 + lengthY2;
+        newRect[7].origin.y = lengthY1 + lengthY2;
+        newRect[8].origin.y = lengthY1 + lengthY2;
         
-        newRect[6].size.height = lenghtY3;
-        newRect[7].size.height = lenghtY3;
-        newRect[8].size.height = lenghtY3;
+        newRect[6].size.height = lengthY3;
+        newRect[7].size.height = lengthY3;
+        newRect[8].size.height = lengthY3;
     }
     else
     {
@@ -301,22 +301,22 @@ void CAScale9ImageView::updateCapInset()
         m_obCapInsets = DRect(w/3, h/3, w/3, h/3);
     }
     
-    const float lenghtX1 = m_obCapInsets.origin.x;
-    const float lenghtX2 = m_obCapInsets.size.width;
-    const float lenghtX3 = w - lenghtX1 - lenghtX2;
-    const float lenghtY1 = m_obCapInsets.origin.y;
-    const float lenghtY2 = m_obCapInsets.size.height;
-    const float lenghtY3 = h - lenghtY1 - lenghtY2;
+    const float lengthX1 = m_obCapInsets.origin.x;
+    const float lengthX2 = m_obCapInsets.size.width;
+    const float lengthX3 = w - lengthX1 - lengthX2;
+    const float lengthY1 = m_obCapInsets.origin.y;
+    const float lengthY2 = m_obCapInsets.size.height;
+    const float lengthY3 = h - lengthY1 - lengthY2;
     
-    m_rFrame[0] = DRect(0, 0, lenghtX1, lenghtY1);
-    m_rFrame[1] = DRect(lenghtX1, 0, lenghtX2, lenghtY1);
-    m_rFrame[2] = DRect(lenghtX1 + lenghtX2, 0, lenghtX3, lenghtY1);
-    m_rFrame[3] = DRect(0, lenghtY1, lenghtX1, lenghtY2);
-    m_rFrame[4] = DRect(lenghtX1, lenghtY1, lenghtX2, lenghtY2);
-    m_rFrame[5] = DRect(lenghtX1 + lenghtX2, lenghtY1, lenghtX3, lenghtY2);
-    m_rFrame[6] = DRect(0, lenghtY1 + lenghtY2, lenghtX1, lenghtY3);
-    m_rFrame[7] = DRect(lenghtX1, lenghtY1 + lenghtY2, lenghtX2, lenghtY3);
-    m_rFrame[8] = DRect(lenghtX1 + lenghtX2, lenghtY1 + lenghtY2, lenghtX3, lenghtY3);
+    m_rFrame[0] = DRect(0, 0, lengthX1, lengthY1);
+    m_rFrame[1] = DRect(lengthX1, 0, lengthX2, lengthY1);
+    m_rFrame[2] = DRect(lengthX1 + lengthX2, 0, lengthX3, lengthY1);
+    m_rFrame[3] = DRect(0, lengthY1, lengthX1, lengthY2);
+    m_rFrame[4] = DRect(lengthX1, lengthY1, lengthX2, lengthY2);
+    m_rFrame[5] = DRect(lengthX1 + lengthX2, lengthY1, lengthX3, lengthY2);
+    m_rFrame[6] = DRect(0, lengthY1 + lengthY2, lengthX1, lengthY3);
+    m_rFrame[7] = DRect(lengthX1, lengthY1 + lengthY2, lengthX2, lengthY3);
+    m_rFrame[8] = DRect(lengthX1 + lengthX2, lengthY1 + lengthY2, lengthX3, lengthY3);
     
     CC_RETURN_IF(m_pobImage == NULL);
     

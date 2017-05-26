@@ -548,61 +548,85 @@ void CAHttpClient::processResponse(CAHttpResponse* response, char* responseMessa
     long responseCode = -1;
     int retValue = 0;
     
+    std::vector<char> responseData;
+    std::vector<char> responseHeader;
     // Process the request -> get response packet
     switch (request->getRequestType())
     {
         case CAHttpRequest::Type::Get: // HTTP GET
             retValue = processGetTask(this, request,
                                       writeData,
-                                      response->getResponseData(),
+                                      &responseData,
                                       &responseCode,
                                       writeHeaderData,
-                                      response->getResponseHeader(),
+                                      &responseHeader,
                                       responseMessage);
             break;
             
         case CAHttpRequest::Type::Post: // HTTP POST
             retValue = processPostTask(this, request,
                                        writeData,
-                                       response->getResponseData(),
+                                       &responseData,
                                        &responseCode,
                                        writeHeaderData,
-                                       response->getResponseHeader(),
+                                       &responseHeader,
                                        responseMessage);
             break;
             
         case CAHttpRequest::Type::Put:
             retValue = processPutTask(this, request,
                                       writeData,
-                                      response->getResponseData(),
+                                      &responseData,
                                       &responseCode,
                                       writeHeaderData,
-                                      response->getResponseHeader(),
+                                      &responseHeader,
                                       responseMessage);
             break;
             
         case CAHttpRequest::Type::Delete:
             retValue = processDeleteTask(this, request,
                                          writeData,
-                                         response->getResponseData(),
+                                         &responseData,
                                          &responseCode,
                                          writeHeaderData,
-                                         response->getResponseHeader(),
+                                         &responseHeader,
                                          responseMessage);
             break;
         case CAHttpRequest::Type::PostFile:
             retValue = processPostFileTask(this, request,
                                            writeData,
-                                           response->getResponseData(),
+                                           &responseData,
                                            &responseCode,
                                            writeHeaderData,
-                                           response->getResponseHeader(),
+                                           &responseHeader,
                                            responseMessage);
             break;
         default:
             CCASSERT(true, "CCCAHttpClient: unknown request type, only GET and POSt are supported");
             break;
     }
+    
+    ssize_t c_responseDataLength = responseData.size();
+    unsigned char* c_responseData = (unsigned char*)malloc(c_responseDataLength);
+    for (ssize_t i=0; i<c_responseDataLength; i++)
+    {
+        c_responseData[i] = responseData.at(i);
+    }
+    
+    CAData* ca_responseData = new CAData();
+    ca_responseData->fastSet(c_responseData, c_responseDataLength);
+    response->setResponseData(ca_responseData);
+    
+    ssize_t c_responseHeaderLength = responseHeader.size();
+    unsigned char* c_responseHeader = (unsigned char*)malloc(c_responseHeaderLength);
+    for (ssize_t i=0; i<c_responseHeaderLength; i++)
+    {
+        c_responseHeader[i] = responseHeader.at(i);
+    }
+    
+    CAData* ca_responseHeader = new CAData();
+    ca_responseHeader->fastSet(c_responseHeader, c_responseHeaderLength);
+    response->setResponseHeader(ca_responseHeader);
     
     // write data to CAHttpResponse
     response->setResponseCode(responseCode);

@@ -272,14 +272,14 @@ void setSecureTextEntryJNI(int key, int var)
     }
 }
 
-void setMaxLenghtJNI(int key, int type)
+void setMaxLengthJNI(int key, int type)
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, CLASS_NAME, "getTextField", GET_CLASS))
     {
         jobject obj = jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, key);
         
-        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setMaxLenght", "(I)V"))
+        if (JniHelper::getMethodInfo(jni, CLASS_NAME, "setMaxLength", "(I)V"))
         {
             jni.env->CallVoidMethod(obj, jni.methodID, type);
             jni.env->DeleteLocalRef(jni.classID);
@@ -368,11 +368,11 @@ extern "C"
         }
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int lenght)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int length)
     {
         std::string text;
-        text.resize(lenght);
-        env->GetByteArrayRegion(textBuffer, 0, lenght, (jbyte *)&text[0]);
+        text.resize(length);
+        env->GetByteArrayRegion(textBuffer, 0, length, (jbyte *)&text[0]);
         
         s_lock = true;
         CATextField* textField = s_map[(int)key];
@@ -404,7 +404,7 @@ CATextField::CATextField()
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)
-, m_iMaxLenght(0)
+, m_iMaxLength(0)
 , m_eClearBtn(CATextField::ClearButtonMode::None)
 , m_eAlign(CATextField::Align::Left)
 , m_eReturnType(CATextField::ReturnType::Done)
@@ -900,15 +900,15 @@ bool CATextField::isSecureTextEntry()
 }
 
 
-void CATextField::setMaxLenght(int var)
+void CATextField::setMaxLength(int var)
 {
-    m_iMaxLenght = var;
-    setMaxLenghtJNI(m_u__ID, var);
+    m_iMaxLength = var;
+    setMaxLengthJNI(m_u__ID, var);
 }
 
-int CATextField::getMaxLenght()
+int CATextField::getMaxLength()
 {
-    return m_iMaxLenght;
+    return m_iMaxLength;
 }
 
 NS_CC_END

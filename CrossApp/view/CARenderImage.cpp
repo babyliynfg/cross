@@ -573,11 +573,12 @@ void CARenderImage::onEnd()
         glReadPixels(0, 0, (GLsizei)m_uPixelsWide, (GLsizei)m_uPixelsHigh, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
         glBindFramebuffer(GL_FRAMEBUFFER, m_uOldFBO);
         
-        image->initWithRawData(buffer, m_ePixelFormat, (unsigned int)m_uPixelsWide, (unsigned int)m_uPixelsHigh);
+        CAData* data = CAData::create();
+        data->fastSet(buffer, m_uPixelsWide * m_uPixelsHigh * 4);
+        
+        image->initWithRawData(data, m_ePixelFormat, (unsigned int)m_uPixelsWide, (unsigned int)m_uPixelsHigh);
 
     } while (0);
-    
-    CC_SAFE_DELETE_ARRAY(buffer);
     
     m_pImageView->setImage(image);
     image->release();

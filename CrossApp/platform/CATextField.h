@@ -40,7 +40,7 @@ public:
     //Warning!!! Warning!!! Warning!!!  This method is not on the OpenGL thread.
 	virtual bool textFieldShouldChangeCharacters(CATextField* sender,
                                                  unsigned int location,
-                                                 unsigned int lenght,
+                                                 unsigned int length,
                                                  const std::string& changedText)
     {
         return true;
@@ -152,7 +152,7 @@ public:
     //Return key to recover the keyboard, the default is true
     CC_SYNTHESIZE_IS(bool, m_bAllowkeyBoardHide, AllowkeyBoardHide);
     
-    CC_PROPERTY(int, m_iMaxLenght, MaxLenght);
+    CC_PROPERTY(int, m_iMaxLength, MaxLength);
     
     //BackgroundImage
     void setBackgroundImage(CAImage* image);

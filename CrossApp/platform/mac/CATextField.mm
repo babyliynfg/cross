@@ -249,15 +249,15 @@
     return location;
 }
 
-- (unsigned int)getLenghtWithBefore:(NSString*)before Current:(NSString*)current Location:(unsigned int)location
+- (unsigned int)getLengthWithBefore:(NSString*)before Current:(NSString*)current Location:(unsigned int)location
 {
-    unsigned int lenght = 0;
+    unsigned int length = 0;
     
     for(unsigned int i=location; i<before.length; i++)
     {
         if (i == current.length)
         {
-            lenght = i + 1 - location;
+            length = i + 1 - location;
             break;
         }
         
@@ -269,24 +269,24 @@
         {
             if (before.length > current.length)
             {
-                lenght = before.length - current.length;
+                length = before.length - current.length;
             }
             else if (before.length < current.length)
             {
-                lenght = i - location;
+                length = i - location;
             }
             else
             {
-                lenght = 0;
+                length = 0;
             }
             
             break;
         }
 
-        lenght = before.length - location;
+        length = before.length - location;
     }
     
-    return lenght;
+    return length;
 }
 
 - (void)textDidChange:(NSNotification *)notification
@@ -295,14 +295,14 @@
     NSString* current = [NSString stringWithString:[self stringValue]];;
     
     unsigned int location = [self getLocationWithBefore:before Current:current];
-    unsigned int lenght = [self getLenghtWithBefore:before Current:current Location:location];
-    unsigned int addLenght = MAX((long)(current.length - (before.length - (long)lenght)), 0);
+    unsigned int length = [self getLengthWithBefore:before Current:current Location:location];
+    unsigned int addLength = MAX((long)(current.length - (before.length - (long)length)), 0);
 
     std::string changedText = "";
     
-    if (addLenght > 0)
+    if (addLength > 0)
     {
-        changedText = [[current substringWithRange:NSMakeRange(location, addLenght)] UTF8String];
+        changedText = [[current substringWithRange:NSMakeRange(location, addLength)] UTF8String];
     }
     else
     {
@@ -310,12 +310,12 @@
     }
     
     
-    int maxLenght = _textField->getMaxLenght();
-    if (maxLenght > 0 && maxLenght < current.length)
+    int maxLength = _textField->getMaxLength();
+    if (maxLength > 0 && maxLength < current.length)
     {
-        if (before.length < maxLenght)
+        if (before.length < maxLength)
         {
-            [self setStringValue:[current substringToIndex:maxLenght]];
+            [self setStringValue:[current substringToIndex:maxLength]];
         }
         else
         {
@@ -324,7 +324,7 @@
     }
     else
     {
-        if (_textField->getDelegate() && !_textField->getDelegate()->textFieldShouldChangeCharacters(_textField, location, lenght, changedText))
+        if (_textField->getDelegate() && !_textField->getDelegate()->textFieldShouldChangeCharacters(_textField, location, length, changedText))
         {
             [self setStringValue:before];
         }
@@ -400,7 +400,7 @@ CATextField::CATextField()
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)
-, m_iMaxLenght(0)
+, m_iMaxLength(0)
 , m_eClearBtn(CATextField::ClearButtonMode::None)
 , m_eAlign(CATextField::Align::Left)
 , m_eReturnType(CATextField::ReturnType::Done)
@@ -518,11 +518,12 @@ void CATextField::showImage()
     
     NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
     
-    unsigned char* data = (unsigned char*)malloc([data_MAC length]);
-    [data_MAC getBytes:data length:[data_MAC length]];
-
-    CAImage *image = CAImage::createWithImageDataNoCache(data, data_MAC.length);
-    free(data);
+    unsigned char* pData = (unsigned char*)malloc([data_MAC length]);
+    [data_MAC getBytes:pData length:[data_MAC length]];
+    
+    CAData* data = CAData::create();
+    data->fastSet(pData, [data_MAC length]);
+    CAImage *image = CAImage::createWithImageDataNoCache(data);
     m_pImgeView->setImage(image);
 }
 
@@ -943,14 +944,14 @@ bool CATextField::isSecureTextEntry()
     return m_bSecureTextEntry;
 }
 
-void CATextField::setMaxLenght(int var)
+void CATextField::setMaxLength(int var)
 {
-    m_iMaxLenght = var;
+    m_iMaxLength = var;
 }
 
-int CATextField::getMaxLenght()
+int CATextField::getMaxLength()
 {
-    return m_iMaxLenght;
+    return m_iMaxLength;
 }
 
 

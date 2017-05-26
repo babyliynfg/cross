@@ -171,7 +171,7 @@ protected:
         return 6 * dt;
     }
     
-    virtual float maxBouncesLenght()
+    virtual float maxBouncesLength()
     {
         return 120.0f;
     }

@@ -13,6 +13,7 @@
 #include "basics/CAPoint.h"
 #include "basics/CASize.h"
 #include "basics/CARect.h"
+#include "basics/CAData.h"
 #include "ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "CCGL.h"
@@ -144,18 +145,16 @@ public:
     
     static CAImage* create(const std::string& file);
 
-    static CAImage* createWithImageDataNoCache(const unsigned char * data, unsigned long lenght);
+    static CAImage* createWithImageDataNoCache(CAData* data);
     
-    static CAImage* createWithImageData(const unsigned char * data,
-                                        unsigned long lenght,
-                                        const std::string& key);
+    static CAImage* createWithImageData(CAData* data, const std::string& key);
     
-    static CAImage* createWithRawDataNoCache(const unsigned char * data,
+    static CAImage* createWithRawDataNoCache(CAData* data,
                                              const CAImage::PixelFormat& pixelFormat,
                                              unsigned int pixelsWide,
                                                  unsigned int pixelsHigh);
     
-    static CAImage* createWithRawData(const unsigned char * data,
+    static CAImage* createWithRawData(CAData* data,
                                       const CAImage::PixelFormat& pixelFormat,
                                       unsigned int pixelsWide,
                                       unsigned int pixelsHigh,
@@ -163,19 +162,15 @@ public:
     
     bool initWithImageFile(const std::string& file, bool isOpenGLThread = true);
     
-    bool initWithImageData(const unsigned char * data, unsigned long dataLen, bool isOpenGLThread = true);
+    bool initWithImageData(CAData* data, bool isOpenGLThread = true);
     
-    bool initWithRawData(const unsigned char * data,
+    bool initWithRawData(CAData* data,
                          const CAImage::PixelFormat& pixelFormat,
                          unsigned int pixelsWide,
                          unsigned int pixelsHigh);
     
     const char* description(void);
-    
-    void releaseData();
-    
-    void releaseData(unsigned char ** data);
-    
+
     void drawAtPoint(const DPoint& point);
     
     void drawInRect(const DRect& rect);
@@ -249,10 +244,8 @@ public:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bMonochrome, Monochrome);
     
-    CC_SYNTHESIZE_READONLY(unsigned char*, m_pData, Data);
-    
-    CC_SYNTHESIZE_READONLY(unsigned long, m_uDataLenght, DataLenght);
-    
+    CC_SYNTHESIZE_READONLY(CAData*, m_pData, Data);
+
     void premultipliedImageData();
     
     void repremultipliedImageData();
@@ -281,9 +274,7 @@ protected:
     
     bool saveImageToPNG(const std::string& filePath, bool isToRGB);
     bool saveImageToJPG(const std::string& filePath);
-    
-    void setData(const unsigned char* data, unsigned long dataLenght);
-    
+
     void convertToRawData();
     
     CAImage::PixelFormat convertDataToFormat(const unsigned char* data,
@@ -373,11 +364,7 @@ protected:
     GifFileType* m_pGIF;
     
     int m_iGIFIndex;
-    
-    unsigned char* m_pImageData;
-    
-    unsigned long m_uImageDataLenght;
-    
+        
     static const PixelFormatInfoMap s_pixelFormatInfoTables;
     
 	friend class CAFTRichFont;

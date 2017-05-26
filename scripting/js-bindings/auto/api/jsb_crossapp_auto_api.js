@@ -439,6 +439,114 @@ getScheduler : function (
 };
 
 /**
+ * @class CAData
+ */
+ca.CAData = {
+
+/**
+ * @method getLength
+ * @return {int}
+ */
+getLength : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method clear
+ */
+clear : function (
+)
+{
+},
+
+/**
+ * @method isNull
+ * @return {bool}
+ */
+isNull : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method toString
+ * @return {String}
+ */
+toString : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method fastSet
+ * @param {unsigned char} arg0
+ * @param {int} arg1
+ */
+fastSet : function (
+char, 
+int 
+)
+{
+},
+
+/**
+ * @method copyString
+ * @param {String} arg0
+ */
+copyString : function (
+str 
+)
+{
+},
+
+/**
+ * @method copy
+ * @param {unsigned char} arg0
+ * @param {int} arg1
+ */
+copy : function (
+char, 
+int 
+)
+{
+},
+
+/**
+ * @method getBytes
+ * @return {unsigned char}
+ */
+getBytes : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @return {ca.CAData}
+ */
+create : function (
+)
+{
+    return ca.CAData;
+},
+
+/**
+ * @method CAData
+ * @constructor
+ */
+CAData : function (
+)
+{
+},
+
+};
+
+/**
  * @class CAImage
  */
 ca.CAImage = {
@@ -519,16 +627,6 @@ getAspectRatio : function (
 )
 {
     return 0;
-},
-
-/**
- * @method releaseData
-* @param {unsigned char} char
-*/
-releaseData : function(
-char 
-)
-{
 },
 
 /**
@@ -671,12 +769,12 @@ getContentSize : function (
 
 /**
  * @method getData
- * @return {unsigned char}
+ * @return {ca.CAData}
  */
 getData : function (
 )
 {
-    return 0;
+    return ca.CAData;
 },
 
 /**
@@ -753,14 +851,12 @@ isMonochrome : function (
 
 /**
  * @method initWithImageData
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
- * @param {bool} arg2
+ * @param {ca.CAData} arg0
+ * @param {bool} arg1
  * @return {bool}
  */
 initWithImageData : function (
-char, 
-long, 
+cadata, 
 bool 
 )
 {
@@ -847,14 +943,14 @@ getImageFileType : function (
 
 /**
  * @method initWithRawData
- * @param {unsigned char} arg0
+ * @param {ca.CAData} arg0
  * @param {ca.CAImage::PixelFormat} arg1
  * @param {unsigned int} arg2
  * @param {unsigned int} arg3
  * @return {bool}
  */
 initWithRawData : function (
-char, 
+cadata, 
 pixelformat, 
 int, 
 int 
@@ -906,16 +1002,6 @@ isCompressed : function (
 },
 
 /**
- * @method getDataLenght
- * @return {unsigned long}
- */
-getDataLenght : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method isJpg
  * @param {unsigned char} arg0
  * @param {unsigned long} arg1
@@ -945,7 +1031,7 @@ long
 
 /**
  * @method createWithRawData
- * @param {unsigned char} arg0
+ * @param {ca.CAData} arg0
  * @param {ca.CAImage::PixelFormat} arg1
  * @param {unsigned int} arg2
  * @param {unsigned int} arg3
@@ -953,7 +1039,7 @@ long
  * @return {ca.CAImage}
  */
 createWithRawData : function (
-char, 
+cadata, 
 pixelformat, 
 int, 
 int, 
@@ -965,14 +1051,12 @@ str
 
 /**
  * @method createWithImageData
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
- * @param {String} arg2
+ * @param {ca.CAData} arg0
+ * @param {String} arg1
  * @return {ca.CAImage}
  */
 createWithImageData : function (
-char, 
-long, 
+cadata, 
 str 
 )
 {
@@ -1053,13 +1137,11 @@ str
 
 /**
  * @method createWithImageDataNoCache
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
+ * @param {ca.CAData} arg0
  * @return {ca.CAImage}
  */
 createWithImageDataNoCache : function (
-char, 
-long 
+cadata 
 )
 {
     return ca.CAImage;
@@ -1167,14 +1249,14 @@ purgeCAImage : function (
 
 /**
  * @method createWithRawDataNoCache
- * @param {unsigned char} arg0
+ * @param {ca.CAData} arg0
  * @param {ca.CAImage::PixelFormat} arg1
  * @param {unsigned int} arg2
  * @param {unsigned int} arg3
  * @return {ca.CAImage}
  */
 createWithRawDataNoCache : function (
-char, 
+cadata, 
 pixelformat, 
 int, 
 int 
@@ -11222,13 +11304,11 @@ str
 
 /**
  * @method initWithData
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
+ * @param {ca.CAData} arg0
  * @return {bool}
  */
 initWithData : function (
-char, 
-long 
+cadata 
 )
 {
     return false;
@@ -11280,13 +11360,11 @@ str
 
 /**
  * @method createWithData
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
+ * @param {ca.CAData} arg0
  * @return {ca.CAGif}
  */
 createWithData : function (
-char, 
-long 
+cadata 
 )
 {
     return ca.CAGif;
@@ -14784,6 +14862,18 @@ str
 },
 
 /**
+ * @method getDataFromFile
+ * @param {String} arg0
+ * @return {ca.CAData}
+ */
+getDataFromFile : function (
+str 
+)
+{
+    return ca.CAData;
+},
+
+/**
  * @method purgeCachedEntries
  */
 purgeCachedEntries : function (
@@ -16927,16 +17017,6 @@ isSucceed : function (
 },
 
 /**
- * @method getResponseCode
- * @return {long}
- */
-getResponseCode : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getHttpRequest
  * @return {ca.CAHttpRequest}
  */
@@ -16947,21 +17027,11 @@ getHttpRequest : function (
 },
 
 /**
- * @method getResponseDataString
- * @return {char}
- */
-getResponseDataString : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setResponseData
- * @param {Array} arg0
+ * @param {ca.CAData} arg0
  */
 setResponseData : function (
-array 
+cadata 
 )
 {
 },
@@ -16977,55 +17047,23 @@ autorelease : function (
 },
 
 /**
- * @method setResponseHeader
- * @param {Array} arg0
- */
-setResponseHeader : function (
-array 
-)
-{
-},
-
-/**
- * @method setSucceed
- * @param {bool} arg0
- */
-setSucceed : function (
-bool 
-)
-{
-},
-
-/**
- * @method setResponseDataString
- * @param {char} arg0
- * @param {unsigned long} arg1
- */
-setResponseDataString : function (
-char, 
-long 
-)
-{
-},
-
-/**
- * @method getResponseHeader
- * @return {Array}
- */
-getResponseHeader : function (
-)
-{
-    return new Array();
-},
-
-/**
  * @method getResponseData
- * @return {Array}
+ * @return {ca.CAData}
  */
 getResponseData : function (
 )
 {
-    return new Array();
+    return ca.CAData;
+},
+
+/**
+ * @method setResponseHeader
+ * @param {ca.CAData} arg0
+ */
+setResponseHeader : function (
+cadata 
+)
+{
 },
 
 /**
@@ -17034,6 +17072,36 @@ getResponseData : function (
  */
 setResponseCode : function (
 long 
+)
+{
+},
+
+/**
+ * @method getResponseCode
+ * @return {long}
+ */
+getResponseCode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getResponseHeader
+ * @return {ca.CAData}
+ */
+getResponseHeader : function (
+)
+{
+    return ca.CAData;
+},
+
+/**
+ * @method setSucceed
+ * @param {bool} arg0
+ */
+setSucceed : function (
+bool 
 )
 {
 },
@@ -17539,16 +17607,6 @@ getAlign : function (
 },
 
 /**
- * @method getMaxLenght
- * @return {int}
- */
-getMaxLenght : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setAlign
  * @param {ca.CATextField::Align} arg0
  */
@@ -17739,6 +17797,16 @@ getDelegate : function (
 },
 
 /**
+ * @method getMaxLength
+ * @return {int}
+ */
+getMaxLength : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method resignFirstResponder
  * @return {bool}
  */
@@ -17781,10 +17849,10 @@ getMarginLeft : function (
 },
 
 /**
- * @method setMaxLenght
+ * @method setMaxLength
  * @param {int} arg0
  */
-setMaxLenght : function (
+setMaxLength : function (
 int 
 )
 {

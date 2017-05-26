@@ -538,7 +538,7 @@ bool FileUtils::writeStringToFile(const std::string& dataStr, const std::string&
     return rv;
 }
 
-bool FileUtils::writeDataToFile(unsigned char* data, size_t lenght, const std::string& fullPath)
+bool FileUtils::writeDataToFile(unsigned char* data, size_t length, const std::string& fullPath)
 {
     const char* mode = "wb";
 
@@ -549,7 +549,7 @@ bool FileUtils::writeDataToFile(unsigned char* data, size_t lenght, const std::s
         FILE *fp = fopen(fileutils->getSuitableFOpen(fullPath).c_str(), mode);
         CC_BREAK_IF(!fp);
 
-        fwrite(data, lenght, 1, fp);
+        fwrite(data, length, 1, fp);
 
         fclose(fp);
 
@@ -571,11 +571,24 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-std::string FileUtils::getFileString(const std::string& pszFilePath)
+CAData* FileUtils::getDataFromFile(const std::string& filename)
+{
+    CAData* data = CAData::create();
+    unsigned long pSize = 0;
+    unsigned char* pData = this->getFileData(filename, "rb", &pSize);
+    
+    if (pSize > 0)
+    {
+        data->fastSet(pData, pSize);
+    }
+    return data;
+}
+
+std::string FileUtils::getFileString(const std::string& filename)
 {
     std::string data;
     unsigned long pSize = 0;
-    unsigned char* pData = this->getFileData(pszFilePath, "rb", &pSize);
+    unsigned char* pData = this->getFileData(filename, "rb", &pSize);
     
     if (pSize > 0)
     {

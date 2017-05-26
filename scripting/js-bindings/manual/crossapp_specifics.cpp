@@ -1301,39 +1301,3 @@ void js_remove_object_root(JS::HandleValue target)
     engine->executeFunctionWithOwner(jsbVal, "unregisterNativeRef", args, &retval);
 }
 
-bool _____js_crossapp_CAHttpResponse_getResponseHeader(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAHttpResponse* cobj = (CrossApp::CAHttpResponse *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAHttpResponse_getResponseHeader : Invalid Native Object");
-    if (argc == 0) {
-        std::vector<char, std::allocator<char> >* ret = cobj->getResponseHeader();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_vector_char_to_jsval(cx, *ret);
-        args.rval().set(jsret);
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_crossapp_CAHttpResponse_getResponseHeader : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool _____js_crossapp_CAHttpResponse_getResponseData(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAHttpResponse* cobj = (CrossApp::CAHttpResponse *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAHttpResponse_getResponseData : Invalid Native Object");
-    if (argc == 0) {
-        std::vector<char, std::allocator<char> >* ret = cobj->getResponseData();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_vector_char_to_jsval(cx, *ret);
-        args.rval().set(jsret);
-        return true;
-    }
-    
-    JS_ReportError(cx, "js_crossapp_CAHttpResponse_getResponseData : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}

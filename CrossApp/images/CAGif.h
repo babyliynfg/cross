@@ -27,11 +27,11 @@ public:
     
     CC_DEPRECATED_ATTRIBUTE static CAGif* createWithFilePath(const std::string& filePath) { return CAGif::create(filePath); }
     
-    static CAGif* createWithData(unsigned char* data, unsigned long lenght);
+    static CAGif* createWithData(CAData* data);
 
     bool initWithFilePath(const std::string& filePath);
     
-    bool initWithData(unsigned char* data, unsigned long lenght);
+    bool initWithData(CAData* data);
     
     CAImage* getImageWithIndex(unsigned int index);
     
@@ -61,6 +61,8 @@ protected:
     
 protected:
 
+    CAData*         m_pGifData;
+    
     unsigned char*  m_pData;
     
     GifFileType*    m_pGIF;

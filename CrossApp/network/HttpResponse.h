@@ -3,7 +3,7 @@
 #define __HTTP_RESPONSE__
 
 #include "network/HttpRequest.h"
-
+#include "basics/CAData.h"
 /**
  * @addtogroup network
  * @{
@@ -27,7 +27,8 @@ public:
     CAHttpResponse(CAHttpRequest* request)
     : _pHttpRequest(request)
     , _succeed(false)
-    , _responseDataString("")
+    , _responseHeader(nullptr)
+    , _responseData(nullptr)
     {
         if (_pHttpRequest)
         {
@@ -45,6 +46,8 @@ public:
         {
             _pHttpRequest->release();
         }
+        CC_SAFE_RELEASE(_responseHeader);
+        CC_SAFE_RELEASE(_responseData);
     }
     
     /**
@@ -81,25 +84,7 @@ public:
     {
         return _succeed;
     }
-    
-    /**
-     * Get the http response data.
-     * @return std::vector<char>* the pointer that point to the _responseData.
-     */
-    inline std::vector<char>* getResponseData()
-    {
-        return &_responseData;
-    }
-    
-    /**
-     * Get the response headers.
-     * @return std::vector<char>* the pointer that point to the _responseHeader.
-     */
-    inline std::vector<char>* getResponseHeader()
-    {
-        return &_responseHeader;
-    }
-    
+
     /**
      * Get the http response code to judge whether response is successful or not.
      * I know that you want to see the _responseCode is 200.
@@ -135,25 +120,6 @@ public:
     }
     
     /**
-     * Set the http response data buffer, it is used by CAHttpClient.
-     * @param data the pointer point to the response data buffer.
-     */
-    inline void setResponseData(std::vector<char>* data)
-    {
-        _responseData = *data;
-    }
-    
-    /**
-     * Set the http response headers buffer, it is used by CAHttpClient.
-     * @param data the pointer point to the response headers buffer.
-     */
-    inline void setResponseHeader(std::vector<char>* data)
-    {
-        _responseHeader = *data;
-    }
-    
-    
-    /**
      * Set the http response code.
      * @param value the http response code that represent whether the request is successful or not.
      */
@@ -174,36 +140,57 @@ public:
     }
     
     /**
-     * Set the response data by the string pointer and the defined size.
-     * @param value a string pointer that point to response data buffer.
-     * @param n the defined size that the response data buffer would be copied.
+     * Get the http response data.
+     * @return CAData* the pointer that point to the _responseData.
      */
-    inline void setResponseDataString(const char* value, size_t n)
+    inline CAData* getResponseData()
     {
-        _responseDataString.clear();
-        _responseDataString.assign(value, n);
+        return _responseData;
     }
     
     /**
-     * Get the string pointer that point to the response data.
-     * @return const char* the string pointer that point to the response data.
-     */
-    inline const char* getResponseDataString() const
+    * Set the http response data buffer, it is used by CAHttpClient.
+    * @param data the pointer point to the response data buffer.
+    */
+
+    inline void setResponseData(CAData* responseData)
     {
-        return _responseDataString.c_str();
+        CC_SAFE_RELEASE(_responseData);
+        CC_SAFE_RETAIN(responseData);
+        _responseData = responseData;
+    }
+    
+    /**
+     * Set the http response headers buffer, it is used by CAHttpClient.
+     * @param data the pointer point to the response headers buffer.
+     */
+
+    inline CAData* getResponseHeader()
+    {
+        return _responseHeader;
+    }
+    
+    /**
+     * Get the response headers.
+     * @return CAData* the pointer that point to the _responseHeader.
+     */
+    inline void setResponseHeader(CAData* responseHeader)
+    {
+        CC_SAFE_RELEASE(_responseHeader);
+        CC_SAFE_RETAIN(responseHeader);
+        _responseHeader = responseHeader;
     }
     
 protected:
     bool initWithRequest(CAHttpRequest* request);
     
     // properties
-    CAHttpRequest*        _pHttpRequest;  /// the corresponding CAHttpRequest pointer who leads to this response
+    CAHttpRequest*      _pHttpRequest;  /// the corresponding CAHttpRequest pointer who leads to this response
     bool                _succeed;       /// to indicate if the http request is successful simply
-    std::vector<char>   _responseData;  /// the returned raw data. You can also dump it as a string
-    std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
+    CAData*             _responseData;  /// the returned raw data. You can also dump it as a string
+    CAData*             _responseHeader;  /// the returned raw header data. You can also dump it as a string
     long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason
-    std::string         _responseDataString; // the returned raw data. You can also dump it as a string
     
 };
 

@@ -65,20 +65,20 @@ bool RenderTarget::init(unsigned int width, unsigned int height, CAImage::PixelF
     if(nullptr == _image) return false;
     //TODO: FIX me, get the correct bit depth for pixelformat
     auto dataLen = width * height * 4;
-    unsigned char* data = (unsigned char*)malloc(dataLen);
-    if( nullptr == data) return false;
+    unsigned char* pData = (unsigned char*)malloc(dataLen);
+    if( nullptr == pData) return false;
     
-    memset(data, 0, dataLen);
+    memset(pData, 0, dataLen);
+    CAData* data = CAData::create();
+    data->fastSet(pData, dataLen);
     if(_image->initWithRawData(data, format, width, height))
     {
         _image->autorelease();
         CC_SAFE_RETAIN(_image);
-        free(data);
     }
     else
     {
         CC_SAFE_DELETE(_image);
-        free(data);
         return false;
     }
     return true;

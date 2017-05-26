@@ -266,11 +266,11 @@ extern "C"
 		return true;
     }
     
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int lenght)
+	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int length)
     {
         std::string text;
-        text.resize(lenght);
-        env->GetByteArrayRegion(textBuffer, 0, lenght, (jbyte *)&text[0]);
+        text.resize(length);
+        env->GetByteArrayRegion(textBuffer, 0, length, (jbyte *)&text[0]);
         
         s_lock = true;
         CATextView* textView = s_map[(int)key];

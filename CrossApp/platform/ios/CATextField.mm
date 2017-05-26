@@ -67,15 +67,15 @@
 {
     CrossApp::CATextField* crossTextField = ((IOSTextField*)self.textField).textField;
     
-    if (crossTextField->getMaxLenght() > 0)
+    if (crossTextField->getMaxLength() > 0)
     {
-        NSUInteger oldLenght = [[textField text] length];
-        NSUInteger addLenght = [string length];
-        NSUInteger delLenght = range.length;
+        NSUInteger oldLength = [[textField text] length];
+        NSUInteger addLength = [string length];
+        NSUInteger delLength = range.length;
         
-        NSUInteger newLength = oldLenght + addLenght - delLenght;
+        NSUInteger newLength = oldLength + addLength - delLength;
         
-        if (newLength > crossTextField->getMaxLenght())
+        if (newLength > crossTextField->getMaxLength())
         {
             return NO;
         }
@@ -101,11 +101,11 @@
     if (crossTextField->getDelegate())
     {
         unsigned int location = 0;
-        unsigned int lenght = (unsigned int)[textField.text length];
+        unsigned int length = (unsigned int)[textField.text length];
 
         return crossTextField->getDelegate()->textFieldShouldChangeCharacters(crossTextField,
                                                                               location,
-                                                                              lenght,
+                                                                              length,
                                                                               "");
     }
     return YES;
@@ -220,7 +220,7 @@ CATextField::CATextField()
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)
-, m_iMaxLenght(0)
+, m_iMaxLength(0)
 , m_eClearBtn(CATextField::ClearButtonMode::None)
 , m_eAlign(CATextField::Align::Left)
 , m_eReturnType(CATextField::ReturnType::Done)
@@ -775,14 +775,14 @@ bool CATextField::isSecureTextEntry()
 }
 
 
-void CATextField::setMaxLenght(int var)
+void CATextField::setMaxLength(int var)
 {
-    m_iMaxLenght = var;
+    m_iMaxLength = var;
 }
 
-int CATextField::getMaxLenght()
+int CATextField::getMaxLength()
 {
-    return m_iMaxLenght;
+    return m_iMaxLength;
 }
 
 NS_CC_END

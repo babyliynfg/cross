@@ -60,7 +60,7 @@ bool CAImageCube::init(const std::string& positive_x, const std::string& negativ
         CAImage* img = images[i];
 
         CAImage::PixelFormat    ePixelFmt   = img->getPixelFormat();
-        unsigned char*          pData       = img->getData();
+        unsigned char*          pData       = img->getData()->getBytes();
         if (ePixelFmt == CAImage::PixelFormat::RGBA8888 || ePixelFmt == CAImage::PixelFormat::DEFAULT)
         {
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,

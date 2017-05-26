@@ -47,7 +47,7 @@
 #include "basics/CANotificationCenter.h"
 #include "basics/CAPointExtension.h"
 #include "basics/CAConfiguration.h"
-
+#include "basics/CAData.h"
 //control
 #include "control/CABar.h"
 #include "control/CAControl.h"

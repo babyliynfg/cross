@@ -60,6 +60,24 @@ bool js_crossapp_CAScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval 
 bool js_crossapp_CAScheduler_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAScheduler_getScheduler(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CAData_class;
+extern JSObject *jsb_CrossApp_CAData_prototype;
+
+bool js_crossapp_CAData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAData_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAData(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAData_getLength(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_clear(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_isNull(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_toString(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_fastSet(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_copyString(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_copy(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_getBytes(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAData_CAData(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CAImage_class;
 extern JSObject *jsb_CrossApp_CAImage_prototype;
 
@@ -75,7 +93,6 @@ bool js_crossapp_CAImage_setMaxS(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_setShaderProgram(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getMaxS(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getAspectRatio(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAImage_releaseData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_hasPremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getPixelsWide(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getPixelsHigh(JSContext *cx, uint32_t argc, jsval *vp);
@@ -110,7 +127,6 @@ bool js_crossapp_CAImage_repremultipliedImageData(JSContext *cx, uint32_t argc, 
 bool js_crossapp_CAImage_detectFormat(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_hasMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_isCompressed(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAImage_getDataLenght(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_isJpg(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_isGif(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_createWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1851,6 +1867,7 @@ void js_register_crossapp_FileUtils(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_FileUtils_writeDataToFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_removeFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FileUtils_getDataFromFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_purgeCachedEntries(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_isAbsolutePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_renameFile(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2113,17 +2130,15 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAHttpResponse_setErrorBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_getErrorBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_isSucceed(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAHttpResponse_getResponseCode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_getHttpRequest(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAHttpResponse_getResponseDataString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_setResponseData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_autorelease(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAHttpResponse_setResponseHeader(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAHttpResponse_setSucceed(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAHttpResponse_setResponseDataString(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAHttpResponse_getResponseHeader(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_getResponseData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpResponse_setResponseHeader(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_setResponseCode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpResponse_getResponseCode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpResponse_getResponseHeader(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpResponse_setSucceed(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpResponse_CAHttpResponse(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAHttpClient_class;
@@ -2193,7 +2208,6 @@ bool js_crossapp_CATextField_getTextColor(JSContext *cx, uint32_t argc, jsval *v
 bool js_crossapp_CATextField_getKeyboardType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_isSecureTextEntry(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_getAlign(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CATextField_getMaxLenght(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_setAlign(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_setMarginImageLeft(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_init(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2213,11 +2227,12 @@ bool js_crossapp_CATextField_setPlaceHolderColor(JSContext *cx, uint32_t argc, j
 bool js_crossapp_CATextField_setTextColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_setReturnType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_getDelegate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CATextField_getMaxLength(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_resignFirstResponder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_setText(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_setMarginImageRight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_getMarginLeft(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CATextField_setMaxLenght(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CATextField_setMaxLength(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_becomeFirstResponder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_setSecureTextEntry(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextField_isAllowkeyBoardHide(JSContext *cx, uint32_t argc, jsval *vp);

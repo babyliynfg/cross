@@ -312,6 +312,8 @@
 		D66BCD4F1D3DC27700587C65 /* CGSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D66BCD4B1D3DC27700587C65 /* CGSpriteFrame.h */; };
 		D66BCD501D3DC27700587C65 /* CGSpriteFrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66BCD4C1D3DC27700587C65 /* CGSpriteFrameCache.cpp */; };
 		D66BCD511D3DC27700587C65 /* CGSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D66BCD4D1D3DC27700587C65 /* CGSpriteFrameCache.h */; };
+		D66F52A51ED7CE4500546E5E /* CAData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66F52A31ED7CE4500546E5E /* CAData.cpp */; };
+		D66F52A61ED7CE4500546E5E /* CAData.h in Headers */ = {isa = PBXBuildFile; fileRef = D66F52A41ED7CE4500546E5E /* CAData.h */; };
 		D673ABF21E52E2A0007E7A5B /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = D673AB891E52E2A0007E7A5B /* CAAccelerometer.h */; };
 		D673ABF31E52E2A0007E7A5B /* CAApplicationCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D673AB8A1E52E2A0007E7A5B /* CAApplicationCaller.h */; };
 		D673ABF41E52E2A0007E7A5B /* CAApplicationCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673AB8B1E52E2A0007E7A5B /* CAApplicationCaller.mm */; };
@@ -758,6 +760,8 @@
 		D66BCD4B1D3DC27700587C65 /* CGSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSpriteFrame.h; sourceTree = "<group>"; };
 		D66BCD4C1D3DC27700587C65 /* CGSpriteFrameCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGSpriteFrameCache.cpp; sourceTree = "<group>"; };
 		D66BCD4D1D3DC27700587C65 /* CGSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSpriteFrameCache.h; sourceTree = "<group>"; };
+		D66F52A31ED7CE4500546E5E /* CAData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAData.cpp; sourceTree = "<group>"; };
+		D66F52A41ED7CE4500546E5E /* CAData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAData.h; sourceTree = "<group>"; };
 		D673AB891E52E2A0007E7A5B /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
 		D673AB8A1E52E2A0007E7A5B /* CAApplicationCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplicationCaller.h; sourceTree = "<group>"; };
 		D673AB8B1E52E2A0007E7A5B /* CAApplicationCaller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAApplicationCaller.mm; sourceTree = "<group>"; };
@@ -983,6 +987,8 @@
 		04EAA05D1956D74D00198A8E /* basics */ = {
 			isa = PBXGroup;
 			children = (
+				D66F52A31ED7CE4500546E5E /* CAData.cpp */,
+				D66F52A41ED7CE4500546E5E /* CAData.h */,
 				D6596E231E57043900A55CF9 /* CANotificationCenter.cpp */,
 				D6596E241E57043900A55CF9 /* CANotificationCenter.h */,
 				D6596E251E57043900A55CF9 /* CAPointExtension.cpp */,
@@ -1773,6 +1779,7 @@
 				B0B05FCE1BB1483200B891CE /* CAWebView.h in Headers */,
 				04EAB0791956D75600198A8E /* ccConfig.h in Headers */,
 				04EAB07A1956D75600198A8E /* ccMacros.h in Headers */,
+				D66F52A61ED7CE4500546E5E /* CAData.h in Headers */,
 				04EAB07B1956D75600198A8E /* ccTypeInfo.h in Headers */,
 				B0B05FBE1BB1483200B891CE /* CARenderImage.h in Headers */,
 				04EAB07C1956D75600198A8E /* ccTypes.h in Headers */,
@@ -2149,6 +2156,7 @@
 				D6596E1D1E57040B00A55CF9 /* HttpClient.cpp in Sources */,
 				E070BB181E5EEA87000746FA /* CAImagePickerController.mm in Sources */,
 				B09205BC19D554A800CB99C1 /* CAThread.cpp in Sources */,
+				D66F52A51ED7CE4500546E5E /* CAData.cpp in Sources */,
 				D66BCD501D3DC27700587C65 /* CGSpriteFrameCache.cpp in Sources */,
 				D6C513241E6910C300B0BE19 /* CAColor.cpp in Sources */,
 				D69B762B1E4AFE12007D9771 /* ccGLStateCache.cpp in Sources */,

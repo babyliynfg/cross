@@ -48,13 +48,13 @@ namespace CrossApp
         * Inflates either zlib or gzip deflated memory. The inflated memory is
         * expected to be freed by the caller.
         *
-        * outLenghtHint is assumed to be the needed room to allocate the inflated buffer.
+        * outLengthHint is assumed to be the needed room to allocate the inflated buffer.
         *
         * @returns the length of the deflated buffer
         *
         @since v1.0.0
         */
-        static int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outLenghtHint);
+        static int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outLengthHint);
 
         /** inflates a GZip file into memory
         *
@@ -126,7 +126,7 @@ namespace CrossApp
 
     private:
         static int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength, 
-                                           unsigned int outLenghtHint);
+                                           unsigned int outLengthHint);
         static inline void ccDecodeEncodedPvr (unsigned int *data, int len);
         static inline unsigned int ccChecksumPvr(const unsigned int *data, int len);
 

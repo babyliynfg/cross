@@ -164,7 +164,7 @@ void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
     {
         if (response->isSucceed())
         {
-            std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
+            std::string data(response->getResponseData()->toString());
             if (!data.empty())
             {
                 localStorageSetItem(MD5(url).md5().c_str(), data.c_str());
@@ -268,7 +268,7 @@ void CommonHttpManager::send_post(const std::string& url,
     {
         if (response->isSucceed())
         {
-            std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
+            std::string data(response->getResponseData()->toString());
             if (!data.empty())
             {
                 CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n", data.c_str());
@@ -346,7 +346,7 @@ void CommonHttpManager::send_postFile(const std::string& url,
     {
         if (response->isSucceed())
         {
-            std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
+            std::string data(response->getResponseData()->toString());
             if (!data.empty())
             {
                 CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n", data.c_str());
@@ -472,7 +472,7 @@ void CommonHttpManager::get_image(const std::string& url,
             {
                 if (response->isSucceed())
                 {
-                    std::string data(response->getResponseData()->begin(), response->getResponseData()->end());
+                    std::string data(response->getResponseData()->toString());
                     unsigned char* pData = ((unsigned char*)(const_cast<char*>(data.c_str())));
                     size_t pSize = data.length();
                     
@@ -501,7 +501,9 @@ void CommonHttpManager::get_image(const std::string& url,
                     }
                     else
                     {
-                        image = CAImage::createWithImageData(pData, pSize, key);
+                        CAData* data = CAData::create();
+                        data->copy(pData, pSize);
+                        image = CAImage::createWithImageData(data, key);
                         
                         if (callback)
                         {

@@ -402,13 +402,13 @@ private:
      *
      * @param stream The stream used for reading the properties from file.
      */
-    Properties(unsigned char* data, unsigned long dataLenght, ssize_t* dataIdx);
+    Properties(unsigned char* data, unsigned long dataLength, ssize_t* dataIdx);
     Properties(const Properties& copy);
 
     /**
      * Constructor. Read from the beginning of namespace specified.
      */
-    Properties(unsigned char* data, unsigned long dataLenght, ssize_t* dataIdx, const std::string& name, const char* id, const char* parentID, Properties* parent);
+    Properties(unsigned char* data, unsigned long dataLength, ssize_t* dataIdx, const std::string& name, const char* id, const char* parentID, Properties* parent);
 
     // Data manipulation methods
     void readProperties();
@@ -438,7 +438,7 @@ private:
     // XXX: hack in order to simulate GamePlay's Stream with CossApp's Data
     ssize_t *       _dataIdx;
     unsigned char*  _data;
-    unsigned long   _dataLenght;
+    unsigned long   _dataLength;
 
     std::string _namespace;
     std::string _id;

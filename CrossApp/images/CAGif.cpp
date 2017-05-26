@@ -28,6 +28,7 @@ const std::map<std::string, CAGif*>& CAGif::getGIFs()
 
 CAGif::CAGif()
 :m_fDelay(0.0f)
+,m_pGifData(nullptr)
 ,m_pData(nullptr)
 {
 
@@ -40,6 +41,7 @@ CAGif::~CAGif()
     
     m_vImages.clear();
     
+    CC_SAFE_RELEASE_NULL(m_pGifData);
     CC_SAFE_DELETE(m_pData);
     
     s_pGIFs.erase(m_sFilePath);
@@ -62,10 +64,10 @@ CAGif* CAGif::create(const std::string& filePath)
     return NULL;
 }
 
-CAGif* CAGif::createWithData(unsigned char* data, unsigned long lenght)
+CAGif* CAGif::createWithData(CAData* data)
 {
     CAGif* gif = new CAGif();
-    if(gif && gif->initWithData(data, lenght))
+    if(gif && gif->initWithData(data))
     {
         gif->autorelease();
         return gif;
@@ -81,10 +83,8 @@ bool CAGif::initWithFilePath(const std::string& filePath)
         return false;
     }
     
-    unsigned long lenght = 0;
-    unsigned char* data = FileUtils::getInstance()->getFileData(filePath, "rb", &lenght);
-    
-    if (this->initWithData(data, lenght))
+    CAData* data = FileUtils::getInstance()->getDataFromFile(filePath);
+    if (!data->isNull() && this->initWithData(data))
     {
         m_sFilePath = filePath;
         s_pGIFs.insert(std::make_pair(m_sFilePath, this));
@@ -94,16 +94,19 @@ bool CAGif::initWithFilePath(const std::string& filePath)
     return false;
 }
 
-bool CAGif::initWithData(unsigned char* data, unsigned long lenght)
+bool CAGif::initWithData(CAData* data)
 {
-    if(data == nullptr || lenght == 0 || !CAGif::init())
+    if(data == nullptr || data->isNull() || !CAGif::init())
     {
         return false;
     }
     
     int error = 0;
     
-    m_pGIF = DGifOpen(data, &memReadFuncGif, &error);
+    CC_SAFE_RETAIN(data);
+    m_pGifData = data;
+    
+    m_pGIF = DGifOpen(m_pGifData->getBytes(), &memReadFuncGif, &error);
 
     if (nullptr == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
     {
@@ -258,7 +261,10 @@ CAImage* CAGif::getImage(unsigned int index)
         }
     }
 
-    return CAImage::createWithRawDataNoCache(m_pData, CAImage::PixelFormat::RGBA8888, m_uPixelsWide, m_uPixelsHigh);
+    CAData* data = CAData::create();
+    data->copy(m_pData, m_uPixelsWide * m_uPixelsHigh * 4);
+    
+    return CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, m_uPixelsWide, m_uPixelsHigh);
 }
 
 void CAGif::getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal)

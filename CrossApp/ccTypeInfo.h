@@ -37,11 +37,11 @@ static std::string crossapp_format_string(const char* format, ...)
     std::string str;
     va_list ap;
     va_start(ap, format);
-    size_t lenght = 102400;
-    char* pBuf = (char*)malloc(lenght);
+    size_t length = 102400;
+    char* pBuf = (char*)malloc(length);
     if (pBuf != NULL)
     {
-        vsnprintf(pBuf, lenght, format, ap);
+        vsnprintf(pBuf, length, format, ap);
         str = pBuf;
         free(pBuf);
     }

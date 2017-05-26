@@ -564,10 +564,10 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_eMultitouchGesture == MultitouchGesture::Zoom || m_eMultitouchGesture == MultitouchGesture::ZoomAndRotate)
         {
-            float touch_lenght = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
+            float touch_length = ccpDistance(this->convertToNodeSpace(touch0->getLocation()) ,
                                              this->convertToNodeSpace(touch1->getLocation()));
             
-            m_fZoomScale = m_fBeganZoomScale * touch_lenght / m_fBeganTouchLength;
+            m_fZoomScale = m_fBeganZoomScale * touch_length / m_fBeganTouchLength;
             
             m_fZoomScale = MIN(m_fZoomScale, m_fMaximumZoomScale);
             m_fZoomScale = MAX(m_fZoomScale, m_fMinimumZoomScale);
@@ -610,20 +610,20 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         DPoint relust_point = curr_point;
         this->getScrollWindowNotOutPoint(relust_point);
         
-        float lenght_x = fabsf(curr_point.x - relust_point.x);
-        float lenght_y = fabsf(curr_point.y - relust_point.y);
+        float length_x = fabsf(curr_point.x - relust_point.x);
+        float length_y = fabsf(curr_point.y - relust_point.y);
         
         DPoint scale = DPoint(1.0f, 1.0f);
         
-        if (lenght_x > FLT_EPSILON)
+        if (length_x > FLT_EPSILON)
         {
-            scale.x = MAX(0.5f - lenght_x / size.width, 0.0f);
+            scale.x = MAX(0.5f - length_x / size.width, 0.0f);
             p_off.x = p_off.x * scale.x;
         }
         
-        if (lenght_y > FLT_EPSILON)
+        if (length_y > FLT_EPSILON)
         {
-            scale.y = MAX(0.5f - lenght_y / size.height, 0.0f);
+            scale.y = MAX(0.5f - length_y / size.height, 0.0f);
             p_off.y = p_off.y * scale.y;
         }
     }
@@ -1111,9 +1111,9 @@ bool CAScrollView::isScrollWindowNotMaxOutSide(const DPoint& point)
     DPoint p = point;
     this->getScrollWindowNotOutPoint(p);
     
-    return (fabsf(p.x - point.x) > maxBouncesLenght()
+    return (fabsf(p.x - point.x) > maxBouncesLength()
             ||
-            fabsf(p.y - point.y) > maxBouncesLenght());
+            fabsf(p.y - point.y) > maxBouncesLength());
 }
 
 void CAScrollView::setHeaderRefreshView(CrossApp::CAPullToRefreshView *var)
@@ -1349,26 +1349,26 @@ void CAIndicator::setIndicator(const DSize& parentSize, const DRect& childrenFra
         float size_scale_x = parentSize.width / childrenFrame.size.width;
         size_scale_x = MIN(size_scale_x, 1.0f);
         
-        float lenght_scale_x = parentSize.width / 2 - childrenFrame.origin.x;
-        lenght_scale_x /= childrenFrame.size.width;
+        float length_scale_x = parentSize.width / 2 - childrenFrame.origin.x;
+        length_scale_x /= childrenFrame.size.width;
         
         DRect rect;
         rect.size = m_obContentSize;
         rect.size.width *= size_scale_x;
         
-        if (lenght_scale_x < size_scale_x / 2)
+        if (length_scale_x < size_scale_x / 2)
         {
-            rect.size.width *= lenght_scale_x / (size_scale_x / 2);
+            rect.size.width *= length_scale_x / (size_scale_x / 2);
         }
-        if (1 - lenght_scale_x < size_scale_x / 2)
+        if (1 - length_scale_x < size_scale_x / 2)
         {
-            rect.size.width *= (1 - lenght_scale_x) / (size_scale_x / 2);
+            rect.size.width *= (1 - length_scale_x) / (size_scale_x / 2);
         }
         rect.size.width = MAX(rect.size.height, rect.size.width);
         
         rect.origin = m_obContentSize;
         rect.origin.y *= 0.5f;
-        rect.origin.x *= lenght_scale_x;
+        rect.origin.x *= length_scale_x;
         rect.origin.x = MAX(rect.origin.x, rect.size.width/2);
         rect.origin.x = MIN(rect.origin.x, m_obContentSize.width - rect.size.width/2);
         
@@ -1379,26 +1379,26 @@ void CAIndicator::setIndicator(const DSize& parentSize, const DRect& childrenFra
         float size_scale_y = parentSize.height / childrenFrame.size.height;
         size_scale_y = MIN(size_scale_y, 1.0f);
         
-        float lenght_scale_y = parentSize.height / 2 - childrenFrame.origin.y;
-        lenght_scale_y /= childrenFrame.size.height;
+        float length_scale_y = parentSize.height / 2 - childrenFrame.origin.y;
+        length_scale_y /= childrenFrame.size.height;
         
         DRect rect;
         rect.size = m_obContentSize;
         rect.size.height *= size_scale_y;
         
-        if (lenght_scale_y < size_scale_y / 2)
+        if (length_scale_y < size_scale_y / 2)
         {
-            rect.size.height *= lenght_scale_y / (size_scale_y / 2);
+            rect.size.height *= length_scale_y / (size_scale_y / 2);
         }
-        if (1 - lenght_scale_y < size_scale_y / 2)
+        if (1 - length_scale_y < size_scale_y / 2)
         {
-            rect.size.height *= (1 - lenght_scale_y) / (size_scale_y / 2);
+            rect.size.height *= (1 - length_scale_y) / (size_scale_y / 2);
         }
         rect.size.height = MAX(rect.size.height, rect.size.width);
 
         rect.origin = m_obContentSize;
         rect.origin.x *= 0.5f;
-        rect.origin.y *= lenght_scale_y;
+        rect.origin.y *= length_scale_y;
         rect.origin.y = MAX(rect.origin.y, rect.size.height/2);
         rect.origin.y = MIN(rect.origin.y, m_obContentSize.height - rect.size.height/2);
         

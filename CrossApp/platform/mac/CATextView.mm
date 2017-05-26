@@ -105,15 +105,15 @@
     return location;
 }
 
-- (unsigned int)getLenghtWithBefore:(NSString*)before Current:(NSString*)current Location:(unsigned int)location
+- (unsigned int)getLengthWithBefore:(NSString*)before Current:(NSString*)current Location:(unsigned int)location
 {
-    unsigned int lenght = 0;
+    unsigned int length = 0;
     
     for(unsigned int i=location; i<before.length; i++)
     {
         if (i == current.length)
         {
-            lenght = i + 1 - location;
+            length = i + 1 - location;
             break;
         }
         
@@ -125,24 +125,24 @@
         {
             if (before.length > current.length)
             {
-                lenght = (unsigned int)(before.length - current.length);
+                length = (unsigned int)(before.length - current.length);
             }
             else if (before.length < current.length)
             {
-                lenght = i - location;
+                length = i - location;
             }
             else
             {
-                lenght = 0;
+                length = 0;
             }
             
             break;
         }
         
-        lenght = (unsigned int)(before.length - location);
+        length = (unsigned int)(before.length - location);
     }
     
-    return lenght;
+    return length;
 }
 
 - (void)textDidChange:(NSNotification *)notification
@@ -151,21 +151,21 @@
     NSString* current = [NSString stringWithString:[self stringValue]];;
     
     unsigned int location = [self getLocationWithBefore:before Current:current];
-    unsigned int lenght = [self getLenghtWithBefore:before Current:current Location:location];
-    unsigned int addLenght = (unsigned int)MAX(current.length - (before.length - lenght), 0);;
+    unsigned int length = [self getLengthWithBefore:before Current:current Location:location];
+    unsigned int addLength = (unsigned int)MAX(current.length - (before.length - length), 0);;
     
     std::string changedText = "";
     
-    if (addLenght > 0)
+    if (addLength > 0)
     {
-        changedText = [[current substringWithRange:NSMakeRange(location, addLenght)] UTF8String];
+        changedText = [[current substringWithRange:NSMakeRange(location, addLength)] UTF8String];
     }
     else
     {
         changedText = "";
     }
     
-    if (_textView->getDelegate() && !_textView->getDelegate()->textViewShouldChangeCharacters(_textView, location, lenght, changedText))
+    if (_textView->getDelegate() && !_textView->getDelegate()->textViewShouldChangeCharacters(_textView, location, length, changedText))
     {
         [self setStringValue:before];
     }
@@ -384,11 +384,12 @@ void CATextView::showImage()
     
     NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
     
-    unsigned char* data = (unsigned char*)malloc([data_MAC length]);
-    [data_MAC getBytes:data length:[data_MAC length]];
+    unsigned char* pData = (unsigned char*)malloc([data_MAC length]);
+    [data_MAC getBytes:pData length:[data_MAC length]];
     
-    CAImage *image = CAImage::createWithImageDataNoCache(data, data_MAC.length);
-    free(data);
+    CAData* data = CAData::create();
+    data->fastSet(pData, [data_MAC length]);
+    CAImage *image = CAImage::createWithImageDataNoCache(data);
     m_pShowImageView->setImage(image);
 }
 

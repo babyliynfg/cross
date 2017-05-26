@@ -95,7 +95,7 @@ public:
     //Warning!!! Warning!!! Warning!!!  This method is not on the OpenGL thread.
     virtual bool textFieldShouldChangeCharacters(CATextField* sender,
                                                  unsigned int location,
-                                                 unsigned int lenght,
+                                                 unsigned int length,
                                                  const std::string& changedText) override
     {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -108,7 +108,7 @@ public:
         
         args[0] = OBJECT_TO_JSVAL(p->obj);
         args[1] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), location);
-        args[2] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), lenght);
+        args[2] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), length);
         args[3] = std_string_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), changedText);
         
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "textFieldShouldChangeCharacters", 1, args,&retval);
@@ -237,7 +237,7 @@ public:
     //Warning!!! Warning!!! Warning!!!  This method is not on the OpenGL thread.
     virtual bool textViewShouldChangeCharacters(CATextView* sender,
                                                 unsigned int location,
-                                                unsigned int lenght,
+                                                unsigned int length,
                                                 const std::string& changedText) override
     {
         JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
@@ -250,7 +250,7 @@ public:
         
         args[0] = OBJECT_TO_JSVAL(p->obj);
         args[1] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), location);
-        args[2] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), lenght);
+        args[2] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), length);
         args[3] = std_string_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), changedText);
         
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "textViewShouldChangeCharacters", 4, args,&retval);

@@ -9,7 +9,7 @@
 #include "platform/CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "basics/CAValue.h"
-
+#include "basics/CAData.h"
 NS_CC_BEGIN
 
 /**
@@ -65,9 +65,15 @@ public:
     virtual void purgeCachedEntries();
 
     /**
+     *  Creates binary data from a file.
+     *  @return A data object.
+     */
+    virtual CAData* getDataFromFile(const std::string& filename);
+    
+    /**
      *  Gets string from a file.
      */
-    virtual std::string getFileString(const std::string& pszFilePath);
+    virtual std::string getFileString(const std::string& filename);
 
     /**
      *  Gets resource file data
@@ -328,7 +334,7 @@ public:
      *@param fullPath The full path to the file you want to save a string
      *@return bool
      */
-    virtual bool writeDataToFile(unsigned char* data, size_t lenght, const std::string& fullPath);
+    virtual bool writeDataToFile(unsigned char* data, size_t length, const std::string& fullPath);
 
     /**
     * write ValueMap into a plist file

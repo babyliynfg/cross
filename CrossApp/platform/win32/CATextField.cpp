@@ -85,7 +85,7 @@ public:
 			return;
 		}
 
-		if (m_sText.size() + len > m_pTextFieldX->getMaxLenght())
+		if (m_sText.size() + len > m_pTextFieldX->getMaxLength())
 			return;
 		
 		std::string cszAddText;
@@ -636,7 +636,7 @@ CATextField::CATextField()
 , m_iMarginLeft(10)
 , m_iMarginRight(10)
 , m_iFontSize(40)
-, m_iMaxLenght(0)
+, m_iMaxLength(0)
 , m_eClearBtn(CATextField::ClearButtonMode::None)
 , m_eAlign(CATextField::Align::Left)
 , m_eReturnType(CATextField::ReturnType::Done)
@@ -1034,14 +1034,14 @@ bool CATextField::isSecureTextEntry()
     return m_bSecureTextEntry;
 }
 
-void CATextField::setMaxLenght(int var)
+void CATextField::setMaxLength(int var)
 {
-    m_iMaxLenght = var;
+    m_iMaxLength = var;
 }
 
-int CATextField::getMaxLenght()
+int CATextField::getMaxLength()
 {
-    return m_iMaxLenght;
+    return m_iMaxLength;
 }
 
 NS_CC_END

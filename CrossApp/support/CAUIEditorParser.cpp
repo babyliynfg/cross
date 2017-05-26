@@ -627,9 +627,9 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 			textField->setFontSize(atoi(value));
 		}
 
-		if (const char* value = viewXml->Attribute("maxLenght"))
+		if (const char* value = viewXml->Attribute("maxLength"))
 		{
-			textField->setMaxLenght(atoi(value));
+			textField->setMaxLength(atoi(value));
 		}
 
 		if (const char* value = viewXml->Attribute("maginLeft"))

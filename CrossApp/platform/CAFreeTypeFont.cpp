@@ -166,14 +166,15 @@ _AgaginInitGlyphs:
 	m_bItalics = false;
 	m_bUnderLine = false;
 
+    CAData* data = CAData::create();
+    data->fastSet(pData, width * height * 4);
 	CAImage* image = new CAImage();
-	if (!image->initWithRawData(pData, CAImage::PixelFormat::RGBA8888, width, height))
+	if (!image->initWithRawData(data, CAImage::PixelFormat::RGBA8888, width, height))
 	{
         CC_SAFE_RELEASE_NULL(image);
 	}
-	delete[]pData;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
-    image->releaseData();
+    image->getData()->clear();
 #endif
 	image->autorelease();
 	return image;
@@ -571,7 +572,7 @@ void CAFreeTypeFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int 
 	FT_Int  x_max = x + iEmojiSize;
 	FT_Int  y_max = y + iEmojiSize;
 
-	uint8_t* src = pEmoji->m_pData;
+	uint8_t* src = pEmoji->m_pData->getBytes();
 	for (FT_Int i = y; i < y_max; i++)
 	{
 		for (FT_Int j = x; j < x_max; j++)
