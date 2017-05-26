@@ -52,18 +52,21 @@
     }
     UIImage *image = [info objectForKey:imageType];
     
-    NSData *data = UIImageJPEGRepresentation([self fixOrientation:image], 1.0f);
-    void* _data = malloc([data length]);
-    [data getBytes:_data];
+    NSData *iOSData = UIImageJPEGRepresentation([self fixOrientation:image], 1.0f);
+    
+    unsigned char* data = (unsigned char*)malloc([iOSData length]);
+    [iOSData getBytes:data];
+    
+    CrossApp::CAData* ca_data = CrossApp::CAData::create();
+    ca_data->fastSet(data, [iOSData length]);
     
     CrossApp::CAImage *__image = new CrossApp::CAImage();
-    __image->initWithImageData((unsigned char*)_data, data.length);
+    __image->initWithImageData(ca_data);
     if (self.callback)
     {
         self.callback(__image);
     }
     CC_SAFE_RELEASE(__image);
-    free(_data);
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

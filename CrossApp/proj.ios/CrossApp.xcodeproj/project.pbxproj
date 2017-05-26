@@ -79,6 +79,8 @@
 		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
 		D6596E0D1E56D1C200A55CF9 /* CAAlertViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */; };
 		D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */; };
+		D66F533B1ED8402300546E5E /* CAData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66F53391ED8402300546E5E /* CAData.cpp */; };
+		D66F533C1ED8402300546E5E /* CAData.h in Headers */ = {isa = PBXBuildFile; fileRef = D66F533A1ED8402300546E5E /* CAData.h */; };
 		D6ADC5ED1E56A72800750771 /* CAAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4361E56A72700750771 /* CAAnimation.cpp */; };
 		D6ADC5EE1E56A72800750771 /* CAAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4371E56A72700750771 /* CAAnimation.h */; };
 		D6ADC5EF1E56A72800750771 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4381E56A72700750771 /* CAViewAnimation.cpp */; };
@@ -526,6 +528,8 @@
 		B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
 		D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlertViewImpl.mm; sourceTree = "<group>"; };
 		D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertViewImpl.h; sourceTree = "<group>"; };
+		D66F53391ED8402300546E5E /* CAData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAData.cpp; sourceTree = "<group>"; };
+		D66F533A1ED8402300546E5E /* CAData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAData.h; sourceTree = "<group>"; };
 		D6ADC4361E56A72700750771 /* CAAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAnimation.cpp; sourceTree = "<group>"; };
 		D6ADC4371E56A72700750771 /* CAAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAnimation.h; sourceTree = "<group>"; };
 		D6ADC4381E56A72700750771 /* CAViewAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewAnimation.cpp; sourceTree = "<group>"; };
@@ -1134,6 +1138,8 @@
 		D6ADC43A1E56A72700750771 /* basics */ = {
 			isa = PBXGroup;
 			children = (
+				D66F53391ED8402300546E5E /* CAData.cpp */,
+				D66F533A1ED8402300546E5E /* CAData.h */,
 				D6C513271E691EA600B0BE19 /* CAColor.cpp */,
 				D6C513281E691EA600B0BE19 /* CAColor.h */,
 				D6ADC74D1E56A78000750771 /* CANotificationCenter.cpp */,
@@ -1943,6 +1949,7 @@
 				D6ADC5F81E56A72800750771 /* CACameraBackgroundBrush.h in Headers */,
 				D6ADC6151E56A72800750771 /* CASTLContainer.h in Headers */,
 				D6ADC66E1E56A72800750771 /* CAGif.h in Headers */,
+				D66F533C1ED8402300546E5E /* CAData.h in Headers */,
 				D6ADC6261E56A72800750771 /* CAButton.h in Headers */,
 				E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */,
 				D6ADC6F81E56A72800750771 /* shapes.h in Headers */,
@@ -2293,6 +2300,7 @@
 				D6ADC6BB1E56A72800750771 /* CCRenderState.cpp in Sources */,
 				D6ADC6881E56A72800750771 /* CAQuaternion.cpp in Sources */,
 				0460ED2E1957019600D13001 /* CCApplication.mm in Sources */,
+				D66F533B1ED8402300546E5E /* CAData.cpp in Sources */,
 				D6ADC7451E56A72800750771 /* CAWebView.cpp in Sources */,
 				D6ADC6B21E56A72800750771 /* CCProperties.cpp in Sources */,
 				D6ADC60B1E56A72800750771 /* CAPointExtension.cpp in Sources */,

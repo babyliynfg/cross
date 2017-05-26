@@ -344,13 +344,13 @@ void CATextField::showImage()
     UIGraphicsEndImageContext();
     
     NSData* iOSData = UIImagePNGRepresentation(image_iOS);
-    //[image_iOS release];
-    
     unsigned char* data = (unsigned char*)malloc([iOSData length]);
     [iOSData getBytes:data];
     
-    CAImage *image = CAImage::createWithImageDataNoCache(data, iOSData.length);
-    free(data);
+    CAData* ca_data = CAData::create();
+    ca_data->fastSet(data, [iOSData length]);
+    
+    CAImage *image = CAImage::createWithImageDataNoCache(ca_data);
 
     m_pImgeView->setImage(image);
 }

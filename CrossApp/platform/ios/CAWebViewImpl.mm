@@ -401,15 +401,14 @@ CAImageView* CAWebViewImpl::getWebViewImage()
 	UIImage* image = [WebViewWrapper getWebViewImage];
     if (image != NULL)
     {
-        NSData* data = UIImagePNGRepresentation(image);
-        if (data != NULL)
-        {
-            Byte* bytesData = (Byte*)[data bytes];
-            if (bytesData != NULL)
-            {
-                return CAImageView::createWithImage(CAImage::createWithImageDataNoCache(bytesData, data.length));
-            }
-        }
+        NSData* iOSData = UIImagePNGRepresentation(image);
+        unsigned char* data = (unsigned char*)malloc([iOSData length]);
+        [iOSData getBytes:data];
+        
+        CAData* ca_data = CAData::create();
+        ca_data->fastSet(data, [iOSData length]);
+
+        return CAImageView::createWithImage(CAImage::createWithImageDataNoCache(ca_data));
     }
     return NULL;
 }

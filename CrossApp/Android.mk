@@ -41,6 +41,7 @@ basics/CAPointExtension.cpp \
 basics/CACamera.cpp \
 basics/CACameraBackgroundBrush.cpp \
 basics/CAConfiguration.cpp \
+basics/CAData.cpp \
 cocoa/CCNS.cpp \
 cocoa/CCSet.cpp \
 cocoa/CACalendar.cpp \

@@ -218,9 +218,15 @@ extern "C"
     
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_onByte(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint width, jint height)
     {
-        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
+        ssize_t length = width * height * 4;
+        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * length);
         env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
-        CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, width, height);
+        
+        CrossApp::CAData* ca_data = CrossApp::CAData::create();
+        ca_data->fastSet(data, length);
+        
+        CAImage* image = CAImage::createWithRawDataNoCache(ca_data, CAImage::PixelFormat::RGBA8888, width, height);
+        
         CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
         imageView->setImage(image);
         free(data);
