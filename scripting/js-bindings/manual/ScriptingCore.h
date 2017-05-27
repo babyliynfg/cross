@@ -159,9 +159,10 @@ public:
     bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args, JS::MutableHandleValue retVal);
     
 
-
+    bool evalString(const char *string);
     
-    bool evalString(const char *string,JS::RootedValue *outVal, const char *filename = NULL, JSContext *cx = NULL, JSObject* global = NULL);
+    
+    bool evalString(const char *string, JS::RootedValue *outVal, const char *filename = NULL, JSContext *cx = NULL, JSObject* global = NULL);
     
     /**
      @brief @~english Get script object for the given path

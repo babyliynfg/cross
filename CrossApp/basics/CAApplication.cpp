@@ -747,6 +747,10 @@ void CAApplication::purgeApplication()
     
     // delete CAApplication
     release();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    exit(0);
+#endif
 }
 
 void CAApplication::restartApplication()
