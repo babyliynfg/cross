@@ -35,10 +35,15 @@ ca.CAScrollView.MultitouchGesture.Rotate = 1;
 ca.CAScrollView.MultitouchGesture.ZoomAndRotate = 2;
 ca.CAScrollView.MultitouchGesture.None = 3;
 
+ca.CAListView.Orientation = {};
+ca.CAListView.Orientation.Vertical = 0;
+ca.CAListView.Orientation.Horizontal = 1;
+
+
 //CAAutoCollectionView
 ca.CAAutoCollectionView.Orientation = {};
-ca.CAAutoCollectionView.Orientation.Horizontal = 0;
-ca.CAAutoCollectionView.Orientation.Vertical = 1;
+ca.CAAutoCollectionView.Orientation.Vertical = 0;
+ca.CAAutoCollectionView.Orientation.Horizontal = 1;
 
 ca.CAAutoCollectionView.CellHoriAlign = {};
 ca.CAAutoCollectionView.CellHoriAlign.HoriAlignLeft = 0;
