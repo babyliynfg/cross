@@ -398,7 +398,7 @@ CAImageView* CAWebViewImpl::getWebViewImage()
 		DSize size = _webView->getBounds().size;
 
         CrossApp::CAData* ca_data = CrossApp::CAData::create();
-        ca_data->fastSet((const unsigned char*)&s_cszWebViewImageData[0], s_cszWebViewImageData.size());
+        ca_data->fastSet((unsigned char*)&s_cszWebViewImageData[0], s_cszWebViewImageData.size());
         
 		CAImage* pImage = new CAImage();
 		if (!pImage->initWithRawData(ca_data, CAImage::PixelFormat::RGBA8888, size.width, size.height))
