@@ -401,6 +401,13 @@ void ScriptingCore::createGlobalContext()
     }
     _needCleanup = true;
 }
+
+bool ScriptingCore::evalString(const char *string)
+{
+    JS::RootedValue retVal(_cx);
+    return evalString(string, &retVal);
+}
+
 bool ScriptingCore::evalString(const char *string,JS::RootedValue *outVal, const char *filename, JSContext *cx, JSObject* global )
 {
     if (cx == NULL) {

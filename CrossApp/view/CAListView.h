@@ -53,8 +53,8 @@ public:
     
     enum class Orientation : int
     {
-        Horizontal = 0,
-        Vertical
+        Vertical = 0,
+        Horizontal
     };
     
 public:

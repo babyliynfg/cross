@@ -120,8 +120,8 @@ public:
     
     enum class Orientation
     {
-        Horizontal,
-        Vertical
+        Vertical = 0,
+        Horizontal
     };
     
     enum class CellHoriAlign

@@ -616,6 +616,7 @@ void CAHttpClient::processResponse(CAHttpResponse* response, char* responseMessa
     CAData* ca_responseData = new CAData();
     ca_responseData->fastSet(c_responseData, c_responseDataLength);
     response->setResponseData(ca_responseData);
+    ca_responseData->release();
     
     ssize_t c_responseHeaderLength = responseHeader.size();
     unsigned char* c_responseHeader = (unsigned char*)malloc(c_responseHeaderLength);
@@ -627,6 +628,7 @@ void CAHttpClient::processResponse(CAHttpResponse* response, char* responseMessa
     CAData* ca_responseHeader = new CAData();
     ca_responseHeader->fastSet(c_responseHeader, c_responseHeaderLength);
     response->setResponseHeader(ca_responseHeader);
+    ca_responseHeader->release();
     
     // write data to CAHttpResponse
     response->setResponseCode(responseCode);
