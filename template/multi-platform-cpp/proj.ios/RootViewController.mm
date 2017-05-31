@@ -29,18 +29,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     CGRect rect = [[UIScreen mainScreen] bounds];
-    //CGFloat scale = [[UIScreen mainScreen] scale];
-    
-//    if ( [[UIDevice currentDevice].systemVersion floatValue] >= 7.0)
-//    {
-//        rect.size.height -= 20;
-//        rect.origin.y = 20;
-//    }
-//    else
-//    {
-//        rect.size = [[UIScreen mainScreen]applicationFrame].size;
-//    }
-    
+
     EAGLView *__glView = [EAGLView viewWithFrame: rect
                                      pixelFormat: kEAGLColorFormatRGB565
                                      depthFormat: GL_DEPTH24_STENCIL8_OES

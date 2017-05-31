@@ -22,20 +22,9 @@ static AppDelegate s_sharedApplication;
 
     // Use RootViewController manage EAGLView 
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-    viewController.wantsFullScreenLayout = NO;
-
-    // Set RootViewController to window
-    if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
-    {
-        // warning: addSubView doesn't work on iOS6
-        [window addSubview: viewController.view];
-    }
-    else
-    {
-        // use this method on ios6
-        [window setRootViewController:viewController];
-    }
     
+    [viewController setEdgesForExtendedLayout:UIRectEdgeAll];
+    [window setRootViewController:viewController];
     [window makeKeyAndVisible];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
