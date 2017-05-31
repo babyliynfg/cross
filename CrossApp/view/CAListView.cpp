@@ -474,9 +474,9 @@ void CAListView::reloadViewSizeData()
     {
         unsigned int cellHeight = 0;
         
-        if (m_obNumberOfIndex)
+        if (m_obHeightForIndex)
         {
-            cellHeight = m_obHeightForIndex(i);
+           cellHeight = m_obHeightForIndex(i);
         }
         else if (m_pListViewDataSource)
         {
@@ -565,14 +565,10 @@ void CAListView::reloadData()
             addSubview(m_pListHeaderView);
         }
     }
-	
-    unsigned int cellCount = m_pListViewDataSource->numberOfIndex(this);
-    for (unsigned i = 0; i < cellCount; i++)
+	    
+    for (unsigned int i = 0; i < m_nIndexs; i++)
     {
-		if (m_nIndexs > 0)
-		{
-			m_mpUsedListCells.insert(std::make_pair(i, (CAListViewCell*)NULL));
-		}
+		m_mpUsedListCells.insert(std::make_pair(i, (CAListViewCell*)NULL));
     }
     
     if (m_nListFooterHeight > 0)

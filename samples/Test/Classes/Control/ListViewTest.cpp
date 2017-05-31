@@ -57,7 +57,7 @@ void ListViewTest::viewDidLoad()
     
     m_pListViewHor->setHeightForIndexCallback([=](unsigned int index)
     {
-        return 20;
+        return 200;
     });
     
     m_pListViewHor->setCellAtIndexCallback([=](const DSize& cellSize, unsigned int index)
