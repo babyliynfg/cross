@@ -17,6 +17,9 @@ CAPageView::CAPageView(CAPageView::Orientation type)
 ,m_pPageViewDelegate(nullptr)
 ,m_bListener(false)
 ,m_fSpacing(0)
+,m_obBeginTurning(nullptr)
+,m_obEndTurning(nullptr)
+,m_obDidSelectedPageAtIndex(nullptr)
 {
 
 }
@@ -199,9 +202,16 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     var = MIN(var, this->getPageCount() - 1);
     var = MAX(var, 0);
 
-    if (m_pPageViewDelegate && m_nCurrPage != var && m_bListener)
+    if (m_nCurrPage != var && m_bListener)
     {
-        m_pPageViewDelegate->pageViewDidBeginTurning(this);
+        if (m_obBeginTurning)
+        {
+            m_obBeginTurning();
+        }
+        else if (m_pPageViewDelegate)
+        {
+            m_pPageViewDelegate->pageViewDidBeginTurning(this);
+        }
     }
     
     m_nCurrPage = var;
@@ -246,9 +256,16 @@ int CAPageView::getSpacing()
 
 void CAPageView::contentOffsetFinish()
 {
-    if (m_pPageViewDelegate && m_bListener && m_vTouches.empty())
+    if (m_bListener && m_vTouches.empty())
     {
-        m_pPageViewDelegate->pageViewDidEndTurning(this);
+        if (m_obEndTurning)
+        {
+            m_obEndTurning();
+        }
+        else if (m_pPageViewDelegate)
+        {
+            m_pPageViewDelegate->pageViewDidEndTurning(this);
+        }
         m_bListener = false;
     }
 }
@@ -351,10 +368,13 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (!pTouch->isDelta())
     {
-        if (m_pPageViewDelegate)
+        if (m_obDidSelectedPageAtIndex)
         {
-            DPoint point = this->convertTouchToNodeSpace(pTouch);
-            m_pPageViewDelegate->pageViewDidSelectedPageAtIndex(this, this->getCurrPage(), point);
+            m_obDidSelectedPageAtIndex(this->getCurrPage(), this->convertTouchToNodeSpace(pTouch));
+        }
+        else if (m_pPageViewDelegate)
+        {
+            m_pPageViewDelegate->pageViewDidSelectedPageAtIndex(this, this->getCurrPage(), this->convertTouchToNodeSpace(pTouch));
         }
         this->runAnimation(true);
     }

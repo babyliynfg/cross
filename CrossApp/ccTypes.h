@@ -231,11 +231,6 @@ static const char* CROSSAPP_CCLOG_NOTIFICATION = "CROSSAPP_CCLOG_NOTIFICATION";
 //script
 namespace script
 {
-    static int onEnter = 0x1;
-    static int onExit = 0x2;
-    static int onEnterTransitionDidFinish = 0x3;
-    static int onExitTransitionDidStart = 0x4;
-    
     static int viewDidLoad = 0x11;
     static int viewDidUnload = 0x12;
     static int viewSizeDidChanged = 0x13;

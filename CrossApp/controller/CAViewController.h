@@ -24,7 +24,7 @@ class CADrawerController;
 class CAUIEditorParser;
 
 class CC_DLL CAViewController
-: public CAResponder
+: public CAObject
 , public CAContentContainer
 , public CAKeypadDelegate
 {
@@ -65,8 +65,6 @@ public:
     
     CAView* getView();
     
-    virtual CAResponder* nextResponder();
-
     CAView* getViewWithID(const std::string& tag);
 
 public:
@@ -293,6 +291,8 @@ public:
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedTitleColor, TabBarTitleColorForSelected);
     
     CC_PROPERTY(bool, m_bTabBarSelectedTitleBold, TabBarTitleBoldForSelected);
+    
+    CC_SYNTHESIZE_IS(bool, m_bScrollEnabled, ScrollEnabled);
     
     void updateItem(CAViewController* viewController);
     

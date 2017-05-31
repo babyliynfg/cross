@@ -57,6 +57,27 @@ public:
     };
     
 public:
+    // event listeners. If these functions are set, the corresponding function of CAScrollViewDelegate will fail.
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDidMoved, DidMovedCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obStopMoved, StopMovedCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obWillBeginDragging, WillBeginDraggingCallbackCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDragging, DraggingCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDidEndDragging, DidEndDraggingCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDidZoom, DidZoomCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const DPoint&)>, m_obTouchUpWithoutMoved, TouchUpWithoutMovedCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obHeaderBeginRefreshing, HeaderBeginRefreshingCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obFooterBeginRefreshing, FooterBeginRefreshingCallback);
+    
+public:
 
     CAScrollView();
     

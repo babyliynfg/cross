@@ -1516,6 +1516,16 @@ bool
 },
 
 /**
+ * @method setMouseMovedOutSideCallback
+ * @param {function} arg0
+ */
+setMouseMovedOutSideCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method isScrollEnabled
  * @return {bool}
  */
@@ -1533,6 +1543,36 @@ isHaveNextResponder : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getMouseScrollWheelCallback
+ * @return {function}
+ */
+getMouseScrollWheelCallback : function (
+)
+{
+    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
+},
+
+/**
+ * @method getMouseMovedOutSideCallback
+ * @return {function}
+ */
+getMouseMovedOutSideCallback : function (
+)
+{
+    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
+},
+
+/**
+ * @method getTouchEndedCallback
+ * @return {function}
+ */
+getTouchEndedCallback : function (
+)
+{
+    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
 },
 
 /**
@@ -1576,6 +1616,16 @@ isFirstResponder : function (
 },
 
 /**
+ * @method setTouchMovedCallback
+ * @param {function} arg0
+ */
+setTouchMovedCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method isTouchEnabled
  * @return {bool}
  */
@@ -1583,6 +1633,16 @@ isTouchEnabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getTouchBeganCallback
+ * @return {function}
+ */
+getTouchBeganCallback : function (
+)
+{
+    return std::function<bool (CrossApp::CATouch , CrossApp::CAEvent )>;
 },
 
 /**
@@ -1613,6 +1673,26 @@ getTouches : function (
 )
 {
     return new Array();
+},
+
+/**
+ * @method getMouseMovedCallback
+ * @return {function}
+ */
+getMouseMovedCallback : function (
+)
+{
+    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
+},
+
+/**
+ * @method setTouchBeganCallback
+ * @param {function} arg0
+ */
+setTouchBeganCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -1716,6 +1796,16 @@ isReachBoundaryHandOverToSuperview : function (
 },
 
 /**
+ * @method setTouchEndedCallback
+ * @param {function} arg0
+ */
+setTouchEndedCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method isReachBoundaryUp
  * @return {bool}
  */
@@ -1723,6 +1813,16 @@ isReachBoundaryUp : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setMouseMovedCallback
+ * @param {function} arg0
+ */
+setMouseMovedCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -1746,6 +1846,16 @@ getScrollRunning : function (
 },
 
 /**
+ * @method setMouseScrollWheelCallback
+ * @param {function} arg0
+ */
+setMouseScrollWheelCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method isMouseScrollWheelEnabled
  * @return {bool}
  */
@@ -1763,6 +1873,16 @@ resignFirstResponder : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getTouchMovedCallback
+ * @return {function}
+ */
+getTouchMovedCallback : function (
+)
+{
+    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
 },
 
 /**
@@ -1806,6 +1926,16 @@ isMultipleTouchEnabled : function (
 },
 
 /**
+ * @method getTouchCancelledCallback
+ * @return {function}
+ */
+getTouchCancelledCallback : function (
+)
+{
+    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
+},
+
+/**
  * @method getZLevel
  * @return {unsigned long}
  */
@@ -1813,6 +1943,16 @@ getZLevel : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setTouchCancelledCallback
+ * @param {function} arg0
+ */
+setTouchCancelledCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -8153,16 +8293,6 @@ canavigationbaritem
 },
 
 /**
- * @method nextResponder
- * @return {ca.CAResponder}
- */
-nextResponder : function (
-)
-{
-    return ca.CAResponder;
-},
-
-/**
  * @method getTitle
  * @return {String}
  */
@@ -8611,6 +8741,16 @@ caimage
 },
 
 /**
+ * @method isScrollEnabled
+ * @return {bool}
+ */
+isScrollEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setTabBarTitleColorForSelected
  * @param {color4b_object} arg0
  */
@@ -8702,6 +8842,16 @@ getTabBarSelectedBackgroundColor : function (
 )
 {
     return ca.CAColor4B;
+},
+
+/**
+ * @method setScrollEnabled
+ * @param {bool} arg0
+ */
+setScrollEnabled : function (
+bool 
+)
+{
 },
 
 /**

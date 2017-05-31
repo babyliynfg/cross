@@ -25,13 +25,18 @@ CADrawerController::CADrawerController()
 ,m_bAnimation(false)
 ,m_pBackgroundView(nullptr)
 {
-    this->getView()->setColor(CAColor4B::CLEAR);
     this->setTouchMoved(true);
-    this->setVerticalScrollEnabled(false);
+    
+    m_pView->setColor(CAColor4B::CLEAR);
+    
+    m_pView->setTouchBeganCallback(STD_BIND_2(CADrawerController::ccTouchBegan, this));
+    m_pView->setTouchMovedCallback(STD_BIND_2(CADrawerController::ccTouchMoved, this));
+    m_pView->setTouchEndedCallback(STD_BIND_2(CADrawerController::ccTouchEnded, this));
+    m_pView->setTouchCancelledCallback(STD_BIND_2(CADrawerController::ccTouchCancelled, this));
     
     memset(m_pContainer, NULL, sizeof(CAView*) * 2);
     
-    CANotificationCenter::getInstance()->addObserver(std::bind(&CADrawerController::changeStatusBarOrientation, this, std::placeholders::_1), this, CAApplicationDidChangeStatusBarOrientationNotification);
+    CANotificationCenter::getInstance()->addObserver(STD_BIND_1(CADrawerController::changeStatusBarOrientation, this), this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 CADrawerController::~CADrawerController()
@@ -373,7 +378,7 @@ bool CADrawerController::isReachBoundaryRight()
 
 bool CADrawerController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    return m_vTouches.size() == 1;
+    return m_pView->getTouches().size() == 1;
 }
 
 void CADrawerController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
@@ -461,7 +466,8 @@ void CADrawerController::setBackgroundImage(CAImage* var)
 void CADrawerController::setTouchMoved(bool var)
 {
     m_bTouchMoved = var;
-    this->setPriorityScroll(var);
+    m_pView->setPriorityScroll(var);
+    m_pView->setVerticalScrollEnabled(false);
 }
 
 bool CADrawerController::isTouchMoved()

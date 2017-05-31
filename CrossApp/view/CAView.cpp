@@ -1432,30 +1432,11 @@ CAView* CAView::copy()
 
 CAResponder* CAView::nextResponder()
 {
-    if (!m_bHaveNextResponder)
-    {
-        return NULL;
-    }
-    
-    if (m_pContentContainer)
-    {
-        return dynamic_cast<CAResponder*>(m_pContentContainer);
-    }
-    return m_pSuperview;
+    return m_bHaveNextResponder ? m_pSuperview : nullptr;
 }
 
 void CAView::onEnter()
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if(CAScriptEngineManager::sharedManager()->getScriptEngine())
-    {
-        if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
-        {
-            if (CAScriptEngineManager::sendNodeEventToJS(this, script::onEnter))
-                return;
-        }
-    }
-#endif
     if (m_pSuperview)
     {
         this->reViewlayout(m_pSuperview->m_obContentSize);
@@ -1468,6 +1449,11 @@ void CAView::onEnter()
     m_bRunning = true;
     this->updateDraw();
     
+    if (m_obOnEnterCallback)
+    {
+        m_obOnEnterCallback();
+    }
+    
     for (auto& subview : m_obSubviews)
     {
         subview->onEnter();
@@ -1477,25 +1463,15 @@ void CAView::onEnter()
     {
         m_pCGNode->onEnter();
     }
-    
-    if (m_obOnEnterCallback)
-    {
-        m_obOnEnterCallback();
-    }
 }
 
 void CAView::onEnterTransitionDidFinish()
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if(CAScriptEngineManager::sharedManager()->getScriptEngine())
+    if (m_obOnEnterTransitionDidFinishCallback)
     {
-        if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
-        {
-            if (CAScriptEngineManager::sendNodeEventToJS(this, script::onEnterTransitionDidFinish))
-                return;
-        }
+        m_obOnEnterTransitionDidFinishCallback();
     }
-#endif
+    
     if (!m_obSubviews.empty())
     {
         CAVector<CAView*>::iterator itr;
@@ -1512,25 +1488,14 @@ void CAView::onEnterTransitionDidFinish()
     {
         m_pContentContainer->viewOnEnterTransitionDidFinish();
     }
-    
-    if (m_obOnEnterTransitionDidFinishCallback)
-    {
-        m_obOnEnterTransitionDidFinishCallback();
-    }
 }
 
 void CAView::onExitTransitionDidStart()
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if(CAScriptEngineManager::sharedManager()->getScriptEngine())
+    if (m_obOnExitTransitionDidStartCallback)
     {
-        if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
-        {
-            if (CAScriptEngineManager::sendNodeEventToJS(this, script::onExitTransitionDidStart))
-                return;
-        }
+        m_obOnExitTransitionDidStartCallback();
     }
-#endif
     
     for (auto& subview : m_obSubviews)
     {
@@ -1546,26 +1511,16 @@ void CAView::onExitTransitionDidStart()
     {
         m_pContentContainer->viewOnExitTransitionDidStart();
     }
-    
-    if (m_obOnExitTransitionDidStartCallback)
-    {
-        m_obOnExitTransitionDidStartCallback();
-    }
 }
 
 void CAView::onExit()
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if(CAScriptEngineManager::sharedManager()->getScriptEngine())
-    {
-        if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
-        {
-            if (CAScriptEngineManager::sendNodeEventToJS(this, script::onExit))
-                return;
-        }
-    }
-#endif
     m_bRunning = false;
+    
+    if (m_obOnExitCallback)
+    {
+        m_obOnExitCallback();
+    }
     
     for (auto& subview : m_obSubviews)
     {
@@ -1575,11 +1530,6 @@ void CAView::onExit()
     if (m_pCGNode)
     {
         m_pCGNode->onExit();
-    }
-    
-    if (m_obOnExitCallback)
-    {
-        m_obOnExitCallback();
     }
 }
 

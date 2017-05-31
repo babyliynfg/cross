@@ -38,8 +38,19 @@ public:
     {
         Horizontal = 0,
         Vertical
-    };
+        };
     
+public:
+    // event listeners. If these functions are set, the corresponding function of CAScrollViewDelegate will fail.
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obBeginTurning, BeginTurningCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obEndTurning, EndTurningCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(unsigned int, const DPoint&)>, m_obDidSelectedPageAtIndex, DidSelectedPageAtIndexCallback);
+
+public:
+
     CAPageView(CAPageView::Orientation type);
     
     virtual ~CAPageView();

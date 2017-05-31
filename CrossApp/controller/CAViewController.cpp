@@ -38,7 +38,7 @@ CAViewController::CAViewController()
     m_pView->retain();
     m_pView->setContentContainer(this);
     m_pView->setLayout(DLayoutFill);
-    this->setHaveNextResponder(false);
+    m_pView->setHaveNextResponder(false);
 }
 
 CAViewController::~CAViewController()
@@ -153,8 +153,6 @@ void CAViewController::viewOnSizeTransitionDidChanged()
 {
     if (m_bLifeLock)
     {
-        
-
         if(CAScriptEngineManager::sharedManager()->getScriptEngine())
         {
 #if CC_ENABLE_SCRIPT_BINDING
@@ -273,11 +271,6 @@ void CAViewController::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 }
 
-CAResponder* CAViewController::nextResponder()
-{
-    return m_pView->getSuperview();
-}
-
 void CAViewController::presentModalViewController(CAViewController* controller, bool animated)
 {
     CAApplication::getApplication()->getRootWindow()->presentModalViewController(controller, animated);
@@ -303,10 +296,18 @@ CANavigationController::CANavigationController()
 ,m_fProgress(1.0f)
 ,m_bClearance(false)
 {
+    this->setTouchMoved(true);
+    
+    m_pView->setVerticalScrollEnabled(false);
     m_pView->setColor(CAColor4B::CLEAR);
     m_pView->setDisplayRange(false);
-    this->setTouchMoved(true);
-    this->setVerticalScrollEnabled(false);
+    
+    m_pView->setTouchBeganCallback(STD_BIND_2(CANavigationController::ccTouchBegan, this));
+    m_pView->setTouchMovedCallback(STD_BIND_2(CANavigationController::ccTouchMoved, this));
+    m_pView->setTouchEndedCallback(STD_BIND_2(CANavigationController::ccTouchEnded, this));
+    m_pView->setTouchCancelledCallback(STD_BIND_2(CANavigationController::ccTouchCancelled, this));
+    
+    
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CANavigationBar");
     this->setNavigationBarBackgroundImage(CAImage::create(map.at("backgroundView")));
     m_sNavigationBarTitleColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor")));
@@ -451,7 +452,7 @@ bool CANavigationController::initWithRootViewController(CAViewController* viewCo
     }
 
     m_pViewControllers.pushBack(viewController);
-    
+
     return true;
 }
 
@@ -1182,7 +1183,7 @@ void CANavigationController::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 void CANavigationController::setTouchMoved(bool var)
 {
     m_bTouchMoved = var;
-    this->setPriorityScroll(var);
+    m_pView->setPriorityScroll(var);
 }
 
 bool CANavigationController::isTouchMoved()
@@ -1215,10 +1216,14 @@ CATabBarController::CATabBarController()
 ,m_bShowTabBarSelectedIndicator(false)
 ,m_fProgress(1.0f)
 ,m_iTabBarHeight(0)
+,m_bScrollEnabled(false)
 {
-    this->setScrollEnabled(false);
     m_pView->setColor(CAColor4B::CLEAR);
     m_pView->setDisplayRange(false);
+    m_pView->setTouchBeganCallback(STD_BIND_2(CATabBarController::ccTouchBegan, this));
+    m_pView->setTouchMovedCallback(STD_BIND_2(CATabBarController::ccTouchMoved, this));
+    m_pView->setTouchEndedCallback(STD_BIND_2(CATabBarController::ccTouchEnded, this));
+    m_pView->setTouchCancelledCallback(STD_BIND_2(CATabBarController::ccTouchCancelled, this));
     
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATabBar");
     
@@ -1402,7 +1407,7 @@ bool CATabBarController::initWithViewControllers(const CAVector<CAViewController
     
     m_pViewControllers = viewControllers;
     m_eTabBarVerticalAlignment = var;
-    
+
     return true;
     
 }

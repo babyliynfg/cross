@@ -26,6 +26,10 @@ CAResponder::CAResponder()
 ,m_bMouseScrollWheelEnabled(false)
 ,m_bScrollRunning(false)
 ,m_uZLevel(0)
+,m_obTouchBegan(nullptr)
+,m_obTouchMoved(nullptr)
+,m_obTouchEnded(nullptr)
+,m_obTouchCancelled(nullptr)
 {
 
 }

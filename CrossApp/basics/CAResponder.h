@@ -71,39 +71,44 @@ public:
     
     virtual bool isReachBoundaryDown() {return false;}
     
-    /**
-     * @lua NA
-     */
+
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<bool(CATouch*, CAEvent*)>, m_obTouchBegan, TouchBeganCallback);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     /**
      * @lua NA
      */
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obTouchMoved, TouchMovedCallback);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
     /**
      * @lua NA
      */
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obTouchEnded, TouchEndedCallback);
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     /**
      * @lua NA
      */
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obTouchCancelled, TouchCancelledCallback);
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     /**
      * @lua NA
      */
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obMouseMoved, MouseMovedCallback);
     virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
     /**
      * @lua NA
      */
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obMouseMovedOutSide, MouseMovedOutSideCallback);
     virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
     /**
      * @lua NA
      */
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obMouseScrollWheel, MouseScrollWheelCallback);
     virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
     
 protected:
     
     void setScrollRunning(bool var);
-    
+
     friend class CATouchController;
 };
 
