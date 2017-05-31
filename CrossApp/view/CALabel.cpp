@@ -39,6 +39,46 @@ CALabel::~CALabel()
     
 }
 
+bool CALabel::init()
+{
+    if (!CAView::init())
+    {
+        return false;
+    }
+    
+    this->setTouchBeganCallback([=](CATouch *pTouch, CAEvent *pEvent)
+    {
+        CAScheduler::getScheduler()->scheduleOnce([&](float de)
+        {
+            if (m_bEnableCopy)
+            {
+                CATextToolBarView *pToolBar = CATextToolBarView::create();
+                pToolBar->addButton(UTF8("\u590d\u5236"), std::bind(&CALabel::copySelectText, this));
+                pToolBar->show();
+            }
+        }, "function", this, 1.0f);
+        return true;
+    });
+    
+    this->setTouchMovedCallback([=](CATouch *pTouch, CAEvent *pEvent)
+    {
+        CAScheduler::getScheduler()->unschedule("function", this);
+    });
+    
+    this->setTouchEndedCallback([=](CATouch *pTouch, CAEvent *pEvent)
+    {
+        CAScheduler::getScheduler()->unschedule("function", this);
+    });
+    
+    this->setTouchCancelledCallback([=](CATouch *pTouch, CAEvent *pEvent)
+    {
+        CAScheduler::getScheduler()->unschedule("function", this);
+    });
+    
+    
+    return true;
+}
+
 CALabel *CALabel::create()
 {
     CALabel *label = new CALabel();
@@ -235,17 +275,6 @@ void CALabel::copySelectText()
 {
 	CAClipboard::setText(m_nText);
 }
-
-void CALabel::ccTouchPress(CATouch *pTouch, CAEvent *pEvent)
-{
-	if (m_bEnableCopy)
-	{
-		CATextToolBarView *pToolBar = CATextToolBarView::create();
-		pToolBar->addButton(UTF8("\u590d\u5236"), std::bind(&CALabel::copySelectText, this));
-		pToolBar->show();
-	}
-}
-
 
 void CALabel::setDimensions(const DSize& var)
 {

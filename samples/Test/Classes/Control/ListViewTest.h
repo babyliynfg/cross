@@ -7,27 +7,7 @@
 
 USING_NS_CC;
 
-class CDListViewTest : public CAView, CAListViewDelegate, CAListViewDataSource
-{
-public:
-    CDListViewTest();
-    virtual ~CDListViewTest();
-    
-    virtual bool init();
-    static CDListViewTest* createWithLayout(const DLayout& layout);
-    
-public:
-    virtual void listViewDidSelectCellAtIndex(CAListView *listView, unsigned int index);
-    virtual void listViewDidDeselectCellAtIndex(CAListView *listView, unsigned int index);
-    virtual unsigned int numberOfIndex(CAListView *listView);
-    virtual unsigned int listViewHeightForIndex(CAListView *listView, unsigned int index);
-    virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index);
-
-public:
-    std::vector<std::string> tempList;
-};
-
-class ListViewTest: public CAViewController, public CAListViewDelegate, public CAListViewDataSource
+class ListViewTest: public CAViewController
 {
     
 public:
@@ -41,21 +21,19 @@ protected:
     void viewDidLoad();
     
     void viewDidUnload();
-    
+
 public:
     
-    DSize winSize;
+    void didSelectCellAtIndex(unsigned int index);
+    void didDeselectCellAtIndex(unsigned int index);
+    unsigned int numberOfIndex();
+    unsigned int heightForIndex(unsigned int index);
+    CAListViewCell* cellAtIndex(const DSize& cellSize, unsigned int index);
     
-    CAListView* p_ListView;
+    CAListView* m_pListViewHor;
+    CAListView* m_pListViewVer;
     
-public:
-    
-    void listViewDidSelectCellAtIndex(CAListView *listView, unsigned int index);
-    void listViewDidDeselectCellAtIndex(CAListView *listView, unsigned int index);
-    unsigned int numberOfIndex(CAListView *listView);
-    unsigned int listViewHeightForIndex(CAListView *listView, unsigned int index);
-    CAListViewCell* listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index);
-    
+    std::set<unsigned int> m_sDidSelectCellAtIndexs;
 };
 
 

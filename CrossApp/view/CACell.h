@@ -51,6 +51,7 @@ public:
     void setControlStateSelected();
     
     void setControlStateDisabled();
+    
 public:
     
     virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);

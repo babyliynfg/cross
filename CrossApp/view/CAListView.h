@@ -56,7 +56,25 @@ public:
         Vertical = 0,
         Horizontal
     };
-    
+   
+public:
+        
+    // event listeners. If these functions are set, the corresponding function of CAListViewDataSource will fail.
+        
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<unsigned int()>, m_obNumberOfIndex, NumberOfIndexCallback);
+        
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<unsigned int(unsigned int index)>, m_obHeightForIndex, HeightForIndexCallback);
+        
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<CAListViewCell* (const DSize& cellSize, unsigned int index)>, m_obCellAtIndex, CellAtIndexCallback);
+        
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CAListViewCell* cell, unsigned int index)>, m_obDisplayCellAtIndex, DisplayCellAtIndexCallback);
+        
+    // event listeners. If these functions are set, the corresponding function of CAListViewDelegate will fail.
+        
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(unsigned int index)>, m_obDidSelectCellAtIndex, DidSelectCellAtIndexCallback);
+        
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(unsigned int index)>, m_obDidDeselectCellAtIndex, DidDeselectCellAtIndexCallback);
+
 public:
     
 	CAListView();

@@ -10,7 +10,7 @@ USING_NS_CC;
 #define _T(x) L##x
 #define CHAR    wchar_t
 
-class PickerViewTest: public CAViewController, public CAPickerViewDelegate, public CAPickerViewDataSource, public CADatePickerViewDelegate, public CAScrollViewDelegate, public CAPageViewDelegate
+class PickerViewTest: public CAViewController, public CAPickerViewDelegate, public CAPickerViewDataSource, public CAScrollViewDelegate, public CAPageViewDelegate
 {
     
 public:
@@ -44,7 +44,7 @@ public:
     virtual const char* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
-    virtual void didSelectRow(const struct tm& tm);
+    virtual void dataPickerViewdidSelectRow(const struct tm& tm);
     
 };
 

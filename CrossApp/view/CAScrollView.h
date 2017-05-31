@@ -63,7 +63,7 @@ public:
     
     CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obStopMoved, StopMovedCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obWillBeginDragging, WillBeginDraggingCallbackCallback);
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obWillBeginDragging, WillBeginDraggingCallback);
     
     CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDragging, DraggingCallback);
     

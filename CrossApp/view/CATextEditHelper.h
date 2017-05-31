@@ -16,27 +16,6 @@
 NS_CC_BEGIN
 
 
-class CC_DLL CATouchView : public CAView
-{
-public:
-	CATouchView();
-	virtual ~CATouchView() {}
-
-	virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent) = 0;
-
-protected:
-	void ccTouchTimer(float interval);
-
-private:
-	CATouch *m_pCurTouch;
-	CAEvent *m_pCurEvent;
-};
-
-
 typedef struct CallbackTarget
 {
     CallbackTarget(const std::function<void()>& s, const std::string& szBtnText)

@@ -14,15 +14,6 @@
 
 NS_CC_BEGIN
 
-class CADatePickerViewDelegate {
-    
-public:
-    virtual ~CADatePickerViewDelegate() {};
-    
-    //virtual void didSelectRow(const struct tm& tm) {CC_UNUSED_PARAM(tm);}
-    virtual void didSelectRow(const struct tm& tm) {}
-};
-
 class CC_DLL CADatePickerView : public CAControl, public CAPickerViewDataSource, public CAPickerViewDelegate {
     
 public:
@@ -35,6 +26,10 @@ public:
         CountDownTimer, // Displays hour and minute (e.g. 1 | 53)
     };
     
+public:
+        
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const struct tm&)>, m_obSelectRow, SelectRowCallback);
+        
 public:
     static CADatePickerView* create(CADatePickerView::Mode m_mode);
     static CADatePickerView* createWithFrame(const DRect& rect, CADatePickerView::Mode m_mode);
@@ -50,9 +45,7 @@ public:
     
 public:
     void setDate(int year, int month, int day, bool animated);
-    
-    CC_SYNTHESIZE(CADatePickerViewDelegate*, m_pDelegate, Delegate);
-    
+
 protected:
     virtual unsigned int numberOfComponentsInPickerView(CAPickerView* pickerView);
     virtual unsigned int numberOfRowsInComponent(CAPickerView* pickerView, unsigned int component);

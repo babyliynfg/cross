@@ -18,7 +18,7 @@ NS_CC_BEGIN
 
 class CALabelStyle;
 
-class CC_DLL CALabel : public CATouchView
+class CC_DLL CALabel : public CAView
 {
 public:
     
@@ -33,6 +33,8 @@ public:
     static CALabel* createWithCenter(const DRect& rect);
     
     static CALabel* createWithLayout(const DLayout& layout);
+    
+    virtual bool init();
     
     CC_PROPERTY_PASS_BY_REF(string, m_nText, Text);
 
@@ -93,8 +95,6 @@ protected:
     virtual void setContentSize(const DSize& var);
 
 	virtual void updateImageRect();
-
-	virtual void ccTouchPress(CATouch *pTouch, CAEvent *pEvent);
     
     void updateImageDraw();
     

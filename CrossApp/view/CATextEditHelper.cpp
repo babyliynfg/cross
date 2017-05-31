@@ -14,49 +14,6 @@
 
 NS_CC_BEGIN
 
-
-CATouchView::CATouchView()
-: m_pCurTouch(nullptr)
-, m_pCurEvent(nullptr)
-{
-}
-
-bool CATouchView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
-{
-    CAScheduler::getScheduler()->scheduleOnce([&](float de)
-    {
-        this->ccTouchPress(m_pCurTouch, m_pCurEvent);
-    }, "function", this, 1.0f);
-
-	m_pCurTouch = pTouch;
-	m_pCurEvent = pEvent;
-	return true;
-}
-
-void CATouchView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
-{
-	CAScheduler::getScheduler()->unschedule("function", this);
-}
-
-void CATouchView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
-{
-	CAScheduler::getScheduler()->unschedule("function", this);
-}
-
-void CATouchView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
-{
-	CAScheduler::getScheduler()->unschedule("function", this);
-}
-
-
-void CATouchView::ccTouchTimer(float interval)
-{
-	
-}
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
 CATextToolBarView::CATextToolBarView()
 : m_pBackView(nullptr)
 , m_pControlView(nullptr)

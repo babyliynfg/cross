@@ -20,8 +20,8 @@ NS_CC_BEGIN
 CADatePickerView::CADatePickerView(CADatePickerView::Mode m_mode)
 : m_pPickerView(nullptr)
 , m_eMode(m_mode)
-, m_pDelegate(nullptr)
-,isSetDate(false)
+, isSetDate(false)
+, m_obSelectRow(nullptr)
 {
 
 }
@@ -429,9 +429,9 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
             break;
     }
     
-    if (m_pDelegate)
+    if (m_obSelectRow)
     {
-        m_pDelegate->didSelectRow(m_tTM);
+        m_obSelectRow(m_tTM);
     }
 }
 
