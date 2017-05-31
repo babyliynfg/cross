@@ -262,9 +262,9 @@ bool CAWebViewImpl::shouldStartLoading(void* pWebViewWrapper, const std::string 
     if (it != s_WebViewImpls.end())
     {
         CAWebView* webView = it->second->m_pWebView;
-        if (webView && webView->m_pWebViewDelegate)
+        if (webView && webView->getStartLoadingCallback())
         {
-            if (!webView->m_pWebViewDelegate->onShouldStartLoading(webView, url))
+            if (!webView->getStartLoadingCallback(url))
                 return false;
         }
     }
@@ -278,9 +278,9 @@ void CAWebViewImpl::didFinishLoading(void* pWebViewWrapper, const std::string &u
     if (it != s_WebViewImpls.end()) {
         
         CAWebView* webView = it->second->m_pWebView;
-        if (webView && webView->m_pWebViewDelegate)
+        if (webView && webView->getFinishLoadingCallback())
         {
-            webView->m_pWebViewDelegate->onDidFinishLoading(webView, url);
+            webView->getFinishLoadingCallback(url);
         }
     }
 }
@@ -291,9 +291,9 @@ void CAWebViewImpl::didFailLoading(void* pWebViewWrapper, const std::string &url
     if (it != s_WebViewImpls.end())
     {
         CAWebView* webView = it->second->m_pWebView;
-        if (webView && webView->m_pWebViewDelegate)
+        if (webView && webView->getFailLoadingCallback())
         {
-            webView->m_pWebViewDelegate->onDidFailLoading(webView, url);
+            webView->getFailLoadingCallback(url);
         }
     }
 }
@@ -305,9 +305,9 @@ void CAWebViewImpl::onJsCallback(void* pWebViewWrapper, const std::string &messa
     if (it != s_WebViewImpls.end())
     {
         CAWebView* webView = it->second->m_pWebView;
-        if (webView && webView->m_pWebViewDelegate)
+        if (webView && webView->getJSCallback())
         {
-            webView->m_pWebViewDelegate->onJSCallback(webView, message);
+            webView->getJSCallback(message);
         }
     }
 }

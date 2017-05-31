@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-class WebViewTest: public CAViewController, public CAWebViewDelegate
+class WebViewTest: public CAViewController
 {
     
 public:

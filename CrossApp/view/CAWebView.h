@@ -21,22 +21,20 @@ NS_CC_BEGIN
 class CAWebView;
 class CAWebViewImpl;
 
-class CAWebViewDelegate
-{
-public:
-	virtual ~CAWebViewDelegate(){};
-
-	virtual bool onShouldStartLoading(CAWebView* pWebView, const std::string &url) { return true; }
-	
-	virtual void onDidFinishLoading(CAWebView* pWebView, const std::string &url) {}
-	
-	virtual void onDidFailLoading(CAWebView* pWebView, const std::string &url) {}
-	
-	virtual void onJSCallback(CAWebView* pWebView, const std::string &message) {}
-};
 
 class CC_DLL CAWebView : public CAView
 {
+public:
+    // event listeners.
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<bool(const std::string&)>, m_obStartLoading, StartLoadingCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const std::string&)>, m_obFinishLoading, FinishLoadingCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const std::string&)>, m_obFailLoading, FailLoadingCallback);
+    
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const std::string&)>, m_obJSCallback, JSCallback);
+    
 public:
     
     CAWebView();
@@ -134,8 +132,6 @@ public:
 
 	virtual void setVisible(bool visible);
     
-	CC_SYNTHESIZE(CAWebViewDelegate*, m_pWebViewDelegate, WebViewDelegate);
-
 	void setActivityView(CAActivityIndicatorView* loadingView);
 	void showLoadingActivity(bool show);
     
