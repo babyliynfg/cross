@@ -396,7 +396,7 @@ void CallFuncN::execute()
     }
 }
 
-bool CallFuncN::initWithFunction(const std::function<void (CGNode *)> &func)
+bool CallFuncN::initWithFunction(const std::function<void(CGNode *)> &func)
 {
     _functionN = func;
     return true;

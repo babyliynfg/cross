@@ -869,7 +869,7 @@ void CAScheduler::resumeAllTargetsWithMinPriority(int minPriority)
     }
 }
 
-void CAScheduler::performFunctionInUIThread(const std::function<void ()> &function)
+void CAScheduler::performFunctionInUIThread(const std::function<void()> &function)
 {
     _performMutex.lock();
     

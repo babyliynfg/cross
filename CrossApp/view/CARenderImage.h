@@ -90,7 +90,7 @@ protected:
     CustomCommand m_obEndCommand;
 
     CustomCommand m_obSaveToFileCommand;
-    std::function<void (CARenderImage*, const std::string&)> m_fSaveFileCallback;
+    std::function<void(CARenderImage*, const std::string&)> m_fSaveFileCallback;
     
     
     GLuint       m_uFBO;

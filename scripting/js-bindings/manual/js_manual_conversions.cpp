@@ -4,6 +4,7 @@
 #include "js_manual_conversions.h"
 //#include "math/TransformUtils.h"
 #include <cmath>
+#include <sstream>
 USING_NS_CC;
 
 // JSStringWrapper
@@ -508,6 +509,7 @@ bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret) {
 
     return false;
 }
+
 bool javal_to_viodpointe(JSContext *cx, JS::HandleValue v, void* context)
 {
     JSObject *tmpObj = v.toObjectOrNull();
@@ -931,6 +933,300 @@ bool jsval_cacolor_to_opacity(JSContext *cx, JS::HandleValue v, int32_t* ret) {
     else return false;
 }
 
+bool jsval_to_cavalue(JSContext* cx, JS::HandleValue v, CrossApp::CAValue* ret)
+{
+    if (v.isObject())
+    {
+        JS::RootedObject jsobj(cx, v.toObjectOrNull());
+        CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+        if (!JS_IsArrayObject(cx, jsobj))
+        {
+            // It's a normal js object.
+            CAValueMap dictVal;
+            bool ok = jsval_to_cavaluemap(cx, v, &dictVal);
+            if (ok)
+            {
+                *ret = CAValue(dictVal);
+            }
+        }
+        else {
+            // It's a js array object.
+            CAValueVector arrVal;
+            bool ok = jsval_to_cavaluevector(cx, v, &arrVal);
+            if (ok)
+            {
+                *ret = CAValue(arrVal);
+            }
+        }
+    }
+    else if (v.isString())
+    {
+        JSStringWrapper valueWapper(v.toString(), cx);
+        *ret = CAValue(valueWapper.get());
+    }
+    else if (v.isNumber())
+    {
+        double number = 0.0;
+        bool ok = JS::ToNumber(cx, v, &number);
+        if (ok) {
+            *ret = CAValue(number);
+        }
+    }
+    else if (v.isBoolean())
+    {
+        bool boolVal = JS::ToBoolean(v);
+        *ret = CAValue(boolVal);
+    }
+    else {
+        CCASSERT(false, "not supported type");
+    }
+    
+    return true;
+}
+
+bool jsval_to_cavaluemap(JSContext* cx, JS::HandleValue v, CrossApp::CAValueMap* ret)
+{
+    if (v.isNullOrUndefined())
+    {
+        return true;
+    }
+    
+    JS::RootedObject tmp(cx, v.toObjectOrNull());
+    if (!tmp) {
+        CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
+        return false;
+    }
+    
+    JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
+    
+    CAValueMap& dict = *ret;
+    
+    while (true)
+    {
+        JS::RootedId idp(cx);
+        JS::RootedValue key(cx);
+        if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key)) {
+            return false; // error
+        }
+        
+        if (key.isNullOrUndefined()) {
+            break; // end of iteration
+        }
+        
+        if (!key.isString()) {
+            continue; // ignore integer properties
+        }
+        
+        JSStringWrapper keyWrapper(key.toString(), cx);
+        
+        JS::RootedValue value(cx);
+        JS_GetPropertyById(cx, tmp, idp, &value);
+        if (value.isObject())
+        {
+            JS::RootedObject jsobj(cx, value.toObjectOrNull());
+            CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+            if (!JS_IsArrayObject(cx, jsobj))
+            {
+                // It's a normal js object.
+                CAValueMap dictVal;
+                bool ok = jsval_to_cavaluemap(cx, value, &dictVal);
+                if (ok)
+                {
+                    dict.insert(CAValueMap::value_type(keyWrapper.get(), CAValue(dictVal)));
+                }
+            }
+            else {
+                // It's a js array object.
+                CAValueVector arrVal;
+                bool ok = jsval_to_cavaluevector(cx, value, &arrVal);
+                if (ok)
+                {
+                    dict.insert(CAValueMap::value_type(keyWrapper.get(), CAValue(arrVal)));
+                }
+            }
+        }
+        else if (value.isString())
+        {
+            JSStringWrapper valueWapper(value.toString(), cx);
+            dict.insert(CAValueMap::value_type(keyWrapper.get(), CAValue(valueWapper.get())));
+        }
+        else if (value.isNumber())
+        {
+            double number = 0.0;
+            bool ok = JS::ToNumber(cx, value, &number);
+            if (ok) {
+                dict.insert(CAValueMap::value_type(keyWrapper.get(), CAValue(number)));
+            }
+        }
+        else if (value.isBoolean())
+        {
+            bool boolVal = JS::ToBoolean(value);
+            dict.insert(CAValueMap::value_type(keyWrapper.get(), CAValue(boolVal)));
+        }
+        else {
+            CCASSERT(false, "not supported type");
+        }
+    }
+    
+    return true;
+}
+
+bool jsval_to_ccvaluemapintkey(JSContext* cx, JS::HandleValue v, CrossApp::CAValueMapIntKey* ret)
+{
+    if (v.isNullOrUndefined())
+    {
+        return true;
+    }
+    
+    JS::RootedObject tmp(cx, v.toObjectOrNull());
+    if (!tmp) {
+        CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
+        return false;
+    }
+    
+    JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
+    
+    CAValueMapIntKey& dict = *ret;
+    
+    while (true)
+    {
+        JS::RootedId idp(cx);
+        JS::RootedValue key(cx);
+        if (! JS_NextProperty(cx, it, idp.address()) || ! JS_IdToValue(cx, idp, &key)) {
+            return false; // error
+        }
+        
+        if (key.isNullOrUndefined()) {
+            break; // end of iteration
+        }
+        
+        if (!key.isString()) {
+            continue; // ignore integer properties
+        }
+        
+        int keyVal = key.toInt32();
+        
+        JS::RootedValue value(cx);
+        JS_GetPropertyById(cx, tmp, idp, &value);
+        if (value.isObject())
+        {
+            JS::RootedObject jsobj(cx, value.toObjectOrNull());
+            CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+            if (!JS_IsArrayObject(cx, jsobj))
+            {
+                // It's a normal js object.
+                CAValueMap dictVal;
+                bool ok = jsval_to_cavaluemap(cx, value, &dictVal);
+                if (ok)
+                {
+                    dict.insert(CAValueMapIntKey::value_type(keyVal, CAValue(dictVal)));
+                }
+            }
+            else {
+                // It's a js array object.
+                CAValueVector arrVal;
+                bool ok = jsval_to_cavaluevector(cx, value, &arrVal);
+                if (ok)
+                {
+                    dict.insert(CAValueMapIntKey::value_type(keyVal, CAValue(arrVal)));
+                }
+            }
+        }
+        else if (value.isString())
+        {
+            JSStringWrapper valueWapper(value.toString(), cx);
+            dict.insert(CAValueMapIntKey::value_type(keyVal, CAValue(valueWapper.get())));
+        }
+        else if (value.isNumber())
+        {
+            double number = 0.0;
+            bool ok = JS::ToNumber(cx, value, &number);
+            if (ok) {
+                dict.insert(CAValueMapIntKey::value_type(keyVal, CAValue(number)));
+            }
+        }
+        else if (value.isBoolean())
+        {
+            bool boolVal = JS::ToBoolean(value);
+            dict.insert(CAValueMapIntKey::value_type(keyVal, CAValue(boolVal)));
+        }
+        else {
+            CCASSERT(false, "not supported type");
+        }
+    }
+    
+    return true;
+}
+
+bool jsval_to_cavaluevector(JSContext* cx, JS::HandleValue v, CrossApp::CAValueVector* ret)
+{
+    JS::RootedObject jsArr(cx);
+    bool ok = v.isObject() && JS_ValueToObject( cx, v, &jsArr );
+    JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
+    JSB_PRECONDITION3( jsArr && JS_IsArrayObject( cx, jsArr),  cx, false, "Object must be an array");
+    
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsArr, &len);
+    
+    for (uint32_t i=0; i < len; i++)
+    {
+        JS::RootedValue value(cx);
+        if (JS_GetElement(cx, jsArr, i, &value))
+        {
+            if (value.isObject())
+            {
+                JS::RootedObject jsobj(cx, value.toObjectOrNull());
+                CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+                
+                if (!JS_IsArrayObject(cx, jsobj))
+                {
+                    // It's a normal js object.
+                    CAValueMap dictVal;
+                    ok = jsval_to_cavaluemap(cx, value, &dictVal);
+                    if (ok)
+                    {
+                        ret->push_back(CAValue(dictVal));
+                    }
+                }
+                else {
+                    // It's a js array object.
+                    CAValueVector arrVal;
+                    ok = jsval_to_cavaluevector(cx, value, &arrVal);
+                    if (ok)
+                    {
+                        ret->push_back(CAValue(arrVal));
+                    }
+                }
+            }
+            else if (value.isString())
+            {
+                JSStringWrapper valueWapper(value.toString(), cx);
+                ret->push_back(CAValue(valueWapper.get()));
+            }
+            else if (value.isNumber())
+            {
+                double number = 0.0;
+                ok = JS::ToNumber(cx, value, &number);
+                if (ok)
+                {
+                    ret->push_back(CAValue(number));
+                }
+            }
+            else if (value.isBoolean())
+            {
+                bool boolVal = JS::ToBoolean(value);
+                ret->push_back(CAValue(boolVal));
+            }
+            else
+            {
+                CCASSERT(false, "not supported type");
+            }
+        }
+    }
+    
+    return true;
+}
+
 bool jsval_to_ssize( JSContext *cx, JS::HandleValue vp, ssize_t* size)
 {
     bool ret = false;
@@ -1192,6 +1488,40 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length)
     return ret;
 }
 
+jsval u_char_to_jsval(JSContext* cx, const unsigned char* v, size_t length)
+{
+    if (v == NULL)
+    {
+        return JSVAL_NULL;
+    }
+    if (length == -1)
+    {
+        length = strlen((const char*)v);
+    }
+
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
+    if (0 == length)
+    {
+        auto emptyStr = JS_NewStringCopyZ(cx, "");
+        return STRING_TO_JSVAL(emptyStr);
+    }
+    
+    jsval ret = JSVAL_NULL;
+    
+    const jschar* strUTF16 = (jschar*)v;
+    
+    if (strUTF16 && length > 0) {
+        JSString* str = JS_NewUCStringCopyN(cx, strUTF16, length);
+        if (str) {
+            ret = STRING_TO_JSVAL(str);
+        }
+        delete[] strUTF16;
+    }
+    
+    return ret;
+}
+
 jsval dpoint_to_jsval(JSContext* cx, const DPoint& v)
 {
     JS::RootedObject proto(cx);
@@ -1390,6 +1720,183 @@ jsval quaternion_to_jsval(JSContext* cx, const CrossApp::Quaternion& q)
         return OBJECT_TO_JSVAL(tmp);
 
     return JSVAL_NULL;
+}
+
+jsval cavalue_to_jsval(JSContext* cx, const CrossApp::CAValue& v)
+{
+    jsval ret = JSVAL_NULL;
+    const CAValue& obj = v;
+    
+    switch (obj.getType())
+    {
+        case CAValue::Type::BOOLEAN:
+            ret = BOOLEAN_TO_JSVAL(obj.asBool());
+            break;
+        case CAValue::Type::FLOAT:
+        case CAValue::Type::DOUBLE:
+            ret = DOUBLE_TO_JSVAL(obj.asDouble());
+            break;
+        case CAValue::Type::INTEGER:
+            ret = INT_TO_JSVAL(obj.asInt());
+            break;
+        case CAValue::Type::STRING:
+            ret = std_string_to_jsval(cx, obj.asString());
+            break;
+        case CAValue::Type::VECTOR:
+            ret = cavaluevector_to_jsval(cx, obj.asValueVector());
+            break;
+        case CAValue::Type::MAP:
+            ret = cavaluemap_to_jsval(cx, obj.asValueMap());
+            break;
+        case CAValue::Type::INT_KEY_MAP:
+            ret = cavaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
+            break;
+        default:
+            break;
+    }
+    
+    return ret;
+}
+
+jsval cavaluemap_to_jsval(JSContext* cx, const CrossApp::CAValueMap& v)
+{
+    JS::RootedObject jsRet(cx, JS_NewArrayObject(cx, 0));
+    
+    for (auto iter = v.begin(); iter != v.end(); ++iter)
+    {
+        JS::RootedValue dictElement(cx);
+        
+        std::string key = iter->first;
+        const CAValue& obj = iter->second;
+        
+        switch (obj.getType())
+        {
+            case CAValue::Type::BOOLEAN:
+                dictElement = BOOLEAN_TO_JSVAL(obj.asBool());
+                break;
+            case CAValue::Type::FLOAT:
+            case CAValue::Type::DOUBLE:
+                dictElement = DOUBLE_TO_JSVAL(obj.asDouble());
+                break;
+            case CAValue::Type::INTEGER:
+                dictElement = INT_TO_JSVAL(obj.asInt());
+                break;
+            case CAValue::Type::STRING:
+                dictElement = std_string_to_jsval(cx, obj.asString());
+                break;
+            case CAValue::Type::VECTOR:
+                dictElement = cavaluevector_to_jsval(cx, obj.asValueVector());
+                break;
+            case CAValue::Type::MAP:
+                dictElement = cavaluemap_to_jsval(cx, obj.asValueMap());
+                break;
+            case CAValue::Type::INT_KEY_MAP:
+                dictElement = cavaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
+                break;
+            default:
+                break;
+        }
+        
+        if (!key.empty())
+        {
+            JS_SetProperty(cx, jsRet, key.c_str(), dictElement);
+        }
+    }
+    return OBJECT_TO_JSVAL(jsRet);
+}
+
+jsval cavaluemapintkey_to_jsval(JSContext* cx, const CrossApp::CAValueMapIntKey& v)
+{
+    JS::RootedObject jsRet(cx, JS_NewArrayObject(cx, 0));
+    
+    for (auto iter = v.begin(); iter != v.end(); ++iter)
+    {
+        JS::RootedValue dictElement(cx);
+        std::stringstream keyss;
+        keyss << iter->first;
+        std::string key = keyss.str();
+        
+        const CAValue& obj = iter->second;
+        
+        switch (obj.getType())
+        {
+            case CAValue::Type::BOOLEAN:
+                dictElement = BOOLEAN_TO_JSVAL(obj.asBool());
+                break;
+            case CAValue::Type::FLOAT:
+            case CAValue::Type::DOUBLE:
+                dictElement = DOUBLE_TO_JSVAL(obj.asDouble());
+                break;
+            case CAValue::Type::INTEGER:
+                dictElement = INT_TO_JSVAL(obj.asInt());
+                break;
+            case CAValue::Type::STRING:
+                dictElement = std_string_to_jsval(cx, obj.asString());
+                break;
+            case CAValue::Type::VECTOR:
+                dictElement = cavaluevector_to_jsval(cx, obj.asValueVector());
+                break;
+            case CAValue::Type::MAP:
+                dictElement = cavaluemap_to_jsval(cx, obj.asValueMap());
+                break;
+            case CAValue::Type::INT_KEY_MAP:
+                dictElement = cavaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
+                break;
+            default:
+                break;
+        }
+        
+        if (!key.empty())
+        {
+            JS_SetProperty(cx, jsRet, key.c_str(), dictElement);
+        }
+    }
+    return OBJECT_TO_JSVAL(jsRet);
+}
+
+jsval cavaluevector_to_jsval(JSContext* cx, const CrossApp::CAValueVector& v)
+{
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
+    
+    int i = 0;
+    for (const auto& obj : v)
+    {
+        JS::RootedValue arrElement(cx);
+        
+        switch (obj.getType())
+        {
+            case CAValue::Type::BOOLEAN:
+                arrElement = BOOLEAN_TO_JSVAL(obj.asBool());
+                break;
+            case CAValue::Type::FLOAT:
+            case CAValue::Type::DOUBLE:
+                arrElement = DOUBLE_TO_JSVAL(obj.asDouble());
+                break;
+            case CAValue::Type::INTEGER:
+                arrElement = INT_TO_JSVAL(obj.asInt());
+                break;
+            case CAValue::Type::STRING:
+                arrElement = std_string_to_jsval(cx, obj.asString());
+                break;
+            case CAValue::Type::VECTOR:
+                arrElement = cavaluevector_to_jsval(cx, obj.asValueVector());
+                break;
+            case CAValue::Type::MAP:
+                arrElement = cavaluemap_to_jsval(cx, obj.asValueMap());
+                break;
+            case CAValue::Type::INT_KEY_MAP:
+                arrElement = cavaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
+                break;
+            default:
+                break;
+        }
+        
+        if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
+            break;
+        }
+        ++i;
+    }
+    return OBJECT_TO_JSVAL(jsretArr);
 }
 
 jsval ssize_to_jsval(JSContext *cx, ssize_t v)

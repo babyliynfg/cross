@@ -4076,25 +4076,6 @@ CAControl : function (
 };
 
 /**
- * @class CATouchView
- */
-ca.CATouchView = {
-
-/**
- * @method ccTouchPress
- * @param {ca.CATouch} arg0
- * @param {ca.CAEvent} arg1
- */
-ccTouchPress : function (
-catouch, 
-caevent 
-)
-{
-},
-
-};
-
-/**
  * @class CAFont
  */
 ca.CAFont = {
@@ -4251,6 +4232,16 @@ getLabelSize : function (
 )
 {
     return ca.DSize;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
 },
 
 /**
@@ -7387,31 +7378,53 @@ removeAllSubviews : function (
 },
 
 /**
- * @method isTracking
+ * @method getDraggingCallback
+ * @return {function}
+ */
+getDraggingCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
+ * @method isZooming
  * @return {bool}
  */
-isTracking : function (
+isZooming : function (
 )
 {
     return false;
 },
 
 /**
- * @method startDeaccelerateScroll
+ * @method getHeaderRefreshView
+ * @return {ca.CAPullToRefreshView}
  */
-startDeaccelerateScroll : function (
+getHeaderRefreshView : function (
+)
+{
+    return ca.CAPullToRefreshView;
+},
+
+/**
+ * @method setDidMovedCallback
+ * @param {function} arg0
+ */
+setDidMovedCallback : function (
+func 
 )
 {
 },
 
 /**
- * @method isBounceVertical
- * @return {bool}
+ * @method setShowsVerticalScrollIndicator
+ * @param {bool} arg0
  */
-isBounceVertical : function (
+setShowsVerticalScrollIndicator : function (
+bool 
 )
 {
-    return false;
 },
 
 /**
@@ -7425,13 +7438,13 @@ isShowsScrollIndicators : function (
 },
 
 /**
- * @method setShowsHorizontalScrollIndicator
- * @param {bool} arg0
+ * @method isShowsHorizontalScrollIndicator
+ * @return {bool}
  */
-setShowsHorizontalScrollIndicator : function (
-bool 
+isShowsHorizontalScrollIndicator : function (
 )
 {
+    return false;
 },
 
 /**
@@ -7445,6 +7458,26 @@ bool
 },
 
 /**
+ * @method setBounceHorizontal
+ * @param {bool} arg0
+ */
+setBounceHorizontal : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isTracking
+ * @return {bool}
+ */
+isTracking : function (
+)
+{
+    return false;
+},
+
+/**
  * @method getZoomScale
  * @return {float}
  */
@@ -7455,13 +7488,25 @@ getZoomScale : function (
 },
 
 /**
- * @method isDecelerating
- * @return {bool}
+ * @method insertSubview
+ * @param {ca.CAView} arg0
+ * @param {int} arg1
  */
-isDecelerating : function (
+insertSubview : function (
+caview, 
+int 
 )
 {
-    return false;
+},
+
+/**
+ * @method setDidZoomCallback
+ * @param {function} arg0
+ */
+setDidZoomCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -7483,23 +7528,23 @@ isBounceHorizontal : function (
 },
 
 /**
- * @method setFooterRefreshView
- * @param {ca.CAPullToRefreshView} arg0
+ * @method isBounceVertical
+ * @return {bool}
  */
-setFooterRefreshView : function (
-capulltorefreshview 
+isBounceVertical : function (
 )
 {
+    return false;
 },
 
 /**
- * @method getHeaderRefreshView
- * @return {ca.CAPullToRefreshView}
+ * @method setShowsScrollIndicators
+ * @param {bool} arg0
  */
-getHeaderRefreshView : function (
+setShowsScrollIndicators : function (
+bool 
 )
 {
-    return ca.CAPullToRefreshView;
 },
 
 /**
@@ -7513,13 +7558,13 @@ caview
 },
 
 /**
- * @method setShowsVerticalScrollIndicator
- * @param {bool} arg0
+ * @method getFooterBeginRefreshingCallback
+ * @return {function}
  */
-setShowsVerticalScrollIndicator : function (
-bool 
+getFooterBeginRefreshingCallback : function (
 )
 {
+    return std::function<void ()>;
 },
 
 /**
@@ -7532,6 +7577,16 @@ dpoint,
 bool 
 )
 {
+},
+
+/**
+ * @method getHeaderBeginRefreshingCallback
+ * @return {function}
+ */
+getHeaderBeginRefreshingCallback : function (
+)
+{
+    return std::function<void ()>;
 },
 
 /**
@@ -7563,6 +7618,16 @@ startPullToHeaderRefreshView : function (
 },
 
 /**
+ * @method setFooterRefreshView
+ * @param {ca.CAPullToRefreshView} arg0
+ */
+setFooterRefreshView : function (
+capulltorefreshview 
+)
+{
+},
+
+/**
  * @method getSubviews
  * @return {Array}
  */
@@ -7583,6 +7648,16 @@ getMultitouchGesture : function (
 },
 
 /**
+ * @method getDidMovedCallback
+ * @return {function}
+ */
+getDidMovedCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
  * @method setHeaderRefreshView
  * @param {ca.CAPullToRefreshView} arg0
  */
@@ -7590,6 +7665,34 @@ setHeaderRefreshView : function (
 capulltorefreshview 
 )
 {
+},
+
+/**
+ * @method getStopMovedCallback
+ * @return {function}
+ */
+getStopMovedCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
+ * @method startDeaccelerateScroll
+ */
+startDeaccelerateScroll : function (
+)
+{
+},
+
+/**
+ * @method getDidZoomCallback
+ * @return {function}
+ */
+getDidZoomCallback : function (
+)
+{
+    return std::function<void ()>;
 },
 
 /**
@@ -7633,25 +7736,23 @@ dsize
 },
 
 /**
- * @method insertSubview
- * @param {ca.CAView} arg0
- * @param {int} arg1
+ * @method setWillBeginDraggingCallback
+ * @param {function} arg0
  */
-insertSubview : function (
-caview, 
-int 
+setWillBeginDraggingCallback : function (
+func 
 )
 {
 },
 
 /**
- * @method setShowsScrollIndicators
- * @param {bool} arg0
+ * @method isReachBoundaryUp
+ * @return {bool}
  */
-setShowsScrollIndicators : function (
-bool 
+isReachBoundaryUp : function (
 )
 {
+    return false;
 },
 
 /**
@@ -7745,13 +7846,13 @@ isReachBoundaryDown : function (
 },
 
 /**
- * @method isZooming
- * @return {bool}
+ * @method setFooterBeginRefreshingCallback
+ * @param {function} arg0
  */
-isZooming : function (
+setFooterBeginRefreshingCallback : function (
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7765,13 +7866,33 @@ caimage
 },
 
 /**
- * @method isShowsHorizontalScrollIndicator
- * @return {bool}
+ * @method setTouchUpWithoutMovedCallback
+ * @param {function} arg0
  */
-isShowsHorizontalScrollIndicator : function (
+setTouchUpWithoutMovedCallback : function (
+func 
 )
 {
-    return false;
+},
+
+/**
+ * @method getDidEndDraggingCallback
+ * @return {function}
+ */
+getDidEndDraggingCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
+ * @method setHeaderBeginRefreshingCallback
+ * @param {function} arg0
+ */
+setHeaderBeginRefreshingCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -7785,13 +7906,13 @@ bool
 },
 
 /**
- * @method isReachBoundaryUp
- * @return {bool}
+ * @method getWillBeginDraggingCallback
+ * @return {function}
  */
-isReachBoundaryUp : function (
+getWillBeginDraggingCallback : function (
 )
 {
-    return false;
+    return std::function<void ()>;
 },
 
 /**
@@ -7815,11 +7936,51 @@ getFooterRefreshView : function (
 },
 
 /**
+ * @method setShowsHorizontalScrollIndicator
+ * @param {bool} arg0
+ */
+setShowsHorizontalScrollIndicator : function (
+bool 
+)
+{
+},
+
+/**
  * @method stopDeaccelerateScroll
  */
 stopDeaccelerateScroll : function (
 )
 {
+},
+
+/**
+ * @method getTouchUpWithoutMovedCallback
+ * @return {function}
+ */
+getTouchUpWithoutMovedCallback : function (
+)
+{
+    return std::function<void (CrossApp::DPoint)>;
+},
+
+/**
+ * @method setDraggingCallback
+ * @param {function} arg0
+ */
+setDraggingCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method isDecelerating
+ * @return {bool}
+ */
+isDecelerating : function (
+)
+{
+    return false;
 },
 
 /**
@@ -7840,6 +8001,16 @@ isReachBoundaryRight : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setDidEndDraggingCallback
+ * @param {function} arg0
+ */
+setDidEndDraggingCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -7871,11 +8042,11 @@ getMinimumZoomScale : function (
 },
 
 /**
- * @method setBounceHorizontal
- * @param {bool} arg0
+ * @method setStopMovedCallback
+ * @param {function} arg0
  */
-setBounceHorizontal : function (
-bool 
+setStopMovedCallback : function (
+func 
 )
 {
 },
@@ -7981,13 +8152,33 @@ int
 },
 
 /**
- * @method setViews
-* @param {Array|ca.CADeque<ca.CAView >} array
-*/
-setViews : function(
-cadeque<crossapp::caview > 
+ * @method getEndTurningCallback
+ * @return {function}
+ */
+getEndTurningCallback : function (
 )
 {
+    return std::function<void ()>;
+},
+
+/**
+ * @method setDidSelectedPageAtIndexCallback
+ * @param {function} arg0
+ */
+setDidSelectedPageAtIndexCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method getPageCount
+ * @return {unsigned int}
+ */
+getPageCount : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -8021,6 +8212,16 @@ getCurrPage : function (
 },
 
 /**
+ * @method getBeginTurningCallback
+ * @return {function}
+ */
+getBeginTurningCallback : function (
+)
+{
+    return std::function<void ()>;
+},
+
+/**
  * @method setCurrPage
  * @param {int} arg0
  * @param {bool} arg1
@@ -8030,6 +8231,26 @@ setCurrPage : function (
 int, 
 bool, 
 bool 
+)
+{
+},
+
+/**
+ * @method setBeginTurningCallback
+ * @param {function} arg0
+ */
+setBeginTurningCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method setEndTurningCallback
+ * @param {function} arg0
+ */
+setEndTurningCallback : function (
+func 
 )
 {
 },
@@ -8045,13 +8266,13 @@ getPageViewDelegate : function (
 },
 
 /**
- * @method getPageCount
- * @return {unsigned int}
+ * @method getDidSelectedPageAtIndexCallback
+ * @return {function}
  */
-getPageCount : function (
+getDidSelectedPageAtIndexCallback : function (
 )
 {
-    return 0;
+    return std::function<void (unsigned int, CrossApp::DPoint)>;
 },
 
 /**
@@ -8064,6 +8285,16 @@ int
 )
 {
     return ca.CAView;
+},
+
+/**
+ * @method setViews
+* @param {Array|ca.CADeque<ca.CAView >} array
+*/
+setViews : function(
+cadeque<crossapp::caview > 
+)
+{
 },
 
 /**
@@ -12126,6 +12357,16 @@ isAllowsSelection : function (
 },
 
 /**
+ * @method getDisplayCellAtIndexCallback
+ * @return {function}
+ */
+getDisplayCellAtIndexCallback : function (
+)
+{
+    return std::function<void (CrossApp::CAListViewCell , unsigned int)>;
+},
+
+/**
  * @method getOrientation
  * @return {ca.CAListView::Orientation}
  */
@@ -12136,6 +12377,16 @@ getOrientation : function (
 },
 
 /**
+ * @method setHeightForIndexCallback
+ * @param {function} arg0
+ */
+setHeightForIndexCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setListFooterHeight
  * @param {unsigned int} arg0
  */
@@ -12143,6 +12394,16 @@ setListFooterHeight : function (
 int 
 )
 {
+},
+
+/**
+ * @method getDidSelectCellAtIndexCallback
+ * @return {function}
+ */
+getDidSelectCellAtIndexCallback : function (
+)
+{
+    return std::function<void (unsigned int)>;
 },
 
 /**
@@ -12166,11 +12427,31 @@ getListViewDelegate : function (
 },
 
 /**
+ * @method isAllowsMultipleSelection
+ * @return {bool}
+ */
+isAllowsMultipleSelection : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setSelectAtIndex
  * @param {unsigned int} arg0
  */
 setSelectAtIndex : function (
 int 
+)
+{
+},
+
+/**
+ * @method setDidDeselectCellAtIndexCallback
+ * @param {function} arg0
+ */
+setDidDeselectCellAtIndexCallback : function (
+func 
 )
 {
 },
@@ -12186,6 +12467,16 @@ getSeparatorViewHeight : function (
 },
 
 /**
+ * @method getCellAtIndexCallback
+ * @return {function}
+ */
+getCellAtIndexCallback : function (
+)
+{
+    return std::function<CrossApp::CAListViewCell (CrossApp::DSize, unsigned int)>;
+},
+
+/**
  * @method init
  * @return {bool}
  */
@@ -12196,13 +12487,23 @@ init : function (
 },
 
 /**
- * @method getListViewDataSource
- * @return {ca.CAListViewDataSource}
+ * @method setDisplayCellAtIndexCallback
+ * @param {function} arg0
  */
-getListViewDataSource : function (
+setDisplayCellAtIndexCallback : function (
+func 
 )
 {
-    return ca.CAListViewDataSource;
+},
+
+/**
+ * @method setCellAtIndexCallback
+ * @param {function} arg0
+ */
+setCellAtIndexCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -12226,6 +12527,18 @@ bool
 },
 
 /**
+ * @method cellForRowAtIndex
+ * @param {unsigned int} arg0
+ * @return {ca.CAListViewCell}
+ */
+cellForRowAtIndex : function (
+int 
+)
+{
+    return ca.CAListViewCell;
+},
+
+/**
  * @method reloadData
  */
 reloadData : function (
@@ -12244,13 +12557,13 @@ bool
 },
 
 /**
- * @method isAllowsMultipleSelection
- * @return {bool}
+ * @method getListViewDataSource
+ * @return {ca.CAListViewDataSource}
  */
-isAllowsMultipleSelection : function (
+getListViewDataSource : function (
 )
 {
-    return false;
+    return ca.CAListViewDataSource;
 },
 
 /**
@@ -12281,6 +12594,16 @@ getListFooterHeight : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getNumberOfIndexCallback
+ * @return {function}
+ */
+getNumberOfIndexCallback : function (
+)
+{
+    return std::function<unsigned int ()>;
 },
 
 /**
@@ -12332,6 +12655,16 @@ int
 },
 
 /**
+ * @method setDidSelectCellAtIndexCallback
+ * @param {function} arg0
+ */
+setDidSelectCellAtIndexCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setOrientation
  * @param {ca.CAListView::Orientation} arg0
  */
@@ -12362,6 +12695,16 @@ caview
 },
 
 /**
+ * @method getHeightForIndexCallback
+ * @return {function}
+ */
+getHeightForIndexCallback : function (
+)
+{
+    return std::function<unsigned int (unsigned int)>;
+},
+
+/**
  * @method getListFooterView
  * @return {ca.CAView}
  */
@@ -12372,15 +12715,23 @@ getListFooterView : function (
 },
 
 /**
- * @method cellForRowAtIndex
- * @param {unsigned int} arg0
- * @return {ca.CAListViewCell}
+ * @method setNumberOfIndexCallback
+ * @param {function} arg0
  */
-cellForRowAtIndex : function (
-int 
+setNumberOfIndexCallback : function (
+func 
 )
 {
-    return ca.CAListViewCell;
+},
+
+/**
+ * @method getDidDeselectCellAtIndexCallback
+ * @return {function}
+ */
+getDidDeselectCellAtIndexCallback : function (
+)
+{
+    return std::function<void (unsigned int)>;
 },
 
 /**
@@ -15323,6 +15674,16 @@ getInstance : function (
 ca.CAWebView = {
 
 /**
+ * @method getJSCallback
+ * @return {function}
+ */
+getJSCallback : function (
+)
+{
+    return std::function<void (std::basic_string<char> &)>;
+},
+
+/**
  * @method draw
  * @param {ca.Renderer} arg0
  * @param {ca.Mat4} arg1
@@ -15332,6 +15693,36 @@ draw : function (
 renderer, 
 mat4, 
 int 
+)
+{
+},
+
+/**
+ * @method setFinishLoadingCallback
+ * @param {function} arg0
+ */
+setFinishLoadingCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method getFinishLoadingCallback
+ * @return {function}
+ */
+getFinishLoadingCallback : function (
+)
+{
+    return std::function<void (std::basic_string<char> &)>;
+},
+
+/**
+ * @method setJSCallback
+ * @param {function} arg0
+ */
+setJSCallback : function (
+func 
 )
 {
 },
@@ -15359,11 +15750,23 @@ str
 },
 
 /**
- * @method reload
+ * @method setStartLoadingCallback
+ * @param {function} arg0
  */
-reload : function (
+setStartLoadingCallback : function (
+func 
 )
 {
+},
+
+/**
+ * @method getHTMLSource
+ * @return {String}
+ */
+getHTMLSource : function (
+)
+{
+    return ;
 },
 
 /**
@@ -15383,6 +15786,16 @@ goBack : function (
 },
 
 /**
+ * @method getStartLoadingCallback
+ * @return {function}
+ */
+getStartLoadingCallback : function (
+)
+{
+    return std::function<bool (std::basic_string<char> &)>;
+},
+
+/**
  * @method setScalesPageToFit
  * @param {bool} arg0
  */
@@ -15390,16 +15803,6 @@ setScalesPageToFit : function (
 bool 
 )
 {
-},
-
-/**
- * @method getWebViewDelegate
- * @return {ca.CAWebViewDelegate}
- */
-getWebViewDelegate : function (
-)
-{
-    return ca.CAWebViewDelegate;
 },
 
 /**
@@ -15431,6 +15834,16 @@ str
 },
 
 /**
+ * @method getFailLoadingCallback
+ * @return {function}
+ */
+getFailLoadingCallback : function (
+)
+{
+    return std::function<void (std::basic_string<char> &)>;
+},
+
+/**
  * @method loadURL
  * @param {String} arg0
  */
@@ -15458,16 +15871,6 @@ str
  */
 showLoadingActivity : function (
 bool 
-)
-{
-},
-
-/**
- * @method setJavascriptInterfaceScheme
- * @param {String} arg0
- */
-setJavascriptInterfaceScheme : function (
-str 
 )
 {
 },
@@ -15509,13 +15912,21 @@ stopLoading : function (
 },
 
 /**
- * @method getHTMLSource
- * @return {String}
+ * @method setFailLoadingCallback
+ * @param {function} arg0
  */
-getHTMLSource : function (
+setFailLoadingCallback : function (
+func 
 )
 {
-    return ;
+},
+
+/**
+ * @method reload
+ */
+reload : function (
+)
+{
 },
 
 /**
@@ -15526,6 +15937,16 @@ canGoForward : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setJavascriptInterfaceScheme
+ * @param {String} arg0
+ */
+setJavascriptInterfaceScheme : function (
+str 
+)
+{
 },
 
 /**
@@ -16246,16 +16667,6 @@ CAPickerView : function (
  * @class CADatePickerView
  */
 ca.CADatePickerView = {
-
-/**
- * @method getDelegate
- * @return {ca.CADatePickerViewDelegate}
- */
-getDelegate : function (
-)
-{
-    return ca.CADatePickerViewDelegate;
-},
 
 /**
  * @method onEnter

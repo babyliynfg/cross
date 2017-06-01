@@ -71,7 +71,7 @@ public:
     
     CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDidZoom, DidZoomCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const DPoint&)>, m_obTouchUpWithoutMoved, TouchUpWithoutMovedCallback);
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(DPoint)>, m_obTouchUpWithoutMoved, TouchUpWithoutMovedCallback);
     
     CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obHeaderBeginRefreshing, HeaderBeginRefreshingCallback);
     

@@ -18,12 +18,6 @@ CAValue::CAValue()
     memset(&_field, 0, sizeof(_field));
 }
 
-CAValue::CAValue(unsigned char v)
-: _type(Type::BYTE)
-{
-    _field.byteVal = v;
-}
-
 CAValue::CAValue(int v)
 : _type(Type::INTEGER)
 {
@@ -72,25 +66,11 @@ CAValue::CAValue(const CAValueVector& v)
     *_field.vectorVal = v;
 }
 
-CAValue::CAValue(CAValueVector&& v)
-: _type(Type::VECTOR)
-{
-    _field.vectorVal = new (std::nothrow) CAValueVector();
-    *_field.vectorVal = std::move(v);
-}
-
 CAValue::CAValue(const CAValueMap& v)
 : _type(Type::MAP)
 {
     _field.mapVal = new (std::nothrow) CAValueMap();
     *_field.mapVal = v;
-}
-
-CAValue::CAValue(CAValueMap&& v)
-: _type(Type::MAP)
-{
-    _field.mapVal = new (std::nothrow) CAValueMap();
-    *_field.mapVal = std::move(v);
 }
 
 CAValue::CAValue(const CAValueMapIntKey& v)
@@ -100,23 +80,10 @@ CAValue::CAValue(const CAValueMapIntKey& v)
     *_field.intKeyMapVal = v;
 }
 
-CAValue::CAValue(CAValueMapIntKey&& v)
-: _type(Type::INT_KEY_MAP)
-{
-    _field.intKeyMapVal = new (std::nothrow) CAValueMapIntKey();
-    *_field.intKeyMapVal = std::move(v);
-}
-
 CAValue::CAValue(const CAValue& other)
 : _type(Type::NONE)
 {
     *this = other;
-}
-
-CAValue::CAValue(CAValue&& other)
-: _type(Type::NONE)
-{
-    *this = std::move(other);
 }
 
 CAValue::~CAValue()
@@ -130,9 +97,6 @@ CAValue& CAValue::operator= (const CAValue& other)
         reset(other._type);
 
         switch (other._type) {
-            case Type::BYTE:
-                _field.byteVal = other._field.byteVal;
-                break;
             case Type::INTEGER:
                 _field.intVal = other._field.intVal;
                 break;
@@ -187,9 +151,6 @@ CAValue& CAValue::operator= (CAValue&& other)
         clear();
         switch (other._type)
         {
-            case Type::BYTE:
-                _field.byteVal = other._field.byteVal;
-                break;
             case Type::INTEGER:
                 _field.intVal = other._field.intVal;
                 break;
@@ -223,13 +184,6 @@ CAValue& CAValue::operator= (CAValue&& other)
         other._type = Type::NONE;
     }
 
-    return *this;
-}
-
-CAValue& CAValue::operator= (unsigned char v)
-{
-    reset(Type::BYTE);
-    _field.byteVal = v;
     return *this;
 }
 
@@ -282,13 +236,6 @@ CAValue& CAValue::operator= (const CAValueVector& v)
     return *this;
 }
 
-CAValue& CAValue::operator= (CAValueVector&& v)
-{
-    reset(Type::VECTOR);
-    *_field.vectorVal = std::move(v);
-    return *this;
-}
-
 CAValue& CAValue::operator= (const CAValueMap& v)
 {
     reset(Type::MAP);
@@ -296,24 +243,10 @@ CAValue& CAValue::operator= (const CAValueMap& v)
     return *this;
 }
 
-CAValue& CAValue::operator= (CAValueMap&& v)
-{
-    reset(Type::MAP);
-    *_field.mapVal = std::move(v);
-    return *this;
-}
-
 CAValue& CAValue::operator= (const CAValueMapIntKey& v)
 {
     reset(Type::INT_KEY_MAP);
     *_field.intKeyMapVal = v;
-    return *this;
-}
-
-CAValue& CAValue::operator= (CAValueMapIntKey&& v)
-{
-    reset(Type::INT_KEY_MAP);
-    *_field.intKeyMapVal = std::move(v);
     return *this;
 }
 
@@ -338,7 +271,6 @@ bool CAValue::operator== (const CAValue& v) const
     if (this->isNull()) return true;
     switch (_type)
     {
-    case Type::BYTE:    return v._field.byteVal   == this->_field.byteVal;
     case Type::INTEGER: return v._field.intVal    == this->_field.intVal;
     case Type::BOOLEAN: return v._field.boolVal   == this->_field.boolVal;
     case Type::STRING:  return *v._field.strVal   == *this->_field.strVal;
@@ -394,42 +326,6 @@ bool CAValue::operator== (const CAValue& v) const
 }
 
 /// Convert CAValue to a specified type
-unsigned char CAValue::asByte() const
-{
-    CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
-
-    if (_type == Type::BYTE)
-    {
-        return _field.byteVal;
-    }
-
-    if (_type == Type::INTEGER)
-    {
-        return static_cast<unsigned char>(_field.intVal);
-    }
-
-    if (_type == Type::STRING)
-    {
-        return static_cast<unsigned char>(atoi(_field.strVal->c_str()));
-    }
-
-    if (_type == Type::FLOAT)
-    {
-        return static_cast<unsigned char>(_field.floatVal);
-    }
-
-    if (_type == Type::DOUBLE)
-    {
-        return static_cast<unsigned char>(_field.doubleVal);
-    }
-
-    if (_type == Type::BOOLEAN)
-    {
-        return _field.boolVal ? 1 : 0;
-    }
-
-    return 0;
-}
 
 int CAValue::asInt() const
 {
@@ -437,11 +333,6 @@ int CAValue::asInt() const
     if (_type == Type::INTEGER)
     {
         return _field.intVal;
-    }
-
-    if (_type == Type::BYTE)
-    {
-        return _field.byteVal;
     }
 
     if (_type == Type::STRING)
@@ -475,11 +366,6 @@ float CAValue::asFloat() const
         return _field.floatVal;
     }
 
-    if (_type == Type::BYTE)
-    {
-        return static_cast<float>(_field.byteVal);
-    }
-
     if (_type == Type::STRING)
     {
         return atof(_field.strVal->c_str());
@@ -511,11 +397,6 @@ double CAValue::asDouble() const
         return _field.doubleVal;
     }
 
-    if (_type == Type::BYTE)
-    {
-        return static_cast<double>(_field.byteVal);
-    }
-
     if (_type == Type::STRING)
     {
         return static_cast<double>(atof(_field.strVal->c_str()));
@@ -545,11 +426,6 @@ bool CAValue::asBool() const
     if (_type == Type::BOOLEAN)
     {
         return _field.boolVal;
-    }
-
-    if (_type == Type::BYTE)
-    {
-        return _field.byteVal == 0 ? false : true;
     }
 
     if (_type == Type::STRING)
@@ -588,9 +464,6 @@ std::string CAValue::asString() const
 
     switch (_type)
     {
-        case Type::BYTE:
-            ret << _field.byteVal;
-            break;
         case Type::INTEGER:
             ret << _field.intVal;
             break;
@@ -708,7 +581,6 @@ static std::string visit(const CAValue& v, int depth)
     switch (v.getType())
     {
         case CAValue::Type::NONE:
-        case CAValue::Type::BYTE:
         case CAValue::Type::INTEGER:
         case CAValue::Type::FLOAT:
         case CAValue::Type::DOUBLE:
@@ -745,9 +617,6 @@ void CAValue::clear()
     // Free memory the old CAValue allocated
     switch (_type)
     {
-        case Type::BYTE:
-            _field.byteVal = 0;
-            break;
         case Type::INTEGER:
             _field.intVal = 0;
             break;

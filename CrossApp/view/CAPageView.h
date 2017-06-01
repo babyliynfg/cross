@@ -47,7 +47,7 @@ public:
     
     CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obEndTurning, EndTurningCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(unsigned int, const DPoint&)>, m_obDidSelectedPageAtIndex, DidSelectedPageAtIndexCallback);
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(unsigned int, DPoint)>, m_obDidSelectedPageAtIndex, DidSelectedPageAtIndexCallback);
 
 public:
 

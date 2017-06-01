@@ -65,7 +65,7 @@ public:
         
     CC_SYNTHESIZE_PASS_BY_REF(std::function<unsigned int(unsigned int index)>, m_obHeightForIndex, HeightForIndexCallback);
         
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<CAListViewCell* (const DSize& cellSize, unsigned int index)>, m_obCellAtIndex, CellAtIndexCallback);
+    CC_SYNTHESIZE_PASS_BY_REF(std::function<CAListViewCell*(DSize cellSize, unsigned int index)>, m_obCellAtIndex, CellAtIndexCallback);
         
     CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CAListViewCell* cell, unsigned int index)>, m_obDisplayCellAtIndex, DisplayCellAtIndexCallback);
         

@@ -17,8 +17,8 @@ NS_CC_BEGIN
 class CAValue;
 
 typedef std::vector<CAValue> CAValueVector;
-typedef std::unordered_map<std::string, CAValue> CAValueMap;
-typedef std::unordered_map<int, CAValue> CAValueMapIntKey;
+typedef std::map<std::string, CAValue> CAValueMap;
+typedef std::map<int, CAValue> CAValueMapIntKey;
 
 CC_DLL extern const CAValueVector CAValueVectorNull;
 CC_DLL extern const CAValueMap CAValueMapNull;
@@ -34,9 +34,7 @@ public:
     static const CAValue Null;
 
     CAValue();
-    
-    explicit CAValue(unsigned char v);
-    
+
     explicit CAValue(int v);
     
     explicit CAValue(float v);
@@ -50,28 +48,18 @@ public:
     explicit CAValue(const std::string& v);
     
     explicit CAValue(const CAValueVector& v);
-
-    explicit CAValue(CAValueVector&& v);
     
     explicit CAValue(const CAValueMap& v);
-
-    explicit CAValue(CAValueMap&& v);
     
     explicit CAValue(const CAValueMapIntKey& v);
 
-    explicit CAValue(CAValueMapIntKey&& v);
-
     CAValue(const CAValue& other);
 
-    CAValue(CAValue&& other);
-    
     ~CAValue();
 
     CAValue& operator= (const CAValue& other);
 
     CAValue& operator= (CAValue&& other);
-
-    CAValue& operator= (unsigned char v);
 
     CAValue& operator= (int v);
 
@@ -87,15 +75,9 @@ public:
 
     CAValue& operator= (const CAValueVector& v);
 
-    CAValue& operator= (CAValueVector&& v);
-
     CAValue& operator= (const CAValueMap& v);
-
-    CAValue& operator= (CAValueMap&& v);
-
+    
     CAValue& operator= (const CAValueMapIntKey& v);
-
-    CAValue& operator= (CAValueMapIntKey&& v);
 
     bool operator!= (const CAValue& v);
 
@@ -104,9 +86,6 @@ public:
     bool operator== (const CAValue& v);
 
     bool operator== (const CAValue& v) const;
-
-
-    unsigned char asByte() const;
 
     int asInt() const;
 
@@ -136,8 +115,6 @@ public:
     {
         /// no CAValue is wrapped, an empty CAValue
         NONE = 0,
-        /// wrap byte
-        BYTE,
         /// wrap integer
         INTEGER,
         /// wrap float
@@ -166,7 +143,6 @@ private:
 
     union
     {
-        unsigned char byteVal;
         int intVal;
         float floatVal;
         double doubleVal;

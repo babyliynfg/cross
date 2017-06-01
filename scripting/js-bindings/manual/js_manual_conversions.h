@@ -152,11 +152,11 @@ bool jsval_to_cavector(JSContext* cx, JS::HandleValue v, CrossApp::CAVector<T>* 
     return true;
 }
 
-//
-//bool jsval_to_ccvalue(JSContext* cx, JS::HandleValue v, CrossApp::CAValue* ret);//**
-//bool jsval_to_ccvaluemap(JSContext* cx, JS::HandleValue v, CrossApp::CAValueMap* ret);//**
-//bool jsval_to_ccvaluemapintkey(JSContext* cx, JS::HandleValue v, CrossApp::CAValueMapIntKey* ret);//**
-//bool jsval_to_ccvaluevector(JSContext* cx, JS::HandleValue v, CrossApp::CAValueVector* ret);//**
+
+bool jsval_to_cavalue(JSContext* cx, JS::HandleValue v, CrossApp::CAValue* ret);//**
+bool jsval_to_cavaluemap(JSContext* cx, JS::HandleValue v, CrossApp::CAValueMap* ret);//**
+bool jsval_to_cavaluemapintkey(JSContext* cx, JS::HandleValue v, CrossApp::CAValueMapIntKey* ret);//**
+bool jsval_to_cavaluevector(JSContext* cx, JS::HandleValue v, CrossApp::CAValueVector* ret);//**
 bool jsval_to_ssize( JSContext *cx, JS::HandleValue vp, ssize_t* ret);
 bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret);//**
 bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int>* ret);//**
@@ -321,6 +321,7 @@ jsval ulong_to_jsval(JSContext* cx, unsigned long v);
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval std_string_to_jsval(JSContext* cx, const std::string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
+jsval u_char_to_jsval(JSContext* cx, const unsigned char* v, size_t length = -1);
 jsval tm_to_jsval(JSContext* cx, const struct tm& v);
 jsval dpoint_to_jsval(JSContext* cx, const CrossApp::DPoint& v);
 jsval dpoint3d_to_jsval(JSContext* cx, const CrossApp::DPoint3D& v);
@@ -447,10 +448,10 @@ jsval ccmap_string_key_to_jsval(JSContext* cx, const CrossApp::CAMap<std::string
     return OBJECT_TO_JSVAL(jsRet);
 }
 
-//jsval ccvalue_to_jsval(JSContext* cx, const CrossApp::CAValue& v);
-//jsval ccvaluemap_to_jsval(JSContext* cx, const CrossApp::CAValueMap& v);
-//jsval ccvaluemapintkey_to_jsval(JSContext* cx, const CrossApp::CAValueMapIntKey& v);
-//jsval ccvaluevector_to_jsval(JSContext* cx, const CrossApp::CAValueVector& v);
+jsval cavalue_to_jsval(JSContext* cx, const CrossApp::CAValue& v);
+jsval cavaluemap_to_jsval(JSContext* cx, const CrossApp::CAValueMap& v);
+jsval cavaluemapintkey_to_jsval(JSContext* cx, const CrossApp::CAValueMapIntKey& v);
+jsval cavaluevector_to_jsval(JSContext* cx, const CrossApp::CAValueVector& v);
 jsval ssize_to_jsval(JSContext *cx, ssize_t v);
 jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v);
 jsval std_vector_char_to_jsval( JSContext *cx, const std::vector<char>& v);
