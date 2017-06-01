@@ -15,7 +15,7 @@ ListViewTest::~ListViewTest()
 
 void ListViewTest::viewDidLoad()
 {
-    m_pListViewHor = CAListView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 120)));
+    m_pListViewHor = CAListView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 88)));
     m_pListViewHor->setOrientation(CAListView::Orientation::Horizontal);
     m_pListViewHor->setAllowsSelection(true);
     this->getView()->addSubview(m_pListViewHor);
@@ -43,7 +43,7 @@ void ListViewTest::viewDidLoad()
         "S",
         "T",
         "U",
-        "V"
+        "V",
         "W",
         "X",
         "Y",
@@ -92,11 +92,11 @@ void ListViewTest::viewDidLoad()
         CCLog("DidDeselectCell %s", vec1.at(index).c_str());
     });
 
-    this->getView()->addSubview(CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(120, 5)), CAColor4B::GREEN));
+    this->getView()->addSubview(CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(88, 5)), CAColor4B::GREEN));
 
-    m_pListViewVer = CAListView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(130, 0)));
+    m_pListViewVer = CAListView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(93, 0)));
     m_pListViewVer->setAllowsSelection(true);
-    m_pListViewVer->setAllowsMultipleSelection(false);
+    m_pListViewVer->setAllowsMultipleSelection(true);
     m_pListViewVer->setOrientation(CAListView::Orientation::Vertical);
     m_pListViewVer->setSeparatorColor(CAColor4B::GRAY);
     this->getView()->addSubview(m_pListViewVer);
@@ -143,7 +143,7 @@ CAListViewCell* ListViewTest::cellAtIndex(const DSize& cellSize, unsigned int in
         btn->setTitleForState(CAControl::State::Normal, "btn");
         btn->setTag(200);
         cell->addSubview(btn);
-        btn->setTouchEventScrollHandOverToSuperview(false);
+        //btn->setTouchEventScrollHandOverToSuperview(false);
     }
     char temptext[10];
     sprintf(temptext, "cell-%d",index);

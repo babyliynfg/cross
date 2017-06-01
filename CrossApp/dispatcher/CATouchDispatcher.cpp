@@ -136,7 +136,6 @@ void CATouchController::passingTouchesViews(float dt)
 void CATouchController::touchBegan()
 {
     m_tFirstPoint = m_pTouch->getLocation();
-    
     CAView* responder = (CAView*)CAApplication::getApplication()->getTouchDispatcher()->getScrollRunningResponder();
     
     std::vector<CAResponder*> vector;
@@ -159,40 +158,32 @@ void CATouchController::touchBegan()
         CAApplication::getApplication()->getTouchDispatcher()->removeScrollRunningResponder(responder);
         this->passingTouchesViews();
         
-        if (!vector.empty())
+        for (auto& res : vector)
         {
-            std::vector<CAResponder*>::iterator itr;
-            for (itr=vector.begin(); itr!=vector.end(); itr++)
-            {
-                CC_CONTINUE_IF(!(*itr)->isPriorityScroll());
-                CC_CONTINUE_IF(!(*itr)->isScrollEnabled());
-                CC_CONTINUE_IF(!(*itr)->isHorizontalScrollEnabled() && !(*itr)->isVerticalScrollEnabled());
-                m_vTouchMovedsViewCache.pushBack((*itr));
-            }
+            CC_CONTINUE_IF(!res->isPriorityScroll());
+            CC_CONTINUE_IF(!res->isScrollEnabled());
+            CC_CONTINUE_IF(!res->isHorizontalScrollEnabled() && !res->isVerticalScrollEnabled());
+            m_vTouchMovedsViewCache.pushBack(res);
         }
     }
-    else
+    else if (!vector.empty())
     {
-        if (!vector.empty())
+        for (auto& res : vector)
         {
-            std::vector<CAResponder*>::iterator itr;
-            for (itr=vector.begin(); itr!=vector.end(); itr++)
-            {
-                CC_CONTINUE_IF(!(*itr)->isPriorityScroll());
-                CC_CONTINUE_IF(!(*itr)->isScrollEnabled());
-                CC_CONTINUE_IF(!(*itr)->isHorizontalScrollEnabled() && !(*itr)->isVerticalScrollEnabled());
-                m_vTouchMovedsViewCache.pushBack((*itr));
-            }
-            m_vTouchesViews.pushBack(vector.back());
-            
-            if (!m_vTouchMovedsViewCache.empty())
-            {
-                CAScheduler::getScheduler()->schedule(schedule_selector(CATouchController::passingTouchesViews), this, 0, 0, 0.05f);
-            }
-            else
-            {
-                this->passingTouchesViews();
-            }
+            CC_CONTINUE_IF(!res->isPriorityScroll());
+            CC_CONTINUE_IF(!res->isScrollEnabled());
+            CC_CONTINUE_IF(!res->isHorizontalScrollEnabled() && !res->isVerticalScrollEnabled());
+            m_vTouchMovedsViewCache.pushBack(res);
+        }
+        m_vTouchesViews.pushBack(vector.back());
+        
+        if (!m_vTouchMovedsViewCache.empty())
+        {
+            CAScheduler::getScheduler()->schedule(schedule_selector(CATouchController::passingTouchesViews), this, 0, 0, 0.05f);
+        }
+        else
+        {
+            this->passingTouchesViews();
         }
     }
 }
@@ -209,10 +200,9 @@ void CATouchController::touchMoved()
         
         bool isTouchEventScrollHandOverToSuperview = true;
         
-        for (CAVector<CAResponder*>::iterator itr=m_vTouchesViews.begin();
-             itr!=m_vTouchesViews.end(); itr++)
+        for (auto& responder : m_vTouchesViews)
         {
-            CC_CONTINUE_IF((*itr)->isTouchEventScrollHandOverToSuperview());
+            CC_CONTINUE_IF(responder->isTouchEventScrollHandOverToSuperview());
             isTouchEventScrollHandOverToSuperview = false;
             break;
         }
@@ -253,10 +243,8 @@ void CATouchController::touchMoved()
             if (!m_vTouchMovedsView.empty())
             {
                 bool isTouchCancelled = true;
-                CAVector<CAResponder*>::iterator itr;
-                for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
+                for (auto& responder : m_vTouchesViews)
                 {
-                    CAResponder* responder = (*itr);
                     if (responder->isPriorityScroll())
                     {
                         DPoint pointOffSet = DPointZero;
@@ -313,20 +301,18 @@ void CATouchController::touchMoved()
                 {
                     if (!isScheduledPassing)
                     {
-                        CAVector<CAResponder*>::iterator itr;
-                        for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
+                        for (auto& var : m_vTouchesViews)
                         {
-                            this->touchCancelledWithResponder(*itr);
+                            this->touchCancelledWithResponder(var);
                         }
+                        m_vTouchesViews.clear();
                     }
-                    m_vTouchesViews.clear();
                 }
                 
                 if (isScheduledPassing || m_vTouchesViews.empty())
                 {
-                    for (int i=0; i<m_vTouchMovedsView.size(); i++)
+                    for (auto& responder : m_vTouchMovedsView)
                     {
-                        CAResponder* responder = m_vTouchMovedsView.at(i);
                         DPoint pointOffSet = DPointZero;
                         if (CAView* v = dynamic_cast<CAView*>(responder))
                         {
@@ -382,11 +368,10 @@ void CATouchController::touchMoved()
         this->touchMovedWithResponder(view);
     }
     
-    CAVector<CAResponder*>::iterator itr;
-    for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
+    for (auto& responder : m_vTouchesViews)
     {
-        CC_CONTINUE_IF(!(*itr)->isScrollEnabled());
-        this->touchMovedWithResponder(*itr);
+        CC_CONTINUE_IF(!responder->isScrollEnabled());
+        this->touchMovedWithResponder(responder);
     }
     
 }
@@ -407,10 +392,9 @@ void CATouchController::touchEnded()
         this->touchEndedWithResponder(view);
     }
     
-    CAVector<CAResponder*>::iterator itr;
-    for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
+    for (auto& responder : m_vTouchesViews)
     {
-        this->touchEndedWithResponder(*itr);
+        this->touchEndedWithResponder(responder);
     }
 }
 
@@ -425,10 +409,9 @@ void CATouchController::touchCancelled()
         this->touchCancelledWithResponder(view);
     }
     
-    CAVector<CAResponder*>::iterator itr;
-    for (itr=m_vTouchesViews.begin(); itr!=m_vTouchesViews.end(); itr++)
+    for (auto& responder : m_vTouchesViews)
     {
-        this->touchCancelledWithResponder(*itr);
+        this->touchCancelledWithResponder(responder);
     }
 }
 

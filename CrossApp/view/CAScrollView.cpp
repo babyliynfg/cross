@@ -760,6 +760,8 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         }
         else
         {
+            this->startDeaccelerateScroll();
+            
             if (m_obTouchUpWithoutMoved)
             {
                 m_obTouchUpWithoutMoved(pTouch->getLocation());
@@ -806,7 +808,7 @@ void CAScrollView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     {
         m_bZooming = false;
     }
-    this->stopDeaccelerateScroll();
+    this->startDeaccelerateScroll();
     this->hideIndicator();
 }
 
