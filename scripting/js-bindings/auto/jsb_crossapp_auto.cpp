@@ -1490,7 +1490,7 @@ bool js_crossapp_CAData_getBytes(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 0) {
         unsigned char* ret = cobj->getBytes();
         jsval jsret = JSVAL_NULL;
-        jsret = u_char_to_jsval(cx, ret);
+        jsret = u_char_to_jsval(cx, ret, cobj->getLength());
         args.rval().set(jsret);
         return true;
     }
