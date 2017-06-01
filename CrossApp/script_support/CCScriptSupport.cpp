@@ -113,26 +113,6 @@ void CAScriptEngineManager::purgeSharedManager(void)
     }
 }
 
-bool CAScriptEngineManager::sendNodeEventToJS(CAView* node, int action)
-{
-    auto scriptEngine = sharedManager()->getScriptEngine();
-    
-    if (scriptEngine->isCalledFromScript())
-    {
-        // Should only be invoked at root class Node
-        scriptEngine->setCalledFromScript(false);
-    }
-    else
-    {
-        BasicScriptData data(node,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        if (scriptEngine->sendEvent(&scriptEvent))
-            return true;
-    }
-    
-    return false;
-}
-
 bool CAScriptEngineManager::sendViewControllerEventToJS(CAViewController* node, int action)
 {
     auto scriptEngine = sharedManager()->getScriptEngine();

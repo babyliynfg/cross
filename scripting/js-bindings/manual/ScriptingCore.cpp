@@ -800,35 +800,6 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
     
     switch (evt->type)
     {
-        case kNodeEvent:
-        {
-            return handleNodeEvent(evt->data);
-        }
-            break;
-        case kScriptActionEvent:
-        {
-//            return handleActionEvent(evt->data); **
-        }
-            break;
-        case kMenuClickedEvent:
-            break;
-        case kTouchEvent:
-        {
-//            TouchScriptData* data = (TouchScriptData*)evt->data;
-//            return handleTouchEvent(data->nativeObject, data->actionType, data->touch, data->event); **
-        }
-            break;
-        case kTouchesEvent:
-        {
-//            TouchesScriptData* data = (TouchesScriptData*)evt->data; //**
-//            return handleTouchesEvent(data->nativeObject, data->actionType, data->touches, data->event); **
-        }
-            break;
-        case kComponentEvent:
-        {
-//            return handleComponentEvent(evt->data); **
-        }
-            break;
         case kViewControllerEvent:
         {
             return handleViewControllerEvent(evt->data);
@@ -1352,59 +1323,6 @@ bool ScriptingCore::isFunctionOverridedInJS(JS::HandleObject obj, const std::str
     return false;
 }
 
-int ScriptingCore::handleNodeEvent(void* data)
-{
-    if (NULL == data)
-        return 0;
-    
-    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
-    if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
-        return 0;
-    
-    CAView* node = static_cast<CAView*>(basicScriptData->nativeObject);
-    int action = *((int*)(basicScriptData->value));
-    js_proxy_t * p = jsb_get_native_proxy(node);
-    if (!p) return 0;
-    
-    JSAutoCompartment ac(_cx, *_global);
-    
-    int ret = 0;
-    JS::RootedValue retval(_cx);
-    jsval dataVal = INT_TO_JSVAL(1);
-    
-    JS::RootedObject jstarget(_cx, p->obj);
-    
-    if (action == script::onEnter)
-    {
-        if (isFunctionOverridedInJS(jstarget, "onEnter", js_crossapp_Node_onEnter))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
-        }
-    }
-    else if (action == script::onExit)
-    {
-        if (isFunctionOverridedInJS(jstarget, "onExit", js_crossapp_Node_onExit))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
-        }
-    }
-    else if (action == script::onEnterTransitionDidFinish)
-    {
-        if (isFunctionOverridedInJS(jstarget, "onEnterTransitionDidFinish", js_crossapp_Node_onEnterTransitionDidFinish))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 0, &dataVal, &retval);
-        }
-    }
-    else if (action == script::onExitTransitionDidStart)
-    {
-        if (isFunctionOverridedInJS(jstarget, "onExitTransitionDidStart", js_crossapp_Node_onExitTransitionDidStart))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 0, &dataVal, &retval);
-        }
-    }
-
-    return ret;
-}
 int ScriptingCore::handleViewControllerEvent(void* data)
 {
     if (NULL == data)

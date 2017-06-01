@@ -124,19 +124,7 @@ private:
 
 enum ScriptEventType
 {
-    kNodeEvent = 0,
-    kMenuClickedEvent,
-    kCallFuncEvent,
-    kScheduleEvent,
-    kTouchEvent,
-    kTouchesEvent,
-    kKeypadEvent,
-    kAccelerometerEvent,
-    kControlEvent,
-    kCommonEvent,
-    kComponentEvent,
     kRestartGame,
-    kScriptActionEvent,
     kViewControllerEvent
 };
 
@@ -215,8 +203,6 @@ public:
     static CAScriptEngineManager* sharedManager(void);
     static CAScriptEngineManager* getScriptEngineManager(void);
     static void purgeSharedManager(void);
-
-    static bool sendNodeEventToJS(CAView* node, int action);
 
     static bool sendViewControllerEventToJS(CAViewController* node, int action);
     

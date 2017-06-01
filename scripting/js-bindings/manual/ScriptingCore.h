@@ -422,7 +422,7 @@ public:
 private:
     void initRegister();
 public:
-    int handleNodeEvent(void* data);
+
     int handleViewControllerEvent(void* data);
 };
 
