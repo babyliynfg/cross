@@ -66,6 +66,17 @@ std::string CAData::toString()
     return ret;
 }
 
+std::u16string CAData::toU16string()
+{
+    std::u16string ret;
+    ret.resize(m_iLength);
+    for (ssize_t i=0; i<m_iLength; i++)
+    {
+        ret[i] = m_pBytes[i];
+    }
+    return ret;
+}
+
 void CAData::clear()
 {
     free(m_pBytes);

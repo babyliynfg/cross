@@ -34,6 +34,8 @@ public:
     
     std::string toString();
     
+    std::u16string toU16string();
+    
     void clear();
     
 private:

@@ -444,6 +444,16 @@ getScheduler : function (
 ca.CAData = {
 
 /**
+ * @method toU16string
+ * @return {std::basic_string<char16_t, std::char_traits<char16_t>, std::allocator<char16_t> >}
+ */
+toU16string : function (
+)
+{
+    return std::basic_string<char16_t, std::char_traits<char16_t>, std::allocator<char16_t> >;
+},
+
+/**
  * @method getLength
  * @return {int}
  */

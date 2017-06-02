@@ -10,6 +10,11 @@
 #include "support/CAThemeManager.h"
 #include <sys/stat.h>
 
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
 NS_CC_BEGIN
 
 // Implement DictMaker
@@ -573,6 +578,7 @@ void FileUtils::purgeCachedEntries()
 
 CAData* FileUtils::getDataFromFile(const std::string& filename)
 {
+    
     CAData* data = CAData::create();
     unsigned long pSize = 0;
     unsigned char* pData = this->getFileData(filename, "rb", &pSize);
@@ -586,16 +592,28 @@ CAData* FileUtils::getDataFromFile(const std::string& filename)
 
 std::string FileUtils::getFileString(const std::string& filename)
 {
-    std::string data;
-    unsigned long pSize = 0;
-    unsigned char* pData = this->getFileData(filename, "rb", &pSize);
+    std::ifstream ifile(filename);
     
-    if (pSize > 0)
+    std::ostringstream buffer;
+    char ch;
+    while(buffer && ifile.get(ch))
     {
-        data.resize(pSize);
-        memcpy(&data[0], pData, pSize);
+        buffer.put(ch);
     }
-    return data;
+    return buffer.str();
+    
+    /*
+     std::string data;
+     unsigned long pSize = 0;
+     unsigned char* pData = this->getFileData(filename, "rb", &pSize);
+     
+     if (pSize > 0)
+     {
+     data.resize(pSize);
+     memcpy(&data[0], pData, pSize);
+     }
+     return data;
+     */
 }
 
 unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, unsigned long *size)

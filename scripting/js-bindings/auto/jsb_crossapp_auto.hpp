@@ -67,6 +67,7 @@ bool js_crossapp_CAData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_crossapp_CAData_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAData(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAData_toU16string(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAData_getLength(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAData_clear(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAData_isNull(JSContext *cx, uint32_t argc, jsval *vp);

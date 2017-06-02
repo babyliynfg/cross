@@ -496,7 +496,28 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
     return true;
 }
 
-bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret) {
+bool jsval_to_std_u16string(JSContext *cx, JS::HandleValue v, std::u16string* ret)
+{
+    if(v.isString() || v.isNumber())
+    {
+        JSString *tmp = JS::ToString(cx, v);
+        JSB_PRECONDITION3(tmp, cx, false, "Error processing arguments");
+        
+        JSStringWrapper str(tmp);
+        
+        (*ret).resize(strlen(str.get()));
+        for (int i=0; i<strlen(str.get()); i++)
+        {
+            (*ret)[i] = str.get()[i];
+        }
+        return true;
+    }
+    
+    return false;
+}
+
+bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret)
+{
     if(v.isString() || v.isNumber())
     {
         JSString *tmp = JS::ToString(cx, v);
@@ -1446,6 +1467,28 @@ jsval uint32_to_jsval( JSContext *cx, uint32_t number )
 jsval ushort_to_jsval( JSContext *cx, unsigned short number )
 {
     return UINT_TO_JSVAL(number);
+}
+
+jsval std_u16String_to_jsval(JSContext* cx, const std::u16string& v)
+{
+    if (v.empty())
+    {
+        return JSVAL_NULL;
+    }
+
+    jsval ret = JSVAL_NULL;
+    
+    size_t utf16_size = v.length();
+    const jschar* strUTF16 = v.c_str();
+    
+    if (strUTF16 && utf16_size > 0) {
+        JSString* str = JS_NewUCStringCopyN(cx, strUTF16, (size_t)utf16_size);
+        if (str) {
+            ret = STRING_TO_JSVAL(str);
+        }
+    }
+    
+    return ret;
 }
 
 jsval std_string_to_jsval(JSContext* cx, const std::string& v)
