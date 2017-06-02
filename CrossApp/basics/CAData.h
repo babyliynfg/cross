@@ -26,6 +26,8 @@ public:
     
     void copyString(const std::string& var);
     
+    void copyU16string(const std::u16string& var);
+    
     bool isNull() const;
     
     unsigned char* getBytes() const;

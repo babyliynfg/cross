@@ -40,6 +40,21 @@ void CAData::copyString(const std::string& var)
     this->copy((const unsigned char*)var.c_str(), var.length());
 }
 
+void CAData::copyU16string(const std::u16string& var)
+{
+    this->clear();
+    
+    if (!var.empty())
+    {
+        m_iLength = var.length();
+        m_pBytes = (unsigned char*)malloc(sizeof(unsigned char) * m_iLength);
+        for (ssize_t i=0; i<m_iLength; i++)
+        {
+            m_pBytes[i] = var[i];
+        }
+    }
+}
+
 bool CAData::isNull() const
 {
     return (m_pBytes == nullptr || m_iLength == 0);
