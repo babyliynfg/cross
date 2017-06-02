@@ -101,11 +101,11 @@ void ListViewTest::viewDidLoad()
     m_pListViewVer->setSeparatorColor(CAColor4B::GRAY);
     this->getView()->addSubview(m_pListViewVer);
     
-    m_pListViewVer->setNumberOfIndexCallback(STD_BIND_0(ListViewTest::numberOfIndex, this));
-    m_pListViewVer->setHeightForIndexCallback(STD_BIND_1(ListViewTest::heightForIndex, this));
-    m_pListViewVer->setCellAtIndexCallback(STD_BIND_2(ListViewTest::cellAtIndex, this));
-    m_pListViewVer->setDidSelectCellAtIndexCallback(STD_BIND_1(ListViewTest::didSelectCellAtIndex, this));
-    m_pListViewVer->setDidDeselectCellAtIndexCallback(STD_BIND_1(ListViewTest::didDeselectCellAtIndex, this));
+    m_pListViewVer->setNumberOfIndexCallback(CALLBACK_BIND_0(ListViewTest::numberOfIndex, this));
+    m_pListViewVer->setHeightForIndexCallback(CALLBACK_BIND_1(ListViewTest::heightForIndex, this));
+    m_pListViewVer->setCellAtIndexCallback(CALLBACK_BIND_2(ListViewTest::cellAtIndex, this));
+    m_pListViewVer->setDidSelectCellAtIndexCallback(CALLBACK_BIND_1(ListViewTest::didSelectCellAtIndex, this));
+    m_pListViewVer->setDidDeselectCellAtIndexCallback(CALLBACK_BIND_1(ListViewTest::didDeselectCellAtIndex, this));
     
 }
 void ListViewTest::viewDidUnload()

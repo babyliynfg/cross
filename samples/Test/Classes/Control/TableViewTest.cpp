@@ -1,147 +1,7 @@
 
 #include "TableViewTest.h"
-//#include "platform/CADevice.h"
-//#include "CrossAppExt.h"
 
 USING_NS_CC;
-//USING_NS_CC_EXT;
-
-std::vector<std::string> sectionTitle;
-
-ETableViewCell::ETableViewCell()
-{
-    this->setAllowsSelected(false);
-}
-
-ETableViewCell::~ETableViewCell()
-{
-    
-}
-
-ETableViewCell* ETableViewCell::create(const std::string& identifier)
-{
-    ETableViewCell* cell = new ETableViewCell();
-    if (cell && cell->initWithReuseIdentifier(identifier))
-    {
-        cell->autorelease();
-        return cell;
-    }
-    CC_SAFE_DELETE(cell);
-    return NULL;
-}
-
-void ETableViewCell::highlightedTableViewCell()
-{
-    this->setBackgroundView(CAView::createWithColor(CAColor4B::CLEAR));
-}
-
-void ETableViewCell::selectedTableViewCell()
-{
-    this->setBackgroundView(CAView::createWithColor(CAColor4B::CLEAR));
-}
-
-void ETableViewCell::initWithCell()
-{
-    CALabel* test = CALabel::createWithLayout(DLayoutFill);
-    test->setColor(ccc4(34, 151, 254, 255));
-    test->setTextAlignment(CATextAlignment::Center);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-    test->setFontSize(28);
-    test->setTag(100);
-    this->addSubview(test);
-}
-
-//-------------------------------------------------------------------------
-//ETableView
-ETableView::ETableView(){
-    
-}
-
-ETableView::~ETableView(){
-}
-
-bool ETableView::init(const CrossApp::DRect &rect)
-{
-    size = rect.size;
-    p_TableView = CATableView::createWithLayout(DLayoutFill);
-    p_TableView->setAllowsSelection(true);
-    p_TableView->setTableViewDelegate(this);
-    p_TableView->setTableViewDataSource(this);
-    p_TableView->setShowsScrollIndicators(false);
-    p_TableView->setSeparatorViewHeight(0);
-    p_TableView->setScrollEnabled(true);
-    p_TableView->setSeparatorColor(CAColor4B::CLEAR);
-    this->addSubview(p_TableView);
-    return true;
-}
-
-ETableView* ETableView::createWithLayout(const CrossApp::DLayout &layout)
-{
-    ETableView* tableView = new ETableView();
-    if (tableView && tableView->initWithLayout(layout))
-    {
-        tableView->autorelease();
-        return tableView;
-    }
-    CC_SAFE_DELETE(tableView);
-    return NULL;
-}
-
-void ETableView::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
-{
-    m_pETableViewDelegate->etableViewDidSelectRowAtIndexPath(table, section, row);
-}
-
-void ETableView::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
-{
-    
-}
-
-CATableViewCell* ETableView::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
-{
-    DSize _size = cellSize;
-    ETableViewCell* cell = dynamic_cast<ETableViewCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
-    if (cell == NULL)
-    {
-        cell = ETableViewCell::create("CrossApp");
-        cell->setLayout(DLayoutFill);
-        cell->initWithCell();
-    }
-    char order[20] = "";
-    sprintf(order, "%s", sectionTitle.at(row).c_str());
-    CALabel* cellText = (CALabel*)cell->getSubviewByTag(100);
-    cellText->setText(order);
-    
-    return cell;
-    
-}
-
-unsigned int ETableView::numberOfRowsInSection(CATableView *table, unsigned int section)
-{
-    return (unsigned int)sectionTitle.size();
-}
-
-unsigned int ETableView::numberOfSections(CATableView *table)
-{
-    return 1;
-}
-
-unsigned int ETableView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
-{
-    return size.height/sectionTitle.size();
-}
-
-unsigned int ETableView::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
-{
-    return 0;
-}
-
-unsigned int ETableView::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
-{
-    return 0;
-}
-
-
 
 TableViewTest::TableViewTest()
 {
@@ -157,53 +17,36 @@ TableViewTest::~TableViewTest()
 
 void TableViewTest::viewDidLoad()
 {
-    
-    sectionTitle.clear();
-    sectionTitle.push_back("A");
-    sectionTitle.push_back("B");
-    sectionTitle.push_back("C");
-    sectionTitle.push_back("D");
-    sectionTitle.push_back("E");
-    sectionTitle.push_back("F");
-    sectionTitle.push_back("G");
-    sectionTitle.push_back("H");
-    sectionTitle.push_back("I");
-    sectionTitle.push_back("J");
-    sectionTitle.push_back("K");
-    sectionTitle.push_back("L");
-    sectionTitle.push_back("M");
-    sectionTitle.push_back("N");
-    sectionTitle.push_back("O");
-    sectionTitle.push_back("P");
-    sectionTitle.push_back("Q");
-    sectionTitle.push_back("R");
-    sectionTitle.push_back("S");
-    sectionTitle.push_back("T");
-    sectionTitle.push_back("U");
-    sectionTitle.push_back("V");
-    sectionTitle.push_back("W");
-    sectionTitle.push_back("X");
-    sectionTitle.push_back("Y");
-    sectionTitle.push_back("Z");
-    
-    showIndex = 0;
-    VIEWLIST.clear();
     this->getView()->setColor(CAColor4B::GRAY);
+    
+    m_pSectionTitle =
+    {
+        "A","B","C","D","E","F","G",
+        "H","I","J","K","L","M","N",
+        "O","P","Q",
+        "R","S","T",
+        "U","V","W",
+        "X","Y","Z",
+    };
 
-    p_TableView = CATableView::createWithLayout(DLayout(DHorizontalLayout_L_R(0, 50), DVerticalLayoutFill));
-    p_TableView->setTableViewDataSource(this);
-    p_TableView->setTableViewDelegate(this);
-    p_TableView->setAllowsSelection(true);
-    p_TableView->setAllowsMultipleSelection(false);
-    p_TableView->setShowsScrollIndicators(false);
-    p_TableView->setSelectRowAtIndexPath(2, 1);
+    m_pTableView = CATableView::createWithLayout(DLayoutFill);
+    m_pTableView->setAllowsSelection(true);
+    m_pTableView->setAllowsMultipleSelection(false);
+    m_pTableView->setShowsScrollIndicators(false);
+    m_pTableView->setSelectRowAtIndexPath(2, 1);
+    this->getView()->addSubview(m_pTableView);
     
-    this->getView()->addSubview(p_TableView);
+    m_pTableView->setCellAtIndexPathCallBack(CALLBACK_BIND_3(TableViewTest::tableCellAtIndex, this));
+    m_pTableView->setHeightForRowAtIndexPathCallback(CALLBACK_BIND_2(TableViewTest::tableViewHeightForRowAtIndexPath, this));
+    m_pTableView->setNumberOfRowsInSectionCallback(CALLBACK_BIND_1(TableViewTest::numberOfRowsInSection, this));
+    m_pTableView->setNumberOfSectionsCallback(CALLBACK_BIND_0(TableViewTest::numberOfSections, this));
+    m_pTableView->setSectionViewForHeaderInSectionCallback(CALLBACK_BIND_2(TableViewTest::tableViewSectionViewForHeaderInSection, this));
+    m_pTableView->setHeightForHeaderInSectionCallback(CALLBACK_BIND_1(TableViewTest::tableViewHeightForHeaderInSection, this));
+    m_pTableView->setSectionViewForFooterInSectionCallback(CALLBACK_BIND_2(TableViewTest::tableViewSectionViewForFooterInSection, this));
+    m_pTableView->setHeightForFooterInSectionCallback(CALLBACK_BIND_1(TableViewTest::tableViewHeightForFooterInSection, this));
+    m_pTableView->setDidSelectRowAtIndexPathCallback(CALLBACK_BIND_2(TableViewTest::tableViewDidSelectRowAtIndexPath, this));
+    m_pTableView->setDidDeselectRowAtIndexPathCallback(CALLBACK_BIND_2(TableViewTest::tableViewDidDeselectRowAtIndexPath, this));
     
-    ETableView* p_TableView1 = ETableView::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 50), DVerticalLayoutFill));
-    p_TableView1->init(this->getView()->getBounds());
-    p_TableView1->setETableViewDelegate(this);
-    this->getView()->addSubview(p_TableView1);
 }
 
 void TableViewTest::viewDidUnload()
@@ -212,26 +55,21 @@ void TableViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void TableViewTest::etableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row) //1
+void TableViewTest::tableViewDidSelectRowAtIndexPath(unsigned int section, unsigned int row) //1
 {
-    //CCLog("ssss====%d",row);
-    p_TableView->setContentOffset(DPoint(0,313*row), false);
+
 }
 
-void TableViewTest::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
-{
-    
-}
 
-void TableViewTest::tableViewDidDeselectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
+void TableViewTest::tableViewDidDeselectRowAtIndexPath(unsigned int section, unsigned int row)
 {
     
 }
 
-CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
+CATableViewCell* TableViewTest::tableCellAtIndex(DSize cellSize, unsigned int section, unsigned int row)
 {
     DSize _size = cellSize;
-    CATableViewCell* cell = dynamic_cast<CATableViewCell*>(table->dequeueReusableCellWithIdentifier("CrossApp"));
+    CATableViewCell* cell = dynamic_cast<CATableViewCell*>(m_pTableView->dequeueReusableCellWithIdentifier("CrossApp"));
     if (cell == NULL)
     {
         cell = CATableViewCell::create("CrossApp");
@@ -258,23 +96,39 @@ CATableViewCell* TableViewTest::tableCellAtIndex(CATableView* table, const DSize
     cell->setDraggingLength(180);
     
     char order[20] = "";
-    sprintf(order, "%s-%d", sectionTitle.at(section).c_str(),row);
+    sprintf(order, "%s-%d", m_pSectionTitle.at(section).c_str(),row);
     CALabel* cellText = (CALabel*)cell->getContentView()->getSubviewByTag(100);
     cellText->setText(order);
     
     CAButton* cellBtn = (CAButton*)cell->getSubviewByTag(101);
     cellBtn->addTarget([=]()
     {
-        CCLog("btn_section===%d,row===%d", section, row);
+        CCLog("button at (section: %d, row: %d)", section, row);
     }, CAButton::Event::TouchUpInSide);
     
     return cell;
     
 }
 
-CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table, const DSize& viewSize, unsigned int section)
+unsigned int TableViewTest::tableViewHeightForRowAtIndexPath(unsigned int section, unsigned int row)
 {
-    std::string head = sectionTitle.at(section);
+    return 130;
+}
+
+
+unsigned int TableViewTest::numberOfRowsInSection(unsigned int section)
+{
+    return 2;
+}
+
+unsigned int TableViewTest::numberOfSections()
+{
+    return (unsigned int)m_pSectionTitle.size();
+}
+
+CAView* TableViewTest::tableViewSectionViewForHeaderInSection(DSize viewSize, unsigned int section)
+{
+    std::string head = m_pSectionTitle.at(section);
     CAView* view = CAView::createWithColor(CAColor4B::GRAY);
     
     DSize _size = viewSize;
@@ -289,33 +143,18 @@ CAView* TableViewTest::tableViewSectionViewForHeaderInSection(CATableView* table
     return view;
 }
 
-CAView* TableViewTest::tableViewSectionViewForFooterInSection(CATableView* table, const DSize& viewSize, unsigned int section)
+unsigned int TableViewTest::tableViewHeightForHeaderInSection(unsigned int section)
+{
+    return 50;
+}
+
+CAView* TableViewTest::tableViewSectionViewForFooterInSection(DSize viewSize, unsigned int section)
 {
     CAView* view = CAView::createWithColor(CAColor4B::GRAY);
     return view;
 }
 
-unsigned int TableViewTest::numberOfRowsInSection(CATableView *table, unsigned int section)
-{
-    return 2;
-}
-
-unsigned int TableViewTest::numberOfSections(CATableView *table)
-{
-    return (unsigned int)sectionTitle.size();
-}
-
-unsigned int TableViewTest::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
-{
-    return 130;
-}
-
-unsigned int TableViewTest::tableViewHeightForHeaderInSection(CATableView* table, unsigned int section)
-{
-    return 50;
-}
-
-unsigned int TableViewTest::tableViewHeightForFooterInSection(CATableView* table, unsigned int section)
+unsigned int TableViewTest::tableViewHeightForFooterInSection(unsigned int section)
 {
     return 1;
 }

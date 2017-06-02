@@ -29,14 +29,14 @@ CADrawerController::CADrawerController()
     
     m_pView->setColor(CAColor4B::CLEAR);
     
-    m_pView->setTouchBeganCallback(STD_BIND_2(CADrawerController::ccTouchBegan, this));
-    m_pView->setTouchMovedCallback(STD_BIND_2(CADrawerController::ccTouchMoved, this));
-    m_pView->setTouchEndedCallback(STD_BIND_2(CADrawerController::ccTouchEnded, this));
-    m_pView->setTouchCancelledCallback(STD_BIND_2(CADrawerController::ccTouchCancelled, this));
+    m_pView->setTouchBeganCallback(CALLBACK_BIND_2(CADrawerController::ccTouchBegan, this));
+    m_pView->setTouchMovedCallback(CALLBACK_BIND_2(CADrawerController::ccTouchMoved, this));
+    m_pView->setTouchEndedCallback(CALLBACK_BIND_2(CADrawerController::ccTouchEnded, this));
+    m_pView->setTouchCancelledCallback(CALLBACK_BIND_2(CADrawerController::ccTouchCancelled, this));
     
     memset(m_pContainer, NULL, sizeof(CAView*) * 2);
     
-    CANotificationCenter::getInstance()->addObserver(STD_BIND_1(CADrawerController::changeStatusBarOrientation, this), this, CAApplicationDidChangeStatusBarOrientationNotification);
+    CANotificationCenter::getInstance()->addObserver(CALLBACK_BIND_1(CADrawerController::changeStatusBarOrientation, this), this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 CADrawerController::~CADrawerController()
