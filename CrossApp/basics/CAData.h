@@ -25,9 +25,7 @@ public:
     void fastSet(unsigned char* bytes, const ssize_t length);
     
     void copyString(const std::string& var);
-    
-    void copyU16string(const std::u16string& var);
-    
+
     bool isNull() const;
     
     unsigned char* getBytes() const;
@@ -35,8 +33,6 @@ public:
     ssize_t getLength() const;
     
     std::string toString();
-    
-    std::u16string toU16string();
     
     void clear();
     

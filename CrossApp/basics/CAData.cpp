@@ -24,8 +24,9 @@ void CAData::copy(const unsigned char* bytes, const ssize_t length)
     if (length > 0)
     {
         m_iLength = length;
-        m_pBytes = (unsigned char*)malloc(sizeof(unsigned char) * length);
+        m_pBytes = (unsigned char*)malloc(sizeof(unsigned char) * (length + 1));
         memcpy(m_pBytes, bytes, length);
+        m_pBytes[m_iLength] = '\0';
     }
 }
 
@@ -38,21 +39,6 @@ void CAData::fastSet(unsigned char* bytes, const ssize_t length)
 void CAData::copyString(const std::string& var)
 {
     this->copy((const unsigned char*)var.c_str(), var.length());
-}
-
-void CAData::copyU16string(const std::u16string& var)
-{
-    this->clear();
-    
-    if (!var.empty())
-    {
-        m_iLength = var.length();
-        m_pBytes = (unsigned char*)malloc(sizeof(unsigned char) * m_iLength);
-        for (ssize_t i=0; i<m_iLength; i++)
-        {
-            m_pBytes[i] = var[i];
-        }
-    }
 }
 
 bool CAData::isNull() const
@@ -73,17 +59,6 @@ ssize_t CAData::getLength() const
 std::string CAData::toString()
 {
     std::string ret;
-    ret.resize(m_iLength);
-    for (ssize_t i=0; i<m_iLength; i++)
-    {
-        ret[i] = m_pBytes[i];
-    }
-    return ret;
-}
-
-std::u16string CAData::toU16string()
-{
-    std::u16string ret;
     ret.resize(m_iLength);
     for (ssize_t i=0; i<m_iLength; i++)
     {
