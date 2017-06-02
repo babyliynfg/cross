@@ -27,14 +27,14 @@ class CC_DLL CAWebView : public CAView
 public:
     // event listeners.
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<bool(const std::string&)>, m_obStartLoading, StartLoadingCallback);
+    CC_LISTENING_FUNCTION(bool(const std::string&), StartLoadingCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const std::string&)>, m_obFinishLoading, FinishLoadingCallback);
+    CC_LISTENING_FUNCTION(void(const std::string&), FinishLoadingCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const std::string&)>, m_obFailLoading, FailLoadingCallback);
+    CC_LISTENING_FUNCTION(void(const std::string&), FailLoadingCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const std::string&)>, m_obJSCallback, JSCallback);
-    
+    CC_LISTENING_FUNCTION(void(const std::string&), JSCallback);
+
 public:
     
     CAWebView();

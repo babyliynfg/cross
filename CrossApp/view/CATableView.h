@@ -79,7 +79,25 @@ public:
 
 class CC_DLL CATableView: public CAScrollView
 {
+public:
     
+    // event listeners. If these functions are set, the corresponding function of CATableViewDataSource will fail.
+    CC_LISTENING_FUNCTION(CATableViewCell*(DSize cellSize, unsigned int section, unsigned int row), CellAtIndexPathCallBack);
+
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), HeightForRowAtIndexPathCallback);
+
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfRowsInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfSectionsCallback);
+    
+    CC_LISTENING_FUNCTION(void(CATableViewCell* cell, unsigned int section, unsigned int row), WillDisplayCellAtIndexPathCallback);
+    
+    // event listeners. If these functions are set, the corresponding function of CATableViewDelegate will fail.
+    
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidSelectRowAtIndexPathCallback);
+    
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidDeselectRowAtIndexPathCallback);
+
 public:
     
     CATableView();

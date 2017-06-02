@@ -42,12 +42,11 @@ public:
     
 public:
     // event listeners. If these functions are set, the corresponding function of CAPageViewDelegate will fail.
-    
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obBeginTurning, BeginTurningCallback);
-    
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obEndTurning, EndTurningCallback);
-    
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(unsigned int, DPoint)>, m_obDidSelectedPageAtIndex, DidSelectedPageAtIndexCallback);
+    CC_LISTENING_FUNCTION(void(), BeginTurningCallback);
+        
+    CC_LISTENING_FUNCTION(void(), EndTurningCallback);
+        
+    CC_LISTENING_FUNCTION(void(unsigned int, DPoint), DidSelectedPageAtIndexCallback);
 
 public:
 

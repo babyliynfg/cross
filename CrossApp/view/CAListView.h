@@ -37,11 +37,11 @@ class CAListViewDataSource
 public:
 	virtual ~CAListViewDataSource(){};
 
-	virtual unsigned int numberOfIndex(CAListView *listView) = 0;
-
+    virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index) = 0;
+    
 	virtual unsigned int listViewHeightForIndex(CAListView *listView, unsigned int index) = 0;
 
-	virtual CAListViewCell* listViewCellAtIndex(CAListView *listView, const DSize& cellSize, unsigned int index) = 0;
+	virtual unsigned int numberOfIndex(CAListView *listView) = 0;
     
     virtual void listViewWillDisplayCellAtIndex(CAListView* table, CAListViewCell* cell, unsigned int index) {};
 };
@@ -58,22 +58,20 @@ public:
     };
    
 public:
-        
+
     // event listeners. If these functions are set, the corresponding function of CAListViewDataSource will fail.
+    CC_LISTENING_FUNCTION(CAListViewCell*(DSize cellSize, unsigned int index), CellAtIndexCallback);
+
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), HeightForIndexCallback);
+
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfIndexCallback);
         
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<unsigned int()>, m_obNumberOfIndex, NumberOfIndexCallback);
-        
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<unsigned int(unsigned int index)>, m_obHeightForIndex, HeightForIndexCallback);
-        
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<CAListViewCell*(DSize cellSize, unsigned int index)>, m_obCellAtIndex, CellAtIndexCallback);
-        
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CAListViewCell* cell, unsigned int index)>, m_obDisplayCellAtIndex, DisplayCellAtIndexCallback);
-        
+    CC_LISTENING_FUNCTION(void(CAListViewCell* cell, unsigned int index), WillDisplayCellAtIndexCallback);
+
     // event listeners. If these functions are set, the corresponding function of CAListViewDelegate will fail.
-        
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(unsigned int index)>, m_obDidSelectCellAtIndex, DidSelectCellAtIndexCallback);
-        
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(unsigned int index)>, m_obDidDeselectCellAtIndex, DidDeselectCellAtIndexCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int index), DidSelectCellAtIndexCallback);
+
+    CC_LISTENING_FUNCTION(void(unsigned int index), DidDeselectCellAtIndexCallback);
 
 public:
     

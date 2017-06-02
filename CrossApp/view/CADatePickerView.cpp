@@ -11,8 +11,6 @@
 #include "basics/CAApplication.h"
 #include <sstream>
 
-
-
 NS_CC_BEGIN
 
 #pragma execution_character_set("utf-8")
@@ -21,7 +19,6 @@ CADatePickerView::CADatePickerView(CADatePickerView::Mode m_mode)
 : m_pPickerView(nullptr)
 , m_eMode(m_mode)
 , isSetDate(false)
-, m_obSelectRow(nullptr)
 {
 
 }
@@ -429,9 +426,9 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
             break;
     }
     
-    if (m_obSelectRow)
+    if (m_obSelectRowCallback)
     {
-        m_obSelectRow(m_tTM);
+        m_obSelectRowCallback(m_tTM);
     }
 }
 

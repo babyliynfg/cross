@@ -25,12 +25,6 @@ CAListView::CAListView()
 , m_nListFooterHeight(0)
 , m_obSeparatorColor(ccc4Int(0xffefeef4))
 , m_nSeparatorViewHeight(1)
-, m_obNumberOfIndex(nullptr)
-, m_obHeightForIndex(nullptr)
-, m_obCellAtIndex(nullptr)
-, m_obDisplayCellAtIndex(nullptr)
-, m_obDidSelectCellAtIndex(nullptr)
-, m_obDidDeselectCellAtIndex(nullptr)
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CACell");
     m_obSeparatorColor = ccc4Int(CrossApp::hex2Int(map.at("separatorColor")));
@@ -332,9 +326,9 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Normal);
 			}
-            if (m_obDidDeselectCellAtIndex)
+            if (m_obDidDeselectCellAtIndexCallback)
             {
-                m_obDidDeselectCellAtIndex(iSelectIndex);
+                m_obDidDeselectCellAtIndexCallback(iSelectIndex);
             }
             else if (m_pListViewDelegate)
 			{
@@ -348,9 +342,9 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Selected);
 			}
-            if (m_obDidSelectCellAtIndex)
+            if (m_obDidSelectCellAtIndexCallback)
             {
-                m_obDidSelectCellAtIndex(iSelectIndex);
+                m_obDidSelectCellAtIndexCallback(iSelectIndex);
             }
 			else if (m_pListViewDelegate)
 			{
@@ -459,9 +453,9 @@ void CAListView::reloadViewSizeData()
     
     m_nIndexs = 0;
     
-    if (m_obNumberOfIndex)
+    if (m_obNumberOfIndexCallback)
     {
-        m_nIndexs = m_obNumberOfIndex();
+        m_nIndexs = m_obNumberOfIndexCallback();
     }
     else if (m_pListViewDataSource)
     {
@@ -474,9 +468,9 @@ void CAListView::reloadViewSizeData()
     {
         unsigned int cellHeight = 0;
         
-        if (m_obHeightForIndex)
+        if (m_obHeightForIndexCallback)
         {
-           cellHeight = m_obHeightForIndex(i);
+           cellHeight = m_obHeightForIndexCallback(i);
         }
         else if (m_pListViewDataSource)
         {
@@ -640,9 +634,9 @@ void CAListView::loadCell()
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
         CAListViewCell* cell = nullptr;
-        if (m_obCellAtIndex)
+        if (m_obCellAtIndexCallback)
         {
-            cell = m_obCellAtIndex(cellRect.size, index);
+            cell = m_obCellAtIndexCallback(cellRect.size, index);
         }
         else if (m_pListViewDataSource)
         {
@@ -664,9 +658,9 @@ void CAListView::loadCell()
 			cell->setControlState(CAControl::State::Selected);
 		}
         
-        if (m_obDisplayCellAtIndex)
+        if (m_obWillDisplayCellAtIndexCallback)
         {
-            m_obDisplayCellAtIndex(cell, index);
+            m_obWillDisplayCellAtIndexCallback(cell, index);
         }
         else if (m_pListViewDataSource)
         {

@@ -124,7 +124,7 @@ void CAHttpClient::networkThreadAlone(CAHttpRequest* request, CAHttpResponse* re
     if (nullptr != _scheduler)
     {
         _scheduler->performFunctionInUIThread([this, response, request]{
-            const CAHttpRequest::Callback& callback = request->getCallback();
+            const auto& callback = request->getCallback();
 
             if (callback != nullptr)
             {
@@ -528,7 +528,7 @@ void CAHttpClient::dispatchResponseCallbacks()
     if (response)
     {
         CAHttpRequest *request = response->getHttpRequest();
-        const CAHttpRequest::Callback& callback = request->getCallback();
+        const auto& callback = request->getCallback();
 
         if (callback != nullptr)
         {

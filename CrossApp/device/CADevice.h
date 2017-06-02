@@ -23,9 +23,9 @@ namespace CADevice
     
     struct WifiDate
     {
-        std::string ssid{""};
+        std::string ssid;
         int level{0};
-        std::string mac{""};
+        std::string mac;
     };
     
     enum class VolumeData : int
@@ -47,7 +47,7 @@ namespace CADevice
     struct SystemVersion
     {
         PlatForm platform;
-        std::string version{""};
+        std::string version;
     };
         
     CADevice::SystemVersion getSystemVersion();

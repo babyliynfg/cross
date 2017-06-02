@@ -27,8 +27,8 @@ public:
     };
     
 public:
-        
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(const struct tm&)>, m_obSelectRow, SelectRowCallback);
+
+    CC_LISTENING_FUNCTION(void(const struct tm&), SelectRowCallback)
         
 public:
     static CADatePickerView* create(CADatePickerView::Mode m_mode);

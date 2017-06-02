@@ -26,10 +26,6 @@ CAWebView::CAWebView()
 , m_pLoadingView(nullptr)
 , m_obLastPoint(DPointZero)
 , m_obLastContentSize(DSizeZero)
-, m_obStartLoading(nullptr)
-, m_obFinishLoading(nullptr)
-, m_obFailLoading(nullptr)
-, m_obJSCallback(nullptr)
 {
     
 }

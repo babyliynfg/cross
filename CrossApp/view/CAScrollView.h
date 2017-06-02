@@ -59,23 +59,23 @@ public:
 public:
     // event listeners. If these functions are set, the corresponding function of CAScrollViewDelegate will fail.
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDidMoved, DidMovedCallback);
+    CC_LISTENING_FUNCTION(void(), DidMovedCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obStopMoved, StopMovedCallback);
+    CC_LISTENING_FUNCTION(void(), StopMovedCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obWillBeginDragging, WillBeginDraggingCallback);
+    CC_LISTENING_FUNCTION(void(), WillBeginDraggingCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDragging, DraggingCallback);
+    CC_LISTENING_FUNCTION(void(), DraggingCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDidEndDragging, DidEndDraggingCallback);
+    CC_LISTENING_FUNCTION(void(), DidEndDraggingCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obDidZoom, DidZoomCallback);
+    CC_LISTENING_FUNCTION(void(), DidZoomCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(DPoint)>, m_obTouchUpWithoutMoved, TouchUpWithoutMovedCallback);
+    CC_LISTENING_FUNCTION(void(DPoint), TouchUpWithoutMovedCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obHeaderBeginRefreshing, HeaderBeginRefreshingCallback);
+    CC_LISTENING_FUNCTION(void(), HeaderBeginRefreshingCallback);
     
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void()>, m_obFooterBeginRefreshing, FooterBeginRefreshingCallback);
+    CC_LISTENING_FUNCTION(void(), FooterBeginRefreshingCallback);
     
 public:
 

@@ -34,9 +34,6 @@ class CAHttpResponse;
 class CC_DLL CAHttpRequest : public CAObject
 {
 public:
-    typedef std::function<void(CAHttpClient* client, CAHttpResponse* response)> Callback;
-    
-    
     /**
      * The CAHttpRequest type enum used in the CAHttpRequest::setRequestType.
      */
@@ -174,7 +171,7 @@ public:
      *
      * @param callback the Callback function.
      */
-    inline void setResponseCallback(const Callback& callback)
+    inline void setResponseCallback(const std::function<void(CAHttpClient* client, CAHttpResponse* response)>& callback)
     {
         _pCallback = callback;
     }
@@ -184,7 +181,7 @@ public:
      *
      * @return const Callback& callback function.
      */
-    inline const Callback& getCallback() const
+    inline const std::function<void(CAHttpClient* client, CAHttpResponse* response)>& getCallback() const
     {
         return _pCallback;
     }
@@ -224,7 +221,8 @@ protected:
     Type                        _requestType;    /// kCAHttpRequestGet, kCAHttpRequestPost or other enums
     std::string                 _url;            /// target url that this request is sent to
     std::vector<char>           _requestData;    /// used for POST
-    Callback                    _pCallback;      /// C++11 style callbacks
+    std::function<void(CAHttpClient* client, CAHttpResponse* response)>
+                                _pCallback;      /// C++11 style callbacks
     std::vector<std::string>    _headers;              /// custom http headers
     std::string					_fileNameToPost;
     ssize_t                     _threadID;
