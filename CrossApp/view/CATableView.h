@@ -90,6 +90,14 @@ public:
     
     CC_LISTENING_FUNCTION(unsigned int(), NumberOfSectionsCallback);
     
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForHeaderInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForHeaderInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForFooterInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForFooterInSectionCallback);
+    
     CC_LISTENING_FUNCTION(void(CATableViewCell* cell, unsigned int section, unsigned int row), WillDisplayCellAtIndexPathCallback);
     
     // event listeners. If these functions are set, the corresponding function of CATableViewDelegate will fail.

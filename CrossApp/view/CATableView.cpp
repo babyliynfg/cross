@@ -324,26 +324,52 @@ void CATableView::reloadViewSizeData()
 {
     this->clearData();
     
-    m_nSections = m_pTableViewDataSource->numberOfSections(this);
+    if (m_obNumberOfSectionsCallback)
+    {
+        m_nSections = m_obNumberOfSectionsCallback();
+    }
+    else if (m_pTableViewDataSource)
+    {
+        m_nSections = m_pTableViewDataSource->numberOfSections(this);
+    }
+    
     m_nRowsInSections.resize(m_nSections);
     for (unsigned int i=0; i<m_nSections; i++)
     {
-        unsigned int rowsInSection = m_pTableViewDataSource->numberOfRowsInSection(this, i);
-        m_nRowsInSections[i] = rowsInSection;
+        if (m_obNumberOfRowsInSectionCallback)
+        {
+            m_nRowsInSections[i] = m_obNumberOfRowsInSectionCallback(i);
+        }
+        else if (m_pTableViewDataSource)
+        {
+            m_nRowsInSections[i] = m_pTableViewDataSource->numberOfRowsInSection(this, i);
+        }
     }
     
     m_nSectionHeaderHeights.resize(m_nSections);
     for (unsigned int i=0; i<m_nSections; i++)
     {
-        unsigned int sectionHeaderHeight = m_pTableViewDataSource->tableViewHeightForHeaderInSection(this, i);
-        m_nSectionHeaderHeights[i] = sectionHeaderHeight;
+        if (m_obHeightForHeaderInSectionCallback)
+        {
+            m_nSectionHeaderHeights[i] = m_obHeightForHeaderInSectionCallback(i);
+        }
+        else if (m_pTableViewDataSource)
+        {
+            m_nSectionHeaderHeights[i] = m_pTableViewDataSource->tableViewHeightForHeaderInSection(this, i);
+        }
     }
     
     m_nSectionFooterHeights.resize(m_nSections);
     for (unsigned int i=0; i<m_nSections; i++)
     {
-        unsigned int sectionFooterHeight = m_pTableViewDataSource->tableViewHeightForFooterInSection(this, i);
-        m_nSectionFooterHeights[i] = sectionFooterHeight;
+        if (m_obHeightForFooterInSectionCallback)
+        {
+            m_nSectionFooterHeights[i] = m_obHeightForFooterInSectionCallback(i);
+        }
+        else if (m_pTableViewDataSource)
+        {
+            m_nSectionFooterHeights[i] = m_pTableViewDataSource->tableViewHeightForFooterInSection(this, i);
+        }
     }
     
     m_nRowHeightss.resize(m_nSections);
@@ -351,9 +377,16 @@ void CATableView::reloadViewSizeData()
     {
         std::vector<unsigned int> rowHeights(m_nRowsInSections.at(i));
         for (unsigned int j=0; j<m_nRowsInSections.at(i); j++)
-        {
-            unsigned int rowHeight = m_pTableViewDataSource->tableViewHeightForRowAtIndexPath(this, i, j);
-            rowHeights[j] = rowHeight;
+        {            
+            if (m_obHeightForRowAtIndexPathCallback)
+            {
+                rowHeights[j] = m_obHeightForRowAtIndexPathCallback(i, j);
+            }
+            else if (m_pTableViewDataSource)
+            {
+                rowHeights[j] = m_pTableViewDataSource->tableViewHeightForRowAtIndexPath(this, i, j);
+
+            }
         }
         m_nRowHeightss[i] = rowHeights;
     }
@@ -385,7 +418,6 @@ void CATableView::reloadViewSizeData()
 
 void CATableView::reloadData()
 {
-    CC_RETURN_IF(m_pTableViewDataSource == NULL);
     this->reloadViewSizeData();
     
     this->removeAllSubviews();
@@ -400,14 +432,32 @@ void CATableView::reloadData()
         y += m_nTableHeaderHeight;
     }
     
-    unsigned int sectionCount = m_pTableViewDataSource->numberOfSections(this);
+    unsigned int sectionCount = 0;
+    
+    if (m_obNumberOfSectionsCallback)
+    {
+        sectionCount = m_obNumberOfSectionsCallback();
+    }
+    else if (m_pTableViewDataSource)
+    {
+        sectionCount = m_pTableViewDataSource->numberOfSections(this);
+    }
     
     m_rTableCellRectss.resize(sectionCount);
     m_rLineRectss.resize(sectionCount);
     for (unsigned int i=0; i<sectionCount; i++)
     {
         DRect sectionHeaderRect = DRect(0, y, width, m_nSectionHeaderHeights.at(i));
-        CAView* sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
+        CAView* sectionHeaderView = nullptr;
+        
+        if (m_obSectionViewForHeaderInSectionCallback)
+        {
+            sectionHeaderView = m_obSectionViewForHeaderInSectionCallback(sectionHeaderRect.size, i);
+        }
+        else if (m_pTableViewDataSource)
+        {
+            sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
+        }
         
         if (sectionHeaderView)
         {
@@ -430,7 +480,15 @@ void CATableView::reloadData()
         
         DRect sectionFooterRect = DRect(0, y, width, m_nSectionFooterHeights.at(i));
         
-        CAView* sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
+        CAView* sectionFooterView = nullptr;
+        if (m_obSectionViewForFooterInSectionCallback)
+        {
+            sectionFooterView = m_obSectionViewForFooterInSectionCallback(sectionFooterRect.size, i);
+        }
+        else if (m_pTableViewDataSource)
+        {
+            sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
+        }
         
         if (sectionFooterView)
         {
@@ -480,7 +538,16 @@ void CATableView::loadTableCell()
             CC_CONTINUE_IF(m_mpUsedTableCells.count(indexPath) && m_mpUsedTableCells[indexPath]);
             DRect cellRect = m_rTableCellRectss[i][j];
             CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
-            CATableViewCell* cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
+            CATableViewCell* cell = nullptr;
+            if (m_obCellAtIndexPathCallBack)
+            {
+                cell = m_obCellAtIndexPathCallBack(m_rTableCellRectss[i][j].size, i, j);
+            }
+            else if (m_pTableViewDataSource)
+            {
+                cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
+            }
+            
             CC_CONTINUE_IF(cell == NULL);
             cell->m_pTarget = this;
             cell->m_nSection = i;
@@ -811,7 +878,12 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             {
                 this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
                 m_pTarget->m_pSelectedTableCells.insert(indexPath);
-                if (m_pTarget->getTableViewDelegate())
+                
+                if (m_pTarget->m_obDidSelectRowAtIndexPathCallback)
+                {
+                    m_pTarget->m_obDidSelectRowAtIndexPathCallback(indexPath.section, indexPath.row);
+                }
+                else if (m_pTarget->getTableViewDelegate())
                 {
                     m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
                 }
@@ -820,7 +892,11 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             {
                 this->performSelector(callfunc_selector(CATableViewCell::setControlStateNormal), 0.05f);
                 m_pTarget->m_pSelectedTableCells.erase(indexPath);
-                if (m_pTarget->getTableViewDelegate())
+                if (m_pTarget->m_obDidDeselectRowAtIndexPathCallback)
+                {
+                    m_pTarget->m_obDidDeselectRowAtIndexPathCallback(indexPath.section, indexPath.row);
+                }
+                else if (m_pTarget->getTableViewDelegate())
                 {
                     m_pTarget->getTableViewDelegate()->tableViewDidDeselectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
                 }
@@ -841,7 +917,11 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                         }
                     }
                     m_pTarget->m_pSelectedTableCells.clear();
-                    if (m_pTarget->getTableViewDelegate())
+                    if (m_pTarget->m_obDidDeselectRowAtIndexPathCallback)
+                    {
+                        m_pTarget->m_obDidDeselectRowAtIndexPathCallback(indexPath2.section, indexPath2.row);
+                    }
+                    else if (m_pTarget->getTableViewDelegate())
                     {
                         m_pTarget->getTableViewDelegate()->tableViewDidDeselectRowAtIndexPath(m_pTarget, indexPath2.section, indexPath2.row);
                     }
@@ -852,14 +932,22 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 {
                     m_pTarget->m_pSelectedTableCells.insert(indexPath);
                 }
-                if (m_pTarget->getTableViewDelegate())
+                if (m_pTarget->m_obDidSelectRowAtIndexPathCallback)
+                {
+                    m_pTarget->m_obDidSelectRowAtIndexPathCallback(indexPath.section, indexPath.row);
+                }
+                else if (m_pTarget->getTableViewDelegate())
                 {
                     m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
                 }
             }
             else
             {
-                if (m_pTarget->getTableViewDelegate())
+                if (m_pTarget->m_obDidSelectRowAtIndexPathCallback)
+                {
+                    m_pTarget->m_obDidSelectRowAtIndexPathCallback(indexPath.section, indexPath.row);
+                }
+                else if (m_pTarget->getTableViewDelegate())
                 {
                     m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
                 }

@@ -148,6 +148,7 @@ public: virtual void set##funName(varType var)   \
 protected: std::function<FUNCTION> m_ob##VARNAME{nullptr};\
 public: void set##VARNAME(const std::function<FUNCTION>& var){ m_ob##VARNAME = var; }
 
+
 #define CC_SAFE_DELETE(p)           do { if(p) { delete (p); (p) = 0; } } while(0)
 #define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)
 #define CC_SAFE_FREE(p)             do { if(p) { free(p); (p) = 0; } } while(0)

@@ -12846,6 +12846,26 @@ func
 },
 
 /**
+ * @method setHeightForHeaderInSectionCallback
+ * @param {function} arg0
+ */
+setHeightForHeaderInSectionCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method setSectionViewForFooterInSectionCallback
+ * @param {function} arg0
+ */
+setSectionViewForFooterInSectionCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method getSectionFooterHeightInSection
  * @param {unsigned int} arg0
  * @return {float}
@@ -12908,6 +12928,16 @@ isAlwaysBottomSectionFooter : function (
 },
 
 /**
+ * @method setHeightForFooterInSectionCallback
+ * @param {function} arg0
+ */
+setHeightForFooterInSectionCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setNumberOfRowsInSectionCallback
  * @param {function} arg0
  */
@@ -12948,13 +12978,13 @@ getSeparatorViewHeight : function (
 },
 
 /**
- * @method init
- * @return {bool}
+ * @method getTableViewDataSource
+ * @return {ca.CATableViewDataSource}
  */
-init : function (
+getTableViewDataSource : function (
 )
 {
-    return false;
+    return ca.CATableViewDataSource;
 },
 
 /**
@@ -12970,13 +13000,13 @@ int
 },
 
 /**
- * @method getTableViewDataSource
- * @return {ca.CATableViewDataSource}
+ * @method init
+ * @return {bool}
  */
-getTableViewDataSource : function (
+init : function (
 )
 {
-    return ca.CATableViewDataSource;
+    return false;
 },
 
 /**
@@ -13171,6 +13201,16 @@ caview
  */
 setSeparatorViewHeight : function (
 int 
+)
+{
+},
+
+/**
+ * @method setSectionViewForHeaderInSectionCallback
+ * @param {function} arg0
+ */
+setSectionViewForHeaderInSectionCallback : function (
+func 
 )
 {
 },

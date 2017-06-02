@@ -33988,6 +33988,105 @@ bool js_crossapp_CATableView_setNumberOfSectionsCallback(JSContext *cx, uint32_t
     JS_ReportError(cx, "js_crossapp_CATableView_setNumberOfSectionsCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CATableView_setHeightForHeaderInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setHeightForHeaderInSectionCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setHeightForHeaderInSectionCallback : Error processing arguments");
+        cobj->setHeightForHeaderInSectionCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_setHeightForHeaderInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CATableView_setSectionViewForFooterInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setSectionViewForFooterInSectionCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setSectionViewForFooterInSectionCallback : Error processing arguments");
+        cobj->setSectionViewForFooterInSectionCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_setSectionViewForFooterInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CATableView_getSectionFooterHeightInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -34148,6 +34247,51 @@ bool js_crossapp_CATableView_isAlwaysBottomSectionFooter(JSContext *cx, uint32_t
     JS_ReportError(cx, "js_crossapp_CATableView_isAlwaysBottomSectionFooter : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CATableView_setHeightForFooterInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setHeightForFooterInSectionCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setHeightForFooterInSectionCallback : Error processing arguments");
+        cobj->setHeightForFooterInSectionCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_setHeightForFooterInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CATableView_setNumberOfRowsInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -34260,23 +34404,30 @@ bool js_crossapp_CATableView_getSeparatorViewHeight(JSContext *cx, uint32_t argc
     JS_ReportError(cx, "js_crossapp_CATableView_getSeparatorViewHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CATableView_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_getTableViewDataSource(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_init : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_getTableViewDataSource : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->init();
+        CrossApp::CATableViewDataSource* ret = cobj->getTableViewDataSource();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CATableViewDataSource>(cx, (CrossApp::CATableViewDataSource*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CATableView_getTableViewDataSource : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CATableView_setSelectRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34302,30 +34453,23 @@ bool js_crossapp_CATableView_setSelectRowAtIndexPath(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_crossapp_CATableView_setSelectRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CATableView_getTableViewDataSource(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_getTableViewDataSource : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_init : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CATableViewDataSource* ret = cobj->getTableViewDataSource();
+        bool ret = cobj->init();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CATableViewDataSource>(cx, (CrossApp::CATableViewDataSource*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_getTableViewDataSource : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CATableView_init : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CATableView_getSectionHeightInSection(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34767,6 +34911,60 @@ bool js_crossapp_CATableView_setSeparatorViewHeight(JSContext *cx, uint32_t argc
     }
 
     JS_ReportError(cx, "js_crossapp_CATableView_setSeparatorViewHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback : Error processing arguments");
+        cobj->setSectionViewForHeaderInSectionCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_setDidDeselectRowAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
@@ -35220,19 +35418,22 @@ void js_register_crossapp_CATableView(JSContext *cx, JS::HandleObject global) {
         JS_FN("getTableFooterView", js_crossapp_CATableView_getTableFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsSelection", js_crossapp_CATableView_isAllowsSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNumberOfSectionsCallback", js_crossapp_CATableView_setNumberOfSectionsCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setHeightForHeaderInSectionCallback", js_crossapp_CATableView_setHeightForHeaderInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSectionViewForFooterInSectionCallback", js_crossapp_CATableView_setSectionViewForFooterInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSectionFooterHeightInSection", js_crossapp_CATableView_getSectionFooterHeightInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparatorColor", js_crossapp_CATableView_setSeparatorColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTableFooterHeight", js_crossapp_CATableView_setTableFooterHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTableHeaderHeight", js_crossapp_CATableView_setTableHeaderHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCellAtIndexPathCallBack", js_crossapp_CATableView_setCellAtIndexPathCallBack, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAlwaysBottomSectionFooter", js_crossapp_CATableView_isAlwaysBottomSectionFooter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setHeightForFooterInSectionCallback", js_crossapp_CATableView_setHeightForFooterInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNumberOfRowsInSectionCallback", js_crossapp_CATableView_setNumberOfRowsInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTableHeaderView", js_crossapp_CATableView_setTableHeaderView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfSections", js_crossapp_CATableView_getNumberOfSections, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSeparatorViewHeight", js_crossapp_CATableView_getSeparatorViewHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_crossapp_CATableView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSelectRowAtIndexPath", js_crossapp_CATableView_setSelectRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTableViewDataSource", js_crossapp_CATableView_getTableViewDataSource, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSelectRowAtIndexPath", js_crossapp_CATableView_setSelectRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_crossapp_CATableView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSectionHeightInSection", js_crossapp_CATableView_getSectionHeightInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsMultipleSelection", js_crossapp_CATableView_isAllowsMultipleSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSeparatorColor", js_crossapp_CATableView_getSeparatorColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -35252,6 +35453,7 @@ void js_register_crossapp_CATableView(JSContext *cx, JS::HandleObject global) {
         JS_FN("isAlwaysTopSectionHeader", js_crossapp_CATableView_isAlwaysTopSectionHeader, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTableFooterView", js_crossapp_CATableView_setTableFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparatorViewHeight", js_crossapp_CATableView_setSeparatorViewHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSectionViewForHeaderInSectionCallback", js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDidDeselectRowAtIndexPathCallback", js_crossapp_CATableView_setDidDeselectRowAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDidSelectRowAtIndexPathCallback", js_crossapp_CATableView_setDidSelectRowAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfRowsInSection", js_crossapp_CATableView_getNumberOfRowsInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
