@@ -25,8 +25,8 @@ void CAData::copy(const unsigned char* bytes, const ssize_t length)
     {
         m_iLength = length;
         m_pBytes = (unsigned char*)malloc(sizeof(unsigned char) * (length + 1));
-        memcpy(m_pBytes, bytes, length);
         m_pBytes[m_iLength] = '\0';
+        memcpy(m_pBytes, bytes, length);
     }
 }
 

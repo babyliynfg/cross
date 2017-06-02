@@ -225,13 +225,16 @@ std::string inline utf8_to_url_string( const char *in )
 namespace StringUtils {
 
 
-CC_DLL bool UTF8ToUTF32(const std::string& utf8, std::u32string& outUtf32);
-CC_DLL bool UTF32ToUTF8(const std::u32string& utf32, std::string& outUtf8);
 /**
- *  @brief Converts utf8 string to utf16 string
- *  @param utf8 The utf8 string to be converted
- *  @param outUtf16 The output utf16 string
- *  @return true if succeed, otherwise false
+ *  @brief Converts from UTF8 string to UTF16 string.
+ *
+ *  This function resizes \p outUtf16 to required size and
+ *  fill its contents with result UTF16 string if conversion success.
+ *  If conversion fails it guarantees not to change \p outUtf16.
+ *
+ *  @param inUtf8 The source UTF8 string to be converted from.
+ *  @param outUtf16 The output string to hold the result UTF16s.
+ *  @return True if succeed, otherwise false.
  *  @note Please check the return value before using \p outUtf16
  *  e.g.
  *  @code
@@ -242,24 +245,42 @@ CC_DLL bool UTF32ToUTF8(const std::u32string& utf32, std::string& outUtf8);
  *    }
  *  @endcode
  */
-CC_DLL bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16);
+CC_DLL bool UTF8ToUTF16(const std::string& inUtf8, std::u16string& outUtf16);
 
 /**
- *  @brief Converts utf16 string to utf8 string
- *  @param utf16 The utf16 string to be converted
- *  @param outUtf8 The output utf8 string
- *  @return true if succeed, otherwise false
- *  @note Please check the return value before using \p outUtf8
- *  e.g.
- *  @code
- *    std::string utf8;
- *    bool ret = StringUtils::UTF16ToUTF8(u"\u4f60\u597d", utf16);
- *    if (ret) {
- *        do_some_thing_with_utf8(utf8);
- *    }
- *  @endcode
+ *  @brief Same as \a UTF8ToUTF16 but converts form UTF8 to UTF32.
+ *
+ *  @see UTF8ToUTF16
  */
-CC_DLL bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8);
+CC_DLL bool UTF8ToUTF32(const std::string& inUtf8, std::u32string& outUtf32);
+
+/**
+ *  @brief Same as \a UTF8ToUTF16 but converts form UTF16 to UTF8.
+ *
+ *  @see UTF8ToUTF16
+ */
+CC_DLL bool UTF16ToUTF8(const std::u16string& inUtf16, std::string& outUtf8);
+
+/**
+ *  @brief Same as \a UTF8ToUTF16 but converts form UTF16 to UTF32.
+ *
+ *  @see UTF8ToUTF16
+ */
+CC_DLL bool UTF16ToUTF32(const std::u16string& inUtf16, std::u32string& outUtf32);
+
+/**
+ *  @brief Same as \a UTF8ToUTF16 but converts form UTF32 to UTF8.
+ *
+ *  @see UTF8ToUTF16
+ */
+CC_DLL bool UTF32ToUTF8(const std::u32string& inUtf32, std::string& outUtf8);
+
+/**
+ *  @brief Same as \a UTF8ToUTF16 but converts form UTF32 to UTF16.
+ *
+ *  @see UTF8ToUTF16
+ */
+CC_DLL bool UTF32ToUTF16(const std::u32string& inUtf32, std::u16string& outUtf16);
 
 /**
  *  @brief Trims the unicode spaces at the end of char16_t vector
@@ -314,97 +335,6 @@ CC_DLL unsigned int getIndexOfLastNotChar16(const std::vector<char16_t>& str, ch
 CC_DLL std::vector<char16_t> getChar16VectorFromUTF16String(const std::u16string& utf16);
 
 } // namespace StringUtils {
-
-/**
- * Returns the character count in UTF16 string
- * @param str pointer to the start of a UTF-16 encoded string. It must be an NULL terminal UTF8 string.
- * @deprecated Please use c++11 `std::u16string::length` instead, don't use `unsigned short*` directly
- */
-CC_DEPRECATED_ATTRIBUTE CC_DLL int cc_wcslen(const unsigned short* str);
-
-/** Trims the space characters at the end of UTF8 string 
- *  @deprecated Please use `StringUtils::trimUTF16Vector` instead
- */
-
-CC_DEPRECATED_ATTRIBUTE void cc_utf8_trim_ws(std::vector<unsigned short>* str);
-
-/**
- * Whether the character is a whitespace character.
- *
- * @param ch    the unicode character
- * @returns     whether the character is a white space character.
- * @deprecated Please use `StringUtils::isUnicodeSpace` instead
- *
- * @see http://en.wikipedia.org/wiki/Whitespace_character#Unicode
- * */
-CC_DEPRECATED_ATTRIBUTE bool isspace_unicode(unsigned short ch);
-
-/**
- * Whether the character is a Chinese/Japanese/Korean character.
- *
- * @param ch    the unicode character
- * @returns     whether the character is a Chinese character.
- * @deprecated Please use `StringUtils::isCJKUnicode` instead
- *
- * @see http://www.searchtb.com/2012/04/chinese_encode.html
- * @see http://tieba.baidu.com/p/748765987
- * */
-CC_DEPRECATED_ATTRIBUTE bool iscjk_unicode(unsigned short ch);
-
-/**
- * Returns the length of the string in characters.
- *
- * @param p pointer to the start of a UTF-8 encoded string. It must be an NULL terminal UTF8 string.
- * @param max Not used from 3.1, just keep it for backward compatibility
- * @deprecated Please use `StringUtils::getCharacterCountInUTF8String` instead
- * @returns the length of the string in characters
- **/
-CC_DEPRECATED_ATTRIBUTE long cc_utf8_strlen (const char * p, int max = -1);
-
-/**
- * Find the last character that is not equal to the character given.
- *
- * @param str   the string to be searched.
- * @param c     the character to be searched for.
- * @deprecated Please use `StringUtils::getIndexOfLastNotChar16` instead
- * @returns the index of the last character that is not \p c.
- * */
-CC_DEPRECATED_ATTRIBUTE unsigned int cc_utf8_find_last_not_char(const std::vector<unsigned short>& str, unsigned short c);
-
-/**
- *  @brief Gets `unsigned short` vector from a given utf16 string
- *  @deprecated Please use `StringUtils::getChar16VectorFromUTF16String` instead
- */
-CC_DEPRECATED_ATTRIBUTE std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* str);
-
-/**
- * Creates an utf8 string from a c string. The result will be null terminated.
- *
- * @param str_old pointer to the start of a C string. It must be an NULL terminal UTF8 string.
- * @param length  not used from 3.1, keep it just for backward compatibility
- * @param rUtf16Size The character count in the return UTF16 string.
- * @deprecated Please use `StringUtils::UTF8ToUTF16` instead
- * @returns the newly created utf16 string, it must be released with `delete[]`,
- *          If an error occurs, %NULL will be returned.
- * */
-CC_DEPRECATED_ATTRIBUTE CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = NULL);
-
-/**
- * Converts a string from UTF-16 to UTF-8. The result will be null terminated.
- *
- * @param utf16 an UTF-16 encoded string, It must be an NULL terminal UTF16 string.
- * @param len not used from 3.1, keep it just for backward compatibility
- * @param items_read     not used from 3.1, keep it just for backward compatibility
- * @param items_written  not used from 3.1, keep it just for backward compatibility
- * @deprecated Please use `StringUtils::UTF16ToUTF8` instead
- * @returns a pointer to a newly allocated UTF-8 string. This value must be
- *          released with `delete[]`. If an error occurs, %NULL will be returned.
- **/
-CC_DEPRECATED_ATTRIBUTE CC_DLL char * cc_utf16_to_utf8 (const unsigned short  *str,
-                  int             len = -1,
-				  long            *items_read = NULL,
-                  long            *items_written = NULL);
-
 
 NS_CC_END
 

@@ -21,7 +21,7 @@ public:
     struct Data
     {
         std::string firstName;
-        std::string lastNam;
+        std::string lastName;
         std::string middleName;
         std::string prefix;
         std::string suffix;

@@ -1338,25 +1338,6 @@ void js_register_crossapp_CAScheduler(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_CrossApp_CAData_class;
 JSObject *jsb_CrossApp_CAData_prototype;
 
-bool js_crossapp_CAData_toU16string(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAData* cobj = (CrossApp::CAData *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAData_toU16string : Invalid Native Object");
-    if (argc == 0) {
-        std::u16string ret = cobj->toU16string();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_u16String_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAData_toU16string : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAData_getLength(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -1391,27 +1372,6 @@ bool js_crossapp_CAData_clear(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAData_clear : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAData_copyU16string(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAData* cobj = (CrossApp::CAData *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAData_copyU16string : Invalid Native Object");
-    if (argc == 1) {
-        std::u16string arg0;
-        ok &= jsval_to_std_u16string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAData_copyU16string : Error processing arguments");
-        cobj->copyU16string(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAData_copyU16string : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAData_isNull(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1620,10 +1580,8 @@ void js_register_crossapp_CAData(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("toU16string", js_crossapp_CAData_toU16string, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLength", js_crossapp_CAData_getLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("clear", js_crossapp_CAData_clear, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("copyU16string", js_crossapp_CAData_copyU16string, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isNull", js_crossapp_CAData_isNull, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("toString", js_crossapp_CAData_toString, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("fastSet", js_crossapp_CAData_fastSet, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),

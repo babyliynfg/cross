@@ -608,11 +608,8 @@ void CAHttpClient::processResponse(CAHttpResponse* response, char* responseMessa
     
     ssize_t c_responseDataLength = responseData.size();
     unsigned char* c_responseData = (unsigned char*)malloc(c_responseDataLength + 1);
-    for (ssize_t i=0; i<c_responseDataLength; i++)
-    {
-        c_responseData[i] = responseData.at(i);
-    }
     c_responseData[c_responseDataLength] = '\0';
+    memcpy((void*)c_responseData, (const void*)responseData.data(), c_responseDataLength);
     
     CAData* ca_responseData = new CAData();
     ca_responseData->fastSet(c_responseData, c_responseDataLength);
@@ -621,11 +618,8 @@ void CAHttpClient::processResponse(CAHttpResponse* response, char* responseMessa
     
     ssize_t c_responseHeaderLength = responseHeader.size();
     unsigned char* c_responseHeader = (unsigned char*)malloc(c_responseHeaderLength + 1);
-    for (ssize_t i=0; i<c_responseHeaderLength; i++)
-    {
-        c_responseHeader[i] = responseHeader.at(i);
-    }
     c_responseHeader[c_responseHeaderLength] = '\0';
+    memcpy((void*)c_responseHeader, (const void*)responseHeader.data(), c_responseHeaderLength);
     
     CAData* ca_responseHeader = new CAData();
     ca_responseHeader->fastSet(c_responseHeader, c_responseHeaderLength);
