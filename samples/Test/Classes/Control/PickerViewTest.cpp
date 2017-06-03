@@ -79,11 +79,16 @@ void PickerViewTest::viewDidLoad()
 {
     if (PickerViewNum == 0)
     {
+        CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
+        view1->setColor(CAColor4B::WHITE);
+        this->getView()->addSubview(view1);
+        
         p_pickerView = CAPickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)));
         p_pickerView->setPickerViewDelegate(this);
         p_pickerView->setPickerViewDataSource(this);
         p_pickerView->setFontSizeNormal(40);
         p_pickerView->setFontSizeSelected(40);
+        view1->addSubview(p_pickerView);
         p_pickerView->reloadAllComponents();
         
         city_value = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(100, 40)));
@@ -92,12 +97,7 @@ void PickerViewTest::viewDidLoad()
         city_value->setFontSize(28);
         city_value->setTextAlignment(CATextAlignment::Center);
         city_value->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-    
-        CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
-        view1->addSubview(p_pickerView);
         view1->addSubview(city_value);
-        view1->setColor(CAColor4B::WHITE);
-        this->getView()->addSubview(view1);
     }
     
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
@@ -179,7 +179,7 @@ unsigned int PickerViewTest::numberOfRowsInComponent(CAPickerView* pickerView, u
 
 float PickerViewTest::widthForComponent(CAPickerView* pickerView, unsigned int component)
 {
-    return p_pickerView->getFrame().size.width/numberOfComponentsInPickerView(pickerView);
+    return this->getView()->getBounds().size.width * 0.8f;
 }
 
 float PickerViewTest::rowHeightForComponent(CAPickerView* pickerView, unsigned int component)

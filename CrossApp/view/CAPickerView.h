@@ -41,8 +41,27 @@ public:
     virtual CAView* viewForSelect(CAPickerView* pickerView, unsigned int component, const DSize& size) {return NULL;}
 };
 
-class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate, public CAScrollViewDelegate
+class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public CATableViewDelegate
 {
+public:
+    // event listeners. If these functions are set, the corresponding function of CAPickerViewDataSource will fail.
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfComponentsCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), NumberOfRowsInComponentCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), WidthForComponentCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), HeightForComponentCallback);
+    
+    CC_LISTENING_FUNCTION(const std::string&(unsigned int row, unsigned int component), TitleForRowCallback);
+    
+    CC_LISTENING_FUNCTION(CAView*(unsigned int row, unsigned int component), ViewForRowCallback);
+    
+    CC_LISTENING_FUNCTION(CAView*(unsigned int component, DSize size), ViewForSelectedCallback);
+    
+    // event listeners. If these functions are set, the corresponding function of CAPickerViewDelegate will fail.
+    CC_LISTENING_FUNCTION(void(unsigned int row, unsigned int component), DidSelectRowCallback);
+    
 public:
     
     CAPickerView();
@@ -61,16 +80,7 @@ public:
 
     virtual void visitEve();
     
-    // info that was fetched and cached from the data source and delegate.
-    // -1 if does not implement CAPickerViewDataSource
-    virtual int numberOfComponents();
-    virtual int numberOfRowsInComponent(unsigned int component);
-    virtual DSize rowSizeForComponent(unsigned int component);
-    
-    // returns the view provided by the delegate via viewForRow
-    // or NULL if the row/component is not visible or the delegate does not implement viewForRow
-    virtual CAView* viewForRow(unsigned int row, unsigned int component);
-    
+
     // Reloading whole view or single component
     virtual void reloadAllComponents();
     virtual void reloadComponent(unsigned int row,unsigned int component, bool bReload = true);
@@ -101,7 +111,6 @@ protected:
     virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
     virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
     virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
-    virtual void scrollViewDidEndDragging(CAScrollView* view);
     
     virtual void setContentSize(const DSize& size);
 private:

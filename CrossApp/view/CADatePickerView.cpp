@@ -93,10 +93,10 @@ bool CADatePickerView::init()
 void CADatePickerView::onEnter()
 {
     CAControl::onEnter();
-    if (!isSetDate) {
+    if (!isSetDate)
+    {
         setMode(m_eMode);
     }
-    
 }
 
 void CADatePickerView::onExit()
@@ -435,11 +435,12 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
 void CADatePickerView::setMode(CADatePickerView::Mode mode)
 {
     m_eMode = mode;
-
-    if (m_pPickerView) {
+    
+    if (m_pPickerView)
+    {
         m_pPickerView->setPickerViewDelegate(this);
         m_pPickerView->setPickerViewDataSource(this);
-        m_pPickerView->reloadAllComponents();
+        
         switch (m_eMode)
         {
             case CADatePickerView::Mode::Date:
@@ -459,6 +460,7 @@ void CADatePickerView::setMode(CADatePickerView::Mode mode)
             default:
                 break;
         }
+        m_pPickerView->reloadAllComponents();
     }
 }
 

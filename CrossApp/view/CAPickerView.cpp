@@ -91,10 +91,11 @@ bool CAPickerView::init()
 void CAPickerView::onEnterTransitionDidFinish()
 {
 	CAView::onEnterTransitionDidFinish();
-    if (!m_obContentSize.equals(DSizeZero))
+    
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt)
     {
         this->reloadAllComponents();
-    }
+    }, "first_reload_data", this, 0);
 }
 
 void CAPickerView::onExitTransitionDidStart()
@@ -109,70 +110,46 @@ void CAPickerView::setContentSize(const DSize& size)
     if (m_bRunning)
     {
         std::vector<int> selected = m_selected;
-        this->reloadAllComponents();
         
         for (size_t i=0; i<selected.size(); i++)
         {
             if (CATableView* tableView = m_tableViews.at(i))
             {
-                int maxRow = m_dataSource->numberOfRowsInComponent(this, (unsigned int)i);
-                float height = m_dataSource->rowHeightForComponent(this, (unsigned int)i);
+                int maxRow = 0;
+                if (m_obNumberOfRowsInComponentCallback)
+                {
+                    maxRow = m_obNumberOfRowsInComponentCallback((unsigned int)i);
+                }
+                else if (m_dataSource)
+                {
+                    maxRow = m_dataSource->numberOfRowsInComponent(this, (unsigned int)i);
+                }
+                unsigned int rowHeight = 0;
+                if (m_obHeightForComponentCallback)
+                {
+                    rowHeight = m_obHeightForComponentCallback((unsigned int)i);
+                }
+                else if (m_dataSource)
+                {
+                    rowHeight = m_dataSource->rowHeightForComponent(this, (unsigned int)i);
+                }
                 DPoint offset = DPointZero;
                 int row = selected.at(i);
                 if (maxRow <= m_displayRow[i])
                 {
                     m_selected[i] = row ;
-                    offset.y = row * height;
+                    offset.y = row * rowHeight;
                     tableView->setContentOffset(offset, false);
                 }
                 else
                 {
                     m_selected[i] = row;
-                    offset.y = m_selected[i] * height + height/2 - tableView->getBounds().size.height/2;
+                    offset.y = m_selected[i] * rowHeight + rowHeight/2 - tableView->getBounds().size.height/2;
                     tableView->setContentOffset(offset, false);
                 }
             }
         }
     }
-}
-
-int CAPickerView::numberOfComponents()
-{
-    if (m_dataSource)
-    {
-        m_dataSource->numberOfComponentsInPickerView(this);
-    }
-    return -1;
-}
-
-int CAPickerView::numberOfRowsInComponent(unsigned int component)
-{
-    if (m_dataSource)
-    {
-        return m_dataSource->numberOfRowsInComponent(this, component);
-    }
-    return -1;
-}
-
-DSize CAPickerView::rowSizeForComponent(unsigned int component)
-{
-    if (m_dataSource)
-    {
-        float width = m_dataSource->widthForComponent(this, component);
-        float height = m_dataSource->rowHeightForComponent(this, component);
-        return DSize(width, height);
-    }
-    return DSize(0, 0);
-}
-
-CAView* CAPickerView::viewForRow(unsigned int row, unsigned int component)
-{
-    if (m_dataSource)
-    {
-        return m_dataSource->viewForRow(this, row, component);
-    }
-    
-    return NULL;
 }
 
 float CAPickerView::calcTotalWidth(unsigned int component)
@@ -180,78 +157,130 @@ float CAPickerView::calcTotalWidth(unsigned int component)
     float total = 0;
     for (int i=0; i<component; i++)
     {
-        total += m_dataSource->widthForComponent(this, i);
+        unsigned int width = 0;
+        if (m_obWidthForComponentCallback)
+        {
+            width = m_obWidthForComponentCallback(i);
+        }
+        else if (m_dataSource)
+        {
+            width = m_dataSource->widthForComponent(this, i);
+        }
+        
+        total += width;
     }
     return total;
 }
 
 void CAPickerView::reloadAllComponents()
 {
-    if (m_delegate && m_dataSource)
+    CC_RETURN_IF(!this->isRunning());
+    
+    m_tableViews.clear();
+    m_selected.clear();
+    m_componentsIndex.clear();
+    m_displayRow.clear();
+    
+    // clear all tableviews
+    this->removeAllSubviews();
+    
+    // reload data
+    unsigned int component = 1;
+    if (m_obNumberOfComponentsCallback)
     {
-        
-        // clear old data       
-        
-		m_tableViews.clear();
-        m_selected.clear();
-        m_componentsIndex.clear();
-        m_displayRow.clear();
-        
-        // clear all tableviews
-        removeAllSubviews();
-        
-        // reload data
-        int component = m_dataSource->numberOfComponentsInPickerView(this);
-        float total_width = calcTotalWidth(component);
-        m_componentsIndex.resize(component);
-        m_componentOffsetX.resize(component);
-        m_displayRow.resize(component);
-        float start_x = getFrame().size.width/2 - total_width/2;
-        for (int i=0; i<component; i++)
+        component = m_obNumberOfComponentsCallback();
+    }
+    else if (m_dataSource)
+    {
+        component = m_dataSource->numberOfComponentsInPickerView(this);
+    }
+    
+    float total_width = calcTotalWidth(component);
+    m_componentsIndex.resize(component);
+    m_componentOffsetX.resize(component);
+    m_displayRow.resize(component);
+    float start_x = getFrame().size.width/2 - total_width/2;
+    for (int i=0; i<component; i++)
+    {
+        m_selected.push_back(0);
+        m_componentsIndex[i] = std::vector<int>();
+        m_componentOffsetX[i] = start_x;
+    
+        unsigned int rowHeight = 0;
+        if (m_obHeightForComponentCallback)
         {
-            m_selected.push_back(0);
-            m_componentsIndex[i] = std::vector<int>();
-            m_componentOffsetX[i] = start_x;
-            m_displayRow[i] = getFrame().size.height/m_dataSource->rowHeightForComponent(this, i);
-            if (m_displayRow[i] % 2 == 0)
-            {
-                m_displayRow[i] += 1;
-            }
-
-            // create tableview
-            float tableWidth = m_dataSource->widthForComponent(this, i);
-            float tableHeight = m_dataSource->rowHeightForComponent(this, i) * m_displayRow[i];
-            float start_y = getFrame().size.height/2 - tableHeight/2;
-            CATableView* tableView = CATableView::createWithFrame(DRect(start_x, start_y, tableWidth, tableHeight));
-            tableView->setTableViewDataSource(this);
-            tableView->setScrollViewDelegate(this);
-            tableView->setSeparatorViewHeight(0);
-            tableView->setSeparatorColor(CAColor4B::CLEAR);
-            tableView->setShowsScrollIndicators(false);
-			m_tableViews.pushBack(tableView);
-            
-			addSubview(tableView);
-            
-            // create highlight
-            DSize selectSize = DSize(tableWidth, m_dataSource->rowHeightForComponent(this, i));
-            CAView* select = m_dataSource->viewForSelect(this, i, selectSize);
-            if (!select)
-            {
-                DRect sepRect = DRect(start_x, getFrame().size.height/2 - m_dataSource->rowHeightForComponent(this, i)/2, tableWidth, s_px_to_dip(1));
-                addSubview(CAView::createWithFrame(sepRect, m_separateColor));
-                sepRect.origin.y += m_dataSource->rowHeightForComponent(this, i);
-                addSubview(CAView::createWithFrame(sepRect, m_separateColor));
-            }
-            else
-            {
-                select->setCenter(DRect(start_x, getFrame().size.height/2, selectSize.width, selectSize.height));
-                addSubview(select);
-            }
-
-            reloadComponent(1,i, true);
-            
-            start_x += m_dataSource->widthForComponent(this, i);
+            rowHeight = m_obHeightForComponentCallback(i);
         }
+        else if (m_dataSource)
+        {
+            rowHeight = m_dataSource->rowHeightForComponent(this, i);
+        }
+        
+        m_displayRow[i] = m_obContentSize.height / rowHeight;
+        unsigned int tableHeight = MAX(rowHeight, rowHeight * m_displayRow[i]) ;
+        unsigned int tableWidth = 0;
+        if (m_obWidthForComponentCallback)
+        {
+            tableWidth = m_obWidthForComponentCallback(i);
+        }
+        else if (m_dataSource)
+        {
+            tableWidth = m_dataSource->widthForComponent(this, i);
+        }
+        
+        
+        
+        if (m_displayRow[i] % 2 == 0)
+        {
+            m_displayRow[i] += 1;
+        }
+        
+        // create tableview
+        
+        float start_y = m_obContentSize.height/2 - tableHeight/2;
+        
+        CATableView* tableView = CATableView::createWithFrame(DRect(start_x, start_y, tableWidth, tableHeight));
+        tableView->setTableViewDataSource(this);
+        tableView->setSeparatorViewHeight(0);
+        tableView->setSeparatorColor(CAColor4B::CLEAR);
+        tableView->setShowsScrollIndicators(false);
+        this->addSubview(tableView);
+        m_tableViews.pushBack(tableView);
+        
+        // create highlight
+        DSize selectSize = DSize(tableWidth, rowHeight);
+        
+        CAView* selectedView = nullptr;
+        if (m_obViewForSelectedCallback)
+        {
+            selectedView = m_obViewForSelectedCallback(i, selectSize);
+        }
+        else if (m_dataSource)
+        {
+            selectedView = m_dataSource->viewForSelect(this, i, selectSize);
+        }
+        
+        if (selectedView == nullptr)
+        {
+            DRect sepRect = DRect(start_x, m_obContentSize.height/2 - rowHeight/2, tableWidth, s_px_to_dip(1));
+            this->addSubview(CAView::createWithFrame(sepRect, m_separateColor));
+            sepRect.origin.y += rowHeight;
+            this->addSubview(CAView::createWithFrame(sepRect, m_separateColor));
+        }
+        else
+        {
+            selectedView->setCenter(DRect(start_x, m_obContentSize.height/2, selectSize.width, selectSize.height));
+            this->addSubview(selectedView);
+        }
+        
+        this->reloadComponent(1,i, true);
+        
+        start_x += tableWidth;
+    }
+
+    for (auto& tableView : m_tableViews)
+    {
+        tableView->reloadData();
     }
 }
 
@@ -259,7 +288,16 @@ void CAPickerView::reloadAllComponents()
 void CAPickerView::reloadComponent(unsigned int _row,unsigned int component, bool bReloadData)
 {
     // reload component
-    int row = m_dataSource->numberOfRowsInComponent(this, component);
+    unsigned int row = 0;
+    if (m_obNumberOfRowsInComponentCallback)
+    {
+        row = m_obNumberOfRowsInComponentCallback(component);
+    }
+    else if (m_dataSource)
+    {
+        row = m_dataSource->numberOfRowsInComponent(this, component);
+    }
+    
     int head = m_displayRow[component]/2;
     int foot = m_displayRow[component]/2;
     if (row <= m_displayRow[component])
@@ -296,7 +334,7 @@ void CAPickerView::reloadComponent(unsigned int _row,unsigned int component, boo
     }
         
     // reset selected index
-    selectRow(_row, component, false);
+    this->selectRow(_row, component, false);
     
     if (bReloadData)
     {
@@ -316,11 +354,29 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, DSize size)
         return NULL;
     }
     
-    CAView* view = m_dataSource->viewForRow(this, index, component);
-    if (!view)
-    { // create view
-        const char* title = m_dataSource->titleForRow(this, index, component);
-        if (title && strlen(title) > 0)
+    CAView* view = nullptr;
+    if (m_obViewForRowCallback)
+    {
+        view = m_obViewForRowCallback(index, component);
+    }
+    else if (m_dataSource)
+    {
+        view = m_dataSource->viewForRow(this, index, component);
+    }
+    
+    if (view == nullptr)
+    {
+        std::string title;
+        if (m_obTitleForRowCallback)
+        {
+            title = m_obTitleForRowCallback(row, component);
+        }
+        else if (m_dataSource)
+        {
+            title = m_dataSource->titleForRow(this, index, component);
+        }
+        
+        if (!title.empty())
         {
             DRect rect = DRect(0, 0, size.width, size.height);
             CALabel* label = CALabel::createWithFrame(rect);
@@ -339,72 +395,75 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, DSize size)
 
 CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
 {
-    if (m_dataSource && !m_tableViews.empty())
+    CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
+    if (cell == NULL)
     {
-        
-        CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
-        if (cell == NULL)
-        {
-            cell = CATableViewCell::create("CrossApp");
-            cell->setBackgroundView(nullptr);
-        }
-        else
-        {
-            cell->removeSubviewByTag(100);            
-        }
-        
-		size_t component = m_tableViews.getIndex(table);
-        
-        CAView* view = viewForRowInComponent((unsigned int)component, row, cellSize);
-        if (view)
-        {
-            view->setTag(100);
-            cell->addSubview(view);
-        }
-        
-        return cell;
+        cell = CATableViewCell::create("CrossApp");
+        cell->setBackgroundView(nullptr);
+    }
+    else
+    {
+        cell->removeSubviewByTag(100);
     }
     
-    return NULL;
+    size_t component = m_tableViews.getIndex(table);
+    
+    CAView* view = viewForRowInComponent((unsigned int)component, row, cellSize);
+    if (view)
+    {
+        view->setTag(100);
+        cell->addSubview(view);
+    }
+    
+    return cell;
 }
 
 unsigned int CAPickerView::numberOfRowsInSection(CATableView *table, unsigned int section)
 {
-    if (m_dataSource && !m_tableViews.empty())
-    {
-		size_t component = m_tableViews.getIndex(table);
-        return (unsigned int)m_componentsIndex[component].size();
-    }
-    return 0;
+    size_t component = m_tableViews.getIndex(table);
+    return (unsigned int)m_componentsIndex[component].size();
 }
 
 unsigned int CAPickerView::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
 {
-    if (m_dataSource && !m_tableViews.empty())
+    unsigned int component = (unsigned int)m_tableViews.getIndex(table);
+    unsigned int rowHeight = 0;
+    if (m_obHeightForComponentCallback)
     {
-        size_t component = m_tableViews.getIndex(table);
-        return m_dataSource->rowHeightForComponent(this, (unsigned int)component);
+        rowHeight = m_obHeightForComponentCallback(component);
     }
-    return 0;
-}
-
-void CAPickerView::scrollViewDidEndDragging(CAScrollView* view)
-{
+    else if (m_dataSource)
+    {
+        rowHeight = m_dataSource->rowHeightForComponent(this, component);
+    }
     
+    return rowHeight;
 }
 
 void CAPickerView::selectRow(unsigned int row, unsigned int component, bool animated)
 {
-    if ( m_tableViews.empty() || !m_dataSource)
-    {
-        return;
-    }
-    
     CATableView* tableView = m_tableViews.at(component);
     if (tableView)
     {
-        int maxRow = m_dataSource->numberOfRowsInComponent(this, component);
-        float height = m_dataSource->rowHeightForComponent(this, component);
+        unsigned int maxRow = 0;
+        if (m_obNumberOfRowsInComponentCallback)
+        {
+            maxRow = m_obNumberOfRowsInComponentCallback(component);
+        }
+        else if (m_dataSource)
+        {
+            maxRow = m_dataSource->numberOfRowsInComponent(this, component);
+        }
+        unsigned int rowHeight = 0;
+        if (m_obHeightForComponentCallback)
+        {
+            rowHeight = m_obHeightForComponentCallback(component);
+        }
+        else if (m_dataSource)
+        {
+            rowHeight = m_dataSource->rowHeightForComponent(this, component);
+        }
+        
         if (row < maxRow)
         {
             //DPoint offset = DPointZero;
@@ -412,13 +471,13 @@ void CAPickerView::selectRow(unsigned int row, unsigned int component, bool anim
             if (maxRow <= m_displayRow[component])
             {
                 m_selected[component] = row + m_displayRow[component]/2;
-                offset.y = row * height;
+                offset.y = row * rowHeight;
                 tableView->setContentOffset(offset, false);
             }
             else
             {
                 m_selected[component] = maxRow + row;
-                offset.y = m_selected[component] * height + height/2 - tableView->getBounds().size.height/2;
+                offset.y = m_selected[component] * rowHeight + rowHeight/2 - tableView->getBounds().size.height/2;
                 tableView->setContentOffset(offset, false);
             }
         }
@@ -430,94 +489,114 @@ int CAPickerView::selectedRowInComponent(unsigned int component)
     return m_selected[component];
 }
 
-void CAPickerView::setBackgroundColor(const CAColor4B& color) {
+void CAPickerView::setBackgroundColor(const CAColor4B& color)
+{
 	this->setColor(color);
 }
 
 void CAPickerView::visitEve()
 {
-    if (m_dataSource)
+    for (int i = 0; i < m_tableViews.size(); i++)
     {
-        for (int i = 0; i < m_tableViews.size(); i++)
+        // cycle data
+        CATableView* tableView = (CATableView*)m_tableViews.at(i);
+        DPoint offset = tableView->getContentOffset();
+        unsigned int component = (unsigned int)m_tableViews.getIndex(tableView);
+        
+        unsigned int row = 0;
+        if (m_obNumberOfRowsInComponentCallback)
         {
-            // cycle data
-            CATableView* tableView = (CATableView*)m_tableViews.at(i);
-            DPoint offset = tableView->getContentOffset();
-            unsigned int component = (unsigned int)m_tableViews.getIndex(tableView);
-            int row = m_dataSource->numberOfRowsInComponent(this, component);
-            int row_height = m_dataSource->rowHeightForComponent(this, component);
-            
-            if (row > m_displayRow[component])
+            row = m_obNumberOfRowsInComponentCallback(component);
+        }
+        else if (m_dataSource)
+        {
+            row = m_dataSource->numberOfRowsInComponent(this, component);
+        }
+        
+        unsigned int rowHeight = 0;
+        if (m_obHeightForComponentCallback)
+        {
+            rowHeight = m_obHeightForComponentCallback(i);
+        }
+        else if (m_dataSource)
+        {
+            rowHeight = m_dataSource->rowHeightForComponent(this, i);
+        }
+        
+        if (row > m_displayRow[component])
+        {
+            if (offset.y < 0)
             {
-                if (offset.y < 0)
-                {
-                    offset.y += row * 2 * row_height;
-                    tableView->setContentOffset(offset, false);
-                }
-                else if (offset.y > row_height * m_componentsIndex[component].size() - tableView->getFrame().size.height)
-                {
-                    offset.y -= row * 2 * row_height;
-                    tableView->setContentOffset(offset, false);
-                }
+                offset.y += row * 2 * rowHeight;
+                tableView->setContentOffset(offset, false);
             }
-            
-            
-            // set opacity
-            int offset_y = abs((int)offset.y);
-            int remainder = offset_y % row_height;
-            int index = offset_y / row_height;
-            
-            if (remainder >= row_height * 0.5)
+            else if (offset.y > rowHeight * m_componentsIndex[component].size() - tableView->getFrame().size.height)
+            {
+                offset.y -= row * 2 * rowHeight;
+                tableView->setContentOffset(offset, false);
+            }
+        }
+        
+        
+        // set opacity
+        int offset_y = abs((int)offset.y);
+        int remainder = offset_y % rowHeight;
+        int index = offset_y / rowHeight;
+        
+        if (remainder >= rowHeight * 0.5)
+        {
+            index++;
+        }
+        
+        for (int i=index-1; i<index + m_displayRow[component] + 2; i++)
+        {
+            CATableViewCell* cell = tableView->cellForRowAtIndexPath(0, i);
+            if (cell)
+            {
+                float y = cell->getFrameOrigin().y - offset_y + cell->getFrame().size.height/2;
+                float mid = tableView->getFrame().size.height/2;
+                float length = fabs(mid - y);
+                float op = (fabs(length - mid))/mid;
+                op = powf(op, 2);
+                op = MAX(op, 0.1f);
+                cell->setAlpha(op);
+            }
+        }
+        
+        // fixed position in the middle
+        if (!tableView->isDecelerating() && !tableView->isTracking())
+        {
+            if (remainder > rowHeight/2)
             {
                 index++;
+                offset.y = index * rowHeight;
+                tableView->setContentOffset(offset, true);
             }
-            
-            for (int i=index-1; i<index + m_displayRow[component] + 2; i++)
+            else if (remainder > 0)
             {
-                CATableViewCell* cell = tableView->cellForRowAtIndexPath(0, i);
-                if (cell)
-                {
-                    float y = cell->getFrameOrigin().y - offset_y + cell->getFrame().size.height/2;
-                    float mid = tableView->getFrame().size.height/2;
-                    float length = fabs(mid - y);
-                    float op = (fabs(length - mid))/mid;
-                    op = powf(op, 2);
-                    op = MAX(op, 0.1f);
-                    cell->setAlpha(op);
-                }
+                offset.y = index * rowHeight;
+                tableView->setContentOffset(offset, true);
             }
-            
-            // fixed position in the middle
-            if (!tableView->isDecelerating() && !tableView->isTracking())
+            else
             {
-                if (remainder > row_height/2)
+                // set selected when stop scrolling.
+                
+                int selected = index + m_displayRow[component]/2;
+                
+                if (m_selected[component] != selected)
                 {
-                    index++;
-                    offset.y = index * row_height;
-                    tableView->setContentOffset(offset, true);
-                }
-                else if (remainder > 0)
-                {
-                    offset.y = index * row_height;
-                    tableView->setContentOffset(offset, true);
-                }
-                else
-                {
-                    // set selected when stop scrolling.
-                    
-                    int selected = index + m_displayRow[component]/2;
-                    
-                    if (m_selected[component] != selected)
+                    m_selected[component] = selected;
+                    if (m_obDidSelectRowCallback)
                     {
-                        m_selected[component] = selected;
-                        if (m_delegate)
-                        {
-                            m_delegate->didSelectRow(this, m_componentsIndex[component][m_selected[component]], component);
-                        }
+                        m_obDidSelectRowCallback(m_componentsIndex[component][m_selected[component]], component);
+                    }
+                    else if (m_delegate)
+                    {
+                        m_delegate->didSelectRow(this, m_componentsIndex[component][m_selected[component]], component);
                     }
                 }
-                
             }
+            
         }
     }
     

@@ -63,14 +63,13 @@ void CATableView::onEnterTransitionDidFinish()
 {
     CAScrollView::onEnterTransitionDidFinish();
     
-    CAViewAnimation::beginAnimations("");
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector([&]()
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt)
     {
-        CC_RETURN_IF(!m_mpUsedTableCells.empty());
-        this->reloadData();
-    });
-    CAViewAnimation::commitAnimations();
+        if (m_mpUsedTableCells.empty())
+        {
+            this->reloadData();
+        }
+    }, "first_reload_data", this, 0);
 }
 
 void CATableView::onExitTransitionDidStart()
@@ -412,7 +411,7 @@ void CATableView::reloadViewSizeData()
     viewHeight += m_nTableHeaderHeight;
     viewHeight += m_nTableFooterHeight;
     
-    DSize size = this->getBounds().size;
+    DSize size = m_obContentSize;
     size.height = viewHeight;
     this->setViewSize(size);
 }
