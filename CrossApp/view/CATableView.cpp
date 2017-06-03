@@ -324,6 +324,7 @@ void CATableView::reloadViewSizeData()
 {
     this->clearData();
     
+    m_nSections = 1;
     if (m_obNumberOfSectionsCallback)
     {
         m_nSections = m_obNumberOfSectionsCallback();
@@ -422,7 +423,7 @@ void CATableView::reloadData()
     
     this->removeAllSubviews();
     
-    float width = this->getBounds().size.width;
+    float width = m_obContentSize.width;
     unsigned int y = 0;
     
     if (m_pTableHeaderView)
@@ -432,16 +433,7 @@ void CATableView::reloadData()
         y += m_nTableHeaderHeight;
     }
     
-    unsigned int sectionCount = 0;
-    
-    if (m_obNumberOfSectionsCallback)
-    {
-        sectionCount = m_obNumberOfSectionsCallback();
-    }
-    else if (m_pTableViewDataSource)
-    {
-        sectionCount = m_pTableViewDataSource->numberOfSections(this);
-    }
+    unsigned int sectionCount = m_nSections;
     
     m_rTableCellRectss.resize(sectionCount);
     m_rLineRectss.resize(sectionCount);
