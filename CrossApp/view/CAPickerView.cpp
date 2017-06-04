@@ -21,7 +21,7 @@ CAPickerView::CAPickerView()
 , m_separateColor(CAColor4B(127, 127, 127, 127))
 , m_displayRow(7)
 {
-    setDisplayRange(false);
+    this->setDisplayRange(false);
 }
 
 CAPickerView::~CAPickerView()
@@ -244,6 +244,7 @@ void CAPickerView::reloadAllComponents()
         tableView->setSeparatorViewHeight(0);
         tableView->setSeparatorColor(CAColor4B::CLEAR);
         tableView->setShowsScrollIndicators(false);
+        tableView->setDisplayRange(true);
         this->addSubview(tableView);
         m_tableViews.pushBack(tableView);
         

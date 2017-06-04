@@ -89,6 +89,35 @@ public:
 
 class CC_DLL CAAutoCollectionView : public CAScrollView
 {
+public:
+    // event listeners. If these functions are set, the corresponding function of CAAutoCollectionViewDataSource will fail.
+    
+    CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int item), CellAtIndexCallback);
+    
+    CC_LISTENING_FUNCTION(DSize(unsigned int section, unsigned int item), SizeForItemAtIndexPath);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfItemsInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfSectionsCallback);
+    
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForHeaderInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForHeaderInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForFooterInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForFooterInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(void(CACollectionViewCell* cell, unsigned int section, unsigned int item), WillDisplayCellAtIndexPathCallback);
+    
+    // event listeners. If these functions are set, the corresponding function of CAAutoCollectionViewDelegate will fail.
+    
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int item), DidSelectRowAtIndexPathCallback);
+    
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int item), DidDeselectRowAtIndexPathCallback);
+    
+protected:
+    
 	struct CollectionViewRow
 	{
 		CollectionViewRow() : iIniValue(0), iMaxValue(0) {}

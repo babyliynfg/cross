@@ -21,6 +21,16 @@ NS_CC_BEGIN
 class CAWaterfallView;
 class CAWaterfallViewCell;
 
+class CAWaterfallViewDelegate
+{
+public:
+    virtual ~CAWaterfallViewDelegate(){};
+    
+    virtual void waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex){};
+    
+    virtual void waterfallViewDidDeselectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex){};
+};
+
 class CAWaterfallViewDataSource
 {
 public:
@@ -42,43 +52,30 @@ public:
 		return 0;
 	}
 
-	virtual CAView* waterfallViewSectionViewForHeader(CAWaterfallView *waterfallView, const DSize& viewSize)
-	{
-		return NULL;
-	}
-
-	virtual unsigned int waterfallViewHeightForHeader(CAWaterfallView *waterfallView)
-	{
-		return 0;
-	}
-
-	virtual CAView* waterfallViewSectionViewForFooter(CAWaterfallView *waterfallView, const DSize& viewSize)
-	{
-		return NULL;
-	}
-
-	virtual unsigned int waterfallViewHeightForFooter(CAWaterfallView *waterfallView)
-	{
-		return 0;
-	}
-
 	virtual void waterfallViewWillDisplayCellAtIndex(CAWaterfallView* waterfallView, CAWaterfallViewCell* cell, unsigned int itemIndex) {};
-};
-
-class CAWaterfallViewDelegate
-{
-public:
-	virtual ~CAWaterfallViewDelegate(){};
-
-	virtual void waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex){};
-
-	virtual void waterfallViewDidDeselectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex){};
 };
 
 class CC_DLL CAWaterfallView : public CAScrollView
 {
 public:
+    
+    // event listeners. If these functions are set, the corresponding function of CAWaterfallViewDataSource will fail.
+    CC_LISTENING_FUNCTION(CAWaterfallViewCell*(DSize cellSize, unsigned int index), CellAtIndexCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), HeightForIndexCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfIndexCallback);
+    
+    CC_LISTENING_FUNCTION(void(CAWaterfallViewCell* cell, unsigned int index), WillDisplayCellAtIndexCallback);
+    
+    // event listeners. If these functions are set, the corresponding function of CAWaterfallViewDelegate will fail.
+    CC_LISTENING_FUNCTION(void(unsigned int index), DidSelectCellAtIndexCallback);
+    
+    CC_LISTENING_FUNCTION(void(unsigned int index), DidDeselectCellAtIndexCallback);
+    
+public:
 	CAWaterfallView();
+    
 	virtual ~CAWaterfallView();
 
 	virtual void onEnterTransitionDidFinish();
@@ -115,7 +112,6 @@ public:
 
 	virtual void switchPCMode(bool var);
 
-	
 	CC_SYNTHESIZE(CAWaterfallViewDataSource*, m_pWaterfallViewDataSource, WaterfallViewDataSource);
 	
 	CC_SYNTHESIZE(CAWaterfallViewDelegate*, m_pWaterfallViewDelegate, WaterfallViewDelegate);

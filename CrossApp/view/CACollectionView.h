@@ -93,7 +93,38 @@ public:
 class CC_DLL CACollectionView : public CAScrollView
 {
 public:
+    
+    // event listeners. If these functions are set, the corresponding function of CACollectionViewDataSource will fail.
+    
+    CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int row, unsigned int item), CellAtIndexCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), HeightForRowAtIndexPathCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), NumberOfItemsInRowsInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfRowsInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfSectionsCallback);
+    
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForHeaderInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForHeaderInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForFooterInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForFooterInSectionCallback);
+    
+    CC_LISTENING_FUNCTION(void(CACollectionViewCell* cell, unsigned int section, unsigned int row, unsigned int item), WillDisplayCellAtIndexPathCallback);
+    
+    // event listeners. If these functions are set, the corresponding function of CACollectionViewDelegate will fail.
+    
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row, unsigned int item), DidSelectRowAtIndexPathCallback);
+    
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row, unsigned int item), DidDeselectRowAtIndexPathCallback);
+    
+public:
 	CACollectionView();
+    
 	virtual ~CACollectionView();
 
 	virtual void onEnterTransitionDidFinish();

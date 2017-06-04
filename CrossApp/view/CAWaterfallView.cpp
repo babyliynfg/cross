@@ -17,7 +17,7 @@ CAWaterfallView::CAWaterfallView()
 , m_pHighlightedWaterfallCells(nullptr)
 , m_nWaterfallHeaderHeight(0)
 , m_nWaterfallFooterHeight(0)
-, m_nColumnCount(3)
+, m_nColumnCount(2)
 , m_nItemMargin(4)
 , m_nColumnMargin(4)
 , m_bAlwaysTopSectionHeader(true)
@@ -403,14 +403,6 @@ void CAWaterfallView::reloadViewSizeData()
 	
 	unsigned int viewHeight = 0;
 
-	m_nWaterfallHeaderHeight = m_pWaterfallViewDataSource->waterfallViewHeightForHeader(this);
-	if (m_nWaterfallHeaderHeight > 0)
-	{
-		setWaterfallHeaderView(m_pWaterfallViewDataSource->waterfallViewSectionViewForHeader(this, DSize(nColumnWidth, m_nWaterfallHeaderHeight)));
-		viewHeight += m_nWaterfallHeaderHeight;
-		viewHeight += m_nItemMargin;
-	}
-
 	int nItemCount = m_pWaterfallViewDataSource->numberOfItems(this);
 	for (int i = 0; i < nItemCount; i++)
 	{
@@ -432,14 +424,6 @@ void CAWaterfallView::reloadViewSizeData()
 		m_nColumnHeightVect[index] += nColumnHeight;
 	}
 	viewHeight += getMaxColumnValue();
-
-	m_nWaterfallFooterHeight = m_pWaterfallViewDataSource->waterfallViewHeightForFooter(this);
-	if (m_nWaterfallFooterHeight > 0)
-	{
-		setWaterfallFooterView(m_pWaterfallViewDataSource->waterfallViewSectionViewForFooter(this, DSize(nColumnWidth, m_nWaterfallFooterHeight)));
-		viewHeight += m_nWaterfallFooterHeight;
-		viewHeight += m_nItemMargin;
-	}
 
 	size.height = viewHeight;
 	this->setViewSize(size);
@@ -515,7 +499,7 @@ void CAWaterfallView::reloadData()
 	{
 		m_pWaterfallHeaderView->setDisplayRange(true);
 		m_pWaterfallHeaderView->setFrame(DRect(0, 0, winRect.size.width, m_nWaterfallHeaderHeight));
-		addSubview(m_pWaterfallHeaderView);
+		this->addSubview(m_pWaterfallHeaderView);
 	}
 
 	int dwValue = getMaxColumnValue();
@@ -525,7 +509,7 @@ void CAWaterfallView::reloadData()
 	if (m_nWaterfallFooterHeight > 0 && m_pWaterfallFooterView)
 	{
 		m_pWaterfallFooterView->setFrame(DRect(0, dwValue, winRect.size.width, m_nWaterfallFooterHeight));
-		addSubview(m_pWaterfallFooterView);
+		this->addSubview(m_pWaterfallFooterView);
 	}
 
     this->loadWaterfallCell();
