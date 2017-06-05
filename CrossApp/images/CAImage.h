@@ -96,47 +96,20 @@ public:
     
     virtual ~CAImage();
     
-    static CAImage* createWithString(const char *text,
-									 const CAColor4B& fontColor,
-                                     const char *fontName,
-                                     float fontSize,
-                                     const DSize& dimensions,
-                                     CATextAlignment hAlignment,
-                                     CAVerticalTextAlignment vAlignment,
-                                     bool isForTextField = false,
-                                     int iLineSpacing = 0,
-                                     bool bBold = false,
-                                     bool bItalics = false,
-                                     bool bUnderLine = false,
-									 bool bDeleteLine = false);
-    
-    static int getFontHeight(const char* pFontName, unsigned long nSize);
+    static int getFontHeight(const char* pFontName, unsigned int nSize);
     
     static int getStringWidth(const char* pFontName,
-                              unsigned long nSize,
+                              unsigned int nSize,
                               const std::string& pText);
-    
-    static int cutStringByWidth(const char* pFontName,
-                                unsigned long nSize,
-                                const std::string& text,
-                                int iLimitWidth,
-                                int& cutWidth);
 
-	static int cutStringByDSize(std::string& text, 
-								const DSize& lableSize, 
-								const char* pFontName, 
-								unsigned long nSize, 
-								bool bWordWrap = true, 
-								int iLineSpacing = 0, 
-								bool bBold = false, 
-								bool bItalics = false);
-    
     static int getStringHeight(const char* pFontName,
-                               unsigned long nSize,
+                               unsigned int nSize,
                                const std::string& pText,
                                int iLimitWidth,
                                int iLineSpace = 0,
                                bool bWordWrap = true);
+    
+    static CAImage* createWithString(const std::string& text, const CAFont& font, DSize& dimensions);
     
     static CAImage* scaleToNewImageWithImage(CAImage* image, const DSize& size);
     
