@@ -1,17 +1,43 @@
 
 #include "platform/CAFontProcesstor.h"
+#include "images/CAImage.h"
+#include "platform/CAFileUtils.h"
+#include "jni/JniHelper.h"
+#include <jni.h>
+#include <string.h>
 #include <vector>
+#include <stdio.h>
 
 
-#define CLASS_CAFONTPROCESSOR "org/CrossApp/lib/CrossAppBitmap"
-#define GET_CAFONTPROCESSOR_CLASS "(I)Lorg/CrossApp/lib/CrossAppBitmap;"
+
+std::vector<CrossApp::CAData*> s_gDataVec;
+CrossApp::DSize s_gDimensions;
+
 
 
 NS_CC_BEGIN
 namespace CAFontProcesstor
 {
-    std::vector<CAData*> s_gDataVec;
-    DSize s_gDimensions;
+    
+    
+    int getTextAlign(CATextAlignment align)
+    {
+        int a = 0x31 ;
+        switch (align) {
+            case CATextAlignment::Left:
+                0x31 ;
+                break;
+            case CATextAlignment::Center:
+                0x33 ;
+                break ;
+            case CATextAlignment::Right :
+                0x32 ;
+                break ;
+            default:
+                break;
+        }
+        return  a ;
+    }
     
     CAImage* imageForText(const std::string& text, const CAFont& font, DSize& dimensions)
     {
@@ -24,7 +50,7 @@ namespace CAFontProcesstor
             
             
             JniMethodInfo methodInfo;
-            if (! JniHelper::getStaticMethodInfo(methodInfo, CLASS_CAFONTPROCESSOR, "createTextBitmapShadowStroke","([BLjava/lang/String;IIIIIIIIZFFFFZIIIIF)Z"))
+            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "(Ljava/lang/String;Ljava/lang/String;IIIIIIIIIFFFFIIIIIF)Z"))
             {
                 break ;
             }
@@ -32,7 +58,7 @@ namespace CAFontProcesstor
             // or the path has been mapped to a different location in the app package:
             std::string fullPathOrFontName = font.fontName;
             if(FileUtils::getInstance()->isFileExist(fullPathOrFontName)) {
-                fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(textDefinition._fontName);
+                fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(font.fontName);
                 // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
                 // requires this portion of the path to be omitted for assets inside the app package.
                 if (fullPathOrFontName.find("assets/") == 0)
@@ -42,47 +68,18 @@ namespace CAFontProcesstor
             }
             
             
-            int count = strlen(text);
-            jbyteArray strArray = methodInfo.env->NewByteArray(count);
-            methodInfo.env->SetByteArrayRegion(strArray, 0, count, reinterpret_cast<const jbyte*>(text));
+//            int count = text.length();
+//            jbyteArray strArray = methodInfo.env->NewByteArray(count);
+//            methodInfo.env->SetByteArrayRegion(strArray, 0, count, reinterpret_cast<const jbyte*>(&text[0]));
+//            jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
+            
             jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
-            
-            
-            /**
-             *
-             * @param string
-             * @param fontName
-             * @param fontSize
-             * @param fontTintR
-             * @param fontTintG
-             * @param fontTintB
-             * @param fontTintA
-             * @param alignment
-             * @param width
-             * @param height
-             * @param shadow
-             * @param shadowDX
-             * @param shadowDY
-             * @param shadowBlur
-             * @param shadowOpacity
-             * @param stroke
-             * @param strokeR
-             * @param strokeG   
-             * @param strokeB    
-             * @param strokeA    
-             * @param strokeSize  
-             * @return
-             
-             bool        strokeEnabled;
-             CAColor4B   strokeColor;
-             float       strokeSize;
-             
-             */
+            jstring jsStr = methodInfo.env->NewStringUTF(text.c_str());
             
             if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID,
-                                                        strArray,
+                                                        jsStr,
                                                         jstrFont,
-                                                        font.fontsize,
+                                                        font.fontSize,
                                                         font.color.r,
                                                         font.color.g,
                                                         font.color.b,
@@ -90,12 +87,12 @@ namespace CAFontProcesstor
                                                         getTextAlign(font.textAlignment),
                                                         dimensions.width,
                                                         dimensions.height,
-                                                        font.shadow.shadowEnabled,
+                                                        (int)font.shadow.shadowEnabled,
                                                         font.shadow.shadowOffset.width,
                                                         font.shadow.shadowOffset.height,
                                                         font.shadow.shadowBlur,
                                                         font.shadow.shadowOpacity,
-                                                        font.stroke.strokeEnabled,
+                                                        (int)font.stroke.strokeEnabled,
                                                         font.stroke.strokeColor.r,
                                                         font.stroke.strokeColor.g,
                                                         font.stroke.strokeColor.b,
@@ -106,7 +103,8 @@ namespace CAFontProcesstor
                 break ;
             }
             
-            methodInfo.env->DeleteLocalRef(strArray);
+//            methodInfo.env->DeleteLocalRef(strArray);
+            methodInfo.env->DeleteLocalRef(jsStr);
             methodInfo.env->DeleteLocalRef(jstrFont);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
             
@@ -114,7 +112,7 @@ namespace CAFontProcesstor
             
             CAData* data = s_gDataVec.front();
             s_gDataVec.clear();
-            ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
+            ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, dimensions.width, dimensions.height);
             data->release();
         } while (0);
         
@@ -127,9 +125,9 @@ namespace CAFontProcesstor
         //public static float heightForFont(int fontSize)
         float ret = 0 ;
         JniMethodInfo jni;
-        if (JniHelper::getStaticMethodInfo(jni, CLASS_CAFONTPROCESSOR, "heightForFont", "(I)F"))
+        if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppBitmap", "heightForFont", "(I)F"))
         {
-            ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, font.fontsize);
+            ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, font.fontSize);
             jni.env->DeleteLocalRef(jni.classID);
             
         }
@@ -139,24 +137,7 @@ namespace CAFontProcesstor
     }
     
     
-    int getTextAlign(CATextAlignment align)
-    {
-        int a = 0x31 ;
-        switch (align) {
-            case Left:
-                0x31 ;
-                break;
-            case Center:
-                0x33 ;
-                break ;
-            case Right :
-                0x32 ;
-                break ;
-            default:
-                break;
-        }
-        return  a ;
-    }
+    
     
     
     float heightForTextAtWidth(const std::string& text, const CAFont& font, float width)
@@ -164,10 +145,10 @@ namespace CAFontProcesstor
         //public static float heightForTextAtWidth(String string , int width , int fontsize)
         float ret = 0 ;
         JniMethodInfo jni;
-        if (JniHelper::getStaticMethodInfo(jni, CLASS_CAFONTPROCESSOR, "heightForTextAtWidth", "(Ljava/lang/String;II)F"))
+        if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppBitmap", "heightForTextAtWidth", "(Ljava/lang/String;II)F"))
         {
             jstring string = jni.env->NewStringUTF(text.c_str());
-            ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, string , width , font.fontsize);
+            ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, string , width , font.fontSize);
             jni.env->DeleteLocalRef(jni.classID);
             
         }
@@ -181,12 +162,12 @@ namespace CAFontProcesstor
         //public static float widthForTextAtOneLine(String string ,  int fontSize)
         float ret = 0 ;
         JniMethodInfo jni;
-        if (JniHelper::getStaticMethodInfo(jni, CLASS_CAFONTPROCESSOR, "widthForTextAtOneLine", "(Ljava/lang/String;I)F"))
+        if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppBitmap", "widthForTextAtOneLine", "(Ljava/lang/String;I)F"))
         {
             
             jstring string = jni.env->NewStringUTF(text.c_str());
             
-            ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, string , font.fontsize);
+            ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, string , font.fontSize);
             jni.env->DeleteLocalRef(jni.classID);
             
         }
@@ -199,29 +180,26 @@ namespace CAFontProcesstor
 }
 NS_CC_END
 
-
-
-
 // this method is called by Cocos2dxBitmap
 extern "C"
 {
     /**
      * this method is called by java code to init width, height and pixels data
      */
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
     {
-        unsigned int pixelsWide = width;
-        unsigned int pixelsHigh = height;
+        s_gDimensions = CrossApp::DSize(width, height);
         
         ssize_t length = width * height * 4;
         unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);
         env->GetByteArrayRegion(pixels, 0, length, (jbyte*)bytes);
         
-        s_gDimensions = DSize(pixelsWide, pixelsHigh);
-        
-        CAData* data = new CAData();
+        CrossApp::CAData* data = new CrossApp::CAData();
         data->fastSet(bytes, length);
         s_gDataVec.push_back(data);
     }
 };
+
+
+
 

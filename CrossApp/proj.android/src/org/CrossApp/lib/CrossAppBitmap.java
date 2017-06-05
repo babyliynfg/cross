@@ -147,8 +147,8 @@ public final class CrossAppBitmap {
     public static boolean createTextBitmapShadowStroke(String string,  final String fontName, int fontSize,
                                                     int fontTintR, int fontTintG, int fontTintB, int fontTintA,
                                                     int alignment, int width, int height, 
-                                                    boolean shadow, float shadowDX, float shadowDY, float shadowBlur, float shadowOpacity, 
-                                                    boolean stroke, int strokeR, int strokeG, int strokeB, int strokeA, float strokeSize) {
+                                                    int shadow, float shadowDX, float shadowDY, float shadowBlur, float shadowOpacity, 
+                                                    int stroke, int strokeR, int strokeG, int strokeB, int strokeA, float strokeSize) {
     	
         Layout.Alignment hAlignment = Layout.Alignment.ALIGN_NORMAL;
         int horizontalAlignment = alignment & 0x0F;
@@ -167,7 +167,7 @@ public final class CrossAppBitmap {
 
         TextPaint paint = CrossAppBitmap.newPaint(fontName, fontSize);
 
-        if (stroke) {
+        if (stroke>0) {
             paint.setStyle(TextPaint.Style.STROKE);
             paint.setStrokeWidth(strokeSize);
         }
@@ -220,7 +220,7 @@ public final class CrossAppBitmap {
         Bitmap bitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(offsetX, offsetY);
-        if ( stroke )
+        if ( stroke>0 )
         {
             paint.setARGB(strokeA, strokeR, strokeG, strokeB);
             layout.draw(canvas);

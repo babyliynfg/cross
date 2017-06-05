@@ -14,7 +14,7 @@
 #include "platform/CAClipboard.h"
 #include "basics/CAApplication.h"
 #include "support/ccUTF8.h"
-#include "CAFontProcesstor.h"
+#include "platform/CAFontProcesstor.h"
 
 NS_CC_BEGIN
 
