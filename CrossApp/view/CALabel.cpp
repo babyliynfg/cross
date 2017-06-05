@@ -142,20 +142,17 @@ void CALabel::updateImage()
  
     unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
 
-    DSize size = DSizeZero;
-    if (linenumber == 0)
+    DSize size = m_obContentSize;
+    if (linenumber > 0)
     {
-        size = m_obContentSize;
-    }
-    else
-    {
-        if (m_nNumberOfLine > 0)
+        if (m_nNumberOfLine > 1)
         {
-            size = DSize(m_obContentSize.width, (m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
+            size.height = (m_iLineSpacing + fontHeight) * (MIN(m_nNumberOfLine, linenumber) + 0.5f);
         }
-        else
+        else if (m_nNumberOfLine == 1)
         {
-            size = DSize(m_obContentSize.width, (m_iLineSpacing + fontHeight) * linenumber);
+            size.width = 0xffffffff;
+            size.height = fontHeight * 1.5f;
         }
     }
 

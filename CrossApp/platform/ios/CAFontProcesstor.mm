@@ -12,9 +12,9 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 
-static id _createSystemFont( const std::string& fontName, int size)
+static id _createSystemFont(const CrossApp::CAFont& font)
 {
-    NSString * fntName      = [NSString stringWithUTF8String:fontName.c_str()];
+    NSString * fntName      = [NSString stringWithUTF8String:font.fontName.c_str()];
     // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
     // calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
     // be referenced as 'SomeFont' when calling [UIFont fontWithName]. Hence we strip out the folder path components and the extension here in order to get just
@@ -23,13 +23,40 @@ static id _createSystemFont( const std::string& fontName, int size)
     fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     
     // create the font
-    id font = [UIFont fontWithName:fntName size:size];
+    UIFont* iosFont = [UIFont fontWithName:fntName size:font.fontSize];
     
-    if (!font)
+    if (!iosFont)
     {
-        font = [UIFont systemFontOfSize:size];
+        iosFont = [UIFont systemFontOfSize:font.fontSize];
     }
-    return font;
+    
+    if (font.bold || font.italics)
+    {
+        NSString* fontName = [NSString stringWithFormat:@"%@", iosFont.fontName];
+        
+        
+//        if (font.bold)
+//        {
+//            fontName = [fontName stringByAppendingString:@"-Bold"];
+//            
+//            if (font.italics)
+//            {
+//                fontName = [fontName stringByAppendingString:@"Oblique"];
+//            }
+//        }
+//        else
+//        {
+//            if (font.italics)
+//            {
+//                fontName = [fontName stringByAppendingString:@"-Oblique"];
+//            }
+//        }
+
+        iosFont = [UIFont fontWithName:fontName size:font.fontSize];
+
+    }
+    
+    return iosFont;
 }
 
 NSTextAlignment _calculateTextAlignment(CrossApp::CATextAlignment alignment)
@@ -61,18 +88,11 @@ CGSize _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSi
 
     CGSize dim;
     dim = [str boundingRectWithSize:CGSizeMake(textRect.width, textRect.height)
-                            options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesDeviceMetrics)
+                            options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine)
                             context:nil].size;
     
     dim.width = ceilf(dim.width);
-    if (dim.height < fontSize * 1.8f)
-    {
-        dim.height = ceilf(dim.height * 1.1f);
-    }
-    else
-    {
-        dim.height = ceilf(dim.height);
-    }
+    dim.height = ceilf(dim.height);
     
     return dim;
 }
@@ -88,7 +108,7 @@ namespace CAFontProcesstor
         {
             CC_BREAK_IF(text.empty());
             
-            id iosfont = _createSystemFont(font.fontName, font.fontSize);
+            id iosfont = _createSystemFont(font);
             CC_BREAK_IF(!iosfont);
 
             NSString * str          = [NSString stringWithUTF8String:text.c_str()];
@@ -222,7 +242,7 @@ namespace CAFontProcesstor
         float ret = 0;
         do
         {
-            id iosfont = _createSystemFont(font.fontName, font.fontSize);
+            id iosfont = _createSystemFont(font);
             CC_BREAK_IF(!iosfont);
             
             // alignment
@@ -243,11 +263,11 @@ namespace CAFontProcesstor
             CGSize textSize = CGSizeMake(CGFLOAT_MAX, 0);
             CGSize dim;
             dim = [str boundingRectWithSize:CGSizeMake(textSize.width, textSize.height)
-                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesDeviceMetrics)
+                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine)
                                     context:nil].size;
             
             dim.width = ceilf(dim.width);
-            dim.height = ceilf(dim.height * 1.1f);
+            dim.height = ceilf(dim.height);
             
             ret = dim.height;
             
@@ -266,7 +286,7 @@ namespace CAFontProcesstor
             NSString* string = [NSString stringWithUTF8String:text.c_str()];
             CC_BREAK_IF(!string);
             
-            id iosfont = _createSystemFont(font.fontName, font.fontSize);
+            id iosfont = _createSystemFont(font);
             CC_BREAK_IF(!iosfont);
             
             // alignment
@@ -287,18 +307,12 @@ namespace CAFontProcesstor
             CGSize textSize = CGSizeMake(width, 0);
             CGSize dim;
             dim = [str boundingRectWithSize:CGSizeMake(textSize.width, textSize.height)
-                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesDeviceMetrics)
+                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine)
                                     context:nil].size;
             
             dim.width = ceilf(dim.width);
-            if (dim.height < font.fontSize * 1.8f)
-            {
-                dim.height = ceilf(dim.height * 1.1f);
-            }
-            else
-            {
-                dim.height = ceilf(dim.height);
-            }
+            dim.height = ceilf(dim.height);
+            
             ret = dim.height;
             
         } while (0);
@@ -316,7 +330,7 @@ namespace CAFontProcesstor
             NSString* string = [NSString stringWithUTF8String:text.c_str()];
             CC_BREAK_IF(!string);
             
-            id iosfont = _createSystemFont(font.fontName, font.fontSize);
+            id iosfont = _createSystemFont(font);
             CC_BREAK_IF(!iosfont);
             
             // alignment
@@ -337,7 +351,7 @@ namespace CAFontProcesstor
             CGSize textSize = CGSizeMake(CGFLOAT_MAX, font.fontSize * 1.5f);
             CGSize dim;
             dim = [str boundingRectWithSize:CGSizeMake(textSize.width, textSize.height)
-                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesDeviceMetrics)
+                                    options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine)
                                     context:nil].size;
             
             dim.width = ceilf(dim.width);
