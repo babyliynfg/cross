@@ -24,15 +24,16 @@ void FirstViewController::viewDidLoad()
 	labelLayout.vertical = DVerticalLayout_T_H(200, 100);
     
     CAFont font;
-    font.color = CAColor_white;
+    font.color = CAColor4B::WHITE;
     font.fontSize = 72;
+    font.textAlignment = CATextAlignment::Center;
+    font.verticalTextAlignment = CAVerticalTextAlignment::Center;
     
     CALabel* label = CALabel::createWithLayout(labelLayout);
-    label->setTextAlignment(CATextAlignment::Center);
-    label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     label->setFont(font);
     label->setText("Hello World!");
     this->getView()->addSubview(label);
+
 }
 
 void FirstViewController::viewDidUnload()

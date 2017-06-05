@@ -57,12 +57,12 @@ void LabelTest::viewDidLoad()
 		CAFont Font;
 		Font.fontSize = 36;
 		Font.color = CAColor4B::RED;
+        Font.textAlignment = CATextAlignment::Center;
+        Font.verticalTextAlignment = CAVerticalTextAlignment::Center;
 
 		CALabel* label = CALabel::create();
 		label->setText(cc);
 		label->setFont(Font);
-        label->setTextAlignment(CATextAlignment::Center);
-        label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.16)));
         view->addSubview(label);
         
@@ -70,13 +70,13 @@ void LabelTest::viewDidLoad()
 		CAFont Font1;
 		Font1.fontSize = 36;
 		Font1.color = CAColor4B::RED;
-		Font1.underLine = true;
-
-		CALabel* label1 = CALabel::create();
+        Font1.textAlignment = CATextAlignment::Center;
+        Font1.verticalTextAlignment = CAVerticalTextAlignment::Center;
+        Font1.underLine = true;
+        
+        CALabel* label1 = CALabel::create();
 		label1->setText(cc);
 		label1->setFont(Font1);
-        label1->setTextAlignment(CATextAlignment::Center);
-        label1->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label1->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.32)));
         view->addSubview(label1);
         
@@ -85,11 +85,12 @@ void LabelTest::viewDidLoad()
 		CAFont Font2;
 		Font2.fontSize = 36;
 		Font2.color = CAColor4B::RED;
+        Font2.textAlignment = CATextAlignment::Center;
+        Font2.verticalTextAlignment = CAVerticalTextAlignment::Center;
 		Font2.bold = true;
+        
 		label2->setText(cc);
 		label2->setFont(Font2);
-        label2->setTextAlignment(CATextAlignment::Center);
-        label2->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label2->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.48)));
         view->addSubview(label2);
         
@@ -98,11 +99,12 @@ void LabelTest::viewDidLoad()
 		CAFont Font3;
 		Font3.fontSize = 36;
 		Font3.color = CAColor4B::RED;
+        Font3.textAlignment = CATextAlignment::Center;
+        Font3.verticalTextAlignment = CAVerticalTextAlignment::Center;
 		Font3.italics = true;
+        
 		label3->setText(cc);
 		label3->setFont(Font3);
-        label3->setTextAlignment(CATextAlignment::Center);
-        label3->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label3->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.64)));
         view->addSubview(label3);
         
@@ -111,10 +113,11 @@ void LabelTest::viewDidLoad()
 		CAFont Font4;
 		Font4.fontSize = 36;
 		Font4.color = CAColor4B::RED;
+        Font4.textAlignment = CATextAlignment::Center;
+        Font4.verticalTextAlignment = CAVerticalTextAlignment::Center;
+        
 		label4->setText("Enable Copy");
 		label4->setFont(Font4);
-        label4->setTextAlignment(CATextAlignment::Center);
-        label4->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label4->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.8)));
         view->addSubview(label4);
 	}
@@ -124,6 +127,8 @@ void LabelTest::viewDidLoad()
 		CAFont Font5;
 		Font5.fontSize = 36;
 		Font5.color = CAColor4B::RED;
+        Font5.textAlignment = CATextAlignment::Center;
+        Font5.verticalTextAlignment = CAVerticalTextAlignment::Center;
 		Font5.fontName = "c:/x.ttf";
 		Font5.bold = true;
 		Font5.italics = true;
@@ -131,8 +136,6 @@ void LabelTest::viewDidLoad()
 		label5->setText("Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World");
 		label5->setFont(Font5);
 		label5->setLineSpacing(20);
-        label5->setTextAlignment(CATextAlignment::Center);
-        label5->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
 		label5->setLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_H(300, 300)));
 
 		CAView* view1 = CAView::createWithLayout(DLayoutFill);

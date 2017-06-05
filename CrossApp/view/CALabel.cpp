@@ -21,9 +21,9 @@ NS_CC_BEGIN
 
 CALabel::CALabel()
 :m_nNumberOfLine(0)
-,m_nText("")
-,m_cLabelSize(DSizeZero)
-,pTextHeight(0)
+,m_sText("")
+,m_obLabelSize(DSizeZero)
+,m_obPadding(DSizeZero)
 ,m_bFitFlag(false)
 ,m_bUpdateImage(false)
 ,m_iLineSpacing(0)
@@ -129,98 +129,87 @@ CALabel* CALabel::createWithLayout(const CrossApp::DLayout &layout)
 
 void CALabel::updateImageDraw()
 {
-    m_bUpdateImage = true;
-    this->updateDraw();
+    if (!m_sText.empty() && m_bUpdateImage == false)
+    {
+        m_bUpdateImage = true;
+        this->updateDraw();
+    }
 }
 
 void CALabel::updateImage()
 {
     int fontHeight = CAFontProcesstor::heightForFont(m_obFont);
-	int defaultLineSpace = fontHeight / 4;
  
     unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
 
     DSize size = DSizeZero;
-    if (m_bFitFlag)
+    if (linenumber == 0)
     {
-        float width = CAFontProcesstor::widthForTextAtOneLine(m_nText, m_obFont);
-        if (width > m_obContentSize.width)
-        {
-            if (m_nNumberOfLine > 1)
-            {
-				size = DSize(m_obContentSize.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * m_nNumberOfLine);
-            }
-            else if (m_nNumberOfLine == 1)
-            {
-				size = DSize(width, fontHeight);
-            }
-            else
-            {
-                size.width = m_obContentSize.width;
-                size.height = CAFontProcesstor::heightForTextAtWidth(m_nText, m_obFont, size.width);
-            }
-        }
-        else
-        {
-            size.height = fontHeight;
-			size.width = width;
-        }
+        size = m_obContentSize;
     }
     else
     {
-        if (linenumber == 0)
-		{
-			size = m_obContentSize;
-		}
-		else
-		{
-			if (m_nNumberOfLine > 0)
-			{
-				size = DSize(m_obContentSize.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
-			}
-			else
-			{
-				size = DSize(m_obContentSize.width, (defaultLineSpace + m_iLineSpacing + fontHeight) * linenumber);
-			}
-		}
-    }
-    
-    CAImage* image = CAFontProcesstor::imageForText(m_nText, m_obFont, size);
-
-
-    this->setImage(image);
-	CC_RETURN_IF(image == NULL);
-    m_cLabelSize = size;
-
-    DRect rect = DRectZero;
-    rect.size.width = m_obContentSize.width;
-    rect.size.height = size.height;
-    
-    float width = m_bFitFlag ? image->getContentSize().width : MIN(m_obContentSize.width, image->getContentSize().width);
-    
-    rect.size.width = width;
-
-    switch (m_obFont.verticalTextAlignment)
-    {
-        case CAVerticalTextAlignment::Top:
-            pTextHeight = 0;
-            break;
-            
-        case CAVerticalTextAlignment::Center:
-            pTextHeight = (m_obContentSize.height - rect.size.height) / 2;
-            break;
-            
-        case CAVerticalTextAlignment::Bottom:
-            pTextHeight = m_obContentSize.height - rect.size.height;
-            break;
-            
-        default:
-            break;
+        if (m_nNumberOfLine > 0)
+        {
+            size = DSize(m_obContentSize.width, (m_iLineSpacing + fontHeight) * MIN(m_nNumberOfLine, linenumber));
+        }
+        else
+        {
+            size = DSize(m_obContentSize.width, (m_iLineSpacing + fontHeight) * linenumber);
+        }
     }
 
-    if (m_bFitFlag)
+    if (CAImage* image = CAFontProcesstor::imageForText(m_sText, m_obFont, size))
     {
-        if (!size.equals(m_obContentSize))
+        this->setImage(image);
+        
+        m_obLabelSize = size;
+        
+        DRect rect = DRectZero;
+        rect.size.width = m_obContentSize.width;
+        rect.size.height = size.height;
+        
+        float width = m_bFitFlag ? image->getContentSize().width : MIN(m_obContentSize.width, image->getContentSize().width);
+        
+        rect.size.width = width;
+        
+        switch (m_obFont.textAlignment)
+        {
+            case CATextAlignment::Left:
+                m_obPadding.width = 0;
+                break;
+                
+            case CATextAlignment::Center:
+                m_obPadding.width = (m_obContentSize.width - rect.size.width) / 2;
+                break;
+                
+            case CATextAlignment::Right:
+                m_obPadding.width = m_obContentSize.width - rect.size.width;
+                break;
+                
+            default:
+                break;
+        }
+        
+        switch (m_obFont.verticalTextAlignment)
+        {
+            case CAVerticalTextAlignment::Top:
+                m_obPadding.height = 0;
+                break;
+                
+            case CAVerticalTextAlignment::Center:
+                m_obPadding.height = (m_obContentSize.height - rect.size.height) / 2;
+                break;
+                
+            case CAVerticalTextAlignment::Bottom:
+                m_obPadding.height = m_obContentSize.height - rect.size.height;
+                break;
+                
+            default:
+                break;
+        }
+        
+        if (m_bFitFlag && !size.equals(m_obContentSize))
         {
             if (m_eLayoutType == 0)
             {
@@ -235,17 +224,19 @@ void CALabel::updateImage()
                 this->setCenter(rect);
             }
         }
+        
+        this->setImageRect(rect);
     }
-    this->setImageRect(rect);
+    
 }
 
 void CALabel::updateImageRect()
 {
     GLfloat x1,x2,y1,y2;
-    x1 = 0;
+    x1 = m_obPadding.width;
     y1 = 0;
     y1 = m_obContentSize.height - m_obRect.size.height - y1;
-    y1 = y1 - pTextHeight;
+    y1 = y1 - m_obPadding.height;
     x2 = x1 + m_obRect.size.width;
     x2 = MAX(x1, x2);
     y2 = y1 + m_obRect.size.height;
@@ -258,16 +249,12 @@ void CALabel::updateImageRect()
 
 void CALabel::copySelectText()
 {
-	CAClipboard::setText(m_nText);
+	CAClipboard::setText(m_sText);
 }
 
 void CALabel::sizeToFit()
 {
     m_bFitFlag = true;
-    if(m_nText.empty())
-    {
-        return;
-    }
     this->updateImageDraw();
 }
 
@@ -278,24 +265,20 @@ void CALabel::unsizeToFit()
 
 void CALabel::setText(const string& var)
 {
-    CC_RETURN_IF(m_nText.compare(var) == 0);
-    m_nText = var;
+    CC_RETURN_IF(m_sText.compare(var) == 0);
+    m_sText = var;
     this->updateImageDraw();
 }
 
 void CALabel::setTextAlignment(const CATextAlignment& var)
 {
     m_obFont.textAlignment = var;
-    if(m_nText.empty())
-    {
-        return;
-    }
-   this->updateImageDraw();
+    this->updateImageDraw();
 }
 
 const string& CALabel::getText()
 {
-    return m_nText;
+    return m_sText;
 }
 
 unsigned int CALabel::getNumberOfLine()
@@ -306,20 +289,12 @@ unsigned int CALabel::getNumberOfLine()
 void CALabel::setNumberOfLine(unsigned int var)
 {
     m_nNumberOfLine = var;
-    if(m_nText.empty())
-    {
-        return;
-    }
     this->updateImageDraw();
 }
 
 void CALabel::setFont(const CrossApp::CAFont &var)
 {
     m_obFont = var;
-    if(m_nText.empty())
-    {
-        return;
-    }
     this->updateImageDraw();
 }
 
@@ -331,10 +306,6 @@ const CAFont& CALabel::getFont()
 void CALabel::setFontSize(unsigned int var)
 {
     m_obFont.fontSize = var;
-    if(m_nText.empty())
-    {
-        return;
-    }
     this->updateImageDraw();
 }
 
@@ -346,10 +317,6 @@ unsigned int CALabel::getFontSize()
 void CALabel::setFontName(const string& var)
 {
     m_obFont.fontName = var;
-    if(m_nText.empty())
-    {
-        return;
-    }
     this->updateImageDraw();
 }
 
@@ -411,7 +378,7 @@ const CAColor4B& CALabel::getColor(void)
 void CALabel::setColor(const CAColor4B& color)
 {
     m_obFont.color = color;
-    updateImage();
+    this->updateImageDraw();
     CAView::setColor(CAColor4B(255, 255, 255, color.a));
 }
 
@@ -436,10 +403,6 @@ void CALabel::setWordWrap(bool var)
 void CALabel::setVerticalTextAlignmet(const CAVerticalTextAlignment& var)
 {
     m_obFont.verticalTextAlignment = var;
-    if(m_nText.empty())
-    {
-        return;
-    }
     this->updateImageDraw();
 }
 
@@ -458,12 +421,12 @@ void CALabel::setContentSize(const CrossApp::DSize &var)
 
 void CALabel::visitEve()
 {
+    CAView::visitEve();
     if (m_bUpdateImage)
     {
         m_bUpdateImage = false;
         this->updateImage();
     }
-    CAView::visitEve();
 }
 
 NS_CC_END

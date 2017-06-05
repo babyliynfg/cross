@@ -36,7 +36,7 @@ public:
     
     virtual bool init();
     
-    CC_PROPERTY_PASS_BY_REF(string, m_nText, Text);
+    CC_PROPERTY_PASS_BY_REF(string, m_sText, Text);
 
     CC_PROPERTY_PASS_BY_REF(CAFont, m_obFont, Font);
     
@@ -80,7 +80,7 @@ public:
 
 	CC_SYNTHESIZE(bool, m_bEnableCopy, EnableCopy);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(DSize, m_cLabelSize, LabelSize);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(DSize, m_obLabelSize, LabelSize);
 
     virtual void visitEve();
     
@@ -100,7 +100,7 @@ protected:
 
 	void copySelectText();
     
-    float pTextHeight;
+    DSize m_obPadding;
     
     bool m_bFitFlag;
     

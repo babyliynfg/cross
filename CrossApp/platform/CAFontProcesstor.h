@@ -4,12 +4,12 @@
 
 #include "CAFontProcesstor.h"
 #include "images/CAImage.h"
-
+#include "CADensityDpi.h"
 NS_CC_BEGIN
 namespace CAFontProcesstor
 {
     
-    CAImage* imageForText(const std::string& text, const CAFont& font, const DSize& dimensions);
+    CAImage* imageForText(const std::string& text, const CAFont& font, DSize& dimensions);
     
     float heightForFont(const CAFont& font);
     
