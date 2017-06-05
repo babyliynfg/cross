@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-static NSTextAlignment _calculateTextAlignment(CrossApp::CATextAlignment alignment)
+NSTextAlignment _calculateTextAlignment(CrossApp::CATextAlignment alignment)
 {
     NSTextAlignment nsAlignment;
     switch (alignment)
@@ -25,63 +25,7 @@ static NSTextAlignment _calculateTextAlignment(CrossApp::CATextAlignment alignme
     return nsAlignment;
 }
 
-static CGFloat _calculateTextDrawStartWidth(CrossApp::CATextAlignment alignment, CGSize realDimensions, CGSize dimensions)
-{
-    CGFloat xPadding = 0;
-    switch (alignment)
-    {
-        case CrossApp::CATextAlignment::Right:
-            xPadding = dimensions.width - realDimensions.width;
-            break;
-        case CrossApp::CATextAlignment::Center:
-            xPadding = (dimensions.width - realDimensions.width) / 2.0f;
-            break;
-        case CrossApp::CATextAlignment::Left:
-        default:
-            break;
-    }
-    return xPadding;
-}
-
-static CGFloat _calculateTextDrawStartHeight(CrossApp::CAVerticalTextAlignment vAlignment, CGSize realDimensions, CGSize dimensions)
-{
-    float startH = 0;
-    switch (vAlignment)
-    {
-        case CrossApp::CAVerticalTextAlignment::Bottom:
-            startH = dimensions.height - realDimensions.height;
-            break;
-        case CrossApp::CAVerticalTextAlignment::Center:
-            startH = (dimensions.height - realDimensions.height) / 2;
-            break;
-        case CrossApp::CAVerticalTextAlignment::Top:
-        default:
-            break;
-    }
-    return startH;
-}
-
-static NSAttributedString* __attributedStringWithFontSize(NSMutableAttributedString* attributedString, CGFloat fontSize)
-{
-    {
-        [attributedString beginEditing];
-        
-        [attributedString enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-            
-            NSFont* font = value;
-            font = [[NSFontManager sharedFontManager] convertFont:font toSize:fontSize];
-            
-            [attributedString removeAttribute:NSFontAttributeName range:range];
-            [attributedString addAttribute:NSFontAttributeName value:font range:range];
-        }];
-        
-        [attributedString endEditing];
-    }
-    
-    return [[attributedString copy] autorelease];
-}
-
-static NSSize _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSize, bool enableWrap, int overflow)
+NSSize _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSize, bool enableWrap, int overflow)
 {
     NSSize textRect = NSZeroSize;
     textRect.width = constrainSize.width > 0 ? constrainSize.width
@@ -195,11 +139,7 @@ namespace CAFontProcesstor
             NSInteger POTWide = dimensions.width;
             NSInteger POTHigh = dimensions.height;
             
-            NSRect textRect = NSMakeRect(0,
-                                         0,
-                                         dimensions.width,
-                                         dimensions.height);
-            
+            NSRect textRect = NSMakeRect(0, 0, dimensions.width, dimensions.height);
             
             [[NSGraphicsContext currentContext] setShouldAntialias:NO];
             
@@ -283,6 +223,7 @@ namespace CAFontProcesstor
         do
         {
             CC_BREAK_IF(text.empty());
+            
             NSString* string = [NSString stringWithUTF8String:text.c_str()];
             CC_BREAK_IF(!string);
             
@@ -322,10 +263,6 @@ namespace CAFontProcesstor
             ret = ceilf(dim.height);
             
         } while (0);
-        
-        
-        return ret;
-        
         
         return ret;
     }
