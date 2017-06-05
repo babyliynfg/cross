@@ -420,6 +420,8 @@
 		D69B76901E4B0713007D9771 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B76841E4B0713007D9771 /* sweep.h */; };
 		D69B76911E4B0713007D9771 /* sweep_context.cc in Sources */ = {isa = PBXBuildFile; fileRef = D69B76851E4B0713007D9771 /* sweep_context.cc */; };
 		D69B76921E4B0713007D9771 /* sweep_context.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B76861E4B0713007D9771 /* sweep_context.h */; };
+		D69DA68D1EE4FB6900590961 /* CAFontProcesstor.h in Headers */ = {isa = PBXBuildFile; fileRef = D69DA68B1EE4FB6900590961 /* CAFontProcesstor.h */; };
+		D69DA6921EE50BA300590961 /* CAFontProcesstor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D69DA6911EE50BA300590961 /* CAFontProcesstor.mm */; };
 		D6B0C6411D6587ED00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */; };
 		D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB51DC9C81500944576 /* libwebsockets.a */; };
 		D6C513241E6910C300B0BE19 /* CAColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6C513221E6910C300B0BE19 /* CAColor.cpp */; };
@@ -912,6 +914,8 @@
 		D69B76851E4B0713007D9771 /* sweep_context.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sweep_context.cc; sourceTree = "<group>"; };
 		D69B76861E4B0713007D9771 /* sweep_context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sweep_context.h; sourceTree = "<group>"; };
 		D69B76A71E4B091A007D9771 /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
+		D69DA68B1EE4FB6900590961 /* CAFontProcesstor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFontProcesstor.h; sourceTree = "<group>"; };
+		D69DA6911EE50BA300590961 /* CAFontProcesstor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAFontProcesstor.mm; sourceTree = "<group>"; };
 		D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 		D6B12EB51DC9C81500944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/mac/libwebsockets.a; sourceTree = "<group>"; };
 		D6C513221E6910C300B0BE19 /* CAColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAColor.cpp; sourceTree = "<group>"; };
@@ -1156,6 +1160,7 @@
 				04EAA12C1956D74D00198A8E /* CASAXParser.h */,
 				04EAA12F1956D74D00198A8E /* CCEGLViewProtocol.cpp */,
 				040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */,
+				D69DA68B1EE4FB6900590961 /* CAFontProcesstor.h */,
 			);
 			path = platform;
 			sourceTree = "<group>";
@@ -1541,6 +1546,7 @@
 		D673AB881E52E2A0007E7A5B /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				D69DA6911EE50BA300590961 /* CAFontProcesstor.mm */,
 				D6596E321E57048600A55CF9 /* CAAlertViewImpl.mm */,
 				D673AB891E52E2A0007E7A5B /* CAAccelerometer.h */,
 				D673AB8A1E52E2A0007E7A5B /* CAApplicationCaller.h */,
@@ -1871,6 +1877,7 @@
 				E070BB011E5EE941000746FA /* CAMotionManager.h in Headers */,
 				B07E827B1C33E7F700A39C95 /* CATextView.h in Headers */,
 				D69B76561E4AFE77007D9771 /* clipper.hpp in Headers */,
+				D69DA68D1EE4FB6900590961 /* CAFontProcesstor.h in Headers */,
 				D69B76891E4B0713007D9771 /* utils.h in Headers */,
 				04EAB1131956D75600198A8E /* CCPlatformConfig.h in Headers */,
 				D6596E2D1E57044700A55CF9 /* CAAlertViewImpl.h in Headers */,
@@ -2109,6 +2116,7 @@
 				D69B76911E4B0713007D9771 /* sweep_context.cc in Sources */,
 				04EAB0A31956D75600198A8E /* CAViewController.cpp in Sources */,
 				D649B2811D3C64480020414A /* CGNode.cpp in Sources */,
+				D69DA6921EE50BA300590961 /* CAFontProcesstor.mm in Sources */,
 				04EAB0AB1956D75600198A8E /* CAKeypadDispatcher.cpp in Sources */,
 				04EAB0AE1956D75600198A8E /* CATouch.cpp in Sources */,
 				3E2154041B817AB80075448E /* LocalStorage.cpp in Sources */,

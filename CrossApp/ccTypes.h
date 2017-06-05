@@ -172,24 +172,6 @@ const BlendFunc BlendFunc_additive = {GL_SRC_ALPHA, GL_ONE};
 
 static const BlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 
-// XXX: If any of these enums are edited and/or reordered, update CAImage.m
-//! Vertical text alignment type
-enum class CAVerticalTextAlignment
-{
-    Top,
-    Center,
-    Bottom,
-};
-
-// XXX: If any of these enums are edited and/or reordered, update CAImage.m
-//! Horizontal text alignment type
-enum class CATextAlignment
-{
-    Left,
-    Center,
-    Right,
-};
-
 // types for animation in particle systems
 
 // texture coordinates for a quad

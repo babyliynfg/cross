@@ -68,15 +68,13 @@ public:
     
     const CAColor4B& getColor();
 
+    void setWordWrap(bool var);
+    
+    void setVerticalTextAlignmet(const CAVerticalTextAlignment& var);
+    
+    void setTextAlignment(const CATextAlignment& var);
+    
 	CC_PROPERTY(int, m_iLineSpacing, LineSpacing);
-    
-    CC_PROPERTY_IS(bool, m_bWordWrap, WordWrap);
-    
-    CC_PROPERTY_PASS_BY_REF(CAVerticalTextAlignment, m_nVerticalTextAlignmet, VerticalTextAlignmet);
-    
-    CC_PROPERTY_PASS_BY_REF(CATextAlignment, m_nTextAlignment, TextAlignment);
-    
-    CC_PROPERTY_PASS_BY_REF(DSize, m_nDimensions, Dimensions);
     
     CC_PROPERTY(unsigned int, m_nNumberOfLine, NumberOfLine);
 

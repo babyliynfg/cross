@@ -14,21 +14,19 @@
 #include "platform/CAClipboard.h"
 #include "basics/CAApplication.h"
 #include "support/ccUTF8.h"
+#include "CAFontProcesstor.h"
+
 NS_CC_BEGIN
 
 
 CALabel::CALabel()
 :m_nNumberOfLine(0)
-,m_nTextAlignment(CATextAlignment::Left)
 ,m_nText("")
-,m_nVerticalTextAlignmet(CAVerticalTextAlignment::Top)
-,m_nDimensions(DSizeZero)
 ,m_cLabelSize(DSizeZero)
 ,pTextHeight(0)
 ,m_bFitFlag(false)
 ,m_bUpdateImage(false)
 ,m_iLineSpacing(0)
-,m_bWordWrap(false)
 ,m_bEnableCopy(false)
 {
     m_obContentSize = DSizeZero;
@@ -137,7 +135,7 @@ void CALabel::updateImageDraw()
 
 void CALabel::updateImage()
 {
-	int fontHeight = CAImage::getFontHeight(m_obFont.fontName.c_str(), m_obFont.fontSize);
+    int fontHeight = CAFontProcesstor::heightForFont(m_obFont);
 	int defaultLineSpace = fontHeight / 4;
  
     unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
@@ -145,7 +143,7 @@ void CALabel::updateImage()
     DSize size = DSizeZero;
     if (m_bFitFlag)
     {
-        float width = CAImage::getStringWidth(m_obFont.fontName.c_str(), m_obFont.fontSize, m_nText);
+        float width = CAFontProcesstor::widthForTextAtOneLine(m_nText, m_obFont);
         if (width > m_obContentSize.width)
         {
             if (m_nNumberOfLine > 1)
@@ -159,7 +157,7 @@ void CALabel::updateImage()
             else
             {
                 size.width = m_obContentSize.width;
-				size.height = CAImage::getStringHeight(m_obFont.fontName.c_str(), m_obFont.fontSize, m_nText, size.width, m_iLineSpacing, m_bWordWrap);
+                size.height = CAFontProcesstor::heightForTextAtWidth(m_nText, m_obFont, size.width);
             }
         }
         else
@@ -187,21 +185,8 @@ void CALabel::updateImage()
 		}
     }
     
-    
-    
-	CAImage* image = CAImage::createWithString(m_nText.c_str(),
-											   m_obFont.color,
-                                               m_obFont.fontName.c_str(),
-                                               m_obFont.fontSize,
-                                               size,
-                                               m_nTextAlignment,
-											   m_nVerticalTextAlignmet, 
-											   m_bWordWrap, 
-											   m_iLineSpacing, 
-											   m_obFont.bold,
-											   m_obFont.italics,
-											   m_obFont.underLine,
-											   m_obFont.deleteLine);
+    CAImage* image = CAFontProcesstor::imageForText(m_nText, m_obFont, size);
+
 
     this->setImage(image);
 	CC_RETURN_IF(image == NULL);
@@ -215,7 +200,7 @@ void CALabel::updateImage()
     
     rect.size.width = width;
 
-    switch (m_nVerticalTextAlignmet)
+    switch (m_obFont.verticalTextAlignment)
     {
         case CAVerticalTextAlignment::Top:
             pTextHeight = 0;
@@ -276,21 +261,6 @@ void CALabel::copySelectText()
 	CAClipboard::setText(m_nText);
 }
 
-void CALabel::setDimensions(const DSize& var)
-{
-    m_nDimensions = var;
-    if(m_nText.empty())
-    {
-        return;
-    }
-    this->updateImageDraw();
-}
-
-const DSize& CALabel::getDimensions()
-{
-    return m_nDimensions;
-}
-
 void CALabel::sizeToFit()
 {
     m_bFitFlag = true;
@@ -315,17 +285,12 @@ void CALabel::setText(const string& var)
 
 void CALabel::setTextAlignment(const CATextAlignment& var)
 {
-    m_nTextAlignment = var;
+    m_obFont.textAlignment = var;
     if(m_nText.empty())
     {
         return;
     }
    this->updateImageDraw();
-}
-
-const CATextAlignment& CALabel::getTextAlignment()
-{
-    return m_nTextAlignment;
 }
 
 const string& CALabel::getText()
@@ -464,28 +429,18 @@ int CALabel::getLineSpacing()
 
 void CALabel::setWordWrap(bool var)
 {
-	m_bWordWrap = var;
+	m_obFont.wordWrap = var;
 	this->updateImageDraw();
-}
-
-bool CALabel::isWordWrap()
-{
-	return m_bWordWrap;
 }
 
 void CALabel::setVerticalTextAlignmet(const CAVerticalTextAlignment& var)
 {
-    m_nVerticalTextAlignmet = var;
+    m_obFont.verticalTextAlignment = var;
     if(m_nText.empty())
     {
         return;
     }
     this->updateImageDraw();
-}
-
-const CAVerticalTextAlignment& CALabel::getVerticalTextAlignmet()
-{
-    return m_nVerticalTextAlignmet;
 }
 
 void CALabel::setContentSize(const CrossApp::DSize &var)

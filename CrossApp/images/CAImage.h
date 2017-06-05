@@ -16,6 +16,7 @@
 #include "basics/CAData.h"
 #include "ccTypes.h"
 #include "platform/CCPlatformMacros.h"
+#include "controller/CAFont.h"
 #include "CCGL.h"
 #include "CCStdC.h"
 #include "gif_lib/gif_lib.h"
