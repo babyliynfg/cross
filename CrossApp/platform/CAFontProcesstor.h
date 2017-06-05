@@ -1,11 +1,12 @@
 
-#ifndef __PLATFORM_H__
-#define __PLATFORM_H__
+#ifndef __CAFontProcesstor_H__
+#define __CAFontProcesstor_H__
 
 #include "CAFontProcesstor.h"
-#include "images/CAImage.h"
 #include "CADensityDpi.h"
 NS_CC_BEGIN
+
+class CAImage;
 namespace CAFontProcesstor
 {
     
@@ -19,4 +20,4 @@ namespace CAFontProcesstor
     
 }
 NS_CC_END
-#endif // __PLATFORM_H__
+#endif // __CAFontProcesstor_H__

@@ -1,6 +1,8 @@
 
 
 #include "CAFontProcesstor.h"
+#include "images/CAImage.h"
+
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 

@@ -17,7 +17,7 @@
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CAFileUtils.h"
-#include "platform/CAFTFontCache.h"
+#include "platform/CAFontProcesstor.h"
 #include "basics/CAApplication.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
@@ -1025,35 +1025,34 @@ CAImage::~CAImage()
     s_pImages.erase(this);
 }
 
-CAImage*  CAImage::createWithString(const char *text, const CAColor4B& fontColor, const char *fontName, float fontSize, const DSize& dimensions, CATextAlignment hAlignment,
-	CAVerticalTextAlignment vAlignment, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics, bool bUnderLine, bool bDeleteLine)
+int CAImage::getFontHeight(const char* pFontName, unsigned int nSize)
 {
-	return g_AFTFontCache.initWithString(text, fontColor, fontName, fontSize, dimensions.width, dimensions.height, hAlignment, vAlignment, bWordWrap, iLineSpacing, bBold, bItalics, bUnderLine, bDeleteLine);
+    CAFont font;
+    font.fontName = pFontName;
+    font.fontSize = nSize;
+    return CAFontProcesstor::heightForFont(font);
 }
 
-int CAImage::getFontHeight(const char* pFontName, unsigned long nSize)
+int CAImage::getStringWidth(const char* pFontName, unsigned int nSize, const std::string& pText)
 {
-    return g_AFTFontCache.getFontHeight(pFontName, nSize);
+    CAFont font;
+    font.fontName = pFontName;
+    font.fontSize = nSize;
+    return CAFontProcesstor::widthForTextAtOneLine(pText, font);
 }
 
-int CAImage::getStringWidth(const char* pFontName, unsigned long nSize, const std::string& pText)
+int CAImage::getStringHeight(const char* pFontName, unsigned int nSize, const std::string& pText, int iLimitWidth, int iLineSpace, bool bWordWrap)
 {
-    return g_AFTFontCache.getStringWidth(pFontName, nSize, pText);
+    CAFont font;
+    font.fontName = pFontName;
+    font.fontSize = nSize;
+    font.wordWrap = bWordWrap;
+    return CAFontProcesstor::heightForTextAtWidth(pText, font, iLimitWidth);
 }
 
-int CAImage::cutStringByWidth(const char* pFontName, unsigned long nSize, const std::string& text, int iLimitWidth, int& cutWidth)
+CAImage* CAImage::createWithString(const std::string& text, const CAFont& font, DSize& dimensions)
 {
-    return g_AFTFontCache.cutStringByWidth(pFontName, nSize, text, iLimitWidth, cutWidth);
-}
-
-int CAImage::cutStringByDSize(std::string& text, const DSize& lableSize, const char* pFontName, unsigned long nSize, bool bWordWrap, int iLineSpacing, bool bBold, bool bItalics)
-{
-	return g_AFTFontCache.cutStringByDSize(text, lableSize, pFontName, nSize, iLineSpacing, bBold, bItalics);
-}
-
-int CAImage::getStringHeight(const char* pFontName, unsigned long nSize, const std::string& pText, int iLimitWidth, int iLineSpace, bool bWordWrap)
-{
-    return g_AFTFontCache.getStringHeight(pFontName, nSize, pText, iLimitWidth, iLineSpace, bWordWrap);
+    return CAFontProcesstor::imageForText(text, font, dimensions);
 }
 
 CAImage* CAImage::create(const std::string& file)
