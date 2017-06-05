@@ -300,7 +300,11 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Normal);
 			}
-			if (m_pCollectionViewDelegate)
+            if (m_obDidDeselectRowAtIndexPathCallback)
+            {
+                m_obDidDeselectRowAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
+            }
+            else if (m_pCollectionViewDelegate)
 			{
 				m_pCollectionViewDelegate->collectionViewDidDeselectCellAtIndexPath(this,
 					deselectedIndexPath.section, deselectedIndexPath.row, deselectedIndexPath.item);
@@ -313,7 +317,11 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Selected);
 			}
-			if (m_pCollectionViewDelegate)
+            if (m_obDidSelectRowAtIndexPathCallback)
+            {
+                m_obDidSelectRowAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
+            }
+			else if (m_pCollectionViewDelegate)
 			{
 				m_pCollectionViewDelegate->collectionViewDidSelectCellAtIndexPath(this,
 					selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
@@ -410,25 +418,58 @@ void CACollectionView::reloadViewSizeData()
 {    
 	clearData();
 
-    m_nSections = m_pCollectionViewDataSource->numberOfSections(this);
+    m_nSections = 1;
+    if (m_obNumberOfSectionsCallback)
+    {
+        m_nSections = m_obNumberOfSectionsCallback();
+    }
+    else if (m_pCollectionViewDataSource)
+    {
+        m_nSections = m_pCollectionViewDataSource->numberOfSections(this);
+    }
+    
     m_nRowsInSections.resize(m_nSections);
     for (unsigned int i=0; i<m_nSections; i++)
     {
-        unsigned int rowsInSection = m_pCollectionViewDataSource->numberOfRowsInSection(this, i);
+        unsigned int rowsInSection = 0;
+        if (m_obNumberOfRowsInSectionCallback)
+        {
+            rowsInSection = m_obNumberOfRowsInSectionCallback(i);
+        }
+        else if (m_pCollectionViewDataSource)
+        {
+            rowsInSection = m_pCollectionViewDataSource->numberOfRowsInSection(this, i);
+        }
         m_nRowsInSections[i] = rowsInSection;
     }
     
     m_nSectionHeaderHeights.resize(m_nSections);
     for (unsigned int i=0; i<m_nSections; i++)
     {
-        unsigned int sectionHeaderHeight = m_pCollectionViewDataSource->collectionViewHeightForHeaderInSection(this, i);
+        unsigned int sectionHeaderHeight = 0;
+        if (m_obHeightForHeaderInSectionCallback)
+        {
+            sectionHeaderHeight = m_obHeightForHeaderInSectionCallback(i);
+        }
+        else if (m_pCollectionViewDataSource)
+        {
+            sectionHeaderHeight = m_pCollectionViewDataSource->collectionViewHeightForHeaderInSection(this, i);
+        }
         m_nSectionHeaderHeights[i] = sectionHeaderHeight;
     }
     
     m_nSectionFooterHeights.resize(m_nSections);
     for (unsigned int i=0; i<m_nSections; i++)
     {
-        unsigned int sectionFooterHeight = m_pCollectionViewDataSource->collectionViewHeightForFooterInSection(this, i);
+        unsigned int sectionFooterHeight = 0;
+        if (m_obHeightForFooterInSectionCallback)
+        {
+            sectionFooterHeight = m_obHeightForFooterInSectionCallback(i);
+        }
+        else if (m_pCollectionViewDataSource)
+        {
+            sectionFooterHeight = m_pCollectionViewDataSource->collectionViewHeightForFooterInSection(this, i);
+        }
         m_nSectionFooterHeights[i] = sectionFooterHeight;
     }
     
@@ -438,7 +479,16 @@ void CACollectionView::reloadViewSizeData()
         std::vector<unsigned int> rowHeights(m_nRowsInSections.at(i));
         for (unsigned int j=0; j<m_nRowsInSections.at(i); j++)
         {
-            unsigned int rowHeight = m_pCollectionViewDataSource->collectionViewHeightForRowAtIndexPath(this, i, j);
+            unsigned int rowHeight = 0;
+            if (m_obHeightForRowAtIndexPathCallback)
+            {
+                rowHeight = m_obHeightForRowAtIndexPathCallback(i, j);
+            }
+            else if (m_pCollectionViewDataSource)
+            {
+                rowHeight = m_pCollectionViewDataSource->collectionViewHeightForRowAtIndexPath(this, i, j);
+
+            }
             rowHeights[j] = rowHeight;
         }
         m_nRowHeightss[i] = rowHeights;
@@ -524,7 +574,16 @@ void CACollectionView::reloadData()
 		DRect sectionHeaderRect = DRect(0, y, width, iSectionHeaderHeight);
 		if (iSectionHeaderHeight>0)
 		{
-			CAView* pSectionHeaderView = m_pCollectionViewDataSource->collectionViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
+            CAView* pSectionHeaderView = nullptr;
+            if (m_obSectionViewForHeaderInSectionCallback)
+            {
+                pSectionHeaderView = m_obSectionViewForHeaderInSectionCallback(sectionHeaderRect.size, i);
+            }
+            else if (m_pCollectionViewDataSource)
+            {
+                pSectionHeaderView = m_pCollectionViewDataSource->collectionViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
+            }
+            
 			if (pSectionHeaderView != NULL)
 			{
 				pSectionHeaderView->setDisplayRange(true);
@@ -541,7 +600,15 @@ void CACollectionView::reloadData()
 		{
 			int iHeight = m_nRowHeightss.at(i).at(j);
             
-			unsigned int itemCount = m_pCollectionViewDataSource->numberOfItemsInRowsInSection(this, i, j);
+            unsigned int itemCount = 0;
+            if (m_obNumberOfItemsInRowsInSectionCallback)
+            {
+                itemCount = m_obNumberOfItemsInRowsInSectionCallback(i, j);
+            }
+            else if (m_pCollectionViewDataSource)
+            {
+                itemCount = m_pCollectionViewDataSource->numberOfItemsInRowsInSection(this, i, j);
+            }
             
 			unsigned int cellWidth = 0;
 			if (itemCount>0)
@@ -559,7 +626,15 @@ void CACollectionView::reloadData()
                 
 				CC_CONTINUE_IF(!winRect.intersectsRect(cellRect));
                 
-				CACollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, j, k);
+                CACollectionViewCell* cell = nullptr;
+                if (m_obCellAtIndexPathCallback)
+                {
+                    cell = m_obCellAtIndexPathCallback(cellRect.size, i, j, k);
+                }
+                else if (m_pCollectionViewDataSource)
+                {
+                    cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, j, k);
+                }
 				if (cell)
 				{
 					addSubview(cell);
@@ -570,7 +645,11 @@ void CACollectionView::reloadData()
 					itrResult.first->second = cell;
                     m_vpUsedCollectionCells.pushBack(cell);
                     
-                    if (m_pCollectionViewDataSource)
+                    if (m_obWillDisplayCellAtIndexPathCallback)
+                    {
+                        m_obWillDisplayCellAtIndexPathCallback(cell, i, j, k);
+                    }
+                    else if (m_pCollectionViewDataSource)
                     {
                         m_pCollectionViewDataSource->collectionViewWillDisplayCellAtIndex(this, cell, i, j, k);
                     }
@@ -583,7 +662,15 @@ void CACollectionView::reloadData()
 		DRect sectionFooterRect = DRect(0, y, width, iSectionFooterHeight);
 		if (iSectionFooterHeight > 0)
 		{
-			CAView* pSectionFooterView = m_pCollectionViewDataSource->collectionViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
+            CAView* pSectionFooterView = nullptr;
+            if (m_obSectionViewForFooterInSectionCallback)
+            {
+                pSectionFooterView = m_obSectionViewForFooterInSectionCallback(sectionFooterRect.size, i);
+            }
+            else if (m_pCollectionViewDataSource)
+            {
+                pSectionFooterView = m_pCollectionViewDataSource->collectionViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
+            }
 			if (pSectionFooterView != NULL)
 			{
 				pSectionFooterView->setDisplayRange(true);

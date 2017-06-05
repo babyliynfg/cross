@@ -96,7 +96,7 @@ public:
     
     // event listeners. If these functions are set, the corresponding function of CACollectionViewDataSource will fail.
     
-    CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int row, unsigned int item), CellAtIndexCallback);
+    CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int row, unsigned int item), CellAtIndexPathCallback);
     
     CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), HeightForRowAtIndexPathCallback);
     

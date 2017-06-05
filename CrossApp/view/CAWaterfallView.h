@@ -60,18 +60,18 @@ class CC_DLL CAWaterfallView : public CAScrollView
 public:
     
     // event listeners. If these functions are set, the corresponding function of CAWaterfallViewDataSource will fail.
-    CC_LISTENING_FUNCTION(CAWaterfallViewCell*(DSize cellSize, unsigned int index), CellAtIndexCallback);
+    CC_LISTENING_FUNCTION(CAWaterfallViewCell*(DSize cellSize, unsigned int index), CellAtIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), HeightForIndexCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), HeightForIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(unsigned int(), NumberOfIndexCallback);
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(void(CAWaterfallViewCell* cell, unsigned int index), WillDisplayCellAtIndexCallback);
+    CC_LISTENING_FUNCTION(void(CAWaterfallViewCell* cell, unsigned int index), WillDisplayCellAtIndexPathCallback);
     
     // event listeners. If these functions are set, the corresponding function of CAWaterfallViewDelegate will fail.
-    CC_LISTENING_FUNCTION(void(unsigned int index), DidSelectCellAtIndexCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int index), DidSelectCellAtIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(void(unsigned int index), DidDeselectCellAtIndexCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int index), DidDeselectCellAtIndexPathCallback);
     
 public:
 	CAWaterfallView();

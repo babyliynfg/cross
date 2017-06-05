@@ -50,17 +50,17 @@ void ListViewTest::viewDidLoad()
         "Z",
     };
     
-    m_pListViewHor->setNumberOfIndexCallback([=]()
+    m_pListViewHor->setNumberOfIndexPathCallback([=]()
     {
         return vec1.size();
     });
     
-    m_pListViewHor->setHeightForIndexCallback([=](unsigned int index)
+    m_pListViewHor->setHeightForIndexPathCallback([=](unsigned int index)
     {
         return 200;
     });
     
-    m_pListViewHor->setCellAtIndexCallback([=](const DSize& cellSize, unsigned int index)
+    m_pListViewHor->setCellAtIndexPathCallback([=](const DSize& cellSize, unsigned int index)
     {
         CAListViewCell* cell = (CAListViewCell*)m_pListViewHor->dequeueReusableCellWithIdentifier("ListViewCell");
         if (!cell)
@@ -82,12 +82,12 @@ void ListViewTest::viewDidLoad()
 
     });
     
-    m_pListViewHor->setDidSelectCellAtIndexCallback([=](unsigned int index)
+    m_pListViewHor->setDidSelectCellAtIndexPathCallback([=](unsigned int index)
     {
         CCLog("DidSelectCell %s", vec1.at(index).c_str());
     });
     
-    m_pListViewHor->setDidDeselectCellAtIndexCallback([=](unsigned int index)
+    m_pListViewHor->setDidDeselectCellAtIndexPathCallback([=](unsigned int index)
     {
         CCLog("DidDeselectCell %s", vec1.at(index).c_str());
     });
@@ -101,11 +101,11 @@ void ListViewTest::viewDidLoad()
     m_pListViewVer->setSeparatorColor(CAColor4B::GRAY);
     this->getView()->addSubview(m_pListViewVer);
     
-    m_pListViewVer->setNumberOfIndexCallback(CALLBACK_BIND_0(ListViewTest::numberOfIndex, this));
-    m_pListViewVer->setHeightForIndexCallback(CALLBACK_BIND_1(ListViewTest::heightForIndex, this));
-    m_pListViewVer->setCellAtIndexCallback(CALLBACK_BIND_2(ListViewTest::cellAtIndex, this));
-    m_pListViewVer->setDidSelectCellAtIndexCallback(CALLBACK_BIND_1(ListViewTest::didSelectCellAtIndex, this));
-    m_pListViewVer->setDidDeselectCellAtIndexCallback(CALLBACK_BIND_1(ListViewTest::didDeselectCellAtIndex, this));
+    m_pListViewVer->setNumberOfIndexPathCallback(CALLBACK_BIND_0(ListViewTest::numberOfIndex, this));
+    m_pListViewVer->setHeightForIndexPathCallback(CALLBACK_BIND_1(ListViewTest::heightForIndex, this));
+    m_pListViewVer->setCellAtIndexPathCallback(CALLBACK_BIND_2(ListViewTest::cellAtIndex, this));
+    m_pListViewVer->setDidSelectCellAtIndexPathCallback(CALLBACK_BIND_1(ListViewTest::didSelectCellAtIndex, this));
+    m_pListViewVer->setDidDeselectCellAtIndexPathCallback(CALLBACK_BIND_1(ListViewTest::didDeselectCellAtIndex, this));
     
 }
 void ListViewTest::viewDidUnload()

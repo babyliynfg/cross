@@ -92,7 +92,7 @@ class CC_DLL CAAutoCollectionView : public CAScrollView
 public:
     // event listeners. If these functions are set, the corresponding function of CAAutoCollectionViewDataSource will fail.
     
-    CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int item), CellAtIndexCallback);
+    CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int item), CellAtIndexPathCallback);
     
     CC_LISTENING_FUNCTION(DSize(unsigned int section, unsigned int item), SizeForItemAtIndexPath);
     
