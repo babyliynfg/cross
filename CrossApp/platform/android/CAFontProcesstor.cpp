@@ -32,21 +32,52 @@ extern "C"
     }
 };
 
-int getTextAlign(CATextAlignment align)
+int getTextAlign(const CAFont& font)
 {
     int a = 0x31 ;
-    switch (align) {
-        case CATextAlignment::Left:
-            0x31 ;
-            break;
-        case CATextAlignment::Center:
-            0x33 ;
-            break ;
-        case CATextAlignment::Right :
-            0x32 ;
-            break ;
-        default:
-            break;
+    
+    CATextAlignment h = font.textAlignment ;
+    CAVerticalTextAlignment v = font.verticalTextAlignment ;
+    
+    //CENTER        = 0x33, /** Horizontal center and vertical center. */
+    if(h == CATextAlignment::Center && v == CAVerticalTextAlignment::Center)
+    {
+        a = 0x33 ;
+    }
+    //TOP_RIGHT     = 0x12, /** Horizontal right and vertical top. */
+    else if(h == CATextAlignment::Right && v == CAVerticalTextAlignment::Top)
+    {
+        a = 0x12 ;
+    }
+    //RIGHT         = 0x32, /** Horizontal right and vertical center. */
+    else if(h == CATextAlignment::Right && v == CAVerticalTextAlignment::Center)
+    {
+        a = 0x32 ;
+    }
+    //BOTTOM_RIGHT  = 0x22, /** Horizontal right and vertical bottom. */
+    else if(h == CATextAlignment::Right && v == CAVerticalTextAlignment::Bottom)
+    {
+        a = 0x22 ;
+    }
+    //BOTTOM        = 0x23, /** Horizontal center and vertical bottom. */
+    else if(h == CATextAlignment::Center && v == CAVerticalTextAlignment::Bottom)
+    {
+        a = 0x23 ;
+    }
+    //BOTTOM_LEFT   = 0x21, /** Horizontal left and vertical bottom. */
+    else if(h == CATextAlignment::Left && v == CAVerticalTextAlignment::Bottom)
+    {
+        a = 0x21 ;
+    }
+    //LEFT          = 0x31, /** Horizontal left and vertical center. */
+    else if(h == CATextAlignment::Left && v == CAVerticalTextAlignment::Center)
+    {
+        a = 0x31 ;
+    }
+    //TOP_LEFT      = 0x11, /** Horizontal left and vertical top. */
+    else if(h == CATextAlignment::Left && v == CAVerticalTextAlignment::Top)
+    {
+        a = 0x11 ;
     }
     return  a ;
 }
@@ -62,7 +93,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         
         
         JniMethodInfo methodInfo;
-        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "(Ljava/lang/String;Ljava/lang/String;IIIIIIIIIFFFFIIIIIF)Z"))
+        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "(Ljava/lang/String;Ljava/lang/String;IIIIIIIIIFFFFIIIIIFIIIIFI)Z"))
         {
             break ;
         }
@@ -96,7 +127,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
                                                     font.color.g,
                                                     font.color.b,
                                                     font.color.a,
-                                                    getTextAlign(font.textAlignment),
+                                                    getTextAlign(font),
                                                     (int)dimensions.width,
                                                     (int)dimensions.height,
                                                     (int)font.shadow.shadowEnabled,
@@ -109,11 +140,20 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
                                                     font.stroke.strokeColor.g,
                                                     font.stroke.strokeColor.b,
                                                     font.stroke.strokeColor.a,
-                                                    font.stroke.strokeSize
+                                                    font.stroke.strokeSize,
+                                                    (int)font.bold,
+                                                    (int)font.underLine,
+                                                    (int)font.deleteLine ,
+                                                    (int)font.italics,
+                                                    0.5f,
+                                                    (int)font.wordWrap
                                                     ))
         {
             break ;
         }
+        
+ 
+        
         
         //            methodInfo.env->DeleteLocalRef(strArray);
         methodInfo.env->DeleteLocalRef(jsStr);
