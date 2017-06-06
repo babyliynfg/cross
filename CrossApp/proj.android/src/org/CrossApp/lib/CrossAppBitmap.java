@@ -142,13 +142,34 @@ public final class CrossAppBitmap {
      * @param strokeB    
      * @param strokeA    
      * @param strokeSize  
+     * @param bold
+     * @param underLine
+     * @param deleteLine
+     * @param italics
+     * @param italics_v
+     * @param wordWrap
+     * 
+     * 
      * @return
      */
-    public static boolean createTextBitmapShadowStroke(String string,  final String fontName, int fontSize,
-                                                    int fontTintR, int fontTintG, int fontTintB, int fontTintA,
-                                                    int alignment, int width, int height, 
-                                                    int shadow, float shadowDX, float shadowDY, float shadowBlur, float shadowOpacity, 
-                                                    int stroke, int strokeR, int strokeG, int strokeB, int strokeA, float strokeSize) {
+    public static boolean createTextBitmapShadowStroke(
+    		String string,  
+    		final String fontName, 
+    		int fontSize,
+            int fontTintR, int fontTintG, int fontTintB, int fontTintA,
+            int alignment, 
+            int width, 
+            int height, 
+            int shadow, float shadowDX, float shadowDY, float shadowBlur, float shadowOpacity, 
+            int stroke, int strokeR, int strokeG, int strokeB, int strokeA, float strokeSize,
+            int bold ,                                        
+            int undeerLine, 
+            int deleteLine , 
+            int italics , 
+            float italics_v , 
+            int wordWrap
+    		) 
+    {
     	
         Layout.Alignment hAlignment = Layout.Alignment.ALIGN_NORMAL;
         int horizontalAlignment = alignment & 0x0F;
@@ -164,16 +185,25 @@ public final class CrossAppBitmap {
             default:
                 break;
         }
-
+        
         TextPaint paint = CrossAppBitmap.newPaint(fontName, fontSize);
-
+        
+        italics_v = -italics_v ; 
+        paint.setFakeBoldText(bold > 0 ?true : false); //true为粗体，false为非粗体
+        paint.setTextSkewX(italics > 0 ? italics_v : 0);     //float类型参数，负数表示右斜，整数左斜
+        paint.setUnderlineText(undeerLine  >0 ? true : false); //true为下划线，false为非下划线
+        paint.setStrikeThruText(deleteLine > 0 ? true: false); //true为删除线，false为非删除线
+        
+        int _increase =  italics > 0 ?  (int) ( fontSize * Math.abs(italics_v) * 0.5f ) : 0 ; 
+        int _italics_trans = italics > 0 ? (   italics_v > 0 ?  _increase : -_increase  ) : 0 ; 
+        
         if (stroke>0) {
             paint.setStyle(TextPaint.Style.STROKE);
             paint.setStrokeWidth(strokeSize);
         }
-
+        
         int maxWidth = width;
-
+        
         if (maxWidth <= 0) {
             maxWidth = (int)Math.ceil( StaticLayout.getDesiredWidth(string, paint));
         }
@@ -196,7 +226,7 @@ public final class CrossAppBitmap {
         if (bitmapWidth == 0 || bitmapHeight == 0) {
             return false;
         }
-
+        
         int offsetX = 0;
         if (horizontalAlignment == HORIZONTAL_ALIGN_CENTER) {
             offsetX = (bitmapWidth - layoutWidth) / 2;
@@ -204,7 +234,8 @@ public final class CrossAppBitmap {
         else if (horizontalAlignment == HORIZONTAL_ALIGN_RIGHT) {
             offsetX = bitmapWidth - layoutWidth;
         }
-
+        offsetX += _italics_trans ; 
+        
         int offsetY = 0;
         int verticalAlignment   = (alignment >> 4) & 0x0F;
         switch (verticalAlignment)
@@ -217,7 +248,7 @@ public final class CrossAppBitmap {
                 break;
         }
         
-        Bitmap bitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap((bitmapWidth + _increase) , bitmapHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(offsetX, offsetY);
         if ( stroke>0 )
