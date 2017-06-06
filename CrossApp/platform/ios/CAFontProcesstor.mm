@@ -148,6 +148,23 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         if (font.underLine) [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
         if (font.deleteLine) [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
 
+        if (font.shadow.shadowEnabled)
+        {
+            NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
+            
+            [shadow setShadowOffset:CGSizeMake(font.shadow.shadowOffset.width, font.shadow.shadowOffset.height)];
+            [shadow setShadowBlurRadius:font.shadow.shadowBlur];
+            
+            UIColor* shadowColor = [UIColor colorWithRed:font.shadow.shadowColor.r / 255.f
+                                                   green:font.shadow.shadowColor.g / 255.f
+                                                    blue:font.shadow.shadowColor.b / 255.f
+                                                   alpha:font.shadow.shadowColor.a / 255.f];
+            
+            [shadow setShadowColor:shadowColor];
+            
+            [tokenAttributesDict setObject:shadow forKey:NSShadowAttributeName];
+        }
+        
         NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict] autorelease];
         
         int shrinkFontSize = font.fontSize;
@@ -223,45 +240,14 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
             
             if (font.italics) [tokenAttributesDict2 setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
             
-            [tokenAttributesDict2 setObject:@(shrinkFontSize / 10.f) forKey:NSStrokeWidthAttributeName];
+            [tokenAttributesDict2 setObject:@(shrinkFontSize / 15.f) forKey:NSStrokeWidthAttributeName];
             [tokenAttributesDict2 setObject:foregroundColor forKey:NSStrokeColorAttributeName];
             
             NSAttributedString *strokeString = [[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict2] autorelease];
             
             [strokeString drawInRect:textRect];
         }
-        
-        if (font.shadow.shadowEnabled)
-        {
-            CGContextSetTextDrawingMode(context, kCGTextStroke);
-            
-            NSMutableDictionary* tokenAttributesDict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                         foregroundColor,NSForegroundColorAttributeName,
-                                                         iosfont, NSFontAttributeName,
-                                                         paragraphStyle, NSParagraphStyleAttributeName, nil];
-            
-            if (font.italics) [tokenAttributesDict2 setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
-            
-            NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
-            
-            [shadow setShadowOffset:CGSizeMake(font.shadow.shadowOffset.width, font.shadow.shadowOffset.height)];
-            [shadow setShadowBlurRadius:font.shadow.shadowBlur];
-            
-            UIColor* shadowColor = [UIColor colorWithRed:font.shadow.shadowColor.r / 255.f
-                                                   green:font.shadow.shadowColor.g / 255.f
-                                                    blue:font.shadow.shadowColor.b / 255.f
-                                                   alpha:font.shadow.shadowColor.a / 255.f];
-            
-            [shadow setShadowColor:shadowColor];
-            
-            [tokenAttributesDict2 setObject:shadow forKey:NSShadowAttributeName];
-            
-            NSAttributedString *strokeString =[[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict2] autorelease];
-            
-            [strokeString drawInRect:textRect];
-            
-        }
-        
+
         if (font.stroke.strokeEnabled)
         {
             CGContextSetTextDrawingMode(context, kCGTextStroke);
