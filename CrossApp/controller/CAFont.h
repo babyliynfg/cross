@@ -75,7 +75,7 @@ public:
     
     std::string             fontName;
     
-    unsigned int            fontSize;
+    float                   fontSize;
     
     CAColor4B               color;
     

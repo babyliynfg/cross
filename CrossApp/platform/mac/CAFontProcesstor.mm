@@ -89,231 +89,228 @@ static NSFont* _createSystemFont(const std::string& fontName, unsigned int size)
 }
 
 NS_CC_BEGIN
-namespace CAFontProcesstor
+
+CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dim)
 {
-    
-    CAImage* imageForText(const std::string& text, const CAFont& font, DSize& dim)
-    {
-        CAImage* ret = nullptr;
-        do {
-            CC_BREAK_IF(text.empty());
-            NSString * string  = [NSString stringWithUTF8String:text.c_str()];
-            CC_BREAK_IF(!string);
-            
-            id nsfont = _createSystemFont(font.fontName, font.fontSize);
-            CC_BREAK_IF(!nsfont);
-            
-            // color
-            NSColor* foregroundColor = [NSColor colorWithDeviceRed:font.color.r/255.0
-                                                             green:font.color.g/255.0
-                                                              blue:font.color.b/255.0
-                                                             alpha:font.color.a/255.0];
-
-            // alignment
-            NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
-
-            NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-            [paragraphStyle setAlignment:textAlign];
-            
-            // attribute
-            NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 foregroundColor,
-                                                 NSForegroundColorAttributeName,
-                                                 nsfont,
-                                                 NSFontAttributeName,
-                                                 paragraphStyle,
-                                                 NSParagraphStyleAttributeName,
-                                                 nil];
-            
-            NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
-            
-            NSSize dimensions = _calculateStringSize(stringWithAttributes, nsfont, CGSizeMake(dim.width, dim.height), font.wordWrap, 0);
-
-            // Mac crashes if the width or height is 0
-            CC_BREAK_IF(dimensions.width <= 0 || dimensions.height <= 0);
-            
-            dim = DSize(dimensions.width, dimensions.height);
-            
-
-            NSInteger POTWide = dimensions.width;
-            NSInteger POTHigh = dimensions.height;
-            
-            NSRect textRect = NSMakeRect(0, 0, dimensions.width, dimensions.height);
-            
-            [[NSGraphicsContext currentContext] setShouldAntialias:NO];
-            
-            NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
-            [image lockFocus];
-            // patch for mac retina display and lableTTF
-            [[NSAffineTransform transform] set];
-            [stringWithAttributes drawInRect:textRect];
-            NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
-            [image unlockFocus];
-            
-            unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
-            unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
-            
-            ssize_t length = pixelsWide * pixelsHigh * 4;
-            unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);
-            memcpy(bytes, (unsigned char*) [bitmap bitmapData], length);
-
-            [bitmap release];
-            [image release];
-            
-            CAData* data = new CAData();
-            data->fastSet(bytes, length);
-            ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
-            data->release();
-        } while (0);
-
+    CAImage* ret = nullptr;
+    do {
+        CC_BREAK_IF(text.empty());
+        NSString * string  = [NSString stringWithUTF8String:text.c_str()];
+        CC_BREAK_IF(!string);
         
-        return ret;
-    }
-    
-    float heightForFont(const CAFont& font)
-    {
-        float ret = 0;
-        do
-        {
-            id nsfont = _createSystemFont(font.fontName, font.fontSize);
-            CC_BREAK_IF(!nsfont);
-            
-            // alignment
-            NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
-            
-            NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-            [paragraphStyle setAlignment:textAlign];
-            
-            // attribute
-            NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSColor whiteColor],
-                                                 NSForegroundColorAttributeName,
-                                                 nsfont,
-                                                 NSFontAttributeName,
-                                                 paragraphStyle,
-                                                 NSParagraphStyleAttributeName,
-                                                 nil];
-            
-            NSAttributedString* str = [[[NSAttributedString alloc] initWithString:@"A" attributes:tokenAttributesDict] autorelease];
-            NSSize textSize = NSMakeSize(CGFLOAT_MAX, 0);
-            NSSize dim;
-#ifdef __MAC_10_11
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
-#else
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-#else
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-            
-            ret = ceilf(dim.height);
-            
-        } while (0);
+        id nsfont = _createSystemFont(font.fontName, font.fontSize);
+        CC_BREAK_IF(!nsfont);
+        
+        // color
+        NSColor* foregroundColor = [NSColor colorWithDeviceRed:font.color.r/255.0
+                                                         green:font.color.g/255.0
+                                                          blue:font.color.b/255.0
+                                                         alpha:font.color.a/255.0];
+        
+        // alignment
+        NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
+        
+        NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        [paragraphStyle setAlignment:textAlign];
+        
+        // attribute
+        NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             foregroundColor,
+                                             NSForegroundColorAttributeName,
+                                             nsfont,
+                                             NSFontAttributeName,
+                                             paragraphStyle,
+                                             NSParagraphStyleAttributeName,
+                                             nil];
+        
+        NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
+        
+        NSSize dimensions = _calculateStringSize(stringWithAttributes, nsfont, CGSizeMake(dim.width, dim.height), font.wordWrap, 0);
+        
+        // Mac crashes if the width or height is 0
+        CC_BREAK_IF(dimensions.width <= 0 || dimensions.height <= 0);
+        
+        dim = DSize(dimensions.width, dimensions.height);
         
         
-        return ret;
-    }
-    
-    float heightForTextAtWidth(const std::string& text, const CAFont& font, float width)
-    {
-        float ret = 0;
-        do
-        {
-            CC_BREAK_IF(text.empty());
-            
-            NSString* string = [NSString stringWithUTF8String:text.c_str()];
-            CC_BREAK_IF(!string);
-            
-            id nsfont = _createSystemFont(font.fontName, font.fontSize);
-            CC_BREAK_IF(!nsfont);
-            
-            // alignment
-            NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
-            
-            NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-            [paragraphStyle setAlignment:textAlign];
-            
-            // attribute
-            NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSColor whiteColor],
-                                                 NSForegroundColorAttributeName,
-                                                 nsfont,
-                                                 NSFontAttributeName,
-                                                 paragraphStyle,
-                                                 NSParagraphStyleAttributeName,
-                                                 nil];
-            
-            NSAttributedString* str = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
-            NSSize textSize = NSMakeSize(width, 0);
-            NSSize dim;
-#ifdef __MAC_10_11
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
-#else
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-#else
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-            
-            ret = ceilf(dim.height);
-            
-        } while (0);
+        NSInteger POTWide = dimensions.width;
+        NSInteger POTHigh = dimensions.height;
         
-        return ret;
-    }
+        NSRect textRect = NSMakeRect(0, 0, dimensions.width, dimensions.height);
+        
+        [[NSGraphicsContext currentContext] setShouldAntialias:NO];
+        
+        NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
+        [image lockFocus];
+        // patch for mac retina display and lableTTF
+        [[NSAffineTransform transform] set];
+        [stringWithAttributes drawInRect:textRect];
+        NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
+        [image unlockFocus];
+        
+        unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
+        unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
+        
+        ssize_t length = pixelsWide * pixelsHigh * 4;
+        unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);
+        memcpy(bytes, (unsigned char*) [bitmap bitmapData], length);
+        
+        [bitmap release];
+        [image release];
+        
+        CAData* data = new CAData();
+        data->fastSet(bytes, length);
+        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
+        data->release();
+    } while (0);
     
-    float widthForTextAtOneLine(const std::string& text, const CAFont& font)
-    {
-        float ret = 0;
-        do
-        {
-            CC_BREAK_IF(text.empty());
-            NSString* string = [NSString stringWithUTF8String:text.c_str()];
-            CC_BREAK_IF(!string);
-            
-            id nsfont = _createSystemFont(font.fontName, font.fontSize);
-            CC_BREAK_IF(!nsfont);
-            
-            // alignment
-            NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
-            
-            NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-            [paragraphStyle setAlignment:textAlign];
-            
-            // attribute
-            NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSColor whiteColor],
-                                                 NSForegroundColorAttributeName,
-                                                 nsfont,
-                                                 NSFontAttributeName,
-                                                 paragraphStyle,
-                                                 NSParagraphStyleAttributeName,
-                                                 nil];
-            
-            NSAttributedString* str = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
-            NSSize textSize = NSMakeSize(CGFLOAT_MAX, 0);
-            NSSize dim;
-#ifdef __MAC_10_11
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
-#else
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-#else
-            dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-            
-            ret = ceilf(dim.width);
-            
-        } while (0);
-        return ret;
-    }
     
+    return ret;
 }
+
+float CAFontProcesstor::heightForFont(const CAFont& font)
+{
+    float ret = 0;
+    do
+    {
+        id nsfont = _createSystemFont(font.fontName, font.fontSize);
+        CC_BREAK_IF(!nsfont);
+        
+        // alignment
+        NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
+        
+        NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        [paragraphStyle setAlignment:textAlign];
+        
+        // attribute
+        NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSColor whiteColor],
+                                             NSForegroundColorAttributeName,
+                                             nsfont,
+                                             NSFontAttributeName,
+                                             paragraphStyle,
+                                             NSParagraphStyleAttributeName,
+                                             nil];
+        
+        NSAttributedString* str = [[[NSAttributedString alloc] initWithString:@"A" attributes:tokenAttributesDict] autorelease];
+        NSSize textSize = NSMakeSize(CGFLOAT_MAX, 0);
+        NSSize dim;
+#ifdef __MAC_10_11
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
+#else
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
+#endif
+#else
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
+#endif
+        
+        ret = ceilf(dim.height);
+        
+    } while (0);
+    
+    
+    return ret;
+}
+
+float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFont& font, float width)
+{
+    float ret = 0;
+    do
+    {
+        CC_BREAK_IF(text.empty());
+        
+        NSString* string = [NSString stringWithUTF8String:text.c_str()];
+        CC_BREAK_IF(!string);
+        
+        id nsfont = _createSystemFont(font.fontName, font.fontSize);
+        CC_BREAK_IF(!nsfont);
+        
+        // alignment
+        NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
+        
+        NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        [paragraphStyle setAlignment:textAlign];
+        
+        // attribute
+        NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSColor whiteColor],
+                                             NSForegroundColorAttributeName,
+                                             nsfont,
+                                             NSFontAttributeName,
+                                             paragraphStyle,
+                                             NSParagraphStyleAttributeName,
+                                             nil];
+        
+        NSAttributedString* str = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
+        NSSize textSize = NSMakeSize(width, 0);
+        NSSize dim;
+#ifdef __MAC_10_11
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
+#else
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
+#endif
+#else
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
+#endif
+        
+        ret = ceilf(dim.height);
+        
+    } while (0);
+    
+    return ret;
+}
+
+float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAFont& font)
+{
+    float ret = 0;
+    do
+    {
+        CC_BREAK_IF(text.empty());
+        NSString* string = [NSString stringWithUTF8String:text.c_str()];
+        CC_BREAK_IF(!string);
+        
+        id nsfont = _createSystemFont(font.fontName, font.fontSize);
+        CC_BREAK_IF(!nsfont);
+        
+        // alignment
+        NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
+        
+        NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        [paragraphStyle setAlignment:textAlign];
+        
+        // attribute
+        NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSColor whiteColor],
+                                             NSForegroundColorAttributeName,
+                                             nsfont,
+                                             NSFontAttributeName,
+                                             paragraphStyle,
+                                             NSParagraphStyleAttributeName,
+                                             nil];
+        
+        NSAttributedString* str = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
+        NSSize textSize = NSMakeSize(CGFLOAT_MAX, 0);
+        NSSize dim;
+#ifdef __MAC_10_11
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
+#else
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
+#endif
+#else
+        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
+#endif
+        
+        ret = ceilf(dim.width);
+        
+    } while (0);
+    return ret;
+}
+
 NS_CC_END

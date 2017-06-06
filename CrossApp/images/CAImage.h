@@ -96,16 +96,16 @@ public:
     
     virtual ~CAImage();
     
-    static int getFontHeight(const char* pFontName, unsigned int nSize);
+    static int getFontHeight(const char* pFontName, float nSize);
     
     static int getStringWidth(const char* pFontName,
-                              unsigned int nSize,
+                              float nSize,
                               const std::string& pText);
 
     static int getStringHeight(const char* pFontName,
-                               unsigned int nSize,
+                               float nSize,
                                const std::string& pText,
-                               int iLimitWidth,
+                               float iLimitWidth,
                                int iLineSpace = 0,
                                bool bWordWrap = true);
     

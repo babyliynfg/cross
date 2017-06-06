@@ -40,9 +40,9 @@ public:
 
     CC_PROPERTY_PASS_BY_REF(CAFont, m_obFont, Font);
     
-    void setFontSize(unsigned int var);
+    void setFontSize(float var);
     
-    unsigned int getFontSize();
+    float getFontSize();
     
     void setFontName(const std::string& var);
     

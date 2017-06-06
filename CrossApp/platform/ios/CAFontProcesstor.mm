@@ -78,7 +78,7 @@ NSTextAlignment _calculateTextAlignment(CrossApp::CATextAlignment alignment)
     return nsAlignment;
 }
 
-CGSize _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSize, bool enableWrap, int fontSize)
+CGSize _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSize, bool enableWrap, float fontSize)
 {
     CGSize textRect = CGSizeZero;
     textRect.width = constrainSize.width > 0 ? constrainSize.width

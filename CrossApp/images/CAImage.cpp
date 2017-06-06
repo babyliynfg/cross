@@ -1025,7 +1025,7 @@ CAImage::~CAImage()
     s_pImages.erase(this);
 }
 
-int CAImage::getFontHeight(const char* pFontName, unsigned int nSize)
+int CAImage::getFontHeight(const char* pFontName, float nSize)
 {
     CAFont font;
     font.fontName = pFontName;
@@ -1033,7 +1033,7 @@ int CAImage::getFontHeight(const char* pFontName, unsigned int nSize)
     return CAFontProcesstor::heightForFont(font);
 }
 
-int CAImage::getStringWidth(const char* pFontName, unsigned int nSize, const std::string& pText)
+int CAImage::getStringWidth(const char* pFontName, float nSize, const std::string& pText)
 {
     CAFont font;
     font.fontName = pFontName;
@@ -1041,7 +1041,7 @@ int CAImage::getStringWidth(const char* pFontName, unsigned int nSize, const std
     return CAFontProcesstor::widthForTextAtOneLine(pText, font);
 }
 
-int CAImage::getStringHeight(const char* pFontName, unsigned int nSize, const std::string& pText, int iLimitWidth, int iLineSpace, bool bWordWrap)
+int CAImage::getStringHeight(const char* pFontName, float nSize, const std::string& pText, float iLimitWidth, int iLineSpace, bool bWordWrap)
 {
     CAFont font;
     font.fontName = pFontName;

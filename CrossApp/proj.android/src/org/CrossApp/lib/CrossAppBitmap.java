@@ -244,16 +244,16 @@ public final class CrossAppBitmap {
       FontMetrics fm = p.getFontMetrics();  
       
       int textHeight = (int) (Math.ceil(fm.descent - fm.ascent) + 2);  
-	  
+	        
       return textHeight;
   }
   
   public static float heightForTextAtWidth(String string , int width , int fontsize)
-  {
+  {	  
 	  TextPaint paint = new TextPaint();
       paint.setTextSize(fontsize);
 	  Layout layout = new StaticLayout(string, paint, width , Layout.Alignment.ALIGN_CENTER,1.0f,0.0f,false);
-      
+      	  
       return layout.getHeight();
   }
   
@@ -262,7 +262,7 @@ public final class CrossAppBitmap {
       
 	  TextPaint paint = new TextPaint();
       paint.setTextSize(fontSize);
-	  
+      
       return paint.measureText(string) ; 
   }
   
@@ -339,8 +339,7 @@ public final class CrossAppBitmap {
         return text_size;
     }
 
-    private static String getStringWithEllipsis(String string, float width,
-                                                float fontSize) {
+    private static String getStringWithEllipsis(String string, float width, float fontSize) {
         if (TextUtils.isEmpty(string)) {
             return "";
         }

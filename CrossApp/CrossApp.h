@@ -178,7 +178,7 @@
 #include "platform/CATextField.h"
 #include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"
-//#include "platform/CADevice.h"
+#include "platform/CAFontProcesstor.h"
 
 // device
 #include "device/CADevice.h"

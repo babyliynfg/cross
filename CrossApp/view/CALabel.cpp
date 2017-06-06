@@ -300,13 +300,13 @@ const CAFont& CALabel::getFont()
     return m_obFont;
 }
 
-void CALabel::setFontSize(unsigned int var)
+void CALabel::setFontSize(float var)
 {
     m_obFont.fontSize = var;
     this->updateImageDraw();
 }
 
-unsigned int CALabel::getFontSize()
+float CALabel::getFontSize()
 {
     return m_obFont.fontSize;
 }
