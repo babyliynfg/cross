@@ -1,499 +1,355 @@
 
 package org.CrossApp.lib;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.LinkedList;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
-import android.graphics.Paint.FontMetricsInt;
+import android.graphics.Paint.FontMetrics;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.text.BoringLayout;
+import android.text.Layout;
+import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.util.FloatMath;
 import android.util.Log;
 
-public class CrossAppBitmap {
-	// ===========================================================
-	// Constants
-	// ===========================================================
-
-	/* The values are the same as CrossApp/platform/CCImage.h. */
-	private static final int HORIZONTALALIGN_LEFT = 1;
-	private static final int HORIZONTALALIGN_RIGHT = 2;
-	private static final int HORIZONTALALIGN_CENTER = 3;
-	private static final int VERTICALALIGN_TOP = 1;
-	private static final int VERTICALALIGN_BOTTOM = 2;
-	private static final int VERTICALALIGN_CENTER = 3;
-
-	// ===========================================================
-	// Fields
-	// ===========================================================
-
-	private static Context sContext;
-
-	// ===========================================================
-	// Constructors
-	// ===========================================================
-
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
-
-	public static void setContext(final Context pContext) {
-		CrossAppBitmap.sContext = pContext;
-	}
-
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
-
-	// ===========================================================
-	// Methods
-	// ===========================================================
-
-	private static native void nativeInitBitmapDC(final int pWidth,
-			final int pHeight, final byte[] pPixels);
-
-	/**
-	 * @param pWidth
-	 *            the width to draw, it can be 0
-	 * @param pHeight
-	 *            the height to draw, it can be 0
-	 */
-	public static void createTextBitmap(String pString, final String pFontName,
-			final int pFontSize, final int pAlignment, final int pWidth,
-			final int pHeight) {
-		
-		//
-		createTextBitmapShadowStroke( pString, pFontName, pFontSize, 1.0f, 1.0f, 1.0f,   	// text font and color
-									  pAlignment, pWidth, pHeight,							// alignment and size
-									  false, 0.0f, 0.0f, 0.0f,								// no shadow
-									  false, 1.0f, 1.0f, 1.0f, 1.0f);						// no stroke
-									 
-	}
-
-	public static void createTextBitmapShadowStroke(String pString,  final String pFontName, final int pFontSize,
-													final float fontTintR, final float fontTintG, final float fontTintB,
-													final int pAlignment, final int pWidth, final int pHeight, final boolean shadow,
-													final float shadowDX, final float shadowDY, final float shadowBlur, final boolean stroke,
-													final float strokeR, final float strokeG, final float strokeB, final float strokeSize) {
-
-		
-		final int horizontalAlignment = pAlignment & 0x0F;
-		final int verticalAlignment   = (pAlignment >> 4) & 0x0F;
-
-		pString = CrossAppBitmap.refactorString(pString);
-		final Paint paint = CrossAppBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
-		
-		// set the paint color
-		paint.setARGB(255, (int)(255.0 * fontTintR), (int)(255.0 * fontTintG), (int)(255.0 * fontTintB));
-
-		final TextProperty textProperty = CrossAppBitmap.computeTextProperty(pString, pWidth, pHeight, paint);
-		final int bitmapTotalHeight = (pHeight == 0 ? textProperty.mTotalHeight: pHeight);
-		
-		// padding needed when using shadows (not used otherwise)
-		float bitmapPaddingX   = 0.0f;
-		float bitmapPaddingY   = 0.0f;
-		float renderTextDeltaX = 0.0f;
-		float renderTextDeltaY = 0.0f;
-		
-		if ( shadow ) {
-
-			int shadowColor = 0xff7d7d7d;
-			paint.setShadowLayer(shadowBlur, shadowDX, shadowDY, shadowColor);
-	
-			bitmapPaddingX = Math.abs(shadowDX);
-			bitmapPaddingY = Math.abs(shadowDY);
-					
-			if ( shadowDX < 0.0 )
-			{
-				renderTextDeltaX = bitmapPaddingX;
-			}
-			
-			if ( shadowDY < 0.0 )
-			{
-				renderTextDeltaY = 	bitmapPaddingY;
-			}
-		}
-		
-		final Bitmap bitmap = Bitmap.createBitmap(textProperty.mMaxWidth + (int)bitmapPaddingX,
-				bitmapTotalHeight + (int)bitmapPaddingY, Bitmap.Config.ARGB_8888);
-		
-		final Canvas canvas = new Canvas(bitmap);
-
-		/* Draw string. */
-		final FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
-		
-		int x = 0;
-		int y = CrossAppBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
-		
-		final String[] lines = textProperty.mLines;
-		
-		for (final String line : lines) {
-			
-			x = CrossAppBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-			canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paint);
-			y += textProperty.mHeightPerLine;
-			
-		}
-		 
-		// draw again with stroke on if needed 
-		if ( stroke ) {
-			
-			final Paint paintStroke = CrossAppBitmap.newPaint(pFontName, pFontSize, horizontalAlignment);
-			paintStroke.setStyle(Paint.Style.STROKE);
-			paintStroke.setStrokeWidth(strokeSize * 0.5f);
-			paintStroke.setARGB(255, (int)strokeR * 255, (int)strokeG * 255, (int)strokeB * 255);
-			
-			x = 0;
-			y = CrossAppBitmap.computeY(fontMetricsInt, pHeight, textProperty.mTotalHeight, verticalAlignment);
-			final String[] lines2 = textProperty.mLines;
-			
-			for (final String line : lines2) {
-				
-				x = CrossAppBitmap.computeX(line, textProperty.mMaxWidth, horizontalAlignment);
-				canvas.drawText(line, x + renderTextDeltaX, y + renderTextDeltaY, paintStroke);
-				y += textProperty.mHeightPerLine;
-				
-			}
-			
-		}
-		
-		CrossAppBitmap.initNativeObject(bitmap);
-	}
-
-	private static Paint newPaint(final String pFontName, final int pFontSize,
-			final int pHorizontalAlignment) {
-		final Paint paint = new Paint();
-		paint.setColor(Color.WHITE);
-		paint.setTextSize(pFontSize); 
-		paint.setAntiAlias(true);
-
-		/* Set type face for paint, now it support .ttf file. */
-		if (pFontName.endsWith(".ttf")) {
-			try {
-				final Typeface typeFace = CrossAppTypefaces.get(
-						CrossAppBitmap.sContext, pFontName);
-				paint.setTypeface(typeFace);
-			} catch (final Exception e) {
-				Log.e("CrossAppBitmap", "error to create ttf type face: "
-						+ pFontName);
-
-				/* The file may not find, use system font. */
-				paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
-			}
-		} else {
-			paint.setTypeface(Typeface.create(pFontName, Typeface.NORMAL));
-		}
-
-		switch (pHorizontalAlignment) {
-		case HORIZONTALALIGN_CENTER:
-			paint.setTextAlign(Align.CENTER);
-			break;
-		case HORIZONTALALIGN_RIGHT:
-			paint.setTextAlign(Align.RIGHT);
-			break;
-		case HORIZONTALALIGN_LEFT:
-		default:
-			paint.setTextAlign(Align.LEFT);
-			break;
-		}
-
-		return paint;
-	}
-	
-	private static TextProperty computeTextProperty(final String pString,
-			final int pWidth, final int pHeight, final Paint pPaint) {
-		final FontMetricsInt fm = pPaint.getFontMetricsInt();
-		final int h = (int) Math.ceil(fm.bottom - fm.top);
-		int maxContentWidth = 0;
-
-		final String[] lines = CrossAppBitmap.splitString(pString, pWidth,
-				pHeight, pPaint);
-
-		if (pWidth != 0) {
-			maxContentWidth = pWidth;
-		} else {
-			/* Compute the max width. */
-			int temp = 0;
-			for (final String line : lines) {
-				temp = (int) FloatMath.ceil(pPaint.measureText(line, 0,
-						line.length()));
-				if (temp > maxContentWidth) {
-					maxContentWidth = temp;
-				}
-			}
-		}
-
-		return new TextProperty(maxContentWidth, h, lines);
-	}
-
-	private static int computeX(final String pText, final int pMaxWidth,
-			final int pHorizontalAlignment) {
-		int ret = 0;
-
-		switch (pHorizontalAlignment) {
-		case HORIZONTALALIGN_CENTER:
-			ret = pMaxWidth / 2;
-			break;
-		case HORIZONTALALIGN_RIGHT:
-			ret = pMaxWidth;
-			break;
-		case HORIZONTALALIGN_LEFT:
-		default:
-			break;
-		}
-
-		return ret;
-	}
-
-	private static int computeY(final FontMetricsInt pFontMetricsInt,
-			final int pConstrainHeight, final int pTotalHeight,
-			final int pVerticalAlignment) {
-		int y = -pFontMetricsInt.top;
-
-		if (pConstrainHeight > pTotalHeight) {
-			switch (pVerticalAlignment) {
-			case VERTICALALIGN_TOP:
-				y = -pFontMetricsInt.top;
-				break;
-			case VERTICALALIGN_CENTER:
-				y = -pFontMetricsInt.top + (pConstrainHeight - pTotalHeight)
-						/ 2;
-				break;
-			case VERTICALALIGN_BOTTOM:
-				y = -pFontMetricsInt.top + (pConstrainHeight - pTotalHeight);
-				break;
-			default:
-				break;
-			}
-		}
-
-		return y;
-	}
-
-	/*
-	 * If maxWidth or maxHeight is not 0, split the string to fix the maxWidth
-	 * and maxHeight.
-	 */
-	private static String[] splitString(final String pString,
-			final int pMaxWidth, final int pMaxHeight, final Paint pPaint) {
-		final String[] lines = pString.split("\\n");
-		String[] ret = null;
-		final FontMetricsInt fm = pPaint.getFontMetricsInt();
-		final int heightPerLine = (int) Math.ceil(fm.bottom - fm.top);
-		final int maxLines = pMaxHeight / heightPerLine;
-
-		if (pMaxWidth != 0) {
-			final LinkedList<String> strList = new LinkedList<String>();
-			for (final String line : lines) {
-				/*
-				 * The width of line is exceed maxWidth, should divide it into
-				 * two or more lines.
-				 */
-				final int lineWidth = (int) FloatMath.ceil(pPaint
-						.measureText(line));
-				if (lineWidth > pMaxWidth) {
-					strList.addAll(CrossAppBitmap.divideStringWithMaxWidth(
-							line, pMaxWidth, pPaint));
-				} else {
-					strList.add(line);
-				}
-
-				/* Should not exceed the max height. */
-				if (maxLines > 0 && strList.size() >= maxLines) {
-					break;
-				}
-			}
-
-			/* Remove exceeding lines. */
-			if (maxLines > 0 && strList.size() > maxLines) {
-				while (strList.size() > maxLines) {
-					strList.removeLast();
-				}
-			}
-
-			ret = new String[strList.size()];
-			strList.toArray(ret);
-		} else if (pMaxHeight != 0 && lines.length > maxLines) {
-			/* Remove exceeding lines. */
-			final LinkedList<String> strList = new LinkedList<String>();
-			for (int i = 0; i < maxLines; i++) {
-				strList.add(lines[i]);
-			}
-			ret = new String[strList.size()];
-			strList.toArray(ret);
-		} else {
-			ret = lines;
-		}
-
-		return ret;
-	}
-
-	private static LinkedList<String> divideStringWithMaxWidth(
-			final String pString, final int pMaxWidth, final Paint pPaint) {
-		final int charLength = pString.length();
-		int start = 0;
-		int tempWidth = 0;
-		final LinkedList<String> strList = new LinkedList<String>();
-
-		/* Break a String into String[] by the width & should wrap the word. */
-		for (int i = 1; i <= charLength; ++i) {
-			tempWidth = (int) FloatMath.ceil(pPaint.measureText(pString, start,
-					i));
-			if (tempWidth >= pMaxWidth) {
-				final int lastIndexOfSpace = pString.substring(0, i)
-						.lastIndexOf(" ");
-
-				if (lastIndexOfSpace != -1 && lastIndexOfSpace > start) {
-					/* Should wrap the word. */
-					strList.add(pString.substring(start, lastIndexOfSpace));
-					i = lastIndexOfSpace + 1; // skip space
-				} else {
-					/* Should not exceed the width. */
-					if (tempWidth > pMaxWidth) {
-						strList.add(pString.substring(start, i - 1));
-						/* Compute from previous char. */
-						--i;
-					} else {
-						strList.add(pString.substring(start, i));
-					}
-				}
-
-				/* Remove spaces at the beginning of a new line. */
-				while (i < charLength && pString.charAt(i) == ' ') {
-					++i;
-				}
-
-				start = i;
-			}
-		}
-
-		/* Add the last chars. */
-		if (start < charLength) {
-			strList.add(pString.substring(start));
-		}
-
-		return strList;
-	}
-
-	private static String refactorString(final String pString) {
-		/* Avoid error when content is "". */
-		if (pString.compareTo("") == 0) {
-			return " ";
-		}
-
-		/*
-		 * If the font of "\n" is "" or "\n", insert " " in front of it. For
-		 * example: "\nabc" -> " \nabc" "\nabc\n\n" -> " \nabc\n \n".
-		 */
-		final StringBuilder strBuilder = new StringBuilder(pString);
-		int start = 0;
-		int index = strBuilder.indexOf("\n");
-		while (index != -1) {
-			if (index == 0 || strBuilder.charAt(index - 1) == '\n') {
-				strBuilder.insert(start, " ");
-				start = index + 2;
-			} else {
-				start = index + 1;
-			}
-
-			if (start > strBuilder.length() || index == strBuilder.length()) {
-				break;
-			}
-
-			index = strBuilder.indexOf("\n", start);
-		}
-
-		return strBuilder.toString();
-	}
-
-	private static void initNativeObject(final Bitmap pBitmap) {
-		final byte[] pixels = CrossAppBitmap.getPixels(pBitmap);
-		if (pixels == null) {
-			return;
-		}
-
-		CrossAppBitmap.nativeInitBitmapDC(pBitmap.getWidth(),
-				pBitmap.getHeight(), pixels);
-	}
-
-	private static byte[] getPixels(final Bitmap pBitmap) {
-		if (pBitmap != null) {
-			final byte[] pixels = new byte[pBitmap.getWidth()
-					* pBitmap.getHeight() * 4];
-			final ByteBuffer buf = ByteBuffer.wrap(pixels);
-			buf.order(ByteOrder.nativeOrder());
-			pBitmap.copyPixelsToBuffer(buf);
-			return pixels;
-		}
-
-		return null;
-	}
-
-	private static int getFontSizeAccordingHeight(int height) {
-		Paint paint = new Paint();
-		Rect bounds = new Rect();
-
-		paint.setTypeface(Typeface.DEFAULT);
-		int incr_text_size = 1;
-		boolean found_desired_size = false;
-
-		while (!found_desired_size) {
-
-			paint.setTextSize(incr_text_size);
-			String text = "SghMNy";
-			paint.getTextBounds(text, 0, text.length(), bounds);
-
-			incr_text_size++;
-
-			if (height - bounds.height() <= 2) {
-				found_desired_size = true;
-			}
-			Log.d("font size", "incr size:" + incr_text_size);
-		}
-		return incr_text_size;
-	}
-
-	private static String getStringWithEllipsis(String pString, float width,
-			float fontSize) {
-		if (TextUtils.isEmpty(pString)) {
-			return "";
-		}
-
-		TextPaint paint = new TextPaint();
-		paint.setTypeface(Typeface.DEFAULT);
-		paint.setTextSize(fontSize);
-
-		return TextUtils.ellipsize(pString, paint, width,
-				TextUtils.TruncateAt.END).toString();
-	}
-
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
-
-	private static class TextProperty {
-		/** The max width of lines. */
-		private final int mMaxWidth;
-		/** The height of all lines. */
-		private final int mTotalHeight;
-		private final int mHeightPerLine;
-		private final String[] mLines;
-
-		TextProperty(final int pMaxWidth, final int pHeightPerLine,
-				final String[] pLines) {
-			this.mMaxWidth = pMaxWidth;
-			this.mHeightPerLine = pHeightPerLine;
-			this.mTotalHeight = pHeightPerLine * pLines.length;
-			this.mLines = pLines;
-		}
-	}
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
+public final class CrossAppBitmap {
+    // ===========================================================
+    // Constants
+    // ===========================================================
+
+    private static final int HORIZONTAL_ALIGN_LEFT = 1;
+    private static final int HORIZONTAL_ALIGN_RIGHT = 2;
+    private static final int HORIZONTAL_ALIGN_CENTER = 3;
+    private static final int VERTICAL_ALIGN_TOP = 1;
+    private static final int VERTICAL_ALIGN_BOTTOM = 2;
+    private static final int VERTICAL_ALIGN_CENTER = 3;
+    
+    // ===========================================================
+    // Fields
+    // ===========================================================
+
+    private static Context sContext;
+
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
+
+    public static void setContext(final Context context) {
+        CrossAppBitmap.sContext = context;
+    }
+
+    // ===========================================================
+    // Methods for/from SuperClass/Interfaces
+    // ===========================================================
+
+    // ===========================================================
+    // Methods
+    // ===========================================================
+
+    private static native void nativeInitBitmapDC(final int width,
+            final int height, final byte[] pixels);
+
+    //http://egoco.de/post/19077604048/calculating-the-height-of-text-in-android
+    public static int getTextHeight(String text, int maxWidth, float textSize, Typeface typeface) {
+        TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.SUBPIXEL_TEXT_FLAG);
+        paint.setTextSize(textSize);
+        paint.setTypeface(typeface);
+
+        int lineCount = 0;
+
+        int index = 0;
+        int length = text.length();
+
+        while(index < length) {
+            index += paint.breakText(text, index, length, true, maxWidth, null);
+            lineCount++;
+        }
+
+        float actualHeight = (Math.abs(paint.ascent()) + Math.abs(paint.descent()));
+
+        return (int)Math.floor(lineCount * actualHeight);
+    }
+
+    public static Typeface calculateShrinkTypeFace(String text, int width, int height, Layout.Alignment hAlignment, float textSize, TextPaint paint, boolean enableWrap)
+    {
+        if (width == 0 || height == 0) {
+            return  paint.getTypeface();
+        }
+        float actualWidth = width + 1;
+        float actualHeight = height + 1;
+        float fontSize = textSize + 1;
+
+        if (!enableWrap) {
+            while (actualWidth > width || actualHeight > height) {
+                fontSize = fontSize - 1;
+
+                actualWidth = (int)Math.ceil( StaticLayout.getDesiredWidth(text, paint));
+                actualHeight = getTextHeight(text, (int)actualWidth, fontSize, paint.getTypeface());
+
+                paint.setTextSize(fontSize);
+                if (fontSize <= 0) {
+                    paint.setTextSize(textSize);
+                    break;
+                }
+            }
+        } else {
+            while (actualHeight > height || actualWidth > width) {
+                fontSize = fontSize - 1;
+
+                Layout layout = new StaticLayout(text, paint, (int) width, hAlignment,1.0f,0.0f,false);
+                actualWidth = layout.getWidth();
+                actualHeight = layout.getLineTop(layout.getLineCount());
+
+                paint.setTextSize(fontSize);
+
+                if (fontSize <= 0) {
+                    paint.setTextSize(textSize);
+                    break;
+                }
+            }
+
+        }
+        return paint.getTypeface();
+    }
+    
+    /**
+     * 
+     * @param string   
+     * @param fontName 
+     * @param fontSize    
+     * @param fontTintR   		
+     * @param fontTintG  
+     * @param fontTintB   
+     * @param fontTintA  
+     * @param alignment 
+     * @param width       
+     * @param height      
+     * @param shadow    
+     * @param shadowDX  
+     * @param shadowDY  
+     * @param shadowBlur  
+     * @param shadowOpacity  
+     * @param stroke       
+     * @param strokeR    
+     * @param strokeG   
+     * @param strokeB    
+     * @param strokeA    
+     * @param strokeSize  
+     * @return
+     */
+    public static boolean createTextBitmapShadowStroke(String string,  final String fontName, int fontSize,
+                                                    int fontTintR, int fontTintG, int fontTintB, int fontTintA,
+                                                    int alignment, int width, int height, 
+                                                    int shadow, float shadowDX, float shadowDY, float shadowBlur, float shadowOpacity, 
+                                                    int stroke, int strokeR, int strokeG, int strokeB, int strokeA, float strokeSize) {
+    	
+        Layout.Alignment hAlignment = Layout.Alignment.ALIGN_NORMAL;
+        int horizontalAlignment = alignment & 0x0F;
+        switch (horizontalAlignment) {
+            case HORIZONTAL_ALIGN_CENTER:
+                hAlignment = Layout.Alignment.ALIGN_CENTER;
+                break;
+            case HORIZONTAL_ALIGN_RIGHT:
+                hAlignment = Layout.Alignment.ALIGN_OPPOSITE;
+                break;
+            case HORIZONTAL_ALIGN_LEFT:
+                break;
+            default:
+                break;
+        }
+
+        TextPaint paint = CrossAppBitmap.newPaint(fontName, fontSize);
+
+        if (stroke>0) {
+            paint.setStyle(TextPaint.Style.STROKE);
+            paint.setStrokeWidth(strokeSize);
+        }
+
+        int maxWidth = width;
+
+        if (maxWidth <= 0) {
+            maxWidth = (int)Math.ceil( StaticLayout.getDesiredWidth(string, paint));
+        }
+
+        Layout layout = null;
+        int layoutWidth = 0;
+        int layoutHeight = 0;
+        
+        layout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,0.0f,false);
+
+        layoutWidth = layout.getWidth();
+        layoutHeight = layout.getLineTop(layout.getLineCount());
+
+        int bitmapWidth = Math.max(layoutWidth, width);
+        int bitmapHeight = layoutHeight;
+        if (height > 0) {
+            bitmapHeight = height;
+        }
+        
+        if (bitmapWidth == 0 || bitmapHeight == 0) {
+            return false;
+        }
+
+        int offsetX = 0;
+        if (horizontalAlignment == HORIZONTAL_ALIGN_CENTER) {
+            offsetX = (bitmapWidth - layoutWidth) / 2;
+        }
+        else if (horizontalAlignment == HORIZONTAL_ALIGN_RIGHT) {
+            offsetX = bitmapWidth - layoutWidth;
+        }
+
+        int offsetY = 0;
+        int verticalAlignment   = (alignment >> 4) & 0x0F;
+        switch (verticalAlignment)
+        {
+            case VERTICAL_ALIGN_CENTER:
+                offsetY = (bitmapHeight - layoutHeight) / 2;
+                break;
+            case VERTICAL_ALIGN_BOTTOM:
+                offsetY = bitmapHeight - layoutHeight;
+                break;
+        }
+        
+        Bitmap bitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.translate(offsetX, offsetY);
+        if ( stroke>0 )
+        {
+            paint.setARGB(strokeA, strokeR, strokeG, strokeB);
+            layout.draw(canvas);
+        }
+        paint.setStyle(TextPaint.Style.FILL);
+        paint.setARGB(fontTintA, fontTintR, fontTintG, fontTintB);
+        layout.draw(canvas);
+        
+        CrossAppBitmap.initNativeObject(bitmap);
+        return true;
+    }
+    
+    
+    
+
+  public static float heightForFont(int fontSize)
+  {
+  
+	  Paint p = new Paint();  
+      p.setTextSize(fontSize);  
+      FontMetrics fm = p.getFontMetrics();  
+      
+      int textHeight = (int) (Math.ceil(fm.descent - fm.ascent) + 2);  
+	  
+      return textHeight;
+  }
+  
+  public static float heightForTextAtWidth(String string , int width , int fontsize)
+  {
+	  TextPaint paint = new TextPaint();
+      paint.setTextSize(fontsize);
+	  Layout layout = new StaticLayout(string, paint, width , Layout.Alignment.ALIGN_CENTER,1.0f,0.0f,false);
+      
+      return layout.getHeight();
+  }
+  
+  public static float widthForTextAtOneLine(String string ,  int fontSize)
+  {
+      
+	  TextPaint paint = new TextPaint();
+      paint.setTextSize(fontSize);
+	  
+      return paint.measureText(string) ; 
+  }
+  
+    
+    
+    
+
+    private static TextPaint newPaint(final String fontName, final int fontSize) {
+        final TextPaint paint = new TextPaint();
+        paint.setTextSize(fontSize);
+        paint.setAntiAlias(true);
+
+        // Set type face for paint, now it support .ttf file.
+        if (fontName != null && fontName.endsWith(".ttf")) {
+            try {
+                final Typeface typeFace = CrossAppTypefaces.get(
+                        CrossAppBitmap.sContext, fontName);
+                paint.setTypeface(typeFace);
+            } catch (final Exception e) {
+                Log.e("Cocos2dxBitmap", "error to create ttf type face: "
+                        + fontName);
+
+                // The file may not find, use system font.
+                paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
+            }
+        } else {
+            paint.setTypeface(Typeface.create(fontName, Typeface.NORMAL));
+        }
+        return paint;
+    }
+    
+    private static void initNativeObject(final Bitmap bitmap) {
+        final byte[] pixels = CrossAppBitmap.getPixels(bitmap);
+        if (pixels == null) {
+            return;
+        }
+        
+        CrossAppBitmap.nativeInitBitmapDC(bitmap.getWidth(),
+                bitmap.getHeight(), pixels);
+    }
+
+    private static byte[] getPixels(final Bitmap bitmap) {
+        if (bitmap != null) {
+            final byte[] pixels = new byte[bitmap.getWidth()
+                    * bitmap.getHeight() * 4];
+            final ByteBuffer buf = ByteBuffer.wrap(pixels);
+            buf.order(ByteOrder.nativeOrder());
+            bitmap.copyPixelsToBuffer(buf);
+            return pixels;
+        }
+
+        return null;
+    }
+
+    public static int getFontSizeAccordingHeight(int height) {
+        TextPaint paint = new TextPaint();
+        Rect bounds = new Rect();
+
+        paint.setTypeface(Typeface.DEFAULT);
+        int text_size = 1;
+        boolean found_desired_size = false;
+
+        while (!found_desired_size) {
+            paint.setTextSize(text_size);
+            String text = "SghMNy";
+            paint.getTextBounds(text, 0, text.length(), bounds);
+
+            text_size++;
+
+            if (height - bounds.height() <= 2) {
+                found_desired_size = true;
+            }
+        }
+        return text_size;
+    }
+
+    private static String getStringWithEllipsis(String string, float width,
+                                                float fontSize) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        }
+
+        TextPaint paint = new TextPaint();
+        paint.setTypeface(Typeface.DEFAULT);
+        paint.setTextSize(fontSize);
+
+        return TextUtils.ellipsize(string, paint, width,
+                TextUtils.TruncateAt.END).toString();
+    }
 }
