@@ -23,22 +23,26 @@ enum class CATextAlignment
     Right,
 };
 
+const CAColor4B CAFontShadowDefaultColor = CAColor4B(0, 0, 0, 88);
+
 class CC_DLL CAFontShadow
 {
 public:
 
-    bool   shadowEnabled;
-    DSize  shadowOffset;
-    float  shadowBlur;
-    float  shadowOpacity;
+    bool       shadowEnabled;
+    DSize      shadowOffset;
+    float      shadowBlur;
+    CAColor4B  shadowColor;
     
 public:
     
     CAFontShadow()
     : shadowEnabled(false)
     , shadowBlur(0)
-    , shadowOpacity(0)
-    {}
+    , shadowColor(CAFontShadowDefaultColor)
+    {
+        
+    }
 };
 
 class CC_DLL CAFontStroke
@@ -71,6 +75,8 @@ public:
     
     bool                    italics;
     
+    float                   italicsValue;
+    
     bool                    wordWrap;
     
     std::string             fontName;
@@ -93,10 +99,11 @@ public:
     : fontSize(24)
     , fontName("")
     , color(CAColor4B::BLACK)
-    , italics(false)
     , bold(false)
     , underLine(false)
     , deleteLine(false)
+    , italics(false)
+    , italicsValue(0.5f)
     , wordWrap(false)
     , textAlignment(CATextAlignment::Left)
     , verticalTextAlignment(CAVerticalTextAlignment::Top)

@@ -160,28 +160,20 @@ void CALabel::updateImage()
     {
         this->setImage(image);
         
-        m_obLabelSize = size;
-        
-        DRect rect = DRectZero;
-        rect.size.width = m_obContentSize.width;
-        rect.size.height = size.height;
-        
-        float width = m_bFitFlag ? image->getContentSize().width : MIN(m_obContentSize.width, image->getContentSize().width);
-        
-        rect.size.width = width;
+        m_obLabelSize = image->getContentSize();
         
         switch (m_obFont.textAlignment)
         {
             case CATextAlignment::Left:
                 m_obPadding.width = 0;
                 break;
-                
+
             case CATextAlignment::Center:
-                m_obPadding.width = (m_obContentSize.width - rect.size.width) / 2;
+                m_obPadding.width = (m_obContentSize.width - m_obLabelSize.width) / 2;
                 break;
                 
             case CATextAlignment::Right:
-                m_obPadding.width = m_obContentSize.width - rect.size.width;
+                m_obPadding.width = m_obContentSize.width - m_obLabelSize.width;
                 break;
                 
             default:
@@ -195,34 +187,34 @@ void CALabel::updateImage()
                 break;
                 
             case CAVerticalTextAlignment::Center:
-                m_obPadding.height = (m_obContentSize.height - rect.size.height) / 2;
+                m_obPadding.height = (m_obContentSize.height - m_obLabelSize.height) / 2;
                 break;
                 
             case CAVerticalTextAlignment::Bottom:
-                m_obPadding.height = m_obContentSize.height - rect.size.height;
+                m_obPadding.height = m_obContentSize.height - m_obLabelSize.height;
                 break;
                 
             default:
                 break;
         }
         
-        if (m_bFitFlag && !size.equals(m_obContentSize))
+        if (m_bFitFlag && !m_obLabelSize.equals(m_obContentSize))
         {
             if (m_eLayoutType == 0)
             {
                 DRect rect = this->getFrame();
-                rect.size = size;
+                rect.size = m_obLabelSize;
                 this->setFrame(rect);
             }
             else if (m_eLayoutType == 1)
             {
                 DRect rect = this->getCenter();
-                rect.size = size;
+                rect.size = m_obLabelSize;
                 this->setCenter(rect);
             }
         }
         
-        this->setImageRect(rect);
+        this->setImageRect(DRect(DPointZero, m_obLabelSize));
     }
     
 }
