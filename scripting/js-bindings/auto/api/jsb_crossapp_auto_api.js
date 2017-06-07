@@ -547,6 +547,22 @@ CAData : function (
 };
 
 /**
+ * @class CAFont
+ */
+ca.CAFont = {
+
+/**
+ * @method CAFont
+ * @constructor
+ */
+CAFont : function (
+)
+{
+},
+
+};
+
+/**
  * @class CAImage
  */
 ca.CAImage = {
@@ -1030,185 +1046,9 @@ long
 },
 
 /**
- * @method createWithRawData
- * @param {ca.CAData} arg0
- * @param {ca.CAImage::PixelFormat} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- * @param {String} arg4
- * @return {ca.CAImage}
+ * @method purgeCAImage
  */
-createWithRawData : function (
-cadata, 
-pixelformat, 
-int, 
-int, 
-str 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method createWithImageData
- * @param {ca.CAData} arg0
- * @param {String} arg1
- * @return {ca.CAImage}
- */
-createWithImageData : function (
-cadata, 
-str 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method getStringWidth
- * @param {char} arg0
- * @param {unsigned long} arg1
- * @param {String} arg2
- * @return {int}
- */
-getStringWidth : function (
-char, 
-long, 
-str 
-)
-{
-    return 0;
-},
-
-/**
- * @method CC_SHADOW_TOP_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_TOP_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method CC_SHADOW_RIGHT_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_RIGHT_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method CC_SHADOW_LEFT_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_LEFT_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method getFontHeight
- * @param {char} arg0
- * @param {unsigned long} arg1
- * @return {int}
- */
-getFontHeight : function (
-char, 
-long 
-)
-{
-    return 0;
-},
-
-/**
- * @method create
- * @param {String} arg0
- * @return {ca.CAImage}
- */
-create : function (
-str 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method createWithImageDataNoCache
- * @param {ca.CAData} arg0
- * @return {ca.CAImage}
- */
-createWithImageDataNoCache : function (
-cadata 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method cutStringByDSize
- * @param {String} arg0
- * @param {size_object} arg1
- * @param {char} arg2
- * @param {unsigned long} arg3
- * @param {bool} arg4
- * @param {int} arg5
- * @param {bool} arg6
- * @param {bool} arg7
- * @return {int}
- */
-cutStringByDSize : function (
-str, 
-dsize, 
-char, 
-long, 
-bool, 
-int, 
-bool, 
-bool 
-)
-{
-    return 0;
-},
-
-/**
- * @method getStringHeight
- * @param {char} arg0
- * @param {unsigned long} arg1
- * @param {String} arg2
- * @param {int} arg3
- * @param {int} arg4
- * @param {bool} arg5
- * @return {int}
- */
-getStringHeight : function (
-char, 
-long, 
-str, 
-int, 
-int, 
-bool 
-)
-{
-    return 0;
-},
-
-/**
- * @method CC_SHADOW_BOTTOM_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_BOTTOM_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method reloadAllImages
- */
-reloadAllImages : function (
+purgeCAImage : function (
 )
 {
 },
@@ -1230,6 +1070,166 @@ float
 },
 
 /**
+ * @method getStringWidth
+ * @param {char} arg0
+ * @param {float} arg1
+ * @param {String} arg2
+ * @return {int}
+ */
+getStringWidth : function (
+char, 
+float, 
+str 
+)
+{
+    return 0;
+},
+
+/**
+ * @method CC_SHADOW_LEFT_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_LEFT_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method getFontHeight
+ * @param {char} arg0
+ * @param {float} arg1
+ * @return {int}
+ */
+getFontHeight : function (
+char, 
+float 
+)
+{
+    return 0;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @return {ca.CAImage}
+ */
+create : function (
+str 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method createWithRawData
+ * @param {ca.CAData} arg0
+ * @param {ca.CAImage::PixelFormat} arg1
+ * @param {unsigned int} arg2
+ * @param {unsigned int} arg3
+ * @param {String} arg4
+ * @return {ca.CAImage}
+ */
+createWithRawData : function (
+cadata, 
+pixelformat, 
+int, 
+int, 
+str 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method createWithImageDataNoCache
+ * @param {ca.CAData} arg0
+ * @return {ca.CAImage}
+ */
+createWithImageDataNoCache : function (
+cadata 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method reloadAllImages
+ */
+reloadAllImages : function (
+)
+{
+},
+
+/**
+ * @method createWithImageData
+ * @param {ca.CAData} arg0
+ * @param {String} arg1
+ * @return {ca.CAImage}
+ */
+createWithImageData : function (
+cadata, 
+str 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method getStringHeight
+ * @param {char} arg0
+ * @param {float} arg1
+ * @param {String} arg2
+ * @param {float} arg3
+ * @param {int} arg4
+ * @param {bool} arg5
+ * @return {int}
+ */
+getStringHeight : function (
+char, 
+float, 
+str, 
+float, 
+int, 
+bool 
+)
+{
+    return 0;
+},
+
+/**
+ * @method generateMipmapsWithImage
+ * @param {ca.CAImage} arg0
+ * @return {ca.CAImage}
+ */
+generateMipmapsWithImage : function (
+caimage 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method CC_SHADOW_TOP_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_TOP_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method CC_SHADOW_BOTTOM_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_BOTTOM_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
  * @method CC_WHITE_IMAGE
  * @return {ca.CAImage}
  */
@@ -1237,14 +1237,6 @@ CC_WHITE_IMAGE : function (
 )
 {
     return ca.CAImage;
-},
-
-/**
- * @method purgeCAImage
- */
-purgeCAImage : function (
-)
-{
 },
 
 /**
@@ -1266,32 +1258,10 @@ int
 },
 
 /**
- * @method cutStringByWidth
- * @param {char} arg0
- * @param {unsigned long} arg1
- * @param {String} arg2
- * @param {int} arg3
- * @param {int} arg4
- * @return {int}
- */
-cutStringByWidth : function (
-char, 
-long, 
-str, 
-int, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method generateMipmapsWithImage
- * @param {ca.CAImage} arg0
+ * @method CC_SHADOW_RIGHT_IMAGE
  * @return {ca.CAImage}
  */
-generateMipmapsWithImage : function (
-caimage 
+CC_SHADOW_RIGHT_IMAGE : function (
 )
 {
     return ca.CAImage;
@@ -1299,35 +1269,15 @@ caimage
 
 /**
  * @method createWithString
- * @param {char} arg0
- * @param {color4b_object} arg1
- * @param {char} arg2
- * @param {float} arg3
- * @param {size_object} arg4
- * @param {ca.CATextAlignment} arg5
- * @param {ca.CAVerticalTextAlignment} arg6
- * @param {bool} arg7
- * @param {int} arg8
- * @param {bool} arg9
- * @param {bool} arg10
- * @param {bool} arg11
- * @param {bool} arg12
+ * @param {String} arg0
+ * @param {font_object} arg1
+ * @param {size_object} arg2
  * @return {ca.CAImage}
  */
 createWithString : function (
-char, 
-cacolor4b, 
-char, 
-float, 
-dsize, 
-catextalignment, 
-caverticaltextalignment, 
-bool, 
-int, 
-bool, 
-bool, 
-bool, 
-bool 
+str, 
+cafont, 
+dsize 
 )
 {
     return ca.CAImage;
@@ -4076,22 +4026,6 @@ CAControl : function (
 };
 
 /**
- * @class CAFont
- */
-ca.CAFont = {
-
-/**
- * @method CAFont
- * @constructor
- */
-CAFont : function (
-)
-{
-},
-
-};
-
-/**
  * @class CALabel
  */
 ca.CALabel = {
@@ -4107,18 +4041,8 @@ catextalignment
 },
 
 /**
- * @method setDimensions
- * @param {size_object} arg0
- */
-setDimensions : function (
-dsize 
-)
-{
-},
-
-/**
  * @method getFontSize
- * @return {unsigned int}
+ * @return {float}
  */
 getFontSize : function (
 )
@@ -4253,13 +4177,13 @@ visitEve : function (
 },
 
 /**
- * @method getColor
- * @return {color4b_object}
+ * @method setWordWrap
+ * @param {bool} arg0
  */
-getColor : function (
+setWordWrap : function (
+bool 
 )
 {
-    return ca.CAColor4B;
 },
 
 /**
@@ -4313,16 +4237,6 @@ getFont : function (
 },
 
 /**
- * @method getVerticalTextAlignmet
- * @return {ca.CAVerticalTextAlignment}
- */
-getVerticalTextAlignmet : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setItalics
  * @param {bool} arg0
  */
@@ -4330,26 +4244,6 @@ setItalics : function (
 bool 
 )
 {
-},
-
-/**
- * @method setWordWrap
- * @param {bool} arg0
- */
-setWordWrap : function (
-bool 
-)
-{
-},
-
-/**
- * @method getDimensions
- * @return {size_object}
- */
-getDimensions : function (
-)
-{
-    return ca.DSize;
 },
 
 /**
@@ -4364,22 +4258,12 @@ getNumberOfLine : function (
 
 /**
  * @method setFontSize
- * @param {unsigned int} arg0
+ * @param {float} arg0
  */
 setFontSize : function (
-int 
+float 
 )
 {
-},
-
-/**
- * @method isWordWrap
- * @return {bool}
- */
-isWordWrap : function (
-)
-{
-    return false;
 },
 
 /**
@@ -4431,16 +4315,6 @@ bool
 },
 
 /**
- * @method getTextAlignment
- * @return {ca.CATextAlignment}
- */
-getTextAlignment : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setNumberOfLine
  * @param {unsigned int} arg0
  */
@@ -4448,6 +4322,16 @@ setNumberOfLine : function (
 int 
 )
 {
+},
+
+/**
+ * @method getColor
+ * @return {color4b_object}
+ */
+getColor : function (
+)
+{
+    return ca.CAColor4B;
 },
 
 /**
@@ -12237,11 +12121,11 @@ isAllowsSelection : function (
 },
 
 /**
- * @method setListFooterView
- * @param {ca.CAView} arg0
+ * @method setHeightForIndexPathCallback
+ * @param {function} arg0
  */
-setListFooterView : function (
-caview 
+setHeightForIndexPathCallback : function (
+func 
 )
 {
 },
@@ -12254,16 +12138,6 @@ getOrientation : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setHeightForIndexCallback
- * @param {function} arg0
- */
-setHeightForIndexCallback : function (
-func 
-)
-{
 },
 
 /**
@@ -12297,31 +12171,11 @@ getListViewDelegate : function (
 },
 
 /**
- * @method isAllowsMultipleSelection
- * @return {bool}
- */
-isAllowsMultipleSelection : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setSelectAtIndex
  * @param {unsigned int} arg0
  */
 setSelectAtIndex : function (
 int 
-)
-{
-},
-
-/**
- * @method setDidDeselectCellAtIndexCallback
- * @param {function} arg0
- */
-setDidDeselectCellAtIndexCallback : function (
-func 
 )
 {
 },
@@ -12347,13 +12201,13 @@ init : function (
 },
 
 /**
- * @method setDidSelectCellAtIndexCallback
- * @param {function} arg0
+ * @method getListViewDataSource
+ * @return {ca.CAListViewDataSource}
  */
-setDidSelectCellAtIndexCallback : function (
-func 
+getListViewDataSource : function (
 )
 {
+    return ca.CAListViewDataSource;
 },
 
 /**
@@ -12377,18 +12231,6 @@ bool
 },
 
 /**
- * @method cellForRowAtIndex
- * @param {unsigned int} arg0
- * @return {ca.CAListViewCell}
- */
-cellForRowAtIndex : function (
-int 
-)
-{
-    return ca.CAListViewCell;
-},
-
-/**
  * @method reloadData
  */
 reloadData : function (
@@ -12407,13 +12249,13 @@ bool
 },
 
 /**
- * @method getListViewDataSource
- * @return {ca.CAListViewDataSource}
+ * @method isAllowsMultipleSelection
+ * @return {bool}
  */
-getListViewDataSource : function (
+isAllowsMultipleSelection : function (
 )
 {
-    return ca.CAListViewDataSource;
+    return false;
 },
 
 /**
@@ -12457,11 +12299,31 @@ bool
 },
 
 /**
+ * @method setNumberOfIndexPathCallback
+ * @param {function} arg0
+ */
+setNumberOfIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setListHeaderHeight
  * @param {unsigned int} arg0
  */
 setListHeaderHeight : function (
 int 
+)
+{
+},
+
+/**
+ * @method setWillDisplayCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setWillDisplayCellAtIndexPathCallback : function (
+func 
 )
 {
 },
@@ -12485,21 +12347,21 @@ getListHeaderView : function (
 },
 
 /**
- * @method setSeparatorViewHeight
- * @param {unsigned int} arg0
+ * @method setDidSelectCellAtIndexPathCallback
+ * @param {function} arg0
  */
-setSeparatorViewHeight : function (
-int 
+setDidSelectCellAtIndexPathCallback : function (
+func 
 )
 {
 },
 
 /**
- * @method setCellAtIndexCallback
- * @param {function} arg0
+ * @method setSeparatorViewHeight
+ * @param {unsigned int} arg0
  */
-setCellAtIndexCallback : function (
-func 
+setSeparatorViewHeight : function (
+int 
 )
 {
 },
@@ -12525,11 +12387,21 @@ getListHeaderHeight : function (
 },
 
 /**
- * @method setWillDisplayCellAtIndexCallback
- * @param {function} arg0
+ * @method switchPCMode
+ * @param {bool} arg0
  */
-setWillDisplayCellAtIndexCallback : function (
-func 
+switchPCMode : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setListFooterView
+ * @param {ca.CAView} arg0
+ */
+setListFooterView : function (
+caview 
 )
 {
 },
@@ -12545,21 +12417,33 @@ getListFooterView : function (
 },
 
 /**
- * @method setNumberOfIndexCallback
+ * @method cellForRowAtIndex
+ * @param {unsigned int} arg0
+ * @return {ca.CAListViewCell}
+ */
+cellForRowAtIndex : function (
+int 
+)
+{
+    return ca.CAListViewCell;
+},
+
+/**
+ * @method setDidDeselectCellAtIndexPathCallback
  * @param {function} arg0
  */
-setNumberOfIndexCallback : function (
+setDidDeselectCellAtIndexPathCallback : function (
 func 
 )
 {
 },
 
 /**
- * @method switchPCMode
- * @param {bool} arg0
+ * @method setCellAtIndexPathCallback
+ * @param {function} arg0
  */
-switchPCMode : function (
-bool 
+setCellAtIndexPathCallback : function (
+func 
 )
 {
 },
@@ -13605,13 +13489,33 @@ int
 },
 
 /**
- * @method isAllowsSelection
- * @return {bool}
+ * @method setNumberOfSectionsCallback
+ * @param {function} arg0
  */
-isAllowsSelection : function (
+setNumberOfSectionsCallback : function (
+func 
 )
 {
-    return false;
+},
+
+/**
+ * @method setHeightForHeaderInSectionCallback
+ * @param {function} arg0
+ */
+setHeightForHeaderInSectionCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method setSectionViewForFooterInSectionCallback
+ * @param {function} arg0
+ */
+setSectionViewForFooterInSectionCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -13645,6 +13549,16 @@ caview
 },
 
 /**
+ * @method setNumberOfItemsInRowsInSectionCallback
+ * @param {function} arg0
+ */
+setNumberOfItemsInRowsInSectionCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method getCollectionFooterView
  * @return {ca.CAView}
  */
@@ -13672,6 +13586,26 @@ isAlwaysBottomSectionFooter : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setHeightForFooterInSectionCallback
+ * @param {function} arg0
+ */
+setHeightForFooterInSectionCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method setNumberOfRowsInSectionCallback
+ * @param {function} arg0
+ */
+setNumberOfRowsInSectionCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -13801,13 +13735,23 @@ int
 },
 
 /**
- * @method displayingCollectionCell
- * @return {Array}
+ * @method getCollectionViewDelegate
+ * @return {ca.CACollectionViewDelegate}
  */
-displayingCollectionCell : function (
+getCollectionViewDelegate : function (
 )
 {
-    return new Array();
+    return ca.CACollectionViewDelegate;
+},
+
+/**
+ * @method setWillDisplayCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setWillDisplayCellAtIndexPathCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -13839,6 +13783,16 @@ onExitTransitionDidStart : function (
 },
 
 /**
+ * @method displayingCollectionCell
+ * @return {Array}
+ */
+displayingCollectionCell : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method isAlwaysTopSectionHeader
  * @return {bool}
  */
@@ -13846,6 +13800,16 @@ isAlwaysTopSectionHeader : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setVertInterval
+ * @param {unsigned int} arg0
+ */
+setVertInterval : function (
+int 
+)
+{
 },
 
 /**
@@ -13859,21 +13823,31 @@ getCollectionHeaderHeight : function (
 },
 
 /**
- * @method getCollectionViewDelegate
- * @return {ca.CACollectionViewDelegate}
+ * @method setSectionViewForHeaderInSectionCallback
+ * @param {function} arg0
  */
-getCollectionViewDelegate : function (
+setSectionViewForHeaderInSectionCallback : function (
+func 
 )
 {
-    return ca.CACollectionViewDelegate;
 },
 
 /**
- * @method setVertInterval
- * @param {unsigned int} arg0
+ * @method setDidDeselectRowAtIndexPathCallback
+ * @param {function} arg0
  */
-setVertInterval : function (
-int 
+setDidDeselectRowAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method setDidSelectRowAtIndexPathCallback
+ * @param {function} arg0
+ */
+setDidSelectRowAtIndexPathCallback : function (
+func 
 )
 {
 },
@@ -13923,6 +13897,16 @@ getHighlightCollectionCell : function (
 },
 
 /**
+ * @method setHeightForRowAtIndexPathCallback
+ * @param {function} arg0
+ */
+setHeightForRowAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method switchPCMode
  * @param {bool} arg0
  */
@@ -13930,6 +13914,26 @@ switchPCMode : function (
 bool 
 )
 {
+},
+
+/**
+ * @method setCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setCellAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method isAllowsSelection
+ * @return {bool}
+ */
+isAllowsSelection : function (
+)
+{
+    return false;
 },
 
 /**
@@ -14216,13 +14220,23 @@ int
 },
 
 /**
- * @method isAllowsSelection
- * @return {bool}
+ * @method setNumberOfSectionsCallback
+ * @param {function} arg0
  */
-isAllowsSelection : function (
+setNumberOfSectionsCallback : function (
+func 
 )
 {
-    return false;
+},
+
+/**
+ * @method setHeightForHeaderInSectionCallback
+ * @param {function} arg0
+ */
+setHeightForHeaderInSectionCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -14233,6 +14247,16 @@ getCellVertAlign : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setSectionViewForFooterInSectionCallback
+ * @param {function} arg0
+ */
+setSectionViewForFooterInSectionCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -14261,6 +14285,16 @@ getOrientation : function (
  */
 setCollectionFooterView : function (
 caview 
+)
+{
+},
+
+/**
+ * @method setSizeForItemAtIndexPath
+ * @param {function} arg0
+ */
+setSizeForItemAtIndexPath : function (
+func 
 )
 {
 },
@@ -14296,10 +14330,10 @@ getCellHoriAlign : function (
 },
 
 /**
- * @method getVertMargins
+ * @method getHoriMargins
  * @return {unsigned int}
  */
-getVertMargins : function (
+getHoriMargins : function (
 )
 {
     return 0;
@@ -14313,6 +14347,26 @@ isAlwaysBottomSectionFooter : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setHeightForFooterInSectionCallback
+ * @param {function} arg0
+ */
+setHeightForFooterInSectionCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method getVertMargins
+ * @return {unsigned int}
+ */
+getVertMargins : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -14365,6 +14419,16 @@ isAllowsMultipleSelection : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setNumberOfItemsInSectionCallback
+ * @param {function} arg0
+ */
+setNumberOfItemsInSectionCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -14450,13 +14514,23 @@ int
 },
 
 /**
- * @method displayingCollectionCell
- * @return {Array}
+ * @method getCollectionViewDelegate
+ * @return {ca.CAAutoCollectionViewDelegate}
  */
-displayingCollectionCell : function (
+getCollectionViewDelegate : function (
 )
 {
-    return new Array();
+    return ca.CAAutoCollectionViewDelegate;
+},
+
+/**
+ * @method setWillDisplayCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setWillDisplayCellAtIndexPathCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -14498,6 +14572,16 @@ cellvertalign
 },
 
 /**
+ * @method displayingCollectionCell
+ * @return {Array}
+ */
+displayingCollectionCell : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method isAlwaysTopSectionHeader
  * @return {bool}
  */
@@ -14528,13 +14612,13 @@ orientation
 },
 
 /**
- * @method getCollectionViewDelegate
- * @return {ca.CAAutoCollectionViewDelegate}
+ * @method setSectionViewForHeaderInSectionCallback
+ * @param {function} arg0
  */
-getCollectionViewDelegate : function (
+setSectionViewForHeaderInSectionCallback : function (
+func 
 )
 {
-    return ca.CAAutoCollectionViewDelegate;
 },
 
 /**
@@ -14545,6 +14629,26 @@ getVertCellInterval : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setDidDeselectRowAtIndexPathCallback
+ * @param {function} arg0
+ */
+setDidDeselectRowAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method setDidSelectRowAtIndexPathCallback
+ * @param {function} arg0
+ */
+setDidSelectRowAtIndexPathCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -14620,13 +14724,23 @@ bool
 },
 
 /**
- * @method getHoriMargins
- * @return {unsigned int}
+ * @method setCellAtIndexPathCallback
+ * @param {function} arg0
  */
-getHoriMargins : function (
+setCellAtIndexPathCallback : function (
+func 
 )
 {
-    return 0;
+},
+
+/**
+ * @method isAllowsSelection
+ * @return {bool}
+ */
+isAllowsSelection : function (
+)
+{
+    return false;
 },
 
 /**
@@ -14702,34 +14816,6 @@ CAAutoCollectionView : function (
 ca.CAWaterfallViewDataSource = {
 
 /**
- * @method waterfallViewWillDisplayCellAtIndex
- * @param {ca.CAWaterfallView} arg0
- * @param {ca.CAWaterfallViewCell} arg1
- * @param {unsigned int} arg2
- */
-waterfallViewWillDisplayCellAtIndex : function (
-cawaterfallview, 
-cawaterfallviewcell, 
-int 
-)
-{
-},
-
-/**
- * @method waterfallViewSectionViewForHeader
- * @param {ca.CAWaterfallView} arg0
- * @param {size_object} arg1
- * @return {ca.CAView}
- */
-waterfallViewSectionViewForHeader : function (
-cawaterfallview, 
-dsize 
-)
-{
-    return ca.CAView;
-},
-
-/**
  * @method waterfallViewHeightForItemAtIndex
  * @param {ca.CAWaterfallView} arg0
  * @param {unsigned int} arg1
@@ -14741,6 +14827,20 @@ int
 )
 {
     return 0;
+},
+
+/**
+ * @method waterfallViewWillDisplayCellAtIndex
+ * @param {ca.CAWaterfallView} arg0
+ * @param {ca.CAWaterfallViewCell} arg1
+ * @param {unsigned int} arg2
+ */
+waterfallViewWillDisplayCellAtIndex : function (
+cawaterfallview, 
+cawaterfallviewcell, 
+int 
+)
+{
 },
 
 /**
@@ -14771,44 +14871,6 @@ int
     return ca.CAWaterfallViewCell;
 },
 
-/**
- * @method waterfallViewHeightForFooter
- * @param {ca.CAWaterfallView} arg0
- * @return {unsigned int}
- */
-waterfallViewHeightForFooter : function (
-cawaterfallview 
-)
-{
-    return 0;
-},
-
-/**
- * @method waterfallViewSectionViewForFooter
- * @param {ca.CAWaterfallView} arg0
- * @param {size_object} arg1
- * @return {ca.CAView}
- */
-waterfallViewSectionViewForFooter : function (
-cawaterfallview, 
-dsize 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method waterfallViewHeightForHeader
- * @param {ca.CAWaterfallView} arg0
- * @return {unsigned int}
- */
-waterfallViewHeightForHeader : function (
-cawaterfallview 
-)
-{
-    return 0;
-},
-
 };
 
 /**
@@ -14837,11 +14899,11 @@ getWaterfallViewDataSource : function (
 },
 
 /**
- * @method setColumnMargin
- * @param {unsigned int} arg0
+ * @method setHeightForIndexPathCallback
+ * @param {function} arg0
  */
-setColumnMargin : function (
-int 
+setHeightForIndexPathCallback : function (
+func 
 )
 {
 },
@@ -14894,6 +14956,16 @@ isAlwaysBottomSectionFooter : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setDidSelectCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setDidSelectCellAtIndexPathCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -15015,6 +15087,16 @@ bool
 },
 
 /**
+ * @method setColumnMargin
+ * @param {unsigned int} arg0
+ */
+setColumnMargin : function (
+int 
+)
+{
+},
+
+/**
  * @method setShowsScrollIndicators
  * @param {bool} arg0
  */
@@ -15057,13 +15139,23 @@ getColumnMargin : function (
 },
 
 /**
- * @method getWaterfallFooterView
- * @return {ca.CAView}
+ * @method setNumberOfIndexPathCallback
+ * @param {function} arg0
  */
-getWaterfallFooterView : function (
+setNumberOfIndexPathCallback : function (
+func 
 )
 {
-    return ca.CAView;
+},
+
+/**
+ * @method setWillDisplayCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setWillDisplayCellAtIndexPathCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -15085,13 +15177,13 @@ onExitTransitionDidStart : function (
 },
 
 /**
- * @method setItemMargin
- * @param {unsigned int} arg0
+ * @method getWaterfallFooterView
+ * @return {ca.CAView}
  */
-setItemMargin : function (
-int 
+getWaterfallFooterView : function (
 )
 {
+    return ca.CAView;
 },
 
 /**
@@ -15112,6 +15204,26 @@ displayingWaterfallCell : function (
 )
 {
     return new Array();
+},
+
+/**
+ * @method setItemMargin
+ * @param {unsigned int} arg0
+ */
+setItemMargin : function (
+int 
+)
+{
+},
+
+/**
+ * @method setDidDeselectCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setDidDeselectCellAtIndexPathCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -15150,6 +15262,16 @@ getWaterfallFooterHeight : function (
  */
 switchPCMode : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setCellAtIndexPathCallback : function (
+func 
 )
 {
 },
@@ -16237,11 +16359,61 @@ int
 ca.CAPickerView = {
 
 /**
+ * @method setViewForSelectedCallback
+ * @param {function} arg0
+ */
+setViewForSelectedCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method setTitleForRowCallback
+ * @param {function} arg0
+ */
+setTitleForRowCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setFontSizeNormal
  * @param {float} arg0
  */
 setFontSizeNormal : function (
 float 
+)
+{
+},
+
+/**
+ * @method setFontSizeSelected
+ * @param {float} arg0
+ */
+setFontSizeSelected : function (
+float 
+)
+{
+},
+
+/**
+ * @method setHeightForComponentCallback
+ * @param {function} arg0
+ */
+setHeightForComponentCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method setDidSelectRowCallback
+ * @param {function} arg0
+ */
+setDidSelectRowCallback : function (
+func 
 )
 {
 },
@@ -16305,6 +16477,16 @@ init : function (
 },
 
 /**
+ * @method setNumberOfComponentsCallback
+ * @param {function} arg0
+ */
+setNumberOfComponentsCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method reloadComponent
  * @param {unsigned int} arg0
  * @param {unsigned int} arg1
@@ -16314,6 +16496,16 @@ reloadComponent : function (
 int, 
 int, 
 bool 
+)
+{
+},
+
+/**
+ * @method setViewForRowCallback
+ * @param {function} arg0
+ */
+setViewForRowCallback : function (
+func 
 )
 {
 },
@@ -16347,6 +16539,16 @@ cacolor4b
 },
 
 /**
+ * @method setNumberOfRowsInComponentCallback
+ * @param {function} arg0
+ */
+setNumberOfRowsInComponentCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setFontColorNormal
  * @param {color4b_object} arg0
  */
@@ -16362,18 +16564,6 @@ cacolor4b
 onExitTransitionDidStart : function (
 )
 {
-},
-
-/**
- * @method numberOfRowsInComponent
- * @param {unsigned int} arg0
- * @return {int}
- */
-numberOfRowsInComponent : function (
-int 
-)
-{
-    return 0;
 },
 
 /**
@@ -16401,13 +16591,13 @@ bool
 },
 
 /**
- * @method numberOfComponents
- * @return {int}
+ * @method setWidthForComponentCallback
+ * @param {function} arg0
  */
-numberOfComponents : function (
+setWidthForComponentCallback : function (
+func 
 )
 {
-    return 0;
 },
 
 /**
@@ -16418,18 +16608,6 @@ setFontColorSelected : function (
 cacolor4b 
 )
 {
-},
-
-/**
- * @method rowSizeForComponent
- * @param {unsigned int} arg0
- * @return {size_object}
- */
-rowSizeForComponent : function (
-int 
-)
-{
-    return ca.DSize;
 },
 
 /**
@@ -16468,30 +16646,6 @@ getFontColorNormal : function (
  * @method onEnterTransitionDidFinish
  */
 onEnterTransitionDidFinish : function (
-)
-{
-},
-
-/**
- * @method viewForRow
- * @param {unsigned int} arg0
- * @param {unsigned int} arg1
- * @return {ca.CAView}
- */
-viewForRow : function (
-int, 
-int 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method setFontSizeSelected
- * @param {float} arg0
- */
-setFontSizeSelected : function (
-float 
 )
 {
 },
