@@ -160,7 +160,7 @@ void CALabel::updateImage()
     {
         this->setImage(image);
         
-        m_obLabelSize = image->getContentSize();
+        m_obLabelSize = size;
         
         switch (m_obFont.textAlignment)
         {
@@ -214,7 +214,7 @@ void CALabel::updateImage()
             }
         }
         
-        this->setImageRect(DRect(DPointZero, m_obLabelSize));
+        this->setImageRect(DRect(DPointZero, image->getContentSize()));
     }
     
 }
@@ -224,11 +224,11 @@ void CALabel::updateImageRect()
     GLfloat x1,x2,y1,y2;
     x1 = m_obPadding.width;
     y1 = 0;
-    y1 = m_obContentSize.height - m_obRect.size.height - y1;
+    y1 = m_obContentSize.height - m_obLabelSize.height - y1;
     y1 = y1 - m_obPadding.height;
-    x2 = x1 + m_obRect.size.width;
+    x2 = x1 + m_obLabelSize.width;
     x2 = MAX(x1, x2);
-    y2 = y1 + m_obRect.size.height;
+    y2 = y1 + m_obLabelSize.height;
     y2 = MAX(y1, y2);
     m_sQuad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
     m_sQuad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
