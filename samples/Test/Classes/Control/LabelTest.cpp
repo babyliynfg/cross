@@ -129,9 +129,9 @@ void LabelTest::viewDidLoad()
         Font5.textAlignment = CATextAlignment::Center;
         Font5.verticalTextAlignment = CAVerticalTextAlignment::Center;
         Font5.shadow.shadowEnabled = true;
-        Font5.shadow.shadowOffset = DSize(3, -3);
+        Font5.shadow.shadowOffset = DSize(2, -2);
         Font5.shadow.shadowBlur = 2.0f;
-        Font5.shadow.shadowColor = CAColor4B(0, 0, 0, 127);
+        Font5.shadow.shadowColor = CAColor4B(0, 0, 0, 88);
         
         label5->setText(cc);
         label5->setFont(Font5);

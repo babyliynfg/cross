@@ -60,8 +60,8 @@ CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNa
     m_vTitle.push_back("PageControl");
     m_vTitle.push_back("ScrollView");
     
-    m_vTitle.push_back("AutoCollectionView(Vertical)");
-    m_vTitle.push_back("AutoCollectionView(Horizontal)");
+    m_vTitle.push_back("AutoCollectionView (Vertical)");
+    m_vTitle.push_back("AutoCollectionView (Horizontal)");
     m_vTitle.push_back("CollectionView");
     
     m_vTitle.push_back("WaterfallView");
