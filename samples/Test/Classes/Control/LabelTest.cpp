@@ -178,7 +178,7 @@ void LabelTest::viewDidLoad()
         
         
         
-        CALabel* label5 = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_H(50, 50)));
+        CALabel* label5 = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
 		label5->setText(text);
 		label5->setFont(Font5);
 		label5->setLineSpacing(20);
