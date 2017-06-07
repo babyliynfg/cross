@@ -25,7 +25,7 @@ NSTextAlignment _calculateTextAlignment(CrossApp::CATextAlignment alignment)
     return nsAlignment;
 }
 
-NSSize _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSize, bool enableWrap, int overflow)
+NSRect _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSize, bool enableWrap, int overflow)
 {
     NSSize textRect = NSZeroSize;
     textRect.width = constrainSize.width > 0 ? constrainSize.width
@@ -46,20 +46,20 @@ NSSize _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSi
         }
     }
     
-    NSSize dim;
+    NSRect dim = NSZeroRect;
 #ifdef __MAC_10_11
 #if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
-    dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
+    dim.size = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
 #else
-    dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
+    dim.size = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
 #endif
 #else
-    dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
+    dim.size = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
 #endif
     
     
-    dim.width = ceilf(dim.width);
-    dim.height = ceilf(dim.height);
+    dim.size.width = ceilf(dim.size.width);
+    dim.size.height = ceilf(dim.size.height);
     
     return dim;
 }
@@ -95,8 +95,8 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
     CAImage* ret = nullptr;
     do {
         CC_BREAK_IF(text.empty());
-        NSString * string  = [NSString stringWithUTF8String:text.c_str()];
-        CC_BREAK_IF(!string);
+        NSString * str  = [NSString stringWithUTF8String:text.c_str()];
+        CC_BREAK_IF(!str);
         
         id nsfont = _createSystemFont(font.fontName, font.fontSize);
         CC_BREAK_IF(!nsfont);
@@ -115,29 +115,69 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         [paragraphStyle setAlignment:textAlign];
         
         // attribute
-        NSDictionary* tokenAttributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                             foregroundColor,
-                                             NSForegroundColorAttributeName,
-                                             nsfont,
-                                             NSFontAttributeName,
-                                             paragraphStyle,
-                                             NSParagraphStyleAttributeName,
-                                             nil];
+        NSMutableDictionary* tokenAttributesDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                    foregroundColor,   NSForegroundColorAttributeName,
+                                                    nsfont,            NSFontAttributeName,
+                                                    paragraphStyle,    NSParagraphStyleAttributeName,
+                                                    nil];
         
-        NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
+        if (font.color == CAColor4B::CLEAR && font.stroke.strokeEnabled)
+        {
+            foregroundColor = [NSColor colorWithDeviceRed:font.stroke.strokeColor.r / 255.f
+                                                    green:font.stroke.strokeColor.g / 255.f
+                                                     blue:font.stroke.strokeColor.b / 255.f
+                                                    alpha:font.stroke.strokeColor.a / 255.f];
+            
+            
+            [tokenAttributesDict setObject:@(font.stroke.strokeSize) forKey:NSStrokeWidthAttributeName];
+            [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
+        }
         
-        NSSize dimensions = _calculateStringSize(stringWithAttributes, nsfont, CGSizeMake(dim.width, dim.height), font.wordWrap, 0);
+        if (font.italics) [tokenAttributesDict setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
+        if (font.underLine) [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+        if (font.deleteLine) [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
+        
+        if (font.shadow.shadowEnabled)
+        {
+            NSShadow* shadow = [[[NSShadow alloc] init] autorelease];
+            
+            [shadow setShadowOffset:CGSizeMake(font.shadow.shadowOffset.width, font.shadow.shadowOffset.height)];
+            [shadow setShadowBlurRadius:font.shadow.shadowBlur];
+            
+            NSColor* shadowColor = [NSColor colorWithDeviceRed:font.shadow.shadowColor.r / 255.f
+                                                         green:font.shadow.shadowColor.g / 255.f
+                                                          blue:font.shadow.shadowColor.b / 255.f
+                                                         alpha:font.shadow.shadowColor.a / 255.f];
+            
+            [shadow setShadowColor:shadowColor];
+            
+            [tokenAttributesDict setObject:shadow forKey:NSShadowAttributeName];
+        }
+        
+        NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict] autorelease];
+        
+        NSRect textRect = _calculateStringSize(stringWithAttributes, nsfont, CGSizeMake(dim.width, dim.height), font.wordWrap, 0);
         
         // Mac crashes if the width or height is 0
-        CC_BREAK_IF(dimensions.width <= 0 || dimensions.height <= 0);
+        CC_BREAK_IF(textRect.size.width <= 0 || textRect.size.height <= 0);
         
-        dim = DSize(dimensions.width, dimensions.height);
-        
-        
-        NSInteger POTWide = dimensions.width;
-        NSInteger POTHigh = dimensions.height;
-        
-        NSRect textRect = NSMakeRect(0, 0, dimensions.width, dimensions.height);
+        int shrinkFontSize = font.fontSize;
+        if (font.italics)
+        {
+            float increase = shrinkFontSize * font.italicsValue * 0.5f;
+            if (font.italicsValue > 0)
+            {
+                textRect.size.width += increase;
+            }
+            else if (font.italicsValue < 0)
+            {
+                textRect.size.width -= increase;
+                textRect.origin.x -= increase;
+            }
+        }
+
+        NSInteger POTWide = textRect.size.width;
+        NSInteger POTHigh = textRect.size.height;
         
         [[NSGraphicsContext currentContext] setShouldAntialias:NO];
         
@@ -146,11 +186,62 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         // patch for mac retina display and lableTTF
         [[NSAffineTransform transform] set];
         [stringWithAttributes drawInRect:textRect];
+        
+        if (font.bold)
+        {
+            
+            NSMutableDictionary* tokenAttributesDict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                         foregroundColor,   NSForegroundColorAttributeName,
+                                                         nsfont,            NSFontAttributeName,
+                                                         paragraphStyle,    NSParagraphStyleAttributeName,
+                                                         nil];
+            
+            if (font.italics) [tokenAttributesDict2 setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
+            if (font.underLine) [tokenAttributesDict2 setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+            if (font.deleteLine) [tokenAttributesDict2 setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
+            
+            [tokenAttributesDict2 setObject:@(shrinkFontSize / 15.f) forKey:NSStrokeWidthAttributeName];
+            [tokenAttributesDict2 setObject:foregroundColor forKey:NSStrokeColorAttributeName];
+            
+            NSAttributedString *strokeString = [[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict2] autorelease];
+            
+            [strokeString drawInRect:textRect];
+        }
+        
+        if (font.stroke.strokeEnabled)
+        {
+            NSColor *strokeColor = [NSColor colorWithDeviceRed:font.stroke.strokeColor.r / 255.f
+                                                         green:font.stroke.strokeColor.g / 255.f
+                                                          blue:font.stroke.strokeColor.b / 255.f
+                                                         alpha:font.stroke.strokeColor.a / 255.f];
+            
+            
+            NSMutableDictionary* tokenAttributesDict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                         foregroundColor,   NSForegroundColorAttributeName,
+                                                         nsfont,            NSFontAttributeName,
+                                                         paragraphStyle,    NSParagraphStyleAttributeName, nil];
+            
+            if (font.italics) [tokenAttributesDict2 setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
+            if (font.underLine) [tokenAttributesDict2 setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+            if (font.deleteLine) [tokenAttributesDict2 setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
+            
+            [tokenAttributesDict2 setObject:@(font.stroke.strokeSize) forKey:NSStrokeWidthAttributeName];
+            [tokenAttributesDict2 setObject:strokeColor forKey:NSStrokeColorAttributeName];
+            
+            NSAttributedString *strokeString =[[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict2] autorelease];
+            
+            [strokeString drawInRect:textRect];
+            
+        }
+        
+        
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
         [image unlockFocus];
         
         unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
         unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
+        
+        dim = DSize(pixelsWide, pixelsHigh);
         
         ssize_t length = pixelsWide * pixelsHigh * 4;
         unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);

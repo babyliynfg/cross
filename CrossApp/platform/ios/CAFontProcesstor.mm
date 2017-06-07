@@ -167,9 +167,12 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         
         NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict] autorelease];
         
-        int shrinkFontSize = font.fontSize;
         CGRect textRect = _calculateStringRect(stringWithAttributes, iosfont, CGSizeMake(dim.width, dim.height), font.wordWrap, font.fontSize);
         
+        CC_BREAK_IF(textRect.size.width <= 0 || textRect.size.height <= 0);
+        
+        
+        int shrinkFontSize = font.fontSize;
         if (font.italics)
         {
             float increase = shrinkFontSize * font.italicsValue * 0.5f;
@@ -233,12 +236,14 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
             CGContextSetTextDrawingMode(context, kCGTextStroke);
 
             NSMutableDictionary* tokenAttributesDict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                         foregroundColor,NSForegroundColorAttributeName,
-                                                         iosfont, NSFontAttributeName,
-                                                         paragraphStyle, NSParagraphStyleAttributeName,
+                                                         foregroundColor,   NSForegroundColorAttributeName,
+                                                         iosfont,           NSFontAttributeName,
+                                                         paragraphStyle,    NSParagraphStyleAttributeName,
                                                          nil];
             
             if (font.italics) [tokenAttributesDict2 setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
+            if (font.underLine) [tokenAttributesDict2 setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+            if (font.deleteLine) [tokenAttributesDict2 setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
             
             [tokenAttributesDict2 setObject:@(shrinkFontSize / 15.f) forKey:NSStrokeWidthAttributeName];
             [tokenAttributesDict2 setObject:foregroundColor forKey:NSStrokeColorAttributeName];
@@ -258,11 +263,13 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
             
             
             NSMutableDictionary* tokenAttributesDict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                         foregroundColor,NSForegroundColorAttributeName,
-                                                         iosfont, NSFontAttributeName,
-                                                         paragraphStyle, NSParagraphStyleAttributeName, nil];
+                                                         foregroundColor,   NSForegroundColorAttributeName,
+                                                         iosfont,           NSFontAttributeName,
+                                                         paragraphStyle,    NSParagraphStyleAttributeName, nil];
             
             if (font.italics) [tokenAttributesDict2 setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
+            if (font.underLine) [tokenAttributesDict2 setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+            if (font.deleteLine) [tokenAttributesDict2 setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
             
             [tokenAttributesDict2 setObject:@(font.stroke.strokeSize) forKey:NSStrokeWidthAttributeName];
             [tokenAttributesDict2 setObject:strokeColor forKey:NSStrokeColorAttributeName];
