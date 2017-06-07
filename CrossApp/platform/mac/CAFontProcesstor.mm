@@ -464,6 +464,19 @@ float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAF
         dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
 #endif
         
+        if (font.italics)
+        {
+            float increase = shrinkFontSize * font.italicsValue * 0.5f;
+            if (font.italicsValue > 0)
+            {
+                dim.width += increase;
+            }
+            else if (font.italicsValue < 0)
+            {
+                dim.width -= increase;
+            }
+        }
+        
         ret = ceilf((dim.width));
         
     } while (0);

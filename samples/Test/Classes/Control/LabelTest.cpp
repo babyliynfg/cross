@@ -155,20 +155,33 @@ void LabelTest::viewDidLoad()
 	}
 	else if (LabelNum == 1)
 	{
-		CALabel* label5 = CALabel::create();
+        std::string text = "        When a lion was asleep, a little mouse began running up and down beside him. This soon wakened the lion. He was very angry, and caught the mouse in his paws.\
+        \n\
+        \"Forgive me, please.\" cried the little mouse.\"I may be able to help you someday.\" The lion was tickled at these words.\
+        \n\
+        He thought, \"How could this little mouse help me?\" However he lifted up his paws and let him go.\
+        \n\
+        A few days later, the lion was caught in a trap.\
+        　\n\
+        The hunters wanted to take him alive to the king, so they tied him to a tree, and went away to look for a wagon.\
+        Just then the little mouse passed by, and saw the sad lion.\
+        　\n\
+        He went up to him, and soon gnawed away the ropes. \"Was I not right?\" asked the little mouse.";
+        
+		
 		CAFont Font5;
 		Font5.fontSize = 36;
 		Font5.color = CAColor4B::RED;
-        Font5.textAlignment = CATextAlignment::Center;
-        Font5.verticalTextAlignment = CAVerticalTextAlignment::Center;
-		Font5.fontName = "c:/x.ttf";
 		Font5.bold = true;
 		Font5.italics = true;
 		Font5.underLine = true;
-		label5->setText("Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World Hello World");
+        
+        
+        
+        CALabel* label5 = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_H(50, 50)));
+		label5->setText(text);
 		label5->setFont(Font5);
 		label5->setLineSpacing(20);
-		label5->setLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_H(300, 300)));
 
 		CAView* view1 = CAView::createWithLayout(DLayoutFill);
 		view1->addSubview(label5);

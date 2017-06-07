@@ -470,7 +470,6 @@ float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAF
                                 options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine)
                                 context:nil].size;
         
-        
         if (font.italics)
         {
             float increase = shrinkFontSize * font.italicsValue * 0.5f;
