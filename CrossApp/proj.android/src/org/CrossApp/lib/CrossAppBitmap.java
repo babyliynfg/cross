@@ -160,8 +160,22 @@ public final class CrossAppBitmap {
             int alignment, 
             int width, 
             int height, 
-            int shadow, float shadowDX, float shadowDY, float shadowBlur, float shadowOpacity, 
-            int stroke, int strokeR, int strokeG, int strokeB, int strokeA, float strokeSize,
+            int shadow, 
+            float shadowDX, 
+            float shadowDY, 
+            float shadowBlur, 
+            
+            int shadowr, 
+            int shadowg, 
+            int  shadowb, 
+            int shadowa, 
+            
+            int stroke, 
+            int strokeR, 
+            int strokeG, 
+            int strokeB, 
+            int strokeA, 
+            float strokeSize,
             int bold ,                                        
             int undeerLine, 
             int deleteLine , 
@@ -194,12 +208,18 @@ public final class CrossAppBitmap {
         paint.setUnderlineText(undeerLine  >0 ? true : false); //true为下划线，false为非下划线
         paint.setStrikeThruText(deleteLine > 0 ? true: false); //true为删除线，false为非删除线
         
+        if (shadowBlur>0) {
+        	int color = Color.argb(shadowa, shadowr, shadowg, shadowb) ; 
+        	paint.setShadowLayer(2 , 2 , 2,color);
+		}
+        
+        
         int _increase =  italics > 0 ?  (int) ( fontSize * Math.abs(italics_v) * 0.5f ) : 0 ; 
         int _italics_trans = italics > 0 ? (   italics_v > 0 ?  _increase : -_increase  ) : 0 ; 
         
         if (stroke>0) {
             paint.setStyle(TextPaint.Style.STROKE);
-            paint.setStrokeWidth(strokeSize);
+            paint.setStrokeWidth(strokeSize/2);
         }
         
         int maxWidth = width;
@@ -234,7 +254,7 @@ public final class CrossAppBitmap {
         else if (horizontalAlignment == HORIZONTAL_ALIGN_RIGHT) {
             offsetX = bitmapWidth - layoutWidth;
         }
-        offsetX += _italics_trans ; 
+        offsetX -= _italics_trans ; 
         
         int offsetY = 0;
         int verticalAlignment   = (alignment >> 4) & 0x0F;
@@ -248,7 +268,8 @@ public final class CrossAppBitmap {
                 break;
         }
         
-        Bitmap bitmap = Bitmap.createBitmap((bitmapWidth + _increase) , bitmapHeight, Bitmap.Config.ARGB_8888);
+        int wid = bitmapWidth + _increase ; 
+        Bitmap bitmap = Bitmap.createBitmap(wid, bitmapHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(offsetX, offsetY);
         if ( stroke>0 )

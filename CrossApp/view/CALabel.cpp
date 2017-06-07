@@ -142,7 +142,7 @@ void CALabel::updateImage()
  
     unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
 
-    DSize size = m_obContentSize;
+    DSize size = DSizeZero;
     if (linenumber > 0)
     {
         if (m_nNumberOfLine > 1)
@@ -151,8 +151,12 @@ void CALabel::updateImage()
         }
         else if (m_nNumberOfLine == 1)
         {
-            size.width = 0xffffffff;
+            size.width = m_bFitFlag ? 0xffffffff : m_obContentSize.width;
             size.height = fontHeight * 1.5f;
+        }
+        else
+        {
+            size = m_obContentSize;
         }
     }
 
