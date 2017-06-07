@@ -1685,19 +1685,35 @@ jsval cafont_to_jsval(JSContext *cx, const CrossApp::CAFont& v){
     JS::RootedObject parent(cx);
     JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
     if (!tmp) return JSVAL_NULL;
+    
     JS::RootedValue color(cx);
-    JS::RootedValue fontName(cx);
     color = cacolor4b_to_jsval(cx, v.color);
+    
+    JS::RootedValue fontName(cx);
     fontName = std_string_to_jsval(cx, v.fontName);
+    
+    JS::RootedObject  shadow(cx, JS_NewObject(cx, NULL, proto, parent));
+
+    JS::RootedObject  stroke(cx, JS_NewObject(cx, NULL, proto, parent));
     
     bool ok = JS_DefineProperty(cx, tmp, "bold", v.bold, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "underLine", v.underLine, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "deleteLine", v.deleteLine, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "italics", v.italics, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "italicsValue", v.italicsValue, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "wordWrap", v.wordWrap, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "fontSize", v.fontSize, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+    JS_SetProperty(cx, tmp, "fontName", fontName) &&
     JS_SetProperty(cx, tmp, "color", color) &&
-    JS_SetProperty(cx, tmp, "fontName", fontName);
-    if (ok) {
+    JS_DefineProperty(cx, tmp, "textAlignment", (int)v.textAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "verticalTextAlignment", (int)v.verticalTextAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT)
+//    &&
+//    JS_SetProperty(cx, tmp, "shadow", (jsval)OBJECT_TO_JSVAL(shadow)) &&
+//    JS_SetProperty(cx, tmp, "stroke", (jsval)OBJECT_TO_JSVAL(stroke))
+    ;
+    
+    if (ok)
+    {
         return OBJECT_TO_JSVAL(tmp);
     }
     

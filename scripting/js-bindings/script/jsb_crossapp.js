@@ -514,18 +514,42 @@ DHorizontalLayoutFill   = DHorizontalLayout_L_R(0, 0);
 DVerticalLayoutFill     = DVerticalLayout_T_B(0, 0);
 DLayoutFill             = DLayout(DHorizontalLayoutFill, DVerticalLayoutFill);
 
+CAFontShadow = function(){
+    return  {
+    shadowEnabled: false,
+    shadowOffset: ca.DSizeZero,
+    shadowBlur: 0,
+    shadowColor: {r:0, g:0, b:0, a:88},
+    };
+} = 0;
+
+CAFontStroke = function(){
+    return  {
+    strokeEnabled: false,
+    strokeColor: ca.CAColor4B.BLACK,
+    strokeSize: 0,
+    };
+} = 0;
 
 CAFont = function(){
     return  {
-    fontSize: 24,
-    color: ca.BLACK,
-    fontName: "",
-    italics: false,
     bold: false,
     underLine: false,
     deleteLine: false,
+    italics: false,
+    italicsValue: 0.5f,
+    wordWrap: false,
+    fontName: "",
+    fontSize: 24,
+    color: ca.CAColor4B.BLACK,
+    textAlignment: ca.CATextAlignment.Left,
+    verticalTextAlignment: ca.CAVerticalTextAlignment.Top,
+    shadow: CAFontShadow(),
+    stroke: CAFontStroke,
     };
-}
+} = 0;
+
+
 ca.CAColor4B = {};
 ca.CAColor4B.WHITE = {r:255, g:255, b:255,a:255};
 ca.CAColor4B.YELLOW = {r:255, g:255, b:0,a:255};
@@ -586,12 +610,6 @@ ca.DPointZero = function () {
 // Basic sturcture : Size
 //
 ca.DSize = function(w,h)
-{
-    ca._reuse_size.width = w;
-    ca._reuse_size.height = h;
-    return ca._reuse_size;
-};
-ca.DRect= function(w,h)
 {
     ca._reuse_size.width = w;
     ca._reuse_size.height = h;
