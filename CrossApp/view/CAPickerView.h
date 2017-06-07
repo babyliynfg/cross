@@ -53,7 +53,7 @@ public:
     
     CC_LISTENING_FUNCTION(unsigned int(unsigned int component), HeightForComponentCallback);
     
-    CC_LISTENING_FUNCTION(const std::string&(unsigned int row, unsigned int component), TitleForRowCallback);
+    CC_LISTENING_FUNCTION(std::string(unsigned int row, unsigned int component), TitleForRowCallback);
     
     CC_LISTENING_FUNCTION(CAView*(unsigned int row, unsigned int component), ViewForRowCallback);
     
