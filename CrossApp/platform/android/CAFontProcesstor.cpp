@@ -93,7 +93,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         
         
         JniMethodInfo methodInfo;
-        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "(Ljava/lang/String;Ljava/lang/String;IIIIIIIIIFFFIIIIIIIIIFIIIIFI)Z"))
+        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "([BLjava/lang/String;IIIIIIIIIFFFIIIIIIIIIFIIIIFI)Z"))
         {
             break ;
         }
@@ -111,16 +111,14 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         }
         
         
-        //            int count = text.length();
-        //            jbyteArray strArray = methodInfo.env->NewByteArray(count);
-        //            methodInfo.env->SetByteArrayRegion(strArray, 0, count, reinterpret_cast<const jbyte*>(&text[0]));
-        //            jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
-        
         jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
-        jstring jsStr = methodInfo.env->NewStringUTF(text.c_str());
+        
+        int count = text.length();
+        jbyteArray bytes = methodInfo.env->NewByteArray(count);
+        methodInfo.env->SetByteArrayRegion(bytes, 0, count, reinterpret_cast<const jbyte*>(text.c_str()));
         
         if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID,
-                                                    jsStr,
+                                                    bytes,
                                                     jstrFont,
                                                     (int)font.fontSize,
                                                     font.color.r,
@@ -155,10 +153,9 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
             break ;
         }
         
-        //            methodInfo.env->DeleteLocalRef(strArray);
-        methodInfo.env->DeleteLocalRef(jsStr);
         methodInfo.env->DeleteLocalRef(jstrFont);
         methodInfo.env->DeleteLocalRef(methodInfo.classID);
+        methodInfo.env->DeleteLocalRef(bytes);
         
         dimensions = s_gDimensions;
         

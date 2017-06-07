@@ -153,7 +153,7 @@ public final class CrossAppBitmap {
      * @return
      */
     public static boolean createTextBitmapShadowStroke(
-    		String string,  
+    		byte[] strs,
     		final String fontName, 
     		int fontSize,
             int fontTintR, int fontTintG, int fontTintB, int fontTintA,
@@ -184,7 +184,7 @@ public final class CrossAppBitmap {
             int wordWrap
     		) 
     {
-    	
+    	String string = new String(strs) ; 
         Layout.Alignment hAlignment = Layout.Alignment.ALIGN_NORMAL;
         int horizontalAlignment = alignment & 0x0F;
         switch (horizontalAlignment) {
