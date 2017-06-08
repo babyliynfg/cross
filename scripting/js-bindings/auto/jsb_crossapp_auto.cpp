@@ -10974,7 +10974,6 @@ void js_register_crossapp_CALabel(JSContext *cx, JS::HandleObject global) {
         JS_FN("visitEve", js_crossapp_CALabel_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWordWrap", js_crossapp_CALabel_setWordWrap, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getEnableCopy", js_crossapp_CALabel_getEnableCopy, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getFontName", js_crossapp_CALabel_getFontName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVerticalTextAlignmet", js_crossapp_CALabel_setVerticalTextAlignmet, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFont", js_crossapp_CALabel_getFont, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getColor", js_crossapp_CALabel_getColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

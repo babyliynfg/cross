@@ -505,7 +505,6 @@ bool js_crossapp_CALabel_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CALabel_visitEve(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CALabel_setWordWrap(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CALabel_getEnableCopy(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CALabel_getFontName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CALabel_setVerticalTextAlignmet(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CALabel_getFont(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CALabel_getColor(JSContext *cx, uint32_t argc, jsval *vp);
