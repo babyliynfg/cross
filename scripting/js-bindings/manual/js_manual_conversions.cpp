@@ -889,15 +889,9 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     ret->fontSize = fontSize;
     
     jsval_to_cacolor4b(cx, js_color, &ret->color);
-    
-    int textAlignment;
-    JS::ToInt32(cx, js_textAlignment, &textAlignment) ;
-    ret->textAlignment = (CATextAlignment)textAlignment;
-    
-    int verticalTextAlignment;
-    JS::ToInt32(cx, js_verticalTextAlignment, &verticalTextAlignment) ;
-    ret->textAlignment = (CATextAlignment)verticalTextAlignment;
-    
+    jsval_to_int32(cx, js_textAlignment, (int32_t *)&ret->textAlignment);
+    jsval_to_int32(cx, js_verticalTextAlignment, (int32_t *)&ret->verticalTextAlignment);
+
     {
         JS::RootedObject shadow_tmp(cx);
         JS::RootedValue shadow_value(cx);
@@ -944,7 +938,20 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
         ret->stroke.strokeSize = JS::ToBoolean(js_strokeSize);
         
     }
-    
+  /*
+    CCLog("CAFont: bold:%d\n underLine:%d\n deleteLine:%d\n italics:%d\n italicsValue:%f\n wordWrap:%d\n fontName:%s\n fontSize:%f\n color:%u\n textAlignment:%d\n verticalTextAlignment:%d\n ",
+          ret->bold,
+          ret->underLine,
+          ret->deleteLine,
+          ret->italics,
+          ret->italicsValue,
+          ret->wordWrap,
+          ret->fontName.c_str(),
+          ret->fontSize,
+          ret->color.getUInt(),
+          ret->textAlignment,
+          ret->verticalTextAlignment);
+    */
     return true;
 }
 bool jsval_to_cacolor4b(JSContext *cx, JS::HandleValue v, CAColor4B* ret) {
