@@ -322,7 +322,7 @@
 		D673ABF71E52E2A0007E7A5B /* CADensityDpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673AB8E1E52E2A0007E7A5B /* CADensityDpi.cpp */; };
 		D673ABF81E52E2A0007E7A5B /* CATextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673AB8F1E52E2A0007E7A5B /* CATextField.mm */; };
 		D673ABF91E52E2A0007E7A5B /* CATextView.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673AB901E52E2A0007E7A5B /* CATextView.mm */; };
-		D673ABFA1E52E2A0007E7A5B /* CAWebViewImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D673AB911E52E2A0007E7A5B /* CAWebViewImpl.cpp */; };
+		D673ABFA1E52E2A0007E7A5B /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673AB911E52E2A0007E7A5B /* CAWebViewImpl.mm */; };
 		D673ABFB1E52E2A0007E7A5B /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D673AB921E52E2A0007E7A5B /* CAWebViewImpl.h */; };
 		D673ABFC1E52E2A0007E7A5B /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = D673AB931E52E2A0007E7A5B /* CCApplication.h */; };
 		D673ABFD1E52E2A0007E7A5B /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673AB941E52E2A0007E7A5B /* CCApplication.mm */; };
@@ -426,6 +426,7 @@
 		D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB51DC9C81500944576 /* libwebsockets.a */; };
 		D6C513241E6910C300B0BE19 /* CAColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6C513221E6910C300B0BE19 /* CAColor.cpp */; };
 		D6C513251E6910C300B0BE19 /* CAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = D6C513231E6910C300B0BE19 /* CAColor.h */; };
+		D6CBC1941EE95CD30083E8C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CBC1931EE95CD30083E8C3 /* WebKit.framework */; };
 		D6CC2DF51DD9BA8F007E8502 /* CAThemeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6CC2DF31DD9BA8F007E8502 /* CAThemeManager.cpp */; };
 		D6CC2DF61DD9BA8F007E8502 /* CAThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */; };
 		D6D8A7821DC2F1EB00A47FC2 /* egif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */; };
@@ -772,7 +773,7 @@
 		D673AB8E1E52E2A0007E7A5B /* CADensityDpi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADensityDpi.cpp; sourceTree = "<group>"; };
 		D673AB8F1E52E2A0007E7A5B /* CATextField.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextField.mm; sourceTree = "<group>"; };
 		D673AB901E52E2A0007E7A5B /* CATextView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextView.mm; sourceTree = "<group>"; };
-		D673AB911E52E2A0007E7A5B /* CAWebViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebViewImpl.cpp; sourceTree = "<group>"; };
+		D673AB911E52E2A0007E7A5B /* CAWebViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebViewImpl.mm; sourceTree = "<group>"; };
 		D673AB921E52E2A0007E7A5B /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
 		D673AB931E52E2A0007E7A5B /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
 		D673AB941E52E2A0007E7A5B /* CCApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCApplication.mm; sourceTree = "<group>"; };
@@ -920,6 +921,7 @@
 		D6B12EB51DC9C81500944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/mac/libwebsockets.a; sourceTree = "<group>"; };
 		D6C513221E6910C300B0BE19 /* CAColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAColor.cpp; sourceTree = "<group>"; };
 		D6C513231E6910C300B0BE19 /* CAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAColor.h; sourceTree = "<group>"; };
+		D6CBC1931EE95CD30083E8C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D6CC2DF31DD9BA8F007E8502 /* CAThemeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThemeManager.cpp; sourceTree = "<group>"; };
 		D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThemeManager.h; sourceTree = "<group>"; };
 		D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = egif_lib.c; sourceTree = "<group>"; };
@@ -939,6 +941,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6CBC1941EE95CD30083E8C3 /* WebKit.framework in Frameworks */,
 				D69B76711E4B05BA007D9771 /* QuartzCore.framework in Frameworks */,
 				D69B766F1E4B05B4007D9771 /* ApplicationServices.framework in Frameworks */,
 				D69B766D1E4B05A7007D9771 /* Cocoa.framework in Frameworks */,
@@ -1273,6 +1276,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6CBC1931EE95CD30083E8C3 /* WebKit.framework */,
 				485203E71E63C73D00571433 /* CoreMedia.framework */,
 				D69B76A71E4B091A007D9771 /* libcurl.tbd */,
 				D69B76721E4B05C3007D9771 /* IOKit.framework */,
@@ -1556,7 +1560,7 @@
 				D673AB8E1E52E2A0007E7A5B /* CADensityDpi.cpp */,
 				D673AB8F1E52E2A0007E7A5B /* CATextField.mm */,
 				D673AB901E52E2A0007E7A5B /* CATextView.mm */,
-				D673AB911E52E2A0007E7A5B /* CAWebViewImpl.cpp */,
+				D673AB911E52E2A0007E7A5B /* CAWebViewImpl.mm */,
 				D673AB921E52E2A0007E7A5B /* CAWebViewImpl.h */,
 				D673AB931E52E2A0007E7A5B /* CCApplication.h */,
 				D673AB941E52E2A0007E7A5B /* CCApplication.mm */,
@@ -2153,7 +2157,7 @@
 				D673AC0A1E52E2A0007E7A5B /* EAGLView.mm in Sources */,
 				B0B05FBF1BB1483200B891CE /* CAScale9ImageView.cpp in Sources */,
 				B01D4BF319A5947C0071F6A3 /* CADrawerController.cpp in Sources */,
-				D673ABFA1E52E2A0007E7A5B /* CAWebViewImpl.cpp in Sources */,
+				D673ABFA1E52E2A0007E7A5B /* CAWebViewImpl.mm in Sources */,
 				D69B76251E4AFE12007D9771 /* CCGLProgramCache.cpp in Sources */,
 				B0A11DA71AE8C5C500933BF6 /* gif_font.c in Sources */,
 				04EAB1151956D75600198A8E /* CASAXParser.cpp in Sources */,

@@ -102,6 +102,13 @@
     
 }
 
+- (void)fullScreenChanged
+{
+    [self removeFromSuperview];
+    EAGLView * eaglview = [EAGLView sharedEGLView];
+    [eaglview addSubview:self];
+}
+
 -(void)setText:(NSString* )value
 {
     self.stringValue = value;
@@ -206,6 +213,8 @@
         
         [self setBeforeText:@"" ];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullScreenChanged) name:@"FULL_SCREEN_CHANGED" object:nil];
+
         return self;
     }
     return nil;
@@ -422,6 +431,7 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:textField_MAC];
     [textField_MAC removeFromSuperview];
     m_pDelegate = NULL;
 }

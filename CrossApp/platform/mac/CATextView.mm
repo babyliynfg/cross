@@ -37,9 +37,17 @@
     {
         [self setBackgroundColor:[NSColor clearColor]];
         [self setBezeled:NO];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fullScreenChanged) name:@"FULL_SCREEN_CHANGED" object:nil];
         return self;
     }
     return nil;
+}
+
+- (void)fullScreenChanged
+{
+    [self removeFromSuperview];
+    EAGLView * eaglview = [EAGLView sharedEGLView];
+    [eaglview addSubview:self];
 }
 
 -(void)setText:(NSString* )value
@@ -231,6 +239,7 @@ CATextView::CATextView()
 
 CATextView::~CATextView()
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:textView_Mac];
     [textView_Mac removeFromSuperview];
     m_pDelegate = NULL;
 }

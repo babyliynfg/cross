@@ -80,6 +80,7 @@
 		D6B033FA1D9507AE00388A90 /* CAVideoPlayerDecoderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B0322D1D9507AD00388A90 /* CAVideoPlayerDecoderMac.cpp */; };
 		D6B033FC1D9507AE00388A90 /* CAVideoPlayerRenderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B032301D9507AD00388A90 /* CAVideoPlayerRenderMac.cpp */; };
 		D6B033FE1D9507AE00388A90 /* CAVideoPlayerViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B032331D9507AD00388A90 /* CAVideoPlayerViewMac.cpp */; };
+		D6CBC1971EE96DBD0083E8C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CBC1961EE96DBD0083E8C3 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,6 +247,7 @@
 		D6B032301D9507AD00388A90 /* CAVideoPlayerRenderMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerRenderMac.cpp; sourceTree = "<group>"; };
 		D6B032321D9507AD00388A90 /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerView.h; sourceTree = "<group>"; };
 		D6B032331D9507AD00388A90 /* CAVideoPlayerViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerViewMac.cpp; sourceTree = "<group>"; };
+		D6CBC1961EE96DBD0083E8C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6CBC1971EE96DBD0083E8C3 /* WebKit.framework in Frameworks */,
 				B049CD321BCBB372001A2B30 /* Security.framework in Frameworks */,
 				B049CD2D1BCBB25E001A2B30 /* VideoToolbox.framework in Frameworks */,
 				B039AF751BC7B43E002C1FDB /* libiconv.2.dylib in Frameworks */,
@@ -383,6 +386,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6CBC1961EE96DBD0083E8C3 /* WebKit.framework */,
 				B09B73BB1BD1FA82001D82BC /* libSDL.a */,
 				B049CD301BCBB34E001A2B30 /* Security.framework */,
 				B049CD2E1BCBB342001A2B30 /* SecurityInterface.framework */,

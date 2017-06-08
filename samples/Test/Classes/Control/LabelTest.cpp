@@ -59,7 +59,7 @@ void LabelTest::viewDidLoad()
         
 		CAFont Font;
 		Font.fontSize = 36;
-		Font.color = CAColor4B::RED;
+		Font.color = CAColor4B::BLUE;
         Font.textAlignment = CATextAlignment::Center;
         Font.verticalTextAlignment = CAVerticalTextAlignment::Center;
 
@@ -72,7 +72,7 @@ void LabelTest::viewDidLoad()
 
 		CAFont Font1;
 		Font1.fontSize = 36;
-		Font1.color = CAColor4B::RED;
+		Font1.color = CAColor4B::BLUE;
         Font1.textAlignment = CATextAlignment::Center;
         Font1.verticalTextAlignment = CAVerticalTextAlignment::Center;
         Font1.bold = true;
@@ -87,7 +87,7 @@ void LabelTest::viewDidLoad()
 		CALabel* label2 = CALabel::create();
 		CAFont Font2;
 		Font2.fontSize = 36;
-		Font2.color = CAColor4B::RED;
+		Font2.color = CAColor4B::BLUE;
         Font2.textAlignment = CATextAlignment::Center;
         Font2.verticalTextAlignment = CAVerticalTextAlignment::Center;
 		Font2.underLine = true;
@@ -101,7 +101,7 @@ void LabelTest::viewDidLoad()
 		CALabel* label3 = CALabel::create();
 		CAFont Font3;
 		Font3.fontSize = 36;
-		Font3.color = CAColor4B::RED;
+		Font3.color = CAColor4B::BLUE;
         Font3.textAlignment = CATextAlignment::Center;
         Font3.verticalTextAlignment = CAVerticalTextAlignment::Center;
         Font3.deleteLine = true;
@@ -115,7 +115,7 @@ void LabelTest::viewDidLoad()
 		CALabel* label4 = CALabel::create();
 		CAFont Font4;
 		Font4.fontSize = 36;
-		Font4.color = CAColor4B::RED;
+		Font4.color = CAColor4B::BLUE;
         Font4.textAlignment = CATextAlignment::Center;
         Font4.verticalTextAlignment = CAVerticalTextAlignment::Center;
         Font4.italics = true;
@@ -128,7 +128,7 @@ void LabelTest::viewDidLoad()
         CALabel* label5 = CALabel::create();
         CAFont Font5;
         Font5.fontSize = 36;
-        Font5.color = CAColor4B::RED;
+        Font5.color = CAColor4B::BLUE;
         Font5.textAlignment = CATextAlignment::Center;
         Font5.verticalTextAlignment = CAVerticalTextAlignment::Center;
         Font5.shadow.shadowEnabled = true;
@@ -149,7 +149,7 @@ void LabelTest::viewDidLoad()
         Font6.verticalTextAlignment = CAVerticalTextAlignment::Center;
         Font6.stroke.strokeEnabled = true;
         Font6.stroke.strokeSize = 3;
-        Font6.stroke.strokeColor = CAColor4B::RED;
+        Font6.stroke.strokeColor = CAColor4B::BLUE;
         
         label6->setText(cc);
         label6->setFont(Font6);
@@ -175,7 +175,7 @@ void LabelTest::viewDidLoad()
 		
 		CAFont Font5;
 		Font5.fontSize = 36;
-		Font5.color = CAColor4B::RED;
+		Font5.color = CAColor4B::BLUE;
 		Font5.bold = true;
         Font5.lineSpacing = 10;
 		//Font5.italics = true;
@@ -184,7 +184,7 @@ void LabelTest::viewDidLoad()
         CALabel* label5 = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
 		label5->setText(text);
 		label5->setFont(Font5);
-        label5->setNumberOfLine(5);
+        //label5->setNumberOfLine(5);
         
 
 		CAView* view1 = CAView::createWithLayout(DLayoutFill);

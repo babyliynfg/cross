@@ -253,7 +253,6 @@ static EAGLView *view;
 		[fullScreenWindow_ makeMainWindow];
 		//[fullScreenWindow_ setNextResponder:superViewGLView_];
         CrossApp::CCApplication::sharedApplication()->applicationDidToggleFullScreen();
-
     }
     else
     {
@@ -292,6 +291,8 @@ static EAGLView *view;
     //[openGLview release]; // Retain -1
 
     [openGLview setNeedsDisplay:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FULL_SCREEN_CHANGED" object:nil];
 #else
 #error Full screen is not supported for Mac OS 10.5 or older yet
 #error If you don't want FullScreen support, you can safely remove these 2 lines
