@@ -222,15 +222,20 @@ public final class CrossAppBitmap {
             paint.setStrokeWidth(strokeSize/2);
         }
         
+        
+        Log.d("liuguoyan", "origin width = " + width  + "   , heigth = " + height) ; 
+        
         //resize size
         width = width == 0xffffffff ? 8192 : width ; 
         height = width == 0xffffffff ? getTextHeight("A", 8192, fontSize, Typeface.DEFAULT) : getTextHeight(string, width, fontSize, Typeface.DEFAULT) ; 
         
-        if(width ==0 || height ==0){
-        	Bitmap b = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_4444) ; 
-        	CrossAppBitmap.initNativeObject(b);
-        	return false ; 
-        } 
+        int txt_hei = getTextHeight(string, width, fontSize, Typeface.DEFAULT) ; 
+        int line_hei = getTextHeight("A", Integer.MAX_VALUE, fontSize, Typeface.DEFAULT) ; 
+        
+        int num_line = height / line_hei == 0 ? 1 :  height / line_hei ;
+        height = line_hei * num_line ; 
+        
+        Log.d("liuguoyan", "lable width = " + width + " , heigth = " + height + " number_line =  " + num_line + "    , txt_hei = " + txt_hei) ; 
         
         int maxWidth = width;
         
@@ -245,13 +250,14 @@ public final class CrossAppBitmap {
         layout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,0.0f,false);
         
         layoutWidth = layout.getWidth();
-        layoutHeight = layout.getLineTop(layout.getLineCount());
+//        layoutHeight = layout.getLineTop(layout.getLineCount());
+        layoutHeight = layout.getLineTop(1);
         
         int bitmapWidth = Math.max(layoutWidth, width);
         int bitmapHeight = layoutHeight;
-        if (height > 0) {
-            bitmapHeight = height;
-        }
+        
+        
+        Log.d("liuguoyan", "layoutHeight = " + layoutHeight) ; 
         
         if (bitmapWidth == 0 || bitmapHeight == 0) {
             return false;
@@ -279,6 +285,7 @@ public final class CrossAppBitmap {
         }
         
         int wid = bitmapWidth + _increase ; 
+        Log.d("liuguoyan", "before create bitmap wid = " + wid + " , bitmapHeight = " + bitmapHeight) ; 
         Bitmap bitmap = Bitmap.createBitmap(wid, bitmapHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(offsetX, offsetY);
