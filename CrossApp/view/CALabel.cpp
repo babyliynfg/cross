@@ -26,7 +26,6 @@ CALabel::CALabel()
 ,m_obPadding(DSizeZero)
 ,m_bFitFlag(false)
 ,m_bUpdateImage(false)
-,m_iLineSpacing(0)
 ,m_bEnableCopy(false)
 {
     m_obContentSize = DSizeZero;
@@ -147,12 +146,13 @@ void CALabel::updateImage()
     {
         if (m_nNumberOfLine > 1)
         {
-            size.height = (m_iLineSpacing + fontHeight) * (MIN(m_nNumberOfLine, linenumber) + 0.5f);
+            linenumber = MIN(m_nNumberOfLine, linenumber);
+            size.height = fontHeight * linenumber + m_obFont.lineSpacing * (linenumber - 1);
         }
         else if (m_nNumberOfLine == 1)
         {
             size.width = m_bFitFlag ? 0xffffffff : m_obContentSize.width;
-            size.height = fontHeight * 1.5f;
+            size.height = fontHeight;
         }
         else
         {
@@ -298,69 +298,44 @@ const CAFont& CALabel::getFont()
 
 void CALabel::setFontSize(float var)
 {
+    CC_RETURN_IF(m_obFont.fontSize == var);
     m_obFont.fontSize = var;
     this->updateImageDraw();
 }
 
-float CALabel::getFontSize()
-{
-    return m_obFont.fontSize;
-}
-
 void CALabel::setFontName(const string& var)
 {
+    CC_RETURN_IF(m_obFont.fontName == var);
     m_obFont.fontName = var;
     this->updateImageDraw();
 }
 
-const std::string& CALabel::getFontName()
-{
-    return m_obFont.fontName;
-}
-
 void CALabel::setBold(bool var)
 {
+    CC_RETURN_IF(m_obFont.bold == var);
     m_obFont.bold = var;
     this->updateImageDraw();
 }
 
-bool CALabel::isBold()
-{
-    return m_obFont.bold;
-}
-
 void CALabel::setUnderLine(bool var)
 {
+    CC_RETURN_IF(m_obFont.underLine == var);
     m_obFont.underLine = var;
     this->updateImageDraw();
 }
 
-bool CALabel::isUnderLine()
-{
-    return m_obFont.underLine;
-}
-
 void CALabel::setDeleteLine(bool var)
 {
+    CC_RETURN_IF(m_obFont.deleteLine == var);
     m_obFont.deleteLine = var;
     this->updateImageDraw();
 }
 
-bool CALabel::isDeleteLine()
-{
-    return m_obFont.deleteLine;
-}
-
-
 void CALabel::setItalics(bool var)
 {
+    CC_RETURN_IF(m_obFont.italics == var);
     m_obFont.italics = var;
     this->updateImageDraw();
-}
-
-bool CALabel::isItalics()
-{
-    return m_obFont.italics;
 }
 
 const CAColor4B& CALabel::getColor(void)
@@ -375,16 +350,11 @@ void CALabel::setColor(const CAColor4B& color)
     CAView::setColor(CAColor4B(255, 255, 255, color.a));
 }
 
-void CALabel::setLineSpacing(int var)
+void CALabel::setLineSpacing(float var)
 {
-    CC_RETURN_IF(m_iLineSpacing == var);
-	m_iLineSpacing = var;
+    CC_RETURN_IF(m_obFont.lineSpacing == var);
+	m_obFont.lineSpacing = var;
 	this->updateImageDraw();
-}
-
-int CALabel::getLineSpacing()
-{
-	return m_iLineSpacing;
 }
 
 void CALabel::setWordWrap(bool var)

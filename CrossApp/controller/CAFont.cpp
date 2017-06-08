@@ -12,6 +12,7 @@ CAFont::CAFont(const CAFont& other)
 , wordWrap(other.wordWrap)
 , fontSize(other.fontSize)
 , fontName(other.fontName)
+, lineSpacing(other.lineSpacing)
 , color(other.color)
 , textAlignment(other.textAlignment)
 , verticalTextAlignment(other.verticalTextAlignment)
@@ -31,6 +32,7 @@ CAFont& CAFont::operator= (const CAFont& other)
     this->wordWrap              = other.wordWrap;
     this->fontSize              = other.fontSize;
     this->fontName              = other.fontName;
+    this->lineSpacing           = other.lineSpacing;
     this->color                 = other.color;
     this->textAlignment         = other.textAlignment;
     this->verticalTextAlignment = other.verticalTextAlignment;

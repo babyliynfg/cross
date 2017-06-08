@@ -35,6 +35,9 @@ void CDUIShowAutoCollectionView::LabelRightBtnRightcallback(CAButton* btn)
     ViewContrllerLabelTest->setNavigationBarItem(LabelNavigationBar);
     ViewContrllerLabelTest->autorelease();
     RootWindow::getInstance()->getRootNavigationController()->replaceViewController(ViewContrllerLabelTest, false);
+    
+    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
+    drawer->setTouchMoved(false);
 }
 
 void LabelTest::viewDidLoad()
@@ -164,6 +167,7 @@ void LabelTest::viewDidLoad()
         A few days later, the lion was caught in a trap.\
         　\n\
         The hunters wanted to take him alive to the king, so they tied him to a tree, and went away to look for a wagon.\
+        \n\
         Just then the little mouse passed by, and saw the sad lion.\
         　\n\
         He went up to him, and soon gnawed away the ropes. \"Was I not right?\" asked the little mouse.";
@@ -173,15 +177,15 @@ void LabelTest::viewDidLoad()
 		Font5.fontSize = 36;
 		Font5.color = CAColor4B::RED;
 		Font5.bold = true;
-		Font5.italics = true;
-		Font5.underLine = true;
-        
-        
+        Font5.lineSpacing = 10;
+		//Font5.italics = true;
+		//Font5.underLine = true;
         
         CALabel* label5 = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
 		label5->setText(text);
 		label5->setFont(Font5);
-		label5->setLineSpacing(20);
+        label5->setNumberOfLine(5);
+        
 
 		CAView* view1 = CAView::createWithLayout(DLayoutFill);
 		view1->addSubview(label5);

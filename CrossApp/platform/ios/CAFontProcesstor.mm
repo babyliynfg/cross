@@ -14,7 +14,7 @@
 
 static id _createSystemFont(const CrossApp::CAFont& font)
 {
-    int shrinkFontSize = (font.fontSize);
+    float shrinkFontSize = (font.fontSize);
     
     NSString * fntName      = [NSString stringWithUTF8String:font.fontName.c_str()];
     // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
@@ -69,7 +69,7 @@ CGRect _calculateStringRect(NSAttributedString *str, id font, CGSize constrainSi
                             context:nil].size;
     
     dim.size.width = ceilf(dim.size.width);
-    dim.size.height = ceilf(dim.size.height);
+    dim.size.height = MIN(ceilf(dim.size.height), constrainSize.height);
     
     return dim;
 }
@@ -82,7 +82,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
     {
         CC_BREAK_IF(text.empty());
         
-        int shrinkFontSize = (font.fontSize);
+        float shrinkFontSize = (font.fontSize);
         id iosfont = _createSystemFont(font);
         CC_BREAK_IF(!iosfont);
         
@@ -99,6 +99,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        [paragraphStyle setLineSpacing:font.lineSpacing];
         [paragraphStyle setAlignment:textAlign];
         
         // adjust text rect according to overflow
@@ -365,6 +366,7 @@ float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFo
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        [paragraphStyle setLineSpacing:font.lineSpacing];
         [paragraphStyle setAlignment:textAlign];
         
         NSMutableDictionary* tokenAttributesDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -424,7 +426,7 @@ float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAF
         NSString* string = [NSString stringWithUTF8String:text.c_str()];
         CC_BREAK_IF(!string);
         
-        int shrinkFontSize = (font.fontSize);
+        float shrinkFontSize = (font.fontSize);
         id iosfont = _createSystemFont(font);
         CC_BREAK_IF(!iosfont);
         

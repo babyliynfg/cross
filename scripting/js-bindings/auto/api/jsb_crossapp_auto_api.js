@@ -4041,16 +4041,6 @@ catextalignment
 },
 
 /**
- * @method getFontSize
- * @return {float}
- */
-getFontSize : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method getText
  * @return {String}
  */
@@ -4058,16 +4048,6 @@ getText : function (
 )
 {
     return ;
-},
-
-/**
- * @method isBold
- * @return {bool}
- */
-isBold : function (
-)
-{
-    return false;
 },
 
 /**
@@ -4081,16 +4061,6 @@ bool
 },
 
 /**
- * @method isDeleteLine
- * @return {bool}
- */
-isDeleteLine : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setFontName
  * @param {String} arg0
  */
@@ -4101,21 +4071,11 @@ str
 },
 
 /**
- * @method isItalics
- * @return {bool}
- */
-isItalics : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setLineSpacing
- * @param {int} arg0
+ * @param {float} arg0
  */
 setLineSpacing : function (
-int 
+float 
 )
 {
 },
@@ -4131,13 +4091,13 @@ bool
 },
 
 /**
- * @method isUnderLine
- * @return {bool}
+ * @method setEnableCopy
+ * @param {bool} arg0
  */
-isUnderLine : function (
+setEnableCopy : function (
+bool 
 )
 {
-    return false;
 },
 
 /**
@@ -4207,16 +4167,6 @@ getFontName : function (
 },
 
 /**
- * @method getLineSpacing
- * @return {int}
- */
-getLineSpacing : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setVerticalTextAlignmet
  * @param {ca.CAVerticalTextAlignment} arg0
  */
@@ -4237,13 +4187,13 @@ getFont : function (
 },
 
 /**
- * @method setItalics
- * @param {bool} arg0
+ * @method getColor
+ * @return {color4b_object}
  */
-setItalics : function (
-bool 
+getColor : function (
 )
 {
+    return ca.CAColor4B;
 },
 
 /**
@@ -4254,6 +4204,16 @@ getNumberOfLine : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setItalics
+ * @param {bool} arg0
+ */
+setItalics : function (
+bool 
+)
+{
 },
 
 /**
@@ -4305,16 +4265,6 @@ str
 },
 
 /**
- * @method setEnableCopy
- * @param {bool} arg0
- */
-setEnableCopy : function (
-bool 
-)
-{
-},
-
-/**
  * @method setNumberOfLine
  * @param {unsigned int} arg0
  */
@@ -4322,16 +4272,6 @@ setNumberOfLine : function (
 int 
 )
 {
-},
-
-/**
- * @method getColor
- * @return {color4b_object}
- */
-getColor : function (
-)
-{
-    return ca.CAColor4B;
 },
 
 /**

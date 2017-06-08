@@ -11,14 +11,14 @@ NS_CC_BEGIN
 
 enum class CAVerticalTextAlignment
 {
-    Top,
+    Top = 0,
     Center,
     Bottom,
 };
 
 enum class CATextAlignment
 {
-    Left,
+    Left = 0,
     Center,
     Right,
 };
@@ -84,6 +84,8 @@ public:
     
     float                   fontSize;
     
+    float                   lineSpacing;
+    
     CAColor4B               color;
     
     CATextAlignment         textAlignment;
@@ -105,6 +107,7 @@ public:
     , wordWrap(false)
     , fontSize(24)
     , fontName("")
+    , lineSpacing(0)
     , color(CAColor4B::BLACK)
     , textAlignment(CATextAlignment::Left)
     , verticalTextAlignment(CAVerticalTextAlignment::Top)

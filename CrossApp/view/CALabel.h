@@ -35,53 +35,41 @@ public:
     static CALabel* createWithLayout(const DLayout& layout);
     
     virtual bool init();
-    
-    CC_PROPERTY_PASS_BY_REF(string, m_sText, Text);
 
+    CC_PROPERTY_PASS_BY_REF(string, m_sText, Text);
+    
     CC_PROPERTY_PASS_BY_REF(CAFont, m_obFont, Font);
+    
+    CC_PROPERTY(unsigned int, m_nNumberOfLine, NumberOfLine);
+    
+    CC_SYNTHESIZE(bool, m_bEnableCopy, EnableCopy);
+    
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(DSize, m_obLabelSize, LabelSize);
+    
+    virtual void setColor(const CAColor4B& var);
+    
+    virtual const CAColor4B& getColor();
     
     void setFontSize(float var);
     
-    float getFontSize();
-    
     void setFontName(const std::string& var);
     
-    const std::string& getFontName();
-    
     void setBold(bool var);
-    
-    bool isBold();
 
     void setUnderLine(bool var);
-    
-    bool isUnderLine();
 
     void setDeleteLine(bool var);
     
-    bool isDeleteLine();
-    
     void setItalics(bool var);
     
-    bool isItalics();
-    
-    void setColor(const CAColor4B& var);
-    
-    const CAColor4B& getColor();
-
     void setWordWrap(bool var);
     
     void setVerticalTextAlignmet(const CAVerticalTextAlignment& var);
     
     void setTextAlignment(const CATextAlignment& var);
     
-	CC_PROPERTY(int, m_iLineSpacing, LineSpacing);
+    void setLineSpacing(float var);
     
-    CC_PROPERTY(unsigned int, m_nNumberOfLine, NumberOfLine);
-
-	CC_SYNTHESIZE(bool, m_bEnableCopy, EnableCopy);
-    
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(DSize, m_obLabelSize, LabelSize);
-
     virtual void visitEve();
     
     void sizeToFit();

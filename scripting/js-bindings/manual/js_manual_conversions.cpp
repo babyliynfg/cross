@@ -768,7 +768,7 @@ bool jsval_to_dverticallayout(JSContext *cx, JS::HandleValue v, CrossApp::DVerti
     JS_GetProperty(cx, tmp, "bottom", &jsbottom) &&
     JS_GetProperty(cx, tmp, "height", &jsheight) &&
     JS_GetProperty(cx, tmp, "center", &jrcenter) &&
-     JS_GetProperty(cx, tmp, "type", &jrtype) &&
+    JS_GetProperty(cx, tmp, "type", &jrtype) &&
     JS::ToNumber(cx, jstop, &top) &&
     JS::ToNumber(cx, jsbottom, &bottom) &&
     JS::ToNumber(cx, jsheight, &height) &&
@@ -841,45 +841,123 @@ bool jsval_to_dlayout(JSContext *cx, JS::HandleValue v, CrossApp::DLayout* layou
 bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     
     JS::RootedObject tmp(cx);
-    JS::RootedValue jsbold(cx);
-    JS::RootedValue jsunderLine(cx);
-    JS::RootedValue jsdeleteLine(cx);
-    JS::RootedValue jsitalics(cx);
-    JS::RootedValue jsfontSize(cx);
-    JS::RootedValue jscolor(cx);
-    JS::RootedValue jsfontName(cx);
+    JS::RootedValue js_bold(cx);
+    JS::RootedValue js_underLine(cx);
+    JS::RootedValue js_deleteLine(cx);
+    JS::RootedValue js_italics(cx);
+    JS::RootedValue js_italicsValue(cx);
+    JS::RootedValue js_wordWrap(cx);
+    JS::RootedValue js_fontName(cx);
+    JS::RootedValue js_fontSize(cx);
+    JS::RootedValue js_lineSpacing(cx);
+    JS::RootedValue js_color(cx);
+    JS::RootedValue js_textAlignment(cx);
+    JS::RootedValue js_verticalTextAlignment(cx);
     
-    bool bold,underLine,deleteLine,italics;
-    double fontSize;
-    CAColor4B color;
-    std::string fontName;
+
     bool ok = v.isObject() &&
     JS_ValueToObject(cx,  v, &tmp) &&
-    JS_GetProperty(cx, tmp, "bold", &jsbold) &&
-    JS_GetProperty(cx, tmp, "underLine", &jsunderLine) &&
-    JS_GetProperty(cx, tmp, "deleteLine", &jsdeleteLine) &&
-    JS_GetProperty(cx, tmp, "italics", &jsitalics) &&
-    JS_GetProperty(cx, tmp, "fontSize", &jsfontSize) &&
-    JS_GetProperty(cx, tmp, "color", &jscolor) &&
-    JS_GetProperty(cx, tmp, "fontName", &jsfontName);
-    bold = JS::ToBoolean(jsbold);
-    underLine = JS::ToBoolean(jsunderLine);
-    deleteLine = JS::ToBoolean(jsdeleteLine);
-    italics = JS::ToBoolean(jsitalics);
-    ok = JS::ToNumber(cx, jsfontSize, &fontSize);
-    ok = jsval_to_cacolor4b(cx, jscolor, &color);
-    ok = jsval_to_std_string(cx, jsfontName, &fontName);
+    JS_GetProperty(cx, tmp, "bold", &js_bold) &&
+    JS_GetProperty(cx, tmp, "underLine", &js_underLine) &&
+    JS_GetProperty(cx, tmp, "deleteLine", &js_deleteLine) &&
+    JS_GetProperty(cx, tmp, "italics", &js_italics) &&
+    JS_GetProperty(cx, tmp, "italicsValue", &js_italicsValue) &&
+    JS_GetProperty(cx, tmp, "wordWrap", &js_wordWrap) &&
+    JS_GetProperty(cx, tmp, "fontName", &js_fontName) &&
+    JS_GetProperty(cx, tmp, "fontSize", &js_fontSize) &&
+    JS_GetProperty(cx, tmp, "lineSpacing", &js_lineSpacing) &&
+    JS_GetProperty(cx, tmp, "color", &js_color) &&
+    JS_GetProperty(cx, tmp, "textAlignment", &js_textAlignment) &&
+    JS_GetProperty(cx, tmp, "verticalTextAlignment", &js_verticalTextAlignment);
     
+
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
     
-    ret->bold = bold;
-    ret->underLine = underLine;
-    ret->deleteLine = deleteLine;
-    ret->italics = italics;
-    ret->fontSize = fontSize;
-    ret->color = color;
-    ret->fontName = fontName;
+    ret->bold = JS::ToBoolean(js_bold);
+    ret->underLine = JS::ToBoolean(js_underLine);
+    ret->deleteLine = JS::ToBoolean(js_deleteLine);
+    ret->italics = JS::ToBoolean(js_italics);
     
+    double italicsValue;
+    JS::ToNumber(cx, js_italicsValue, &italicsValue);
+    ret->italicsValue = italicsValue;
+    
+    ret->wordWrap = JS::ToBoolean(js_wordWrap);
+    
+    jsval_to_std_string(cx, js_fontName, &ret->fontName);
+    
+    double fontSize;
+    JS::ToNumber(cx, js_fontSize, &fontSize);
+    ret->fontSize = fontSize;
+    
+    double lineSpacing;
+    JS::ToNumber(cx, js_lineSpacing, &lineSpacing);
+    ret->lineSpacing = lineSpacing;
+    
+    jsval_to_cacolor4b(cx, js_color, &ret->color);
+    jsval_to_int32(cx, js_textAlignment, (int32_t *)&ret->textAlignment);
+    jsval_to_int32(cx, js_verticalTextAlignment, (int32_t *)&ret->verticalTextAlignment);
+
+    {
+        JS::RootedObject shadow_tmp(cx);
+        JS::RootedValue shadow_value(cx);
+        JS::RootedValue js_shadowEnabled(cx);
+        JS::RootedValue js_shadowOffset(cx);
+        JS::RootedValue js_shadowBlur(cx);
+        JS::RootedValue js_shadowColor(cx);
+        
+        JS_GetProperty(cx, tmp, "shadow", &shadow_value);
+        JS_ValueToObject(cx, shadow_value, &shadow_tmp);
+        
+        bool ok = \
+        JS_GetProperty(cx, shadow_tmp, "shadowEnabled", &js_shadowEnabled) &&
+        JS_GetProperty(cx, shadow_tmp, "shadowOffset", &js_shadowOffset) &&
+        JS_GetProperty(cx, shadow_tmp, "shadowBlur", &js_shadowBlur) &&
+        JS_GetProperty(cx, shadow_tmp, "shadowColor", &js_shadowColor);
+        
+        JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+        
+        ret->shadow.shadowEnabled = JS::ToBoolean(js_shadowEnabled);
+        jsval_to_dsize(cx, js_shadowOffset, &ret->shadow.shadowOffset);
+        ret->shadow.shadowBlur = JS::ToBoolean(js_shadowBlur);
+        jsval_to_cacolor4b(cx, js_shadowColor, &ret->shadow.shadowColor);
+    }
+    
+    {
+        JS::RootedObject stroke_tmp(cx);
+        JS::RootedValue stroke_value(cx);
+        JS::RootedValue js_strokeEnabled(cx);
+        JS::RootedValue js_strokeColor(cx);
+        JS::RootedValue js_strokeSize(cx);
+        
+        JS_GetProperty(cx, tmp, "stroke", &stroke_value);
+        JS_ValueToObject(cx, stroke_value, &stroke_tmp);
+        
+        bool ok = JS_GetProperty(cx, stroke_tmp, "strokeEnabled", &js_strokeEnabled) &&
+        JS_GetProperty(cx, stroke_tmp, "strokeColor", &js_strokeColor) &&
+        JS_GetProperty(cx, stroke_tmp, "strokeSize", &js_strokeSize);
+        
+        JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+        
+        ret->stroke.strokeEnabled = JS::ToBoolean(js_strokeEnabled);
+        jsval_to_cacolor4b(cx, js_strokeColor, &ret->stroke.strokeColor);
+        ret->stroke.strokeSize = JS::ToBoolean(js_strokeSize);
+        
+    }
+  /*
+    CCLog("CAFont: bold:%d\n underLine:%d\n deleteLine:%d\n italics:%d\n italicsValue:%f\n wordWrap:%d\n fontName:%s\n fontSize:%f\n color:%u\n textAlignment:%d\n verticalTextAlignment:%d\n ",
+          ret->bold,
+          ret->underLine,
+          ret->deleteLine,
+          ret->italics,
+          ret->italicsValue,
+          ret->wordWrap,
+          ret->fontName.c_str(),
+          ret->fontSize,
+          ret->color.getUInt(),
+          ret->textAlignment,
+          ret->verticalTextAlignment);
+    */
     return true;
 }
 bool jsval_to_cacolor4b(JSContext *cx, JS::HandleValue v, CAColor4B* ret) {
@@ -1692,9 +1770,44 @@ jsval cafont_to_jsval(JSContext *cx, const CrossApp::CAFont& v){
     JS::RootedValue fontName(cx);
     fontName = std_string_to_jsval(cx, v.fontName);
     
-    JS::RootedObject  shadow(cx, JS_NewObject(cx, NULL, proto, parent));
-
-    JS::RootedObject  stroke(cx, JS_NewObject(cx, NULL, proto, parent));
+    JS::RootedValue shadow(cx);
+    JS::RootedObject shadow_tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    if (shadow_tmp)
+    {
+        JS::RootedValue shadowOffset(cx);
+        shadowOffset = dsize_to_jsval(cx, v.shadow.shadowOffset);
+        
+        JS::RootedValue shadowColor(cx);
+        shadowColor = cacolor4b_to_jsval(cx, v.shadow.shadowColor);
+        
+        bool ok = JS_DefineProperty(cx, shadow_tmp, "shadowEnabled", v.shadow.shadowEnabled, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_SetProperty(cx, shadow_tmp, "shadowOffset", shadowOffset) &&
+        JS_DefineProperty(cx, shadow_tmp, "shadowBlur", v.shadow.shadowBlur, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_SetProperty(cx, shadow_tmp, "shadowColor", shadowColor);
+        
+        shadow = ok ? OBJECT_TO_JSVAL(shadow_tmp) : JSVAL_NULL;
+    }
+    else
+    {
+        shadow = JSVAL_NULL;
+    }
+    JS::RootedValue  stroke(cx);
+    JS::RootedObject stroke_tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+    if (stroke_tmp)
+    {
+        JS::RootedValue strokeColor(cx);
+        strokeColor = cacolor4b_to_jsval(cx, v.stroke.strokeColor);
+        
+        bool ok = JS_DefineProperty(cx, stroke_tmp, "strokeEnabled", v.stroke.strokeEnabled, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_SetProperty(cx, stroke_tmp, "strokeColor", strokeColor) &&
+        JS_DefineProperty(cx, stroke_tmp, "strokeSize", v.stroke.strokeSize, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+        
+        stroke = ok ? OBJECT_TO_JSVAL(stroke_tmp) : JSVAL_NULL;
+    }
+    else
+    {
+        stroke = JSVAL_NULL;
+    }
     
     bool ok = JS_DefineProperty(cx, tmp, "bold", v.bold, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "underLine", v.underLine, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -1703,14 +1816,13 @@ jsval cafont_to_jsval(JSContext *cx, const CrossApp::CAFont& v){
     JS_DefineProperty(cx, tmp, "italicsValue", v.italicsValue, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "wordWrap", v.wordWrap, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "fontSize", v.fontSize, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+    JS_DefineProperty(cx, tmp, "lineSpacing", v.lineSpacing, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
     JS_SetProperty(cx, tmp, "fontName", fontName) &&
     JS_SetProperty(cx, tmp, "color", color) &&
     JS_DefineProperty(cx, tmp, "textAlignment", (int)v.textAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "verticalTextAlignment", (int)v.verticalTextAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT)
-//    &&
-//    JS_SetProperty(cx, tmp, "shadow", (jsval)OBJECT_TO_JSVAL(shadow)) &&
-//    JS_SetProperty(cx, tmp, "stroke", (jsval)OBJECT_TO_JSVAL(stroke))
-    ;
+    JS_DefineProperty(cx, tmp, "verticalTextAlignment", (int)v.verticalTextAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_SetProperty(cx, tmp, "shadow", shadow) &&
+    JS_SetProperty(cx, tmp, "stroke", stroke);
     
     if (ok)
     {
