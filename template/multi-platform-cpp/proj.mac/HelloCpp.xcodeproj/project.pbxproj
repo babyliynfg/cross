@@ -40,6 +40,7 @@
 		D69B76A21E4B08AE007D9771 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A11E4B08AE007D9771 /* IOKit.framework */; };
 		D69B76A41E4B08B4007D9771 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A31E4B08B4007D9771 /* Security.framework */; };
 		D69B76A61E4B08E1007D9771 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A51E4B08E1007D9771 /* libiconv.tbd */; };
+		D6CBC19A1EE97A590083E8C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CBC1991EE97A590083E8C3 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		D69B76A11E4B08AE007D9771 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		D69B76A31E4B08B4007D9771 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D69B76A51E4B08E1007D9771 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		D6CBC1991EE97A590083E8C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6CBC19A1EE97A590083E8C3 /* WebKit.framework in Frameworks */,
 				D69B76A61E4B08E1007D9771 /* libiconv.tbd in Frameworks */,
 				B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */,
 				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,
@@ -246,6 +249,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6CBC1991EE97A590083E8C3 /* WebKit.framework */,
 				D69B76A51E4B08E1007D9771 /* libiconv.tbd */,
 				D69B76A31E4B08B4007D9771 /* Security.framework */,
 				D69B76A11E4B08AE007D9771 /* IOKit.framework */,
