@@ -38,6 +38,7 @@ public:
     
     CAFontShadow()
     : shadowEnabled(false)
+    , shadowOffset(DSizeZero)
     , shadowBlur(0)
     , shadowColor(CAFontShadowDefaultColor)
     {
@@ -96,15 +97,15 @@ public:
 public:
     
     CAFont()
-    : fontSize(24)
-    , fontName("")
-    , color(CAColor4B::BLACK)
-    , bold(false)
+    : bold(false)
     , underLine(false)
     , deleteLine(false)
     , italics(false)
     , italicsValue(0.5f)
     , wordWrap(false)
+    , fontSize(24)
+    , fontName("")
+    , color(CAColor4B::BLACK)
     , textAlignment(CATextAlignment::Left)
     , verticalTextAlignment(CAVerticalTextAlignment::Top)
     {
