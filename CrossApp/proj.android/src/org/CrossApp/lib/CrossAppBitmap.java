@@ -181,7 +181,8 @@ public final class CrossAppBitmap {
             int deleteLine , 
             int italics , 
             float italics_v , 
-            int wordWrap
+            int wordWrap,
+            float lineSpacing
     		) 
     {
     	String string = new String(strs) ; 
@@ -222,21 +223,9 @@ public final class CrossAppBitmap {
             paint.setStrokeWidth(strokeSize/2);
         }
         
-        
-        Log.d("liuguoyan", "origin width = " + width  + "   , heigth = " + height) ; 
-        
         //resize size
         width = width == 0xffffffff ? 8192 : width ; 
-        height = width == 0xffffffff ? getTextHeight("A", 8192, fontSize, Typeface.DEFAULT) : getTextHeight(string, width, fontSize, Typeface.DEFAULT) ; 
-        
-        int txt_hei = getTextHeight(string, width, fontSize, Typeface.DEFAULT) ; 
-        int line_hei = getTextHeight("A", Integer.MAX_VALUE, fontSize, Typeface.DEFAULT) ; 
-        
-        int num_line = height / line_hei == 0 ? 1 :  height / line_hei ;
-        height = line_hei * num_line ; 
-        
-        Log.d("liuguoyan", "lable width = " + width + " , heigth = " + height + " number_line =  " + num_line + "    , txt_hei = " + txt_hei) ; 
-        
+
         int maxWidth = width;
         
         if (maxWidth <= 0) {
@@ -247,17 +236,30 @@ public final class CrossAppBitmap {
         int layoutWidth = 0;
         int layoutHeight = 0;
         
-        layout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,0.0f,false);
+        //if number of lines = 1 , lineSpacing 
+        StaticLayout pramsLayout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,lineSpacing,false) ; 
+        lineSpacing = pramsLayout.getLineCount() == 1 ? 0.0f : lineSpacing ;
+        pramsLayout = null ; 
         
+        
+        layout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,lineSpacing,false);
+        
+        
+        //get number of lines
+        int line_height = layout.getLineTop(1) ; 
+        int number_of_lines = height / line_height == 0 ? 1 : height / line_height ; 
+        float number_hei = (float)height / (float)line_height == 0.0f ? 1.0f : (float)height / (float)line_height ; 
+        height = (int)(line_height * number_hei ) ; 
+
+        
+
+        number_of_lines = (int)Math.round(number_hei) ; 
+
         layoutWidth = layout.getWidth();
-//        layoutHeight = layout.getLineTop(layout.getLineCount());
-        layoutHeight = layout.getLineTop(1);
+        layoutHeight = layout.getLineTop(number_of_lines> layout.getLineCount()  ? layout.getLineCount() : number_of_lines);
         
         int bitmapWidth = Math.max(layoutWidth, width);
         int bitmapHeight = layoutHeight;
-        
-        
-        Log.d("liuguoyan", "layoutHeight = " + layoutHeight) ; 
         
         if (bitmapWidth == 0 || bitmapHeight == 0) {
             return false;
@@ -285,7 +287,6 @@ public final class CrossAppBitmap {
         }
         
         int wid = bitmapWidth + _increase ; 
-        Log.d("liuguoyan", "before create bitmap wid = " + wid + " , bitmapHeight = " + bitmapHeight) ; 
         Bitmap bitmap = Bitmap.createBitmap(wid, bitmapHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.translate(offsetX, offsetY);
@@ -313,16 +314,16 @@ public final class CrossAppBitmap {
       FontMetrics fm = p.getFontMetrics();  
       
       int textHeight = (int) (Math.ceil(fm.descent - fm.ascent) + 2);  
-	        
+	  
       return textHeight;
   }
   
-  public static float heightForTextAtWidth(String string , int width , int fontsize)
+  public static float heightForTextAtWidth(String string , int width , int fontsize ,float lineSpacing)
   {	  
 	  TextPaint paint = new TextPaint();
       paint.setTextSize(fontsize);
-	  Layout layout = new StaticLayout(string, paint, width , Layout.Alignment.ALIGN_CENTER,1.0f,0.0f,false);
-      	  
+	  Layout layout = new StaticLayout(string, paint, width , Layout.Alignment.ALIGN_CENTER,1.0f,lineSpacing,false);
+	  
       return layout.getHeight();
   }
   
