@@ -142,7 +142,7 @@ void CALabel::updateImage()
  
     unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
 
-    DSize size = DSizeZero;
+    DSize size = m_obContentSize;
     if (linenumber > 0)
     {
         if (m_nNumberOfLine > 1)
@@ -159,7 +159,7 @@ void CALabel::updateImage()
             size = m_obContentSize;
         }
     }
-
+    
     if (CAImage* image = CAFontProcesstor::imageForText(m_sText, m_obFont, size))
     {
         this->setImage(image);

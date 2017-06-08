@@ -203,10 +203,10 @@ public final class CrossAppBitmap {
         TextPaint paint = CrossAppBitmap.newPaint(fontName, fontSize);
         
         italics_v = -italics_v ; 
-        paint.setFakeBoldText(bold > 0 ?true : false); //true为粗体，false为非粗体
-        paint.setTextSkewX(italics > 0 ? italics_v : 0);     //float类型参数，负数表示右斜，整数左斜
-        paint.setUnderlineText(undeerLine  >0 ? true : false); //true为下划线，false为非下划线
-        paint.setStrikeThruText(deleteLine > 0 ? true: false); //true为删除线，false为非删除线
+        paint.setFakeBoldText(bold > 0 ?true : false);
+        paint.setTextSkewX(italics > 0 ? italics_v : 0);     
+        paint.setUnderlineText(undeerLine  >0 ? true : false); 
+        paint.setStrikeThruText(deleteLine > 0 ? true: false); 
         
         if (shadowBlur>0) {
         	int color = Color.argb(shadowa, shadowr, shadowg, shadowb) ; 
@@ -222,21 +222,31 @@ public final class CrossAppBitmap {
             paint.setStrokeWidth(strokeSize/2);
         }
         
+        //resize size
+        width = width == 0xffffffff ? 8192 : width ; 
+        height = width == 0xffffffff ? getTextHeight("A", 8192, fontSize, Typeface.DEFAULT) : getTextHeight(string, width, fontSize, Typeface.DEFAULT) ; 
+        
+        if(width ==0 || height ==0){
+        	Bitmap b = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_4444) ; 
+        	CrossAppBitmap.initNativeObject(b);
+        	return false ; 
+        } 
+        
         int maxWidth = width;
         
         if (maxWidth <= 0) {
             maxWidth = (int)Math.ceil( StaticLayout.getDesiredWidth(string, paint));
         }
-
+        
         Layout layout = null;
         int layoutWidth = 0;
         int layoutHeight = 0;
         
         layout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,0.0f,false);
-
+        
         layoutWidth = layout.getWidth();
         layoutHeight = layout.getLineTop(layout.getLineCount());
-
+        
         int bitmapWidth = Math.max(layoutWidth, width);
         int bitmapHeight = layoutHeight;
         if (height > 0) {
