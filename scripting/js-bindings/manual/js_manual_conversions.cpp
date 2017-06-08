@@ -849,6 +849,7 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     JS::RootedValue js_wordWrap(cx);
     JS::RootedValue js_fontName(cx);
     JS::RootedValue js_fontSize(cx);
+    JS::RootedValue js_lineSpacing(cx);
     JS::RootedValue js_color(cx);
     JS::RootedValue js_textAlignment(cx);
     JS::RootedValue js_verticalTextAlignment(cx);
@@ -864,6 +865,7 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     JS_GetProperty(cx, tmp, "wordWrap", &js_wordWrap) &&
     JS_GetProperty(cx, tmp, "fontName", &js_fontName) &&
     JS_GetProperty(cx, tmp, "fontSize", &js_fontSize) &&
+    JS_GetProperty(cx, tmp, "lineSpacing", &js_lineSpacing) &&
     JS_GetProperty(cx, tmp, "color", &js_color) &&
     JS_GetProperty(cx, tmp, "textAlignment", &js_textAlignment) &&
     JS_GetProperty(cx, tmp, "verticalTextAlignment", &js_verticalTextAlignment);
@@ -887,6 +889,10 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     double fontSize;
     JS::ToNumber(cx, js_fontSize, &fontSize);
     ret->fontSize = fontSize;
+    
+    double lineSpacing;
+    JS::ToNumber(cx, js_lineSpacing, &lineSpacing);
+    ret->lineSpacing = lineSpacing;
     
     jsval_to_cacolor4b(cx, js_color, &ret->color);
     jsval_to_int32(cx, js_textAlignment, (int32_t *)&ret->textAlignment);
@@ -1810,6 +1816,7 @@ jsval cafont_to_jsval(JSContext *cx, const CrossApp::CAFont& v){
     JS_DefineProperty(cx, tmp, "italicsValue", v.italicsValue, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "wordWrap", v.wordWrap, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "fontSize", v.fontSize, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+    JS_DefineProperty(cx, tmp, "lineSpacing", v.lineSpacing, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
     JS_SetProperty(cx, tmp, "fontName", fontName) &&
     JS_SetProperty(cx, tmp, "color", color) &&
     JS_DefineProperty(cx, tmp, "textAlignment", (int)v.textAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&

@@ -25,26 +25,13 @@ NSTextAlignment _calculateTextAlignment(CrossApp::CATextAlignment alignment)
     return nsAlignment;
 }
 
-NSRect _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSize, bool enableWrap, int overflow)
+NSRect _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSize, bool enableWrap)
 {
     NSSize textRect = NSZeroSize;
     textRect.width = constrainSize.width > 0 ? constrainSize.width
     : CGFLOAT_MAX;
     textRect.height = constrainSize.height > 0 ? constrainSize.height
     : CGFLOAT_MAX;
-    
-    if (overflow == 1)
-    {
-        if (!enableWrap)
-        {
-            textRect.width = CGFLOAT_MAX;
-            textRect.height = CGFLOAT_MAX;
-        }
-        else
-        {
-            textRect.height = CGFLOAT_MAX;
-        }
-    }
     
     NSRect dim = NSZeroRect;
 #ifdef __MAC_10_11
@@ -59,12 +46,12 @@ NSRect _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSi
     
     
     dim.size.width = ceilf(dim.size.width);
-    dim.size.height = ceilf(dim.size.height);
+    dim.size.height = MIN(ceilf(dim.size.height), constrainSize.height) ;
     
     return dim;
 }
 
-static NSFont* _createSystemFont(const std::string& fontName, unsigned int size)
+static NSFont* _createSystemFont(const std::string& fontName, float size)
 {
     NSString * fntName = [NSString stringWithUTF8String:fontName.c_str()];
     fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
@@ -98,7 +85,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         NSString * str  = [NSString stringWithUTF8String:text.c_str()];
         CC_BREAK_IF(!str);
         
-        int shrinkFontSize = (font.fontSize);
+        float shrinkFontSize = (font.fontSize);
         id nsfont = _createSystemFont(font.fontName, shrinkFontSize);
         CC_BREAK_IF(!nsfont);
         
@@ -113,6 +100,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        [paragraphStyle setLineSpacing:font.lineSpacing];
         [paragraphStyle setAlignment:textAlign];
         
         // attribute
@@ -157,7 +145,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         
         NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict] autorelease];
         
-        NSRect textRect = _calculateStringSize(stringWithAttributes, nsfont, CGSizeMake(dim.width, dim.height), font.wordWrap, 0);
+        NSRect textRect = _calculateStringSize(stringWithAttributes, nsfont, CGSizeMake(dim.width, dim.height), font.wordWrap);
         
         // Mac crashes if the width or height is 0
         CC_BREAK_IF(textRect.size.width <= 0 || textRect.size.height <= 0);
@@ -265,7 +253,7 @@ float CAFontProcesstor::heightForFont(const CAFont& font)
     float ret = 0;
     do
     {
-        int shrinkFontSize = (font.fontSize);
+        float shrinkFontSize = (font.fontSize);
         id nsfont = _createSystemFont(font.fontName, shrinkFontSize);
         CC_BREAK_IF(!nsfont);
         
@@ -336,7 +324,7 @@ float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFo
         NSString* string = [NSString stringWithUTF8String:text.c_str()];
         CC_BREAK_IF(!string);
         
-        int shrinkFontSize = (font.fontSize);
+        float shrinkFontSize = (font.fontSize);
         id nsfont = _createSystemFont(font.fontName, shrinkFontSize);
         CC_BREAK_IF(!nsfont);
         
@@ -345,6 +333,7 @@ float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFo
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        [paragraphStyle setLineSpacing:font.lineSpacing];
         [paragraphStyle setAlignment:textAlign];
         
         // attribute
@@ -407,7 +396,7 @@ float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAF
         NSString* string = [NSString stringWithUTF8String:text.c_str()];
         CC_BREAK_IF(!string);
         
-        int shrinkFontSize = (font.fontSize);
+        float shrinkFontSize = (font.fontSize);
         id nsfont = _createSystemFont(font.fontName, shrinkFontSize);
         CC_BREAK_IF(!nsfont);
         

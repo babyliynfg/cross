@@ -10329,25 +10329,6 @@ bool js_crossapp_CALabel_setTextAlignment(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CALabel_setTextAlignment : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CALabel_getFontSize(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_getFontSize : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getFontSize();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_getFontSize : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CALabel_getText(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -10365,25 +10346,6 @@ bool js_crossapp_CALabel_getText(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CALabel_getText : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CALabel_isBold(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_isBold : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isBold();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_isBold : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CALabel_setUnderLine(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10407,25 +10369,6 @@ bool js_crossapp_CALabel_setUnderLine(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CALabel_setUnderLine : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CALabel_isDeleteLine(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_isDeleteLine : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isDeleteLine();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_isDeleteLine : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CALabel_setFontName(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -10447,25 +10390,6 @@ bool js_crossapp_CALabel_setFontName(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CALabel_setFontName : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CALabel_isItalics(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_isItalics : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isItalics();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_isItalics : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CALabel_setLineSpacing(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -10476,8 +10400,8 @@ bool js_crossapp_CALabel_setLineSpacing(JSContext *cx, uint32_t argc, jsval *vp)
     CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_setLineSpacing : Invalid Native Object");
     if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CALabel_setLineSpacing : Error processing arguments");
         cobj->setLineSpacing(arg0);
         args.rval().setUndefined();
@@ -10508,23 +10432,25 @@ bool js_crossapp_CALabel_setBold(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CALabel_setBold : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CALabel_isUnderLine(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CALabel_setEnableCopy(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_isUnderLine : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isUnderLine();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_setEnableCopy : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CALabel_setEnableCopy : Error processing arguments");
+        cobj->setEnableCopy(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CALabel_isUnderLine : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CALabel_setEnableCopy : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CALabel_sizeToFit(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10639,44 +10565,6 @@ bool js_crossapp_CALabel_getEnableCopy(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CALabel_getEnableCopy : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CALabel_getFontName(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_getFontName : Invalid Native Object");
-    if (argc == 0) {
-        const std::string& ret = cobj->getFontName();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_getFontName : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CALabel_getLineSpacing(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_getLineSpacing : Invalid Native Object");
-    if (argc == 0) {
-        int ret = cobj->getLineSpacing();
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_getLineSpacing : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CALabel_setVerticalTextAlignmet(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -10717,25 +10605,23 @@ bool js_crossapp_CALabel_getFont(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CALabel_getFont : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CALabel_setItalics(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CALabel_getColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_setItalics : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CALabel_setItalics : Error processing arguments");
-        cobj->setItalics(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_getColor : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::CAColor4B& ret = cobj->getColor();
+        jsval jsret = JSVAL_NULL;
+        jsret = cacolor4b_to_jsval(cx, ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CALabel_setItalics : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CALabel_getColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CALabel_getNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10755,6 +10641,27 @@ bool js_crossapp_CALabel_getNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_crossapp_CALabel_getNumberOfLine : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CALabel_setItalics(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_setItalics : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CALabel_setItalics : Error processing arguments");
+        cobj->setItalics(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CALabel_setItalics : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CALabel_setFontSize(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10858,27 +10765,6 @@ bool js_crossapp_CALabel_setText(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CALabel_setText : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CALabel_setEnableCopy(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_setEnableCopy : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CALabel_setEnableCopy : Error processing arguments");
-        cobj->setEnableCopy(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_setEnableCopy : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CALabel_setNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -10898,25 +10784,6 @@ bool js_crossapp_CALabel_setNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_crossapp_CALabel_setNumberOfLine : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CALabel_getColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_getColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_getColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CALabel_setFont(JSContext *cx, uint32_t argc, jsval *vp)
@@ -11095,16 +10962,12 @@ void js_register_crossapp_CALabel(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setTextAlignment", js_crossapp_CALabel_setTextAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getFontSize", js_crossapp_CALabel_getFontSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getText", js_crossapp_CALabel_getText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isBold", js_crossapp_CALabel_isBold, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUnderLine", js_crossapp_CALabel_setUnderLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isDeleteLine", js_crossapp_CALabel_isDeleteLine, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontName", js_crossapp_CALabel_setFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isItalics", js_crossapp_CALabel_isItalics, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLineSpacing", js_crossapp_CALabel_setLineSpacing, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBold", js_crossapp_CALabel_setBold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isUnderLine", js_crossapp_CALabel_isUnderLine, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setEnableCopy", js_crossapp_CALabel_setEnableCopy, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("sizeToFit", js_crossapp_CALabel_sizeToFit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLabelSize", js_crossapp_CALabel_getLabelSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CALabel_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -11112,19 +10975,17 @@ void js_register_crossapp_CALabel(JSContext *cx, JS::HandleObject global) {
         JS_FN("setWordWrap", js_crossapp_CALabel_setWordWrap, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getEnableCopy", js_crossapp_CALabel_getEnableCopy, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFontName", js_crossapp_CALabel_getFontName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getLineSpacing", js_crossapp_CALabel_getLineSpacing, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVerticalTextAlignmet", js_crossapp_CALabel_setVerticalTextAlignmet, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFont", js_crossapp_CALabel_getFont, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setItalics", js_crossapp_CALabel_setItalics, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getColor", js_crossapp_CALabel_getColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfLine", js_crossapp_CALabel_getNumberOfLine, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setItalics", js_crossapp_CALabel_setItalics, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontSize", js_crossapp_CALabel_setFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setColor", js_crossapp_CALabel_setColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDeleteLine", js_crossapp_CALabel_setDeleteLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("unsizeToFit", js_crossapp_CALabel_unsizeToFit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setText", js_crossapp_CALabel_setText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setEnableCopy", js_crossapp_CALabel_setEnableCopy, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNumberOfLine", js_crossapp_CALabel_setNumberOfLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getColor", js_crossapp_CALabel_getColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFont", js_crossapp_CALabel_setFont, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -43772,7 +43633,7 @@ bool js_crossapp_CAPickerView_setTitleForRowCallback(JSContext *cx, uint32_t arg
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-                auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = uint32_to_jsval(cx, larg0);

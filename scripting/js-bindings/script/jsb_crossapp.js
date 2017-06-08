@@ -541,6 +541,7 @@ CAFont = function(){
     wordWrap: false,
     fontName: "",
     fontSize: 24,
+    lineSpacing: 0,
     color: ca.CAColor4B.BLACK,
     textAlignment: ca.CATextAlignment.Left,
     verticalTextAlignment: ca.CAVerticalTextAlignment.Top,
