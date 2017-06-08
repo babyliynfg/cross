@@ -11,14 +11,14 @@ NS_CC_BEGIN
 
 enum class CAVerticalTextAlignment
 {
-    Top,
+    Top = 0,
     Center,
     Bottom,
 };
 
 enum class CATextAlignment
 {
-    Left,
+    Left = 0,
     Center,
     Right,
 };

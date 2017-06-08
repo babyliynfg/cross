@@ -102,9 +102,6 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         id nsfont = _createSystemFont(font.fontName, shrinkFontSize);
         CC_BREAK_IF(!nsfont);
         
-        dim.width = (dim.width);
-        dim.height = (dim.height);
-        
         // color
         NSColor* foregroundColor = [NSColor colorWithDeviceRed:font.color.r/255.0
                                                          green:font.color.g/255.0

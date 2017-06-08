@@ -521,7 +521,7 @@ CAFontShadow = function(){
     shadowBlur: 0,
     shadowColor: {r:0, g:0, b:0, a:88},
     };
-} = 0;
+};
 
 CAFontStroke = function(){
     return  {
@@ -529,7 +529,7 @@ CAFontStroke = function(){
     strokeColor: ca.CAColor4B.BLACK,
     strokeSize: 0,
     };
-} = 0;
+};
 
 CAFont = function(){
     return  {
@@ -537,7 +537,7 @@ CAFont = function(){
     underLine: false,
     deleteLine: false,
     italics: false,
-    italicsValue: 0.5f,
+    italicsValue: 0.5,
     wordWrap: false,
     fontName: "",
     fontSize: 24,
@@ -545,9 +545,9 @@ CAFont = function(){
     textAlignment: ca.CATextAlignment.Left,
     verticalTextAlignment: ca.CAVerticalTextAlignment.Top,
     shadow: CAFontShadow(),
-    stroke: CAFontStroke,
+    stroke: CAFontStroke(),
     };
-} = 0;
+};
 
 
 ca.CAColor4B = {};
