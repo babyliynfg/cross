@@ -27,6 +27,8 @@ CALabel::CALabel()
 ,m_bFitFlag(false)
 ,m_bUpdateImage(false)
 ,m_bEnableCopy(false)
+,m_eTextAlignment(CATextAlignment::Left)
+,m_eVerticalTextAlignment(CAVerticalTextAlignment::Top)
 {
     m_obContentSize = DSizeZero;
 }
@@ -159,14 +161,16 @@ void CALabel::updateImage()
             size = m_obContentSize;
         }
     }
+    CAImage* image = CAFontProcesstor::imageForText(m_sText, m_obFont, size, m_eTextAlignment);
+    this->setImage(image);
     
-    if (CAImage* image = CAFontProcesstor::imageForText(m_sText, m_obFont, size))
+    if (image)
     {
         this->setImage(image);
         
         m_obLabelSize = size;
         
-        switch (m_obFont.textAlignment)
+        switch (m_eTextAlignment)
         {
             case CATextAlignment::Left:
                 m_obPadding.width = 0;
@@ -184,7 +188,7 @@ void CALabel::updateImage()
                 break;
         }
         
-        switch (m_obFont.verticalTextAlignment)
+        switch (m_eVerticalTextAlignment)
         {
             case CAVerticalTextAlignment::Top:
                 m_obPadding.height = 0;
@@ -220,7 +224,10 @@ void CALabel::updateImage()
         
         this->setImageRect(DRect(DPointZero, image->getContentSize()));
     }
-    
+    else
+    {
+        this->setImageRect(DRectZero);
+    }
 }
 
 void CALabel::updateImageRect()
@@ -265,7 +272,15 @@ void CALabel::setText(const string& var)
 
 void CALabel::setTextAlignment(const CATextAlignment& var)
 {
-    m_obFont.textAlignment = var;
+    CC_RETURN_IF(m_eTextAlignment == var);
+    m_eTextAlignment = var;
+    this->updateImageDraw();
+}
+
+void CALabel::setVerticalTextAlignmet(const CAVerticalTextAlignment& var)
+{
+    CC_RETURN_IF(m_eVerticalTextAlignment == var);
+    m_eVerticalTextAlignment = var;
     this->updateImageDraw();
 }
 
@@ -361,12 +376,6 @@ void CALabel::setWordWrap(bool var)
 {
 	m_obFont.wordWrap = var;
 	this->updateImageDraw();
-}
-
-void CALabel::setVerticalTextAlignmet(const CAVerticalTextAlignment& var)
-{
-    m_obFont.verticalTextAlignment = var;
-    this->updateImageDraw();
 }
 
 void CALabel::setContentSize(const CrossApp::DSize &var)

@@ -10,7 +10,7 @@ class CAImage;
 namespace CAFontProcesstor
 {
     
-    CAImage* imageForText(const std::string& text, const CAFont& font, DSize& dimensions);
+    CAImage* imageForText(const std::string& text, const CAFont& font, DSize& dimensions, CATextAlignment textAlignment);
     
     float heightForFont(const CAFont& font);
     

@@ -851,8 +851,6 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     JS::RootedValue js_fontSize(cx);
     JS::RootedValue js_lineSpacing(cx);
     JS::RootedValue js_color(cx);
-    JS::RootedValue js_textAlignment(cx);
-    JS::RootedValue js_verticalTextAlignment(cx);
     
 
     bool ok = v.isObject() &&
@@ -866,9 +864,7 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     JS_GetProperty(cx, tmp, "fontName", &js_fontName) &&
     JS_GetProperty(cx, tmp, "fontSize", &js_fontSize) &&
     JS_GetProperty(cx, tmp, "lineSpacing", &js_lineSpacing) &&
-    JS_GetProperty(cx, tmp, "color", &js_color) &&
-    JS_GetProperty(cx, tmp, "textAlignment", &js_textAlignment) &&
-    JS_GetProperty(cx, tmp, "verticalTextAlignment", &js_verticalTextAlignment);
+    JS_GetProperty(cx, tmp, "color", &js_color);
     
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
@@ -895,8 +891,6 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     ret->lineSpacing = lineSpacing;
     
     jsval_to_cacolor4b(cx, js_color, &ret->color);
-    jsval_to_int32(cx, js_textAlignment, (int32_t *)&ret->textAlignment);
-    jsval_to_int32(cx, js_verticalTextAlignment, (int32_t *)&ret->verticalTextAlignment);
 
     {
         JS::RootedObject shadow_tmp(cx);
@@ -1819,8 +1813,6 @@ jsval cafont_to_jsval(JSContext *cx, const CrossApp::CAFont& v){
     JS_DefineProperty(cx, tmp, "lineSpacing", v.lineSpacing, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
     JS_SetProperty(cx, tmp, "fontName", fontName) &&
     JS_SetProperty(cx, tmp, "color", color) &&
-    JS_DefineProperty(cx, tmp, "textAlignment", (int)v.textAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "verticalTextAlignment", (int)v.verticalTextAlignment, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_SetProperty(cx, tmp, "shadow", shadow) &&
     JS_SetProperty(cx, tmp, "stroke", stroke);
     

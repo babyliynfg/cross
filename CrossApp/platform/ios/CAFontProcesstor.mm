@@ -75,7 +75,7 @@ CGRect _calculateStringRect(NSAttributedString *str, id font, CGSize constrainSi
 }
 
 NS_CC_BEGIN
-CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dim)
+CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dim, CATextAlignment textAlignment)
 {
     CAImage* ret = nullptr;
     do
@@ -95,7 +95,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
                                                     blue:font.color.b / 255.f
                                                    alpha:font.color.a / 255.f];
         
-        NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
+        NSTextAlignment textAlign = _calculateTextAlignment(textAlignment);
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -295,11 +295,10 @@ float CAFontProcesstor::heightForFont(const CAFont& font)
         CC_BREAK_IF(!iosfont);
         
         // alignment
-        NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-        [paragraphStyle setAlignment:textAlign];
+        [paragraphStyle setAlignment:NSTextAlignmentLeft];
         
         NSMutableDictionary* tokenAttributesDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                     [UIColor whiteColor],   NSForegroundColorAttributeName,
@@ -361,13 +360,10 @@ float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFo
         id iosfont = _createSystemFont(font);
         CC_BREAK_IF(!iosfont);
         
-        // alignment
-        NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
-        
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
         [paragraphStyle setLineSpacing:font.lineSpacing];
-        [paragraphStyle setAlignment:textAlign];
+        [paragraphStyle setAlignment:NSTextAlignmentLeft];
         
         NSMutableDictionary* tokenAttributesDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                     [UIColor whiteColor],   NSForegroundColorAttributeName,
@@ -429,13 +425,10 @@ float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAF
         float shrinkFontSize = (font.fontSize);
         id iosfont = _createSystemFont(font);
         CC_BREAK_IF(!iosfont);
-        
-        // alignment
-        NSTextAlignment textAlign = _calculateTextAlignment(font.textAlignment);
-        
+
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-        [paragraphStyle setAlignment:textAlign];
+        [paragraphStyle setAlignment:NSTextAlignmentLeft];
         
         NSMutableDictionary* tokenAttributesDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                     [UIColor whiteColor],   NSForegroundColorAttributeName,

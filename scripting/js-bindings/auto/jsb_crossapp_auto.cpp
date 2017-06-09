@@ -3223,15 +3223,17 @@ bool js_crossapp_CAImage_createWithString(JSContext *cx, uint32_t argc, jsval *v
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 3) {
+    if (argc == 4) {
         std::string arg0;
         CrossApp::CAFont arg1;
         CrossApp::DSize arg2;
+        CrossApp::CATextAlignment arg3;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_cafont(cx, args.get(1), &arg1);
         ok &= jsval_to_dsize(cx, args.get(2), &arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_createWithString : Error processing arguments");
-        CrossApp::CAImage* ret = CrossApp::CAImage::createWithString(arg0, arg1, arg2);
+        CrossApp::CAImage* ret = CrossApp::CAImage::createWithString(arg0, arg1, arg2, arg3);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -3374,7 +3376,7 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
         JS_FN("CC_WHITE_IMAGE", js_crossapp_CAImage_CC_WHITE_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("createWithRawDataNoCache", js_crossapp_CAImage_createWithRawDataNoCache, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("CC_SHADOW_RIGHT_IMAGE", js_crossapp_CAImage_CC_SHADOW_RIGHT_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithString", js_crossapp_CAImage_createWithString, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithString", js_crossapp_CAImage_createWithString, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -10565,6 +10567,27 @@ bool js_crossapp_CALabel_getEnableCopy(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CALabel_getEnableCopy : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CALabel_setNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_setNumberOfLine : Invalid Native Object");
+    if (argc == 1) {
+        uint32_t arg0 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CALabel_setNumberOfLine : Error processing arguments");
+        cobj->setNumberOfLine(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CALabel_setNumberOfLine : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CALabel_setVerticalTextAlignmet(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -10765,27 +10788,6 @@ bool js_crossapp_CALabel_setText(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CALabel_setText : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CALabel_setNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CALabel* cobj = (CrossApp::CALabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CALabel_setNumberOfLine : Invalid Native Object");
-    if (argc == 1) {
-        uint32_t arg0 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CALabel_setNumberOfLine : Error processing arguments");
-        cobj->setNumberOfLine(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CALabel_setNumberOfLine : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CALabel_setFont(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -10974,6 +10976,7 @@ void js_register_crossapp_CALabel(JSContext *cx, JS::HandleObject global) {
         JS_FN("visitEve", js_crossapp_CALabel_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWordWrap", js_crossapp_CALabel_setWordWrap, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getEnableCopy", js_crossapp_CALabel_getEnableCopy, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setNumberOfLine", js_crossapp_CALabel_setNumberOfLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVerticalTextAlignmet", js_crossapp_CALabel_setVerticalTextAlignmet, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFont", js_crossapp_CALabel_getFont, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getColor", js_crossapp_CALabel_getColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -10984,7 +10987,6 @@ void js_register_crossapp_CALabel(JSContext *cx, JS::HandleObject global) {
         JS_FN("setDeleteLine", js_crossapp_CALabel_setDeleteLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("unsizeToFit", js_crossapp_CALabel_unsizeToFit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setText", js_crossapp_CALabel_setText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfLine", js_crossapp_CALabel_setNumberOfLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFont", js_crossapp_CALabel_setFont, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };

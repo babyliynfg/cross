@@ -109,7 +109,7 @@ public:
                                int iLineSpace = 0,
                                bool bWordWrap = true);
     
-    static CAImage* createWithString(const std::string& text, const CAFont& font, DSize& dimensions);
+    static CAImage* createWithString(const std::string& text, const CAFont& font, DSize& dimensions, CATextAlignment textAlignment);
     
     static CAImage* scaleToNewImageWithImage(CAImage* image, const DSize& size);
     

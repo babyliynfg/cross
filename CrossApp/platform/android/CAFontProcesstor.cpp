@@ -21,7 +21,6 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppBitmap_nativeInitBitmapDC(JNIEnv*  env, jobject thiz, int width, int height, jbyteArray pixels)
     {
         s_gDimensions = DSize(width, height);
-        CCLog("xxxxxxxxxxxxxxxx:  width %d, height %d", width, height);
         ssize_t length = width * height * 4;
         unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);
         env->GetByteArrayRegion(pixels, 0, length, (jbyte*)bytes);
@@ -32,12 +31,12 @@ extern "C"
     }
 };
 
-int getTextAlign(const CAFont& font)
+int getTextAlign(const CAFont& font, CATextAlignment textAlignment)
 {
     int a = 0x31 ;
     
-    CATextAlignment h = font.textAlignment ;
-    CAVerticalTextAlignment v = font.verticalTextAlignment ;
+    CATextAlignment h = textAlignment ;
+    CAVerticalTextAlignment v = CAVerticalTextAlignment::Top ;
     
     //CENTER        = 0x33, /** Horizontal center and vertical center. */
     if(h == CATextAlignment::Center && v == CAVerticalTextAlignment::Center)
@@ -82,7 +81,7 @@ int getTextAlign(const CAFont& font)
     return  a ;
 }
 
-CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dimensions)
+CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dimensions, CATextAlignment textAlignment)
 {
     CAImage* ret = nullptr;
     
@@ -125,7 +124,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
                                                     font.color.g,
                                                     font.color.b,
                                                     font.color.a,
-                                                    getTextAlign(font),
+                                                    getTextAlign(font, textAlignment),
                                                     (int)dimensions.width,
                                                     (int)dimensions.height,
                                                     (int)font.shadow.shadowEnabled,

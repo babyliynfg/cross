@@ -185,7 +185,7 @@ void CARichLabel::splitUrlStrings(const std::string& text, std::vector<std::pair
 void CARichLabel::appendTextEx(const std::string& text, const CAFont& font)
 {
 	std::vector<std::pair<int, int>> vIntVect;
-	splitUrlStrings(text, vIntVect);
+	this->splitUrlStrings(text, vIntVect);
 
 	if (vIntVect.empty())
 	{

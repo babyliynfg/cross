@@ -1272,12 +1272,14 @@ CC_SHADOW_RIGHT_IMAGE : function (
  * @param {String} arg0
  * @param {font_object} arg1
  * @param {size_object} arg2
+ * @param {ca.CATextAlignment} arg3
  * @return {ca.CAImage}
  */
 createWithString : function (
 str, 
 cafont, 
-dsize 
+dsize, 
+catextalignment 
 )
 {
     return ca.CAImage;
@@ -4157,13 +4159,13 @@ getEnableCopy : function (
 },
 
 /**
- * @method getFontName
- * @return {String}
+ * @method setNumberOfLine
+ * @param {unsigned int} arg0
  */
-getFontName : function (
+setNumberOfLine : function (
+int 
 )
 {
-    return ;
 },
 
 /**
@@ -4260,16 +4262,6 @@ unsizeToFit : function (
  */
 setText : function (
 str 
-)
-{
-},
-
-/**
- * @method setNumberOfLine
- * @param {unsigned int} arg0
- */
-setNumberOfLine : function (
-int 
 )
 {
 },

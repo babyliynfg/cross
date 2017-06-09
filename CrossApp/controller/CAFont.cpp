@@ -14,8 +14,6 @@ CAFont::CAFont(const CAFont& other)
 , fontName(other.fontName)
 , lineSpacing(other.lineSpacing)
 , color(other.color)
-, textAlignment(other.textAlignment)
-, verticalTextAlignment(other.verticalTextAlignment)
 , shadow(other.shadow)
 , stroke(other.stroke)
 {
@@ -34,8 +32,6 @@ CAFont& CAFont::operator= (const CAFont& other)
     this->fontName              = other.fontName;
     this->lineSpacing           = other.lineSpacing;
     this->color                 = other.color;
-    this->textAlignment         = other.textAlignment;
-    this->verticalTextAlignment = other.verticalTextAlignment;
     this->shadow                = other.shadow;
     this->stroke                = other.stroke;
     return *this;

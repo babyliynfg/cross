@@ -53,6 +53,7 @@
 		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
 		B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */; };
 		B09FC0BC1AD3A25F0009C2D7 /* r in Resources */ = {isa = PBXBuildFile; fileRef = B09FC0BB1AD3A25F0009C2D7 /* r */; };
+		D6CBC1A31EEAA1B80083E8C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CBC1A21EEAA1B80083E8C3 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +149,7 @@
 		B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		B0621C291AC3DCB2005EBCA7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
 		B09FC0BB1AD3A25F0009C2D7 /* r */ = {isa = PBXFileReference; lastKnownFileType = folder; path = r; sourceTree = "<group>"; };
+		D6CBC1A21EEAA1B80083E8C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6CBC1A31EEAA1B80083E8C3 /* WebKit.framework in Frameworks */,
 				480EDE701D953E4D00C758DA /* Security.framework in Frameworks */,
 				480EDE721D953E5700C758DA /* VideoToolbox.framework in Frameworks */,
 				480EDE761D953EDA00C758DA /* libiconv.2.tbd in Frameworks */,
@@ -274,6 +277,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6CBC1A21EEAA1B80083E8C3 /* WebKit.framework */,
 				480EDE7B1D953F2D00C758DA /* libbz2.1.0.tbd */,
 				480EDE791D953F1900C758DA /* CoreVideo.framework */,
 				480EDE771D953F0D00C758DA /* VideoDecodeAcceleration.framework */,

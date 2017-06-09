@@ -88,11 +88,15 @@ protected:
 
 	void copySelectText();
     
-    DSize m_obPadding;
+    CATextAlignment         m_eTextAlignment;
     
-    bool m_bFitFlag;
+    CAVerticalTextAlignment m_eVerticalTextAlignment;
     
-    bool m_bUpdateImage;
+    DSize                   m_obPadding;
+    
+    bool                    m_bFitFlag;
+    
+    bool                    m_bUpdateImage;
 };
 
 NS_CC_END

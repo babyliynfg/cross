@@ -1050,9 +1050,9 @@ int CAImage::getStringHeight(const char* pFontName, float nSize, const std::stri
     return CAFontProcesstor::heightForTextAtWidth(pText, font, iLimitWidth);
 }
 
-CAImage* CAImage::createWithString(const std::string& text, const CAFont& font, DSize& dimensions)
+CAImage* CAImage::createWithString(const std::string& text, const CAFont& font, DSize& dimensions, CATextAlignment textAlignment)
 {
-    return CAFontProcesstor::imageForText(text, font, dimensions);
+    return CAFontProcesstor::imageForText(text, font, dimensions, textAlignment);
 }
 
 CAImage* CAImage::create(const std::string& file)

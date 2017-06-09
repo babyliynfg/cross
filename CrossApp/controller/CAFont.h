@@ -87,11 +87,7 @@ public:
     float                   lineSpacing;
     
     CAColor4B               color;
-    
-    CATextAlignment         textAlignment;
-    
-    CAVerticalTextAlignment verticalTextAlignment;
-    
+
     CAFontShadow            shadow;
     
     CAFontStroke            stroke;
@@ -109,8 +105,6 @@ public:
     , fontName("")
     , lineSpacing(0)
     , color(CAColor4B::BLACK)
-    , textAlignment(CATextAlignment::Left)
-    , verticalTextAlignment(CAVerticalTextAlignment::Top)
     {
         
     }
