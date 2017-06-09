@@ -139,6 +139,7 @@ void LabelTest::viewDidLoad()
         label5->setText(cc);
         label5->setFont(Font5);
         label5->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 6/8.f)));
+        label5->setNumberOfLine(3) ;
         view->addSubview(label5);
         
         CALabel* label6 = CALabel::create();

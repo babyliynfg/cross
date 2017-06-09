@@ -181,7 +181,8 @@ public final class CrossAppBitmap {
             int deleteLine , 
             int italics , 
             float italics_v , 
-            int wordWrap
+            int wordWrap,
+            float lineSpacing
     		) 
     {
     	String string = new String(strs) ; 
@@ -224,14 +225,7 @@ public final class CrossAppBitmap {
         
         //resize size
         width = width == 0xffffffff ? 8192 : width ; 
-        height = width == 0xffffffff ? getTextHeight("A", 8192, fontSize, Typeface.DEFAULT) : getTextHeight(string, width, fontSize, Typeface.DEFAULT) ; 
-        
-        if(width ==0 || height ==0){
-        	Bitmap b = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_4444) ; 
-        	CrossAppBitmap.initNativeObject(b);
-        	return false ; 
-        } 
-        
+
         int maxWidth = width;
         
         if (maxWidth <= 0) {
@@ -242,16 +236,30 @@ public final class CrossAppBitmap {
         int layoutWidth = 0;
         int layoutHeight = 0;
         
-        layout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,0.0f,false);
+        //if number of lines = 1 , lineSpacing 
+        StaticLayout pramsLayout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,lineSpacing,false) ; 
+        lineSpacing = pramsLayout.getLineCount() == 1 ? 0.0f : lineSpacing ;
+        pramsLayout = null ; 
         
+        
+        layout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,lineSpacing,false);
+        
+        
+        //get number of lines
+        int line_height = layout.getLineTop(1) ; 
+        int number_of_lines = height / line_height == 0 ? 1 : height / line_height ; 
+        float number_hei = (float)height / (float)line_height == 0.0f ? 1.0f : (float)height / (float)line_height ; 
+        height = (int)(line_height * number_hei ) ; 
+
+        
+
+        number_of_lines = (int)Math.round(number_hei) ; 
+
         layoutWidth = layout.getWidth();
-        layoutHeight = layout.getLineTop(layout.getLineCount());
+        layoutHeight = layout.getLineTop(number_of_lines> layout.getLineCount()  ? layout.getLineCount() : number_of_lines);
         
         int bitmapWidth = Math.max(layoutWidth, width);
         int bitmapHeight = layoutHeight;
-        if (height > 0) {
-            bitmapHeight = height;
-        }
         
         if (bitmapWidth == 0 || bitmapHeight == 0) {
             return false;
@@ -306,16 +314,16 @@ public final class CrossAppBitmap {
       FontMetrics fm = p.getFontMetrics();  
       
       int textHeight = (int) (Math.ceil(fm.descent - fm.ascent) + 2);  
-	        
+	  
       return textHeight;
   }
   
-  public static float heightForTextAtWidth(String string , int width , int fontsize)
+  public static float heightForTextAtWidth(String string , int width , int fontsize ,float lineSpacing)
   {	  
 	  TextPaint paint = new TextPaint();
       paint.setTextSize(fontsize);
-	  Layout layout = new StaticLayout(string, paint, width , Layout.Alignment.ALIGN_CENTER,1.0f,0.0f,false);
-      	  
+	  Layout layout = new StaticLayout(string, paint, width , Layout.Alignment.ALIGN_CENTER,1.0f,lineSpacing,false);
+	  
       return layout.getHeight();
   }
   

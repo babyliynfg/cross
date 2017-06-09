@@ -93,7 +93,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         
         
         JniMethodInfo methodInfo;
-        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "([BLjava/lang/String;IIIIIIIIIFFFIIIIIIIIIFIIIIFI)Z"))
+        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "([BLjava/lang/String;IIIIIIIIIFFFIIIIIIIIIFIIIIFIF)Z"))
         {
             break ;
         }
@@ -147,7 +147,8 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
                                                     (int)font.deleteLine ,
                                                     (int)font.italics,
                                                     font.italicsValue ,
-                                                    (int)font.wordWrap
+                                                    (int)font.wordWrap,
+                                                    font.lineSpacing
                                                     ))
         {
             break ;
@@ -193,12 +194,12 @@ float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFo
     float ret = 0;
     CCLog("xxxxxxxxxxxxxxxx:  width %f, fontSize %f", width, font.fontSize);
     JniMethodInfo jni;
-    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppBitmap", "heightForTextAtWidth", "(Ljava/lang/String;II)F"))
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppBitmap", "heightForTextAtWidth", "(Ljava/lang/String;IIF)F"))
     {
         jstring string = jni.env->NewStringUTF(text.c_str());
         int w = (int)width;
         int fontSize = (int)font.fontSize;
-        ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, string, w, fontSize);
+        ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, string, w, fontSize , font.lineSpacing);
         jni.env->DeleteLocalRef(jni.classID);
         
     }
