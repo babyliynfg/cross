@@ -79,6 +79,7 @@
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D609D6521E7123C700F82D5A /* CheckboxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D609D64E1E7123C700F82D5A /* CheckboxTest.cpp */; };
 		D609D6531E7123C700F82D5A /* PageControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D609D6501E7123C700F82D5A /* PageControlTest.cpp */; };
+		D6409C0C1EEBD296009EE629 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6409C0B1EEBD296009EE629 /* CoreMedia.framework */; };
 		D6B036B11D95273200388A90 /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036A51D95273200388A90 /* CAVideoPlayerControlView.cpp */; };
 		D6B036B31D95273200388A90 /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036A81D95273200388A90 /* CAVideoPlayerDecoder.cpp */; };
 		D6B036B51D95273200388A90 /* CAVideoPlayerRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036AB1D95273200388A90 /* CAVideoPlayerRender.cpp */; };
@@ -241,6 +242,7 @@
 		D609D64F1E7123C700F82D5A /* CheckboxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckboxTest.h; path = ../Classes/Control/CheckboxTest.h; sourceTree = "<group>"; };
 		D609D6501E7123C700F82D5A /* PageControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PageControlTest.cpp; path = ../Classes/Control/PageControlTest.cpp; sourceTree = "<group>"; };
 		D609D6511E7123C700F82D5A /* PageControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageControlTest.h; path = ../Classes/Control/PageControlTest.h; sourceTree = "<group>"; };
+		D6409C0B1EEBD296009EE629 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D6B036A51D95273200388A90 /* CAVideoPlayerControlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerControlView.cpp; path = video/CAVideoPlayerControlView.cpp; sourceTree = "<group>"; };
 		D6B036A61D95273200388A90 /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerControlView.h; path = video/CAVideoPlayerControlView.h; sourceTree = "<group>"; };
 		D6B036A81D95273200388A90 /* CAVideoPlayerDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerDecoder.cpp; path = video/CAVideoPlayerDecoder.cpp; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6409C0C1EEBD296009EE629 /* CoreMedia.framework in Frameworks */,
 				D6B036C81D9527EA00388A90 /* libSDL2.a in Frameworks */,
 				D6B036C01D9527D800388A90 /* libavcodec.a in Frameworks */,
 				D6B036C11D9527D800388A90 /* libavdevice.a in Frameworks */,
@@ -416,6 +419,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6409C0B1EEBD296009EE629 /* CoreMedia.framework */,
 				D6B036C71D9527EA00388A90 /* libSDL2.a */,
 				D6B036B91D9527D800388A90 /* libavcodec.a */,
 				D6B036BA1D9527D800388A90 /* libavdevice.a */,
@@ -735,7 +739,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
-					"CROSSAPP_DEBUG=1",
+					"CROSSAPP_DEBUG=0",
 					CC_ENABLE_CHIPMUNK_INTEGRATION,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;

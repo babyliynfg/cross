@@ -170,7 +170,6 @@ void LabelTest::viewDidLoad()
 		CAFont Font5;
 		Font5.fontSize = 36;
 		Font5.color = CAColor4B::BLUE;
-		Font5.bold = true;
         Font5.lineSpacing = 10;
 		//Font5.italics = true;
 		//Font5.underLine = true;
@@ -178,7 +177,7 @@ void LabelTest::viewDidLoad()
         CALabel* label5 = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
 		label5->setText(text);
 		label5->setFont(Font5);
-        //label5->setNumberOfLine(5);
+        label5->setNumberOfLine(14);
         
 
 		CAView* view1 = CAView::createWithLayout(DLayoutFill);

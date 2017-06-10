@@ -592,7 +592,7 @@ CAData* FileUtils::getDataFromFile(const std::string& filename)
 
 std::string FileUtils::getFileString(const std::string& filename)
 {
-    std::ifstream ifile(filename);
+    std::ifstream ifile(this->fullPathForFilename(filename));
     
     std::ostringstream buffer;
     char ch;

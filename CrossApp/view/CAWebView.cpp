@@ -173,6 +173,7 @@ void CAWebView::hideNativeWebAndShowImage()
 	m_pImageView = _impl->getWebViewImage();
 	if (m_pImageView)
 	{
+        m_pImageView->setLayout(DLayoutFill);
 		this->insertSubview(m_pImageView, 1);
 	}
 	m_bHideNativeWeCmd = true;

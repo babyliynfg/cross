@@ -213,6 +213,7 @@ std::map<NSWebView_MAC*, CrossApp::CAWebViewImpl*> s_WebViewImpls;
 
 - (void)setScalesPageToFit:(const bool)scalesPageToFit
 {
+    
 }
 
 #pragma mark - NSWebViewDelegate
