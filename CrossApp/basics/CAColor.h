@@ -40,9 +40,9 @@ public:
         a = _a;
     }
     
-    void setUInt(unsigned int rgba);
+    void setUInt32(unsigned int rgba);
     
-    unsigned int getUInt() const;
+    unsigned int getUInt32() const;
     
     bool operator==(const CAColor4B& right) const;
     bool operator==(const CAColor4F& right) const;
