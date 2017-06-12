@@ -81,6 +81,27 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
 {
     NSString * str  = [NSString stringWithUTF8String:text.c_str()];
 
+    if (font.italics)
+    {
+        int increase = ceilf(font.italicsValue / 0.5f);
+        
+        if (increase > 0)
+        {
+            for (int i=0; i<increase; i++)
+            {
+                str = [str stringByAppendingString:@" "];
+            }
+        }
+        
+        if (increase < 0)
+        {
+            for (int i=0; i<std::abs(increase); i++)
+            {
+                str = [NSString stringWithFormat:@" %@", str];
+            }
+        }
+    }
+    
     float shrinkFontSize = (font.fontSize);
     id nsfont = _createSystemFont(font.fontName, shrinkFontSize);
 

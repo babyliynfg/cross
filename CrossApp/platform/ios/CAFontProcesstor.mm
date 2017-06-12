@@ -29,7 +29,7 @@ static id _createSystemFont(const CrossApp::CAFont& font)
     
     if (!iosFont)
     {
-        iosFont = [UIFont fontWithName:@"Helvetica" size:shrinkFontSize];
+        iosFont = [UIFont fontWithName:@"Arial" size:shrinkFontSize];
     }
 
     return iosFont;
@@ -78,9 +78,6 @@ NS_CC_BEGIN
 
 NSAttributedString* NSAttributedStringForText(const std::string& text, const CAFont& font, const DSize& dim, CATextAlignment textAlignment)
 {
-    float shrinkFontSize = (font.fontSize);
-    id iosfont = _createSystemFont(font);
-    
     NSString * str = [NSString stringWithUTF8String:text.c_str()];
     
     if (font.italics)
@@ -103,6 +100,9 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
             }
         }
     }
+    
+    float shrinkFontSize = (font.fontSize);
+    id iosfont = _createSystemFont(font);
     
     // color
     UIColor* foregroundColor = [UIColor colorWithRed:font.color.r / 255.f
@@ -211,7 +211,7 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
     return [[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict] autorelease];
 }
 
-CAImage* imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dim, CATextAlignment textAlignment)
+CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dim, CATextAlignment textAlignment)
 {
     CAImage* ret = nullptr;
     do
