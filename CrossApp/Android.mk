@@ -167,7 +167,6 @@ renderer/ccShaders.cpp \
 platform/CASAXParser.cpp \
 platform/CAFileUtils.cpp \
 platform/platform.cpp \
-platform/CAFreeTypeFont.cpp \
 platform/CAFTRichFont.cpp \
 platform/CAEmojiFont.cpp \
 platform/CAFTFontCache.cpp \
@@ -246,7 +245,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_png_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_tiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_webp_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_freetype_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
@@ -268,6 +266,5 @@ $(call import-module,jpeg/prebuilt/android)
 $(call import-module,png/prebuilt/android)
 $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
-$(call import-module,freetype/prebuilt/android)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
