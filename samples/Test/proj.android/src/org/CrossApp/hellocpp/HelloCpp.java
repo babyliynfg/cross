@@ -5,6 +5,7 @@ import org.CrossApp.lib.CrossAppActivity;
 import org.CrossApp.lib.CrossAppGLSurfaceView;
 
 import android.os.Bundle;
+import android.text.DynamicLayout;
 
 public class HelloCpp extends CrossAppActivity{
 	

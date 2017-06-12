@@ -172,7 +172,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
 }
 
 
-CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, CATextAlignment textAlignment)
+CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment);
 {
     
     
