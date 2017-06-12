@@ -10,11 +10,14 @@ import android.graphics.Paint.FontMetrics;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.BoringLayout;
+import android.text.Html;
 import android.text.Layout;
+import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -242,7 +245,9 @@ public final class CrossAppBitmap {
         pramsLayout = null ; 
         
         
-        layout = new StaticLayout(string, paint, maxWidth , hAlignment,1.0f,lineSpacing,false);
+        String str ="<h2>Hello wold</h2><ul><li>cats</li><li>dogs</li></ul><img src=\"cat_pic\"/>" ; 
+        
+        layout = new StaticLayout(Html.fromHtml(str), paint, maxWidth , hAlignment,1.0f,lineSpacing,false);
         
         
         //get number of lines
@@ -252,6 +257,7 @@ public final class CrossAppBitmap {
         height = (int)(line_height * number_hei ) ; 
 
         
+       
 
         number_of_lines = (int)Math.round(number_hei) ; 
 
@@ -298,6 +304,13 @@ public final class CrossAppBitmap {
         paint.setStyle(TextPaint.Style.FILL);
         paint.setARGB(fontTintA, fontTintR, fontTintG, fontTintB);
         layout.draw(canvas);
+        
+        
+        TextView textView = new TextView(CrossAppActivity.getContext());
+        textView.setWidth(wid);
+        textView.setHeight(bitmapHeight);
+        textView.setText(string);
+        bitmap = textView.getDrawingCache() ; 
         
         CrossAppBitmap.initNativeObject(bitmap);
         return true;

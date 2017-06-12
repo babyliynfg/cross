@@ -1,6 +1,6 @@
 #include "CARichLabel.h"
 #include "ccMacros.h"
-#include "CAFontProcesstor.h"
+#include "platform/CAFontProcesstor.h"
 #include "device/CADevice.h"
 NS_CC_BEGIN
 

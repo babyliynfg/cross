@@ -171,6 +171,15 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
     return ret;
 }
 
+
+CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment);
+{
+    
+    
+    return nullptr ;
+}
+
+
 float CAFontProcesstor::heightForFont(const CAFont& font)
 {
     //public static float heightForFont(int fontSize)
