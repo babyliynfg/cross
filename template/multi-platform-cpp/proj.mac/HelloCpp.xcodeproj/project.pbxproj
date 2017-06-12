@@ -488,7 +488,6 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/\"",
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
 				);
@@ -535,7 +534,6 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include/\"",
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
 				);
