@@ -167,11 +167,7 @@ renderer/ccShaders.cpp \
 platform/CASAXParser.cpp \
 platform/CAFileUtils.cpp \
 platform/platform.cpp \
-platform/CAFTRichFont.cpp \
-platform/CAEmojiFont.cpp \
-platform/CAFTFontCache.cpp \
 platform/CCEGLViewProtocol.cpp \
-platform/CATempTypeFont.cpp \
 platform/android/CADensityDpi.cpp \
 platform/android/CCEGLView.cpp \
 platform/android/CAAccelerometer.cpp \
@@ -216,7 +212,6 @@ script_support/CCScriptSupport.cpp \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
-                    $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/support/network \
                     $(LOCAL_PATH)/support/LocalStorage \
@@ -224,7 +219,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/support/Json/lib_json \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
-                    $(LOCAL_PATH)/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/support/network \
                     $(LOCAL_PATH)/support/LocalStorage \

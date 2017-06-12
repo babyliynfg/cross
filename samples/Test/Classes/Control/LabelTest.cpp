@@ -189,25 +189,32 @@ void LabelTest::viewDidLoad()
 	else
 	{
 
-		CARichLabel* RichLabel = CARichLabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(200, 200)));
+		CARichLabel* RichLabel = CARichLabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(200, 200)));
 		CAFont RichLabelFont;
 		RichLabelFont.bold = true;
-		RichLabelFont.fontSize = 42;
+		RichLabelFont.fontSize = 36;
 		RichLabelFont.color = CAColor4B::RED;
-		RichLabel->appendText("Hello World", RichLabelFont);
+        RichLabelFont.lineSpacing = 30;
+		RichLabel->appendText("        When a lion was asleep, a little mouse began running up and down beside him. This soon wakened the lion. He was very angry, and caught the mouse in his paws.", RichLabelFont);
 
 		CAFont RichLabelFont1;
 		RichLabelFont1.italics = true;
         RichLabelFont1.underLine = true;
-		RichLabelFont1.fontSize = 32;
+		RichLabelFont1.fontSize = 28;
 		RichLabelFont1.color = CAColor4B::YELLOW;
-		RichLabel->appendText("https://www.baidu.com ", RichLabelFont1);
+		RichLabel->appendText("https://www.baidu.com", RichLabelFont1);
 
 		CAFont RichLabelFont2;
 		RichLabelFont2.underLine = true;
-		RichLabelFont2.fontSize = 32;
+		RichLabelFont2.fontSize = 28;
 		RichLabelFont2.color = CAColor4B::RED;
-		RichLabel->appendText("Hello World", RichLabelFont2);
+		RichLabel->appendText("libpng warning: iCCP: known incorrect sRGB profile", RichLabelFont2);
+
+        CAFont RichLabelFont3;
+        RichLabelFont3.underLine = true;
+        RichLabelFont3.fontSize = 32;
+        RichLabelFont3.color = CAColor4B::RED;
+        RichLabel->appendText("        When a lion was asleep, a little mouse began running up and down beside him. This soon wakened the lion. He was very angry, and caught the mouse in his paws.", RichLabelFont3);
 
 		CAView* view2 = CAView::createWithLayout(DLayoutFill);
 		view2->addSubview(RichLabel);

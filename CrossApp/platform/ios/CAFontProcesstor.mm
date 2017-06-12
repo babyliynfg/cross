@@ -29,7 +29,7 @@ static id _createSystemFont(const CrossApp::CAFont& font)
     
     if (!iosFont)
     {
-        iosFont = [UIFont fontWithName:@"Arial" size:shrinkFontSize];
+        iosFont = [UIFont fontWithName:@"Helvetica" size:shrinkFontSize];
     }
 
     return iosFont;
