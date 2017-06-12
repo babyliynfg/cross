@@ -87,19 +87,19 @@ void CARichLabel::setContentSize(const CrossApp::DSize &var)
 
 void CARichLabel::updateImageRect()
 {
-	GLfloat x1, x2, y1, y2;
-	x1 = 0;
-	y1 = 0;
-	y1 = m_obContentSize.height - m_obRect.size.height - y1;
-	y1 = y1 - 0;
-	x2 = x1 + m_obRect.size.width;
-	x2 = MAX(x1, x2);
-	y2 = y1 + m_obRect.size.height;
-	y2 = MAX(y1, y2);
-	m_sQuad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-	m_sQuad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-	m_sQuad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-	m_sQuad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
+    GLfloat x1,x2,y1,y2;
+    x1 = m_obPadding.width;
+    y1 = 0;
+    y1 = m_obContentSize.height - m_obLabelSize.height - y1;
+    y1 = y1 - m_obPadding.height;
+    x2 = x1 + m_obLabelSize.width;
+    x2 = MAX(x1, x2);
+    y2 = y1 + m_obLabelSize.height;
+    y2 = MAX(y1, y2);
+    m_sQuad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
+    m_sQuad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
+    m_sQuad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
+    m_sQuad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
 }
 
 void CARichLabel::updateImageDraw()
@@ -110,29 +110,94 @@ void CARichLabel::updateImageDraw()
 
 void CARichLabel::updateImage()
 {
-	int fontHeight = 0;
-	int defaultLineSpace = fontHeight / 5;
-
-	DSize size;
-	unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
-	if (linenumber == 0)
-	{
-		size = m_obContentSize;
-	}
-	else
-	{
-		size = DSize(m_obContentSize.width, (defaultLineSpace + fontHeight) * (linenumber+1));
-	}
-
-	CAImage* image = nullptr;
-	this->setImage(image);
+    int fontHeight = CAFontProcesstor::heightForFont(m_vElements.front().font);
+    
+    unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
+    
+    DSize size = m_obContentSize;
+    if (linenumber > 0)
+    {
+        if (m_iNumberOfLine > 1)
+        {
+            linenumber = MIN(m_iNumberOfLine, linenumber);
+            size.height = fontHeight * linenumber + m_vElements.front().font.lineSpacing * (linenumber - 1);
+        }
+        else if (m_iNumberOfLine == 1)
+        {
+            size.width = m_bFitFlag ? 0xffffffff : m_obContentSize.width;
+            size.height = fontHeight;
+        }
+        else
+        {
+            size = m_obContentSize;
+        }
+    }
+    CAImage* image = CAFontProcesstor::imageForRichText(m_vElements, size, m_eTextAlignment);
+    this->setImage(image);
+    
     if (image)
     {
-        DRect rect = DRectZero;
-        rect.size.width = MIN(m_obContentSize.width, image->getContentSize().width);
-        rect.size.height = m_obContentSize.height;
+        this->setImage(image);
         
-        this->setImageRect(rect);
+        m_obLabelSize = size;
+        
+        switch (m_eTextAlignment)
+        {
+            case CATextAlignment::Left:
+                m_obPadding.width = 0;
+                break;
+                
+            case CATextAlignment::Center:
+                m_obPadding.width = (m_obContentSize.width - m_obLabelSize.width) / 2;
+                break;
+                
+            case CATextAlignment::Right:
+                m_obPadding.width = m_obContentSize.width - m_obLabelSize.width;
+                break;
+                
+            default:
+                break;
+        }
+        
+        switch (m_eVerticalTextAlignment)
+        {
+            case CAVerticalTextAlignment::Top:
+                m_obPadding.height = 0;
+                break;
+                
+            case CAVerticalTextAlignment::Center:
+                m_obPadding.height = (m_obContentSize.height - m_obLabelSize.height) / 2;
+                break;
+                
+            case CAVerticalTextAlignment::Bottom:
+                m_obPadding.height = m_obContentSize.height - m_obLabelSize.height;
+                break;
+                
+            default:
+                break;
+        }
+        
+        if (m_bFitFlag && !m_obLabelSize.equals(m_obContentSize))
+        {
+            if (m_eLayoutType == 0)
+            {
+                DRect rect = this->getFrame();
+                rect.size = m_obLabelSize;
+                this->setFrame(rect);
+            }
+            else if (m_eLayoutType == 1)
+            {
+                DRect rect = this->getCenter();
+                rect.size = m_obLabelSize;
+                this->setCenter(rect);
+            }
+        }
+        
+        this->setImageRect(DRect(DPointZero, image->getContentSize()));
+    }
+    else
+    {
+        this->setImageRect(DRectZero);
     }
 }
 
