@@ -189,30 +189,30 @@ void LabelTest::viewDidLoad()
 	else
 	{
 
-		CARichLabel* RichLabel = CARichLabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(200, 200)));
-		CAFont RichLabelFont;
-		RichLabelFont.bold = true;
-		RichLabelFont.fontSize = 42;
-		RichLabelFont.color = CAColor4B::RED;
-		RichLabel->appendText("Hello World", RichLabelFont);
-
-		CAFont RichLabelFont1;
-		RichLabelFont1.italics = true;
-		RichLabelFont1.fontSize = 42;
-		RichLabelFont1.color = CAColor4B::RED;
-		RichLabel->appendText("https://www.baidu.com", RichLabelFont1);
-
-		CAFont RichLabelFont2;
-		RichLabelFont2.underLine = true;
-		RichLabelFont2.fontSize = 42;
-		RichLabelFont2.color = CAColor4B::RED;
-		RichLabel->appendText("Hello World", RichLabelFont2);
-
-		CAView* view2 = CAView::createWithLayout(DLayoutFill);
-		view2->addSubview(RichLabel);
-		view2->setColor(CAColor4B::GRAY);
-
-		this->getView()->addSubview(view2);
+//		CARichLabel* RichLabel = CARichLabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(200, 200)));
+//		CAFont RichLabelFont;
+//		RichLabelFont.bold = true;
+//		RichLabelFont.fontSize = 42;
+//		RichLabelFont.color = CAColor4B::RED;
+//		RichLabel->appendText("Hello World", RichLabelFont);
+//
+//		CAFont RichLabelFont1;
+//		RichLabelFont1.italics = true;
+//		RichLabelFont1.fontSize = 42;
+//		RichLabelFont1.color = CAColor4B::RED;
+//		RichLabel->appendText("https://www.baidu.com", RichLabelFont1);
+//
+//		CAFont RichLabelFont2;
+//		RichLabelFont2.underLine = true;
+//		RichLabelFont2.fontSize = 42;
+//		RichLabelFont2.color = CAColor4B::RED;
+//		RichLabel->appendText("Hello World", RichLabelFont2);
+//
+//		CAView* view2 = CAView::createWithLayout(DLayoutFill);
+//		view2->addSubview(RichLabel);
+//		view2->setColor(CAColor4B::GRAY);
+//
+//		this->getView()->addSubview(view2);
 	}
 }
 

@@ -71,9 +71,13 @@ public:
     bool                    bold;
     
     bool                    underLine;
-    
+    /*
+    CAColor4B               underLineColor;
+    */
     bool                    deleteLine;
-    
+    /*
+    CAColor4B               deleteLineColor;
+    */
     bool                    italics;
     
     float                   italicsValue;
@@ -97,7 +101,13 @@ public:
     CAFont()
     : bold(false)
     , underLine(false)
+    /*
+    , underLineColor(CAColor4B::CLEAR)
+     */
     , deleteLine(false)
+    /*
+    , deleteLineColor(CAColor4B::CLEAR)
+     */
     , italics(false)
     , italicsValue(0.5f)
     , wordWrap(false)

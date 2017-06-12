@@ -174,7 +174,6 @@
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"
-#include "platform/CAFTFontCache.h"
 #include "platform/CATextField.h"
 #include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"

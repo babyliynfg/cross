@@ -77,6 +77,16 @@ static NSFont* _createSystemFont(const std::string& fontName, float size)
 
 NS_CC_BEGIN
 
+CAImage* imageForRichText(const std::vector<CARichLabel::Element>& elements, CATextAlignment textAlignment)
+{
+    CAImage* ret = nullptr;
+    do
+    {
+    }
+    while (0);
+    return ret;
+}
+
 CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dim, CATextAlignment textAlignment)
 {
     CAImage* ret = nullptr;
@@ -142,9 +152,39 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
             [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
         }
         
-        if (font.italics) [tokenAttributesDict setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
-        if (font.underLine) [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
-        if (font.deleteLine) [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
+        if (font.italics)
+        {
+            [tokenAttributesDict setObject:@(font.italicsValue) forKey:NSObliquenessAttributeName];
+        }
+        
+        if (font.underLine)
+        {
+            [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+            /*
+            if (font.underLineColor != CAColor4B::CLEAR)
+            {
+                NSColor* underLineColor = [NSColor colorWithDeviceRed:font.underLineColor.r/255.0
+                                                                green:font.underLineColor.g/255.0
+                                                                 blue:font.underLineColor.b/255.0
+                                                                alpha:font.underLineColor.a/255.0];
+                [tokenAttributesDict setObject:underLineColor forKey:NSUnderlineColorAttributeName];
+            }
+             */
+        }
+        if (font.deleteLine)
+        {
+            [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
+            /*
+            if (font.deleteLineColor != CAColor4B::CLEAR)
+            {
+                NSColor* deleteLineColor = [NSColor colorWithDeviceRed:font.deleteLineColor.r/255.0
+                                                                 green:font.deleteLineColor.g/255.0
+                                                                  blue:font.deleteLineColor.b/255.0
+                                                                 alpha:font.deleteLineColor.a/255.0];
+                [tokenAttributesDict setObject:deleteLineColor forKey:NSStrikethroughColorAttributeName];
+            }
+             */
+        }
         
         if (font.shadow.shadowEnabled)
         {

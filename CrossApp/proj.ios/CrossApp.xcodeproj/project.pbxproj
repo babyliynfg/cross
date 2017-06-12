@@ -56,27 +56,16 @@
 		1AC6CE8916B910CD00330EFD /* CAFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC6CE8716B910CD00330EFD /* CAFileUtils.h */; };
 		B01F650819658599005C14FC /* CADensityDpi.mm in Sources */ = {isa = PBXBuildFile; fileRef = B01F650719658599005C14FC /* CADensityDpi.mm */; };
 		B01F650A196585B2005C14FC /* CADensityDpi.h in Headers */ = {isa = PBXBuildFile; fileRef = B01F6509196585B2005C14FC /* CADensityDpi.h */; };
-		B04455E91C8FBB8A00B949BF /* CAFTRichFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B04455E71C8FBB8A00B949BF /* CAFTRichFont.cpp */; };
-		B04455EA1C8FBB8A00B949BF /* CAFTRichFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B04455E81C8FBB8A00B949BF /* CAFTRichFont.h */; };
-		B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */; };
-		B0596A591976287B00B1E8CB /* CAFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0596A571976287B00B1E8CB /* CAFreeTypeFont.h */; };
 		B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BEB1AC3C1C9005EBCA7 /* libcurl.a */; };
-		B0621BF81AC3C1E5005EBCA7 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BF71AC3C1E5005EBCA7 /* libfreetype.a */; };
 		B0621BFA1AC3C1F0005EBCA7 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BF91AC3C1F0005EBCA7 /* libjpeg.a */; };
 		B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621BFB1AC3C1FA005EBCA7 /* libpng.a */; };
 		B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621C011AC3C229005EBCA7 /* libwebp.a */; };
 		B07E81141C33B34800A39C95 /* CATextView.h in Headers */ = {isa = PBXBuildFile; fileRef = B07E81131C33B34800A39C95 /* CATextView.h */; };
 		B07E81161C33B36700A39C95 /* CATextView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B07E81151C33B36700A39C95 /* CATextView.mm */; };
-		B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */; };
-		B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */; };
 		B0C3BD461ADE7264009BE71A /* CAClipboard.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C3BD451ADE7264009BE71A /* CAClipboard.h */; };
 		B0C3BD481ADE726B009BE71A /* CAClipboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0C3BD471ADE726B009BE71A /* CAClipboard.mm */; };
-		B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */; };
-		B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */; };
 		B0CA5A3B1A77A8B400BECD89 /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */; };
 		B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */; };
-		B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */; };
-		B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */; };
 		D6596E0D1E56D1C200A55CF9 /* CAAlertViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */; };
 		D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */; };
 		D66F533B1ED8402300546E5E /* CAData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66F53391ED8402300546E5E /* CAData.cpp */; };
@@ -503,10 +492,6 @@
 		3727122F1A1C78D400FB827E /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		B01F650719658599005C14FC /* CADensityDpi.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CADensityDpi.mm; sourceTree = "<group>"; };
 		B01F6509196585B2005C14FC /* CADensityDpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADensityDpi.h; sourceTree = "<group>"; };
-		B04455E71C8FBB8A00B949BF /* CAFTRichFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTRichFont.cpp; sourceTree = "<group>"; };
-		B04455E81C8FBB8A00B949BF /* CAFTRichFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTRichFont.h; sourceTree = "<group>"; };
-		B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFreeTypeFont.cpp; sourceTree = "<group>"; };
-		B0596A571976287B00B1E8CB /* CAFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFreeTypeFont.h; sourceTree = "<group>"; };
 		B0621BEB1AC3C1C9005EBCA7 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../the_third_party/curl/prebuilt/ios/libcurl.a; sourceTree = "<group>"; };
 		B0621BF71AC3C1E5005EBCA7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../the_third_party/freetype/prebuilt/ios/libfreetype.a; sourceTree = "<group>"; };
 		B0621BF91AC3C1F0005EBCA7 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../the_third_party/jpeg/prebuilt/ios/libjpeg.a; sourceTree = "<group>"; };
@@ -516,18 +501,12 @@
 		B07E81131C33B34800A39C95 /* CATextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextView.h; sourceTree = "<group>"; };
 		B07E81151C33B36700A39C95 /* CATextView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CATextView.mm; sourceTree = "<group>"; };
 		B08BE2231CCDB5D5001A0F36 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
-		B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATempTypeFont.h; sourceTree = "<group>"; };
 		B0C3BD451ADE7264009BE71A /* CAClipboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAClipboard.h; sourceTree = "<group>"; };
 		B0C3BD471ADE726B009BE71A /* CAClipboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAClipboard.mm; sourceTree = "<group>"; };
-		B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFTFontCache.cpp; sourceTree = "<group>"; };
-		B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFTFontCache.h; sourceTree = "<group>"; };
 		B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
 		B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebViewImpl.mm; sourceTree = "<group>"; };
 		B0D7FA7C1B21506B004B2B86 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../the_third_party/curl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
 		B0D7FA7D1B21506B004B2B86 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../the_third_party/curl/prebuilt/ios/libssl.a; sourceTree = "<group>"; };
-		B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAEmojiFont.cpp; sourceTree = "<group>"; };
-		B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEmojiFont.h; sourceTree = "<group>"; };
 		D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlertViewImpl.mm; sourceTree = "<group>"; };
 		D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertViewImpl.h; sourceTree = "<group>"; };
 		D66F53391ED8402300546E5E /* CAData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAData.cpp; sourceTree = "<group>"; };
@@ -965,7 +944,6 @@
 				B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */,
 				B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */,
 				B0621BFA1AC3C1F0005EBCA7 /* libjpeg.a in Frameworks */,
-				B0621BF81AC3C1E5005EBCA7 /* libfreetype.a in Frameworks */,
 				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1051,19 +1029,9 @@
 				D69DA6981EE54F4E00590961 /* CAFontProcesstor.h */,
 				D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */,
 				E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */,
-				B04455E71C8FBB8A00B949BF /* CAFTRichFont.cpp */,
-				B04455E81C8FBB8A00B949BF /* CAFTRichFont.h */,
 				B07E81131C33B34800A39C95 /* CATextView.h */,
 				022160761C1FAD38009FFCFC /* CATextField.h */,
-				B0F61E1F1B9C402800BDCBAB /* CAEmojiFont.cpp */,
-				B0F61E201B9C402800BDCBAB /* CAEmojiFont.h */,
 				B0C3BD451ADE7264009BE71A /* CAClipboard.h */,
-				B0A02FF51A8E04A80005CB8F /* CATempTypeFont.cpp */,
-				B0A02FF61A8E04A80005CB8F /* CATempTypeFont.h */,
-				B0C512C519A2DF9F00E6934B /* CAFTFontCache.cpp */,
-				B0C512C619A2DF9F00E6934B /* CAFTFontCache.h */,
-				B0596A561976287B00B1E8CB /* CAFreeTypeFont.cpp */,
-				B0596A571976287B00B1E8CB /* CAFreeTypeFont.h */,
 				B01F6509196585B2005C14FC /* CADensityDpi.h */,
 				0460ED18195700EE00D13001 /* CCApplicationProtocol.h */,
 				0460ED19195700EE00D13001 /* CCEGLViewProtocol.cpp */,
@@ -1851,9 +1819,7 @@
 				D6ADC6991E56A72800750771 /* CCCustomCommand.h in Headers */,
 				D6ADC6411E56A72800750771 /* CAKeypadDelegate.h in Headers */,
 				D6ADC63F1E56A72800750771 /* CAIMEDispatcher.h in Headers */,
-				B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */,
 				D6ADC6201E56A72800750771 /* CCNS.h in Headers */,
-				B0C512C819A2DF9F00E6934B /* CAFTFontCache.h in Headers */,
 				D6ADC6441E56A72800750771 /* CAProtocols.h in Headers */,
 				B07E81141C33B34800A39C95 /* CATextView.h in Headers */,
 				D6ADC6501E56A72800750771 /* CGActionEase.h in Headers */,
@@ -1864,13 +1830,11 @@
 				D6ADC6A71E56A72800750771 /* CCGroupCommand.h in Headers */,
 				D6ADC6321E56A72800750771 /* CAStepper.h in Headers */,
 				D6ADC6E01E56A72800750771 /* deelx.h in Headers */,
-				B0596A591976287B00B1E8CB /* CAFreeTypeFont.h in Headers */,
 				1551A71B158F2ADE00E66CFE /* CACommon.h in Headers */,
 				D6ADC7461E56A72800750771 /* CAWebView.h in Headers */,
 				D6ADC6C01E56A72800750771 /* CCTechnique.h in Headers */,
 				D6ADC6CE1E56A72800750771 /* CAProfiling.h in Headers */,
 				D6ADC64C1E56A72800750771 /* CGActionCamera.h in Headers */,
-				B0F61E221B9C402800BDCBAB /* CAEmojiFont.h in Headers */,
 				1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */,
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
 				D6ADC6741E56A72800750771 /* CAImageCube.h in Headers */,
@@ -1974,7 +1938,6 @@
 				D6ADC67A1E56A72800750771 /* gif_hash.h in Headers */,
 				D6ADC6221E56A72800750771 /* CCSet.h in Headers */,
 				D6ADC6641E56A72800750771 /* CGProgressTimer.h in Headers */,
-				B04455EA1C8FBB8A00B949BF /* CAFTRichFont.h in Headers */,
 				02F19A931D4260E900BE472F /* CASAXParser.h in Headers */,
 				D6ADC6581E56A72800750771 /* CGActionProgressTimer.h in Headers */,
 				D6ADC6CC1E56A72800750771 /* base64.h in Headers */,
@@ -2115,7 +2078,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6ADC6211E56A72800750771 /* CCSet.cpp in Sources */,
-				B0596A581976287B00B1E8CB /* CAFreeTypeFont.cpp in Sources */,
 				D69DA69B1EE54F9B00590961 /* CAFontProcesstor.mm in Sources */,
 				D6ADC6531E56A72800750771 /* CGActionInterval.cpp in Sources */,
 				B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */,
@@ -2124,7 +2086,6 @@
 				D6ADC6351E56A72800750771 /* CABarItem.cpp in Sources */,
 				D6ADC66B1E56A72800750771 /* CGSpriteFrameCache.cpp in Sources */,
 				D6ADC6711E56A72800750771 /* CAImageCache.cpp in Sources */,
-				B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */,
 				D6ADC6D51E56A72800750771 /* ccUtils.cpp in Sources */,
 				D6ADC6CD1E56A72800750771 /* CAProfiling.cpp in Sources */,
 				D6ADC5F31E56A72800750771 /* CAAutoreleasePool.cpp in Sources */,
@@ -2196,7 +2157,6 @@
 				D6ADC7251E56A72800750771 /* CADrawView.cpp in Sources */,
 				E0FCFF421E5C4E2B00CCA191 /* CADevice.mm in Sources */,
 				1551A74E158F2ADE00E66CFE /* platform.cpp in Sources */,
-				B0F61E211B9C402800BDCBAB /* CAEmojiFont.cpp in Sources */,
 				D6ADC66F1E56A72800750771 /* CAImage.cpp in Sources */,
 				D6ADC7271E56A72800750771 /* CAGifView.cpp in Sources */,
 				D6ADC6F71E56A72800750771 /* shapes.cc in Sources */,
@@ -2222,7 +2182,6 @@
 				D6ADC7011E56A72800750771 /* sweep_context.cc in Sources */,
 				D6ADC72B1E56A72800750771 /* CALabel.cpp in Sources */,
 				D6ADC6B61E56A72800750771 /* CCRenderCommand.cpp in Sources */,
-				B04455E91C8FBB8A00B949BF /* CAFTRichFont.cpp in Sources */,
 				D6ADC6611E56A72800750771 /* CGNode.cpp in Sources */,
 				B01F650819658599005C14FC /* CADensityDpi.mm in Sources */,
 				D6ADC64D1E56A72800750771 /* CGActionCatmullRom.cpp in Sources */,
@@ -2248,7 +2207,6 @@
 				D6ADC6131E56A72800750771 /* CASize.cpp in Sources */,
 				D6ADC7391E56A72800750771 /* CAScale9ImageView.cpp in Sources */,
 				D6ADC67D1E56A72800750771 /* gifalloc.c in Sources */,
-				B0C512C719A2DF9F00E6934B /* CAFTFontCache.cpp in Sources */,
 				D6ADC7351E56A72800750771 /* CARenderImage.cpp in Sources */,
 				D6ADC6A41E56A72800750771 /* ccGLStateCache.cpp in Sources */,
 				D6ADC6C51E56A72800750771 /* CCVertexIndexData.cpp in Sources */,
@@ -2403,7 +2361,6 @@
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
 				);
@@ -2412,7 +2369,6 @@
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/ios\"",
 				);
@@ -2444,7 +2400,6 @@
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
-					"\"$(SRCROOT)/../the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
 				);
@@ -2453,7 +2408,6 @@
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
-					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/ios\"",
 				);

@@ -751,7 +751,6 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 				);
@@ -806,7 +805,6 @@
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
 					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 				);

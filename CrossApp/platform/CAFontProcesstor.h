@@ -4,6 +4,7 @@
 
 #include "CAFontProcesstor.h"
 #include "CADensityDpi.h"
+#include "view/CARichLabel.h"
 NS_CC_BEGIN
 
 class CAImage;
@@ -17,6 +18,8 @@ namespace CAFontProcesstor
     float heightForTextAtWidth(const std::string& text, const CAFont& font, float width);
     
     float widthForTextAtOneLine(const std::string& text, const CAFont& font);
+    
+    CAImage* imageForRichText(const std::vector<CARichLabel::Element>& elements, CATextAlignment textAlignment);
     
 }
 NS_CC_END
