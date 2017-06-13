@@ -9,8 +9,8 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Parcel;
 import android.text.Editable;
 import android.text.Html;
@@ -68,10 +68,12 @@ public class CrossAppTagHandler implements HtmlParser.TagHandler {
 			handlerStartShadow(output, attributes);
 		}else if (tag.equalsIgnoreCase("border")) {
 			handlerStartBorder(output, attributes);
+		}else if (tag.equalsIgnoreCase("i")) {
+			handlerStartItalic(output, attributes);
 		}
     }
-
-
+    
+    
     private void handlerEndTAG(String tag, Editable output, Attributes attributes) {
         if (tag.equalsIgnoreCase("font")) {
             handlerEndFONT(output);
@@ -81,6 +83,8 @@ public class CrossAppTagHandler implements HtmlParser.TagHandler {
 			handlerEndShadow(output);
 		}else if (tag.equalsIgnoreCase("border")) {
 			handlerEndBorder(output);
+		}else if (tag.equalsIgnoreCase("i")) {
+			handlerEndItalic(output); 
 		}
     }
     
@@ -93,13 +97,13 @@ public class CrossAppTagHandler implements HtmlParser.TagHandler {
             startIndex = new Stack();
         }
         startIndex.push(output.length());
-
+        
         if (propertyValue == null) {
             propertyValue = new Stack();
         }
         
         propertyValue.push(HtmlParser.getValue(attributes, "size"));
-    }
+    }  
     
     private void handlerEndFONT(Editable output) {
         if (!propertyValue.isEmpty()) {
@@ -201,6 +205,38 @@ public class CrossAppTagHandler implements HtmlParser.TagHandler {
     
     
     
+    /****  handlerStartItalic  & handlerEndItalic  ****/
+    private void handlerStartItalic(Editable output, Attributes attributes) {
+        if (startIndex == null) {
+            startIndex = new Stack();
+        }
+        startIndex.push(output.length());
+        
+        if (propertyValue == null) {
+            propertyValue = new Stack();
+        }
+        
+        propertyValue.push(HtmlParser.getValue(attributes, "italic"));
+    }
+    
+    private void handlerEndItalic(Editable output) {
+        if (!propertyValue.isEmpty()) {
+            try {
+                float value = Float.parseFloat(propertyValue.pop());
+                output.setSpan(new ItalicSpan(value), startIndex.pop(), output.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+    
+    
+    
+    
+    
+    
     /**
      * 返回true表示不交给系统后续处理
      * false表示交给系统后续处理
@@ -291,6 +327,41 @@ class ShadowSpan extends CharacterStyle implements UpdateAppearance ,ParcelableS
 	}
 	
 }
+
+
+/**
+ * i
+ * @author liuguoyan
+ */
+class ItalicSpan extends CharacterStyle implements UpdateAppearance ,ParcelableSpan{
+	
+	private float italic;
+	
+	public ItalicSpan(float italic) {
+		this.italic = italic ;
+	}
+	
+	@Override
+	public void updateDrawState(TextPaint tp) {
+		tp.setTextSkewX(-this.italic);
+	}
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+	}
+
+	@Override
+	public int getSpanTypeId() {
+		return Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+	}
+	
+}
+
 
 
 /*******************************************************************************************************/
