@@ -43,7 +43,7 @@ CAColor4B::CAColor4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
 
 CAColor4B::CAColor4B(unsigned int rgba)
 {
-    setUInt(rgba);
+    setUInt32(rgba);
 }
 
 CAColor4B::CAColor4B(const CAColor4B& other)
@@ -61,7 +61,7 @@ CAColor4B::CAColor4B(const CAColor4F& color)
 , a(color.a * 255)
 {}
 
-void CAColor4B::setUInt(unsigned int rgba)
+void CAColor4B::setUInt32(unsigned int rgba)
 {
     b = rgba % 0x100;
     rgba /= 0x100;
@@ -72,7 +72,7 @@ void CAColor4B::setUInt(unsigned int rgba)
     a = rgba % 0x100;
 }
 
-unsigned int CAColor4B::getUInt() const
+unsigned int CAColor4B::getUInt32() const
 {
     return (b + g * 0x100 + r * 0x10000 + a * 0x1000000);
 }

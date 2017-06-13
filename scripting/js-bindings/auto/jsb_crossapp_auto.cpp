@@ -30474,26 +30474,7 @@ void js_register_crossapp_CAGifView(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_CrossApp_CARichLabel_class;
 JSObject *jsb_CrossApp_CARichLabel_prototype;
 
-bool js_crossapp_CARichLabel_getUrls(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_getUrls : Invalid Native Object");
-    if (argc == 0) {
-        std::vector<std::string, std::allocator<std::string> > ret = cobj->getUrls();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_vector_string_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CARichLabel_getUrls : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CARichLabel_setLinksClickable(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CARichLabel_setTextAlignment(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -30501,36 +30482,38 @@ bool js_crossapp_CARichLabel_setLinksClickable(JSContext *cx, uint32_t argc, jsv
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_setLinksClickable : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_setTextAlignment : Invalid Native Object");
     if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARichLabel_setLinksClickable : Error processing arguments");
-        cobj->setLinksClickable(arg0);
+        CrossApp::CATextAlignment arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARichLabel_setTextAlignment : Error processing arguments");
+        cobj->setTextAlignment(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CARichLabel_setLinksClickable : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CARichLabel_setTextAlignment : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CARichLabel_getAutoLinkMask(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CARichLabel_setVerticalTextAlignmet(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_getAutoLinkMask : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->getAutoLinkMask();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_setVerticalTextAlignmet : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAVerticalTextAlignment arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARichLabel_setVerticalTextAlignmet : Error processing arguments");
+        cobj->setVerticalTextAlignmet(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CARichLabel_getAutoLinkMask : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CARichLabel_setVerticalTextAlignmet : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CARichLabel_visitEve(JSContext *cx, uint32_t argc, jsval *vp)
@@ -30567,64 +30550,26 @@ bool js_crossapp_CARichLabel_clear(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CARichLabel_clear : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CARichLabel_getLinkVisitedTextColor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CARichLabel_getLabelSize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_getLinkVisitedTextColor : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_getLabelSize : Invalid Native Object");
     if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getLinkVisitedTextColor();
+        const CrossApp::DSize& ret = cobj->getLabelSize();
         jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
+        jsret = dsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CARichLabel_getLinkVisitedTextColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CARichLabel_getLabelSize : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CARichLabel_getLinksClickable(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_getLinksClickable : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->getLinksClickable();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CARichLabel_getLinksClickable : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CARichLabel_init(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_init : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->init();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CARichLabel_init : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CARichLabel_setAutoLinkMask(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CARichLabel_setNumberOfLine(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -30632,75 +30577,40 @@ bool js_crossapp_CARichLabel_setAutoLinkMask(JSContext *cx, uint32_t argc, jsval
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_setAutoLinkMask : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_setNumberOfLine : Invalid Native Object");
     if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARichLabel_setAutoLinkMask : Error processing arguments");
-        cobj->setAutoLinkMask(arg0);
+        uint32_t arg0 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARichLabel_setNumberOfLine : Error processing arguments");
+        cobj->setNumberOfLine(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CARichLabel_setAutoLinkMask : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CARichLabel_getLinkTextColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_getLinkTextColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getLinkTextColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CARichLabel_getLinkTextColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CARichLabel_setNumberOfLine : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CARichLabel_appendText(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    bool ok = true;
-    CrossApp::CARichLabel* cobj = nullptr;
-
+    
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : nullptr);
+    CrossApp::CARichLabel* cobj = (CrossApp::CARichLabel *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CARichLabel_appendText : Invalid Native Object");
-    do {
-        if (argc == 2) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            CrossApp::CAFont arg1;
-            ok &= jsval_to_cafont(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            cobj->appendText(arg0, arg1);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
+    if (argc == 2) {
+        std::string arg0;
+        CrossApp::CAFont arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_cafont(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CARichLabel_appendText : Error processing arguments");
+        cobj->appendText(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
 
-    do {
-        if (argc == 1) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            cobj->appendText(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_crossapp_CARichLabel_appendText : wrong number of arguments");
+    JS_ReportError(cx, "js_crossapp_CARichLabel_appendText : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_crossapp_CARichLabel_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -30857,17 +30767,13 @@ void js_register_crossapp_CARichLabel(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("getUrls", js_crossapp_CARichLabel_getUrls, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setLinksClickable", js_crossapp_CARichLabel_setLinksClickable, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getAutoLinkMask", js_crossapp_CARichLabel_getAutoLinkMask, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTextAlignment", js_crossapp_CARichLabel_setTextAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setVerticalTextAlignmet", js_crossapp_CARichLabel_setVerticalTextAlignmet, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("visitEve", js_crossapp_CARichLabel_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("clear", js_crossapp_CARichLabel_clear, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getLinkVisitedTextColor", js_crossapp_CARichLabel_getLinkVisitedTextColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getLinksClickable", js_crossapp_CARichLabel_getLinksClickable, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_crossapp_CARichLabel_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAutoLinkMask", js_crossapp_CARichLabel_setAutoLinkMask, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getLinkTextColor", js_crossapp_CARichLabel_getLinkTextColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("appendText", js_crossapp_CARichLabel_appendText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getLabelSize", js_crossapp_CARichLabel_getLabelSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setNumberOfLine", js_crossapp_CARichLabel_setNumberOfLine, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("appendText", js_crossapp_CARichLabel_appendText, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

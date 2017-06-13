@@ -11616,33 +11616,23 @@ CAGifView : function (
 ca.CARichLabel = {
 
 /**
- * @method getUrls
- * @return {Array}
+ * @method setTextAlignment
+ * @param {ca.CATextAlignment} arg0
  */
-getUrls : function (
-)
-{
-    return new Array();
-},
-
-/**
- * @method setLinksClickable
- * @param {bool} arg0
- */
-setLinksClickable : function (
-bool 
+setTextAlignment : function (
+catextalignment 
 )
 {
 },
 
 /**
- * @method getAutoLinkMask
- * @return {bool}
+ * @method setVerticalTextAlignmet
+ * @param {ca.CAVerticalTextAlignment} arg0
  */
-getAutoLinkMask : function (
+setVerticalTextAlignmet : function (
+caverticaltextalignment 
 )
 {
-    return false;
 },
 
 /**
@@ -11662,62 +11652,32 @@ clear : function (
 },
 
 /**
- * @method getLinkVisitedTextColor
- * @return {color4b_object}
+ * @method getLabelSize
+ * @return {size_object}
  */
-getLinkVisitedTextColor : function (
+getLabelSize : function (
 )
 {
-    return ca.CAColor4B;
+    return ca.DSize;
 },
 
 /**
- * @method getLinksClickable
- * @return {bool}
+ * @method setNumberOfLine
+ * @param {unsigned int} arg0
  */
-getLinksClickable : function (
+setNumberOfLine : function (
+int 
 )
 {
-    return false;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setAutoLinkMask
- * @param {bool} arg0
- */
-setAutoLinkMask : function (
-bool 
-)
-{
-},
-
-/**
- * @method getLinkTextColor
- * @return {color4b_object}
- */
-getLinkTextColor : function (
-)
-{
-    return ca.CAColor4B;
 },
 
 /**
  * @method appendText
-* @param {String|String} str
-* @param {font_object} cafont
-*/
-appendText : function(
-str,
+ * @param {String} arg0
+ * @param {font_object} arg1
+ */
+appendText : function (
+str, 
 cafont 
 )
 {

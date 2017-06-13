@@ -95,7 +95,7 @@ public:
 #define schedule_selector(_SELECTOR) (CrossApp::SEL_Schedule)(&_SELECTOR)
 
 
-const float FLOAT_NONE = FLT_MAX;
+const float FLOAT_NONE = 0XFFFFFFFF;
 const int INT_NONE = 0x8FFFFFFF;
 const unsigned int UINT_NONE = 0XFFFFFFFF;
 

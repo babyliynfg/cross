@@ -168,7 +168,9 @@ ca.CAKeypadDispatcher.KeypadMSGType = {};
 ca.CAKeypadDispatcher.KeypadMSGType.BackClicked = 1;
 ca.CAKeypadDispatcher.KeypadMSGType.MenuClicked = 2;
 
-ca.DHorizontalLayout = {};
+ca.DLayout = {}
+
+ca.DHorizontalLayout = {}
 ca.DHorizontalLayout.Type = {};
 ca.DHorizontalLayout.Type.L_R = 0;
 ca.DHorizontalLayout.Type.L_W = 1;
@@ -176,7 +178,7 @@ ca.DHorizontalLayout.Type.R_W = 2;
 ca.DHorizontalLayout.Type.W_C = 3;
 ca.DHorizontalLayout.Type.NW_C = 4;
 
-ca.DVerticalLayout = {};
+ca.DVerticalLayout = {}
 ca.DVerticalLayout.Type = {};
 ca.DVerticalLayout.Type.T_B = 0;
 ca.DVerticalLayout.Type.T_H = 1;
@@ -364,157 +366,164 @@ ca.tLongAudioSourceState.kLAS_Paused = 3;
 ca.tLongAudioSourceState.kLAS_Stopped = 4;
 
 
-ca.FLT_MAX = 0;
+ca.FLT_MAX = 0xFFFFFFFF;
 // dlayout
-DHorizontalLayout = function(var1,var2,vtype){
-    var vleft = ca.FLT_MAX;
-    var vright = ca.FLT_MAX;
-    var vwidth = ca.FLT_MAX;
-    var vcenter = ca.FLT_MAX;
-    var vnormalizedWidth = ca.FLT_MAX;
+ca.DHorizontalLayout.set = function(var1, var2, _type)
+{
+    var _left = ca.FLT_MAX;
+    var _right = ca.FLT_MAX;
+    var _width = ca.FLT_MAX;
+    var _center = ca.FLT_MAX;
+    var _normalizedWidth = ca.FLT_MAX;
 
-    switch (vtype)
+    switch (_type)
     {
         case ca.DHorizontalLayout.Type.L_R:
         {
-            vleft = var1;
-            vright = var2;
+            _left = var1;
+            _right = var2;
         }
             break;
         case ca.DHorizontalLayout.Type.L_W:
         {
-            vleft = var1;
-            vwidth = var2;
+            _left = var1;
+            _width = var2;
         }
             break;
         case ca.DHorizontalLayout.Type.R_W:
         {
-            vright = var1;
-            vwidth = var2;
+            _right = var1;
+            _width = var2;
         }
             break;
         case ca.DHorizontalLayout.Type.W_C:
         {
-            vwidth = var1;
-            vcenter = var2;
+            _width = var1;
+            _center = var2;
         }
             break;
         case ca.DHorizontalLayout.Type.NW_C:
         {
-            vnormalizedWidth = var1;
-            vcenter = var2;
+            _normalizedWidth = var1;
+            _center = var2;
         }
             break;
         default:
             break;
     }
 
-    return {left:vleft,right:vright,width:vwidth,center:vcenter,type:vtype,normalizedWidth:vnormalizedWidth};
+    return {left:_left, right:_right, width:_width, center:_center, normalizedWidth:_normalizedWidth, type:_type};
 };
 
-DVerticalLayout =function (var1,var2,vtype){
+ca.DVerticalLayout.set =function (var1, var2, _type){
 
-    var vtop = ca.FLT_MAX;
-    var vbottom = ca.FLT_MAX;
-    var vheight = ca.FLT_MAX;
-    var vcenter = ca.FLT_MAX;
-    var vnormalizedWidth = ca.FLT_MAX;
+    var _top = ca.FLT_MAX;
+    var _bottom = ca.FLT_MAX;
+    var _height = ca.FLT_MAX;
+    var _center = ca.FLT_MAX;
+    var _normalizedWidth = ca.FLT_MAX;
 
-    switch (vtype)
+    switch (_type)
     {
         case ca.DVerticalLayout.Type.T_B:
         {
-            vtop = var1;
-            vbottom = var2;
+            _top = var1;
+            _bottom = var2;
         }
             break;
         case ca.DVerticalLayout.Type.T_H:
         {
-            vtop = var1;
-            vheight = var2;
+            _top = var1;
+            _height = var2;
         }
             break;
         case ca.DVerticalLayout.Type.B_H:
         {
-            vbottom = var1;
-            vheight = var2;
+            _bottom = var1;
+            _height = var2;
         }
             break;
         case ca.DVerticalLayout.Type.H_C:
         {
-            vheight = var1;
-            vcenter = var2;
+            _height = var1;
+            _center = var2;
         }
             break;
         case ca.DVerticalLayout.Type.NH_C:
         {
-            vbottom = var1;
-            vnormalizedWidth = var2;
+            _bottom = var1;
+            _normalizedWidth = var2;
         }
             break;
         default:
             break;
     }
 
-    return {top:vtop,bottom:vbottom,height:vheight,center:vcenter,type:vtype,normalizedWidth:vnormalizedWidth};
-};
-
-DLayout = function (hor,ver){
-    return {horizontal:hor,vertical:ver};
+    return {top:_top, bottom:_bottom, height:_height, center:_center, type:_type, normalizedWidth:_normalizedWidth};
 };
 
 
-//ca.HorizontalLayout = HorizontalLayout;
-//ca.VerticalLayout = VerticalLayout;
-//ca.DLayout = DLayout;
-
-
-DHorizontalLayout_L_R = function(left,right){
-   return DHorizontalLayout(left, right, ca.DHorizontalLayout.Type.L_R);
+ca.DLayout.set = function (hor, ver)
+{
+    return {horizontal:hor, vertical:ver};
 };
 
-DHorizontalLayout_L_W = function(left,width){
-    return DHorizontalLayout(left, width, ca.DHorizontalLayout.Type.L_W);
+ca.DHorizontalLayout_L_R = function(left,right)
+{
+   return ca.DHorizontalLayout.set(left, right, ca.DHorizontalLayout.Type.L_R);
 };
 
-DHorizontalLayout_R_W = function(right,width){
-    return DHorizontalLayout(right,width, ca.DHorizontalLayout.Type.R_W);
+ca.DHorizontalLayout_L_W = function(left,width)
+{
+    return ca.DHorizontalLayout.set(left, width, ca.DHorizontalLayout.Type.L_W);
 };
 
-DHorizontalLayout_W_C = function(width,center){
-    return DHorizontalLayout(width, center, ca.DHorizontalLayout.Type.W_C);
-};
-DHorizontalLayout_NW_C = function(width,center){
-    return DHorizontalLayout(width, center, ca.DHorizontalLayout.Type.NW_C);
+ca.DHorizontalLayout_R_W = function(right,width)
+{
+    return ca.DHorizontalLayout.set(right,width, ca.DHorizontalLayout.Type.R_W);
 };
 
-DVerticalLayout_T_B = function(top,bottom){
-    return DVerticalLayout(top,bottom, ca.DVerticalLayout.Type.T_B);
+ca.DHorizontalLayout_W_C = function(width,center)
+{
+    return ca.DHorizontalLayout.set(width, center, ca.DHorizontalLayout.Type.W_C);
+};
+ca.DHorizontalLayout_NW_C = function(width,center)
+{
+    return ca.DHorizontalLayout.set(width, center, ca.DHorizontalLayout.Type.NW_C);
 };
 
-DVerticalLayout_T_H = function(top,height){
-    return DVerticalLayout(top,height, ca.DVerticalLayout.Type.T_H);
+ca.DVerticalLayout_T_B = function(top,bottom)
+{
+    return ca.DVerticalLayout.set(top,bottom, ca.DVerticalLayout.Type.T_B);
 };
 
-DVerticalLayout_B_H = function(bottom,height){
-    return DVerticalLayout(bottom,height, ca.DVerticalLayout.Type.B_H);
+ca.DVerticalLayout_T_H = function(top,height)
+{
+    return ca.DVerticalLayout.set(top,height, ca.DVerticalLayout.Type.T_H);
 };
 
-DVerticalLayout_H_C = function(height,center){
-    return DVerticalLayout(height,center, ca.DVerticalLayout.Type.H_C);
-};
-DVerticalLayout_NH_C = function(height,center){
-    return DVerticalLayout(height,center, ca.DVerticalLayout.Type.NH_C);
+ca.DVerticalLayout_B_H = function(bottom,height)
+{
+    return ca.DVerticalLayout.set(bottom,height, ca.DVerticalLayout.Type.B_H);
 };
 
-DHorizontalLayouttZero  = DHorizontalLayout(0,0,0);
-DVerticalLayoutZero     = DVerticalLayout(0,0,0);
-DLayoutZero             = DLayout(DHorizontalLayouttZero,DVerticalLayoutZero);
-DHorizontalLayoutFill   = DHorizontalLayout_L_R(0, 0);
-DVerticalLayoutFill     = DVerticalLayout_T_B(0, 0);
-DLayoutFill             = DLayout(DHorizontalLayoutFill, DVerticalLayoutFill);
+ca.DVerticalLayout_H_C = function(height,center)
+{
+    return ca.DVerticalLayout.set(height,center, ca.DVerticalLayout.Type.H_C);
+};
+ca.DVerticalLayout_NH_C = function(height,center)
+{
+    return ca.DVerticalLayout.set(height,center, ca.DVerticalLayout.Type.NH_C);
+};
 
-CAFontShadow = function(){
+ca.DHorizontalLayouttZero  = ca.DHorizontalLayout.set(0,0,0);
+ca.DVerticalLayoutZero     = ca.DVerticalLayout.set(0,0,0);
+ca.DLayoutZero             = ca.DLayout.set(ca.DHorizontalLayouttZero, ca.DVerticalLayoutZero);
+ca.DHorizontalLayoutFill   = ca.DHorizontalLayout_L_R(0, 0);
+ca.DVerticalLayoutFill     = ca.DVerticalLayout_T_B(0, 0);
+ca.DLayoutFill             = ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill);
+
+ca.CAFontShadow = function(){
     return  {
     shadowEnabled: false,
     shadowOffset: ca.DSizeZero,
@@ -523,7 +532,7 @@ CAFontShadow = function(){
     };
 };
 
-CAFontStroke = function(){
+ca.CAFontStroke = function(){
     return  {
     strokeEnabled: false,
     strokeColor: ca.CAColor4B.BLACK,
@@ -531,7 +540,7 @@ CAFontStroke = function(){
     };
 };
 
-CAFont = function(){
+ca.CAFont = function(){
     return  {
     bold: false,
     underLine: false,
@@ -543,13 +552,12 @@ CAFont = function(){
     fontSize: 24,
     lineSpacing: 0,
     color: ca.CAColor4B.BLACK,
-    shadow: CAFontShadow(),
-    stroke: CAFontStroke(),
+    shadow: ca.CAFontShadow(),
+    stroke: ca.CAFontStroke(),
     };
 };
 
-
-ca.CAColor4B = {};
+ca.CAColor4B = {}
 ca.CAColor4B.WHITE = {r:255, g:255, b:255,a:255};
 ca.CAColor4B.YELLOW = {r:255, g:255, b:0,a:255};
 ca.CAColor4B.GREEN = {r:0, g:255, b:0,a:255};
@@ -561,7 +569,35 @@ ca.CAColor4B.ORANGE = {r:255, g:127, b:0,a:255};
 ca.CAColor4B.GRAY = {r:166, g:166, b:166,a:255};
 ca.CAColor4B.CLEAR = {r:255, g:255, b:255,a:0};
 
-ca.CAColor4F = {};
+ca.CAColor4B.set = function (_r, _g, _b, _a)
+{
+    return {r:_r, g:_g, b:_b, a:_a};
+};
+
+ca.CAColor4B.setUInt32 = function (_rgba)
+{
+    var _b = _rgba % 0x100;
+    _rgba /= 0x100;
+    var _g = _rgba % 0x100;
+    _rgba /= 0x100;
+    var _r = _rgba % 0x100;
+    _rgba /= 0x100;
+    var _a = _rgba % 0x100;
+
+    return {r:_r, g:_g, b:_b, a:_a};
+};
+
+ca.CAColor4B.getUInt32 = function (_color)
+{
+    return (_color.b + _color.g * 0x100 + _color.r * 0x10000 + _color.a * 0x1000000);
+};
+
+ca.CAColor4BEquals = function (_color1, _color2)
+{
+    return (_color1.r == _color2.r && _color1.g == _color2.g && _color1.b == _color2.b && _color1.a == _color2.a);
+};
+
+ca.CAColor4F = {}
 ca.CAColor4F.WHITE = {r:1, g:1, b:1,a:1};
 ca.CAColor4F.YELLOW = {r:1, g:1, b:0,a:1};
 ca.CAColor4F.GREEN = {r:0, g:1, b:0,a:1};
@@ -573,240 +609,98 @@ ca.CAColor4F.ORANGE = {r:1, g:0.5, b:0,a:1};
 ca.CAColor4F.GRAY = {r:0.65, g:0.65, b:0.65,a:1};
 ca.CAColor4F.CLEAR = {r:1, g:1, b:1,a:0};
 
-//
-// Reusable objects
-//
-ca._reuse_p = [ {x:0, y:0}, {x:0,y:0}, {x:0,y:0}, {x:0,y:0} ];
-ca._reuse_p_index = 0;
-ca._reuse_size = {width:0, height:0};
-ca._reuse_rect = {x:0, y:0, width:0, height:0};
-ca._reuse_color3b = {r:255, g:255, b:255 };
-ca._reuse_color4b = {r:255, g:255, b:255, a:255 };
-//
-// Basic sturcture : Point
-//
-ca.DPoint = function( x, y )
+ca.CAColor4F.set = function (_r, _g, _b, _a)
 {
-    if( ca._reuse_p_index == ca._reuse_p.length )
-        ca._reuse_p_index = 0;
-
-    var p = ca._reuse_p[ ca._reuse_p_index];
-    ca._reuse_p_index++;
-    p.x = x;
-    p.y = y;
-    return p;
+    return {r:_r, g:_g, b:_b, a:_a};
 };
 
-ca.DPointEqualToDPoint = function (point1, point2) {
-    return ((point1.x == point2.x) && (point1.y == point2.y));
-};
-
-ca.DPointZero = function () {
-    return ca.p(0, 0);
-};
-
-//
-// Basic sturcture : Size
-//
-ca.DSize = function(w,h)
+ca.CAColor4FEquals = function (_color1, _color2)
 {
-    ca._reuse_size.width = w;
-    ca._reuse_size.height = h;
-    return ca._reuse_size;
+    return (_color1.r == _color2.r && _color1.g == _color2.g && _color1.b == _color2.b && _color1.a == _color2.a);
 };
 
-ca.DSizeEqualToDSize = function (size1, size2)
+ca.DPoint = {}
+ca.DPoint.set = function( _x, _y )
 {
-    return ((size1.width == size2.width) && (size1.height == size2.height));
+    return {x:_x, y:_y};
 };
 
-ca.DSizeZero = function () {
-    return ca.size(0, 0);
-};
-
-
-/**
- * create a ca.rect object
- * @param {Number|ca.point|ca.rect} [x] a Number value as x or a ca.point object as origin or a ca.rect clone object
- * @param {Number|ca.size} [y] x1 a Number value as y or a ca.size object as size
- * @param {Number} [w]
- * @param {Number} [h]
- * @return {Object} a ca.rect object
- */
-ca.rect = function(x,y,w,h)
+ca.DPointZero = function ()
 {
-    var argLen = arguments.length;
-    if (argLen === 0)
-        return { x: 0, y: 0, width: 0, height: 0 };
-
-    if (argLen === 1)
-        return { x: x.x, y: x.y, width: x.width, height: x.height };
-
-    if (argLen === 2)
-        return { x: x.x, y: x.y, width: y.width, height: y.height };
-
-    if (argLen === 4)
-        return { x: x, y: y, width: w, height: h };
-
-    throw "unknown argument type";
+    return ca.DPoint(0, 0);
 };
-ca.DRect = function(x,y,w,h)
+
+ca.DPointEquals = function (p1, p2)
 {
-    ca._reuse_rect.x = x;
-    ca._reuse_rect.y = y;
-    ca._reuse_rect.width = w;
-    ca._reuse_rect.height = h;
-    return ca._reuse_rect;
-};
-ca.RectEqualToRect = function (rect1, rect2) {
-    return ( rect1.x==rect2.x && rect1.y==rect2.y && rect1.width==rect2.width && rect1.height==rect2.height);
+    return ((p1.x == p2.x) && (p1.y == p2.y));
 };
 
-ca.RectContainsRect = function (rect1, rect2) {
-    if ((rect1.x >= rect2.x) || (rect1.y >= rect2.y) ||
-        ( rect1.x + rect1.width <= rect2.x + rect2.width) ||
-        ( rect1.y + rect1.height <= rect2.y + rect2.height))
+ca.DPoint.getDistance = function (p1, p2)
+{
+    var xx = p1.x - p2.x;
+    var yy = p1.y - p2.y;
+    return Math.sqrt(xx*xx + yy*yy)
+}
+
+ca.DSize = {}
+ca.DSize.set = function(_width, _height)
+{
+    return {width:_width, height:_height};
+};
+
+ca.DSizeEquals = function (s1, s2)
+{
+    return ((s1.width == s2.width) && (s1.height == s2.height));
+};
+
+ca.DSizeZero = function ()
+{
+    return ca.DSize(0, 0);
+};
+
+ca.DRect = {}
+
+ca.DRect.set = function(_x, _y, _width, _height)
+{
+    return {x:_x, y:_y, width:_width, height:_height};
+};
+
+ca.DRectZero = function ()
+{
+    return ca.DRect.set(0, 0, 0, 0);
+};
+
+ca.DRectEquals = function (r1, r2)
+{
+    return ( r1.x == r2.x && r1.y == r2.y && r1.width == r2.width && r1.height == r2.height);
+};
+
+ca.DRect.intersectsRect = function (r1, r2)
+{
+    if (r1.origin.x + r1.size.width < r2.origin.x)
+    {
         return false;
+    }
+
+    if (r2.origin.x + r2.size.width < r1.origin.x)
+    {
+        return false;
+    }
+
+    if (r1.origin.y + r1.size.height < r2.origin.y)
+    {
+        return false;
+    }
+
+    if (r2.origin.y + r2.size.height < r1.origin.y)
+    {
+        return false;
+    }
+
     return true;
 };
 
-ca.RectZero = function () {
-    return ca.drect(0, 0, 0, 0);
-};
-
-
-// Basic sturcture : Color
-ca.Color = function (r, g, b, a) {
-    this.r = r || 0;
-    this.g = g || 0;
-    this.b = b || 0;
-    this.a = (a === undefined) ? 255 : a;
-};
-
-/**
- * Generate a color object based on multiple forms of parameters
- * @example
- *
- * // 1. All channels seperately as parameters
- * var color1 = ca.color(255, 255, 255, 255);
- *
- * // 2. Convert a hex string to a color
- * var color2 = ca.color("#000000");
- *
- * // 3. An color object as parameter
- * var color3 = ca.color({r: 255, g: 255, b: 255, a: 255});
- *
- * Alpha channel is optional. Default value is 255
- *
- * @param {Number|String|ca.Color} r
- * @param {Number} g
- * @param {Number} b
- * @param {Number} [a=255]
- * @returns {ca.Color}
- */
-ca.color = function (r, g, b, a) {
-    if (r === undefined)
-        return {r: 0, g: 0, b: 0, a: 255};
-    if (typeof r === "string")
-        return ca.hexToColor(r);
-    if (typeof r === "object")
-        return {r: r.r, g: r.g, b: r.b, a: (r.a === undefined) ? 255 : r.a};
-    return  {r: r, g: g, b: b, a: (a === undefined ? 255 : a)};
-};
-
-/**
- * returns true if both caColor3B are equal. Otherwise it returns false.
- * @param {ca.Color} color1
- * @param {ca.Color} color2
- * @return {Boolean}  true if both caColor3B are equal. Otherwise it returns false.
- */
-ca.colorEqual = function(color1, color2){
-    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
-};
-
-/**
- * convert a string of color for style to Color.
- * e.g. "#ff06ff"  to : ca.color(255,6,255)
- * @param {String} hex
- * @return {ca.Color}
- */
-ca.hexToColor = function (hex) {
-    hex = hex.replace(/^#?/, "0x");
-    var c = parseInt(hex);
-    var r = c >> 16;
-    var g = (c >> 8) % 256;
-    var b = c % 256;
-    return ca.color(r, g, b);
-};
-
-/**
- * convert Color to a string of color for style.
- * e.g.  ca.color(255,6,255)  to : "#ff06ff"
- * @param {ca.Color} color
- * @return {String}
- */
-ca.colorToHex = function (color) {
-    var hR = color.r.toString(16);
-    var hG = color.g.toString(16);
-    var hB = color.b.toString(16);
-    var hex = "#" + (color.r < 16 ? ("0" + hR) : hR) + (color.g < 16 ? ("0" + hG) : hG) + (color.b < 16 ? ("0" + hB) : hB);
-    return hex;
-};
-
-var _proto = ca.color;
-/** @expose */
-_proto.WHITE;
-ca.defineGetterSetter(_proto, "WHITE", _proto._getWhite);
-/** @expose */
-_proto.YELLOW;
-ca.defineGetterSetter(_proto, "YELLOW", _proto._getYellow);
-/** @expose */
-_proto.BLUE;
-ca.defineGetterSetter(_proto, "BLUE", _proto._getBlue);
-/** @expose */
-_proto.GREEN;
-ca.defineGetterSetter(_proto, "GREEN", _proto._getGreen);
-/** @expose */
-_proto.RED;
-ca.defineGetterSetter(_proto, "RED", _proto._getRed);
-/** @expose */
-_proto.MAGENTA;
-ca.defineGetterSetter(_proto, "MAGENTA", _proto._getMagenta);
-/** @expose */
-_proto.BLACK;
-ca.defineGetterSetter(_proto, "BLACK", _proto._getBlack);
-/** @expose */
-_proto.ORANGE;
-ca.defineGetterSetter(_proto, "ORANGE", _proto._getOrange);
-/** @expose */
-_proto.GRAY;
-ca.defineGetterSetter(_proto, "GRAY", _proto._getGray);
 
 ca.CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
 ca.CROSSAPP_CCLOG_NOTIFICATION = "CROSSAPP_CCLOG_NOTIFICATION";
 
-// Cocos2d-html5 supports multi scene resources preloading.
-// This is a compatible function for JSB.
-ca.Loader = ca.Class.extend({
-                            initWith:function (resources, selector, target) {
-                            if (selector) {
-                            this._selector = selector;
-                            this._target = target;
-                            }
-                            this._selector.call(this._target);
-                            }
-                            });
-
-ca.Loader.preload = function (resources, selector, target) {
-    if (!this._instance) {
-        this._instance = new ca.Loader();
-    }
-    this._instance.initWith(resources, selector, target);
-    return this._instance;
-};
-
-
-var ConfigType = {
-NONE: 0,
-COCOSTUDIO: 1
-};
