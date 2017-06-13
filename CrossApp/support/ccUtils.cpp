@@ -2,6 +2,9 @@
 #include "ccUtils.h"
 #include <iostream>
 #include <cstdlib>
+#include <sstream>
+#include <string>
+#include <iomanip>
 
 namespace CrossApp {
 
@@ -47,6 +50,16 @@ CC_DLL unsigned int hex2Int(const std::string& hexStr)
     sscanf(hexStr.c_str(), "%x", &x);
     
     return x;
+}
+    
+CC_DLL std::string int2hex(int i)
+{
+    std::stringstream ioss;
+    std::string s_temp;
+    //ioss << std::setiosflags(std::ios::uppercase) << std::hex << i; //以十六制(大写)形式输出
+    ioss << std::resetiosflags(std::ios::uppercase) << std::hex << i; //以十六制(小写)形式输出//取消大写的设置
+    ioss >> s_temp;
+    return s_temp;
 }
 
 }

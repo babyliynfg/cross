@@ -12,15 +12,15 @@ NS_CC_BEGIN
 enum class CAVerticalTextAlignment
 {
     Top = 0,
-    Center,
-    Bottom,
+    Center = 1,
+    Bottom = 2,
 };
 
 enum class CATextAlignment
 {
     Left = 0,
-    Center,
-    Right,
+    Center = 1,
+    Right = 2,
 };
 
 const CAColor4B CAFontShadowDefaultColor = CAColor4B(0, 0, 0, 88);

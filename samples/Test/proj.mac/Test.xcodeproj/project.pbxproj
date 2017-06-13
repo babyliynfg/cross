@@ -24,6 +24,23 @@
 		15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23A168318C3006C7997 /* CocosDenshion.m */; };
 		15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23B168318C3006C7997 /* SimpleAudioEngine.mm */; };
 		15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */; };
+		1E75C1531EEE996600C552FD /* CAAccelerometer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C1371EEE996600C552FD /* CAAccelerometer.cpp */; };
+		1E75C1541EEE996600C552FD /* CAAlertViewImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C1391EEE996600C552FD /* CAAlertViewImpl.cpp */; };
+		1E75C1551EEE996600C552FD /* CAClipboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C13A1EEE996600C552FD /* CAClipboard.cpp */; };
+		1E75C1561EEE996600C552FD /* CACommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C13B1EEE996600C552FD /* CACommon.cpp */; };
+		1E75C1571EEE996600C552FD /* CADensityDpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C13C1EEE996600C552FD /* CADensityDpi.cpp */; };
+		1E75C1581EEE996600C552FD /* CAFontProcesstor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C13D1EEE996600C552FD /* CAFontProcesstor.cpp */; };
+		1E75C1591EEE996600C552FD /* CATextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C13E1EEE996600C552FD /* CATextField.cpp */; };
+		1E75C15A1EEE996600C552FD /* CATextView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C13F1EEE996600C552FD /* CATextView.cpp */; };
+		1E75C15B1EEE996600C552FD /* CAWebViewImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C1401EEE996600C552FD /* CAWebViewImpl.cpp */; };
+		1E75C15C1EEE996600C552FD /* CCApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C1421EEE996600C552FD /* CCApplication.cpp */; };
+		1E75C15D1EEE996600C552FD /* CCEGLView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C1441EEE996600C552FD /* CCEGLView.cpp */; };
+		1E75C15E1EEE996600C552FD /* CCFileUtilsAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C1461EEE996600C552FD /* CCFileUtilsAndroid.cpp */; };
+		1E75C15F1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppAccelerometer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C14C1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppAccelerometer.cpp */; };
+		1E75C1601EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C14D1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppHelper.cpp */; };
+		1E75C1611EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C14F1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppRenderer.cpp */; };
+		1E75C1621EEE996600C552FD /* JniHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C1501EEE996600C552FD /* JniHelper.cpp */; };
+		1E75C1631EEE996600C552FD /* TouchesJni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1E75C1521EEE996600C552FD /* TouchesJni.cpp */; };
 		41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70DA15BF81A5006A0A6C /* AppController.mm */; };
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
@@ -129,6 +146,33 @@
 		15D8B23C168318C3006C7997 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		15D8B23D168318C3006C7997 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E75C1371EEE996600C552FD /* CAAccelerometer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAccelerometer.cpp; sourceTree = "<group>"; };
+		1E75C1381EEE996600C552FD /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
+		1E75C1391EEE996600C552FD /* CAAlertViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAlertViewImpl.cpp; sourceTree = "<group>"; };
+		1E75C13A1EEE996600C552FD /* CAClipboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAClipboard.cpp; sourceTree = "<group>"; };
+		1E75C13B1EEE996600C552FD /* CACommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACommon.cpp; sourceTree = "<group>"; };
+		1E75C13C1EEE996600C552FD /* CADensityDpi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADensityDpi.cpp; sourceTree = "<group>"; };
+		1E75C13D1EEE996600C552FD /* CAFontProcesstor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFontProcesstor.cpp; sourceTree = "<group>"; };
+		1E75C13E1EEE996600C552FD /* CATextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextField.cpp; sourceTree = "<group>"; };
+		1E75C13F1EEE996600C552FD /* CATextView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATextView.cpp; sourceTree = "<group>"; };
+		1E75C1401EEE996600C552FD /* CAWebViewImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAWebViewImpl.cpp; sourceTree = "<group>"; };
+		1E75C1411EEE996600C552FD /* CAWebViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAWebViewImpl.h; sourceTree = "<group>"; };
+		1E75C1421EEE996600C552FD /* CCApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication.cpp; sourceTree = "<group>"; };
+		1E75C1431EEE996600C552FD /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
+		1E75C1441EEE996600C552FD /* CCEGLView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLView.cpp; sourceTree = "<group>"; };
+		1E75C1451EEE996600C552FD /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLView.h; sourceTree = "<group>"; };
+		1E75C1461EEE996600C552FD /* CCFileUtilsAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtilsAndroid.cpp; sourceTree = "<group>"; };
+		1E75C1471EEE996600C552FD /* CCFileUtilsAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsAndroid.h; sourceTree = "<group>"; };
+		1E75C1481EEE996600C552FD /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
+		1E75C1491EEE996600C552FD /* CCPlatformDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
+		1E75C14A1EEE996600C552FD /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
+		1E75C14C1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppAccelerometer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Java_org_CrossApp_lib_CrossAppAccelerometer.cpp; sourceTree = "<group>"; };
+		1E75C14D1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Java_org_CrossApp_lib_CrossAppHelper.cpp; sourceTree = "<group>"; };
+		1E75C14E1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Java_org_CrossApp_lib_CrossAppHelper.h; sourceTree = "<group>"; };
+		1E75C14F1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Java_org_CrossApp_lib_CrossAppRenderer.cpp; sourceTree = "<group>"; };
+		1E75C1501EEE996600C552FD /* JniHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JniHelper.cpp; sourceTree = "<group>"; };
+		1E75C1511EEE996600C552FD /* JniHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JniHelper.h; sourceTree = "<group>"; };
+		1E75C1521EEE996600C552FD /* TouchesJni.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchesJni.cpp; sourceTree = "<group>"; };
 		41BC70D915BF81A5006A0A6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
 		41BC70DA15BF81A5006A0A6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
 		41BC70DD15BF81A5006A0A6C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
@@ -291,6 +335,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1E75C1361EEE996600C552FD /* android */,
 				3E91E5131C9BFE030027C466 /* Control */,
 				B063D46B1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp */,
 				B063D46C1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.h */,
@@ -366,6 +411,49 @@
 				1D6058910D05DD3D006BFB54 /* Test.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1E75C1361EEE996600C552FD /* android */ = {
+			isa = PBXGroup;
+			children = (
+				1E75C1371EEE996600C552FD /* CAAccelerometer.cpp */,
+				1E75C1381EEE996600C552FD /* CAAccelerometer.h */,
+				1E75C1391EEE996600C552FD /* CAAlertViewImpl.cpp */,
+				1E75C13A1EEE996600C552FD /* CAClipboard.cpp */,
+				1E75C13B1EEE996600C552FD /* CACommon.cpp */,
+				1E75C13C1EEE996600C552FD /* CADensityDpi.cpp */,
+				1E75C13D1EEE996600C552FD /* CAFontProcesstor.cpp */,
+				1E75C13E1EEE996600C552FD /* CATextField.cpp */,
+				1E75C13F1EEE996600C552FD /* CATextView.cpp */,
+				1E75C1401EEE996600C552FD /* CAWebViewImpl.cpp */,
+				1E75C1411EEE996600C552FD /* CAWebViewImpl.h */,
+				1E75C1421EEE996600C552FD /* CCApplication.cpp */,
+				1E75C1431EEE996600C552FD /* CCApplication.h */,
+				1E75C1441EEE996600C552FD /* CCEGLView.cpp */,
+				1E75C1451EEE996600C552FD /* CCEGLView.h */,
+				1E75C1461EEE996600C552FD /* CCFileUtilsAndroid.cpp */,
+				1E75C1471EEE996600C552FD /* CCFileUtilsAndroid.h */,
+				1E75C1481EEE996600C552FD /* CCGL.h */,
+				1E75C1491EEE996600C552FD /* CCPlatformDefine.h */,
+				1E75C14A1EEE996600C552FD /* CCStdC.h */,
+				1E75C14B1EEE996600C552FD /* jni */,
+			);
+			name = android;
+			path = ../../../CrossApp/platform/android;
+			sourceTree = "<group>";
+		};
+		1E75C14B1EEE996600C552FD /* jni */ = {
+			isa = PBXGroup;
+			children = (
+				1E75C14C1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppAccelerometer.cpp */,
+				1E75C14D1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppHelper.cpp */,
+				1E75C14E1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppHelper.h */,
+				1E75C14F1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppRenderer.cpp */,
+				1E75C1501EEE996600C552FD /* JniHelper.cpp */,
+				1E75C1511EEE996600C552FD /* JniHelper.h */,
+				1E75C1521EEE996600C552FD /* TouchesJni.cpp */,
+			);
+			path = jni;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -632,34 +720,48 @@
 			files = (
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
 				B063D4C11CAD24F300B1FF13 /* VideoPlayerControlViewTest.cpp in Sources */,
+				1E75C1631EEE996600C552FD /* TouchesJni.cpp in Sources */,
 				B063D4B21CAD24F300B1FF13 /* PageViewTest.cpp in Sources */,
+				1E75C1531EEE996600C552FD /* CAAccelerometer.cpp in Sources */,
 				B063D4A81CAD24F300B1FF13 /* ActivityIndicatorViewTest.cpp in Sources */,
 				B063D4B61CAD24F300B1FF13 /* Scale9ImageViewTest.cpp in Sources */,
 				B063D4B81CAD24F300B1FF13 /* SegmentedControlTest.cpp in Sources */,
 				B063D4B91CAD24F300B1FF13 /* SliderTest.cpp in Sources */,
+				1E75C15D1EEE996600C552FD /* CCEGLView.cpp in Sources */,
 				B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */,
+				1E75C1601EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppHelper.cpp in Sources */,
 				B063D4B11CAD24F300B1FF13 /* ListViewTest.cpp in Sources */,
 				B063D4AE1CAD24F300B1FF13 /* GifViewTest.cpp in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
 				B093DB481CBCDA5600E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */,
 				B093DB491CBCDA5600E98AD6 /* AutoCollectionViewVerticalTest.cpp in Sources */,
 				B063D4B01CAD24F300B1FF13 /* LabelTest.cpp in Sources */,
+				1E75C1541EEE996600C552FD /* CAAlertViewImpl.cpp in Sources */,
 				B063D4BC1CAD24F300B1FF13 /* TabBarControllerTest.cpp in Sources */,
 				B063D4B31CAD24F300B1FF13 /* PickerViewTest.cpp in Sources */,
 				B063D4AB1CAD24F300B1FF13 /* ButtonTest.cpp in Sources */,
+				1E75C15A1EEE996600C552FD /* CATextView.cpp in Sources */,
+				1E75C1571EEE996600C552FD /* CADensityDpi.cpp in Sources */,
 				B0621C311AC3DCB2005EBCA7 /* RootWindow.cpp in Sources */,
 				D6B033FA1D9507AE00388A90 /* CAVideoPlayerDecoderMac.cpp in Sources */,
 				D6B033F81D9507AE00388A90 /* CAVideoPlayerControlViewMac.cpp in Sources */,
 				B063D4BB1CAD24F300B1FF13 /* SwitchTest.cpp in Sources */,
+				1E75C1591EEE996600C552FD /* CATextField.cpp in Sources */,
 				B063D4B41CAD24F300B1FF13 /* ProgressTest.cpp in Sources */,
+				1E75C1551EEE996600C552FD /* CAClipboard.cpp in Sources */,
 				B063D4BF1CAD24F300B1FF13 /* TextViewTest.cpp in Sources */,
+				1E75C15B1EEE996600C552FD /* CAWebViewImpl.cpp in Sources */,
 				B063D4AC1CAD24F300B1FF13 /* CollectionViewTest.cpp in Sources */,
 				4EC91E981AE4A173003B5305 /* CommonHttpManager.cpp in Sources */,
+				1E75C15C1EEE996600C552FD /* CCApplication.cpp in Sources */,
 				4EC5C5931AEE36B80003331B /* CDWebViewController.cpp in Sources */,
+				1E75C15E1EEE996600C552FD /* CCFileUtilsAndroid.cpp in Sources */,
 				D6B033FE1D9507AE00388A90 /* CAVideoPlayerViewMac.cpp in Sources */,
 				B063D4AF1CAD24F300B1FF13 /* ImageViewTest.cpp in Sources */,
+				1E75C15F1EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppAccelerometer.cpp in Sources */,
 				4EF2E6481ACE7B9B00A4DFE1 /* MenuViewController.cpp in Sources */,
 				B063D4C21CAD24F300B1FF13 /* ViewAnimationTest.cpp in Sources */,
+				1E75C1581EEE996600C552FD /* CAFontProcesstor.cpp in Sources */,
 				B063D4BE1CAD24F300B1FF13 /* TextFieldTest.cpp in Sources */,
 				D6B033FC1D9507AE00388A90 /* CAVideoPlayerRenderMac.cpp in Sources */,
 				B063D4A91CAD24F300B1FF13 /* AlertViewTest.cpp in Sources */,
@@ -669,15 +771,18 @@
 				B063D4C41CAD24F300B1FF13 /* WebViewTest.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
 				D410DC391E66629E00F6E25C /* CheckboxTest.cpp in Sources */,
+				1E75C1561EEE996600C552FD /* CACommon.cpp in Sources */,
 				B063D4BA1CAD24F300B1FF13 /* StepperTest.cpp in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
+				1E75C1611EEE996600C552FD /* Java_org_CrossApp_lib_CrossAppRenderer.cpp in Sources */,
 				B063D4BD1CAD24F300B1FF13 /* TableViewTest.cpp in Sources */,
 				B063D4C31CAD24F300B1FF13 /* WaterfallViewTest.cpp in Sources */,
 				B063D4B71CAD24F300B1FF13 /* ScrollViewTest.cpp in Sources */,
 				B063D46D1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp in Sources */,
+				1E75C1621EEE996600C552FD /* JniHelper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

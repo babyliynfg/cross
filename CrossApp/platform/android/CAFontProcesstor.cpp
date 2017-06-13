@@ -2,6 +2,7 @@
 #include "platform/CAFontProcesstor.h"
 #include "images/CAImage.h"
 #include "platform/CAFileUtils.h"
+#include "support/ccUtils.h"
 #include "jni/JniHelper.h"
 #include <jni.h>
 #include <string.h>
@@ -42,6 +43,11 @@ int getTextAlign(const CAFont& font, CATextAlignment textAlignment)
     if(h == CATextAlignment::Center && v == CAVerticalTextAlignment::Center)
     {
         a = 0x33 ;
+    }
+    //TOP           = 0x13, /** Horizontal center and vertical top. */
+    if(h == CATextAlignment::Center && v == CAVerticalTextAlignment::Top)
+    {
+        a = 0x13 ;
     }
     //TOP_RIGHT     = 0x12, /** Horizontal right and vertical top. */
     else if(h == CATextAlignment::Right && v == CAVerticalTextAlignment::Top)
@@ -172,11 +178,104 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
 }
 
 
-CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment);
+CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment)
 {
+    CAImage* ret = nullptr;
     
+    do
+    {
+        CC_BREAK_IF(elements.empty());
+        
+        const char* model_font = "<font color='#%s' size='%.0f'>%s</font>" ;
+        const char* model_border = "<border color='#%s' width='%.0f'>%s</border>" ;
+        const char* model_shadow = "<shadow color='#%s'>%s</shadow>";
+        const char* model_u = "<u>%s</u>" ;
+        const char* model_del = "<del>%s</del>";
+        const char* model_i = "<i italic='%f'>%s</i>";
+        const char* model_b = "<b>%s</b>" ;
+        
+        std::string html_format ;
+        
+        for (auto& var : elements)
+        {
+            std::string text = var.text;
+            const CAFont& font =  var.font ;
+            
+            std::string frontSpace;
+            int frontSpaceCount = 0;
+            for (auto& space : text)
+            {
+                CC_BREAK_IF(space != ' ');
+                ++frontSpaceCount;
+                frontSpace += "&nbsp;";
+            }
+            text = frontSpace + text.substr(frontSpaceCount, text.length() - frontSpaceCount);
+            
+            if (font.italics)
+            {
+                int increase = ceilf(font.italicsValue / 0.5f);
+                
+                if (increase > 0)
+                {
+                    for (int i=0; i<increase; i++)
+                    {
+                        text = text + " ";
+                    }
+                }
+                
+                if (increase < 0)
+                {
+                    for (int i=0; i<std::abs(increase); i++)
+                    {
+                        text = " " + text;
+                    }
+                }
+            }
+            
+            std::string html_str ;
+            //add font tag
+            html_str = crossapp_format_string(model_font, int2hex(font.color.getUInt32()%0x1000000).c_str(),font.fontSize,text.c_str());
+            
+            
+            //add border tag
+            if (font.stroke.strokeEnabled) {
+                html_str = crossapp_format_string(model_border, int2hex(font.stroke.strokeColor.getUInt32()%0x1000000).c_str(),font.stroke.strokeSize , model_font) ;
+            }
+            
+            //add shadow tag
+            if (font.shadow.shadowEnabled) {
+                html_str = crossapp_format_string(model_shadow , int2hex(font.shadow.shadowColor.getUInt32()%0x1000000).c_str(),html_str.c_str()) ;
+            }
+            
+            //add u tag
+            if (font.underLine) {
+                html_str = crossapp_format_string(model_u , html_str.c_str()) ;
+            }
+            
+            //add del tag
+            if (font.deleteLine) {
+                html_str = crossapp_format_string(model_del , html_str.c_str()) ;
+            }
+            
+            //add i tag
+            if (font.italics) {
+                html_str = crossapp_format_string(model_i ,font.italicsValue, html_str.c_str()) ;
+            }
+            
+            //add b tag
+            if (font.bold) {
+                html_str = crossapp_format_string(model_b ,html_str.c_str()) ;
+            }
+            
+            html_format = html_format + html_str ;
+        }
+        
+        ret = imageForText(html_format, elements.front().font, dimensions, textAlignment) ;
+
+    }
+    while (0);
     
-    return nullptr ;
+    return ret;
 }
 
 
