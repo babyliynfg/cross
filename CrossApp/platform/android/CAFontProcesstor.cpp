@@ -201,6 +201,15 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
             std::string text = var.text;
             const CAFont& font =  var.font ;
             
+            std::string frontSpace;
+            int frontSpaceCount = 0;
+            for (auto& space : text)
+            {
+                CC_BREAK_IF(space != ' ');
+                ++frontSpaceCount;
+                frontSpace += "&nbsp;";
+            }
+            text = frontSpace + text.substr(frontSpaceCount, text.length() - frontSpaceCount);
             
             if (font.italics)
             {

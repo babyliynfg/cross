@@ -243,9 +243,10 @@ public final class CrossAppBitmap {
         lineSpacing = pramsLayout.getLineCount() == 1 ? 0.0f : lineSpacing ;
         pramsLayout = null ; 
         
-        
-        //string = "<b><i><shadow color='#00ff00'><font color='#ff6c00' size='20'> <border  color='#cccccc' width='2'>1500/天</border></font></shadow></i></b><del><font  color='#808080' size='20'>原价:20000元 </font></del><font>我是谁？</font>";
-        CharSequence c = HtmlParser.buildSpannedText(string,new CrossAppTagHandler()) ; 
+        CharSequence c = string; 
+        if (string.contains("</font>")) { 
+			c = HtmlParser.buildSpannedText(string,new CrossAppTagHandler()) ; 
+		}
         
         layout = new StaticLayout(c, paint, maxWidth , hAlignment,1.0f,lineSpacing,false);
         
