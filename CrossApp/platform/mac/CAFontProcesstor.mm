@@ -126,32 +126,6 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
                                                 paragraphStyle,    NSParagraphStyleAttributeName,
                                                 nil];
     
-    if (font.stroke.strokeEnabled)
-    {
-        if (font.color == CAColor4B::CLEAR)
-        {
-            foregroundColor = [NSColor colorWithDeviceRed:font.stroke.strokeColor.r / 255.f
-                                                    green:font.stroke.strokeColor.g / 255.f
-                                                     blue:font.stroke.strokeColor.b / 255.f
-                                                    alpha:font.stroke.strokeColor.a / 255.f];
-            
-            
-            [tokenAttributesDict setObject:@(fabsf(font.stroke.strokeSize)) forKey:NSStrokeWidthAttributeName];
-            [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
-        }
-        else
-        {
-            NSColor *strokeColor = [NSColor colorWithDeviceRed:font.stroke.strokeColor.r / 255.f
-                                                         green:font.stroke.strokeColor.g / 255.f
-                                                          blue:font.stroke.strokeColor.b / 255.f
-                                                         alpha:font.stroke.strokeColor.a / 255.f];
-            
-            
-            [tokenAttributesDict setObject:@(-fabsf(font.stroke.strokeSize)) forKey:NSStrokeWidthAttributeName];
-            [tokenAttributesDict setObject:strokeColor forKey:NSStrokeColorAttributeName];
-        }
-    }
-    
     if (font.bold)
     {
         [tokenAttributesDict setObject:@(-shrinkFontSize / 10.f) forKey:NSStrokeWidthAttributeName];
@@ -177,6 +151,7 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
          }
          */
     }
+    
     if (font.deleteLine)
     {
         [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
@@ -190,6 +165,32 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
          [tokenAttributesDict setObject:deleteLineColor forKey:NSStrikethroughColorAttributeName];
          }
          */
+    }
+    
+    if (font.stroke.strokeEnabled)
+    {
+        if (font.color == CAColor4B::CLEAR)
+        {
+            foregroundColor = [NSColor colorWithDeviceRed:font.stroke.strokeColor.r / 255.f
+                                                    green:font.stroke.strokeColor.g / 255.f
+                                                     blue:font.stroke.strokeColor.b / 255.f
+                                                    alpha:font.stroke.strokeColor.a / 255.f];
+            
+            
+            [tokenAttributesDict setObject:@(fabsf(font.stroke.strokeSize)) forKey:NSStrokeWidthAttributeName];
+            [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
+        }
+        else
+        {
+            NSColor *strokeColor = [NSColor colorWithDeviceRed:font.stroke.strokeColor.r / 255.f
+                                                         green:font.stroke.strokeColor.g / 255.f
+                                                          blue:font.stroke.strokeColor.b / 255.f
+                                                         alpha:font.stroke.strokeColor.a / 255.f];
+            
+            
+            [tokenAttributesDict setObject:@(-fabsf(font.stroke.strokeSize)) forKey:NSStrokeWidthAttributeName];
+            [tokenAttributesDict setObject:strokeColor forKey:NSStrokeColorAttributeName];
+        }
     }
     
     if (font.shadow.shadowEnabled)
@@ -244,8 +245,9 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         [image lockFocus];
         // patch for mac retina display and lableTTF
         [[NSAffineTransform transform] set];
-        [stringWithAttributes drawInRect:textRect];
         
+        
+        [stringWithAttributes drawInRect:textRect];
         
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
         [image unlockFocus];
