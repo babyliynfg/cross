@@ -1,6 +1,9 @@
 
 package org.CrossApp.lib;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,18 +12,12 @@ import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.text.BoringLayout;
 import android.text.Html;
 import android.text.Layout;
-import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.TextView;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 public final class CrossAppBitmap {
     // ===========================================================
@@ -188,6 +185,7 @@ public final class CrossAppBitmap {
             float lineSpacing
     		) 
     {
+    	
     	String string = new String(strs) ; 
         Layout.Alignment hAlignment = Layout.Alignment.ALIGN_NORMAL;
         int horizontalAlignment = alignment & 0x0F;
@@ -203,6 +201,7 @@ public final class CrossAppBitmap {
             default:
                 break;
         }
+        
         
         TextPaint paint = CrossAppBitmap.newPaint(fontName, fontSize);
         
@@ -228,7 +227,7 @@ public final class CrossAppBitmap {
         
         //resize size
         width = width == 0xffffffff ? 8192 : width ; 
-
+        
         int maxWidth = width;
         
         if (maxWidth <= 0) {
@@ -245,9 +244,10 @@ public final class CrossAppBitmap {
         pramsLayout = null ; 
         
         
-        String str ="<h2>Hello wold</h2><ul><li>cats</li><li>dogs</li></ul><img src=\"cat_pic\"/>" ; 
+        //string = "<b><i><shadow color='#00ff00'><font color='#ff6c00' size='20'> <border  color='#cccccc' width='2'>1500/天</border></font></shadow></i></b><del><font  color='#808080' size='20'>原价:20000元 </font></del><font>我是谁？</font>";
+        CharSequence c = HtmlParser.buildSpannedText(string,new CrossAppTagHandler()) ; 
         
-        layout = new StaticLayout(Html.fromHtml(str), paint, maxWidth , hAlignment,1.0f,lineSpacing,false);
+        layout = new StaticLayout(c, paint, maxWidth , hAlignment,1.0f,lineSpacing,false);
         
         
         //get number of lines
@@ -255,10 +255,7 @@ public final class CrossAppBitmap {
         int number_of_lines = height / line_height == 0 ? 1 : height / line_height ; 
         float number_hei = (float)height / (float)line_height == 0.0f ? 1.0f : (float)height / (float)line_height ; 
         height = (int)(line_height * number_hei ) ; 
-
         
-       
-
         number_of_lines = (int)Math.round(number_hei) ; 
 
         layoutWidth = layout.getWidth();
@@ -304,13 +301,6 @@ public final class CrossAppBitmap {
         paint.setStyle(TextPaint.Style.FILL);
         paint.setARGB(fontTintA, fontTintR, fontTintG, fontTintB);
         layout.draw(canvas);
-        
-        
-        TextView textView = new TextView(CrossAppActivity.getContext());
-        textView.setWidth(wid);
-        textView.setHeight(bitmapHeight);
-        textView.setText(string);
-        bitmap = textView.getDrawingCache() ; 
         
         CrossAppBitmap.initNativeObject(bitmap);
         return true;

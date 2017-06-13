@@ -43,6 +43,11 @@ int getTextAlign(const CAFont& font, CATextAlignment textAlignment)
     {
         a = 0x33 ;
     }
+    //TOP           = 0x13, /** Horizontal center and vertical top. */
+    if(h == CATextAlignment::Center && v == CAVerticalTextAlignment::Top)
+    {
+        a = 0x13 ;
+    }
     //TOP_RIGHT     = 0x12, /** Horizontal right and vertical top. */
     else if(h == CATextAlignment::Right && v == CAVerticalTextAlignment::Top)
     {
@@ -172,8 +177,43 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
 }
 
 
-CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment);
+CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment)
 {
+    
+//    下划线<u/>
+//    删除线<del/>
+//    斜体<i/>
+//    加粗<b/>
+//    <font color=“#fff” size=“20”/>字体颜色，字号
+//    <border color=“#0f0”width="2" />空心字
+//    <shadow color=“#0f0” />阴影
+    //crossapp_format_string("<u>%s</u>")
+    
+    std::string font = "<font color='%s' size='%d'>%s</font>" ;
+    std::string border = "<border color='%s' width='%d'>%s</border>" ;
+    std::string shadow = "<shadow color='%s'>%s</shadow>";
+    std::string u = "<u>%s</u>" ;
+    std::string del = "<del>%s</del>";
+    std::string i = "<i>%s</i>";
+    std::string b = "<b>%s</b>" ;
+    
+    for (auto& var : elements)
+    {
+        const std::string& text = var.text;
+        const CAFont& font =  var.font ;
+        
+        crossapp_format_string(text, font.color,font.fontSize);
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
     
     
     return nullptr ;
