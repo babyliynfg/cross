@@ -109,7 +109,7 @@ public:
     , deleteLineColor(CAColor4B::CLEAR)
      */
     , italics(false)
-    , italicsValue(0.5f)
+    , italicsValue(0.25f)
     , wordWrap(false)
     , fontSize(24)
     , fontName("")

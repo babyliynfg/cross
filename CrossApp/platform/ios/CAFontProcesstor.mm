@@ -125,32 +125,6 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
                                                 nil];
     
     
-    if (font.stroke.strokeEnabled)
-    {
-        if (font.color == CAColor4B::CLEAR)
-        {
-            foregroundColor = [UIColor colorWithRed:font.stroke.strokeColor.r / 255.f
-                                              green:font.stroke.strokeColor.g / 255.f
-                                               blue:font.stroke.strokeColor.b / 255.f
-                                              alpha:font.stroke.strokeColor.a / 255.f];
-            
-            
-            [tokenAttributesDict setObject:@(fabsf(font.stroke.strokeSize)) forKey:NSStrokeWidthAttributeName];
-            [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
-        }
-        else
-        {
-            UIColor *strokeColor = [UIColor colorWithRed:font.stroke.strokeColor.r / 255.f
-                                                   green:font.stroke.strokeColor.g / 255.f
-                                                    blue:font.stroke.strokeColor.b / 255.f
-                                                   alpha:font.stroke.strokeColor.a / 255.f];
-            
-            
-            [tokenAttributesDict setObject:@(-fabsf(font.stroke.strokeSize)) forKey:NSStrokeWidthAttributeName];
-            [tokenAttributesDict setObject:strokeColor forKey:NSStrokeColorAttributeName];
-        }
-    }
-    
     if (font.bold)
     {
         [tokenAttributesDict setObject:@(-shrinkFontSize / 10.f) forKey:NSStrokeWidthAttributeName];
@@ -176,6 +150,7 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
          }
          */
     }
+    
     if (font.deleteLine)
     {
         [tokenAttributesDict setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
@@ -189,6 +164,32 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
          [tokenAttributesDict setObject:deleteLineColor forKey:NSStrikethroughColorAttributeName];
          }
          */
+    }
+    
+    if (font.stroke.strokeEnabled)
+    {
+        if (font.color == CAColor4B::CLEAR)
+        {
+            foregroundColor = [UIColor colorWithRed:font.stroke.strokeColor.r / 255.f
+                                              green:font.stroke.strokeColor.g / 255.f
+                                               blue:font.stroke.strokeColor.b / 255.f
+                                              alpha:font.stroke.strokeColor.a / 255.f];
+            
+            
+            [tokenAttributesDict setObject:@(fabsf(font.stroke.strokeSize)) forKey:NSStrokeWidthAttributeName];
+            [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
+        }
+        else
+        {
+            UIColor *strokeColor = [UIColor colorWithRed:font.stroke.strokeColor.r / 255.f
+                                                   green:font.stroke.strokeColor.g / 255.f
+                                                    blue:font.stroke.strokeColor.b / 255.f
+                                                   alpha:font.stroke.strokeColor.a / 255.f];
+            
+            
+            [tokenAttributesDict setObject:@(-fabsf(font.stroke.strokeSize)) forKey:NSStrokeWidthAttributeName];
+            [tokenAttributesDict setObject:strokeColor forKey:NSStrokeColorAttributeName];
+        }
     }
     
     if (font.shadow.shadowEnabled)
@@ -398,27 +399,27 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         
         CGContextBeginTransparencyLayerWithRect(context, textRect, NULL);
 
-        /*
-        if (true)
-        {
-            CGContextSetTextDrawingMode(context, kCGTextStroke);
-
-            NSMutableDictionary* tokenAttributesDict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                         foregroundColor,   NSForegroundColorAttributeName,
-                                                         iosfont,           NSFontAttributeName,
-                                                         paragraphStyle,    NSParagraphStyleAttributeName, nil];
-            
-
-            NSAttributedString *strokeString =[[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict2] autorelease];
-            
-            [strokeString drawInRect:textRect];
-        }
-        */
-        
         CGContextSetTextDrawingMode(context, kCGTextFill);
         
         // actually draw the text in the context
         [stringWithAttributes drawInRect:textRect];
+        
+        /*
+         if (true)
+         {
+         CGContextSetTextDrawingMode(context, kCGTextStroke);
+         
+         NSMutableDictionary* tokenAttributesDict2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+         foregroundColor,   NSForegroundColorAttributeName,
+         iosfont,           NSFontAttributeName,
+         paragraphStyle,    NSParagraphStyleAttributeName, nil];
+         
+         
+         NSAttributedString *strokeString =[[[NSAttributedString alloc] initWithString:str attributes:tokenAttributesDict2] autorelease];
+         
+         [strokeString drawInRect:textRect];
+         }
+         */
         
         CGContextEndTransparencyLayer(context);
         
