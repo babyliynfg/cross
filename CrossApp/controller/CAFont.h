@@ -110,7 +110,7 @@ public:
      */
     , italics(false)
     , italicsValue(0.25f)
-    , wordWrap(false)
+    , wordWrap(true)
     , fontSize(24)
     , fontName("")
     , lineSpacing(0)

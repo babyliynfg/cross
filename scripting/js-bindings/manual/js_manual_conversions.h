@@ -97,6 +97,8 @@ bool jsval_to_uint16( JSContext *cx, JS::HandleValue vp, uint16_t *ret );
 bool jsval_to_long( JSContext *cx, JS::HandleValue vp, long *out);
 bool jsval_to_ulong( JSContext *cx, JS::HandleValue vp, unsigned long *out);
 bool jsval_to_long_long(JSContext *cx, JS::HandleValue v, long long* ret);
+bool jsval_to_float( JSContext *cx, JS::HandleValue vp, float *ret );
+bool jsval_to_double( JSContext *cx, JS::HandleValue vp, double *ret );
 bool jsval_to_std_u16string(JSContext *cx, JS::HandleValue v, std::u16string* ret);
 bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret);
 
@@ -320,6 +322,8 @@ jsval ushort_to_jsval( JSContext *cx, unsigned short number );
 jsval long_to_jsval( JSContext *cx, long number );
 jsval ulong_to_jsval(JSContext* cx, unsigned long v);
 jsval long_long_to_jsval(JSContext* cx, long long v);
+jsval float_to_jsval( JSContext *cx, float number);
+jsval double_to_jsval( JSContext *cx, double number);
 jsval std_u16String_to_jsval(JSContext* cx, const std::u16string& v);
 jsval std_string_to_jsval(JSContext* cx, const std::string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);

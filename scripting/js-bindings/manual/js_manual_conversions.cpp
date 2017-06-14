@@ -260,6 +260,16 @@ jsval long_long_to_jsval( JSContext *cx, long long number )
 #endif
 }
 
+jsval float_to_jsval( JSContext *cx, float number)
+{
+    return DOUBLE_TO_JSVAL((double)number);
+}
+
+jsval double_to_jsval( JSContext *cx, double number)
+{
+    return DOUBLE_TO_JSVAL(number);
+}
+
 bool jsval_to_charptr( JSContext *cx, JS::HandleValue vp, const char **ret )
 {
     JSString *jsstr = JS::ToString( cx, vp );
@@ -494,6 +504,34 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
     
     *r = ret;
     return true;
+}
+
+bool jsval_to_float( JSContext *cx, JS::HandleValue vp, float *outval )
+{
+    bool ok = true;
+    double dp;
+    ok &= JS::ToNumber(cx, vp, &dp);
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    
+    *outval = (float)dp;
+    
+    return ok;
+}
+
+bool jsval_to_double( JSContext *cx, JS::HandleValue vp, double *outval )
+{
+    bool ok = true;
+    double dp;
+    ok &= JS::ToNumber(cx, vp, &dp);
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
+    
+    *outval = dp;
+    
+    return ok;
 }
 
 bool jsval_to_std_u16string(JSContext *cx, JS::HandleValue v, std::u16string* ret)
@@ -874,22 +912,11 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
     ret->deleteLine = JS::ToBoolean(js_deleteLine);
     ret->italics = JS::ToBoolean(js_italics);
     
-    double italicsValue;
-    JS::ToNumber(cx, js_italicsValue, &italicsValue);
-    ret->italicsValue = italicsValue;
-    
+    jsval_to_float(cx, js_italicsValue, &ret->italicsValue);
     ret->wordWrap = JS::ToBoolean(js_wordWrap);
-    
     jsval_to_std_string(cx, js_fontName, &ret->fontName);
-    
-    double fontSize;
-    JS::ToNumber(cx, js_fontSize, &fontSize);
-    ret->fontSize = fontSize;
-    
-    double lineSpacing;
-    JS::ToNumber(cx, js_lineSpacing, &lineSpacing);
-    ret->lineSpacing = lineSpacing;
-    
+    jsval_to_float(cx, js_fontSize, &ret->fontSize);
+    jsval_to_float(cx, js_lineSpacing, &ret->lineSpacing);
     jsval_to_cacolor4b(cx, js_color, &ret->color);
 
     {
@@ -913,7 +940,7 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
         
         ret->shadow.shadowEnabled = JS::ToBoolean(js_shadowEnabled);
         jsval_to_dsize(cx, js_shadowOffset, &ret->shadow.shadowOffset);
-        ret->shadow.shadowBlur = JS::ToBoolean(js_shadowBlur);
+        jsval_to_float(cx, js_shadowBlur, &ret->shadow.shadowBlur);
         jsval_to_cacolor4b(cx, js_shadowColor, &ret->shadow.shadowColor);
     }
     
@@ -935,8 +962,7 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret){
         
         ret->stroke.strokeEnabled = JS::ToBoolean(js_strokeEnabled);
         jsval_to_cacolor4b(cx, js_strokeColor, &ret->stroke.strokeColor);
-        ret->stroke.strokeSize = JS::ToBoolean(js_strokeSize);
-        
+        jsval_to_float(cx, js_strokeSize, &ret->stroke.strokeSize);
     }
   /*
     CCLog("CAFont: bold:%d\n underLine:%d\n deleteLine:%d\n italics:%d\n italicsValue:%f\n wordWrap:%d\n fontName:%s\n fontSize:%f\n color:%u\n textAlignment:%d\n verticalTextAlignment:%d\n ",
