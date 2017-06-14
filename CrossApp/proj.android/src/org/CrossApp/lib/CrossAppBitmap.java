@@ -18,6 +18,7 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 public final class CrossAppBitmap {
     // ===========================================================
@@ -148,6 +149,7 @@ public final class CrossAppBitmap {
      * @param italics
      * @param italics_v
      * @param wordWrap
+     * @param lineSpacing
      * 
      * 
      * @return
@@ -246,6 +248,8 @@ public final class CrossAppBitmap {
         CharSequence c = string; 
         if (string.contains("</font>")) { 
 			c = HtmlParser.buildSpannedText(string,new CrossAppTagHandler()) ; 
+		}else if (wordWrap==0) {
+			c = autoSplitText(paint, string, maxWidth) ; 
 		}
         
         layout = new StaticLayout(c, paint, maxWidth , hAlignment,1.0f,lineSpacing,false);
@@ -308,6 +312,48 @@ public final class CrossAppBitmap {
     }
     
     
+    
+    /**
+     * 
+     * @param tvPaint
+     * @param rawText
+     * @param tvWidth
+     * @return
+     */
+	public static String autoSplitText( Paint tvPaint , String rawText ,  float tvWidth) {
+		
+		// 将原始文本按行拆分
+		String[] rawTextLines = rawText.replaceAll("\r", "").split("\n");
+		StringBuilder sbNewText = new StringBuilder();
+		for (String rawTextLine : rawTextLines) {
+			if (tvPaint.measureText(rawTextLine) <= tvWidth) {
+				// 如果整行宽度在控件可用宽度之内，就不处理了
+				sbNewText.append(rawTextLine);
+			} else {
+				// 如果整行宽度超过控件可用宽度，则按字符测量，在超过可用宽度的前一个字符处手动换行
+				float lineWidth = 0;
+				for (int cnt = 0; cnt != rawTextLine.length(); ++cnt) {
+					char ch = rawTextLine.charAt(cnt);
+					lineWidth += tvPaint.measureText(String.valueOf(ch));
+					if (lineWidth <= tvWidth) {
+						sbNewText.append(ch);
+					} else {
+						sbNewText.append("\n");
+						lineWidth = 0;
+						--cnt;
+					}
+				}
+			}
+			sbNewText.append("\n");
+		}
+
+		// 把结尾多余的\n去掉
+		if (!rawText.endsWith("\n")) {
+			sbNewText.deleteCharAt(sbNewText.length() - 1);
+		}
+
+		return sbNewText.toString();
+	}
     
 
   public static float heightForFont(int fontSize)
