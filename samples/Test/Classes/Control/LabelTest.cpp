@@ -58,19 +58,19 @@ void LabelTest::viewDidLoad()
         this->getView()->addSubview(view);
         
 		CAFont Font;
-		Font.fontSize = 36;
+		Font.fontSize = 50;
 		Font.color = CAColor4B::BLUE;
 
 		CALabel* label = CALabel::create();
 		label->setText(cc);
 		label->setFont(Font);
         label->setTextAlignment(CATextAlignment::Center);
-		label->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 1/8.f)));
+		label->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 1/8.f)));
         view->addSubview(label);
         
 
 		CAFont Font1;
-		Font1.fontSize = 36;
+		Font1.fontSize = 50;
 		Font1.color = CAColor4B::BLUE;
         Font1.bold = true;
         
@@ -78,51 +78,51 @@ void LabelTest::viewDidLoad()
 		label1->setText(cc);
 		label1->setFont(Font1);
         label1->setTextAlignment(CATextAlignment::Center);
-		label1->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 2/8.f)));
+		label1->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 2/8.f)));
         view->addSubview(label1);
         
         
 		CALabel* label2 = CALabel::create();
 		CAFont Font2;
-		Font2.fontSize = 36;
+		Font2.fontSize = 50;
 		Font2.color = CAColor4B::BLUE;
 		Font2.underLine = true;
         
 		label2->setText(cc);
 		label2->setFont(Font2);
         label2->setTextAlignment(CATextAlignment::Center);
-		label2->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 3/8.f)));
+		label2->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 3/8.f)));
         view->addSubview(label2);
         
 
 		CALabel* label3 = CALabel::create();
 		CAFont Font3;
-		Font3.fontSize = 36;
+		Font3.fontSize = 50;
 		Font3.color = CAColor4B::BLUE;
         Font3.deleteLine = true;
         
 		label3->setText(cc);
 		label3->setFont(Font3);
         label3->setTextAlignment(CATextAlignment::Center);
-		label3->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 4/8.f)));
+		label3->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 4/8.f)));
         view->addSubview(label3);
         
 
 		CALabel* label4 = CALabel::create();
 		CAFont Font4;
-		Font4.fontSize = 36;
+		Font4.fontSize = 50;
 		Font4.color = CAColor4B::BLUE;
         Font4.italics = true;
         
 		label4->setText(cc);
 		label4->setFont(Font4);
         label4->setTextAlignment(CATextAlignment::Center);
-		label4->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 5/8.f)));
+		label4->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 5/8.f)));
         view->addSubview(label4);
         
         CALabel* label5 = CALabel::create();
         CAFont Font5;
-        Font5.fontSize = 36;
+        Font5.fontSize = 50;
         Font5.color = CAColor4B::BLUE;
         Font5.shadow.shadowEnabled = true;
         Font5.shadow.shadowOffset = DSize(2, -2);
@@ -132,13 +132,13 @@ void LabelTest::viewDidLoad()
         label5->setText(cc);
         label5->setFont(Font5);
         label5->setTextAlignment(CATextAlignment::Center);
-        label5->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 6/8.f)));
+        label5->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 6/8.f)));
         label5->setNumberOfLine(3) ;
         view->addSubview(label5);
         
         CALabel* label6 = CALabel::create();
         CAFont Font6;
-        Font6.fontSize = 36;
+        Font6.fontSize = 50;
         Font6.color = CAColor4B::CLEAR;
         Font6.stroke.strokeEnabled = true;
         Font6.stroke.strokeSize = 3;
@@ -147,7 +147,7 @@ void LabelTest::viewDidLoad()
         label6->setText(cc);
         label6->setFont(Font6);
         label6->setTextAlignment(CATextAlignment::Center);
-        label6->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 7/8.f)));
+        label6->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 7/8.f)));
         view->addSubview(label6);
 	}
 	else if (LabelNum == 1)

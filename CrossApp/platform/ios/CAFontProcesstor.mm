@@ -113,7 +113,7 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
     NSTextAlignment textAlign = _calculateTextAlignment(textAlignment);
     
     NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-    [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+    [paragraphStyle setLineBreakMode:font.wordWrap ? NSLineBreakByWordWrapping : NSLineBreakByCharWrapping];
     [paragraphStyle setLineSpacing:font.lineSpacing];
     [paragraphStyle setAlignment:textAlign];
     
@@ -456,7 +456,7 @@ float CAFontProcesstor::heightForFont(const CAFont& font)
         // alignment
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-        [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+        [paragraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
         [paragraphStyle setAlignment:NSTextAlignmentLeft];
         
         NSMutableDictionary* tokenAttributesDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -520,7 +520,7 @@ float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFo
         CC_BREAK_IF(!iosfont);
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-        [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+        [paragraphStyle setLineBreakMode:font.wordWrap ? NSLineBreakByWordWrapping : NSLineBreakByCharWrapping];
         [paragraphStyle setLineSpacing:font.lineSpacing];
         [paragraphStyle setAlignment:NSTextAlignmentLeft];
         
@@ -586,7 +586,7 @@ float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAF
         CC_BREAK_IF(!iosfont);
 
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-        [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+        [paragraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
         [paragraphStyle setAlignment:NSTextAlignmentLeft];
         
         NSMutableDictionary* tokenAttributesDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
