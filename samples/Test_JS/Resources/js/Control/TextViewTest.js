@@ -6,7 +6,9 @@ var TextViewTest = ca.CAViewController.extend({
         this._super();
         this.getView().setColor(ca.color._getGray());
 
-        var textView = ca.CATextView.createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100, 100)));
+        var textView = ca.CATextView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_B(100, 100)));
         this.getView().addSubview(textView);
+    },
+    viewDidLoad: function() {
     },
 });

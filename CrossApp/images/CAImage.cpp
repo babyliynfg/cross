@@ -41,15 +41,20 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
 {
     CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
     
-    CAApplication::getApplication()->getRenderer()->clean();
+    CAApplication* application = CAApplication::getApplication();
+    application->getRenderer()->clean();
     experimental::FrameBuffer::clearAllFBOs();
     
-    renderImage->begin();
+    renderImage->beginWithClear(CAColor4B::CLEAR);
 
+    application->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    application->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, Mat4::IDENTITY);
+    
     static CustomCommand _customCommand;
     _customCommand.init(0);
     _customCommand.func = [=]()
     {
+        
         GLfloat    coordinates[] =
         {
             0.0f,                   0.0f,
@@ -76,11 +81,16 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
+
     };
-    CAApplication::getApplication()->getRenderer()->addCommand(&_customCommand);
+    application->getRenderer()->addCommand(&_customCommand);
+    
+    application->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     renderImage->end();
-    CAApplication::getApplication()->getRenderer()->render();
+    
+    application->getRenderer()->render();
+    
     return renderImage->getImageView()->getImage();
 }
 

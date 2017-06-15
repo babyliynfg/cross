@@ -511,8 +511,6 @@ unsigned int CAWaterfallView::getMaxColumnValue()
 
 void CAWaterfallView::reloadData()
 {
-	CC_RETURN_IF(m_pWaterfallViewDataSource == NULL);
-
 	this->reloadViewSizeData();
 
 	this->removeAllSubviews();

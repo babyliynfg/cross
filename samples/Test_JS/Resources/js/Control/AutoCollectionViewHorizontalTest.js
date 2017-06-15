@@ -8,7 +8,6 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
 
-        this.getView().setColor(ca.color._getGray());
         this.HorizontalcolorArr = new Array();
         for (var i = 0; i < 60; i++)
         {
@@ -16,30 +15,22 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
 
-            this.HorizontalcolorArr.push(ca.color(r, g, b, 255));
+            this.HorizontalcolorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
         this.AutoCollectionViewHorizontalNum = 0;
         if (this.AutoCollectionViewHorizontalNum == 0)
         {
-            var p_AutoCollection = ca.CAAutoCollectionView.createWithLayout(DLayoutFill);
+            var p_AutoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
             p_AutoCollection.setAllowsSelection(true);
             p_AutoCollection.setAllowsMultipleSelection(true);
-            p_AutoCollection.setCollectionViewDelegate(this);
-            p_AutoCollection.setCollectionViewDataSource(this);
             p_AutoCollection.setOrientation(0);
             //p_AutoCollection.setScrollViewDelegate(this);
             p_AutoCollection.setHoriCellInterval(20);
             p_AutoCollection.setVertCellInterval(20);
             this.getView().addSubview(p_AutoCollection);
         }
-        else
-        {
-            //EAutoCollectionViewHorizontal* p_AutoCollection1 = EAutoCollectionViewHorizontal.createWithLayout(DLayoutFill);
-            //p_AutoCollection1.init();
-            //p_AutoCollection1.setEAutoCollectionViewHorizontalDelegate(this);
-            //this.getView().addSubview(p_AutoCollection1);
-        }
-
+    },
+    viewDidLoad: function() {
     },
     collectionViewDidSelectCellAtIndexPath: function(collectionView, section, item)
     {
@@ -64,11 +55,11 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
         {
             p_Cell = ca.CACollectionViewCell.create("CrossApp");
 
-            var itemImage = ca.CAView.createWithLayout(DLayoutFill);
+            var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
             itemImage.setTag(99);
             p_Cell.getContentView().addSubview(itemImage);
 
-            var itemText = ca.CALabel.createWithLayout(DLayoutFill);
+            var itemText = ca.CALabel.createWithLayout(ca.DLayoutFill);
             itemText.setTag(100);
             itemText.setFontSize(29);
             itemText.setTextAlignment(ca.CATextAlignment.Center);

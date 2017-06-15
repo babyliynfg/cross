@@ -17,7 +17,7 @@ var TabBarControllerTest = ca.CAViewController.extend({
         item.push(item2);
         item.push(item3);
 
-        var tabBar = ca.CATabBar.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(98, 0.33)));
+        var tabBar = ca.CATabBar.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_H_C(98, 0.33)));
         tabBar.setItems(item);
         tabBar.showSelectedIndicator();
         tabBar.setSelectedAtIndex(0);
@@ -32,17 +32,19 @@ var TabBarControllerTest = ca.CAViewController.extend({
         it1.push(item5);
         it1.push(item6);
 
-        var tabBar1 = ca.CATabBar.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(98, 0.66)));
+        var tabBar1 = ca.CATabBar.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_H_C(98, 0.66)));
         tabBar1.setItems(it1);
         tabBar1.setBackgroundImage(ca.CAImage.create("image/tab_news_bg.png"));
-        tabBar1.setSelectedBackgroundColor(ca.color(255,255,255,0));
+        tabBar1.setSelectedBackgroundColor(ca.CAColor4B.set(255,255,255,0));
         tabBar1.setTag(100);
         tabBar1.setSelectedAtIndex(0);
 
-        var view1 = ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(960, 0.5)));
+        var view1 = ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_H_C(960, 0.5)));
         view1.addSubview(tabBar);
         view1.addSubview(tabBar1);
         view1.setColor(ca.color._getGray());
         this.getView().addSubview(view1);
+    },
+    viewDidLoad: function() {
     },
 });

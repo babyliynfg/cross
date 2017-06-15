@@ -6,7 +6,7 @@ var TextFieldTest = ca.CAViewController.extend({
         this._super();
         this.getView().setColor(ca.color._getGray());
 
-        var textField1 = ca.CATextField.createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(200, 100)));
+        var textField1 = ca.CATextField.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_H(200, 100)));
         textField1.setTag(100);
         //PlaceHolder文本内容
         textField1.setPlaceHolderText("Input");
@@ -17,7 +17,7 @@ var TextFieldTest = ca.CAViewController.extend({
         textField1.setDelegate(this);
         this.getView().addSubview(textField1);
 
-        var textField2 = ca.CATextField.createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(450, 100)));
+        var textField2 = ca.CATextField.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_H(450, 100)));
         textField2.setTag(101);
         textField2.setPlaceHolderText("Input");
         textField2.setKeyboardType(0);
@@ -27,6 +27,8 @@ var TextFieldTest = ca.CAViewController.extend({
         textField2.setSecureTextEntry(true);
         textField2.setDelegate(this);
         this.getView().addSubview(textField2);
+    },
+    viewDidLoad: function() {
     },
     textFieldShouldBeginEditing: function(sender){
         log("textFieldShouldBeginEditing-->");

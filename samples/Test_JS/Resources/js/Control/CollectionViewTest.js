@@ -16,13 +16,13 @@ var CollectionViewTest = ca.CAViewController.extend({
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
+            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
 
         this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
         this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
-        this.p_Conllection = ca.CACollectionView.createWithLayout(DLayoutFill);
+        this.p_Conllection = ca.CACollectionView.createWithLayout(ca.DLayoutFill);
         this.p_Conllection.setAllowsSelection(true);
         // this.p_Conllection.setAllowsMultipleSelection(true);
         this.p_Conllection.setCollectionViewDelegate(this);
@@ -38,6 +38,8 @@ var CollectionViewTest = ca.CAViewController.extend({
         this.p_Conllection.startPullToHeaderRefreshView();
 
     },
+    viewDidLoad: function() {
+    },
     refreshData1: function( interval){
         this.colorArr = [];
         for (var i = 0; i < 40; i++)
@@ -45,7 +47,7 @@ var CollectionViewTest = ca.CAViewController.extend({
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
+            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
         this.p_Conllection.reloadData();
     },
@@ -55,7 +57,7 @@ var CollectionViewTest = ca.CAViewController.extend({
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
+            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
         this.p_Conllection.reloadData();
     },
@@ -94,11 +96,11 @@ var CollectionViewTest = ca.CAViewController.extend({
         {
             p_Cell = ca.CACollectionViewCell.create("CrossApp");
 
-            var itemImage = ca.CAView.createWithLayout(DLayoutFill);
+            var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
             itemImage.setTag(99);
             p_Cell.getContentView().addSubview(itemImage);
 
-            var itemText = ca.CALabel.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(50, 50)));
+            var itemText = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(50, 50)));
             itemText.setTag(100);
             itemText.setFontSize(29);
             itemText.setTextAlignment(ca.CATextAlignment.Center);

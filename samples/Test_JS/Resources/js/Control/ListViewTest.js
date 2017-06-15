@@ -25,15 +25,15 @@ var listViewDataSource = {
         if (cell == null) {
             cell = ca.CAListViewCell.create("ListViewCell");
 
-            var test = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_W(0, 200), DVerticalLayoutFill));
-            test.setColor(ca.color(51, 204, 255, 255));
+            var test = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_W(0, 200), ca.DVerticalLayoutFill));
+            test.setColor(ca.CAColor4B.set(51, 204, 255, 255));
             test.setTextAlignment(ca.CATextAlignment.Center);
             test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             test.setFontSize(28);
             test.setTag(100);
             cell.addSubview(test);
 
-            var btn = ca.CAButton.createWithLayout(DLayout(DHorizontalLayout_W_C(100, 0.85), DVerticalLayout_H_C(50, 0.5)), ca.CAButton.Type.SquareRect);
+            var btn = ca.CAButton.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(100, 0.85), ca.DVerticalLayout_H_C(50, 0.5)), ca.CAButton.Type.SquareRect);
             btn.setTitleForState(ca.CAControl.State.Normal, "btn");
             btn.setTag(200);
             cell.addSubview(btn);
@@ -76,8 +76,8 @@ var CDlistViewDataSource = {
         if (cell == null) {
             cell = ca.CAListViewCell.create("CDListViewCell");
 
-            var test = ca.CALabel.createWithLayout(DLayoutFill);
-            test.setColor(ca.color(51, 204, 255, 255));
+            var test = ca.CALabel.createWithLayout(ca.DLayoutFill);
+            test.setColor(ca.CAColor4B.set(51, 204, 255, 255));
             test.setTextAlignment(ca.CATextAlignment.Center);
             test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             test.setFontSize(28);
@@ -101,7 +101,7 @@ var ListViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
 
-        var cdListView = ca.CAListView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 120)));
+        var cdListView = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 120)));
         cdListView.setListViewDelegate(CDlistViewDategate);
         cdListView.setListViewDataSource(CDlistViewDataSource);
         cdListView.setAllowsSelection(true);
@@ -113,7 +113,7 @@ var ListViewTest = ca.CAViewController.extend({
         this.getView().addSubview(cdListView);
 
 
-        // var cdListView = ca.CAListView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 120)));
+        // var cdListView = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 120)));
         // cdListView.setListViewDelegate(CDlistViewDategate);
         // cdListView.setListViewDataSource(CDlistViewDataSource);
         // cdListView.setAllowsSelection(true);
@@ -124,9 +124,9 @@ var ListViewTest = ca.CAViewController.extend({
         // // cdListView.setSeparatorColor(ca.color.clear);
         // this.getView().addSubview(cdListView);
 
-        this.getView().addSubview(ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(120, 5)), ca.color._getGreen()));
+        this.getView().addSubview(ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(120, 5)), ca.color._getGreen()));
 
-        var ListView = ca.CAListView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(130, 0)));
+        var ListView = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(130, 0)));
         ListView.setListViewDelegate(listViewDategate);
         ListView.setListViewDataSource(listViewDataSource);
         ListView.setAllowsSelection(true);
@@ -136,5 +136,7 @@ var ListViewTest = ca.CAViewController.extend({
         ListView.setSeparatorViewHeight(30);
         ListView.setSeparatorColor(ca.color._getGray());
         this.getView().addSubview(ListView);
+    },
+    viewDidLoad: function() {
     },
 });

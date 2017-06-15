@@ -15,6 +15,8 @@ var LabelTest = ca.CAViewController.extend({
         //btn.addTarget(this, this.btncallback, 0);
         //this.getView().addSubview(btn);
     },
+    viewDidLoad: function() {
+    },
     initLabelTest:function(){
         var str = "Hello World";
         if (this.labelNum == 0)
@@ -29,7 +31,7 @@ var LabelTest = ca.CAViewController.extend({
             label.setFont(Font);
             label.setTextAlignment(ca.CATextAlignment.Center);
             label.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            label.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.16)));
+            label.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.16)));
 
             var Font1 = new CAFont();
             Font1.fontSize = 36;
@@ -42,7 +44,7 @@ var LabelTest = ca.CAViewController.extend({
             label1.setFont(Font1);
             label1.setTextAlignment(ca.CATextAlignment.Center);
             label1.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            label1.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.32)));
+            label1.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.32)));
 
             var label2 = ca.CALabel.create();
             var Font2 = new CAFont();
@@ -54,7 +56,7 @@ var LabelTest = ca.CAViewController.extend({
             label2.setFont(Font2);
             label2.setTextAlignment(ca.CATextAlignment.Center);
             label2.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            label2.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.48)));
+            label2.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.48)));
 
             var label3 = ca.CALabel.create();
             var Font3 = new CAFont();
@@ -66,7 +68,7 @@ var LabelTest = ca.CAViewController.extend({
             label3.setFont(Font3);
             label3.setTextAlignment(ca.CATextAlignment.Center);
             label3.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            label3.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.64)));
+            label3.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.64)));
 
             var label4 = ca.CALabel.create();
             var Font4 = new CAFont();
@@ -76,9 +78,9 @@ var LabelTest = ca.CAViewController.extend({
             label4.setFont(Font4);
             label4.setTextAlignment(ca.CATextAlignment.Center);
             label4.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            label4.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(40, 0.8)));
+            label4.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.8)));
 
-            var view = ca.CAView.createWithLayout(DLayoutFill);
+            var view = ca.CAView.createWithLayout(ca.DLayoutFill);
             view.addSubview(label);
             view.addSubview(label1);
             view.addSubview(label2);
@@ -103,9 +105,9 @@ var LabelTest = ca.CAViewController.extend({
             label5.setLineSpacing(20);
             label5.setTextAlignment(ca.CATextAlignment.Center);
             label5.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            label5.setLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_H(300, 300)));
+            label5.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(50, 50), ca.DVerticalLayout_T_H(300, 300)));
 
-            var view1 = ca.CAView.createWithLayout(DLayoutFill);
+            var view1 = ca.CAView.createWithLayout(ca.DLayoutFill);
             view1.addSubview(label5);
             view1.setColor(ca.color._getGray());
 
@@ -114,7 +116,7 @@ var LabelTest = ca.CAViewController.extend({
         else
         {
 
-            var RichLabel = ca.CARichLabel.createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(200, 200)));
+            var RichLabel = ca.CARichLabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_B(200, 200)));
             var RichLabelFont = new CAFont();
             RichLabelFont.bold = true;
             RichLabelFont.fontSize = 42;
@@ -133,7 +135,7 @@ var LabelTest = ca.CAViewController.extend({
             RichLabelFont2.color = ca.RED;
             RichLabel.appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont2);
 
-            var view2 = ca.CAView.createWithLayout(DLayoutFill);
+            var view2 = ca.CAView.createWithLayout(ca.DLayoutFill);
             view2.addSubview(RichLabel);
             view2.setColor(ca.color._getGray());
 

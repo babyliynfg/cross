@@ -12,10 +12,12 @@ var StepperTest = ca.CAViewController.extend({
         }
         this.initStepper();
     },
+    viewDidLoad: function() {
+    },
     initStepper:function(){
         this.getView().setColor(ca.color._getGray());
 
-        this.step_value = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_W_C(250, 0.5), DVerticalLayout_H_C(100, 0.25)));
+        this.step_value = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(250, 0.5), ca.DVerticalLayout_H_C(100, 0.25)));
         this.step_value.setText("step_value:0");
         this.step_value.setFontSize(28);
         this.step_value.setTextAlignment(ca.CATextAlignment.Center);
@@ -24,7 +26,7 @@ var StepperTest = ca.CAViewController.extend({
 
         if (this.StepperNum == 0)
         {
-            var step = ca.CAStepper.createWithLayout(DLayout(DHorizontalLayout_W_C(360, 0.5), DVerticalLayout_H_C(60, 0.5)), ca.CAStepper.Orientation.Horizontal);
+            var step = ca.CAStepper.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(360, 0.5), ca.DVerticalLayout_H_C(60, 0.5)), ca.CAStepper.Orientation.Horizontal);
             //step.setWraps(true);//是否循环,默认循环
             step.setMinValue(0);
             step.setMaxValue(50);
@@ -40,7 +42,7 @@ var StepperTest = ca.CAViewController.extend({
         }
         else
         {
-            var step = ca.CAStepper.createWithLayout(DLayout(DHorizontalLayout_W_C(60, 0.5), DVerticalLayout_H_C(360, 0.5)), ca.CAStepper.Orientation.Vertical);
+            var step = ca.CAStepper.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(60, 0.5), ca.DVerticalLayout_H_C(360, 0.5)), ca.CAStepper.Orientation.Vertical);
             //step.setWraps(true);//是否循环,默认循环
             step.setMinValue(0);
             step.setMaxValue(50);

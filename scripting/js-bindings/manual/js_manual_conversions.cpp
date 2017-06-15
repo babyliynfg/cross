@@ -736,8 +736,9 @@ bool jsval_to_dhorizontallayout(JSContext *cx, JS::HandleValue v, CrossApp::DHor
     JS::RootedValue jright(cx);
     JS::RootedValue jswidth(cx);
     JS::RootedValue jrcenter(cx);
+    JS::RootedValue jrnormalizedWidth(cx);
     JS::RootedValue jrtype(cx);
-    double left,right,width,center;
+    double left,right,width,center,normalizedWidth;
     int type = 0;
     bool ok = v.isObject() &&
     JS_ValueToObject(cx, v, &tmp) &&
@@ -745,11 +746,13 @@ bool jsval_to_dhorizontallayout(JSContext *cx, JS::HandleValue v, CrossApp::DHor
     JS_GetProperty(cx, tmp, "right", &jright) &&
     JS_GetProperty(cx, tmp, "width", &jswidth) &&
     JS_GetProperty(cx, tmp, "center", &jrcenter) &&
+    JS_GetProperty(cx, tmp, "normalizedWidth", &jrnormalizedWidth) &&
     JS_GetProperty(cx, tmp, "type", &jrtype) &&
     JS::ToNumber(cx, jsleft, &left) &&
     JS::ToNumber(cx, jright, &right) &&
     JS::ToNumber(cx, jswidth, &width) &&
     JS::ToNumber(cx, jrcenter, &center) &&
+    JS::ToNumber(cx, jrnormalizedWidth, &normalizedWidth) &&
     JS::ToInt32(cx, jrtype, &type) ;
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
@@ -779,7 +782,7 @@ bool jsval_to_dhorizontallayout(JSContext *cx, JS::HandleValue v, CrossApp::DHor
         break;
         case DHorizontalLayout::Type::NW_C:
         {
-            *horizontal = DHorizontalLayout_NW_C(left, center);
+            *horizontal = DHorizontalLayout_NW_C(normalizedWidth, center);
         }
         break;
         default:
@@ -797,8 +800,9 @@ bool jsval_to_dverticallayout(JSContext *cx, JS::HandleValue v, CrossApp::DVerti
     JS::RootedValue jsbottom(cx);
     JS::RootedValue jsheight(cx);
     JS::RootedValue jrcenter(cx);
+    JS::RootedValue jrnormalizedHeight(cx);
     JS::RootedValue jrtype(cx);
-    double top,bottom,height,center;
+    double top,bottom,height,center,normalizedHeight;
     int type = 0;
     bool ok = v.isObject() &&
     JS_ValueToObject(cx, v, &tmp) &&
@@ -806,11 +810,13 @@ bool jsval_to_dverticallayout(JSContext *cx, JS::HandleValue v, CrossApp::DVerti
     JS_GetProperty(cx, tmp, "bottom", &jsbottom) &&
     JS_GetProperty(cx, tmp, "height", &jsheight) &&
     JS_GetProperty(cx, tmp, "center", &jrcenter) &&
+    JS_GetProperty(cx, tmp, "normalizedHeight", &jrnormalizedHeight) &&
     JS_GetProperty(cx, tmp, "type", &jrtype) &&
     JS::ToNumber(cx, jstop, &top) &&
     JS::ToNumber(cx, jsbottom, &bottom) &&
     JS::ToNumber(cx, jsheight, &height) &&
     JS::ToNumber(cx, jrcenter, &center) &&
+    JS::ToNumber(cx, jrnormalizedHeight, &normalizedHeight) &&
     JS::ToInt32(cx, jrtype, &type) ;
     
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
@@ -840,7 +846,7 @@ bool jsval_to_dverticallayout(JSContext *cx, JS::HandleValue v, CrossApp::DVerti
         break;
         case DVerticalLayout::Type::NH_C:
         {
-            *vertical = DVerticalLayout_NH_C(top,center);
+            *vertical = DVerticalLayout_NH_C(normalizedHeight,center);
         }
             break;
         default:

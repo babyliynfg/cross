@@ -53,7 +53,7 @@ var RenderImageTest = ca.CAViewController.extend({
         rect.width = scrollView.getViewSize().width;
         rect.x = 0;
         rect.y = 0;
-        var imv = ca.CAImageView.createWithLayout(DLayoutFill);
+        var imv = ca.CAImageView.createWithLayout(ca.DLayoutFill);
         imv.setImage(image);
         imv.setScaleType(ca.CAImageView.ScaleType.FitImageInside);
         scrollView.addSubview(imv);
@@ -72,9 +72,11 @@ var RenderImageTest = ca.CAViewController.extend({
 //        ivRect.x = scrollRect.x *-1;
 //        ivRect.y = scrollRect.y * -1;
 //
-//        var iv = ca.CAView.createWithColor(ca.color(0,0,0,128));
+//        var iv = ca.CAView.createWithColor(ca.CAColor4B.set(0,0,0,128));
 //        iv.setFrame(ivRect);
 //        m_clv.addSubview(iv);
+    },
+    viewDidLoad: function() {
     },
     getStencil: function(size, index)
     {
@@ -86,7 +88,7 @@ var RenderImageTest = ca.CAViewController.extend({
             ver[2] = ca.p(size.width, size.height);
             ver[3] = ca.p(size.width, 0);
             var stencil = ca.CADrawView.create();
-            stencil.drawPolygon(ver, 4, ca.color(255, 0, 0, 0), 2, ca.color(255, 0, 0, 0));
+            stencil.drawPolygon(ver, 4, ca.CAColor4B.set(255, 0, 0, 0), 2, ca.CAColor4B.set(255, 0, 0, 0));
             stencil.setFrameOrigin(ca.DPoint(0, size.height));
             return stencil;
         }
@@ -100,7 +102,7 @@ var RenderImageTest = ca.CAViewController.extend({
                 cir[i] = ca.p(x, y);
             }
             var stencil = ca.CADrawView.create();
-            stencil.drawPolygon(cir, 720, ca.color(1, 1, 1, 0.5), 0, ca.color(1, 1, 1, 0));
+            stencil.drawPolygon(cir, 720, ca.CAColor4B.set(1, 1, 1, 0.5), 0, ca.CAColor4B.set(1, 1, 1, 0));
             stencil.setCenterOrigin(ca.p(size.width/2, size.height/2));
             return stencil;
         }

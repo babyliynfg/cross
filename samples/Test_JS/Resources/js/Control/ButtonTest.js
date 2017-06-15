@@ -9,19 +9,19 @@ var ButtonTest = ca.CAViewController.extend({
 
         var btn1 = ca.CAButton.create(ca.CAButton.Type.Custom);
         btn1.setTag(1);
-        btn1.setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.16)));
+        btn1.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(240, 0.5), ca.DVerticalLayout_H_C(54, 0.16)));
         //设置Button标题的显示文本和字体大小
         btn1.setTitleForState(ca.CAControl.State.Normal, "Noborder");
         btn1.setTitleFontSize(40);
         //设置Button的标题颜色和状态
-        btn1.setTitleColorForState(ca.CAControl.State.Normal, ca.color(51,204,255,255));
+        btn1.setTitleColorForState(ca.CAControl.State.Normal, ca.CAColor4B.set(51,204,255,255));
         //添加回调事件
         btn1.addTarget(function(){ log("Button Noborder");}, ca.CAButton.Event.TouchUpInSide );
         this.getView().addSubview(btn1);
 
         var btn2 = ca.CAButton.create(ca.CAButton.Type.SquareRect);
         btn2.setTag(2);
-        btn2.setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.32)));
+        btn2.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(240, 0.5), ca.DVerticalLayout_H_C(54, 0.32)));
         //设置Button标题的显示文本
         btn2.setTitleForState(ca.CAControl.State.Normal, "SquareRect");
         //添加回调事件
@@ -30,7 +30,7 @@ var ButtonTest = ca.CAViewController.extend({
 
         var btn3 = ca.CAButton.create(ca.CAButton.Type.RoundedRect);
         btn3.setTag(3);
-        btn3.setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.48)));
+        btn3.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(240, 0.5), ca.DVerticalLayout_H_C(54, 0.48)));
         //设置Button标题的显示文本
         btn3.setTitleForState(ca.CAControl.State.Normal, "RoundedRect");
         //添加回调事件
@@ -39,7 +39,7 @@ var ButtonTest = ca.CAViewController.extend({
 
         var btn4 = ca.CAButton.create(ca.CAButton.Type.SquareRect);
         btn4.setTag(4);
-        btn4.setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.64)));
+        btn4.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(240, 0.5), ca.DVerticalLayout_H_C(54, 0.64)));
         //设置Button的标题颜色和状态
         btn4.setTitleColorForState(ca.CAControl.State.Normal,ca.WHITE);
         //设置Button的背景View
@@ -52,7 +52,7 @@ var ButtonTest = ca.CAViewController.extend({
 
         var btn5 = ca.CAButton.create(ca.CAButton.Type.SquareRect);
         btn5.setTag(5);
-        btn5.setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.8)));
+        btn5.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(240, 0.5), ca.DVerticalLayout_H_C(54, 0.8)));
         btn5.setTitleForState(ca.CAControl.State.Normal, "Normal");
         btn5.setTitleColorForState(ca.CAControl.State.Normal, ca.WHITE);
         btn5.setTitleForState(ca.CAControl.State.Highlighted, "Highlighted");
@@ -62,5 +62,7 @@ var ButtonTest = ca.CAViewController.extend({
         this.getView().addSubview(btn5);
 
 
+    },
+    viewDidLoad: function() {
     },
 });

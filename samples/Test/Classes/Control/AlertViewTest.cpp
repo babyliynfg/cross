@@ -61,7 +61,13 @@ void AlertViewTest::viewDidLoad()
     btn3->addTarget([=]()
     {
         
-        std::string message = "This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.This message is very long, a lot of buttons, which is a shortcut to use a multi button case.";
+        std::string message = "        When a lion was asleep, a little mouse began running up and down beside him. This soon wakened the lion. He was very angry, and caught the mouse in his paws."
+        + "Forgive me, please.\" cried the little mouse.\"I may be able to help you someday.\" The lion was tickled at these words."
+        + "He thought, \"How could this little mouse help me?\" However he lifted up his paws and let him go."
+        + "A few days later, the lion was caught in a trap."
+        + "The hunters wanted to take him alive to the king, so they tied him to a tree, and went away to look for a wagon."
+        + "Just then the little mouse passed by, and saw the sad lion."
+        + "He went up to him, and soon gnawed away the ropes. \"Was I not right?\" asked the little mouse.";
         
         CAAlertView* alert = CAAlertView::create("Alert", message.c_str());
         alert->setButtonTitles({"button1", "button2", "button3", "button4", "button5", "button6", "button7", "button8", "button9", "button10"});

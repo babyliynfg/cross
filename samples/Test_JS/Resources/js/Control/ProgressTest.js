@@ -13,20 +13,22 @@ var ProgressTest = ca.CAViewController.extend({
         this._super();
         this.getView().setColor(ca.color._getGray());
 
-        this.progress_value = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 50)));
+        this.progress_value = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_H(300, 50)));
         this.progress_value.setTag(100);
         this.progress_value.setText("");
         this.progress_value.setFontSize(30);
-        this.progress_value.setColor(ca.color(51, 204, 255, 255));
+        this.progress_value.setColor(ca.CAColor4B.set(51, 204, 255, 255));
         this.progress_value.setTextAlignment(ca.CATextAlignment.Center);
         this.progress_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
         this.getView().addSubview(this.progress_value);
 
         this.progress = ca.CAProgress.create();
-        this.progress.setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(550, 0)));
+        this.progress.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_H(550, 0)));
         //開啟定時函數，一定要做釋放
         ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.progressValueChange,0.01);
         this.getView().addSubview(this.progress);
+    },
+    viewDidLoad: function() {
     },
     viewOnExitTransitionDidStart:function()
     {

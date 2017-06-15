@@ -52,7 +52,7 @@ var TableViewTest = ca.CAViewController.extend({
 
         showIndex = 0;
 
-        var p_TableView = ca.CATableView.createWithLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayoutFill));
+        var p_TableView = ca.CATableView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0, 0), ca.DVerticalLayoutFill));
         p_TableView.setTableViewDataSource(this);
         p_TableView.setTableViewDelegate(this);
         p_TableView.setAllowsSelection(true);
@@ -63,6 +63,8 @@ var TableViewTest = ca.CAViewController.extend({
         this.getView().addSubview(p_TableView);
 
 
+    },
+    viewDidLoad: function() {
     },
     tableViewDidSelectRowAtIndexPath: function(table, section ,row)
     {
@@ -79,11 +81,11 @@ var TableViewTest = ca.CAViewController.extend({
         if (cell == null)
         {
             cell = ca.CATableViewCell.create("CrossApp");
-            var image = ca.CAImageView.createWithLayout(DLayoutFill);
+            var image = ca.CAImageView.createWithLayout(ca.DLayoutFill);
             image.setImage(ca.CAImage.create("source_material/second_2.png"));
             cell.addSubview(image);
 
-            var cellText = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_R(150, 10), DVerticalLayout_T_B(10, 10)));
+            var cellText = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(150, 10), ca.DVerticalLayout_T_B(10, 10)));
             cellText.setTag(100);
             cellText.setFontSize(30);
             cellText.setTextAlignment(ca.CATextAlignment.Left);
@@ -101,7 +103,7 @@ var TableViewTest = ca.CAViewController.extend({
         var view = ca.CAView.createWithColor(ca.color._getGray());
 
         var _size = viewSize;
-        var header = ca.CALabel.createWithLayout(DLayout(DHorizontalLayout_L_R(50, 0), DVerticalLayoutFill));
+        var header = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(50, 0), ca.DVerticalLayoutFill));
         header.setText(head);
         header.setFontSize(30);
         header.setColor(ca.WHITE);

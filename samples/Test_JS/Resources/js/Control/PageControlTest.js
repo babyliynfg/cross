@@ -8,7 +8,7 @@ var PageControlTest = ca.CAViewController.extend({
         this._super();
         this.getView().setColor(ca.color._getGray());
 
-        var pageControl = ca.CAPageControl.createWithLayout(DLayout(DHorizontalLayout_W_C(150, 0.5), DVerticalLayout_H_C(54, 0.25)));
+        var pageControl = ca.CAPageControl.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(150, 0.5), ca.DVerticalLayout_H_C(54, 0.25)));
         pageControl.setNumberOfPages(5);
         pageControl.setStyle(ca.CAPageControl.Style.Dot);
         pageControl.setPageIndicatorTintColor(ca.color._getWhite());
@@ -19,7 +19,7 @@ var PageControlTest = ca.CAViewController.extend({
         });
         this.getView().addSubview(pageControl);
 
-        var pageControl2 = ca.CAPageControl.createWithLayout(DLayout(DHorizontalLayout_W_C(150, 0.5), DVerticalLayout_H_C(54, 0.4)));
+        var pageControl2 = ca.CAPageControl.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(150, 0.5), ca.DVerticalLayout_H_C(54, 0.4)));
         pageControl2.setNumberOfPages(5);
         pageControl2.setStyle(ca.CAPageControl.Style.Round);
         pageControl2.setPageIndicatorTintColor(ca.color._getWhite());
@@ -30,7 +30,7 @@ var PageControlTest = ca.CAViewController.extend({
         });
         this.getView().addSubview(pageControl2);
 
-        var pageControl3 = ca.CAPageControl.createWithLayout(DLayout(DHorizontalLayout_W_C(150, 0.5), DVerticalLayout_H_C(54, 0.55)));
+        var pageControl3 = ca.CAPageControl.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(150, 0.5), ca.DVerticalLayout_H_C(54, 0.55)));
         pageControl3.setNumberOfPages(5);
         pageControl3.setStyle(ca.CAPageControl.Style.Rectangle);
         pageControl3.setPageIndicatorTintColor(ca.color._getWhite());
@@ -40,5 +40,7 @@ var PageControlTest = ca.CAViewController.extend({
             log("btn_tag==="+pageControl3.getCurrentPage());
         });
         this.getView().addSubview(pageControl3);
+    },
+    viewDidLoad: function() {
     },
 });

@@ -18,7 +18,7 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
                 var g = Math.floor(Math.random()*255);
                 var b = Math.floor(Math.random()*255);
 
-                this.HorizontalcolorArr.push(ca.color(r, g, b, 255));
+                this.HorizontalcolorArr.push(ca.CAColor4B.set(r, g, b, 255));
             }
 
             this.AutoCollectionViewHorizontalNum = 0;
@@ -28,7 +28,7 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
 
             if (this.AutoCollectionViewHorizontalNum == 0)
             {
-                this.p_AutoCollection = ca.CAAutoCollectionView.createWithLayout(DLayoutFill);
+                this.p_AutoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
                 this.p_AutoCollection.setAllowsSelection(true);
                 this.p_AutoCollection.setAllowsMultipleSelection(true);
                 this.p_AutoCollection.setCollectionViewDelegate(this);
@@ -43,12 +43,14 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
             }
             else
             {
-                //EAutoCollectionViewHorizontal* p_AutoCollection1 = EAutoCollectionViewHorizontal.createWithLayout(DLayoutFill);
+                //EAutoCollectionViewHorizontal* p_AutoCollection1 = EAutoCollectionViewHorizontal.createWithLayout(ca.DLayoutFill);
                 //p_AutoCollection1.init();
                 //p_AutoCollection1.setEAutoCollectionViewHorizontalDelegate(this);
                 //this.getView().addSubview(p_AutoCollection1);
             }
 
+        },
+        viewDidLoad: function() {
         },
         refreshData1: function( interval){
             this.colorArr = [];
@@ -57,7 +59,7 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
                 var r = Math.floor(Math.random()*255);
                 var g = Math.floor(Math.random()*255);
                 var b = Math.floor(Math.random()*255);
-                this.HorizontalcolorArr.push(ca.color(r, g, b, 255));
+                this.HorizontalcolorArr.push(ca.CAColor4B.set(r, g, b, 255));
             }
             this.p_AutoCollection.reloadData();
         },
@@ -67,7 +69,7 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
                 var r = Math.floor(Math.random()*255);
                 var g = Math.floor(Math.random()*255);
                 var b = Math.floor(Math.random()*255);
-                this.HorizontalcolorArr.push(ca.color(r, g, b, 255));
+                this.HorizontalcolorArr.push(ca.CAColor4B.set(r, g, b, 255));
             }
             this.p_AutoCollection.reloadData();
         },
@@ -102,11 +104,11 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
             {
                 p_Cell = ca.CACollectionViewCell.create("CrossApp");
 
-                var itemImage = ca.CAView.createWithLayout(DLayoutFill);
+                var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
                 itemImage.setTag(99);
                 p_Cell.getContentView().addSubview(itemImage);
 
-                var itemText = ca.CALabel.createWithLayout(DLayoutFill);
+                var itemText = ca.CALabel.createWithLayout(ca.DLayoutFill);
                 itemText.setTag(100);
                 itemText.setFontSize(29);
                 itemText.setTextAlignment(ca.CATextAlignment.Center);

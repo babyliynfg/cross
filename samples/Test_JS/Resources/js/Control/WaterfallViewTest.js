@@ -16,26 +16,26 @@ var WaterfallViewTest = ca.CAViewController.extend({
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
+            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
 
         this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
         this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
-        this.Waterfall = ca.CAWaterfallView.createWithLayout(DLayoutFill);
+        this.Waterfall = ca.CAWaterfallView.createWithLayout(ca.DLayoutFill);
         this.Waterfall.setItemMargin(10);
         this.Waterfall.setColumnMargin(10);
         this.Waterfall.setColumnCount(2);
         this.Waterfall.setAllowsSelection(true);
-        // this.Waterfall.setScrollViewDelegate(this);
-        this.Waterfall.setWaterfallViewDelegate(this);
-        this.Waterfall.setWaterfallViewDataSource(this);
+
         // this.Waterfall.setHeaderRefreshView(this.headerRefreshView);
         // this.Waterfall.setFooterRefreshView(this.footerRefreshView);
         this.getView().addSubview(this.Waterfall);
 
         // this.Waterfall.reloadData();
         // this.Waterfall.startPullToHeaderRefreshView();
+    },
+    viewDidLoad: function() {
     },
     refreshData1: function ( interval)
     {
@@ -45,7 +45,7 @@ var WaterfallViewTest = ca.CAViewController.extend({
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
+            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
         this.Waterfall.reloadData();
     },
@@ -57,7 +57,7 @@ var WaterfallViewTest = ca.CAViewController.extend({
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
+            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
         this.Waterfall.reloadData();
     }
@@ -93,11 +93,11 @@ var WaterfallViewTest = ca.CAViewController.extend({
         {
             p_Cell = ca.CAWaterfallViewCell.create("CrossApp");
 
-            var itemImage = ca.CAView.createWithLayout(DLayoutFill);
+            var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
             itemImage.setTag(99);
             p_Cell.getContentView().addSubview(itemImage);
 
-            var itemText = ca.CALabel.createWithLayout(DLayoutFill);
+            var itemText = ca.CALabel.createWithLayout(ca.DLayoutFill);
             itemText.setTag(100);
             itemText.setFontSize(24);
             itemText.setTextAlignment(ca.CATextAlignment.Center);

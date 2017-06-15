@@ -545,9 +545,7 @@ void CACollectionView::clearData()
 }
 
 void CACollectionView::reloadData()
-{
-	CC_RETURN_IF(m_pCollectionViewDataSource == NULL);
-    
+{    
 	this->reloadViewSizeData();
     
 	this->removeAllSubviews();

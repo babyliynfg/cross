@@ -375,7 +375,7 @@ ca.DHorizontalLayout.set = function(var1, var2, _type)
     var _width = ca.FLT_MAX;
     var _center = ca.FLT_MAX;
     var _normalizedWidth = ca.FLT_MAX;
-
+    
     switch (_type)
     {
         case ca.DHorizontalLayout.Type.L_R:
@@ -411,18 +411,18 @@ ca.DHorizontalLayout.set = function(var1, var2, _type)
         default:
             break;
     }
-
+    
     return {left:_left, right:_right, width:_width, center:_center, normalizedWidth:_normalizedWidth, type:_type};
 };
 
 ca.DVerticalLayout.set =function (var1, var2, _type){
-
+    
     var _top = ca.FLT_MAX;
     var _bottom = ca.FLT_MAX;
     var _height = ca.FLT_MAX;
     var _center = ca.FLT_MAX;
-    var _normalizedWidth = ca.FLT_MAX;
-
+    var _normalizedHeight = ca.FLT_MAX;
+    
     switch (_type)
     {
         case ca.DVerticalLayout.Type.T_B:
@@ -451,15 +451,15 @@ ca.DVerticalLayout.set =function (var1, var2, _type){
             break;
         case ca.DVerticalLayout.Type.NH_C:
         {
-            _bottom = var1;
-            _normalizedWidth = var2;
+            _normalizedHeight = var1;
+            _center = var2;
         }
             break;
         default:
             break;
     }
-
-    return {top:_top, bottom:_bottom, height:_height, center:_center, type:_type, normalizedWidth:_normalizedWidth};
+    
+    return {top:_top, bottom:_bottom, height:_height, center:_center, type:_type, normalizedHeight:_normalizedHeight};
 };
 
 
@@ -470,7 +470,7 @@ ca.DLayout.set = function (hor, ver)
 
 ca.DHorizontalLayout_L_R = function(left,right)
 {
-   return ca.DHorizontalLayout.set(left, right, ca.DHorizontalLayout.Type.L_R);
+    return ca.DHorizontalLayout.set(left, right, ca.DHorizontalLayout.Type.L_R);
 };
 
 ca.DHorizontalLayout_L_W = function(left,width)
@@ -583,7 +583,7 @@ ca.CAColor4B.setUInt32 = function (_rgba)
     var _r = _rgba % 0x100;
     _rgba /= 0x100;
     var _a = _rgba % 0x100;
-
+    
     return {r:_r, g:_g, b:_b, a:_a};
 };
 
@@ -681,22 +681,22 @@ ca.DRect.intersectsRect = function (r1, r2)
     {
         return false;
     }
-
+    
     if (r2.origin.x + r2.size.width < r1.origin.x)
     {
         return false;
     }
-
+    
     if (r1.origin.y + r1.size.height < r2.origin.y)
     {
         return false;
     }
-
+    
     if (r2.origin.y + r2.size.height < r1.origin.y)
     {
         return false;
     }
-
+    
     return true;
 };
 

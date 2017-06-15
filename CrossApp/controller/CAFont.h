@@ -124,9 +124,6 @@ public:
     CAFont& operator= (const CAFont& other);
 };
 
-
-#define g_CAFontCache CAFontCache::sharedStyleCache()
-
 NS_CC_END
 
 #endif // CAFont_h__

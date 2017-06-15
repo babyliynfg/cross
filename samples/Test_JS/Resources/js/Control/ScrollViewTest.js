@@ -9,7 +9,7 @@ var ScrollViewTest = ca.CAViewController.extend({
 
         this.colorArr = new Array();
 
-        this.p_ScrollView = ca.CAScrollView.createWithLayout(DLayoutFill);
+        this.p_ScrollView = ca.CAScrollView.createWithLayout(ca.DLayoutFill);
         this.p_ScrollView.setMinimumZoomScale(0.2);
         this.p_ScrollView.setMaximumZoomScale(5.0);
         this.p_ScrollView.setMultitouchGesture(ca.CAScrollView.MultitouchGesture.ZoomAndRotate);
@@ -18,8 +18,10 @@ var ScrollViewTest = ca.CAViewController.extend({
 
         var _size = this.p_ScrollView.getBounds().size;
         p_imageView = ca.CAImageView.createWithImage(ca.CAImage.create("image/h1.png"));
-        p_imageView.setLayout(DLayoutFill);
+        p_imageView.setLayout(ca.DLayoutFill);
         this.p_ScrollView.addSubview(p_imageView);
+    },
+    viewDidLoad: function() {
     },
     btncallback: function () {
         log("btncallback-->");
@@ -31,7 +33,7 @@ var ScrollViewTest = ca.CAViewController.extend({
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.color(r, g, b, 255));
+            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
         this.p_Conllection.reloadData();
     },

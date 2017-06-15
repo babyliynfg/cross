@@ -47,7 +47,7 @@ var PickerViewTest = ca.CAViewController.extend({
 
         //this.getView().setColor(ca.color._getGray());
 
-        this.p_pickerView = ca.CAPickerView.createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)));
+        this.p_pickerView = ca.CAPickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(10, 10), ca.DVerticalLayout_T_H(200, 400)));
         this.p_pickerView.setPickerViewDelegate(this);
         this.p_pickerView.setPickerViewDataSource(this);
         this.p_pickerView.setFontSizeNormal(40);
@@ -56,27 +56,29 @@ var PickerViewTest = ca.CAViewController.extend({
         this.p_pickerView.setFontColorSelected(ca.BLACK);
         this.p_pickerView.reloadAllComponents();
 
-        this.city_value = ca.CALabel.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(100, 40)));
+        this.city_value = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(100, 40)));
         this.city_value.setText("天津");
         this.city_value.setColor(ca.BLACK);
         this.city_value.setFontSize(28);
         this.city_value.setTextAlignment(ca.CATextAlignment.Center);
         this.city_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
 
-        var view1 = ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
+        var view1 = ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill));
         view1.addSubview(this.p_pickerView);
         view1.addSubview(this.city_value);
         view1.setColor(ca.WHITE);
         this.getView().addSubview(view1);
 
-        // var dpv = ca.CADatePickerView.createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)), ca.CADatePickerView.Mode.Date);
+        // var dpv = ca.CADatePickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(10, 10), ca.DVerticalLayout_T_H(200, 400)), ca.CADatePickerView.Mode.Date);
         // //dpv->setDate(2004, 2, 16, false);
         // dpv.setDelegate(this);
         //
-        // var view2 = ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
+        // var view2 = ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill));
         // view2.addSubview(dpv);
         // view2.setColor(ca.CAColor4B.WHITE);
         // this.getView().addSubview(view2);
+    },
+    viewDidLoad: function() {
     },
     didSelectRow: function (pickerView, row, component) {
         this.city_value.setText(adressTag[row]);
