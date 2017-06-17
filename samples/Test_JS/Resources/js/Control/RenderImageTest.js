@@ -11,53 +11,49 @@ var RenderImageTest = ca.CAViewController.extend({
     viewDidLoad: function() {
         var image = ca.CAImage.create("r/HelloWorld.png");
 
-        var dle_ren_index = 0;
 
-        var index = 0;
 
-        var scrollRect = ca.DRect.set(0,0,0,0);
-        scrollRect.x = 100;
-        scrollRect.y = 100;
-        scrollRect.width = ca.winSize.width - 200;
-        scrollRect.height = ca.winSize.height - 400;
+        this.imageView = ca.CAImageView.createWithImage(image) ;
+        this.imageView.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(400, 0.5) , ca.DVerticalLayout_H_C(500, 0.5))) ;
+        this.imageView.setScaleType(ca.CAImageView.ScaleType.FitImageInside) ;
+        this.getView().addSubview(this.imageView) ;
 
-        var m_clvImage = ca.CAClippingView.create();
-        m_clvImage.setStencil(this.getStencil(ca.DSize.set(scrollRect.width,scrollRect.height), index));
-        m_clvImage.setFrame(scrollRect);
-        m_clvImage.setInverted(false);
-        m_clvImage.setClippingEnabled(false);
-        this.getView().addSubview(m_clvImage);
 
-        var temp_mini = 0;
-        if (image.getContentSize().width>image.getContentSize().height)
-        {
-            temp_mini = scrollRect.height/image.getContentSize().height;
-        }
-        else
-        {
-            temp_mini = scrollRect.width/image.getContentSize().width;
-        }
-        var scrollView = ca.CAScrollView.createWithFrame(m_clvImage.getBounds());
-        scrollView.setViewSize(ca.DSize.set(image.getContentSize()));
-        scrollView.setContentOffset(ca.DPoint.set(0,ca.winSize.height/4), false);
-        scrollView.setMinimumZoomScale(temp_mini);
-        scrollView.setMaximumZoomScale(2.5);
-        scrollView.setShowsScrollIndicators(false);
-        scrollView.setBounces(false);
-        //scrollView.setScrollViewDelegate(this);
-        scrollView.setDisplayRange(true);
-        m_clvImage.addSubview(scrollView);
+        this.button = ca.CAButton.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(200, 0.5) , ca.DVerticalLayout_B_H(20, 60)) , ca.CAButton.Type.RoundedRect) ;
+        this.button.setTitleForState(ca.CAControl.State.Normal,"截取") ;
+        this.getView().addSubview(this.button) ;
 
-        var rect = ca.DRect.set(0,0,0,0);
-        rect.height = scrollView.getViewSize().height;
-        rect.width = scrollView.getViewSize().width;
-        rect.x = 0;
-        rect.y = 0;
-        var imv = ca.CAImageView.createWithLayout(ca.DLayoutFill);
-        imv.setImage(image);
-        imv.setScaleType(ca.CAImageView.ScaleType.FitImageInside);
-        scrollView.addSubview(imv);
+
+
+        this.button.addTarget(this._onButtonEvent.bind(this) , ca.CAButton.Event.TouchUpInSide) ;
+
     },
+
+    _onButtonEvent:function(){
+
+        var layer = ca.CAView.createWithLayout(ca.DLayoutFill) ;
+        layer.setColor(ca.CAColor4B.WHITE) ;
+        layer.setAlpha(0) ;
+        ca.RootWindow.insertSubview(layer , 0xffff) ;
+
+        ca.CAViewAnimation.beginAnimations("");
+        ca.CAViewAnimation.setAnimationDuration(0.1);
+        var imgview = this.imageView ;
+        ca.CAViewAnimation.setAnimationDidStopSelector(function()
+        {
+            var winSize = ca.CAApplication.getApplication().getWinSize();
+            var render =  ca.CARenderImage.create(winSize.width , winSize.height , ca.CAImage.PixelFormat.RGBA8888);
+            render.printscreenWithView(ca.RootWindow.getRootViewController().getView()) ;
+            var img = render.getImageView().getImage()  ;
+            imgview.setImage(img) ;
+
+            layer.removeFromSuperview();
+
+        });
+        layer.setAlpha(255) ;
+        ca.CAViewAnimation.commitAnimations();
+    },
+    
     getStencil: function(size, index)
     {
         if (index == 0)
@@ -83,7 +79,7 @@ var RenderImageTest = ca.CAViewController.extend({
             }
             var stencil = ca.CADrawView.create();
             stencil.drawPolygon(cir, 720, ca.CAColor4B.set(1, 1, 1, 0.5), 0, ca.CAColor4B.set(1, 1, 1, 0));
-            stencil.setCenterOrigin(ca.p(size.width/2, size.height/2));
+            stencil.setCenterOrigin(ca.DPoint.set(size.width/2, size.height/2));
             return stencil;
         }
         return null;

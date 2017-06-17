@@ -636,7 +636,14 @@ void CAView::setAnchorPoint(const DPoint& anchorPoint)
             DPoint point = anchorPointInPoints;
             point.y = m_obContentSize.height - point.y;
             point = PointApplyAffineTransform(point, this->getViewToSuperviewAffineTransform());
-            point.y = this->m_pSuperview->m_obContentSize.height - point.y;
+            if (m_pSuperview)
+            {
+                point.y = m_pSuperview->m_obContentSize.height - point.y;
+            }
+            else
+            {
+                point.y = m_pApplication->getWinSize().height - point.y;
+            }
             this->setPoint(point);
             this->updateDraw();
         }
