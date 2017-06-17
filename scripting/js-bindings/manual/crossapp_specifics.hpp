@@ -123,52 +123,6 @@ protected:
     mozilla::Maybe<JS::PersistentRootedValue> _extraData;
 };
 
-class JSScheduleWrapper: public JSCallbackWrapper {
-    
-public:
-    JSScheduleWrapper();
-    virtual ~JSScheduleWrapper();
-
-    static void setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target);
-    static CrossApp::CAVector<CAObject*> * getTargetForSchedule(JS::HandleValue sched);
-    static void setTargetForJSObject(JS::HandleObject jsTargetObj, JSScheduleWrapper *target);
-    static CrossApp::CAVector<CAObject*> * getTargetForJSObject(JS::HandleObject jsTargetObj);
-    
-    // Remove all targets.
-    static void removeAllTargets();
-    // Remove all targets for priority.
-    static void removeAllTargetsForMinPriority(int minPriority);
-    // Remove all targets by js object from hash table(_schedFunc_target_ht and _schedObj_target_ht).   
-    static void removeAllTargetsForJSObject(JS::HandleObject jsTargetObj);
-    // Remove the target by js object and the wrapper for native schedule.
-    static void removeTargetForJSObject(JS::HandleObject jsTargetObj, JSScheduleWrapper* target);
-    static void dump();
-
-    void pause();
-    
-    void scheduleFunc(float dt);
-    void update(float dt);
-    
-    CAObject* getTarget();
-    void setTarget(CAObject* pTarget);
-    
-    void setPureJSTarget(JS::HandleObject jstarget);
-    JSObject* getPureJSTarget();
-    
-    void setPriority(int priority);
-    int  getPriority();
-    
-    void setUpdateSchedule(bool isUpdateSchedule);
-    bool isUpdateSchedule();
-    
-protected:
-    CAObject* _pTarget;
-    mozilla::Maybe<JS::PersistentRootedObject> _pPureJSTarget;
-    int _priority;
-    bool _isUpdateSchedule;
-};
-
-
 class JSTouchDelegate: public CrossApp::CAResponder
 {
 public:

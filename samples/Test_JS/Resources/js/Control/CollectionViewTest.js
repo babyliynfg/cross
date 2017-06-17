@@ -39,6 +39,9 @@ var CollectionViewTest = ca.CAViewController.extend({
         this.p_Conllection.setNumberOfSectionsCallback(this.numberOfSections.bind(this)) ;
         this.p_Conllection.setDidSelectCellAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this)) ;
         this.p_Conllection.setDidDeselectCellAtIndexPathCallback(this.collectionViewDidDeselectCellAtIndexPath.bind(this)) ;
+        this.p_Conllection.setHeaderBeginRefreshingCallback(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
+        this.p_Conllection.setFooterBeginRefreshingCallback(this.scrollViewFooterBeginRefreshing.bind(this)) ;
+
 
 
         this.p_Conllection.setHeaderRefreshView(this.headerRefreshView);
@@ -63,6 +66,9 @@ var CollectionViewTest = ca.CAViewController.extend({
 
 
     _randomColor:function(){
+
+        ca.log("random....color.......");
+
         for (var i = 0; i < 40; i++)
         {
             var r = Math.floor(Math.random()*255);
@@ -75,8 +81,7 @@ var CollectionViewTest = ca.CAViewController.extend({
 
     scrollViewHeaderBeginRefreshing: function()
     {
-        ca.CAAlertView.create("", "AAA").show(function(){});
-        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData1.bind(this), "A", this, 0.5);
+        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData1.bind(this), "Azzzzzzzzzzzzz", this, 0.5);
     },
     scrollViewFooterBeginRefreshing: function()
     {
@@ -123,7 +128,6 @@ var CollectionViewTest = ca.CAViewController.extend({
 
         var itemImageView = p_Cell.getContentView().getSubviewByTag(99);
         itemImageView.setColor(this.colorArr[row * 3 + item]);
-        log("row = "+item);
 
 
         var pos= section+""+row+""+item;

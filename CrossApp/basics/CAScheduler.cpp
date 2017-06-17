@@ -287,7 +287,6 @@ CAScheduler::CAScheduler(void)
 CAScheduler::~CAScheduler(void)
 {
     unscheduleAll();
-    m_obScriptHandlerEntries.clear();
 }
 
 CAScheduler* CAScheduler::getScheduler()
@@ -685,34 +684,7 @@ void CAScheduler::unscheduleAllWithMinPriority(int minPriority)
             unscheduleUpdate(entry->target);
         }
     }
-
-#if CC_ENABLE_SCRIPT_BINDING
-    m_obScriptHandlerEntries.clear();
-#endif
 }
-
-unsigned int CAScheduler::scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
-{
-    CASchedulerScriptHandlerEntry* pEntry = CASchedulerScriptHandlerEntry::create(nHandler, fInterval, bPaused);
-    m_obScriptHandlerEntries.pushBack(pEntry);
-    return pEntry->getEntryId();
-}
-
-void CAScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
-{
-#if CC_ENABLE_SCRIPT_BINDING
-    for (auto &obj : m_obScriptHandlerEntries)
-    {
-        CASchedulerScriptHandlerEntry* pEntry = static_cast<CASchedulerScriptHandlerEntry*>(obj);
-        if (pEntry->getEntryId() == (int)uScheduleScriptEntryID)
-        {
-            pEntry->markedForDeletion();
-            break;
-        }
-    }
-#endif
-}
-
 
 void CAScheduler::resumeTarget(void *target)
 {
@@ -960,25 +932,6 @@ void CAScheduler::update(float dt)
             removeHashElement(_currentTarget);
         }
     }
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    
-    if (!m_obScriptHandlerEntries.empty())
-    {
-        for (auto& obj : m_obScriptHandlerEntries)
-        {
-            CASchedulerScriptHandlerEntry* pEntry = static_cast<CASchedulerScriptHandlerEntry*>(obj);
-            if (pEntry->isMarkedForDeletion())
-            {
-                m_obScriptHandlerEntries.eraseObject(obj);
-            }
-            else if (!pEntry->isPaused())
-            {
-                pEntry->getTimer()->update(dt);
-            }
-        }
-    }
-#endif
     // delete all updates that are marked for deletion
     // updates with priority < 0
     DL_FOREACH_SAFE(_updatesNegList, entry, tmp)

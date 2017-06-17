@@ -776,33 +776,6 @@ bool js_crossapp_CAScheduler_pauseAll(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAScheduler_pauseAll : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScheduler_scheduleScriptFunc(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_scheduleScriptFunc : Invalid Native Object");
-    if (argc == 3) {
-        uint32_t arg0 = 0;
-        double arg1 = 0;
-        bool arg2;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-        arg2 = JS::ToBoolean(args.get(2));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_scheduleScriptFunc : Error processing arguments");
-        uint32_t ret = cobj->scheduleScriptFunc(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_scheduleScriptFunc : wrong number of arguments: %d, was expecting %d", argc, 3);
-    return false;
-}
 bool js_crossapp_CAScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 {
     bool ok = true;
@@ -1039,27 +1012,6 @@ bool js_crossapp_CAScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CAScheduler_resumeTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScheduler_unscheduleScriptEntry(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleScriptEntry : Invalid Native Object");
-    if (argc == 1) {
-        uint32_t arg0 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unscheduleScriptEntry : Error processing arguments");
-        cobj->unscheduleScriptEntry(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleScriptEntry : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAScheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -1288,11 +1240,9 @@ void js_register_crossapp_CAScheduler(JSContext *cx, JS::HandleObject global) {
         JS_FN("unscheduleUpdate", js_crossapp_CAScheduler_unscheduleUpdate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resumeAllTargetsWithMinPriority", js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pauseAll", js_crossapp_CAScheduler_pauseAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("scheduleScriptFunc", js_crossapp_CAScheduler_scheduleScriptFunc, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("schedule", js_crossapp_CAScheduler_schedule, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("update", js_crossapp_CAScheduler_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resumeTarget", js_crossapp_CAScheduler_resumeTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("unscheduleScriptEntry", js_crossapp_CAScheduler_unscheduleScriptEntry, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("unscheduleAll", js_crossapp_CAScheduler_unscheduleAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pauseTarget", js_crossapp_CAScheduler_pauseTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("performFunctionInUIThread", js_crossapp_CAScheduler_performFunctionInUIThread, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

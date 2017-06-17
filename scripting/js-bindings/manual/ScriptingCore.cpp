@@ -1295,20 +1295,6 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,CATouch *pTouch, JSObje
     
 }
 
-void ScriptingCore::cleanupSchedulesAndActions(js_proxy_t* p)
-{
-    JS::RootedObject obj(_cx, p->obj.get());
-    CrossApp::CAVector<CAObject*>* arr = JSScheduleWrapper::getTargetForJSObject(obj);
-    if (arr)
-    {
-        for (auto&& target : *arr)
-        {
-            CAScheduler::getScheduler()->unscheduleAllForTarget(target);
-        }
-        JSScheduleWrapper::removeAllTargetsForJSObject(obj);
-    }
-}
-
 bool ScriptingCore::isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native)
 {
     JS::RootedObject jsobj(_cx, obj);
@@ -1348,7 +1334,6 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     if (action == script::viewDidUnload)
     {
         ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidUnload", 0, &dataVal, &retval);
-         cleanupSchedulesAndActions(p);
     }
     else if (action == script::viewDidLoad)
     {

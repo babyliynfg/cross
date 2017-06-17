@@ -73,25 +73,7 @@ public:
      * @see evalString
      */
     virtual int executeString(const char* codes) override { return 0; };
-    
-    
-   
-    /**
-     * @brief @~english Pause scheduled tasks and actions for an object proxy.
-     * @param p @~english The object proxy
-     */
-//    void pauseSchedulesAndActions(js_proxy_t* p);
-    /**
-     * @brief @~english Resume scheduled tasks and actions for an object proxy.
-     * @param p @~english The object proxy
-     */
-//    void resumeSchedulesAndActions(js_proxy_t* p);
-    /**
-     * @brief @~english Cleanup scheduled tasks and actions for an object proxy.
-     * @param p @~english The object proxy
-     */
-    void cleanupSchedulesAndActions(js_proxy_t* p);
-    
+
     /**
      @brief Useless in ScriptingCore, please use runScript
      @param filename String object holding the filename of the script file that is to be executed

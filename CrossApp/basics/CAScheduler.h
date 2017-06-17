@@ -79,12 +79,6 @@ private:
     
     virtual ~CAScheduler();
 
-public:
-
-    unsigned int scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused);
-    
-    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
-    
 protected:
     
     void schedulePerFrame(const CAScheduler::Callback& callback, void *target, int priority, bool paused);
@@ -111,8 +105,6 @@ protected:
 
     std::vector<std::function<void()> > _functionsToPerform;
     std::mutex _performMutex;
-    CAVector<CAObject*> m_obScriptHandlerEntries;
-    
     friend class CAApplication;
 };
 
