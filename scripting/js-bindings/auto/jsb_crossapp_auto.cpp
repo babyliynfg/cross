@@ -525,6 +525,52 @@ void js_register_crossapp_CAObject(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_CrossApp_CAScheduler_class;
 JSObject *jsb_CrossApp_CAScheduler_prototype;
 
+bool js_crossapp_CAScheduler_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleUpdate : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAObject* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unscheduleUpdate : Error processing arguments");
+        cobj->unscheduleUpdate(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleUpdate : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAScheduler_resumeAll(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_resumeAll : Invalid Native Object");
+    if (argc == 0) {
+        cobj->resumeAll();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_resumeAll : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CAScheduler_setTimeScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -546,234 +592,23 @@ bool js_crossapp_CAScheduler_setTimeScale(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CAScheduler_setTimeScale : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScheduler_isScheduled(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_isScheduled : Invalid Native Object");
-    if (argc == 2) {
-        std::string arg0;
-        void* arg1 = nullptr;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= javal_to_viodpointe(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_isScheduled : Error processing arguments");
-        bool ret = cobj->isScheduled(arg0, arg1);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_getTimeScale : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getTimeScale();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScheduler_isScheduled : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAScheduler_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unschedule : Invalid Native Object");
-    if (argc == 2) {
-        std::string arg0;
-        void* arg1 = nullptr;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= javal_to_viodpointe(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unschedule : Error processing arguments");
-        cobj->unschedule(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_unschedule : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAScheduler_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_scheduleOnce : Invalid Native Object");
-    if (argc == 4) {
-        std::function<void (float)> arg0;
-        std::string arg1;
-        void* arg2 = nullptr;
-        double arg3 = 0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](float larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = DOUBLE_TO_JSVAL(larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        ok &= javal_to_viodpointe(cx, args.get(2), &arg2);
-        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_scheduleOnce : Error processing arguments");
-        cobj->scheduleOnce(arg0, arg1, arg2, arg3);
-        args.rval().setUndefined();
-        return true;
-    }
-    if (argc == 5) {
-        std::function<void (float)> arg0;
-        std::string arg1;
-        void* arg2 = nullptr;
-        double arg3 = 0;
-        bool arg4;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](float larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = DOUBLE_TO_JSVAL(larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        ok &= javal_to_viodpointe(cx, args.get(2), &arg2);
-        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
-        arg4 = JS::ToBoolean(args.get(4));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_scheduleOnce : Error processing arguments");
-        cobj->scheduleOnce(arg0, arg1, arg2, arg3, arg4);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_scheduleOnce : wrong number of arguments: %d, was expecting %d", argc, 4);
-    return false;
-}
-bool js_crossapp_CAScheduler_unscheduleAllForTarget(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleAllForTarget : Invalid Native Object");
-    if (argc == 1) {
-        void* arg0 = nullptr;
-        ok &= javal_to_viodpointe(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unscheduleAllForTarget : Error processing arguments");
-        cobj->unscheduleAllForTarget(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleAllForTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScheduler_resumeAll(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_resumeAll : Invalid Native Object");
-    if (argc == 0) {
-        cobj->resumeAll();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_resumeAll : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScheduler_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleUpdate : Invalid Native Object");
-    if (argc == 1) {
-        void* arg0 = nullptr;
-        ok &= javal_to_viodpointe(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unscheduleUpdate : Error processing arguments");
-        cobj->unscheduleUpdate(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleUpdate : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority : Error processing arguments");
-        cobj->resumeAllTargetsWithMinPriority(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScheduler_pauseAll(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_pauseAll : Invalid Native Object");
-    if (argc == 0) {
-        cobj->pauseAll();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_pauseAll : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScheduler_getTimeScale : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
@@ -816,8 +651,16 @@ bool js_crossapp_CAScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            void* arg2 = nullptr;
-            ok &= javal_to_viodpointe(cx, args.get(2), &arg2);
+            CrossApp::CAObject* arg2 = nullptr;
+            do {
+                if (args.get(2).isNull()) { arg2 = nullptr; break; }
+                if (!args.get(2).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, 0, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             double arg3 = 0;
             ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
@@ -863,8 +706,16 @@ bool js_crossapp_CAScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            void* arg2 = nullptr;
-            ok &= javal_to_viodpointe(cx, args.get(2), &arg2);
+            CrossApp::CAObject* arg2 = nullptr;
+            do {
+                if (args.get(2).isNull()) { arg2 = nullptr; break; }
+                if (!args.get(2).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, 0, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             double arg3 = 0;
             ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
@@ -912,8 +763,16 @@ bool js_crossapp_CAScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            void* arg2 = nullptr;
-            ok &= javal_to_viodpointe(cx, args.get(2), &arg2);
+            CrossApp::CAObject* arg2 = nullptr;
+            do {
+                if (args.get(2).isNull()) { arg2 = nullptr; break; }
+                if (!args.get(2).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, 0, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             double arg3 = 0;
             ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
@@ -953,8 +812,16 @@ bool js_crossapp_CAScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            void* arg2 = nullptr;
-            ok &= javal_to_viodpointe(cx, args.get(2), &arg2);
+            CrossApp::CAObject* arg2 = nullptr;
+            do {
+                if (args.get(2).isNull()) { arg2 = nullptr; break; }
+                if (!args.get(2).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, 0, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             double arg3 = 0;
             ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
@@ -968,6 +835,91 @@ bool js_crossapp_CAScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
     } while(0);
 
     JS_ReportError(cx, "js_crossapp_CAScheduler_schedule : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAScheduler_unscheduleAllWithMinPriority(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleAllWithMinPriority : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unscheduleAllWithMinPriority : Error processing arguments");
+        cobj->unscheduleAllWithMinPriority(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleAllWithMinPriority : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAScheduler_isScheduled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_isScheduled : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        CrossApp::CAObject* arg1 = nullptr;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_isScheduled : Error processing arguments");
+        bool ret = cobj->isScheduled(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_isScheduled : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CAScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_isTargetPaused : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAObject* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_isTargetPaused : Error processing arguments");
+        bool ret = cobj->isTargetPaused(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_isTargetPaused : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScheduler_update(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1001,8 +953,16 @@ bool js_crossapp_CAScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *v
     CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_resumeTarget : Invalid Native Object");
     if (argc == 1) {
-        void* arg0 = nullptr;
-        ok &= javal_to_viodpointe(cx, args.get(0), &arg0);
+        CrossApp::CAObject* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_resumeTarget : Error processing arguments");
         cobj->resumeTarget(arg0);
         args.rval().setUndefined();
@@ -1012,24 +972,7 @@ bool js_crossapp_CAScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CAScheduler_resumeTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleAll : Invalid Native Object");
-    if (argc == 0) {
-        cobj->unscheduleAll();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleAll : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1037,17 +980,17 @@ bool js_crossapp_CAScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_pauseTarget : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority : Invalid Native Object");
     if (argc == 1) {
-        void* arg0 = nullptr;
-        ok &= javal_to_viodpointe(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_pauseTarget : Error processing arguments");
-        cobj->pauseTarget(arg0);
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority : Error processing arguments");
+        cobj->resumeAllTargetsWithMinPriority(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScheduler_pauseTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScheduler_performFunctionInUIThread(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1090,26 +1033,7 @@ bool js_crossapp_CAScheduler_performFunctionInUIThread(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_crossapp_CAScheduler_performFunctionInUIThread : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScheduler_getTimeScale(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_getTimeScale : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getTimeScale();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScheduler_getTimeScale : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScheduler_unscheduleAllWithMinPriority(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScheduler_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1117,20 +1041,47 @@ bool js_crossapp_CAScheduler_unscheduleAllWithMinPriority(JSContext *cx, uint32_
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleAllWithMinPriority : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unscheduleAllWithMinPriority : Error processing arguments");
-        cobj->unscheduleAllWithMinPriority(arg0);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unschedule : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        CrossApp::CAObject* arg1 = nullptr;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unschedule : Error processing arguments");
+        cobj->unschedule(arg0, arg1);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleAllWithMinPriority : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScheduler_unschedule : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleAll : Invalid Native Object");
+    if (argc == 0) {
+        cobj->unscheduleAll();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleAll : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAScheduler_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1138,19 +1089,172 @@ bool js_crossapp_CAScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_isTargetPaused : Invalid Native Object");
-    if (argc == 1) {
-        void* arg0 = nullptr;
-        ok &= javal_to_viodpointe(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_isTargetPaused : Error processing arguments");
-        bool ret = cobj->isTargetPaused(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_scheduleOnce : Invalid Native Object");
+    if (argc == 4) {
+        std::function<void (float)> arg0;
+        std::string arg1;
+        CrossApp::CAObject* arg2 = nullptr;
+        double arg3 = 0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](float larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = DOUBLE_TO_JSVAL(larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        do {
+            if (args.get(2).isNull()) { arg2 = nullptr; break; }
+            if (!args.get(2).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(2).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg2 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg2, cx, 0, "Invalid Native Object");
+        } while (0);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_scheduleOnce : Error processing arguments");
+        cobj->scheduleOnce(arg0, arg1, arg2, arg3);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 5) {
+        std::function<void (float)> arg0;
+        std::string arg1;
+        CrossApp::CAObject* arg2 = nullptr;
+        double arg3 = 0;
+        bool arg4;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](float larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = DOUBLE_TO_JSVAL(larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        do {
+            if (args.get(2).isNull()) { arg2 = nullptr; break; }
+            if (!args.get(2).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(2).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg2 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg2, cx, 0, "Invalid Native Object");
+        } while (0);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        arg4 = JS::ToBoolean(args.get(4));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_scheduleOnce : Error processing arguments");
+        cobj->scheduleOnce(arg0, arg1, arg2, arg3, arg4);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScheduler_isTargetPaused : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScheduler_scheduleOnce : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_CAScheduler_unscheduleAllForTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_unscheduleAllForTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAObject* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_unscheduleAllForTarget : Error processing arguments");
+        cobj->unscheduleAllForTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_unscheduleAllForTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_pauseTarget : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAObject* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScheduler_pauseTarget : Error processing arguments");
+        cobj->pauseTarget(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_pauseTarget : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAScheduler_pauseAll(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScheduler_pauseAll : Invalid Native Object");
+    if (argc == 0) {
+        cobj->pauseAll();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScheduler_pauseAll : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScheduler_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1231,24 +1335,24 @@ void js_register_crossapp_CAScheduler(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("setTimeScale", js_crossapp_CAScheduler_setTimeScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isScheduled", js_crossapp_CAScheduler_isScheduled, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("unschedule", js_crossapp_CAScheduler_unschedule, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("scheduleOnce", js_crossapp_CAScheduler_scheduleOnce, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("unscheduleAllForTarget", js_crossapp_CAScheduler_unscheduleAllForTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("resumeAll", js_crossapp_CAScheduler_resumeAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("unscheduleUpdate", js_crossapp_CAScheduler_unscheduleUpdate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("resumeAllTargetsWithMinPriority", js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("pauseAll", js_crossapp_CAScheduler_pauseAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("resumeAll", js_crossapp_CAScheduler_resumeAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTimeScale", js_crossapp_CAScheduler_setTimeScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTimeScale", js_crossapp_CAScheduler_getTimeScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("schedule", js_crossapp_CAScheduler_schedule, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("unscheduleAllWithMinPriority", js_crossapp_CAScheduler_unscheduleAllWithMinPriority, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isScheduled", js_crossapp_CAScheduler_isScheduled, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isTargetPaused", js_crossapp_CAScheduler_isTargetPaused, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("update", js_crossapp_CAScheduler_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resumeTarget", js_crossapp_CAScheduler_resumeTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("unscheduleAll", js_crossapp_CAScheduler_unscheduleAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("pauseTarget", js_crossapp_CAScheduler_pauseTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("resumeAllTargetsWithMinPriority", js_crossapp_CAScheduler_resumeAllTargetsWithMinPriority, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("performFunctionInUIThread", js_crossapp_CAScheduler_performFunctionInUIThread, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTimeScale", js_crossapp_CAScheduler_getTimeScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("unscheduleAllWithMinPriority", js_crossapp_CAScheduler_unscheduleAllWithMinPriority, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isTargetPaused", js_crossapp_CAScheduler_isTargetPaused, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("unschedule", js_crossapp_CAScheduler_unschedule, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("unscheduleAll", js_crossapp_CAScheduler_unscheduleAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("scheduleOnce", js_crossapp_CAScheduler_scheduleOnce, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("unscheduleAllForTarget", js_crossapp_CAScheduler_unscheduleAllForTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("pauseTarget", js_crossapp_CAScheduler_pauseTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("pauseAll", js_crossapp_CAScheduler_pauseAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("scheduleUpdate", js_crossapp_CAScheduler_scheduleUpdate, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -46331,30 +46435,25 @@ bool js_crossapp_CAHttpRequest_setUrl(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAHttpRequest_setUrl : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAHttpRequest_autorelease(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAHttpRequest_setRequestType(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAHttpRequest* cobj = (CrossApp::CAHttpRequest *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAHttpRequest_autorelease : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAObject* ret = cobj->autorelease();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAObject>(cx, (CrossApp::CAObject*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAHttpRequest_setRequestType : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAHttpRequest::Type arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAHttpRequest_setRequestType : Error processing arguments");
+        cobj->setRequestType(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAHttpRequest_autorelease : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAHttpRequest_setRequestType : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAHttpRequest_getHeaders(JSContext *cx, uint32_t argc, jsval *vp)
@@ -46456,27 +46555,6 @@ bool js_crossapp_CAHttpRequest_getRequestDataSize(JSContext *cx, uint32_t argc, 
     }
 
     JS_ReportError(cx, "js_crossapp_CAHttpRequest_getRequestDataSize : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAHttpRequest_setRequestType(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAHttpRequest* cobj = (CrossApp::CAHttpRequest *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAHttpRequest_setRequestType : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAHttpRequest::Type arg0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAHttpRequest_setRequestType : Error processing arguments");
-        cobj->setRequestType(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAHttpRequest_setRequestType : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAHttpRequest_setFileNameToPost(JSContext *cx, uint32_t argc, jsval *vp)
@@ -46628,13 +46706,12 @@ void js_register_crossapp_CAHttpRequest(JSContext *cx, JS::HandleObject global) 
         JS_FN("getThreadID", js_crossapp_CAHttpRequest_getThreadID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRequestData", js_crossapp_CAHttpRequest_getRequestData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUrl", js_crossapp_CAHttpRequest_setUrl, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("autorelease", js_crossapp_CAHttpRequest_autorelease, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setRequestType", js_crossapp_CAHttpRequest_setRequestType, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHeaders", js_crossapp_CAHttpRequest_getHeaders, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRequestType", js_crossapp_CAHttpRequest_getRequestType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setThreadID", js_crossapp_CAHttpRequest_setThreadID, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setRequestData", js_crossapp_CAHttpRequest_setRequestData, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRequestDataSize", js_crossapp_CAHttpRequest_getRequestDataSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setRequestType", js_crossapp_CAHttpRequest_setRequestType, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFileNameToPost", js_crossapp_CAHttpRequest_setFileNameToPost, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setHeaders", js_crossapp_CAHttpRequest_setHeaders, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFileNameToPost", js_crossapp_CAHttpRequest_getFileNameToPost, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -47392,6 +47469,8 @@ bool js_crossapp_CAHttpClient_getInstance(JSContext *cx, uint32_t argc, jsval *v
     return false;
 }
 
+extern JSObject *jsb_CrossApp_CAObject_prototype;
+
 void js_CrossApp_CAHttpClient_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (CAHttpClient)", obj);
 }
@@ -47438,7 +47517,7 @@ void js_register_crossapp_CAHttpClient(JSContext *cx, JS::HandleObject global) {
 
     jsb_CrossApp_CAHttpClient_prototype = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        JS::RootedObject(cx, jsb_CrossApp_CAObject_prototype),
         jsb_CrossApp_CAHttpClient_class,
         dummy_constructor<CrossApp::CAHttpClient>, 0, // no constructor
         properties,
@@ -47459,7 +47538,7 @@ void js_register_crossapp_CAHttpClient(JSContext *cx, JS::HandleObject global) {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_CrossApp_CAHttpClient_class;
         p->proto = jsb_CrossApp_CAHttpClient_prototype;
-        p->parentProto = NULL;
+        p->parentProto = jsb_CrossApp_CAObject_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
