@@ -1,12 +1,14 @@
 /**
- * Created by zhanglei on 16/8/8.
+ * Created by crossApp on 16/8/8.
  */
 
 var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
-    HorizontalcolorArr:null,
-    AutoCollectionViewHorizontalNum:null,
+
     ctor: function () {
         this._super();
+    },
+
+    viewDidLoad: function() {
 
         this.HorizontalcolorArr = new Array();
         for (var i = 0; i < 60; i++)
@@ -20,21 +22,26 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
         this.AutoCollectionViewHorizontalNum = 0;
         if (this.AutoCollectionViewHorizontalNum == 0)
         {
-            var p_AutoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
-            p_AutoCollection.setAllowsSelection(true);
-            p_AutoCollection.setAllowsMultipleSelection(true);
-            p_AutoCollection.setOrientation(0);
-            //p_AutoCollection.setScrollViewDelegate(this);
-            p_AutoCollection.setHoriCellInterval(20);
-            p_AutoCollection.setVertCellInterval(20);
-            this.getView().addSubview(p_AutoCollection);
+            this.autoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
+            this.autoCollection.setAllowsSelection(true);
+            this.autoCollection.setAllowsMultipleSelection(true);
+            this.autoCollection.setOrientation(ca.CAAutoCollectionView.Orientation.Horizontal);
+            this.autoCollection.setHoriCellInterval(20);
+            this.autoCollection.setVertCellInterval(20);
+            this.autoCollection.setDidSelectRowAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this));
+            this.autoCollection.setCellAtIndexPathCallback(this.collectionCellAtIndex.bind(this));
+            this.autoCollection.setSizeForItemAtIndexPath(this.collectionViewSizeForItemAtIndexPath.bind(this));
+            this.autoCollection.setNumberOfItemsInSectionCallback(this.numberOfItemsInSection.bind(this));
+            this.autoCollection.setNumberOfSectionsCallback(this.numberOfSections.bind(this));
+
+            this.getView().addSubview(this.autoCollection);
+
         }
     },
-    viewDidLoad: function() {
-    },
-    collectionViewDidSelectCellAtIndexPath: function(collectionView, section, item)
+
+    collectionViewDidSelectCellAtIndexPath: function(section, item)
     {
-        var cell = collectionView.cellForRowAtIndexPath(section, item);
+        var cell = this.autoCollection.cellForRowAtIndexPath(section, item);
         cell.getContentView().setRotation(-360);
         cell.getContentView().setScale(0.5);
         ca.CAViewAnimation.beginAnimations("");
@@ -42,18 +49,13 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
         cell.getContentView().setScale(1.0);
         ca.CAViewAnimation.commitAnimations();
     },
-
-    collectionViewDidDeselectCellAtIndexPath: function (collectionView, section, item)
+    collectionCellAtIndex: function(cellSize, section, item)
     {
-    },
-
-    collectionCellAtIndex: function(collectionView,  cellSize, section, item)
-    {
-        var p_Cell = collectionView.dequeueReusableCellWithIdentifier("CrossApp");
+        var p_Cell = this.autoCollection.dequeueReusableCellWithIdentifier("cell");
 
         if (p_Cell == null)
         {
-            p_Cell = ca.CACollectionViewCell.create("CrossApp");
+            p_Cell = ca.CACollectionViewCell.create("cell");
 
             var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
             itemImage.setTag(99);
@@ -69,18 +71,18 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
 
         var itemImageView = p_Cell.getContentView().getSubviewByTag(99);
         itemImageView.setColor(this.HorizontalcolorArr[item]);
-        log("row = "+ item);
+        ca.log("row = "+ item);
 
 
         var itemText = p_Cell.getContentView().getSubviewByTag(100);
-        itemText.setText("(%"+section+","+item+")");
+        itemText.setText("("+section+","+item+")");
         return  p_Cell;
 
     },
 
     collectionViewSizeForItemAtIndexPath: function( collectionView, section, item)
     {
-        return ca.dsize(230, 230);
+        return ca.DSize.set(230, 230);
     },
 
     numberOfItemsInSection: function(collectionView, section)

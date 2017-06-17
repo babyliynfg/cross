@@ -1,5 +1,5 @@
 /**
- * Created by zhanglei on 16/8/8.
+ * Created by crossApp on 16/8/8.
  */
 //事件代理
 var listViewDategate = {
@@ -10,7 +10,7 @@ var listViewDategate = {
 };
 
 //数据代理
-var listViewDataSource = {
+var listView1DataSource = {
     numberOfIndex: function (listView) {
         return 30;
     },
@@ -52,16 +52,8 @@ var listViewDataSource = {
 };
 
 
-//事件代理
-var CDlistViewDategate = {
-    listViewDidSelectCellAtIndex: function (listView, index) {
-    },
-    listViewDidDeselectCellAtIndex: function (listView, index) {
-    }
-};
-
 //数据代理
-var CDlistViewDataSource = {
+var listView2DataSource = {
     numberOfIndex: function (listView) {
         return 20;
     },
@@ -101,41 +93,40 @@ var ListViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
 
-        var cdListView = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 120)));
-        cdListView.setListViewDelegate(CDlistViewDategate);
-        cdListView.setListViewDataSource(CDlistViewDataSource);
-        cdListView.setAllowsSelection(true);
-        cdListView.setAllowsMultipleSelection(false);
-        cdListView.setOrientation(2); //(ca.CAListView.orientation.horizontal);
-        // cdListView.setShowsScrollIndicators(false);
-        cdListView.setShowsHorizontalScrollIndicator(false);
-        cdListView.setSeparatorColor(ca.CAColor4F.CLEAR);
-        this.getView().addSubview(cdListView);
+        var listview1 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 120)));
+        //listview1.setListViewDelegate(listViewDategate);
+        //listview1.setListViewDataSource(listView1DataSource);
 
 
-        // var cdListView = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 120)));
-        // cdListView.setListViewDelegate(CDlistViewDategate);
-        // cdListView.setListViewDataSource(CDlistViewDataSource);
-        // cdListView.setAllowsSelection(true);
-        // cdListView.setAllowsMultipleSelection(false);
-        // cdListView.setOrientation(ca.CAListView.Orientation.Horizontal);
-        // //cdListView.setShowsHorizontalScrollIndicator(false);
-        // cdListView.setShowsScrollIndicators(false);
-        // // cdListView.setSeparatorColor(ca.color.clear);
-        // this.getView().addSubview(cdListView);
+        listview1.setDidSelectCellAtIndexPathCallback(listViewDategate.listViewDidSelectCellAtIndex.bind(listViewDategate));
+        listview1.setDidDeselectCellAtIndexPathCallback(listViewDategate.listViewDidDeselectCellAtIndex.bind(listViewDategate));
+        listview1.setNumberOfIndexPathCallback(listView1DataSource.numberOfIndex.bind(listView1DataSource));
+        listview1.setHeightForIndexPathCallback(listView1DataSource.listViewHeightForIndex.bind(listView1DataSource));
+        listview1.setCellAtIndexPathCallBack(listView1DataSource.listViewCellAtIndex.bind(listView1DataSource))
+        listview1.setWillDisplayCellAtIndexPathCallback(listView1DataSource.listViewWillDisplayCellAtIndex.bind(listView1DataSource)) ;
 
-        this.getView().addSubview(ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(120, 5)), ca.color._getGreen()));
 
-        var ListView = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(130, 0)));
-        ListView.setListViewDelegate(listViewDategate);
-        ListView.setListViewDataSource(listViewDataSource);
-        ListView.setAllowsSelection(true);
-        ListView.setAllowsMultipleSelection(false);
-        // ListView.setOrientation(ca.CAListView.Vertical);
-        ListView.setShowsScrollIndicators(true);
-        ListView.setSeparatorViewHeight(30);
-        ListView.setSeparatorColor(ca.color._getGray());
-        this.getView().addSubview(ListView);
+
+        listview1.setAllowsSelection(true);
+        listview1.setAllowsMultipleSelection(false);
+        listview1.setOrientation(ca.CAListView.Orientation.Horizontal); //(ca.CAListView.orientation.horizontal);
+        listview1.setShowsHorizontalScrollIndicator(false);
+        listview1.setSeparatorColor(ca.CAColor4F.CLEAR);
+        this.getView().addSubview(listview1);
+
+
+        //this.getView().addSubview(ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(120, 5)), ca.CAColor4B.GRAY));
+        //
+        //var listview2 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(130, 0)));
+        //listview2.setListViewDelegate(listViewDategate);
+        //listview2.setListViewDataSource(listView2DataSource);
+        //listview2.setAllowsSelection(true);
+        //listview2.setAllowsMultipleSelection(false);
+        //listview2.setOrientation(ca.CAListView.Orientation.Vertical);
+        //listview2.setShowsScrollIndicators(true);
+        //listview2.setSeparatorViewHeight(30);
+        //listview2.setSeparatorColor(ca.CAColor4B.GRAY);
+        //this.getView().addSubview(listview2);
     },
     viewDidLoad: function() {
     },

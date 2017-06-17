@@ -1424,10 +1424,10 @@ ca._initDebugSetting = function (mode) {
         var string = ca.formatStr.apply(ca, arguments);
         bakLog.call(this, string);
         
-        if (ca.CAApplication.getApplication().isCrossAppCCLogNotification() == true)
-        {
-            ca.CANotificationCenter.getInstance().postNotificationWithStringValue(ca.CROSSAPP_CCLOG_NOTIFICATION, string);
-        }
+        // if (ca.CAApplication.getApplication().isCrossAppCCLogNotification() == true)
+        // {
+        //     ca.CANotificationCenter.getInstance().postNotificationWithStringValue(ca.CROSSAPP_CCLOG_NOTIFICATION, string);
+        // }
         
     };
     ca.assert = function(cond, msg) {

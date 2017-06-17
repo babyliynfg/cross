@@ -300,9 +300,9 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Normal);
 			}
-            if (m_obDidDeselectRowAtIndexPathCallback)
+            if (m_obDidDeselectCellAtIndexPathCallback)
             {
-                m_obDidDeselectRowAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
+                m_obDidDeselectCellAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
             }
             else if (m_pCollectionViewDelegate)
 			{
@@ -317,9 +317,9 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Selected);
 			}
-            if (m_obDidSelectRowAtIndexPathCallback)
+            if (m_obDidSelectCellAtIndexPathCallback)
             {
-                m_obDidSelectRowAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
+                m_obDidSelectCellAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
             }
 			else if (m_pCollectionViewDelegate)
 			{
@@ -432,9 +432,9 @@ void CACollectionView::reloadViewSizeData()
     for (unsigned int i=0; i<m_nSections; i++)
     {
         unsigned int rowsInSection = 0;
-        if (m_obNumberOfRowsInSectionCallback)
+        if (m_obNumberOfRowsAtIndexPathCallback)
         {
-            rowsInSection = m_obNumberOfRowsInSectionCallback(i);
+            rowsInSection = m_obNumberOfRowsAtIndexPathCallback(i);
         }
         else if (m_pCollectionViewDataSource)
         {
@@ -480,9 +480,9 @@ void CACollectionView::reloadViewSizeData()
         for (unsigned int j=0; j<m_nRowsInSections.at(i); j++)
         {
             unsigned int rowHeight = 0;
-            if (m_obHeightForRowAtIndexPathCallback)
+            if (m_obCellHeightAtIndexPathCallback)
             {
-                rowHeight = m_obHeightForRowAtIndexPathCallback(i, j);
+                rowHeight = m_obCellHeightAtIndexPathCallback(i, j);
             }
             else if (m_pCollectionViewDataSource)
             {
@@ -599,9 +599,9 @@ void CACollectionView::reloadData()
 			int iHeight = m_nRowHeightss.at(i).at(j);
             
             unsigned int itemCount = 0;
-            if (m_obNumberOfItemsInRowsInSectionCallback)
+            if (m_obNumberOfItemsAtIndexPathCallback)
             {
-                itemCount = m_obNumberOfItemsInRowsInSectionCallback(i, j);
+                itemCount = m_obNumberOfItemsAtIndexPathCallback(i, j);
             }
             else if (m_pCollectionViewDataSource)
             {

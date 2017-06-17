@@ -2,10 +2,12 @@
  * Created by zhanglei on 16/8/8.
  */
 var ScrollViewTest = ca.CAViewController.extend({
-    colorArr:null,
-    p_ScrollView:null,
+
     ctor: function () {
         this._super();
+    },
+
+    viewDidLoad: function() {
 
         this.colorArr = new Array();
 
@@ -14,18 +16,16 @@ var ScrollViewTest = ca.CAViewController.extend({
         this.p_ScrollView.setMaximumZoomScale(5.0);
         this.p_ScrollView.setMultitouchGesture(ca.CAScrollView.MultitouchGesture.ZoomAndRotate);
         this.getView().addSubview(this.p_ScrollView);
-        this.p_ScrollView.setViewSize(ca.dsize(2160, 3840));
+        this.p_ScrollView.setViewSize(ca.DSize.set(2160,3840));
 
-        var _size = this.p_ScrollView.getBounds().size;
-        p_imageView = ca.CAImageView.createWithImage(ca.CAImage.create("image/h1.png"));
-        p_imageView.setLayout(ca.DLayoutFill);
-        this.p_ScrollView.addSubview(p_imageView);
-    },
-    viewDidLoad: function() {
+        this.p_imageView = ca.CAImageView.createWithImage(ca.CAImage.create("image/h1.png"));
+        this.p_imageView.setLayout(ca.DLayoutFill);
+        this.p_ScrollView.addSubview(this.p_imageView);
     },
     btncallback: function () {
         log("btncallback-->");
     },
+
     refreshData: function (interval)
     {
         for (var i = 0; i < 40; i++)
@@ -67,15 +67,12 @@ var ScrollViewTest = ca.CAViewController.extend({
     ,scrollViewHeaderBeginRefreshing: function (view)
     {
         this.colorArr.clear();
-        //ca.CAScheduler.schedule(schedule_selector(this.refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
-
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.refreshData,0.01);
+        ca.CAScheduler.getScheduler().schedule(this,this.refreshData,0.01);
     }
 
     ,scrollViewFooterBeginRefreshing: function ( view)
     {
-        //ca.CAScheduler.schedule(schedule_selector(this.refreshData), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this,this.refreshData,0.02);
+        ca.CAScheduler.getScheduler().schedule(this,this.refreshData,0.02);
     }
 
 

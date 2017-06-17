@@ -412,9 +412,9 @@ void CAWaterfallView::reloadViewSizeData()
 	unsigned int viewHeight = 0;
 
     int nItemCount = 0;
-    if (m_obNumberOfIndexPathCallback)
+    if (m_obNumberOfItemsAtIndexPathCallback)
     {
-        nItemCount = m_obNumberOfIndexPathCallback();
+        nItemCount = m_obNumberOfItemsAtIndexPathCallback();
     }
     else if (m_pWaterfallViewDataSource)
     {
@@ -424,9 +424,9 @@ void CAWaterfallView::reloadViewSizeData()
 	for (int i = 0; i < nItemCount; i++)
 	{
         unsigned int nColumnHeight = 0;
-        if (m_obHeightForIndexPathCallback)
+        if (m_obCellHeightAtIndexPathCallback)
         {
-            nColumnHeight = m_obHeightForIndexPathCallback(i);
+            nColumnHeight = m_obCellHeightAtIndexPathCallback(i);
         }
         else if (m_pWaterfallViewDataSource)
         {

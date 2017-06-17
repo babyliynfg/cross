@@ -1,83 +1,49 @@
 /**
- * Created by zhanglei on 16/8/8.
+ * Created by crossApp on 16/8/8.
  */
-
-var ETableViewCell = ca.CAView.extend({
-    ctor: function () {
-        this._super();
-    }
-});
-
-var ETableView = ca.CATableViewCell.extend({
-    ctor: function () {
-        this._super();
-    }
-});
 
 
 var TableViewTest = ca.CAViewController.extend({
-    sectionTitle:null,
+
     ctor: function () {
         this._super();
-
-        this.getView().setColor(ca.color._getGray());
-
-        this.sectionTitle = new Array();
-        this.sectionTitle.push("A");
-        this.sectionTitle.push("B");
-        this.sectionTitle.push("C");
-        this.sectionTitle.push("D");
-        this.sectionTitle.push("E");
-        this.sectionTitle.push("F");
-        this.sectionTitle.push("G");
-        this.sectionTitle.push("H");
-        this.sectionTitle.push("I");
-        this.sectionTitle.push("J");
-        this.sectionTitle.push("K");
-        this.sectionTitle.push("L");
-        this.sectionTitle.push("M");
-        this.sectionTitle.push("N");
-        this.sectionTitle.push("O");
-        this.sectionTitle.push("P");
-        this.sectionTitle.push("Q");
-        this.sectionTitle.push("R");
-        this.sectionTitle.push("S");
-        this.sectionTitle.push("T");
-        this.sectionTitle.push("U");
-        this.sectionTitle.push("V");
-        this.sectionTitle.push("W");
-        this.sectionTitle.push("X");
-        this.sectionTitle.push("Y");
-        this.sectionTitle.push("Z");
-
-        showIndex = 0;
-
-        var p_TableView = ca.CATableView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0, 0), ca.DVerticalLayoutFill));
-        p_TableView.setTableViewDataSource(this);
-        p_TableView.setTableViewDelegate(this);
-        p_TableView.setAllowsSelection(true);
-        p_TableView.setAllowsMultipleSelection(false);
-        p_TableView.setShowsScrollIndicators(false);
-        p_TableView.setSelectRowAtIndexPath(2, 1);
-
-        this.getView().addSubview(p_TableView);
-
-
     },
+
     viewDidLoad: function() {
+        this.sectionTitle = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+
+        this.p_TableView = ca.CATableView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0, 0), ca.DVerticalLayoutFill));
+
+        this.p_TableView.setDidSelectRowAtIndexPathCallback(this.tableViewDidSelectRowAtIndexPath.bind(this)) ;
+        this.p_TableView.setDidDeselectRowAtIndexPathCallback(this.tableViewDidDeselectRowAtIndexPath.bind(this)) ;
+        this.p_TableView.setCellAtIndexPathCallBack(this.tableCellAtIndex.bind(this)) ;
+        this.p_TableView.setSectionViewForHeaderInSectionCallback(this.tableViewSectionViewForHeaderInSection.bind(this)) ;
+        this.p_TableView.setSectionViewForFooterInSectionCallback(this.tableViewSectionViewForFooterInSection.bind(this)) ;
+        this.p_TableView.setNumberOfRowsInSectionCallback(this.numberOfRowsInSection.bind(this));
+        this.p_TableView.setNumberOfSectionsCallback(this.numberOfSections.bind(this)) ;
+        this.p_TableView.setHeightForRowAtIndexPathCallback(this.tableViewHeightForRowAtIndexPath.bind(this));
+        this.p_TableView.setHeightForHeaderInSectionCallback(this.tableViewHeightForHeaderInSection.bind(this));
+        this.p_TableView.setHeightForFooterInSectionCallback(this.tableViewHeightForFooterInSection.bind(this)) ;
+
+        this.p_TableView.setAllowsSelection(true);
+        this.p_TableView.setAllowsMultipleSelection(false);
+        this.p_TableView.setShowsScrollIndicators(false);
+        this.p_TableView.setSelectRowAtIndexPath(2, 1);
+
+        this.getView().addSubview(this.p_TableView);
+
     },
-    tableViewDidSelectRowAtIndexPath: function(table, section ,row)
+    tableViewDidSelectRowAtIndexPath: function(section ,row)
     {
 
     },
-    tableViewDidDeselectRowAtIndexPath: function( table, section ,row)
+    tableViewDidDeselectRowAtIndexPath: function( section ,row)
     {
 
     },
-    tableCellAtIndex: function( table, cellSize, section ,row)
+    tableCellAtIndex: function( cellSize, section ,row)
     {
-        var _size = cellSize;
-        var cell = table.dequeueReusableCellWithIdentifier("CrossApp");
+        var cell = this.p_TableView.dequeueReusableCellWithIdentifier("CrossApp");
         if (cell == null)
         {
             cell = ca.CATableViewCell.create("CrossApp");
@@ -97,44 +63,43 @@ var TableViewTest = ca.CAViewController.extend({
         return cell;
 
     }
-    ,tableViewSectionViewForHeaderInSection: function( table, viewSize ,section)
+    ,tableViewSectionViewForHeaderInSection: function(viewSize ,section)
     {
         var head = this.sectionTitle[section];
-        var view = ca.CAView.createWithColor(ca.color._getGray());
+        var view = ca.CAView.createWithColor(ca.CAColor4B.GRAY);
 
-        var _size = viewSize;
         var header = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(50, 0), ca.DVerticalLayoutFill));
         header.setText(head);
         header.setFontSize(30);
-        header.setColor(ca.WHITE);
+        header.setColor(ca.CAColor4B.WHITE);
         header.setTextAlignment(ca.CATextAlignment.Left);
         header.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
         view.addSubview(header);
 
         return view;
     }
-    ,tableViewSectionViewForFooterInSection: function( table, viewSize ,section)
+    ,tableViewSectionViewForFooterInSection: function(viewSize ,section)
     {
-        var view = ca.CAView.createWithColor(ca.color._getGray());
+        var view = ca.CAView.createWithColor(ca.CAColor4B.GRAY);
         return view;
     }
-    ,numberOfRowsInSection: function(table, section)
+    ,numberOfRowsInSection: function(section)
     {
         return 2;
     }
-    ,numberOfSections: function(table)
+    ,numberOfSections: function()
     {
         return this.sectionTitle.length;
     }
-    ,tableViewHeightForRowAtIndexPath: function( table,section, row)
+    ,tableViewHeightForRowAtIndexPath: function(section, row)
     {
         return 130;
     }
-    ,tableViewHeightForHeaderInSection: function( table, section)
+    ,tableViewHeightForHeaderInSection: function(section)
     {
         return 50;
     }
-    ,tableViewHeightForFooterInSection: function( table, section)
+    ,tableViewHeightForFooterInSection: function(section)
     {
         return 1;
     }

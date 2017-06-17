@@ -5,18 +5,12 @@ var RootWindow = ca.CAWindow.extend(
         m_pRootNavigationController:null,
         ctor: function () {
             this._super();
-        },
 
-        init: function(){
             var viewController = new FirstViewController();
-            viewController.init();
 
             var navItem = ca.CANavigationBarItem.create("控件展示");
             var item = ca.CABarButtonItem.create("", ca.CAImage.create("image/ic_category_list.png"), null);
-            item.setCallbackFunction(function ()
-            {
-
-            });
+            item.setCallbackFunction(function (){});
             navItem.addLeftButtonItem(item);
             viewController.setNavigationBarItem(navItem);
 

@@ -93,8 +93,6 @@ protected:
     virtual void contentOffsetFinish() override;
     
     virtual void setContentSize(const DSize& contentSize) override;
-
-    void runAnimation(bool animated);
     
 private:
     

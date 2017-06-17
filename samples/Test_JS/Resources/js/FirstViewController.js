@@ -35,7 +35,7 @@ var FirstViewController = ca.CAViewController.extend({
             ["WebView",                         "image/WebView.png",                "WebViewTest()"],
             ["GifView",                         "image/GifView.png",                "GifViewTest()"],
             ["VideoPlayer",                     "image/Video.png",                  "VideoPlayerControlViewTest()"],
-            ["RenderImage",                     "image/RenderImage.png",            "AlertViewTest()"],
+            ["RenderImage",                     "image/RenderImage.png",            "RenderImageTest()"],
             ["Animation",                       "image/Video.png",                  "ViewAnimationTest()"]
         ];
     },

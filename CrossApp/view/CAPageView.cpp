@@ -160,7 +160,7 @@ void CAPageView::setContentSize(const DSize& contentSize)
             m_pViews.at(i)->setFrame(rect);
         }
         
-        this->runAnimation(false);
+        this->contentOffsetFinish();
     }
 }
 
@@ -213,24 +213,27 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
     
     m_nCurrPage = var;
     
-    this->runAnimation(animated);
+    if (animated)
+    {
+        if (m_eOrientation == CAPageView::Orientation::Horizontal)
+        {
+            this->setContentOffset(DPoint(m_nCurrPage * (m_obContentSize.width + m_fSpacing), 0), animated);
+        }
+        else
+        {
+            this->setContentOffset(DPoint(0, m_nCurrPage * (m_obContentSize.height + m_fSpacing)), animated);
+        }
+    }
+    else
+    {
+        this->contentOffsetFinish();
+    }
+    
 }
 
 int CAPageView::getCurrPage()
 {
     return m_nCurrPage;
-}
-
-void CAPageView::runAnimation(bool animated)
-{
-    if (m_eOrientation == CAPageView::Orientation::Horizontal)
-    {
-        this->setContentOffset(DPoint(m_nCurrPage * (m_obContentSize.width + m_fSpacing), 0), animated);
-    }
-    else
-    {
-        this->setContentOffset(DPoint(0, m_nCurrPage * (m_obContentSize.height + m_fSpacing)), animated);
-    }
 }
 
 void CAPageView::setSpacing(int var)
@@ -373,7 +376,15 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         {
             m_pPageViewDelegate->pageViewDidSelectedPageAtIndex(this, this->getCurrPage(), this->convertTouchToNodeSpace(pTouch));
         }
-        this->runAnimation(true);
+        m_bListener = false;
+        if (m_eOrientation == CAPageView::Orientation::Horizontal)
+        {
+            this->setContentOffset(DPoint(m_nCurrPage * (m_obContentSize.width + m_fSpacing), 0), true);
+        }
+        else
+        {
+            this->setContentOffset(DPoint(0, m_nCurrPage * (m_obContentSize.height + m_fSpacing)), true);
+        }
     }
     else
     {

@@ -1,7 +1,8 @@
 var CheckboxTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
-        this.getView().setColor(ca.color._getGray());
+    },
+    viewDidLoad: function() {
 
         var box = ca.CACheckbox.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(54, 0.5), ca.DVerticalLayout_H_C(54, 0.25)), ca.CACheckbox.Type.RoundedRect);
         this.getView().addSubview(box);
@@ -46,7 +47,6 @@ var CheckboxTest = ca.CAViewController.extend({
                 log("取消选中");
             }
         });
-    },
-    viewDidLoad: function() {
+
     },
 });
