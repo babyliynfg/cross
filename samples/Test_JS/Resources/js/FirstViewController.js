@@ -40,9 +40,7 @@ var FirstViewController = ca.CAViewController.extend({
         ];
     },
     viewDidLoad: function() {
-        ca.CAScheduler.getScheduler().scheduleOnce(function (dt) {
-            ca.log("XXXXXXXXXXXX");
-        }, "Azzzzzzzzzzzzz", this, 0.5);
+
         this._collectionView = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
         this._collectionView.setAllowsSelection(true);
         this._collectionView.setHoriCellInterval(3);
