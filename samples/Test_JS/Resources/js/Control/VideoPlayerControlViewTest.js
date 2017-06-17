@@ -1,10 +1,11 @@
 /**
- * Created by zhanglei on 16/8/4.
+ * Created by crossApp on 16/8/4.
  */
 var VideoPlayerControlViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
-
+    },
+    viewDidLoad: function() {
         //// Do any additional setup after loading the view from its nib.
         var VideoPlayerControlView = ca.CAVideoPlayerControlView.createWithLayout(ca.DLayoutFill);
         VideoPlayerControlView.setUrl("http://42.62.6.159/big_buck_bunny.mp4");
@@ -13,12 +14,6 @@ var VideoPlayerControlViewTest = ca.CAViewController.extend({
         //VideoPlayerControlView->setShowBackButton(false);
         VideoPlayerControlView.setPlayerControlViewDelegate(this);
         this.getView().addSubview(VideoPlayerControlView);
+    },
 
-
-    },
-    viewDidLoad: function() {
-    },
-    btncallback: function () {
-        log("btncallback-->");
-    },
 });

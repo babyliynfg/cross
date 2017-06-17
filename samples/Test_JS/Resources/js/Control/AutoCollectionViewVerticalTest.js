@@ -62,11 +62,11 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
         scrollViewHeaderBeginRefreshing: function()
         {
             ca.log("scrollViewHeaderBeginRefreshing");
-            ca.CAScheduler.getScheduler().schedule(this, this.refreshDataHeader, 0.5, 0, 0);
+            ca.CAScheduler.getScheduler().scheduleOnce(this.refreshDataHeader.bind(this), "A",this, 0.5);
         },
         scrollViewFooterBeginRefreshing: function()
         {
-            ca.CAScheduler.getScheduler().schedule(this, this.refreshDataFooter, 0.5, 0, 0);
+            ca.CAScheduler.getScheduler().scheduleOnce(this.refreshDataFooter.bind(this), "A",this, 0.5);
         },
         collectionViewDidSelectCellAtIndexPath: function( section, item)
         {

@@ -1,27 +1,114 @@
 /**
  * Created by crossApp on 16/8/8.
  */
-//事件代理
-var listViewDategate = {
-    listViewDidSelectCellAtIndex: function (listView, index) {
-    },
-    listViewDidDeselectCellAtIndex: function (listView, index) {
-    }
-};
 
-//数据代理
-var listView1DataSource = {
-    numberOfIndex: function (listView) {
+var ListViewTest = ca.CAViewController.extend({
+    ctor: function () {
+        this._super();
+    },
+    viewDidLoad: function() {
+
+        this.listview1 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 120)));
+
+        list1DataSourceDelegate.init(this.listview1) ;
+
+        this.getView().addSubview(this.listview1);
+
+
+        this.listview2 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(122,0)));
+
+        list2DataSourceDelegate.init(this.listview2) ;
+
+        this.getView().addSubview(this.listview2);
+
+    },
+
+});
+
+var list1DataSourceDelegate = {
+
+    init:function(listview){
+        this.listview = listview ;
+
+        this.listview.setAllowsSelection(true);
+        this.listview.setAllowsMultipleSelection(false);
+        this.listview.setOrientation(ca.CAListView.Orientation.Horizontal); //(ca.CAListView.orientation.horizontal);
+        this.listview.setShowsHorizontalScrollIndicator(false);
+        this.listview.setSeparatorColor(ca.CAColor4F.CLEAR);
+
+
+        this.listview.setDidSelectCellAtIndexPathCallback(this.listViewDidSelectCellAtIndex.bind(this));
+        this.listview.setDidDeselectCellAtIndexPathCallback(this.listViewDidDeselectCellAtIndex.bind(this));
+        this.listview.setNumberOfRowsAtIndexPathCallback(this.numberOfIndex.bind(this));
+        this.listview.setCellHeightAtIndexPathCallback(this.listViewHeightForIndex.bind(this));
+        this.listview.setWillDisplayCellAtIndexPathCallback(this.listViewWillDisplayCellAtIndex.bind(this)) ;
+        this.listview.setCellAtIndexPathCallback(this.listViewCellAtIndex.bind(this)) ;
+    },
+
+    numberOfIndex: function () {
         return 30;
     },
-    listViewHeightForIndex: function (listView, index) {
+    listViewHeightForIndex: function ( index) {
+        return 120;
+    },
+    listViewCellAtIndex: function (cellSize, index) {
+        var cell = this.listview.dequeueReusableCellWithIdentifier("ListViewCell");
+        if (cell == null) {
+            cell = ca.CAListViewCell.create("ListViewCell");
+
+            var test = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_W(0, 200), ca.DVerticalLayoutFill));
+            test.setColor(ca.CAColor4B.set(51, 204, 255, 255));
+            test.setTextAlignment(ca.CATextAlignment.Center);
+            test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
+            test.setFontSize(28);
+            test.setTag(100);
+            cell.addSubview(test);
+        }
+
+        var test = cell.getSubviewByTag(100);
+        test.setText(""+index);
+        return cell;
+    },
+    listViewWillDisplayCellAtIndex: function ( cell, index) {
+        log("listViewWillDisplayCellAtIndex");
+        return 0;
+    },
+
+    listViewDidSelectCellAtIndex: function ( index) {
+    },
+    listViewDidDeselectCellAtIndex: function ( index) {
+    }
+}
+
+var list2DataSourceDelegate = {
+
+
+    init:function(listview){
+        this.listview = listview ;
+
+        this.listview.setAllowsSelection(true);
+        this.listview.setAllowsMultipleSelection(false);
+        this.listview.setOrientation(ca.CAListView.Orientation.Vertical); //(ca.CAListView.orientation.horizontal);
+        this.listview.setShowsHorizontalScrollIndicator(false);
+        this.listview.setSeparatorColor(ca.CAColor4F.CLEAR);
+
+
+        this.listview.setDidSelectCellAtIndexPathCallback(this.listViewDidSelectCellAtIndex.bind(this));
+        this.listview.setDidDeselectCellAtIndexPathCallback(this.listViewDidDeselectCellAtIndex.bind(this));
+        this.listview.setNumberOfRowsAtIndexPathCallback(this.numberOfIndex.bind(this));
+        this.listview.setCellHeightAtIndexPathCallback(this.listViewHeightForIndex.bind(this));
+        this.listview.setWillDisplayCellAtIndexPathCallback(this.listViewWillDisplayCellAtIndex.bind(this)) ;
+        this.listview.setCellAtIndexPathCallback(this.listViewCellAtIndex.bind(this)) ;
+    },
+
+    numberOfIndex: function () {
+        return 30;
+    },
+    listViewHeightForIndex: function ( index) {
         return 100;
     },
-    listViewCellAtIndex: function (listView, cellSize, index) {
-        var size = cellSize;
-
-        log(cellSize.width + "listViewCellAtIndex");
-        var cell = listView.dequeueReusableCellWithIdentifier("ListViewCell");
+    listViewCellAtIndex: function ( cellSize, index) {
+        var cell = this.listview.dequeueReusableCellWithIdentifier("ListViewCell");
         if (cell == null) {
             cell = ca.CAListViewCell.create("ListViewCell");
 
@@ -44,90 +131,18 @@ var listView1DataSource = {
         test.setText("cell-"+index);
         return cell;
     },
-    listViewWillDisplayCellAtIndex: function (listView, cell, index) {
+    listViewWillDisplayCellAtIndex: function ( cell, index) {
         log("listViewWillDisplayCellAtIndex");
-
         return 0;
+    },
+
+    listViewDidSelectCellAtIndex: function ( index) {
+    },
+    listViewDidDeselectCellAtIndex: function ( index) {
     }
-};
-
-
-//数据代理
-var listView2DataSource = {
-    numberOfIndex: function (listView) {
-        return 20;
-    },
-    listViewHeightForIndex: function (listView, index) {
-        return 150;
-    },
-    listViewCellAtIndex: function (listView, cellSize, index) {
-        var size = cellSize;
-
-        log(cellSize.width + "listViewCellAtIndex");
-        var cell = listView.dequeueReusableCellWithIdentifier("CDListViewCell");
-        if (cell == null) {
-            cell = ca.CAListViewCell.create("CDListViewCell");
-
-            var test = ca.CALabel.createWithLayout(ca.DLayoutFill);
-            test.setColor(ca.CAColor4B.set(51, 204, 255, 255));
-            test.setTextAlignment(ca.CATextAlignment.Center);
-            test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            test.setFontSize(28);
-            test.setTag(100);
-            cell.addSubview(test);
-        }
-
-        var test = cell.getSubviewByTag(100);
-        test.setText("cell-"+index);
-        return cell;
-    },
-    listViewWillDisplayCellAtIndex: function (listView, cell, index) {
-        log("listViewWillDisplayCellAtIndex");
-
-        return 0;
-    }
-};
-
-
-var ListViewTest = ca.CAViewController.extend({
-    ctor: function () {
-        this._super();
-
-        var listview1 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 120)));
-        //listview1.setListViewDelegate(listViewDategate);
-        //listview1.setListViewDataSource(listView1DataSource);
-
-
-        listview1.setDidSelectCellAtIndexPathCallback(listViewDategate.listViewDidSelectCellAtIndex.bind(listViewDategate));
-        listview1.setDidDeselectCellAtIndexPathCallback(listViewDategate.listViewDidDeselectCellAtIndex.bind(listViewDategate));
-        listview1.setNumberOfIndexPathCallback(listView1DataSource.numberOfIndex.bind(listView1DataSource));
-        listview1.setHeightForIndexPathCallback(listView1DataSource.listViewHeightForIndex.bind(listView1DataSource));
-        listview1.setCellAtIndexPathCallBack(listView1DataSource.listViewCellAtIndex.bind(listView1DataSource))
-        listview1.setWillDisplayCellAtIndexPathCallback(listView1DataSource.listViewWillDisplayCellAtIndex.bind(listView1DataSource)) ;
+}
 
 
 
-        listview1.setAllowsSelection(true);
-        listview1.setAllowsMultipleSelection(false);
-        listview1.setOrientation(ca.CAListView.Orientation.Horizontal); //(ca.CAListView.orientation.horizontal);
-        listview1.setShowsHorizontalScrollIndicator(false);
-        listview1.setSeparatorColor(ca.CAColor4F.CLEAR);
-        this.getView().addSubview(listview1);
 
 
-        //this.getView().addSubview(ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(120, 5)), ca.CAColor4B.GRAY));
-        //
-        //var listview2 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(130, 0)));
-        //listview2.setListViewDelegate(listViewDategate);
-        //listview2.setListViewDataSource(listView2DataSource);
-        //listview2.setAllowsSelection(true);
-        //listview2.setAllowsMultipleSelection(false);
-        //listview2.setOrientation(ca.CAListView.Orientation.Vertical);
-        //listview2.setShowsScrollIndicators(true);
-        //listview2.setSeparatorViewHeight(30);
-        //listview2.setSeparatorColor(ca.CAColor4B.GRAY);
-        //this.getView().addSubview(listview2);
-    },
-    viewDidLoad: function() {
-    },
-});

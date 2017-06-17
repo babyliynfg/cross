@@ -20,9 +20,11 @@ var ProgressTest = ca.CAViewController.extend({
         this.progress = ca.CAProgress.create();
         this.progress.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_H(550, 0)));
         //定时函数
-        ca.CAScheduler.getScheduler().schedule(this,this.progressValueChange,0.01);
+
+        ca.CAScheduler.getScheduler().schedule(this.progressValueChange.bind(this),"A" ,this ,0);
         this.getView().addSubview(this.progress);
     },
+
 
     progressValueChange: function (dt) {
         var currentValue = this.progress.getProgress() + 0.001;

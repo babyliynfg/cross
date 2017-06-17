@@ -64,11 +64,7 @@ var CollectionViewTest = ca.CAViewController.extend({
         this.p_Conllection.reloadData();
     },
 
-
     _randomColor:function(){
-
-        ca.log("random....color.......");
-
         for (var i = 0; i < 40; i++)
         {
             var r = Math.floor(Math.random()*255);
@@ -81,7 +77,7 @@ var CollectionViewTest = ca.CAViewController.extend({
 
     scrollViewHeaderBeginRefreshing: function()
     {
-        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData1.bind(this), "Azzzzzzzzzzzzz", this, 0.5);
+        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData1.bind(this), "A", this, 0.5);
     },
     scrollViewFooterBeginRefreshing: function()
     {
@@ -129,7 +125,6 @@ var CollectionViewTest = ca.CAViewController.extend({
         var itemImageView = p_Cell.getContentView().getSubviewByTag(99);
         itemImageView.setColor(this.colorArr[row * 3 + item]);
 
-
         var pos= section+""+row+""+item;
         var itemText = p_Cell.getContentView().getSubviewByTag(100);
         itemText.setText(pos);
@@ -150,7 +145,6 @@ var CollectionViewTest = ca.CAViewController.extend({
     },
     collectionViewHeightForRowAtIndexPath: function(section, row)
     {
-        //return (this.getView().getBounds().size.width - 20 * 4) / 3;
         return (ca.winSize.width - 20 * 4) /3;
     },
 

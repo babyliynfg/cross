@@ -1,92 +1,94 @@
 /**
- * Created by zhanglei on 16/8/8.
+ * Created by crossApp on 16/8/8.
  */
 var WaterfallViewTest = ca.CAViewController.extend({
-    colorArr:null,
-    Waterfall:null,
-    footerRefreshView:null,
-    headerRefreshView:null,
+
     ctor: function () {
         this._super();
 
         this.colorArr = new Array();
+        this._randomColor() ;
 
-        for (var i = 0; i < 12; i++)
-        {
-            var r = Math.floor(Math.random()*255);
-            var g = Math.floor(Math.random()*255);
-            var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
-        }
+    },
+    viewDidLoad: function() {
 
         this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
         this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
         this.Waterfall = ca.CAWaterfallView.createWithLayout(ca.DLayoutFill);
+
+        this.Waterfall.setHeaderRefreshView(this.headerRefreshView) ;
+        this.Waterfall.setFooterRefreshView(this.footerRefreshView) ;
+
         this.Waterfall.setItemMargin(10);
         this.Waterfall.setColumnMargin(10);
         this.Waterfall.setColumnCount(2);
         this.Waterfall.setAllowsSelection(true);
 
-        // this.Waterfall.setHeaderRefreshView(this.headerRefreshView);
-        // this.Waterfall.setFooterRefreshView(this.footerRefreshView);
+        this.Waterfall.setCellAtIndexPathCallback(this.waterfallCellAtIndex.bind(this)) ;
+        this.Waterfall.setCellHeightAtIndexPathCallback(this.waterfallViewHeightForItemAtIndex.bind(this));
+        this.Waterfall.setNumberOfItemsAtIndexPathCallback(this.numberOfItems.bind(this)) ;
+        this.Waterfall.setWillDisplayCellAtIndexPathCallback(this.waterfallViewWillDisplayCellAtIndex.bind(this)) ;
+        this.Waterfall.setDidSelectCellAtIndexPathCallback(this.waterfallViewDidSelectCellAtIndexPath.bind(this)) ;
+        this.Waterfall.setDidDeselectCellAtIndexPathCallback(this.waterfallViewDidDeselectCellAtIndexPath.bind(this)) ;
+        this.Waterfall.setHeaderBeginRefreshingCallback(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
+        this.Waterfall.setFooterBeginRefreshingCallback(this.scrollViewFooterBeginRefreshing.bind(this)) ;
+
+
+
         this.getView().addSubview(this.Waterfall);
 
-        // this.Waterfall.reloadData();
-        // this.Waterfall.startPullToHeaderRefreshView();
-    },
-    viewDidLoad: function() {
     },
     refreshData1: function ( interval)
     {
-        this.colorArr = [];
-        for (var i = 0; i < 12; i++)
-        {
-            var r = Math.floor(Math.random()*255);
-            var g = Math.floor(Math.random()*255);
-            var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
-        }
+        this._randomColor() ;
         this.Waterfall.reloadData();
     },
     refreshData2: function ( interval)
     {
 
-        for (var i = 0; i < 12; i++)
+        this._randomColor() ;
+        this.Waterfall.reloadData();
+    }
+
+    ,
+    _randomColor:function(){
+        for (var i = 0; i < 60; i++)
         {
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
+
             this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
         }
-        this.Waterfall.reloadData();
     }
-    ,scrollViewHeaderBeginRefreshing: function ( view)
+
+    ,scrollViewHeaderBeginRefreshing: function ()
     {
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData1, 0.5, 0, 0);
+        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData1.bind(this), "A",this, 0.5);
     }
-    ,scrollViewFooterBeginRefreshing: function ( view)
+    ,scrollViewFooterBeginRefreshing: function ()
     {
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData2, 0.5, 0, 0);
+        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData2.bind(this), "A",this, 0.5);
     }
-    ,waterfallViewDidSelectCellAtIndexPath: function (waterfallView, itemIndex)
+    ,waterfallViewDidSelectCellAtIndexPath: function (itemIndex)
     {
         //选中
-        cell = waterfallView.cellForRowAtIndexPath(itemIndex);
+        cell = this.Waterfall.cellForRowAtIndexPath(itemIndex);
         cell.getContentView().setRotation(-360);
         cell.getContentView().setScale(0.5);
         ca.CAViewAnimation.beginAnimations("");
         cell.getContentView().setRotation(0);
         cell.getContentView().setScale(1.0);
         ca.CAViewAnimation.commitAnimations();
-        log("选中");
+        ca.log("选中");
     }
-    ,waterfallViewDidDeselectCellAtIndexPath: function (waterfallView, itemIndex)
+    ,waterfallViewDidDeselectCellAtIndexPath: function (itemIndex)
     {
-        log("取消选中");
+        ca.log("取消选中");
     },
-    //Necessary
-   waterfallCellAtIndex: function (waterfallView,  cellSize, itemIndex)
+
+    waterfallCellAtIndex: function (cellSize, itemIndex)
     {
         p_Cell = this.Waterfall.dequeueReusableCellWithIdentifier("CrossApp");
         if (p_Cell == null)
@@ -109,15 +111,13 @@ var WaterfallViewTest = ca.CAViewController.extend({
         var itemImageView = p_Cell.getContentView().getSubviewByTag(99);
         itemImageView.setColor(this.colorArr[itemIndex]);
 
-
         var itemText = p_Cell.getContentView().getSubviewByTag(100);
         itemText.setText("("+itemIndex+")");
 
         return  p_Cell;
-
     }
     //Necessary
-    ,waterfallViewHeightForItemAtIndex: function(waterfallView, itemIndex)
+    ,waterfallViewHeightForItemAtIndex: function( itemIndex)
     {
         return Math.random() * 300 + 300;
     }
@@ -125,24 +125,9 @@ var WaterfallViewTest = ca.CAViewController.extend({
     ,numberOfItems: function (waterfallView)
     {
         return this.colorArr.length;
-    },
-   waterfallViewSectionViewForHeader: function (waterfallView,  viewSize)
-    {
-        return null;
     }
-    ,waterfallViewHeightForHeader: function (waterfallView)
-    {
-        return 0;
-    },
-    waterfallViewSectionViewForFooter: function (waterfallView,  viewSize)
-    {
-        return null;
-    }
-    ,waterfallViewHeightForFooter: function (waterfallView)
-    {
-        return 0;
-    }
-    ,waterfallViewWillDisplayCellAtIndex: function ( waterfallView,  cell, itemIndex)
+
+    ,waterfallViewWillDisplayCellAtIndex: function ( cell, itemIndex)
     {
 
     }

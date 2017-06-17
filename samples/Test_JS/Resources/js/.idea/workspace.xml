@@ -25,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/require.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
+              <caret line="29" column="43" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -34,8 +34,28 @@
       <file leaf-file-name="ListViewTest.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Control/ListViewTest.js">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.0">
+              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VideoPlayerControlViewTest.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Control/VideoPlayerControlViewTest.js">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="46" selection-start-line="84" selection-start-column="46" selection-end-line="84" selection-end-column="46" />
+              <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RenderImageTest.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Control/RenderImageTest.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.028436018">
+              <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -44,38 +64,38 @@
       <file leaf-file-name="CollectionViewTest.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Control/CollectionViewTest.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-20.444445">
-              <caret line="83" column="8" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="110" />
+            <state vertical-scroll-proportion="-14.185185">
+              <caret line="78" column="5" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableViewTest.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Control/TableViewTest.js">
+      <file leaf-file-name="ProgressTest.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Control/ProgressTest.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="52" selection-start-line="32" selection-start-column="52" selection-end-line="32" selection-end-column="52" />
+              <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewAnimationTest.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Control/ViewAnimationTest.js">
+      <file leaf-file-name="WaterfallViewTest.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Control/WaterfallViewTest.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+              <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LabelTest.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Control/LabelTest.js">
+      <file leaf-file-name="ScrollViewTest.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Control/ScrollViewTest.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
+              <caret line="69" column="46" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -85,37 +105,17 @@
         <entry file="file://$PROJECT_DIR$/Control/AutoCollectionViewVerticalTest.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+              <caret line="65" column="10" selection-start-line="65" selection-start-column="10" selection-end-line="65" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AutoCollectionViewHorizontalTest.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Control/AutoCollectionViewHorizontalTest.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="51" column="60" selection-start-line="51" selection-start-column="60" selection-end-line="51" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jsb_crossapp_auto_api.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="jsb_crossapp_auto_api.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_auto_api.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37535545">
-              <caret line="12247" column="1" selection-start-line="12247" selection-start-column="1" selection-end-line="12247" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FirstViewController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/FirstViewController.js">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="50" column="42" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
+              <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -137,17 +137,14 @@
         <option value="$PROJECT_DIR$/CDUIShowAutoCollectionView.js" />
         <option value="$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js" />
         <option value="$PROJECT_DIR$/Control/ActivityIndicatorViewTest.js" />
-        <option value="$PROJECT_DIR$/Control/VideoPlayerControlViewTest.js" />
         <option value="$PROJECT_DIR$/Control/WebViewTest.js" />
         <option value="$PROJECT_DIR$/Control/AlertViewTest.js" />
         <option value="$PROJECT_DIR$/rootwindow.js" />
         <option value="$PROJECT_DIR$/Control/ButtonTest.js" />
-        <option value="$PROJECT_DIR$/Control/WaterfallViewTest.js" />
         <option value="$PROJECT_DIR$/Control/CheckboxTest.js" />
         <option value="$PROJECT_DIR$/Control/SegmentedControlTest.js" />
         <option value="$PROJECT_DIR$/Control/ImageViewTest.js" />
         <option value="$PROJECT_DIR$/Control/Scale9ImageViewTest.js" />
-        <option value="$PROJECT_DIR$/Control/ProgressTest.js" />
         <option value="$PROJECT_DIR$/Control/SliderTest.js" />
         <option value="$PROJECT_DIR$/Control/SwitchTest.js" />
         <option value="$PROJECT_DIR$/Control/StepperTest.js" />
@@ -160,15 +157,19 @@
         <option value="$PROJECT_DIR$/Control/ScrollViewTest.js" />
         <option value="$PROJECT_DIR$/Control/PickerViewTest.js" />
         <option value="$PROJECT_DIR$/Control/GifViewTest.js" />
-        <option value="$PROJECT_DIR$/Control/RenderImageTest.js" />
         <option value="$PROJECT_DIR$/Control/ViewAnimationTest.js" />
-        <option value="$PROJECT_DIR$/Control/TableViewTest.js" />
-        <option value="$PROJECT_DIR$/require.js" />
-        <option value="$PROJECT_DIR$/Control/ListViewTest.js" />
         <option value="$PROJECT_DIR$/Control/AutoCollectionViewHorizontalTest.js" />
-        <option value="$PROJECT_DIR$/Control/AutoCollectionViewVerticalTest.js" />
-        <option value="$PROJECT_DIR$/Control/CollectionViewTest.js" />
         <option value="$PROJECT_DIR$/FirstViewController.js" />
+        <option value="$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_auto_api.js" />
+        <option value="$PROJECT_DIR$/Control/TableViewTest.js" />
+        <option value="$PROJECT_DIR$/Control/ListViewTest.js" />
+        <option value="$PROJECT_DIR$/Control/AutoCollectionViewVerticalTest.js" />
+        <option value="$PROJECT_DIR$/Control/WaterfallViewTest.js" />
+        <option value="$PROJECT_DIR$/Control/CollectionViewTest.js" />
+        <option value="$PROJECT_DIR$/Control/ProgressTest.js" />
+        <option value="$PROJECT_DIR$/require.js" />
+        <option value="$PROJECT_DIR$/Control/VideoPlayerControlViewTest.js" />
+        <option value="$PROJECT_DIR$/Control/RenderImageTest.js" />
       </list>
     </option>
   </component>
@@ -181,7 +182,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="933" />
+    <option name="x" value="184" />
     <option name="y" value="23" />
     <option name="width" value="2207" />
     <option name="height" value="1337" />
@@ -332,7 +333,7 @@
     <option name="totallyTimeSpent" value="2705000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="933" y="23" width="2207" height="1337" extended-state="0" />
+    <frame x="184" y="23" width="2207" height="1337" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -499,26 +500,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Control/VideoPlayerControlViewTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29113925">
-          <caret line="23" column="3" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Control/CheckboxTest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39919356">
           <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Control/WaterfallViewTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38709676">
-          <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -551,14 +536,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Control/ProgressTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -643,14 +620,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Control/ScrollViewTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="46" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Control/PickerViewTest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -683,14 +652,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Control/RenderImageTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="41" selection-start-line="44" selection-start-column="41" selection-end-line="44" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Control/ViewAnimationTest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -699,50 +660,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Control/TableViewTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="52" selection-start-line="32" selection-start-column="52" selection-end-line="32" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/require.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Control/ListViewTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="46" selection-start-line="84" selection-start-column="46" selection-end-line="84" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Control/AutoCollectionViewHorizontalTest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="51" column="60" selection-start-line="51" selection-start-column="60" selection-end-line="51" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Control/AutoCollectionViewVerticalTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Control/CollectionViewTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.444445">
-          <caret line="83" column="8" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="110" />
           <folding />
         </state>
       </provider>
@@ -763,10 +684,90 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Control/TableViewTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="70" selection-start-line="16" selection-start-column="70" selection-end-line="16" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/ListViewTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/ScrollViewTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="69" column="46" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/AutoCollectionViewVerticalTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="10" selection-start-line="65" selection-start-column="10" selection-end-line="65" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/WaterfallViewTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/CollectionViewTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.185185">
+          <caret line="78" column="5" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_auto_api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37535545">
-          <caret line="12247" column="1" selection-start-line="12247" selection-start-column="1" selection-end-line="12247" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/ProgressTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/require.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="43" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/VideoPlayerControlViewTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/RenderImageTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.028436018">
+          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
           <folding />
         </state>
       </provider>

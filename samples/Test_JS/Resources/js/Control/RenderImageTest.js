@@ -3,9 +3,12 @@
  */
 
 var RenderImageTest = ca.CAViewController.extend({
+
     ctor: function () {
         this._super();
+    },
 
+    viewDidLoad: function() {
         var image = ca.CAImage.create("r/HelloWorld.png");
 
         var dle_ren_index = 0;
@@ -54,8 +57,6 @@ var RenderImageTest = ca.CAViewController.extend({
         imv.setImage(image);
         imv.setScaleType(ca.CAImageView.ScaleType.FitImageInside);
         scrollView.addSubview(imv);
-    },
-    viewDidLoad: function() {
     },
     getStencil: function(size, index)
     {
