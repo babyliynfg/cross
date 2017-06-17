@@ -742,7 +742,16 @@ void CACollectionView::loadCollectionCell()
 		DRect cellRect = m_rUsedCollectionCellRects[r];
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
-		CACollectionViewCell* cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, r.section, r.row, r.item);
+        CACollectionViewCell* cell = nullptr;
+        if (m_obCellAtIndexPathCallback)
+        {
+            cell = m_obCellAtIndexPathCallback(cellRect.size, r.section, r.row, r.item);
+        }
+        else if (m_pCollectionViewDataSource)
+        {
+            m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, r.section, r.row, r.item);
+        }
+        
 		if (cell)
 		{
 			cell->m_nSection = r.section;
@@ -758,8 +767,11 @@ void CACollectionView::loadCollectionCell()
 			{
 				cell->setControlState(CAControl::State::Selected);
 			}
-            
-            if (m_pCollectionViewDataSource)
+            if (m_obWillDisplayCellAtIndexPathCallback)
+            {
+                m_obWillDisplayCellAtIndexPathCallback(cell, r.section, r.row, r.item);
+            }
+            else if (m_pCollectionViewDataSource)
             {
                 m_pCollectionViewDataSource->collectionViewWillDisplayCellAtIndex(this, cell, r.section, r.row, r.item);
             }

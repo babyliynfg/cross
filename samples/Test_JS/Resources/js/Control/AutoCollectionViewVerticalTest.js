@@ -21,10 +21,10 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
             this.p_AutoCollection.setHeaderRefreshView(this.headerRefreshView) ;
             this.p_AutoCollection.setFooterRefreshView(this.footerRefreshView) ;
 
-            this.p_AutoCollection.setDidSelectRowAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this));
+            this.p_AutoCollection.setDidSelectCellAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this));
             this.p_AutoCollection.setCellAtIndexPathCallback(this.collectionCellAtIndex.bind(this));
-            this.p_AutoCollection.setSizeForItemAtIndexPath(this.collectionViewSizeForItemAtIndexPath.bind(this));
-            this.p_AutoCollection.setNumberOfItemsInSectionCallback(this.numberOfItemsInSection.bind(this));
+            this.p_AutoCollection.setCellSizeAtIndexPathCallback(this.collectionViewSizeForItemAtIndexPath.bind(this));
+            this.p_AutoCollection.setNumberOfItemsAtIndexPathCallback(this.numberOfItemsInSection.bind(this));
             this.p_AutoCollection.setNumberOfSectionsCallback(this.numberOfSections.bind(this));
             this.p_AutoCollection.setHeaderBeginRefreshingCallback(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
             this.p_AutoCollection.setFooterBeginRefreshingCallback(this.scrollViewFooterBeginRefreshing.bind(this)) ;
