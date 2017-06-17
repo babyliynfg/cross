@@ -330,9 +330,9 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Normal);
 			}
-            if (m_obDidDeselectRowAtIndexPathCallback)
+            if (m_obDidDeselectCellAtIndexPathCallback)
             {
-                m_obDidDeselectRowAtIndexPathCallback(deselectedIndexPath.section, deselectedIndexPath.item);
+                m_obDidDeselectCellAtIndexPathCallback(deselectedIndexPath.section, deselectedIndexPath.item);
             }
             else if (m_pCollectionViewDelegate)
 			{
@@ -346,9 +346,9 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Selected);
 			}
-            if (m_obDidSelectRowAtIndexPathCallback)
+            if (m_obDidSelectCellAtIndexPathCallback)
             {
-                m_obDidSelectRowAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.item);
+                m_obDidSelectCellAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.item);
             }
 			else if (m_pCollectionViewDelegate)
 			{
@@ -524,9 +524,9 @@ void CAAutoCollectionView::reloadViewSizeData()
         }
         
         unsigned int itemCount = 0;
-        if (m_obNumberOfItemsInSectionCallback)
+        if (m_obNumberOfItemsAtIndexPathCallback)
         {
-            itemCount = m_obNumberOfItemsInSectionCallback(i);
+            itemCount = m_obNumberOfItemsAtIndexPathCallback(i);
         }
         else if (m_pCollectionViewDataSource)
         {
@@ -535,13 +535,13 @@ void CAAutoCollectionView::reloadViewSizeData()
 		for (int j = 0; j < itemCount; j++)
 		{
             DSize rSize = DSizeZero;
-            if (m_obSizeForItemAtIndexPath)
+            if (m_obCellSizeAtIndexPathCallback)
             {
-                rSize = m_obSizeForItemAtIndexPath(i, j);
+                rSize = m_obCellSizeAtIndexPathCallback(i, j);
             }
             else if (m_pCollectionViewDataSource)
             {
-                rSize = m_pCollectionViewDataSource->collectionViewSizeForItemAtIndexPath(this, i, j);
+                rSize = m_pCollectionViewDataSource->collectionViewCellSizeAtIndexPathCallback(this, i, j);
             }
             
 			if (!fillSectionRowData(r, rSize))

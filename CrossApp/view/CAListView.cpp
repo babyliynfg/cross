@@ -453,9 +453,9 @@ void CAListView::reloadViewSizeData()
     
     m_nIndexs = 0;
     
-    if (m_obNumberOfIndexPathCallback)
+    if (m_obNumberOfRowsAtIndexPathCallback)
     {
-        m_nIndexs = m_obNumberOfIndexPathCallback();
+        m_nIndexs = m_obNumberOfRowsAtIndexPathCallback();
     }
     else if (m_pListViewDataSource)
     {
@@ -468,9 +468,9 @@ void CAListView::reloadViewSizeData()
     {
         unsigned int cellHeight = 0;
         
-        if (m_obHeightForIndexPathCallback)
+        if (m_obCellHeightAtIndexPathCallback)
         {
-           cellHeight = m_obHeightForIndexPathCallback(i);
+           cellHeight = m_obCellHeightAtIndexPathCallback(i);
         }
         else if (m_pListViewDataSource)
         {

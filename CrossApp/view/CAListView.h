@@ -62,9 +62,9 @@ public:
     // event listeners. If these functions are set, the corresponding function of CAListViewDataSource will fail.
     CC_LISTENING_FUNCTION(CAListViewCell*(DSize cellSize, unsigned int index), CellAtIndexPathCallback);
 
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), HeightForIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), CellHeightAtIndexPathCallback);
 
-    CC_LISTENING_FUNCTION(unsigned int(), NumberOfIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfRowsAtIndexPathCallback);
         
     CC_LISTENING_FUNCTION(void(CAListViewCell* cell, unsigned int index), WillDisplayCellAtIndexPathCallback);
 

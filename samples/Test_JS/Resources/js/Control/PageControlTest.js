@@ -1,46 +1,47 @@
 /**
- * Created by liangyuan on 2017/3/3.
+ * Created by crossApp on 2017/3/3.
  */
 
 var PageControlTest = ca.CAViewController.extend({
     ctor: function ()
     {
         this._super();
-        this.getView().setColor(ca.color._getGray());
+    },
+
+
+    viewDidLoad: function() {
 
         var pageControl = ca.CAPageControl.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(150, 0.5), ca.DVerticalLayout_H_C(54, 0.25)));
         pageControl.setNumberOfPages(5);
         pageControl.setStyle(ca.CAPageControl.Style.Dot);
-        pageControl.setPageIndicatorTintColor(ca.color._getWhite());
-        pageControl.setCurrentPageIndicatorTintColor(ca.color._getGreen());
-        pageControl.setTarget(function ( func)
+        pageControl.setPageIndicatorTintColor(ca.CAColor4B.WHITE);
+        pageControl.setCurrentPageIndicatorTintColor(ca.CAColor4B.GREEN);
+        pageControl.setTarget(function (index)
         {
-            log("btn_tag==="+pageControl.getCurrentPage());
+            ca.log("index = "+index);
         });
         this.getView().addSubview(pageControl);
 
         var pageControl2 = ca.CAPageControl.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(150, 0.5), ca.DVerticalLayout_H_C(54, 0.4)));
         pageControl2.setNumberOfPages(5);
         pageControl2.setStyle(ca.CAPageControl.Style.Round);
-        pageControl2.setPageIndicatorTintColor(ca.color._getWhite());
-        pageControl2.setCurrentPageIndicatorTintColor(ca.color._getGreen());
-        pageControl2.setTarget(function ( func)
+        pageControl2.setPageIndicatorTintColor(ca.CAColor4B.WHITE);
+        pageControl2.setCurrentPageIndicatorTintColor(ca.CAColor4B.GREEN);
+        pageControl2.setTarget(function (index)
         {
-            log("btn_tag==="+pageControl2.getCurrentPage());
+            ca.log("index = "+index);
         });
         this.getView().addSubview(pageControl2);
 
         var pageControl3 = ca.CAPageControl.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(150, 0.5), ca.DVerticalLayout_H_C(54, 0.55)));
         pageControl3.setNumberOfPages(5);
         pageControl3.setStyle(ca.CAPageControl.Style.Rectangle);
-        pageControl3.setPageIndicatorTintColor(ca.color._getWhite());
-        pageControl3.setCurrentPageIndicatorTintColor(ca.color._getGreen());
-        pageControl3.setTarget(function ( func)
+        pageControl3.setPageIndicatorTintColor(ca.CAColor4B.WHITE);
+        pageControl3.setCurrentPageIndicatorTintColor(ca.CAColor4B.GREEN);
+        pageControl3.setTarget(function (index)
         {
-            log("btn_tag==="+pageControl3.getCurrentPage());
+            ca.log("index = "+index);
         });
         this.getView().addSubview(pageControl3);
-    },
-    viewDidLoad: function() {
     },
 });

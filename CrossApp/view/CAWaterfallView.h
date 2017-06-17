@@ -62,9 +62,9 @@ public:
     // event listeners. If these functions are set, the corresponding function of CAWaterfallViewDataSource will fail.
     CC_LISTENING_FUNCTION(CAWaterfallViewCell*(DSize cellSize, unsigned int index), CellAtIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), HeightForIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), CellHeightAtIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(unsigned int(), NumberOfIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfItemsAtIndexPathCallback);
     
     CC_LISTENING_FUNCTION(void(CAWaterfallViewCell* cell, unsigned int index), WillDisplayCellAtIndexPathCallback);
     

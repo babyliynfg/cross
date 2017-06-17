@@ -47,7 +47,7 @@ public:
     }
 
     //Necessary
-	virtual DSize collectionViewSizeForItemAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+	virtual DSize collectionViewCellSizeAtIndexPathCallback(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
     {
         return DSizeZero;
     }
@@ -94,9 +94,9 @@ public:
     
     CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int item), CellAtIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(DSize(unsigned int section, unsigned int item), SizeForItemAtIndexPath);
+    CC_LISTENING_FUNCTION(DSize(unsigned int section, unsigned int item), CellSizeAtIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfItemsInSectionCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfItemsAtIndexPathCallback);
     
     CC_LISTENING_FUNCTION(unsigned int(), NumberOfSectionsCallback);
     
@@ -112,9 +112,9 @@ public:
     
     // event listeners. If these functions are set, the corresponding function of CAAutoCollectionViewDelegate will fail.
     
-    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int item), DidSelectRowAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int item), DidSelectCellAtIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int item), DidDeselectRowAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int item), DidDeselectCellAtIndexPathCallback);
     
 protected:
     

@@ -1,11 +1,13 @@
 /**
- * Created by zhanglei on 16/8/3.
+ * Created by crossApp on 16/8/3.
  */
 var PageViewTest = ca.CAViewController.extend({
-    pageViewIndex:0,
-    pageControl: null,
+
     ctor: function () {
         this._super();
+    },
+
+    viewDidLoad: function() {
 
         var view1 = ca.CAImageView.createWithImage(ca.CAImage.create("image/1.jpg"));
         var view2 = ca.CAImageView.createWithImage(ca.CAImage.create("image/2.jpg"));
@@ -15,45 +17,43 @@ var PageViewTest = ca.CAViewController.extend({
         views.push(view2);
         views.push(view3);
 
-        var p_pageView = ca.CAPageView.createWithLayout(ca.DLayoutFill, 0);
-        p_pageView.setViews(views);
-        p_pageView.setPageViewDelegate(this);
-        this.getView().addSubview(p_pageView);
+        this._pageView = ca.CAPageView.createWithLayout(ca.DLayoutFill, 0);
+        this._pageView.setViews(views);
+        this.getView().addSubview(this._pageView);
 
-        var pageView = p_pageView;
+        this._pageView.setBeginTurningCallback(this.pageViewDidBeginTurning.bind(this)) ;
+        this._pageView.setEndTurningCallback(this.pageViewDidEndTurning.bind(this)) ;
+        this._pageView.setDidSelectedPageAtIndexCallback(this.pageViewDidSelectPageAtIndex.bind(this)) ;
+
 
         this.pageControl = ca.CAPageControl.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(100, 0.5), ca.DVerticalLayout_T_H(30, 50)));
         this.pageControl.setNumberOfPages(views.length);
-        this.pageControl.setPageIndicatorTintColor(ca.color._getGray());
-        this.pageControl.setCurrentPageIndicatorTintColor(ca.color._getGreen());
+        this.pageControl.setPageIndicatorTintColor(ca.CAColor4B.GRAY);
+        this.pageControl.setCurrentPageIndicatorTintColor(ca.CAColor4B.GREEN);
         this.getView().addSubview(this.pageControl);
 
-        var page = this.pageControl;
-
-        this.pageControl.setTarget(function ( func)
+        var pageContro = this.pageControl;
+        var pageView = this._pageView;
+        this.pageControl.setTarget(function(index)
         {
-            log("Button RoundedRect");
-            log("btn_tag==="+page.getCurrentPage());
-            pageView.setCurrPage(page.getCurrentPage(), true);
+            ca.log("Button RoundedRect");
+            ca.log("btn_tag==="+pageContro.getCurrentPage());
+            pageView.setCurrPage(pageContro.getCurrentPage(), true);
         });
+    },
+
+    pageViewDidBeginTurning: function () {
+
+        ca.log("pageViewDidBeginTurning()" );
 
     },
-    viewDidLoad: function() {
+    pageViewDidEndTurning: function () {
+        this.pageControl.setCurrentPage(this._pageView.getCurrPage());
+        this.pageControl.updateCurrentPageDisplay();
+        ca.log("pageViewDidEndTurning() ---  this._pageView.getCurrPage() = " + this._pageView.getCurrPage() );
     },
-    pageViewDidBeginTurning: function (pageView) {
-
-    },
-    pageViewDidEndTurning: function (pageView) {
-        if (this.pageViewIndex == 0) {
-            this.pageControl.setCurrentPage(pageView.getCurrPage());
-            this.pageControl.updateCurrentPageDisplay();
-        }
-        else {
-
-        }
-    },
-    pageViewDidSelectPageAtIndex: function (pageView, index, point) {
-
+    pageViewDidSelectPageAtIndex: function (index, point) {
+        ca.log("pageViewDidSelectPageAtIndex("+index+"),("+point+")");
     }
 
 

@@ -84,9 +84,9 @@ public:
     // event listeners. If these functions are set, the corresponding function of CATableViewDataSource will fail.
     CC_LISTENING_FUNCTION(CATableViewCell*(DSize cellSize, unsigned int section, unsigned int row), CellAtIndexPathCallBack);
 
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), HeightForRowAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), CellHeightAtIndexPathCallback);
 
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfRowsInSectionCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfRowsAtIndexPathCallback);
     
     CC_LISTENING_FUNCTION(unsigned int(), NumberOfSectionsCallback);
     
@@ -102,9 +102,9 @@ public:
     
     // event listeners. If these functions are set, the corresponding function of CATableViewDelegate will fail.
     
-    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidSelectRowAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidSelectCellAtIndexPathCallback);
     
-    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidDeselectRowAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidDeselectCellAtIndexPathCallback);
 
 public:
     

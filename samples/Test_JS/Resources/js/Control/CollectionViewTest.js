@@ -1,33 +1,35 @@
 /**
- * Created by zhanglei on 16/8/4.
+ * Created by crossApp on 16/8/4.
  */
 var CollectionViewTest = ca.CAViewController.extend({
-    colorArr : null,
-    footerRefreshView:null,
-    headerRefreshView:null,
-    p_Conllection:null,
+
     ctor: function () {
         this._super();
 
         this.colorArr = new Array();
+        this._randomColor() ;
 
-        for (var i = 0; i < 40; i++)
-        {
-            var r = Math.floor(Math.random()*255);
-            var g = Math.floor(Math.random()*255);
-            var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
-        }
+    },
+    viewDidLoad: function() {
 
         this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
         this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
         this.p_Conllection = ca.CACollectionView.createWithLayout(ca.DLayoutFill);
         this.p_Conllection.setAllowsSelection(true);
-        // this.p_Conllection.setAllowsMultipleSelection(true);
-        this.p_Conllection.setCollectionViewDelegate(this);
-        this.p_Conllection.setCollectionViewDataSource(this);
-        this.p_Conllection.setScrollViewDelegate(this);
+
+        this.p_Conllection.setHeaderBeginRefreshingCallback(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
+        this.p_Conllection.setFooterBeginRefreshingCallback(this.scrollViewFooterBeginRefreshing.bind(this)) ;
+
+        this.p_Conllection.setDidSelectCellAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this));//<----
+        this.p_Conllection.setDidDeselectCellAtIndexPathCallback(this.collectionViewDidDeselectCellAtIndexPath.bind(this));//<----
+        this.p_Conllection.setCellAtIndexPathCallBack(this.collectionCellAtIndex.bind(this)) ;//<----
+
+        this.p_Conllection.setNumberOfSectionsCallback(this.numberOfSections.bind(this)) ;
+        this.p_Conllection.setNumberOfRowsInSectionCallback(this.numberOfRowsInSection.bind(this));
+        this.p_Conllection.setNumberOfItemsInRowsInSectionCallback(this.numberOfItemsInRowsInSection.bind(this)) ;//<----
+        this.p_Conllection.setHeightForRowAtIndexPathCallback(ths.collectionViewHeightForRowAtIndexPath.bind(this));
+
         this.p_Conllection.setHeaderRefreshView(this.headerRefreshView);
         this.p_Conllection.setFooterRefreshView(this.footerRefreshView);
         this.p_Conllection.setHoriInterval(20);
@@ -38,9 +40,8 @@ var CollectionViewTest = ca.CAViewController.extend({
         this.p_Conllection.startPullToHeaderRefreshView();
 
     },
-    viewDidLoad: function() {
-    },
-    refreshData1: function( interval){
+
+    refreshData1: function(interval){
         this.colorArr = [];
         for (var i = 0; i < 40; i++)
         {
@@ -51,6 +52,7 @@ var CollectionViewTest = ca.CAViewController.extend({
         }
         this.p_Conllection.reloadData();
     },
+
     refreshData2: function(interval){
         for (var i = 0; i < 40; i++)
         {
@@ -61,17 +63,30 @@ var CollectionViewTest = ca.CAViewController.extend({
         }
         this.p_Conllection.reloadData();
     },
-    scrollViewHeaderBeginRefreshing: function( view)
-    {
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData1, 0.5, 0, 0);
+
+
+    _randomColor:function(){
+        for (var i = 0; i < 40; i++)
+        {
+            var r = Math.floor(Math.random()*255);
+            var g = Math.floor(Math.random()*255);
+            var b = Math.floor(Math.random()*255);
+
+            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
+        }
     },
-    scrollViewFooterBeginRefreshing: function( view)
+
+    scrollViewHeaderBeginRefreshing: function()
     {
-        ca.CAScheduler.getScheduler().scheduleCallbackForTarget(this, this.refreshData2, 0.5, 0, 0);
+        ca.CAScheduler.getScheduler().schedule(this, this.refreshData1, 0.5, 0, 0);
     },
-    collectionViewDidSelectCellAtIndexPath: function(collectionView, section, row, item)
+    scrollViewFooterBeginRefreshing: function()
     {
-        var cell = collectionView.cellForRowAtIndexPath(section, row, item);
+        ca.CAScheduler.getScheduler().schedule(this, this.refreshData2, 0.5, 0, 0);
+    },
+    collectionViewDidSelectCellAtIndexPath: function(section, row, item)
+    {
+        var cell = this.p_Conllection.cellForRowAtIndexPath(section, row, item);
         cell.getContentView().setRotation(-360);
         cell.getContentView().setScale(0.5);
         ca.CAViewAnimation.beginAnimations("");
@@ -79,11 +94,11 @@ var CollectionViewTest = ca.CAViewController.extend({
         cell.getContentView().setScale(1.0);
         ca.CAViewAnimation.commitAnimations();
     },
-    collectionViewDidDeselectCellAtIndexPath: function(collectionView, section, row, item)
+    collectionViewDidDeselectCellAtIndexPath: function(section, row, item)
     {
 
     },
-    collectionCellAtIndex: function(collectionView, cellSize, section, row, item)
+    collectionCellAtIndex: function(cellSize, section, row, item)
     {
         if (row * 3 + item >= this.colorArr.length)
         {
@@ -91,10 +106,10 @@ var CollectionViewTest = ca.CAViewController.extend({
         }
 
         var _size = ca.size(0,0);
-        var p_Cell = collectionView.dequeueReusableCellWithIdentifier("CrossApp");
+        var p_Cell = this.p_Conllection.dequeueReusableCellWithIdentifier("cell");
         if (p_Cell == null)
         {
-            p_Cell = ca.CACollectionViewCell.create("CrossApp");
+            p_Cell = ca.CACollectionViewCell.create("cell");
 
             var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
             itemImage.setTag(99);
@@ -119,19 +134,19 @@ var CollectionViewTest = ca.CAViewController.extend({
 
         return p_Cell;
     },
-    numberOfSections: function(collectionView)
+    numberOfSections: function()
     {
         return 1;
     },
-    numberOfRowsInSection: function(collectionView,section)
+    numberOfRowsInSection: function(section)
     {
         return (this.colorArr.length % 3 == 0 ? this.colorArr.length / 3 : this.colorArr.length / 3 + 1);
     },
-    numberOfItemsInRowsInSection: function(collectionView, section, row)
+    numberOfItemsInRowsInSection: function( section, row)
     {
         return 3;
     },
-    collectionViewHeightForRowAtIndexPath: function(collectionView, section, row)
+    collectionViewHeightForRowAtIndexPath: function(section, row)
     {
         //return (this.getView().getBounds().size.width - 20 * 4) / 3;
         return (ca.winSize.width - 20 * 4) /3;

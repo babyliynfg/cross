@@ -12013,16 +12013,6 @@ isAllowsSelection : function (
 },
 
 /**
- * @method setHeightForIndexPathCallback
- * @param {function} arg0
- */
-setHeightForIndexPathCallback : function (
-func 
-)
-{
-},
-
-/**
  * @method getOrientation
  * @return {ca.CAListView::Orientation}
  */
@@ -12038,6 +12028,16 @@ getOrientation : function (
  */
 setListFooterHeight : function (
 int 
+)
+{
+},
+
+/**
+ * @method setNumberOfRowsAtIndexPathCallback
+ * @param {function} arg0
+ */
+setNumberOfRowsAtIndexPathCallback : function (
+func 
 )
 {
 },
@@ -12171,6 +12171,16 @@ caview
 },
 
 /**
+ * @method setCellHeightAtIndexPathCallback
+ * @param {function} arg0
+ */
+setCellHeightAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method getListFooterHeight
  * @return {unsigned int}
  */
@@ -12186,16 +12196,6 @@ getListFooterHeight : function (
  */
 setShowsScrollIndicators : function (
 bool 
-)
-{
-},
-
-/**
- * @method setNumberOfIndexPathCallback
- * @param {function} arg0
- */
-setNumberOfIndexPathCallback : function (
-func 
 )
 {
 },
@@ -12634,6 +12634,16 @@ int
 },
 
 /**
+ * @method setNumberOfRowsAtIndexPathCallback
+ * @param {function} arg0
+ */
+setNumberOfRowsAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setSeparatorColor
  * @param {color4b_object} arg0
  */
@@ -12694,13 +12704,17 @@ func
 },
 
 /**
- * @method setNumberOfRowsInSectionCallback
- * @param {function} arg0
+ * @method getRowHeightInSectionInRow
+ * @param {unsigned int} arg0
+ * @param {unsigned int} arg1
+ * @return {float}
  */
-setNumberOfRowsInSectionCallback : function (
-func 
+getRowHeightInSectionInRow : function (
+int, 
+int 
 )
 {
+    return 0;
 },
 
 /**
@@ -12836,6 +12850,16 @@ getTableFooterHeight : function (
 },
 
 /**
+ * @method setCellHeightAtIndexPathCallback
+ * @param {function} arg0
+ */
+setCellHeightAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setAlwaysTopSectionHeader
  * @param {bool} arg0
  */
@@ -12890,20 +12914,6 @@ getTableHeaderView : function (
 },
 
 /**
- * @method getRowHeightInSectionInRow
- * @param {unsigned int} arg0
- * @param {unsigned int} arg1
- * @return {float}
- */
-getRowHeightInSectionInRow : function (
-int, 
-int 
-)
-{
-    return 0;
-},
-
-/**
  * @method setWillDisplayCellAtIndexPathCallback
  * @param {function} arg0
  */
@@ -12942,6 +12952,16 @@ isAlwaysTopSectionHeader : function (
 },
 
 /**
+ * @method setDidSelectCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setDidSelectCellAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setTableFooterView
  * @param {ca.CAView} arg0
  */
@@ -12972,21 +12992,11 @@ func
 },
 
 /**
- * @method setDidDeselectRowAtIndexPathCallback
- * @param {function} arg0
+ * @method switchPCMode
+ * @param {bool} arg0
  */
-setDidDeselectRowAtIndexPathCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method setDidSelectRowAtIndexPathCallback
- * @param {function} arg0
- */
-setDidSelectRowAtIndexPathCallback : function (
-func 
+switchPCMode : function (
+bool 
 )
 {
 },
@@ -13038,21 +13048,11 @@ int
 },
 
 /**
- * @method setHeightForRowAtIndexPathCallback
+ * @method setDidDeselectCellAtIndexPathCallback
  * @param {function} arg0
  */
-setHeightForRowAtIndexPathCallback : function (
+setDidDeselectCellAtIndexPathCallback : function (
 func 
-)
-{
-},
-
-/**
- * @method switchPCMode
- * @param {bool} arg0
- */
-switchPCMode : function (
-bool 
 )
 {
 },
@@ -13441,10 +13441,10 @@ caview
 },
 
 /**
- * @method setNumberOfItemsInRowsInSectionCallback
+ * @method setNumberOfRowsAtIndexPathCallback
  * @param {function} arg0
  */
-setNumberOfItemsInRowsInSectionCallback : function (
+setNumberOfRowsAtIndexPathCallback : function (
 func 
 )
 {
@@ -13485,16 +13485,6 @@ isAlwaysBottomSectionFooter : function (
  * @param {function} arg0
  */
 setHeightForFooterInSectionCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method setNumberOfRowsInSectionCallback
- * @param {function} arg0
- */
-setNumberOfRowsInSectionCallback : function (
 func 
 )
 {
@@ -13563,6 +13553,16 @@ isAllowsMultipleSelection : function (
 },
 
 /**
+ * @method setNumberOfItemsAtIndexPathCallback
+ * @param {function} arg0
+ */
+setNumberOfItemsAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setAllowsSelection
  * @param {bool} arg0
  */
@@ -13598,6 +13598,16 @@ getCollectionHeaderView : function (
 )
 {
     return ca.CAView;
+},
+
+/**
+ * @method setCellHeightAtIndexPathCallback
+ * @param {function} arg0
+ */
+setCellHeightAtIndexPathCallback : function (
+func 
+)
+{
 },
 
 /**
@@ -13695,6 +13705,36 @@ isAlwaysTopSectionHeader : function (
 },
 
 /**
+ * @method setDidSelectCellAtIndexPathCallback
+ * @param {function} arg0
+ */
+setDidSelectCellAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
+ * @method switchPCMode
+ * @param {bool} arg0
+ */
+switchPCMode : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setSectionViewForHeaderInSectionCallback
+ * @param {function} arg0
+ */
+setSectionViewForHeaderInSectionCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method setVertInterval
  * @param {unsigned int} arg0
  */
@@ -13712,36 +13752,6 @@ getCollectionHeaderHeight : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setSectionViewForHeaderInSectionCallback
- * @param {function} arg0
- */
-setSectionViewForHeaderInSectionCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method setDidDeselectRowAtIndexPathCallback
- * @param {function} arg0
- */
-setDidDeselectRowAtIndexPathCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method setDidSelectRowAtIndexPathCallback
- * @param {function} arg0
- */
-setDidSelectRowAtIndexPathCallback : function (
-func 
-)
-{
 },
 
 /**
@@ -13789,21 +13799,11 @@ getHighlightCollectionCell : function (
 },
 
 /**
- * @method setHeightForRowAtIndexPathCallback
+ * @method setDidDeselectCellAtIndexPathCallback
  * @param {function} arg0
  */
-setHeightForRowAtIndexPathCallback : function (
+setDidDeselectCellAtIndexPathCallback : function (
 func 
-)
-{
-},
-
-/**
- * @method switchPCMode
- * @param {bool} arg0
- */
-switchPCMode : function (
-bool 
 )
 {
 },
@@ -14045,22 +14045,6 @@ int
 },
 
 /**
- * @method collectionViewSizeForItemAtIndexPath
- * @param {ca.CAAutoCollectionView} arg0
- * @param {unsigned int} arg1
- * @param {unsigned int} arg2
- * @return {size_object}
- */
-collectionViewSizeForItemAtIndexPath : function (
-caautocollectionview, 
-int, 
-int 
-)
-{
-    return ca.DSize;
-},
-
-/**
  * @method collectionViewSectionViewForFooterInSection
  * @param {ca.CAAutoCollectionView} arg0
  * @param {size_object} arg1
@@ -14074,6 +14058,22 @@ int
 )
 {
     return ca.CAView;
+},
+
+/**
+ * @method collectionViewCellSizeAtIndexPathCallback
+ * @param {ca.CAAutoCollectionView} arg0
+ * @param {unsigned int} arg1
+ * @param {unsigned int} arg2
+ * @return {size_object}
+ */
+collectionViewCellSizeAtIndexPathCallback : function (
+caautocollectionview, 
+int, 
+int 
+)
+{
+    return ca.DSize;
 },
 
 /**
@@ -14182,16 +14182,6 @@ caview
 },
 
 /**
- * @method setSizeForItemAtIndexPath
- * @param {function} arg0
- */
-setSizeForItemAtIndexPath : function (
-func 
-)
-{
-},
-
-/**
  * @method getCollectionFooterView
  * @return {ca.CAView}
  */
@@ -14207,6 +14197,16 @@ getCollectionFooterView : function (
  */
 setHoriCellInterval : function (
 int 
+)
+{
+},
+
+/**
+ * @method setCellSizeAtIndexPathCallback
+ * @param {function} arg0
+ */
+setCellSizeAtIndexPathCallback : function (
+func 
 )
 {
 },
@@ -14314,10 +14314,10 @@ isAllowsMultipleSelection : function (
 },
 
 /**
- * @method setNumberOfItemsInSectionCallback
+ * @method setNumberOfItemsAtIndexPathCallback
  * @param {function} arg0
  */
-setNumberOfItemsInSectionCallback : function (
+setNumberOfItemsAtIndexPathCallback : function (
 func 
 )
 {
@@ -14484,13 +14484,23 @@ isAlwaysTopSectionHeader : function (
 },
 
 /**
- * @method getCollectionHeaderHeight
- * @return {unsigned int}
+ * @method setDidSelectCellAtIndexPathCallback
+ * @param {function} arg0
  */
-getCollectionHeaderHeight : function (
+setDidSelectCellAtIndexPathCallback : function (
+func 
 )
 {
-    return 0;
+},
+
+/**
+ * @method switchPCMode
+ * @param {bool} arg0
+ */
+switchPCMode : function (
+bool 
+)
+{
 },
 
 /**
@@ -14524,23 +14534,13 @@ getVertCellInterval : function (
 },
 
 /**
- * @method setDidDeselectRowAtIndexPathCallback
- * @param {function} arg0
+ * @method getCollectionHeaderHeight
+ * @return {unsigned int}
  */
-setDidDeselectRowAtIndexPathCallback : function (
-func 
+getCollectionHeaderHeight : function (
 )
 {
-},
-
-/**
- * @method setDidSelectRowAtIndexPathCallback
- * @param {function} arg0
- */
-setDidSelectRowAtIndexPathCallback : function (
-func 
-)
-{
+    return 0;
 },
 
 /**
@@ -14606,11 +14606,11 @@ int
 },
 
 /**
- * @method switchPCMode
- * @param {bool} arg0
+ * @method setDidDeselectCellAtIndexPathCallback
+ * @param {function} arg0
  */
-switchPCMode : function (
-bool 
+setDidDeselectCellAtIndexPathCallback : function (
+func 
 )
 {
 },
@@ -14791,11 +14791,11 @@ getWaterfallViewDataSource : function (
 },
 
 /**
- * @method setHeightForIndexPathCallback
- * @param {function} arg0
+ * @method setColumnMargin
+ * @param {unsigned int} arg0
  */
-setHeightForIndexPathCallback : function (
-func 
+setColumnMargin : function (
+int 
 )
 {
 },
@@ -14941,6 +14941,16 @@ isAllowsMultipleSelection : function (
 },
 
 /**
+ * @method setNumberOfItemsAtIndexPathCallback
+ * @param {function} arg0
+ */
+setNumberOfItemsAtIndexPathCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method getHighlightWaterfallCell
  * @return {ca.CAWaterfallViewCell}
  */
@@ -14979,11 +14989,11 @@ bool
 },
 
 /**
- * @method setColumnMargin
- * @param {unsigned int} arg0
+ * @method setCellHeightAtIndexPathCallback
+ * @param {function} arg0
  */
-setColumnMargin : function (
-int 
+setCellHeightAtIndexPathCallback : function (
+func 
 )
 {
 },
@@ -15028,16 +15038,6 @@ getColumnMargin : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setNumberOfIndexPathCallback
- * @param {function} arg0
- */
-setNumberOfIndexPathCallback : function (
-func 
-)
-{
 },
 
 /**

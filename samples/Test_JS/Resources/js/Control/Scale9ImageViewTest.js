@@ -4,9 +4,8 @@
 var Scale9ImageViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
-
-        this.getView().setColor(ca.color._getGray());
-
+    },
+    viewDidLoad: function() {
         var image = ca.CAImageView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(200, 200), ca.DVerticalLayout_T_H(100, 200)));
         image.setImage(ca.CAImage.create("source_material/btn_rounded_normal.png"));
         this.getView().addSubview(image);
@@ -15,9 +14,5 @@ var Scale9ImageViewTest = ca.CAViewController.extend({
         s9image.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(200, 200), ca.DVerticalLayout_T_H(400, 200)));
         this.getView().addSubview(s9image);
     },
-    viewDidLoad: function() {
-    },
-    btncallback: function () {
-        log("btncallback-->");
-    }
+
 });

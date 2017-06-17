@@ -336,9 +336,9 @@ void CATableView::reloadViewSizeData()
     m_nRowsInSections.resize(m_nSections);
     for (unsigned int i=0; i<m_nSections; i++)
     {
-        if (m_obNumberOfRowsInSectionCallback)
+        if (m_obNumberOfRowsAtIndexPathCallback)
         {
-            m_nRowsInSections[i] = m_obNumberOfRowsInSectionCallback(i);
+            m_nRowsInSections[i] = m_obNumberOfRowsAtIndexPathCallback(i);
         }
         else if (m_pTableViewDataSource)
         {
@@ -378,9 +378,9 @@ void CATableView::reloadViewSizeData()
         std::vector<unsigned int> rowHeights(m_nRowsInSections.at(i));
         for (unsigned int j=0; j<m_nRowsInSections.at(i); j++)
         {            
-            if (m_obHeightForRowAtIndexPathCallback)
+            if (m_obCellHeightAtIndexPathCallback)
             {
-                rowHeights[j] = m_obHeightForRowAtIndexPathCallback(i, j);
+                rowHeights[j] = m_obCellHeightAtIndexPathCallback(i, j);
             }
             else if (m_pTableViewDataSource)
             {
@@ -870,9 +870,9 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
                 m_pTarget->m_pSelectedTableCells.insert(indexPath);
                 
-                if (m_pTarget->m_obDidSelectRowAtIndexPathCallback)
+                if (m_pTarget->m_obDidSelectCellAtIndexPathCallback)
                 {
-                    m_pTarget->m_obDidSelectRowAtIndexPathCallback(indexPath.section, indexPath.row);
+                    m_pTarget->m_obDidSelectCellAtIndexPathCallback(indexPath.section, indexPath.row);
                 }
                 else if (m_pTarget->getTableViewDelegate())
                 {
@@ -883,9 +883,9 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             {
                 this->performSelector(callfunc_selector(CATableViewCell::setControlStateNormal), 0.05f);
                 m_pTarget->m_pSelectedTableCells.erase(indexPath);
-                if (m_pTarget->m_obDidDeselectRowAtIndexPathCallback)
+                if (m_pTarget->m_obDidDeselectCellAtIndexPathCallback)
                 {
-                    m_pTarget->m_obDidDeselectRowAtIndexPathCallback(indexPath.section, indexPath.row);
+                    m_pTarget->m_obDidDeselectCellAtIndexPathCallback(indexPath.section, indexPath.row);
                 }
                 else if (m_pTarget->getTableViewDelegate())
                 {
@@ -908,9 +908,9 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                         }
                     }
                     m_pTarget->m_pSelectedTableCells.clear();
-                    if (m_pTarget->m_obDidDeselectRowAtIndexPathCallback)
+                    if (m_pTarget->m_obDidDeselectCellAtIndexPathCallback)
                     {
-                        m_pTarget->m_obDidDeselectRowAtIndexPathCallback(indexPath2.section, indexPath2.row);
+                        m_pTarget->m_obDidDeselectCellAtIndexPathCallback(indexPath2.section, indexPath2.row);
                     }
                     else if (m_pTarget->getTableViewDelegate())
                     {
@@ -923,9 +923,9 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 {
                     m_pTarget->m_pSelectedTableCells.insert(indexPath);
                 }
-                if (m_pTarget->m_obDidSelectRowAtIndexPathCallback)
+                if (m_pTarget->m_obDidSelectCellAtIndexPathCallback)
                 {
-                    m_pTarget->m_obDidSelectRowAtIndexPathCallback(indexPath.section, indexPath.row);
+                    m_pTarget->m_obDidSelectCellAtIndexPathCallback(indexPath.section, indexPath.row);
                 }
                 else if (m_pTarget->getTableViewDelegate())
                 {
@@ -934,9 +934,9 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
             else
             {
-                if (m_pTarget->m_obDidSelectRowAtIndexPathCallback)
+                if (m_pTarget->m_obDidSelectCellAtIndexPathCallback)
                 {
-                    m_pTarget->m_obDidSelectRowAtIndexPathCallback(indexPath.section, indexPath.row);
+                    m_pTarget->m_obDidSelectCellAtIndexPathCallback(indexPath.section, indexPath.row);
                 }
                 else if (m_pTarget->getTableViewDelegate())
                 {

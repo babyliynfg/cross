@@ -1,5 +1,5 @@
 /**
- * Created by zhanglei on 16/8/3.
+ * Created by crossApp on 16/8/3.
  */
 var adressTag = new Array(
     "北京市",
@@ -40,25 +40,33 @@ var adressTag = new Array(
 
 
 var PickerViewTest = ca.CAViewController.extend({
-    city_value: null,
-    p_pickerView:null,
+
     ctor: function () {
         this._super();
+    },
 
-        //this.getView().setColor(ca.color._getGray());
+    viewDidLoad: function() {
 
         this.p_pickerView = ca.CAPickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(10, 10), ca.DVerticalLayout_T_H(200, 400)));
-        this.p_pickerView.setPickerViewDelegate(this);
-        this.p_pickerView.setPickerViewDataSource(this);
+
+
+        this.p_pickerView.setDidSelectRowCallback(this.didSelectRow.bind(this)) ;
+        this.p_pickerView.setNumberOfComponentsCallback(this.numberOfComponentsInPickerView.bind(this)) ;
+        this.p_pickerView.setNumberOfRowsInComponentCallback(this.numberOfRowsInComponent.bind(this)) ;
+        this.p_pickerView.setWidthForComponentCallback(this.widthForComponent.bind(this)) ;
+        this.p_pickerView.setHeightForComponentCallback(this.rowHeightForComponent.bind(this)) ;
+        this.p_pickerView.setTitleForRowCallback(this.titleForRow.bind(this)) ;
+
+
         this.p_pickerView.setFontSizeNormal(40);
         this.p_pickerView.setFontSizeSelected(40);
-        this.p_pickerView.setFontColorNormal(ca.BLACK);
-        this.p_pickerView.setFontColorSelected(ca.BLACK);
+        this.p_pickerView.setFontColorNormal(ca.CAColor4B.BLACK);
+        this.p_pickerView.setFontColorSelected(ca.CAColor4B.BLACK);
         this.p_pickerView.reloadAllComponents();
 
         this.city_value = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(100, 40)));
         this.city_value.setText("天津");
-        this.city_value.setColor(ca.BLACK);
+        this.city_value.setColor(ca.CAColor4B.BLACK);
         this.city_value.setFontSize(28);
         this.city_value.setTextAlignment(ca.CATextAlignment.Center);
         this.city_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
@@ -66,39 +74,28 @@ var PickerViewTest = ca.CAViewController.extend({
         var view1 = ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill));
         view1.addSubview(this.p_pickerView);
         view1.addSubview(this.city_value);
-        view1.setColor(ca.WHITE);
+        view1.setColor(ca.CAColor4B.WHITE);
         this.getView().addSubview(view1);
 
-        // var dpv = ca.CADatePickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(10, 10), ca.DVerticalLayout_T_H(200, 400)), ca.CADatePickerView.Mode.Date);
-        // //dpv->setDate(2004, 2, 16, false);
-        // dpv.setDelegate(this);
-        //
-        // var view2 = ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill));
-        // view2.addSubview(dpv);
-        // view2.setColor(ca.CAColor4B.WHITE);
-        // this.getView().addSubview(view2);
     },
-    viewDidLoad: function() {
-    },
-    didSelectRow: function (pickerView, row, component) {
+    didSelectRow: function ( row, component) {
         this.city_value.setText(adressTag[row]);
     },
-    numberOfComponentsInPickerView: function (pickerView) {
+    numberOfComponentsInPickerView: function () {
         return 1;
     },
 
-    numberOfRowsInComponent: function (pickerView, component) {
-        //log("numberOfRowsInComponent");
+    numberOfRowsInComponent: function ( component) {
         return 34;
     },
-    widthForComponent: function (pickerView, component) {
+    widthForComponent: function ( component) {
         return 400;
     },
 
-    rowHeightForComponent: function (pickerView, component) {
+    rowHeightForComponent: function ( component) {
         return 80;
     },
-    titleForRow: function (pickerView, row, component) {
+    titleForRow: function ( row, component) {
         var str = adressTag[row];
         return str;
     }
