@@ -185,65 +185,11 @@ CAObject : function (
 ca.CAScheduler = {
 
 /**
- * @method setTimeScale
- * @param {float} arg0
+ * @method unscheduleUpdate
+ * @param {ca.CAObject} arg0
  */
-setTimeScale : function (
-float 
-)
-{
-},
-
-/**
- * @method isScheduled
- * @param {String} arg0
- * @param {void} arg1
- * @return {bool}
- */
-isScheduled : function (
-str, 
-void 
-)
-{
-    return false;
-},
-
-/**
- * @method unschedule
- * @param {String} arg0
- * @param {void} arg1
- */
-unschedule : function (
-str, 
-void 
-)
-{
-},
-
-/**
- * @method scheduleOnce
- * @param {function} arg0
- * @param {String} arg1
- * @param {void} arg2
- * @param {float} arg3
- * @param {bool} arg4
- */
-scheduleOnce : function (
-func, 
-str, 
-void, 
-float, 
-bool 
-)
-{
-},
-
-/**
- * @method unscheduleAllForTarget
- * @param {void} arg0
- */
-unscheduleAllForTarget : function (
-void 
+unscheduleUpdate : function (
+caobject 
 )
 {
 },
@@ -257,125 +203,11 @@ resumeAll : function (
 },
 
 /**
- * @method unscheduleUpdate
- * @param {void} arg0
- */
-unscheduleUpdate : function (
-void 
-)
-{
-},
-
-/**
- * @method resumeAllTargetsWithMinPriority
- * @param {int} arg0
- */
-resumeAllTargetsWithMinPriority : function (
-int 
-)
-{
-},
-
-/**
- * @method pauseAll
- */
-pauseAll : function (
-)
-{
-},
-
-/**
- * @method scheduleScriptFunc
- * @param {unsigned int} arg0
- * @param {float} arg1
- * @param {bool} arg2
- * @return {unsigned int}
- */
-scheduleScriptFunc : function (
-int, 
-float, 
-bool 
-)
-{
-    return 0;
-},
-
-/**
- * @method schedule
-* @param {function|function} func
-* @param {String|String} str
-* @param {void|void} void
-* @param {float|float} float
-* @param {unsigned int|bool} int
-* @param {float} float
-* @param {bool} bool
-*/
-schedule : function(
-func,
-str,
-void,
-float,
-int,
-float,
-bool 
-)
-{
-},
-
-/**
- * @method update
+ * @method setTimeScale
  * @param {float} arg0
  */
-update : function (
+setTimeScale : function (
 float 
-)
-{
-},
-
-/**
- * @method resumeTarget
- * @param {void} arg0
- */
-resumeTarget : function (
-void 
-)
-{
-},
-
-/**
- * @method unscheduleScriptEntry
- * @param {unsigned int} arg0
- */
-unscheduleScriptEntry : function (
-int 
-)
-{
-},
-
-/**
- * @method unscheduleAll
- */
-unscheduleAll : function (
-)
-{
-},
-
-/**
- * @method pauseTarget
- * @param {void} arg0
- */
-pauseTarget : function (
-void 
-)
-{
-},
-
-/**
- * @method performFunctionInUIThread
- * @param {function} arg0
- */
-performFunctionInUIThread : function (
-func 
 )
 {
 },
@@ -391,6 +223,28 @@ getTimeScale : function (
 },
 
 /**
+ * @method schedule
+* @param {function|function} func
+* @param {String|String} str
+* @param {ca.CAObject|ca.CAObject} caobject
+* @param {float|float} float
+* @param {unsigned int|bool} int
+* @param {float} float
+* @param {bool} bool
+*/
+schedule : function(
+func,
+str,
+caobject,
+float,
+int,
+float,
+bool 
+)
+{
+},
+
+/**
  * @method unscheduleAllWithMinPriority
  * @param {int} arg0
  */
@@ -401,15 +255,135 @@ int
 },
 
 /**
- * @method isTargetPaused
- * @param {void} arg0
+ * @method isScheduled
+ * @param {String} arg0
+ * @param {ca.CAObject} arg1
  * @return {bool}
  */
-isTargetPaused : function (
-void 
+isScheduled : function (
+str, 
+caobject 
 )
 {
     return false;
+},
+
+/**
+ * @method isTargetPaused
+ * @param {ca.CAObject} arg0
+ * @return {bool}
+ */
+isTargetPaused : function (
+caobject 
+)
+{
+    return false;
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method resumeTarget
+ * @param {ca.CAObject} arg0
+ */
+resumeTarget : function (
+caobject 
+)
+{
+},
+
+/**
+ * @method resumeAllTargetsWithMinPriority
+ * @param {int} arg0
+ */
+resumeAllTargetsWithMinPriority : function (
+int 
+)
+{
+},
+
+/**
+ * @method performFunctionInUIThread
+ * @param {function} arg0
+ */
+performFunctionInUIThread : function (
+func 
+)
+{
+},
+
+/**
+ * @method unschedule
+ * @param {String} arg0
+ * @param {ca.CAObject} arg1
+ */
+unschedule : function (
+str, 
+caobject 
+)
+{
+},
+
+/**
+ * @method unscheduleAll
+ */
+unscheduleAll : function (
+)
+{
+},
+
+/**
+ * @method scheduleOnce
+ * @param {function} arg0
+ * @param {String} arg1
+ * @param {ca.CAObject} arg2
+ * @param {float} arg3
+ * @param {bool} arg4
+ */
+scheduleOnce : function (
+func, 
+str, 
+caobject, 
+float, 
+bool 
+)
+{
+},
+
+/**
+ * @method unscheduleAllForTarget
+ * @param {ca.CAObject} arg0
+ */
+unscheduleAllForTarget : function (
+caobject 
+)
+{
+},
+
+/**
+ * @method pauseTarget
+ * @param {ca.CAObject} arg0
+ */
+pauseTarget : function (
+caobject 
+)
+{
+},
+
+/**
+ * @method pauseAll
+ */
+pauseAll : function (
+)
+{
 },
 
 /**
@@ -17356,13 +17330,13 @@ str
 },
 
 /**
- * @method autorelease
- * @return {ca.CAObject}
+ * @method setRequestType
+ * @param {ca.CAHttpRequest::Type} arg0
  */
-autorelease : function (
+setRequestType : function (
+type 
 )
 {
-    return ca.CAObject;
 },
 
 /**
@@ -17415,16 +17389,6 @@ getRequestDataSize : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setRequestType
- * @param {ca.CAHttpRequest::Type} arg0
- */
-setRequestType : function (
-type 
-)
-{
 },
 
 /**

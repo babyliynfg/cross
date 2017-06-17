@@ -14,7 +14,7 @@ typedef struct _listEntry
 {
     struct _listEntry   *prev, *next;
     CAScheduler::Callback     callback;
-    void                *target;
+    CAObject            *target;
     int                 priority;
     bool                paused;
     bool                markedForDeletion; // selector will no longer be called and entry will be removed at end of the next tick
@@ -24,7 +24,7 @@ typedef struct _hashUpdateEntry
 {
     tListEntry          **list;        // Which list does it belong to ?
     tListEntry          *entry;        // entry in the list
-    void                *target;
+    CAObject            *target;
     CAScheduler::Callback     callback;
     UT_hash_handle      hh;
 } tHashUpdateEntry;
@@ -33,7 +33,7 @@ typedef struct _hashUpdateEntry
 typedef struct _hashSelectorEntry
 {
     ccArray             *timers;
-    void                *target;
+    CAObject            *target;
     int                 timerIndex;
     Timer               *currentTimer;
     bool                currentTimerSalvaged;
@@ -95,7 +95,7 @@ public:
     TimerTargetCallback();
     
     // Initializes a timer with a target, a lambda and an interval in seconds, repeat in number of times to repeat, delay in seconds.
-    bool initWithCallback(CAScheduler* scheduler, const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float seconds, unsigned int repeat, float delay);
+    bool initWithCallback(CAScheduler* scheduler, const CAScheduler::Callback& callback, const std::string& callbackName, CAObject *target, float seconds, unsigned int repeat, float delay);
     
     inline const CAScheduler::Callback& getCallback() const { return _callback; };
     inline const std::string& getCallbackName() const { return _callbackName; };
@@ -104,7 +104,7 @@ public:
     virtual void cancel() override;
     
 protected:
-    void* _target;
+    CAObject* _target;
     CAScheduler::Callback _callback;
     std::string _callbackName;
 };
@@ -204,7 +204,7 @@ TimerTargetCallback::TimerTargetCallback()
 {
 }
 
-bool TimerTargetCallback::initWithCallback(CAScheduler* scheduler, const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float seconds, unsigned int repeat, float delay)
+bool TimerTargetCallback::initWithCallback(CAScheduler* scheduler, const CAScheduler::Callback& callback, const std::string& callbackName, CAObject *target, float seconds, unsigned int repeat, float delay)
 {
     _scheduler = scheduler;
     _callback = callback;
@@ -301,7 +301,7 @@ void CAScheduler::removeHashElement(_hashSelectorEntry *element)
     free(element);
 }
 
-void CAScheduler::scheduleOnce(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float delay, bool paused)
+void CAScheduler::scheduleOnce(const CAScheduler::Callback& callback, const std::string& callbackName, CAObject *target, float delay, bool paused)
 {
     this->schedule(callback, callbackName, target, 0.0f, 0, delay, paused);
 }
@@ -311,7 +311,7 @@ void CAScheduler::scheduleOnce(SEL_Schedule selector, CAObject *target, float de
     this->schedule(selector, target, 0.0f, 0, delay, paused);
 }
 
-void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float interval, bool paused)
+void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& callbackName, CAObject *target, float interval, bool paused)
 {
     this->schedule(callback, callbackName, target, interval, kCCRepeatForever, 0.0f, paused);
 }
@@ -321,7 +321,7 @@ void CAScheduler::schedule(SEL_Schedule selector, CrossApp::CAObject *target, fl
     this->schedule(selector, target, interval, kCCRepeatForever, 0.0f, paused);
 }
 
-void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& callbackName, void *target, float interval, unsigned int repeat, float delay, bool paused)
+void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& callbackName, CAObject *target, float interval, unsigned int repeat, float delay, bool paused)
 {
     CCAssert(target, "Argument target must be non-nullptr");
     CCAssert(!callbackName.empty(), "key should not be empty!");
@@ -418,7 +418,7 @@ void CAScheduler::schedule(SEL_Schedule selector, CAObject *target, float interv
     timer->release();
 }
 
-void CAScheduler::unschedule(const std::string &callbackName, void *target)
+void CAScheduler::unschedule(const std::string &callbackName, CAObject *target)
 {
     // explicit handle nil arguments when removing an object
     if (target == nullptr || callbackName.empty())
@@ -523,7 +523,7 @@ void CAScheduler::unschedule(SEL_Schedule selector, CAObject *target)
     }
 }
 
-void CAScheduler::unscheduleAllForTarget(void* target)
+void CAScheduler::unscheduleAllForTarget(CAObject *target)
 {
     // explicit nullptr handling
     if (target == nullptr)
@@ -558,7 +558,7 @@ void CAScheduler::unscheduleAllForTarget(void* target)
     unscheduleUpdate(target);
 }
 
-bool CAScheduler::isScheduled(const std::string& callbackName, void *target)
+bool CAScheduler::isScheduled(const std::string& callbackName, CAObject *target)
 {
     CCAssert(!callbackName.empty(), "Argument key must not be empty");
     CCAssert(target, "Argument target must be non-nullptr");
@@ -686,7 +686,7 @@ void CAScheduler::unscheduleAllWithMinPriority(int minPriority)
     }
 }
 
-void CAScheduler::resumeTarget(void *target)
+void CAScheduler::resumeTarget(CAObject *target)
 {
     CCAssert(target != nullptr, "target can't be nullptr!");
     
@@ -708,7 +708,7 @@ void CAScheduler::resumeTarget(void *target)
     }
 }
 
-void CAScheduler::pauseTarget(void *target)
+void CAScheduler::pauseTarget(CAObject *target)
 {
     CCAssert(target != nullptr, "target can't be nullptr!");
     
@@ -730,7 +730,7 @@ void CAScheduler::pauseTarget(void *target)
     }
 }
 
-bool CAScheduler::isTargetPaused(void *target)
+bool CAScheduler::isTargetPaused(CAObject *target)
 {
     CCAssert( target != nullptr, "target must be non nil" );
     
@@ -992,7 +992,7 @@ void CAScheduler::scheduleUpdate(CAObject *target, int priority, bool paused)
     },target, priority, paused);
 }
 
-void CAScheduler::unscheduleUpdate(void *target)
+void CAScheduler::unscheduleUpdate(CAObject *target)
 {
     if (target == nullptr)
     {
@@ -1014,7 +1014,7 @@ void CAScheduler::unscheduleUpdate(void *target)
     }
 }
 
-void CAScheduler::priorityIn(tListEntry **list, const CAScheduler::Callback& callback, void *target, int priority, bool paused)
+void CAScheduler::priorityIn(tListEntry **list, const CAScheduler::Callback& callback, CAObject *target, int priority, bool paused)
 {
     tListEntry *listElement = new (std::nothrow) tListEntry();
     
@@ -1071,7 +1071,7 @@ void CAScheduler::priorityIn(tListEntry **list, const CAScheduler::Callback& cal
     HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 
-void CAScheduler::appendIn(_listEntry **list, const CAScheduler::Callback& callback, void *target, bool paused)
+void CAScheduler::appendIn(_listEntry **list, const CAScheduler::Callback& callback, CAObject *target, bool paused)
 {
     tListEntry *listElement = new (std::nothrow) tListEntry();
     
@@ -1091,7 +1091,7 @@ void CAScheduler::appendIn(_listEntry **list, const CAScheduler::Callback& callb
     HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 
-void CAScheduler::schedulePerFrame(const CAScheduler::Callback& callback, void *target, int priority, bool paused)
+void CAScheduler::schedulePerFrame(const CAScheduler::Callback& callback, CAObject *target, int priority, bool paused)
 {
     tHashUpdateEntry *hashElement = nullptr;
     HASH_FIND_PTR(_hashForUpdates, &target, hashElement);

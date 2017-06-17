@@ -66,18 +66,7 @@ public:
     }
     
     CREATE_FUNC(CAHttpRequest);
-    
-    /**
-     * Override autorelease method to avoid developers to call it.
-     * If this function was called, it would trigger assert in debug mode
-     *
-     * @return Ref* always return nullptr.
-     */
-    CAObject* autorelease()
-    {
-        return nullptr;
-    }
-    
+
     // setter/getters for properties
     
     /**

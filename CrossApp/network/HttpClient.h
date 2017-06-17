@@ -13,7 +13,7 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CAHttpClient
+class CC_DLL CAHttpClient: public CAObject
 {
 public:
     /**
