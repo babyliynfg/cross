@@ -53,7 +53,7 @@ var RenderImageTest = ca.CAViewController.extend({
         layer.setAlpha(255) ;
         ca.CAViewAnimation.commitAnimations();
     },
-    
+
     getStencil: function(size, index)
     {
         if (index == 0)

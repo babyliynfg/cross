@@ -36,7 +36,9 @@ var FirstViewController = ca.CAViewController.extend({
             ["GifView",                         "image/GifView.png",                "GifViewTest()"],
             ["VideoPlayer",                     "image/Video.png",                  "VideoPlayerControlViewTest()"],
             ["RenderImage",                     "image/RenderImage.png",            "RenderImageTest()"],
-            ["Animation",                       "image/Video.png",                  "ViewAnimationTest()"]
+            ["Animation",                       "image/Video.png",                  "ViewAnimationTest()"],
+            ["DrawView",                        "image/RenderImage.png",            "DrawViewTest()"],
+            ["ClipView",                        "image/RenderImage.png",            "ClipViewTest()"],
         ];
     },
     viewDidLoad: function() {

@@ -16,6 +16,8 @@ require('js/Control/PageViewTest.js');
 require('js/Control/PickerViewTest.js');
 require('js/Control/ProgressTest.js');
 require('js/Control/RenderImageTest.js');
+require('js/Control/DrawViewTest.js');
+require('js/Control/ClipViewTest.js');
 require('js/Control/Scale9ImageViewTest.js');
 require('js/Control/ScrollViewTest.js');
 require('js/Control/SegmentedControlTest.js');
