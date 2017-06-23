@@ -592,6 +592,7 @@ CAData* FileUtils::getDataFromFile(const std::string& filename)
 
 std::string FileUtils::getFileString(const std::string& filename)
 {
+    /*
     std::ifstream ifile(this->fullPathForFilename(filename));
     
     std::ostringstream buffer;
@@ -601,19 +602,19 @@ std::string FileUtils::getFileString(const std::string& filename)
         buffer.put(ch);
     }
     return buffer.str();
+    */
     
-    /*
-     std::string data;
-     unsigned long pSize = 0;
-     unsigned char* pData = this->getFileData(filename, "rb", &pSize);
-     
-     if (pSize > 0)
-     {
-     data.resize(pSize);
-     memcpy(&data[0], pData, pSize);
-     }
-     return data;
-     */
+    std::string data;
+    unsigned long pSize = 0;
+    unsigned char* pData = this->getFileData(filename, "rb", &pSize);
+    
+    if (pSize > 0)
+    {
+        data.resize(pSize);
+        memcpy(&data[0], pData, pSize);
+    }
+    return data;
+    
 }
 
 unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, unsigned long *size)

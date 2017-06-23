@@ -4,23 +4,22 @@ var FirstViewController = ca.CAViewController.extend({
     },
     viewDidLoad: function () {
 
-        this.getView().setColor(ca.CAColor4B.GRAY);
         var img = ca.CAImageView.createWithImage(ca.CAImage.create("r/HelloWorld.png"));
-        img.setLayout(DLayoutFill);
+        img.setLayout(ca.DLayoutFill);
         img.setScaleType(1);
         this.getView().addSubview(img);
 
-        var font = new CAFont();
+        var font = ca.CAFont();
         font.color = ca.CAColor4B.WHITE;
         font.fontSize = 72;
 
-        var labelLayout = DLayout(DHorizontalLayout_L_R(20, 20),DVerticalLayout_T_H(200, 100));
-        var lab = ca.CALabel.createWithLayout(labelLayout);
-        lab.setTextAlignment(ca.CATextAlignment.Center);
-        lab.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-        lab.setText("CrossApp");
-        lab.setFont(font);
-        this.getView().addSubview(lab);
+        var labelLayout = ca.DLayout.set(ca.DHorizontalLayout_L_R(20, 20),ca.DVerticalLayout_T_H(200, 100));
+        var label = ca.CALabel.createWithLayout(labelLayout);
+        label.setTextAlignment(ca.CATextAlignment.Center);
+        label.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
+        label.setFont(font);
+        this.getView().addSubview(label);
+        label.setText("CrossApp");
     },
     viewDidUnload: function () {
         ca.log("viewDidUnload");

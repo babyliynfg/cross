@@ -2,6 +2,7 @@
 #include "ScriptingCore.h"
 #include "jsb_crossapp_auto.hpp"
 #include "crossapp_specifics.hpp"
+#include "jsb_websocket.hpp"
 #include "js_crossapp_delegates_manual.hpp"
 
 USING_NS_CC;
