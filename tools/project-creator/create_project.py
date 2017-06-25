@@ -73,8 +73,7 @@ def checkParams(context):
         platforms_list = ["ios",
                           "android",
                           "mac",
-                          "win32",
-                          "win32_vs2015"]
+                          "win32"]
     elif ("javascript" == context["language"]):
         context["src_project_name"] = "HelloCpp"
         context["src_package_name"] = "org.CrossApp.hellocpp"
@@ -82,8 +81,7 @@ def checkParams(context):
         platforms_list = ["ios",
                           "android",
                           "mac",
-                          "win32",
-                          "win32_vs2015"]
+                          "win32"]
 # end of checkParams(context) function
 
 def replaceString(filepath, src_string, dst_string):

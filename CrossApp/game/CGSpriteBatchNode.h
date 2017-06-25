@@ -57,7 +57,7 @@ public:
 
     void increaseAtlasCapacity();
 
-    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void removeChildAtIndex(unsigned int index);
 
     void appendChild(CGSprite* sprite);
     void removeSpriteFromAtlas(CGSprite *sprite);

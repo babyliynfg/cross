@@ -17,7 +17,7 @@ var ClipViewTest = ca.CAViewController.extend({
         this.getView().addSubview(clipView) ;
 
 
-        var win_wid =ca.CAApplication.getApplication().getWinSize().width ;
+        var win_wid = ca.winSize.width ;
 
         var drawView = ca.CADrawView.create() ;
         drawView.setLayout(ca.DLayoutFill) ;

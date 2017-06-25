@@ -111,11 +111,25 @@ void CGSpriteBatchNode::removeChild(CGNode* child)
     }
 }
 
+void CGSpriteBatchNode::removeChildAtIndex(unsigned int index)
+{
+    this->removeChild(m_obChildren.at(index));
+}
+
 void CGSpriteBatchNode::removeAllChildren()
 {
+    for(const auto &sprite: m_obDescendants)
+    {
+        sprite->setBatchNode(nullptr);
+    }
+    
     CGNode::removeAllChildren();
     m_pobImageAtlas->removeAllQuads();
     m_obDescendants.clear();
+    if (m_pobImageAtlas)
+    {
+        m_pobImageAtlas->removeAllQuads();
+    }
 }
 
 void CGSpriteBatchNode::sortAllChildren()

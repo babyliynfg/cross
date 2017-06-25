@@ -2156,6 +2156,24 @@ jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v)
     return OBJECT_TO_JSVAL(jsretArr);
 }
 
+jsval std_set_int_to_jsval( JSContext *cx, const std::set<int>& v)
+{
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
+    
+    int i = 0;
+    for (const int obj : v)
+    {
+        JS::RootedValue arrElement(cx);
+        arrElement = int32_to_jsval(cx, obj);
+        
+        if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
+            break;
+        }
+        ++i;
+    }
+    return OBJECT_TO_JSVAL(jsretArr);
+}
+
 jsval matrix_to_jsval(JSContext *cx, const CrossApp::Mat4& v)
 {
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 16));

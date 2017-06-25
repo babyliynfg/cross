@@ -162,8 +162,6 @@ bool jsval_to_cavaluemapintkey(JSContext* cx, JS::HandleValue v, CrossApp::CAVal
 bool jsval_to_cavaluevector(JSContext* cx, JS::HandleValue v, CrossApp::CAValueVector* ret);//**
 bool jsval_to_ssize( JSContext *cx, JS::HandleValue vp, ssize_t* ret);
 bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret);//**
-bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int>* ret);//**
-bool jsval_to_std_vector_float( JSContext *cx, JS::HandleValue vp, std::vector<float>* ret);//**
 bool jsval_to_matrix(JSContext *cx, JS::HandleValue vp, CrossApp::Mat4* ret);
 bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, CrossApp::DPoint* ret);
 bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, CrossApp::BlendFunc* ret);
@@ -463,6 +461,7 @@ jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>&
 jsval std_vector_char_to_jsval( JSContext *cx, const std::vector<char>& v);
 jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v);
 jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v);
+jsval std_set_int_to_jsval( JSContext *cx, const std::set<int>& v);
 jsval matrix_to_jsval(JSContext *cx, const CrossApp::Mat4& v);
 jsval vector2_to_jsval(JSContext *cx, const CrossApp::DPoint& v);
 jsval blendfunc_to_jsval(JSContext *cx, const CrossApp::BlendFunc& v);

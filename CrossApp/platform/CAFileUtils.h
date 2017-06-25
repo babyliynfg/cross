@@ -334,7 +334,7 @@ public:
      *@param fullPath The full path to the file you want to save a string
      *@return bool
      */
-    virtual bool writeDataToFile(unsigned char* data, size_t length, const std::string& fullPath);
+    virtual bool writeDataToFile(CAData* data, const std::string& fullPath);
 
     /**
     * write ValueMap into a plist file

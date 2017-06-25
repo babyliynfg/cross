@@ -60,7 +60,7 @@ var FirstViewController = ca.CAViewController.extend({
     {
         var viewController = eval("new " + this._array[item][2]);
         viewController.init();
-        ca.RootWindow.getRootNavigationController().pushViewController(viewController, true);
+        ca.rootWindow.getRootNavigationController().pushViewController(viewController, true);
         viewController.getView().setColor(ca.CAColor4B.GRAY);
         viewController.release();
     },

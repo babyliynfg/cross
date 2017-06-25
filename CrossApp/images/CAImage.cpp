@@ -2901,6 +2901,11 @@ bool CAImage::isWebp(const unsigned char * data, unsigned long dataLen)
             memcmp(static_cast<const unsigned char*>(data) + 8, WEBP_WEBP, 4) == 0;
 }
 
+bool CAImage::isPvr(const unsigned char *data, unsigned long dataLen)
+{
+    return false;
+}
+
 namespace
 {
     typedef CAImage::PixelFormatInfoMap::value_type PixelFormatInfoMapValue;

@@ -37,7 +37,7 @@ class CC_DLL CADownloadManager
 	friend class DownloadResponseHelper;
     typedef struct _DownloadRecord
     {
-        unsigned long   download_id;
+        ssize_t   download_id;
         std::string     download_Url;
 		std::string		download_header;
         std::string     filePath;
@@ -61,43 +61,43 @@ public:
     
     static void destroyInstance();
 
-    unsigned long enqueueDownload(const std::string& downloadUrl,
+    ssize_t enqueueDownload(const std::string& downloadUrl,
                                   const std::string& fileName,
                                   const std::string& headers = "",
                                   const std::string& textTag = "");
 
-	unsigned long enqueueDownloadEx(const std::string& downloadUrl,
+	ssize_t enqueueDownloadEx(const std::string& downloadUrl,
                                     const std::string& fileName,
                                     const std::string& headers = "",
                                     const std::string& textTag = "");
 
-    void resumeDownload(unsigned long download_id);
+    void resumeDownload(ssize_t download_id);
     
-	void pauseDownload(unsigned long download_id);
+	void pauseDownload(ssize_t download_id);
 
-	void eraseDownload(unsigned long download_id);
+	void eraseDownload(ssize_t download_id);
     
-    const char* getDownloadUrl(unsigned long download_id);
+    const char* getDownloadUrl(ssize_t download_id);
 
-	const char* getDownloadHeader(unsigned long download_id);
+	const char* getDownloadHeader(ssize_t download_id);
     
-    const char* getFilePath(unsigned long download_id);
+    const char* getFilePath(ssize_t download_id);
     
-    unsigned long getTotalFileSize(unsigned long download_id);
+    ssize_t getTotalFileSize(ssize_t download_id);
     
-    unsigned long getLocalFileSize(unsigned long download_id);
+    ssize_t getLocalFileSize(ssize_t download_id);
     
-    const char* getStartTime(unsigned long download_id);
+    const char* getStartTime(ssize_t download_id);
     
-    bool isFinished(unsigned long download_id);
+    bool isFinished(ssize_t download_id);
     
-    bool isDownloading(unsigned long download_id);
+    bool isDownloading(ssize_t download_id);
 
     void clearOnSuccessDownloadAllRecord();
     
-    void clearOnSuccessDownloadRecord(unsigned long download_id);
+    void clearOnSuccessDownloadRecord(ssize_t download_id);
     
-    std::vector<unsigned long> getDownloadIdsFromTextTag(const std::string& textTag);
+    std::vector<ssize_t> getDownloadIdsFromTextTag(const std::string& textTag);
     
     std::vector<std::string> getDownloadAllTextTags();
     
@@ -115,23 +115,23 @@ protected:
 
     void loadDownloadTasks();
 
-	void deleteTaskFromDb(unsigned long download_id);
+	void deleteTaskFromDb(ssize_t download_id);
 
 	void deleteTaskFromDb(const std::string& cszUrl);
 
-	void setTaskFinished(unsigned long download_id);
+	void setTaskFinished(ssize_t download_id);
     
-    std::vector<unsigned long> selectIdFromTextTag(const std::string& textTag);
+    std::vector<ssize_t> selectIdFromTextTag(const std::string& textTag);
     
 	double getDownloadFileSize(const std::string& downloadUrl, const std::string& downloadHeader);
 
-	unsigned long insertDownload(const std::string& downloadUrl, const std::string& downloadHeader, const std::string& fileName, const std::string& textTag);
+	ssize_t insertDownload(const std::string& downloadUrl, const std::string& downloadHeader, const std::string& fileName, const std::string& textTag);
 
 	void enqueueDownload(CADownloadResponse* request);
 
     void onError(CADownloadResponse* request, CADownloadManager::ErrorCode errorCode);
     
-    void onProgress(CADownloadResponse* request, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded);
+    void onProgress(CADownloadResponse* request, int percent, ssize_t nowDownloaded, ssize_t totalToDownloaded);
     
     void onSuccess(CADownloadResponse* request);
 
@@ -141,9 +141,9 @@ private:
     
 	void* m_mpSqliteDB;
     
-    CAMap<unsigned long, CADownloadResponse*> m_mCADownloadResponses;
+    CAMap<ssize_t, CADownloadResponse*> m_mCADownloadResponses;
     
-    std::map<unsigned long, DownloadRecord> m_mDownloadRecords;
+    std::map<ssize_t, DownloadRecord> m_mDownloadRecords;
     
     CAVector<CADownloadResponse*> m_vDownloadingRequests;
     
@@ -162,10 +162,10 @@ private:
 
 	static CADownloadResponse* create(const std::string& downloadUrl,
 		const std::string& fileName,
-		unsigned long downloadId,
+		ssize_t downloadId,
 		const std::string& headers = "");
 
-	CADownloadResponse(const std::string& downloadUrl, const std::string& fileName, unsigned long downloadId, const std::string& downHeaders = "");
+	CADownloadResponse(const std::string& downloadUrl, const std::string& fileName, ssize_t downloadId, const std::string& downHeaders = "");
 
 	virtual ~CADownloadResponse();
 
@@ -175,7 +175,7 @@ private:
 
 	void setDownloadCmd(int cmd);
 
-	unsigned long getDownloadID() const;
+	ssize_t getDownloadID() const;
 
 	const std::string& getDownloadUrl() const;
 
@@ -228,7 +228,7 @@ private:
 
 	unsigned int _connectionTimeout;
 
-	unsigned long _download_id;
+	ssize_t _download_id;
 
 	float m_fDelay;
 
@@ -239,15 +239,15 @@ class CC_DLL CADownloadManagerDelegate
 {
 public:
     
-    virtual void onError(unsigned long download_id, CADownloadManager::ErrorCode errorCode){};
+    virtual void onError(ssize_t download_id, CADownloadManager::ErrorCode errorCode){};
     
-    virtual void onProgress(unsigned long download_id, int percent, unsigned long nowDownloaded, unsigned long totalToDownloaded){};
+    virtual void onProgress(ssize_t download_id, int percent, ssize_t nowDownloaded, ssize_t totalToDownloaded){};
     
-    virtual void onPauseDownload(unsigned long download_id){};
+    virtual void onPauseDownload(ssize_t download_id){};
     
-    virtual void onResumeDownload(unsigned long download_id){};
+    virtual void onResumeDownload(ssize_t download_id){};
     
-    virtual void onSuccess(unsigned long download_id){};
+    virtual void onSuccess(ssize_t download_id){};
 };
 
 

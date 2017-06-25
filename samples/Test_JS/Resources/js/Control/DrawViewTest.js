@@ -13,7 +13,7 @@ var DrawViewTest = ca.CAViewController.extend({
         drawView.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0,0) , ca.DVerticalLayout_T_B(0,40)));
         this.getView().addSubview(drawView) ;
 
-        var win_wid =ca.CAApplication.getApplication().getWinSize().width ;
+        var win_wid = ca.winSize.width ;
 
         /** 线 */
         drawView.drawLine(ca.DPoint.set(win_wid * 0.2, 50), ca.DPoint.set(win_wid * 0.8 ,50),ca.CAColor4B.BLUE) ;

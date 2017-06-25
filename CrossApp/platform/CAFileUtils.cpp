@@ -538,23 +538,34 @@ FileUtils::~FileUtils()
 
 bool FileUtils::writeStringToFile(const std::string& dataStr, const std::string& fullPath)
 {
-    bool rv = writeDataToFile((unsigned char*)dataStr.c_str(), dataStr.size(), fullPath);
-
-    return rv;
-}
-
-bool FileUtils::writeDataToFile(unsigned char* data, size_t length, const std::string& fullPath)
-{
     const char* mode = "wb";
-
-    auto fileutils = FileUtils::getInstance();
+    
     do
     {
         // Read the file from hardware
-        FILE *fp = fopen(fileutils->getSuitableFOpen(fullPath).c_str(), mode);
+        FILE *fp = fopen(this->getSuitableFOpen(fullPath).c_str(), mode);
+        CC_BREAK_IF(!fp);
+        
+        fwrite(dataStr.c_str(), dataStr.length(), 1, fp);
+                fclose(fp);
+        
+        return true;
+    } while (0);
+    
+    return false;
+}
+
+bool FileUtils::writeDataToFile(CAData* data, const std::string& fullPath)
+{
+    const char* mode = "wb";
+
+    do
+    {
+        // Read the file from hardware
+        FILE *fp = fopen(this->getSuitableFOpen(fullPath).c_str(), mode);
         CC_BREAK_IF(!fp);
 
-        fwrite(data, length, 1, fp);
+        fwrite(data->getBytes(), data->getLength(), 1, fp);
 
         fclose(fp);
 

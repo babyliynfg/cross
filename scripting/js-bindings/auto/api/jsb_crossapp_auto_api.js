@@ -521,22 +521,6 @@ CAData : function (
 };
 
 /**
- * @class CAFont
- */
-ca.CAFont = {
-
-/**
- * @method CAFont
- * @constructor
- */
-CAFont : function (
-)
-{
-},
-
-};
-
-/**
  * @class CAImage
  */
 ca.CAImage = {
@@ -725,6 +709,16 @@ bool
 )
 {
     return false;
+},
+
+/**
+ * @method drawInRect
+ * @param {rect_object} arg0
+ */
+drawInRect : function (
+drect 
+)
+{
 },
 
 /**
@@ -932,6 +926,16 @@ getImageFileType : function (
 },
 
 /**
+ * @method drawAtPoint
+ * @param {point_object} arg0
+ */
+drawAtPoint : function (
+dpoint 
+)
+{
+},
+
+/**
  * @method initWithRawData
  * @param {ca.CAData} arg0
  * @param {ca.CAImage::PixelFormat} arg1
@@ -998,6 +1002,20 @@ isCompressed : function (
  * @return {bool}
  */
 isJpg : function (
+char, 
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method isPvr
+ * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
+ * @return {bool}
+ */
+isPvr : function (
 char, 
 long 
 )
@@ -1886,6 +1904,178 @@ func
  * @constructor
  */
 CAResponder : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAImageCache
+ */
+ca.CAImageCache = {
+
+/**
+ * @method addImageFullPathAsync
+ * @param {String} arg0
+ * @param {function} arg1
+ */
+addImageFullPathAsync : function (
+str, 
+func 
+)
+{
+},
+
+/**
+ * @method description
+ * @return {char}
+ */
+description : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getImageFilePath
+ * @param {ca.CAImage} arg0
+ * @return {String}
+ */
+getImageFilePath : function (
+caimage 
+)
+{
+    return ;
+},
+
+/**
+ * @method addImageAsync
+ * @param {String} arg0
+ * @param {function} arg1
+ */
+addImageAsync : function (
+str, 
+func 
+)
+{
+},
+
+/**
+ * @method removeAllImages
+ */
+removeAllImages : function (
+)
+{
+},
+
+/**
+ * @method removeImage
+ * @param {ca.CAImage} arg0
+ */
+removeImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method removeUnusedImages
+ */
+removeUnusedImages : function (
+)
+{
+},
+
+/**
+ * @method addImage
+ * @param {String} arg0
+ * @return {ca.CAImage}
+ */
+addImage : function (
+str 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method setImageForKey
+ * @param {ca.CAImage} arg0
+ * @param {String} arg1
+ */
+setImageForKey : function (
+caimage, 
+str 
+)
+{
+},
+
+/**
+ * @method removeImageForKey
+ * @param {String} arg0
+ */
+removeImageForKey : function (
+str 
+)
+{
+},
+
+/**
+ * @method reloadImage
+ * @param {String} arg0
+ * @return {bool}
+ */
+reloadImage : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method imageForKey
+ * @param {String} arg0
+ * @return {ca.CAImage}
+ */
+imageForKey : function (
+str 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method dumpCachedImageInfo
+ */
+dumpCachedImageInfo : function (
+)
+{
+},
+
+/**
+ * @method reloadAllImages
+ */
+reloadAllImages : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {ca.CAImageCache}
+ */
+getInstance : function (
+)
+{
+    return ca.CAImageCache;
+},
+
+/**
+ * @method CAImageCache
+ * @constructor
+ */
+CAImageCache : function (
 )
 {
 },
@@ -4765,6 +4955,16 @@ cathememanager
 },
 
 /**
+ * @method getAccelerometer
+ * @return {ca.CAAccelerometer}
+ */
+getAccelerometer : function (
+)
+{
+    return ca.CAAccelerometer;
+},
+
+/**
  * @method restart
  */
 restart : function (
@@ -6502,6 +6702,16 @@ int
 },
 
 /**
+ * @method getItems
+ * @return {Array}
+ */
+getItems : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method getSelectedIndex
  * @return {int}
  */
@@ -6617,6 +6827,16 @@ setSelectedIndicatorColor : function (
 cacolor4b 
 )
 {
+},
+
+/**
+ * @method getForbidSelectedIndexs
+ * @return {std::set<int, std::less<int>, std::allocator<int> >}
+ */
+getForbidSelectedIndexs : function (
+)
+{
+    return std::set<int, std::less<int>, std::allocator<int> >;
 },
 
 /**
@@ -9284,6 +9504,16 @@ char
 },
 
 /**
+ * @method clearStencil
+ * @param {int} arg0
+ */
+clearStencil : function (
+int 
+)
+{
+},
+
+/**
  * @method setClearStencil
  * @param {float} arg0
  */
@@ -9387,6 +9617,26 @@ isAutoDraw : function (
  */
 setClearDepth : function (
 float 
+)
+{
+},
+
+/**
+ * @method clearDepth
+ * @param {float} arg0
+ */
+clearDepth : function (
+float 
+)
+{
+},
+
+/**
+ * @method clear
+ * @param {color4b_object} arg0
+ */
+clear : function (
+cacolor4b 
 )
 {
 },
@@ -15254,14 +15504,12 @@ ca.FileUtils = {
 
 /**
  * @method writeDataToFile
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
- * @param {String} arg2
+ * @param {ca.CAData} arg0
+ * @param {String} arg1
  * @return {bool}
  */
 writeDataToFile : function (
-char, 
-long, 
+cadata, 
 str 
 )
 {
@@ -15358,6 +15606,32 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method writeToFile
+ * @param {map_object} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+writeToFile : function (
+map, 
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getValueMapFromFile
+ * @param {String} arg0
+ * @return {map_object}
+ */
+getValueMapFromFile : function (
+str 
+)
+{
+    return map_object;
 },
 
 /**
@@ -17764,11 +18038,11 @@ int
 
 /**
  * @method getLocalFileSize
- * @param {unsigned long} arg0
- * @return {unsigned long}
+ * @param {int} arg0
+ * @return {int}
  */
 getLocalFileSize : function (
-long 
+int 
 )
 {
     return 0;
@@ -17780,7 +18054,7 @@ long
  * @param {String} arg1
  * @param {String} arg2
  * @param {String} arg3
- * @return {unsigned long}
+ * @return {int}
  */
 enqueueDownload : function (
 str, 
@@ -17802,10 +18076,10 @@ clearOnSuccessDownloadAllRecord : function (
 
 /**
  * @method eraseDownload
- * @param {unsigned long} arg0
+ * @param {int} arg0
  */
 eraseDownload : function (
-long 
+int 
 )
 {
 },
@@ -17816,7 +18090,7 @@ long
  * @param {String} arg1
  * @param {String} arg2
  * @param {String} arg3
- * @return {unsigned long}
+ * @return {int}
  */
 enqueueDownloadEx : function (
 str, 
@@ -17830,11 +18104,11 @@ str
 
 /**
  * @method isDownloading
- * @param {unsigned long} arg0
+ * @param {int} arg0
  * @return {bool}
  */
 isDownloading : function (
-long 
+int 
 )
 {
     return false;
@@ -17842,21 +18116,21 @@ long
 
 /**
  * @method clearOnSuccessDownloadRecord
- * @param {unsigned long} arg0
+ * @param {int} arg0
  */
 clearOnSuccessDownloadRecord : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method getDownloadUrl
- * @param {unsigned long} arg0
+ * @param {int} arg0
  * @return {char}
  */
 getDownloadUrl : function (
-long 
+int 
 )
 {
     return 0;
@@ -17864,12 +18138,24 @@ long
 
 /**
  * @method resumeDownload
- * @param {unsigned long} arg0
+ * @param {int} arg0
  */
 resumeDownload : function (
-long 
+int 
 )
 {
+},
+
+/**
+ * @method getDownloadIdsFromTextTag
+ * @param {String} arg0
+ * @return {Array}
+ */
+getDownloadIdsFromTextTag : function (
+str 
+)
+{
+    return new Array();
 },
 
 /**
@@ -17884,11 +18170,11 @@ getDownloadManagerDelegate : function (
 
 /**
  * @method getTotalFileSize
- * @param {unsigned long} arg0
- * @return {unsigned long}
+ * @param {int} arg0
+ * @return {int}
  */
 getTotalFileSize : function (
-long 
+int 
 )
 {
     return 0;
@@ -17896,11 +18182,11 @@ long
 
 /**
  * @method getFilePath
- * @param {unsigned long} arg0
+ * @param {int} arg0
  * @return {char}
  */
 getFilePath : function (
-long 
+int 
 )
 {
     return 0;
@@ -17908,11 +18194,11 @@ long
 
 /**
  * @method getDownloadHeader
- * @param {unsigned long} arg0
+ * @param {int} arg0
  * @return {char}
  */
 getDownloadHeader : function (
-long 
+int 
 )
 {
     return 0;
@@ -17920,21 +18206,21 @@ long
 
 /**
  * @method pauseDownload
- * @param {unsigned long} arg0
+ * @param {int} arg0
  */
 pauseDownload : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method isFinished
- * @param {unsigned long} arg0
+ * @param {int} arg0
  * @return {bool}
  */
 isFinished : function (
-long 
+int 
 )
 {
     return false;
@@ -17952,11 +18238,11 @@ getDownloadAllTextTags : function (
 
 /**
  * @method getStartTime
- * @param {unsigned long} arg0
+ * @param {int} arg0
  * @return {char}
  */
 getStartTime : function (
-long 
+int 
 )
 {
     return 0;
@@ -20901,6 +21187,18 @@ cgsprite
 )
 {
     return 0;
+},
+
+/**
+ * @method removeChildAtIndex
+ * @param {unsigned int} arg0
+ * @param {bool} arg1
+ */
+removeChildAtIndex : function (
+int, 
+bool 
+)
+{
 },
 
 /**

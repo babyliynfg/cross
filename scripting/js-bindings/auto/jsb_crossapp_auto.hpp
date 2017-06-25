@@ -76,15 +76,6 @@ bool js_crossapp_CAData_getBytes(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAData_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAData_CAData(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_CrossApp_CAFont_class;
-extern JSObject *jsb_CrossApp_CAFont_prototype;
-
-bool js_crossapp_CAFont_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CAFont_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CAFont(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAFont_CAFont(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_CrossApp_CAImage_class;
 extern JSObject *jsb_CrossApp_CAImage_prototype;
 
@@ -110,6 +101,7 @@ bool js_crossapp_CAImage_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getGifImageIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_setMaxT(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_initWithImageFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImage_drawInRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getBitPerPixel(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getGifImageCounts(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getContentSize(JSContext *cx, uint32_t argc, jsval *vp);
@@ -129,12 +121,14 @@ bool js_crossapp_CAImage_isWebp(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_updateGifImageWithIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_copy(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_getImageFileType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImage_drawAtPoint(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_initWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_repremultipliedImageData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_detectFormat(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_hasMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_isCompressed(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_isJpg(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImage_isPvr(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_isGif(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_purgeCAImage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImage_scaleToNewImageWithImage(JSContext *cx, uint32_t argc, jsval *vp);
@@ -239,6 +233,30 @@ bool js_crossapp_CAResponder_getTouchCancelledCallback(JSContext *cx, uint32_t a
 bool js_crossapp_CAResponder_getZLevel(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAResponder_setTouchCancelledCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAResponder_CAResponder(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CAImageCache_class;
+extern JSObject *jsb_CrossApp_CAImageCache_prototype;
+
+bool js_crossapp_CAImageCache_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAImageCache_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAImageCache(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAImageCache_addImageFullPathAsync(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_description(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_getImageFilePath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_addImageAsync(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_removeAllImages(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_removeImage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_removeUnusedImages(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_addImage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_setImageForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_removeImageForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_reloadImage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_imageForKey(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_dumpCachedImageInfo(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_reloadAllImages(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImageCache_CAImageCache(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAView_class;
 extern JSObject *jsb_CrossApp_CAView_prototype;
@@ -575,6 +593,7 @@ bool js_crossapp_CAApplication_purgeCachedData(JSContext *cx, uint32_t argc, jsv
 bool js_crossapp_CAApplication_getTotalFrames(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_pause(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setThemeManager(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAApplication_getAccelerometer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_restart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_loadIdentityMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_isDisplayStats(JSContext *cx, uint32_t argc, jsval *vp);
@@ -797,6 +816,7 @@ bool js_crossapp_CATabBar_getTitleBoldForSelected(JSContext *cx, uint32_t argc, 
 bool js_crossapp_CATabBar_setSelectedAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_showSelectedIndicator(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_addForbidSelectedAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CATabBar_getItems(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_getSelectedIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_setSelectedIndicatorImage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_getTitleColorForNormal(JSContext *cx, uint32_t argc, jsval *vp);
@@ -809,6 +829,7 @@ bool js_crossapp_CATabBar_setBackgroundColor(JSContext *cx, uint32_t argc, jsval
 bool js_crossapp_CATabBar_setTitleColorForSelected(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_setSelectedIndicatorColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CATabBar_getForbidSelectedIndexs(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_getSelectedBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_setSelectedBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBar_getDelegate(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1142,6 +1163,7 @@ bool js_crossapp_CARenderImage_getImageView(JSContext *cx, uint32_t argc, jsval 
 bool js_crossapp_CARenderImage_printscreenWithView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_getClearStencil(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CARenderImage_clearStencil(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_setClearStencil(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_setClearFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_setImageView(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1152,6 +1174,8 @@ bool js_crossapp_CARenderImage_getClearColor(JSContext *cx, uint32_t argc, jsval
 bool js_crossapp_CARenderImage_getClearFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_isAutoDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_setClearDepth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CARenderImage_clearDepth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CARenderImage_clear(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_getClearDepth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_CARenderImage(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1915,6 +1939,8 @@ bool js_crossapp_FileUtils_renameFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_getDefaultResourceRootPath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_isPopupNotify(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_removeDirectory(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FileUtils_writeToFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FileUtils_getValueMapFromFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_getFileString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_getFileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_FileUtils_getFileData(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2228,6 +2254,7 @@ bool js_crossapp_CADownloadManager_isDownloading(JSContext *cx, uint32_t argc, j
 bool js_crossapp_CADownloadManager_clearOnSuccessDownloadRecord(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADownloadManager_getDownloadUrl(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADownloadManager_resumeDownload(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADownloadManager_getDownloadIdsFromTextTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADownloadManager_getDownloadManagerDelegate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADownloadManager_getTotalFileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADownloadManager_getFilePath(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2569,6 +2596,7 @@ bool js_crossapp_CGSpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, 
 bool js_crossapp_CGSpriteBatchNode_setImage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSpriteBatchNode_highestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CGSpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSpriteBatchNode_getImage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSpriteBatchNode_removeSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);

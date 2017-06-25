@@ -34,16 +34,16 @@ var RenderImageTest = ca.CAViewController.extend({
         var layer = ca.CAView.createWithLayout(ca.DLayoutFill) ;
         layer.setColor(ca.CAColor4B.WHITE) ;
         layer.setAlpha(0) ;
-        ca.RootWindow.insertSubview(layer , 0xffff) ;
+        ca.rootWindow.insertSubview(layer , 0xffff) ;
 
         ca.CAViewAnimation.beginAnimations("");
         ca.CAViewAnimation.setAnimationDuration(0.1);
         var imgview = this.imageView ;
         ca.CAViewAnimation.setAnimationDidStopSelector(function()
         {
-            var winSize = ca.CAApplication.getApplication().getWinSize();
+            var winSize = ca.winSize;
             var render =  ca.CARenderImage.create(winSize.width , winSize.height , ca.CAImage.PixelFormat.RGBA8888);
-            render.printscreenWithView(ca.RootWindow.getRootViewController().getView()) ;
+            render.printscreenWithView(ca.rootWindow.getRootViewController().getView()) ;
             var img = render.getImageView().getImage()  ;
             imgview.setImage(img) ;
 
