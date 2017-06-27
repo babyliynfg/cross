@@ -2343,6 +2343,19 @@ bool js_crossapp_CATextView_createWithLayout(JSContext *cx, uint32_t argc, jsval
 bool js_crossapp_CATextView_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATextView_CATextView(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CAFontProcesstor_class;
+extern JSObject *jsb_CrossApp_CAFontProcesstor_prototype;
+
+bool js_crossapp_CAFontProcesstor_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAFontProcesstor_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAFontProcesstor(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAFontProcesstor_heightForFont(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAFontProcesstor_imageForText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAFontProcesstor_heightForTextAtWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAFontProcesstor_widthForTextAtOneLine(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAFontProcesstor_imageForRichText(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CGNode_class;
 extern JSObject *jsb_CrossApp_CGNode_prototype;
 

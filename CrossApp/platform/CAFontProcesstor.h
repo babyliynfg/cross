@@ -8,8 +8,10 @@
 NS_CC_BEGIN
 
 class CAImage;
-struct CC_DLL CAFontProcesstor
+class CC_DLL CAFontProcesstor
 {
+public:
+    
     static CAImage* imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment);
     
     static CAImage* imageForText(const std::string& text, const CAFont& font, DSize& dimensions, CATextAlignment textAlignment);

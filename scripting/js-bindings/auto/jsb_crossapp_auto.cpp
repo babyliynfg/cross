@@ -50318,6 +50318,156 @@ void js_register_crossapp_CATextView(JSContext *cx, JS::HandleObject global) {
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CAFontProcesstor_class;
+JSObject *jsb_CrossApp_CAFontProcesstor_prototype;
+
+bool js_crossapp_CAFontProcesstor_heightForFont(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CAFont arg0;
+        ok &= jsval_to_cafont(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAFontProcesstor_heightForFont : Error processing arguments");
+        double ret = CrossApp::CAFontProcesstor::heightForFont(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAFontProcesstor_heightForFont : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAFontProcesstor_imageForText(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 4) {
+        std::string arg0;
+        CrossApp::CAFont arg1;
+        CrossApp::DSize arg2;
+        CrossApp::CATextAlignment arg3;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_cafont(cx, args.get(1), &arg1);
+        ok &= jsval_to_dsize(cx, args.get(2), &arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAFontProcesstor_imageForText : Error processing arguments");
+        CrossApp::CAImage* ret = CrossApp::CAFontProcesstor::imageForText(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAFontProcesstor_imageForText : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAFontProcesstor_heightForTextAtWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 3) {
+        std::string arg0;
+        CrossApp::CAFont arg1;
+        double arg2 = 0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_cafont(cx, args.get(1), &arg1);
+        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAFontProcesstor_heightForTextAtWidth : Error processing arguments");
+        double ret = CrossApp::CAFontProcesstor::heightForTextAtWidth(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAFontProcesstor_heightForTextAtWidth : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAFontProcesstor_widthForTextAtOneLine(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        std::string arg0;
+        CrossApp::CAFont arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_cafont(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAFontProcesstor_widthForTextAtOneLine : Error processing arguments");
+        double ret = CrossApp::CAFontProcesstor::widthForTextAtOneLine(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAFontProcesstor_widthForTextAtOneLine : wrong number of arguments");
+    return false;
+}
+void js_CrossApp_CAFontProcesstor_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CAFontProcesstor)", obj);
+}
+void js_register_crossapp_CAFontProcesstor(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CAFontProcesstor_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CAFontProcesstor_class->name = "CAFontProcesstor";
+    jsb_CrossApp_CAFontProcesstor_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CAFontProcesstor_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CAFontProcesstor_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CAFontProcesstor_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CAFontProcesstor_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CAFontProcesstor_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CAFontProcesstor_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CAFontProcesstor_class->finalize = js_CrossApp_CAFontProcesstor_finalize;
+    jsb_CrossApp_CAFontProcesstor_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("heightForFont", js_crossapp_CAFontProcesstor_heightForFont, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("imageForText", js_crossapp_CAFontProcesstor_imageForText, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("heightForTextAtWidth", js_crossapp_CAFontProcesstor_heightForTextAtWidth, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("widthForTextAtOneLine", js_crossapp_CAFontProcesstor_widthForTextAtOneLine, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CAFontProcesstor_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_CrossApp_CAFontProcesstor_class,
+        dummy_constructor<CrossApp::CAFontProcesstor>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CAFontProcesstor", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CAFontProcesstor> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CAFontProcesstor_class;
+        p->proto = jsb_CrossApp_CAFontProcesstor_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CGNode_class;
 JSObject *jsb_CrossApp_CGNode_prototype;
 
@@ -68347,6 +68497,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CABarButtonItem(cx, ns);
     js_register_crossapp_ActionEase(cx, ns);
     js_register_crossapp_EaseQuarticActionInOut(cx, ns);
+    js_register_crossapp_CAFontProcesstor(cx, ns);
     js_register_crossapp_CATabBarItem(cx, ns);
     js_register_crossapp_CAWindow(cx, ns);
     js_register_crossapp_CALabel(cx, ns);

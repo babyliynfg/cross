@@ -18899,6 +18899,89 @@ CATextView : function (
 };
 
 /**
+ * @class CAFontProcesstor
+ */
+ca.CAFontProcesstor = {
+
+/**
+ * @method heightForFont
+ * @param {font_object} arg0
+ * @return {float}
+ */
+heightForFont : function (
+cafont 
+)
+{
+    return 0;
+},
+
+/**
+ * @method imageForText
+ * @param {String} arg0
+ * @param {font_object} arg1
+ * @param {size_object} arg2
+ * @param {ca.CATextAlignment} arg3
+ * @return {ca.CAImage}
+ */
+imageForText : function (
+str, 
+cafont, 
+dsize, 
+catextalignment 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method heightForTextAtWidth
+ * @param {String} arg0
+ * @param {font_object} arg1
+ * @param {float} arg2
+ * @return {float}
+ */
+heightForTextAtWidth : function (
+str, 
+cafont, 
+float 
+)
+{
+    return 0;
+},
+
+/**
+ * @method widthForTextAtOneLine
+ * @param {String} arg0
+ * @param {font_object} arg1
+ * @return {float}
+ */
+widthForTextAtOneLine : function (
+str, 
+cafont 
+)
+{
+    return 0;
+},
+
+/**
+ * @method imageForRichText
+ * @param {Array} arg0
+ * @param {size_object} arg1
+ * @param {ca.CATextAlignment} arg2
+ * @return {ca.CAImage}
+ */
+imageForRichText : function (
+array, 
+dsize, 
+catextalignment 
+)
+{
+    return ca.CAImage;
+},
+
+};
+
+/**
  * @class CGNode
  */
 ca.CGNode = {
