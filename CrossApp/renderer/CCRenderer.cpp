@@ -188,7 +188,7 @@ Renderer::Renderer()
     _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESERVED_SIZE);
 
     // default clear color
-    _clearColor = CAColor4F(1, 1, 1, 1);
+    _clearColor = CAColor4F::WHITE;
 
     // for the batched TriangleCommand
     _triBatchesToDrawCapacity = 500;

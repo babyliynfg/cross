@@ -78,17 +78,22 @@ void CCEGLViewProtocol::setFrameSize(float width, float height)
         DSize customScreenSize = nativeApp->applicationScreenSize();
         float x = customScreenSize.width > 0 ? width / customScreenSize.width : 0;
         float y = customScreenSize.height > 0 ? height / customScreenSize.height : 0;
-        m_fScale = MAX(x, y);
+        m_fScale = MIN(x, y);
         CADensityDpi::setDensityDpi(m_fScale * DPI_STANDARD);
         m_obDesignResolutionSize.setSize(customScreenSize.width, customScreenSize.height);
+        
+        float viewPortX = (m_obScreenSize.width - m_obDesignResolutionSize.width * m_fScale) / 2;
+        float viewPortY = (m_obScreenSize.height - m_obDesignResolutionSize.height * m_fScale) / 2;
+        m_obViewPortRect.setRect(viewPortX, viewPortY, m_obScreenSize.width, m_obScreenSize.height);
     }
     else
     {
         m_obDesignResolutionSize.setSize(s_px_to_dip(width), s_px_to_dip(height));
         m_fScale = s_dip_to_px(1.0f);
+        m_obViewPortRect.setRect(0, 0, m_obScreenSize.width, m_obScreenSize.height);
     }
     
-    m_obViewPortRect.setRect(0, 0, m_obScreenSize.width, m_obScreenSize.height);
+    
     CAApplication::getApplication()->reshapeProjection(m_obDesignResolutionSize);
 }
 

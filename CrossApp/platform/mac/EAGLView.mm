@@ -281,15 +281,6 @@ static EAGLView *view;
 
     isFullScreen_ = fullscreen;
 
-    //[openGLview retain]; // Retain +1
-
-	// is this necessary?
-    // re-configure glView
-	//CrossApp::CAApplication *director = CrossApp::CAApplication::getApplication();
-	//director->setOpenGLView(openGLview); //[self setView:openGLview];
-
-    //[openGLview release]; // Retain -1
-
     [openGLview setNeedsDisplay:YES];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FULL_SCREEN_CHANGED" object:nil];

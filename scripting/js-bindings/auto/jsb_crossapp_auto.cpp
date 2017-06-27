@@ -48534,9 +48534,9 @@ bool js_crossapp_CADownloadManager_getDownloadIdsFromTextTag(JSContext *cx, uint
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADownloadManager_getDownloadIdsFromTextTag : Error processing arguments");
         std::vector<int> ret;
-        for (auto& var : cobj->getDownloadIdsFromTextTag(arg0))
+        for (int r : cobj->getDownloadIdsFromTextTag(arg0))
         {
-            ret.push_back(var);
+            ret.push_back(r);
         }
         jsval jsret = JSVAL_NULL;
         jsret = std_vector_int_to_jsval(cx, ret);
@@ -56168,7 +56168,7 @@ bool js_crossapp_CGSpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t ar
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_removeChildAtIndex : Invalid Native Object");
-    if (argc == 2) {
+    if (argc == 1) {
         uint32_t arg0 = 0;
         ok &= jsval_to_uint32(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_removeChildAtIndex : Error processing arguments");
@@ -56177,7 +56177,7 @@ bool js_crossapp_CGSpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t ar
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_removeChildAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_removeChildAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CGSpriteBatchNode_getImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -56449,7 +56449,7 @@ void js_register_crossapp_CGSpriteBatchNode(JSContext *cx, JS::HandleObject glob
         JS_FN("setImage", js_crossapp_CGSpriteBatchNode_setImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBlendFunc", js_crossapp_CGSpriteBatchNode_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("highestAtlasIndexInChild", js_crossapp_CGSpriteBatchNode_highestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeChildAtIndex", js_crossapp_CGSpriteBatchNode_removeChildAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeChildAtIndex", js_crossapp_CGSpriteBatchNode_removeChildAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getImage", js_crossapp_CGSpriteBatchNode_getImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeSpriteFromAtlas", js_crossapp_CGSpriteBatchNode_removeSpriteFromAtlas, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBlendFunc", js_crossapp_CGSpriteBatchNode_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

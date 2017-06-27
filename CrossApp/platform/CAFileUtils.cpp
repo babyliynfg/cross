@@ -853,7 +853,7 @@ void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
     _defaultResRootPath = path;
     size_t pos = _defaultResRootPath.find_last_of("/");
-    if (pos != std::string::npos)
+    if (pos != path.length() - 1)
     {
         _defaultResRootPath += "/";
     }

@@ -21192,11 +21192,9 @@ cgsprite
 /**
  * @method removeChildAtIndex
  * @param {unsigned int} arg0
- * @param {bool} arg1
  */
 removeChildAtIndex : function (
-int, 
-bool 
+int 
 )
 {
 },
