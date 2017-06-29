@@ -379,7 +379,6 @@ public final class CrossAppBitmap {
   
   public static float widthForTextAtOneLine(String string ,  int fontSize)
   {
-      
 	  TextPaint paint = new TextPaint();
       paint.setTextSize(fontSize);
       

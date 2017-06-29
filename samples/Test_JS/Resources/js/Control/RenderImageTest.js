@@ -18,7 +18,6 @@ var RenderImageTest = ca.CAViewController.extend({
         this.imageView.setScaleType(ca.CAImageView.ScaleType.FitImageInside) ;
         this.getView().addSubview(this.imageView) ;
 
-
         this.button = ca.CAButton.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(200, 0.5) , ca.DVerticalLayout_B_H(20, 60)) , ca.CAButton.Type.RoundedRect) ;
         this.button.setTitleForState(ca.CAControl.State.Normal,"截取") ;
         this.getView().addSubview(this.button) ;

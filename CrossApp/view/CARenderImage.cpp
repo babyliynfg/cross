@@ -14,6 +14,7 @@
 #include "basics/CAConfiguration.h"
 #include "basics/CANotificationCenter.h"
 #include "platform/CAFileUtils.h"
+#include "platform/CADensityDpi.h"
 NS_CC_BEGIN
 
 // implementation CARenderImage
@@ -189,6 +190,9 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
     {
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
 
+        w = s_dip_to_px(w);
+        h = s_dip_to_px(h);
+        
         // textures must be power of two squared
         unsigned long powW = 0;
         unsigned long powH = 0;
@@ -293,7 +297,7 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
 //        // check if it worked (probably worth doing :) )
         CCAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach Image to framebuffer");
 
-        CAImageView* imageView = CAImageView::createWithFrame(DRect(0, 0, m_uPixelsWide, m_uPixelsHigh));
+        CAImageView* imageView = CAImageView::createWithLayout(DLayoutFill);
         imageView->setBlendFunc(BlendFunc_alpha_premultiplied);
         imageView->setOpacityModifyRGB(true);
         this->addSubview(imageView);
@@ -341,17 +345,21 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     {
         point.y = CAApplication::getApplication()->getWinSize().height;
     }
-    point.y -= view->m_obContentSize.height;
+    
+    DPoint ori_p = view->m_obPoint;
+    DPoint orig_anp = view->getAnchorPoint();
+    float ori_ro_x = view->getRotationX();
+    float ori_s = view->getScale();
+    
+    point.y -= view->m_obContentSize.height * s_dip_to_px(ori_s);
     point.y += offset.y;
     point.x -= offset.x;
     
-    DPoint originalPoint = view->m_obPoint;
-    DPoint originalAnchorPoint = view->getAnchorPoint();
-    float originalRotationX = view->getRotationX();
     
-    view->setRotationX(originalRotationX + 180);
+    view->setRotationX(ori_ro_x + 180);
     view->setAnchorPoint(DPoint(0.0f, 1.0f));
     view->setPoint(point);
+    view->setScale(s_dip_to_px(ori_s));
     
     m_pApplication->getRenderer()->clean();
     experimental::FrameBuffer::clearAllFBOs();
@@ -362,9 +370,10 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     this->end();
     m_pApplication->getRenderer()->render();
     
-    view->setRotationX(originalRotationX);
-    view->setAnchorPoint(originalAnchorPoint);
-    view->setPoint(originalPoint);
+    view->setRotationX(ori_ro_x);
+    view->setAnchorPoint(orig_anp);
+    view->setPoint(ori_p);
+    view->setScale(ori_s);
 }
 
 void CARenderImage::begin()
@@ -375,22 +384,7 @@ void CARenderImage::begin()
     m_pApplication->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     m_tTransformMatrix = m_pApplication->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    {
-        m_pApplication->setProjection(m_pApplication->getProjection());
-        
-        const DSize texSize = DSize((float)m_uPixelsWide, (float)m_uPixelsHigh);
-        
-        // Calculate the adjustment ratios based on the old and new projections
-        DSize size = m_pApplication->getWinSize();
-        
-        float widthRatio = size.width / texSize.width;
-        float heightRatio = size.height / texSize.height;
-        
-        Mat4 orthoMatrix;
-        Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
-        m_pApplication->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
-    }
-    
+
     Renderer *renderer =  m_pApplication->getRenderer();
     m_obGroupCommand.init(0);
     renderer->addCommand(&m_obGroupCommand);
@@ -577,7 +571,7 @@ void CARenderImage::onEnd()
         data->fastSet(buffer, m_uPixelsWide * m_uPixelsHigh * 4);
         
         image->initWithRawData(data, m_ePixelFormat, (unsigned int)m_uPixelsWide, (unsigned int)m_uPixelsHigh);
-
+        
     } while (0);
     
     m_pImageView->setImage(image);
@@ -709,6 +703,6 @@ bool CARenderImage::saveToFile(const char *szFilePath)
 
 void CARenderImage::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(DSize(m_uPixelsWide, m_uPixelsHigh));
+    CAView::setContentSize(DSize(s_px_to_dip(m_uPixelsWide), s_px_to_dip(m_uPixelsHigh)));
 }
 NS_CC_END
