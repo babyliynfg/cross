@@ -42,7 +42,6 @@ var FirstViewController = ca.CAViewController.extend({
         ];
     },
     viewDidLoad: function() {
-
         this._collectionView = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
         this._collectionView.setAllowsSelection(true);
         this._collectionView.setHoriCellInterval(3);

@@ -8,8 +8,8 @@
 
 #include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"
-#include "platform/CAFreeTypeFont.h"
-#include "platform/CAFTFontCache.h"
+#include "CAFreeTypeFont.h"
+#include "CAFTFontCache.h"
 #include "platform/CAClipboard.h"
 #include "animation/CAViewAnimation.h"
 #include "basics/CAScheduler.h"

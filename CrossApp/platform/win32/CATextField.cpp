@@ -14,9 +14,9 @@
 #include "control/CAButton.h"
 #include "CCEGLView.h"
 #include "dispatcher/CAIMEDelegate.h"
-#include "../CAFreeTypeFont.h"
-#include "../ccUTF8.h"
-#include "../CAFTFontCache.h"
+#include "CAFreeTypeFont.h"
+#include "CAFTFontCache.h"
+#include "support/ccUTF8.h"
 #include "support/CAThemeManager.h"
 #include "support/ccUtils.h"
 NS_CC_BEGIN

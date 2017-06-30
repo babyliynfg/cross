@@ -86,7 +86,7 @@ extern "C"
         data.y = py;
         data.z = pz;
         data.timestamp = pTime;
-        _callBack(data);
+        _callBack(&data);
     }
 }
 

@@ -4531,6 +4531,16 @@ getStatusBarOrientation : function (
 },
 
 /**
+ * @method getNotificationCenter
+ * @return {ca.CANotificationCenter}
+ */
+getNotificationCenter : function (
+)
+{
+    return ca.CANotificationCenter;
+},
+
+/**
  * @method getImageCache
  * @return {ca.CAImageCache}
  */
@@ -9424,14 +9434,6 @@ int
 },
 
 /**
- * @method destroyInstance
- */
-destroyInstance : function (
-)
-{
-},
-
-/**
  * @method getInstance
  * @return {ca.CANotificationCenter}
  */
@@ -12159,69 +12161,6 @@ CACell : function (
 };
 
 /**
- * @class CAListViewDataSource
- */
-ca.CAListViewDataSource = {
-
-/**
- * @method listViewCellAtIndex
- * @param {ca.CAListView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @return {ca.CAListViewCell}
- */
-listViewCellAtIndex : function (
-calistview, 
-dsize, 
-int 
-)
-{
-    return ca.CAListViewCell;
-},
-
-/**
- * @method numberOfIndex
- * @param {ca.CAListView} arg0
- * @return {unsigned int}
- */
-numberOfIndex : function (
-calistview 
-)
-{
-    return 0;
-},
-
-/**
- * @method listViewWillDisplayCellAtIndex
- * @param {ca.CAListView} arg0
- * @param {ca.CAListViewCell} arg1
- * @param {unsigned int} arg2
- */
-listViewWillDisplayCellAtIndex : function (
-calistview, 
-calistviewcell, 
-int 
-)
-{
-},
-
-/**
- * @method listViewHeightForIndex
- * @param {ca.CAListView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-listViewHeightForIndex : function (
-calistview, 
-int 
-)
-{
-    return 0;
-},
-
-};
-
-/**
  * @class CAListView
  */
 ca.CAListView = {
@@ -12673,117 +12612,6 @@ str
  * @constructor
  */
 CAListViewCell : function (
-)
-{
-},
-
-};
-
-/**
- * @class CATableViewDataSource
- */
-ca.CATableViewDataSource = {
-
-/**
- * @method tableViewHeightForFooterInSection
- * @param {ca.CATableView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-tableViewHeightForFooterInSection : function (
-catableview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method tableViewHeightForRowAtIndexPath
- * @param {ca.CATableView} arg0
- * @param {unsigned int} arg1
- * @param {unsigned int} arg2
- * @return {unsigned int}
- */
-tableViewHeightForRowAtIndexPath : function (
-catableview, 
-int, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method numberOfSections
- * @param {ca.CATableView} arg0
- * @return {unsigned int}
- */
-numberOfSections : function (
-catableview 
-)
-{
-    return 0;
-},
-
-/**
- * @method tableCellAtIndex
- * @param {ca.CATableView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- * @return {ca.CATableViewCell}
- */
-tableCellAtIndex : function (
-catableview, 
-dsize, 
-int, 
-int 
-)
-{
-    return ca.CATableViewCell;
-},
-
-/**
- * @method numberOfRowsInSection
- * @param {ca.CATableView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-numberOfRowsInSection : function (
-catableview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method tableViewHeightForHeaderInSection
- * @param {ca.CATableView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-tableViewHeightForHeaderInSection : function (
-catableview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method tableViewWillDisplayCellAtIndex
- * @param {ca.CATableView} arg0
- * @param {ca.CATableViewCell} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- */
-tableViewWillDisplayCellAtIndex : function (
-catableview, 
-catableviewcell, 
-int, 
-int 
 )
 {
 },
@@ -13427,169 +13255,6 @@ CATableViewCell : function (
 };
 
 /**
- * @class CACollectionViewDataSource
- */
-ca.CACollectionViewDataSource = {
-
-/**
- * @method numberOfSections
- * @param {ca.CACollectionView} arg0
- * @return {unsigned int}
- */
-numberOfSections : function (
-cacollectionview 
-)
-{
-    return 0;
-},
-
-/**
- * @method collectionViewHeightForRowAtIndexPath
- * @param {ca.CACollectionView} arg0
- * @param {unsigned int} arg1
- * @param {unsigned int} arg2
- * @return {unsigned int}
- */
-collectionViewHeightForRowAtIndexPath : function (
-cacollectionview, 
-int, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method collectionViewHeightForHeaderInSection
- * @param {ca.CACollectionView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-collectionViewHeightForHeaderInSection : function (
-cacollectionview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method collectionViewHeightForFooterInSection
- * @param {ca.CACollectionView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-collectionViewHeightForFooterInSection : function (
-cacollectionview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method collectionViewSectionViewForHeaderInSection
- * @param {ca.CACollectionView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @return {ca.CAView}
- */
-collectionViewSectionViewForHeaderInSection : function (
-cacollectionview, 
-dsize, 
-int 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method numberOfItemsInRowsInSection
- * @param {ca.CACollectionView} arg0
- * @param {unsigned int} arg1
- * @param {unsigned int} arg2
- * @return {unsigned int}
- */
-numberOfItemsInRowsInSection : function (
-cacollectionview, 
-int, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method numberOfRowsInSection
- * @param {ca.CACollectionView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-numberOfRowsInSection : function (
-cacollectionview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method collectionViewWillDisplayCellAtIndex
- * @param {ca.CACollectionView} arg0
- * @param {ca.CACollectionViewCell} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- * @param {unsigned int} arg4
- */
-collectionViewWillDisplayCellAtIndex : function (
-cacollectionview, 
-cacollectionviewcell, 
-int, 
-int, 
-int 
-)
-{
-},
-
-/**
- * @method collectionViewSectionViewForFooterInSection
- * @param {ca.CACollectionView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @return {ca.CAView}
- */
-collectionViewSectionViewForFooterInSection : function (
-cacollectionview, 
-dsize, 
-int 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method collectionCellAtIndex
- * @param {ca.CACollectionView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- * @param {unsigned int} arg4
- * @return {ca.CACollectionViewCell}
- */
-collectionCellAtIndex : function (
-cacollectionview, 
-dsize, 
-int, 
-int, 
-int 
-)
-{
-    return ca.CACollectionViewCell;
-},
-
-};
-
-/**
  * @class CACollectionView
  */
 ca.CACollectionView = {
@@ -14173,149 +13838,6 @@ str
 CACollectionViewCell : function (
 )
 {
-},
-
-};
-
-/**
- * @class CAAutoCollectionViewDataSource
- */
-ca.CAAutoCollectionViewDataSource = {
-
-/**
- * @method numberOfItemsInSection
- * @param {ca.CAAutoCollectionView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-numberOfItemsInSection : function (
-caautocollectionview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method numberOfSections
- * @param {ca.CAAutoCollectionView} arg0
- * @return {unsigned int}
- */
-numberOfSections : function (
-caautocollectionview 
-)
-{
-    return 0;
-},
-
-/**
- * @method collectionViewHeightForHeaderInSection
- * @param {ca.CAAutoCollectionView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-collectionViewHeightForHeaderInSection : function (
-caautocollectionview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method collectionViewHeightForFooterInSection
- * @param {ca.CAAutoCollectionView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-collectionViewHeightForFooterInSection : function (
-caautocollectionview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method collectionViewSectionViewForHeaderInSection
- * @param {ca.CAAutoCollectionView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @return {ca.CAView}
- */
-collectionViewSectionViewForHeaderInSection : function (
-caautocollectionview, 
-dsize, 
-int 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method collectionViewWillDisplayCellAtIndex
- * @param {ca.CAAutoCollectionView} arg0
- * @param {ca.CACollectionViewCell} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- */
-collectionViewWillDisplayCellAtIndex : function (
-caautocollectionview, 
-cacollectionviewcell, 
-int, 
-int 
-)
-{
-},
-
-/**
- * @method collectionViewSectionViewForFooterInSection
- * @param {ca.CAAutoCollectionView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @return {ca.CAView}
- */
-collectionViewSectionViewForFooterInSection : function (
-caautocollectionview, 
-dsize, 
-int 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method collectionViewCellSizeAtIndexPathCallback
- * @param {ca.CAAutoCollectionView} arg0
- * @param {unsigned int} arg1
- * @param {unsigned int} arg2
- * @return {size_object}
- */
-collectionViewCellSizeAtIndexPathCallback : function (
-caautocollectionview, 
-int, 
-int 
-)
-{
-    return ca.DSize;
-},
-
-/**
- * @method collectionCellAtIndex
- * @param {ca.CAAutoCollectionView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- * @return {ca.CACollectionViewCell}
- */
-collectionCellAtIndex : function (
-caautocollectionview, 
-dsize, 
-int, 
-int 
-)
-{
-    return ca.CACollectionViewCell;
 },
 
 };
@@ -14922,69 +14444,6 @@ drect
 CAAutoCollectionView : function (
 )
 {
-},
-
-};
-
-/**
- * @class CAWaterfallViewDataSource
- */
-ca.CAWaterfallViewDataSource = {
-
-/**
- * @method waterfallViewHeightForItemAtIndex
- * @param {ca.CAWaterfallView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-waterfallViewHeightForItemAtIndex : function (
-cawaterfallview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method waterfallViewWillDisplayCellAtIndex
- * @param {ca.CAWaterfallView} arg0
- * @param {ca.CAWaterfallViewCell} arg1
- * @param {unsigned int} arg2
- */
-waterfallViewWillDisplayCellAtIndex : function (
-cawaterfallview, 
-cawaterfallviewcell, 
-int 
-)
-{
-},
-
-/**
- * @method numberOfItems
- * @param {ca.CAWaterfallView} arg0
- * @return {unsigned int}
- */
-numberOfItems : function (
-cawaterfallview 
-)
-{
-    return 0;
-},
-
-/**
- * @method waterfallCellAtIndex
- * @param {ca.CAWaterfallView} arg0
- * @param {size_object} arg1
- * @param {unsigned int} arg2
- * @return {ca.CAWaterfallViewCell}
- */
-waterfallCellAtIndex : function (
-cawaterfallview, 
-dsize, 
-int 
-)
-{
-    return ca.CAWaterfallViewCell;
 },
 
 };
@@ -16380,115 +15839,6 @@ array
 )
 {
     return ca.CAAlertView;
-},
-
-};
-
-/**
- * @class CAPickerViewDataSource
- */
-ca.CAPickerViewDataSource = {
-
-/**
- * @method numberOfComponentsInPickerView
- * @param {ca.CAPickerView} arg0
- * @return {unsigned int}
- */
-numberOfComponentsInPickerView : function (
-capickerview 
-)
-{
-    return 0;
-},
-
-/**
- * @method numberOfRowsInComponent
- * @param {ca.CAPickerView} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-numberOfRowsInComponent : function (
-capickerview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method viewForSelect
- * @param {ca.CAPickerView} arg0
- * @param {unsigned int} arg1
- * @param {size_object} arg2
- * @return {ca.CAView}
- */
-viewForSelect : function (
-capickerview, 
-int, 
-dsize 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method viewForRow
- * @param {ca.CAPickerView} arg0
- * @param {unsigned int} arg1
- * @param {unsigned int} arg2
- * @return {ca.CAView}
- */
-viewForRow : function (
-capickerview, 
-int, 
-int 
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method widthForComponent
- * @param {ca.CAPickerView} arg0
- * @param {unsigned int} arg1
- * @return {float}
- */
-widthForComponent : function (
-capickerview, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method titleForRow
- * @param {ca.CAPickerView} arg0
- * @param {unsigned int} arg1
- * @param {unsigned int} arg2
- * @return {char}
- */
-titleForRow : function (
-capickerview, 
-int, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method rowHeightForComponent
- * @param {ca.CAPickerView} arg0
- * @param {unsigned int} arg1
- * @return {float}
- */
-rowHeightForComponent : function (
-capickerview, 
-int 
-)
-{
-    return 0;
 },
 
 };
@@ -18963,20 +18313,113 @@ cafont
     return 0;
 },
 
+};
+
 /**
- * @method imageForRichText
- * @param {Array} arg0
- * @param {size_object} arg1
- * @param {ca.CATextAlignment} arg2
- * @return {ca.CAImage}
+ * @class CAMotionManager
  */
-imageForRichText : function (
-array, 
-dsize, 
-catextalignment 
+ca.CAMotionManager = {
+
+/**
+ * @method stopGyroscope
+ */
+stopGyroscope : function (
 )
 {
-    return ca.CAImage;
+},
+
+/**
+ * @method startGyroscope
+ * @param {function} arg0
+ */
+startGyroscope : function (
+func 
+)
+{
+},
+
+/**
+ * @method setGyroInterval
+ * @param {float} arg0
+ */
+setGyroInterval : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ca.CAMotionManager}
+ */
+create : function (
+)
+{
+    return ca.CAMotionManager;
+},
+
+};
+
+/**
+ * @class CAImagePickerController
+ */
+ca.CAImagePickerController = {
+
+/**
+ * @method writeImageToPhoto
+ * @param {ca.CAImage} arg0
+ * @param {function} arg1
+ * @param {String} arg2
+ */
+writeImageToPhoto : function (
+caimage, 
+func, 
+str 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method open
+ * @param {function} arg0
+ */
+open : function (
+func 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {ca.CAImagePickerController::SourceType} arg0
+ * @return {ca.CAImagePickerController}
+ */
+create : function (
+sourcetype 
+)
+{
+    return ca.CAImagePickerController;
+},
+
+/**
+ * @method CAImagePickerController
+ * @constructor
+ * @param {ca.CAImagePickerController::SourceType} arg0
+ */
+CAImagePickerController : function (
+sourcetype 
+)
+{
 },
 
 };

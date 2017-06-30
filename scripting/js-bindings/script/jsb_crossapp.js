@@ -523,7 +523,8 @@ ca.DHorizontalLayoutFill   = ca.DHorizontalLayout_L_R(0, 0);
 ca.DVerticalLayoutFill     = ca.DVerticalLayout_T_B(0, 0);
 ca.DLayoutFill             = ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill);
 
-ca.CAFontShadow = function(){
+ca.CAFontShadow = function()
+{
     return  {
     shadowEnabled: false,
     shadowOffset: ca.DSizeZero,
@@ -532,7 +533,8 @@ ca.CAFontShadow = function(){
     };
 };
 
-ca.CAFontStroke = function(){
+ca.CAFontStroke = function()
+{
     return  {
     strokeEnabled: false,
     strokeColor: ca.CAColor4B.BLACK,
@@ -540,7 +542,8 @@ ca.CAFontStroke = function(){
     };
 };
 
-ca.CAFont = function(){
+ca.CAFont = function()
+{
     return  {
     bold: false,
     underLine: false,

@@ -18,7 +18,7 @@ class CC_DLL CAMotionManager : public CAObject
 {
 public:
     
-    struct Date
+    struct Data
     {
         double x{0.f};
         double y{0.f};
@@ -26,13 +26,13 @@ public:
         float timestamp{0.f};
     };
     
-    typedef std::function<void(const CAMotionManager::Date&)> Callback;
+    typedef std::function<void(const CAMotionManager::Data* const)> Callback;
     
 public:
     
     CREATE_FUNC(CAMotionManager);
     
-    void startGyroscope(const CAMotionManager::Callback& callback);
+    void startGyroscope(const CrossApp::CAMotionManager::Callback& callback);
     
     void setGyroInterval(float interval);
     
@@ -48,7 +48,7 @@ private:
     
     void* m_pMotionManager{nullptr};
     
-    CAMotionManager::Date m_obData;
+    CAMotionManager::Data m_obData;
     
     CAMotionManager::Callback m_callback{nullptr};
 };

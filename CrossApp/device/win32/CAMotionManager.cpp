@@ -20,11 +20,10 @@ CAMotionManager::~CAMotionManager()
 }
 
 
-std::function<void(const CAMotionManager::Date&)> _callBack;
 
 void CAMotionManager::startGyroscope(const std::function<void(const CAMotionManager::Date&)>& callback)
 {
-    _callBack = callback;
+
 }
 
 void CAMotionManager::setGyroInterval(float interval)

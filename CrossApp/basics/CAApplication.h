@@ -29,6 +29,7 @@ class CAKeypadDispatcher;
 class CAAccelerometer;
 class CAThemeManager;
 class Renderer;
+class CANotificationCenter;
 class CAConsole;
 namespace experimental
 {
@@ -200,9 +201,11 @@ public:
     
     Renderer* getRenderer() const { return m_pRenderer; }
     
+    CAImageCache* getImageCache(){ return m_pImageCache; }
+    
     void setImageCache(CAImageCache* imageCache);
     
-    CAImageCache* getImageCache(){ return m_pImageCache; }
+    CANotificationCenter* getNotificationCenter() const { return m_pNotificationCenter; }
     
     CAConsole* getConsole() const { return m_pConsole; }
 
@@ -271,6 +274,8 @@ protected:
     CCEGLView    *m_pobOpenGLView;
 
     CAImageCache* m_pImageCache;
+    
+    CANotificationCenter* m_pNotificationCenter;
     
     double m_dAnimationInterval;
     

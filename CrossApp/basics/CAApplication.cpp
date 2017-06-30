@@ -103,6 +103,8 @@ bool CAApplication::init(void)
     
     m_pImageCache = new (std::nothrow) CAImageCache();
     
+    m_pNotificationCenter = new (std::nothrow) CANotificationCenter();
+    
     this->initMatrixStack();
     m_pRenderer = new (std::nothrow) Renderer;
     RenderState::initialize();
@@ -142,7 +144,7 @@ CAApplication::~CAApplication(void)
 	CC_SAFE_DELETE(m_defaultFBO);
 	CC_SAFE_RELEASE_NULL(m_pActionManager);
     CC_SAFE_RELEASE_NULL(m_pScheduler);
-    
+    CC_SAFE_RELEASE_NULL(m_pNotificationCenter);
     
     // delete fps string
     delete []m_pszFPS;

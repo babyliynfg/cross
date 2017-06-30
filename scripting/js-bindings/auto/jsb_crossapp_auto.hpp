@@ -549,6 +549,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAApplication_setDefaultValues(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setCrossAppCCLogNotification(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getStatusBarOrientation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAApplication_getNotificationCenter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getImageCache(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getDeltaTime(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setGLDefaultValues(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1148,7 +1149,6 @@ bool js_crossapp_CANotificationCenter_postNotificationWithFloatValue(JSContext *
 bool js_crossapp_CANotificationCenter_getScriptHandler(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_addObserver(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_registerScriptObserver(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CANotificationCenter_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_CANotificationCenter(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -1509,18 +1509,6 @@ bool js_crossapp_CACell_setBackgroundView(JSContext *cx, uint32_t argc, jsval *v
 bool js_crossapp_CACell_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_CACell(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_CrossApp_CAListViewDataSource_class;
-extern JSObject *jsb_CrossApp_CAListViewDataSource_prototype;
-
-bool js_crossapp_CAListViewDataSource_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CAListViewDataSource_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CAListViewDataSource(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAListViewDataSource_listViewCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAListViewDataSource_numberOfIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAListViewDataSource_listViewWillDisplayCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAListViewDataSource_listViewHeightForIndex(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_CrossApp_CAListView_class;
 extern JSObject *jsb_CrossApp_CAListView_prototype;
 
@@ -1580,21 +1568,6 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAListViewCell_getIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAListViewCell_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAListViewCell_CAListViewCell(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_CrossApp_CATableViewDataSource_class;
-extern JSObject *jsb_CrossApp_CATableViewDataSource_prototype;
-
-bool js_crossapp_CATableViewDataSource_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CATableViewDataSource_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CATableViewDataSource(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CATableViewDataSource_tableViewHeightForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CATableViewDataSource_tableViewHeightForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CATableViewDataSource_numberOfSections(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CATableViewDataSource_tableCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CATableViewDataSource_numberOfRowsInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CATableViewDataSource_tableViewHeightForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CATableViewDataSource_tableViewWillDisplayCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CATableView_class;
 extern JSObject *jsb_CrossApp_CATableView_prototype;
@@ -1672,24 +1645,6 @@ bool js_crossapp_CATableViewCell_getRow(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_crossapp_CATableViewCell_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableViewCell_CATableViewCell(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_CrossApp_CACollectionViewDataSource_class;
-extern JSObject *jsb_CrossApp_CACollectionViewDataSource_prototype;
-
-bool js_crossapp_CACollectionViewDataSource_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CACollectionViewDataSource_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CACollectionViewDataSource(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CACollectionViewDataSource_numberOfSections(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_collectionViewHeightForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_collectionViewHeightForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_collectionViewHeightForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_collectionViewSectionViewForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_numberOfItemsInRowsInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_numberOfRowsInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_collectionViewWillDisplayCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_collectionViewSectionViewForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACollectionViewDataSource_collectionCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_CrossApp_CACollectionView_class;
 extern JSObject *jsb_CrossApp_CACollectionView_prototype;
 
@@ -1762,23 +1717,6 @@ bool js_crossapp_CACollectionViewCell_getRow(JSContext *cx, uint32_t argc, jsval
 bool js_crossapp_CACollectionViewCell_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACollectionViewCell_CACollectionViewCell(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_CrossApp_CAAutoCollectionViewDataSource_class;
-extern JSObject *jsb_CrossApp_CAAutoCollectionViewDataSource_prototype;
-
-bool js_crossapp_CAAutoCollectionViewDataSource_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CAAutoCollectionViewDataSource_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CAAutoCollectionViewDataSource(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAAutoCollectionViewDataSource_numberOfItemsInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAAutoCollectionViewDataSource_numberOfSections(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAAutoCollectionViewDataSource_collectionViewHeightForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAAutoCollectionViewDataSource_collectionViewHeightForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAAutoCollectionViewDataSource_collectionViewSectionViewForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAAutoCollectionViewDataSource_collectionViewWillDisplayCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAAutoCollectionViewDataSource_collectionViewSectionViewForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAAutoCollectionViewDataSource_collectionViewCellSizeAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAAutoCollectionViewDataSource_collectionCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_CrossApp_CAAutoCollectionView_class;
 extern JSObject *jsb_CrossApp_CAAutoCollectionView_prototype;
 
@@ -1845,18 +1783,6 @@ bool js_crossapp_CAAutoCollectionView_createWithFrame(JSContext *cx, uint32_t ar
 bool js_crossapp_CAAutoCollectionView_createWithLayout(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAutoCollectionView_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAutoCollectionView_CAAutoCollectionView(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_CrossApp_CAWaterfallViewDataSource_class;
-extern JSObject *jsb_CrossApp_CAWaterfallViewDataSource_prototype;
-
-bool js_crossapp_CAWaterfallViewDataSource_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CAWaterfallViewDataSource_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CAWaterfallViewDataSource(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAWaterfallViewDataSource_waterfallViewHeightForItemAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAWaterfallViewDataSource_waterfallViewWillDisplayCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAWaterfallViewDataSource_numberOfItems(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAWaterfallViewDataSource_waterfallCellAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAWaterfallView_class;
 extern JSObject *jsb_CrossApp_CAWaterfallView_prototype;
@@ -2034,21 +1960,6 @@ bool js_crossapp_CAAlertView_show(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAlertView_setButtonTitles(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAlertView_addButtonTitle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAlertView_create(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_CrossApp_CAPickerViewDataSource_class;
-extern JSObject *jsb_CrossApp_CAPickerViewDataSource_prototype;
-
-bool js_crossapp_CAPickerViewDataSource_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CAPickerViewDataSource_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CAPickerViewDataSource(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAPickerViewDataSource_numberOfComponentsInPickerView(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAPickerViewDataSource_numberOfRowsInComponent(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAPickerViewDataSource_viewForSelect(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAPickerViewDataSource_viewForRow(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAPickerViewDataSource_widthForComponent(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAPickerViewDataSource_titleForRow(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAPickerViewDataSource_rowHeightForComponent(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAPickerView_class;
 extern JSObject *jsb_CrossApp_CAPickerView_prototype;
@@ -2354,7 +2265,31 @@ bool js_crossapp_CAFontProcesstor_heightForFont(JSContext *cx, uint32_t argc, js
 bool js_crossapp_CAFontProcesstor_imageForText(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAFontProcesstor_heightForTextAtWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAFontProcesstor_widthForTextAtOneLine(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFontProcesstor_imageForRichText(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CAMotionManager_class;
+extern JSObject *jsb_CrossApp_CAMotionManager_prototype;
+
+bool js_crossapp_CAMotionManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAMotionManager_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAMotionManager(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAMotionManager_stopGyroscope(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAMotionManager_setGyroInterval(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAMotionManager_create(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CAImagePickerController_class;
+extern JSObject *jsb_CrossApp_CAImagePickerController_prototype;
+
+bool js_crossapp_CAImagePickerController_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAImagePickerController_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAImagePickerController(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAImagePickerController_writeImageToPhoto(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImagePickerController_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImagePickerController_open(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImagePickerController_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAImagePickerController_CAImagePickerController(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CGNode_class;
 extern JSObject *jsb_CrossApp_CGNode_prototype;

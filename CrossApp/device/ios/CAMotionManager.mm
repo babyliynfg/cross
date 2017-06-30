@@ -55,7 +55,7 @@ void CAMotionManager::startGyroscope(const CAMotionManager::Callback& callback)
         {
             if (m_callback)
             {
-                m_callback(m_obData);
+                m_callback(&m_obData);
             }
         });
     }];

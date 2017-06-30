@@ -2,9 +2,8 @@
 
 #include "CANotificationCenter.h"
 #include "CAValue.h"
+#include "basics/CAApplication.h"
 NS_CC_BEGIN
-
-static CANotificationCenter *s_sharedNotifCenter = nullptr;
 
 CANotificationCenter::CANotificationCenter()
 : m_scriptHandler(0)
@@ -19,16 +18,7 @@ CANotificationCenter::~CANotificationCenter()
 
 CANotificationCenter *CANotificationCenter::getInstance(void)
 {
-    if (!s_sharedNotifCenter)
-    {
-        s_sharedNotifCenter = new (std::nothrow) CANotificationCenter();
-    }
-    return s_sharedNotifCenter;
-}
-
-void CANotificationCenter::destroyInstance(void)
-{
-    CC_SAFE_RELEASE_NULL(s_sharedNotifCenter);
+    return CAApplication::getApplication()->getNotificationCenter();
 }
 
 bool CANotificationCenter::observerExisted(CAObject *target, const std::string& name)

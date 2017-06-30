@@ -34,9 +34,7 @@ public:
     ~CANotificationCenter();
     
     static CANotificationCenter *getInstance();
-    
-    static void destroyInstance();
-    
+
     void addObserver(const CANotificationCenter::Callback& callback, CAObject *target, const std::string& name);
 
     void removeObserver(CAObject *target, const std::string& name);
