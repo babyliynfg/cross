@@ -50,7 +50,7 @@ void ListViewTest::viewDidLoad()
         "Z",
     };
     
-    m_pListViewHor->setNumberOfItemsAtIndexPathCallback([=]()
+    m_pListViewHor->setNumberOfRowsAtIndexPathCallback([=]()
     {
         return vec1.size();
     });
@@ -101,7 +101,7 @@ void ListViewTest::viewDidLoad()
     m_pListViewVer->setSeparatorColor(CAColor4B::GRAY);
     this->getView()->addSubview(m_pListViewVer);
     
-    m_pListViewVer->setNumberOfItemsAtIndexPathCallback(CALLBACK_BIND_0(ListViewTest::numberOfIndex, this));
+    m_pListViewVer->setNumberOfRowsAtIndexPathCallback(CALLBACK_BIND_0(ListViewTest::numberOfIndex, this));
     m_pListViewVer->setCellHeightAtIndexPathCallback(CALLBACK_BIND_1(ListViewTest::heightForIndex, this));
     m_pListViewVer->setCellAtIndexPathCallback(CALLBACK_BIND_2(ListViewTest::cellAtIndex, this));
     m_pListViewVer->setDidSelectCellAtIndexPathCallback(CALLBACK_BIND_1(ListViewTest::didSelectCellAtIndex, this));
