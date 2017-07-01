@@ -32,9 +32,7 @@ public class CrossAppHelper {
 	private static CrossAppMusic sCrossAppMusic;
 	private static CrossAppSound sCrossAppound;
 	private static AssetManager sAssetManager;
-	private static CrossAppAccelerometer sCrossAppAccelerometer;
 	private static CrossAppGyroscope sCrossAppGyroscope;
-	private static boolean sAccelerometerEnabled;
 	private static boolean bGyroscope;
 	private static String sPackageName;
 	private static String sFileDirectory;
@@ -55,7 +53,6 @@ public class CrossAppHelper {
 		CrossAppHelper.sFileDirectory = pContext.getFilesDir().getAbsolutePath();
 		CrossAppHelper.nativeSetApkPath(applicationInfo.sourceDir);
 
-		CrossAppHelper.setsCrossAppAccelerometer(new CrossAppAccelerometer(pContext));
 		CrossAppHelper.setCrossAppGyroscope(new CrossAppGyroscope(pContext));
 		CrossAppHelper.sCrossAppMusic = new CrossAppMusic(pContext);
 		CrossAppHelper.sCrossAppound = new CrossAppSound(pContext);
@@ -100,21 +97,6 @@ public class CrossAppHelper {
 		return CrossAppHelper.sAssetManager;
 	}
 
-	public static void enableAccelerometer() {
-		CrossAppHelper.setsAccelerometerEnabled(true);
-		CrossAppHelper.getsCrossAppAccelerometer().enable();
-	}
-
-	public static void setAccelerometerInterval(float interval) {
-		CrossAppHelper.getsCrossAppAccelerometer().setInterval(interval);
-	}
-
-	public static void disableAccelerometer() {
-		CrossAppHelper.setsAccelerometerEnabled(false);
-		CrossAppHelper.getsCrossAppAccelerometer().disable();
-	}
-	
-	
 	public static void enableGyroscopr() {
 		CrossAppHelper.setGyroscopeEnable(true);
 		CrossAppHelper.getCrossAppGyroscope().enable();
@@ -131,10 +113,7 @@ public class CrossAppHelper {
 	
 	
 	public static void onResume() {
-		if (CrossAppHelper.issAccelerometerEnabled()) 
-		{
-			CrossAppHelper.getsCrossAppAccelerometer().enable();
-		}
+
 		if(CrossAppHelper.isGyroscopeEnabled())
 		{
 			CrossAppHelper.getCrossAppGyroscope().enable();
@@ -142,10 +121,7 @@ public class CrossAppHelper {
 	}
 
 	public static void onPause() {
-		if (CrossAppHelper.issAccelerometerEnabled())
-		{
-			CrossAppHelper.getsCrossAppAccelerometer().disable();
-		}
+
 		if(CrossAppHelper.isGyroscopeEnabled())
 		{
 			CrossAppHelper.getCrossAppGyroscope().disable();
@@ -436,23 +412,6 @@ public class CrossAppHelper {
 	// Inner and Anonymous Classes
 	// ===========================================================
 
-    // Accelerometer
-	public static boolean issAccelerometerEnabled() {
-		return sAccelerometerEnabled;
-	}
-
-	public static void setsAccelerometerEnabled(boolean sAccelerometerEnabled) {
-		CrossAppHelper.sAccelerometerEnabled = sAccelerometerEnabled;
-	}
-
-	
-	public static CrossAppAccelerometer getsCrossAppAccelerometer() {
-		return sCrossAppAccelerometer;
-	}
-
-	public static void setsCrossAppAccelerometer(CrossAppAccelerometer sCrossAppAccelerometer) {
-		CrossAppHelper.sCrossAppAccelerometer = sCrossAppAccelerometer;
-	}
 
 	// Gyroscope
 	public static boolean isGyroscopeEnabled() {

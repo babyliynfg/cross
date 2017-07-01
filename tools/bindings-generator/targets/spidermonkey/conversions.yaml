@@ -129,10 +129,10 @@ conversions:
     "Quaternion": "${out_value} = quaternion_to_jsval(cx, ${in_value})"
     "OffMeshLinkData": "${out_value} = offMeshLinkData_to_jsval(cx, ${in_value})"
     "Uniform*": "${out_value} = uniform_to_jsval(cx, ${in_value})"
-    "CAValue": "${out_value} = cavalue_to_jsval(cx, ${in_value})"
-    "CAValueMap": "${out_value} = cavaluemap_to_jsval(cx, ${in_value})"
-    "CAValueMapIntKey": "${out_value} = cavaluemapintkey_to_jsval(cx, ${in_value})"
-    "CAValueVector": "${out_value} = cavaluevector_to_jsval(cx, ${in_value})"
+    "@CAValue\\s*&?": "${out_value} = cavalue_to_jsval(cx, ${in_value})"
+    "@CAValueMap\\s*&?": "${out_value} = cavaluemap_to_jsval(cx, ${in_value})"
+    "@CAValueMapIntKey\\s*&?": "${out_value} = cavaluemapintkey_to_jsval(cx, ${in_value})"
+    "@CAValueVector\\s*&?": "${out_value} = cavaluevector_to_jsval(cx, ${in_value})"
     object: |
       do {
       ${($level + 1) * '    '}if (${in_value}) {

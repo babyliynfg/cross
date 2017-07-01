@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.CrossApp.lib.CrossAppBattery;
-
-import android.R.integer;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -23,7 +22,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
-import android.util.Log;
 import android.view.WindowManager;
 
 @SuppressLint("SimpleDateFormat")
@@ -190,21 +188,6 @@ public abstract class CrossAppDevice  extends Activity  {
 		return CrossAppNetWorkManager.isNetWorkAvailble();
 	}
 	
-	// Accelerorometer
-	public static void enableAccelerometer() {
-		CrossAppHelper.setsAccelerometerEnabled(true);
-		CrossAppHelper.getsCrossAppAccelerometer().enable();
-	}
-
-	public static void setAccelerometerInterval(float interval) {
-		CrossAppHelper.getsCrossAppAccelerometer().setInterval(interval);
-	}
-
-	public static void disableAccelerometer() {
-		CrossAppHelper.setsAccelerometerEnabled(false);
-		CrossAppHelper.getsCrossAppAccelerometer().disable();
-	}
-	
 	// Gyroscope
 	public static void enableGyroscope() {
 		
@@ -224,18 +207,12 @@ public abstract class CrossAppDevice  extends Activity  {
 	
 	
 	public  void onResume() {
-		if (CrossAppHelper.issAccelerometerEnabled()) {
-			CrossAppHelper.getsCrossAppAccelerometer().enable();
-		}
 		if(CrossAppHelper.isGyroscopeEnabled()){
 			CrossAppHelper.getCrossAppGyroscope().enable();
 		}
 	}
 
 	public  void onPause() {
-		if (CrossAppHelper.issAccelerometerEnabled()) {
-			CrossAppHelper.getsCrossAppAccelerometer().disable();
-		}
 		if(CrossAppHelper.isGyroscopeEnabled()){
 			CrossAppHelper.getCrossAppGyroscope().disable();
 		}
@@ -255,7 +232,6 @@ public abstract class CrossAppDevice  extends Activity  {
 	
 	public static int getScreenBrightness() 
 	{
-		Log.d("66666", "66666452");
 		return CrossAppNativeTool.getScreenBrightness();
 	}
 
@@ -319,6 +295,8 @@ public abstract class CrossAppDevice  extends Activity  {
 		return CrossAppVolumeControl.getVolum(type);
 	}
 
+	
+	@TargetApi(16)
 	public static void showNotification(String title,String content)
 	{
 		

@@ -15,7 +15,6 @@
 #include "ccTypes.h"
 #include "basics/CALayout.h"
 #include "dispatcher/CAProtocols.h"
-#include "platform/CAAccelerometerDelegate.h"
 #include "basics/CAResponder.h"
 #include "images/CAImageCache.h"
 #include "math/CAAffineTransform.h"

@@ -1,11 +1,14 @@
 package org.CrossApp.lib;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.hardware.SensorEvent;
-
+import android.view.Display;
+import android.view.Surface;
+import android.view.WindowManager;
 
 public class CrossAppGyroscope  implements SensorEventListener{
 	
@@ -23,6 +26,8 @@ public class CrossAppGyroscope  implements SensorEventListener{
 	
 	private static final int UPTATE_INTERVAL_TIME = 1000;
 	
+	private final int mNaturalOrientation;
+	
 	public CrossAppGyroscope(final Context pContext) {
 		
 		this.mContext = pContext;
@@ -30,17 +35,21 @@ public class CrossAppGyroscope  implements SensorEventListener{
 		this.mSensorManager = (SensorManager) this.mContext.getSystemService(Context.SENSOR_SERVICE);
 		
 		this.mGyroscope = this.mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+		
+		final Display display = ((WindowManager) this.mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		this.mNaturalOrientation = display.getOrientation();
 	}
     
-
-
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    public void onAccuracyChanged(Sensor sensor, int accuracy)
+    {
     }
 
-    public void onSensorChanged (SensorEvent event) {
-    	
-		if (event.sensor.getType() != Sensor.TYPE_GYROSCOPE) {
+    
+    @Override
+	public void onSensorChanged(final SensorEvent pSensorEvent) 
+    {
+		if (pSensorEvent.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
 			return;
 		}
 
@@ -56,15 +65,32 @@ public class CrossAppGyroscope  implements SensorEventListener{
 		
 		// The time into the last time
 		lastUpdateTime = currentUpdateTime;
-    	
-		float x = event.values[0];
-		float y = event.values[1];
-		float z = event.values[2];
+				
+		float x = pSensorEvent.values[0];
+		float y = pSensorEvent.values[1];
+		final float z = pSensorEvent.values[2];
 
+		/*
+		 * Because the axes are not swapped when the device's screen orientation
+		 * changes. So we should swap it here. In tablets such as Motorola Xoom,
+		 * the default orientation is landscape, so should consider this.
+		 */
+		final int orientation = this.mContext.getResources().getConfiguration().orientation;
+
+		if ((orientation == Configuration.ORIENTATION_LANDSCAPE) && (this.mNaturalOrientation != Surface.ROTATION_0)) {
+			final float tmp = x;
+			x = -y;
+			y = tmp;
+		} else if ((orientation == Configuration.ORIENTATION_PORTRAIT) && (this.mNaturalOrientation != Surface.ROTATION_0)) {
+			final float tmp = x;
+			x = y;
+			y = -tmp;
+		}		
+		
 		CrossAppGLSurfaceView.queueGyroscope(x, y, z, mInterval);
 	}
-
     
+
 	public void enable() {
 		this.mSensorManager.registerListener(this, this.mGyroscope, SensorManager.SENSOR_DELAY_GAME);
 	}

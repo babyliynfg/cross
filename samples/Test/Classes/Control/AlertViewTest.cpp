@@ -61,7 +61,7 @@ void AlertViewTest::viewDidLoad()
     btn3->addTarget([=]()
     {
         
-        std::string message = "        When a lion was asleep, a little mouse began running up and down beside him. This soon wakened the lion. He was very angry, and caught the mouse in his paws."
+        std::string message = std::string("        When a lion was asleep, a little mouse began running up and down beside him. This soon wakened the lion. He was very angry, and caught the mouse in his paws.")
         + "Forgive me, please.\" cried the little mouse.\"I may be able to help you someday.\" The lion was tickled at these words."
         + "He thought, \"How could this little mouse help me?\" However he lifted up his paws and let him go."
         + "A few days later, the lion was caught in a trap."

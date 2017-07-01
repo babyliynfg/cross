@@ -26,10 +26,10 @@ class CAScheduler;
 class ActionManager;
 class CATouchDispatcher;
 class CAKeypadDispatcher;
-class CAAccelerometer;
 class CAThemeManager;
 class Renderer;
 class CANotificationCenter;
+class CAMotionManager;
 class CAConsole;
 namespace experimental
 {
@@ -207,6 +207,8 @@ public:
     
     CANotificationCenter* getNotificationCenter() const { return m_pNotificationCenter; }
     
+    CAMotionManager* getMotionManager() const { return m_pMotionManager; }
+    
     CAConsole* getConsole() const { return m_pConsole; }
 
     const std::thread::id& getCrossAppThreadId() const { return m_uCrossAppThreadID; }
@@ -220,8 +222,6 @@ public:
     CC_PROPERTY(CATouchDispatcher*, m_pTouchDispatcher, TouchDispatcher);
 
     CC_PROPERTY(CAKeypadDispatcher*, m_pKeypadDispatcher, KeypadDispatcher);
-
-    CC_PROPERTY(CAAccelerometer*, m_pAccelerometer, Accelerometer);
 
 	CC_PROPERTY_READONLY(float, m_fDeltaTime, DeltaTime);
     
@@ -276,6 +276,8 @@ protected:
     CAImageCache* m_pImageCache;
     
     CANotificationCenter* m_pNotificationCenter;
+    
+    CAMotionManager* m_pMotionManager;
     
     double m_dAnimationInterval;
     

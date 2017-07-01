@@ -12,25 +12,29 @@
 #include "basics/CAObject.h"
 #include <iostream>
 #include <functional>
+#include "basics/CAValue.h"
 NS_CC_BEGIN
+
+
 
 class CC_DLL CAMotionManager : public CAObject
 {
 public:
     
-    struct Data
-    {
-        double x{0.f};
-        double y{0.f};
-        double z{0.f};
-        float timestamp{0.f};
-    };
-    
-    typedef std::function<void(const CAMotionManager::Data* const)> Callback;
-    
+    /**
+     *  @       "x"         double
+     *  @       "y"         double
+     *  @       "z"         double
+     *  @       "timestamp" float
+     */
+    typedef std::function<void(const CAValueMap&)> Callback;
 public:
+
+    CAMotionManager();
     
-    CREATE_FUNC(CAMotionManager);
+    virtual ~CAMotionManager();
+    
+    static CAMotionManager* getInstance();
     
     void startGyroscope(const CrossApp::CAMotionManager::Callback& callback);
     
@@ -40,15 +44,9 @@ public:
 
 private:
     
-    CAMotionManager();
-    
-    virtual ~CAMotionManager();
-    
-private:
-    
     void* m_pMotionManager{nullptr};
     
-    CAMotionManager::Data m_obData;
+    CAValueMap m_obData;
     
     CAMotionManager::Callback m_callback{nullptr};
 };

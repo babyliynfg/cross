@@ -4735,6 +4735,16 @@ resetMatrixStack : function (
 },
 
 /**
+ * @method getMotionManager
+ * @return {ca.CAMotionManager}
+ */
+getMotionManager : function (
+)
+{
+    return ca.CAMotionManager;
+},
+
+/**
  * @method getStatusBarStyle
  * @return {ca.CAStatusBarStyle}
  */
@@ -4962,16 +4972,6 @@ setThemeManager : function (
 cathememanager 
 )
 {
-},
-
-/**
- * @method getAccelerometer
- * @return {ca.CAAccelerometer}
- */
-getAccelerometer : function (
-)
-{
-    return ca.CAAccelerometer;
 },
 
 /**
@@ -18329,16 +18329,6 @@ stopGyroscope : function (
 },
 
 /**
- * @method startGyroscope
- * @param {function} arg0
- */
-startGyroscope : function (
-func 
-)
-{
-},
-
-/**
  * @method setGyroInterval
  * @param {float} arg0
  */
@@ -18349,13 +18339,32 @@ float
 },
 
 /**
- * @method create
+ * @method startGyroscope
+ * @param {function} arg0
+ */
+startGyroscope : function (
+func 
+)
+{
+},
+
+/**
+ * @method getInstance
  * @return {ca.CAMotionManager}
  */
-create : function (
+getInstance : function (
 )
 {
     return ca.CAMotionManager;
+},
+
+/**
+ * @method CAMotionManager
+ * @constructor
+ */
+CAMotionManager : function (
+)
+{
 },
 
 };

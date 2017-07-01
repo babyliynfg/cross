@@ -116,7 +116,6 @@ bool jsval_to_cafont(JSContext *cx, JS::HandleValue v, CrossApp::CAFont* ret);
 bool jsval_to_cacolor4b(JSContext *cx, JS::HandleValue v, CrossApp::CAColor4B* ret);
 bool jsval_to_cacolor4f(JSContext *cx, JS::HandleValue v, CrossApp::CAColor4F* ret);
 bool jsval_cacolor_to_opacity(JSContext *cx, JS::HandleValue v, int32_t* ret);
-bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, CrossApp::CAAcceleration* ret);
 bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, CrossApp::Quaternion* ret);
 
 // forward declaration
@@ -339,7 +338,6 @@ jsval dlayout_to_jsval(JSContext *cx, const CrossApp::DLayout& v);
 jsval cafont_to_jsval(JSContext *cx, const CrossApp::CAFont& v);
 jsval cacolor4b_to_jsval(JSContext* cx, const CrossApp::CAColor4B& v);
 jsval cacolor4f_to_jsval(JSContext* cx, const CrossApp::CAColor4F& v);
-jsval ccacceleration_to_jsval(JSContext* cx, const CrossApp::CAAcceleration& v);
 jsval quaternion_to_jsval(JSContext* cx, const CrossApp::Quaternion& q);
 
 template<class T>
@@ -466,7 +464,6 @@ jsval matrix_to_jsval(JSContext *cx, const CrossApp::Mat4& v);
 jsval vector2_to_jsval(JSContext *cx, const CrossApp::DPoint& v);
 jsval blendfunc_to_jsval(JSContext *cx, const CrossApp::BlendFunc& v);
 jsval std_map_string_string_to_jsval(JSContext* cx, const std::map<std::string, std::string>& v);
-
 
 #endif /* __JS_MANUAL_CONVERSIONS_H__ */
 

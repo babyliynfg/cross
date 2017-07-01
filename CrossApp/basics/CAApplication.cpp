@@ -19,7 +19,6 @@
 #include "platform/CAFileUtils.h"
 #include "CCApplication.h"
 #include "CCEGLView.h"
-#include "CAAccelerometer.h"
 #include "dispatcher/CATouchDispatcher.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "dispatcher/CATouch.h"
@@ -32,7 +31,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCFrameBuffer.h"
-
+#include "device/CAMotionManager.h"
 
 NS_CC_BEGIN
 
@@ -105,6 +104,8 @@ bool CAApplication::init(void)
     
     m_pNotificationCenter = new (std::nothrow) CANotificationCenter();
     
+    m_pMotionManager = new (std::nothrow) CAMotionManager();
+    
     this->initMatrixStack();
     m_pRenderer = new (std::nothrow) Renderer;
     RenderState::initialize();
@@ -115,9 +116,6 @@ bool CAApplication::init(void)
     
     // KeypadDispatcher
     m_pKeypadDispatcher = new CAKeypadDispatcher();
-    
-    // Accelerometer
-    m_pAccelerometer = new CAAccelerometer();
     
     m_pThemeManager = nullptr;
 
@@ -140,7 +138,6 @@ CAApplication::~CAApplication(void)
     CC_SAFE_RELEASE(m_pTouchDispatcher);
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
     CC_SAFE_RELEASE(m_pThemeManager);
-	CC_SAFE_DELETE(m_pAccelerometer);
 	CC_SAFE_DELETE(m_defaultFBO);
 	CC_SAFE_RELEASE_NULL(m_pActionManager);
     CC_SAFE_RELEASE_NULL(m_pScheduler);
@@ -966,20 +963,6 @@ void CAApplication::setKeypadDispatcher(CAKeypadDispatcher* pKeypadDispatcher)
 CAKeypadDispatcher* CAApplication::getKeypadDispatcher()
 {
     return m_pKeypadDispatcher;
-}
-
-void CAApplication::setAccelerometer(CAAccelerometer* pAccelerometer)
-{
-    if (m_pAccelerometer != pAccelerometer)
-    {
-        CC_SAFE_DELETE(m_pAccelerometer);
-        m_pAccelerometer = pAccelerometer;
-    }
-}
-
-CAAccelerometer* CAApplication::getAccelerometer()
-{
-    return m_pAccelerometer;
 }
 
 unsigned long CAApplication::getCurrentNumberOfDraws()

@@ -628,34 +628,6 @@ bool jsval_to_dpoint3d(JSContext *cx, JS::HandleValue v, CrossApp::DPoint3D* ret
     return true;
 }
 
-bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, CAAcceleration* ret) {
-    JS::RootedObject tmp(cx);
-    JS::RootedValue jsx(cx);
-    JS::RootedValue jsy(cx);
-    JS::RootedValue jsz(cx);
-    JS::RootedValue jstimestamp(cx);
-    
-    double x, y, timestamp, z;
-    bool ok = v.isObject() &&
-    JS_ValueToObject(cx, v, &tmp) &&
-    JS_GetProperty(cx, tmp, "x", &jsx) &&
-    JS_GetProperty(cx, tmp, "y", &jsy) &&
-    JS_GetProperty(cx, tmp, "z", &jsz) &&
-    JS_GetProperty(cx, tmp, "timestamp", &jstimestamp) &&
-    JS::ToNumber(cx, jsx, &x) &&
-    JS::ToNumber(cx, jsy, &y) &&
-    JS::ToNumber(cx, jsz, &z) &&
-    JS::ToNumber(cx, jstimestamp, &timestamp);
-    
-    JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
-    
-    ret->x = x;
-    ret->y = y;
-    ret->z = z;
-    ret->timestamp = timestamp;
-    return true;
-}
-
 bool jsval_to_quaternion( JSContext *cx, JS::HandleValue v, CrossApp::Quaternion* ret)
 {
     JS::RootedObject tmp(cx);
@@ -1681,23 +1653,6 @@ jsval dpoint3d_to_jsval(JSContext* cx, const CrossApp::DPoint3D& v)
     return JSVAL_NULL;
 }
 
-jsval ccacceleration_to_jsval(JSContext* cx, const CAAcceleration& v)
-{
-    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-
-    JS::RootedObject proto(cx);
-    JS::RootedObject parent(cx);
-    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
-    if (!tmp) return JSVAL_NULL;
-    bool ok = JS_DefineProperty(cx, tmp, "x", v.x, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "y", v.y, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "z", v.z, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "timestamp", v.timestamp, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    if (ok) {
-        return OBJECT_TO_JSVAL(tmp);
-    }
-    return JSVAL_NULL;
-}
 jsval viodpointe_to_javal(JSContext *cx, JS::HandleValue v, void* context)
 {
     if (nullptr != context) {

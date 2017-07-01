@@ -570,6 +570,7 @@ bool js_crossapp_CAApplication_isDrawing(JSContext *cx, uint32_t argc, jsval *vp
 bool js_crossapp_CAApplication_setDepthTest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getSecondsPerFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_resetMatrixStack(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAApplication_getMotionManager(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getStatusBarStyle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setScheduler(JSContext *cx, uint32_t argc, jsval *vp);
@@ -594,7 +595,6 @@ bool js_crossapp_CAApplication_purgeCachedData(JSContext *cx, uint32_t argc, jsv
 bool js_crossapp_CAApplication_getTotalFrames(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_pause(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setThemeManager(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAApplication_getAccelerometer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_restart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_loadIdentityMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_isDisplayStats(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2274,9 +2274,10 @@ void js_crossapp_CAMotionManager_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAMotionManager(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAMotionManager_stopGyroscope(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAMotionManager_setGyroInterval(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAMotionManager_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAMotionManager_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAMotionManager_CAMotionManager(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAImagePickerController_class;
 extern JSObject *jsb_CrossApp_CAImagePickerController_prototype;

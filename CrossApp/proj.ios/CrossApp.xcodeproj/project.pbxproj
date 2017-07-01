@@ -29,8 +29,6 @@
 		1551A71B158F2ADE00E66CFE /* CACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A46E158F2ADE00E66CFE /* CACommon.h */; };
 		1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */; };
 		1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A476158F2ADE00E66CFE /* CCPlatformMacros.h */; };
-		1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */; };
-		1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */; };
 		1551A72E158F2ADE00E66CFE /* CACommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A482158F2ADE00E66CFE /* CACommon.mm */; };
 		1551A72F158F2ADE00E66CFE /* CAApplicationCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A483158F2ADE00E66CFE /* CAApplicationCaller.h */; };
 		1551A730158F2ADE00E66CFE /* CAApplicationCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1551A484158F2ADE00E66CFE /* CAApplicationCaller.mm */; };
@@ -425,8 +423,6 @@
 		D6CA51851E604C4D00317AB9 /* CACheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6CA51831E604C4D00317AB9 /* CACheckbox.cpp */; };
 		D6CA51861E604C4D00317AB9 /* CACheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CA51841E604C4D00317AB9 /* CACheckbox.h */; };
 		E0AAB3651CCA3E3A00353011 /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */; };
-		E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */; };
-		E0AAB3691CCA3E7500353011 /* CAAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */; };
 		E0FCFF061E5C094A00CCA191 /* CAMotionManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0FCFF001E5BEEF400CCA191 /* CAMotionManager.mm */; };
 		E0FCFF0E1E5C1B5300CCA191 /* CAMotionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E0FCFEFE1E5BEEF400CCA191 /* CAMotionManager.h */; };
 		E0FCFF171E5C1F4300CCA191 /* CAImagePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = E0FCFF161E5C1F4300CCA191 /* CAImagePickerController.h */; };
@@ -462,8 +458,6 @@
 		1551A46E158F2ADE00E66CFE /* CACommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACommon.h; sourceTree = "<group>"; };
 		1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformConfig.h; sourceTree = "<group>"; };
 		1551A476158F2ADE00E66CFE /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
-		1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerDelegateWrapper.h; sourceTree = "<group>"; };
-		1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccelerometerDelegateWrapper.mm; sourceTree = "<group>"; };
 		1551A482158F2ADE00E66CFE /* CACommon.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CACommon.mm; sourceTree = "<group>"; };
 		1551A483158F2ADE00E66CFE /* CAApplicationCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplicationCaller.h; sourceTree = "<group>"; };
 		1551A484158F2ADE00E66CFE /* CAApplicationCaller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAApplicationCaller.mm; sourceTree = "<group>"; };
@@ -917,8 +911,6 @@
 		D6CA51831E604C4D00317AB9 /* CACheckbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACheckbox.cpp; sourceTree = "<group>"; };
 		D6CA51841E604C4D00317AB9 /* CACheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACheckbox.h; sourceTree = "<group>"; };
 		E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
-		E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
-		E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAccelerometer.mm; sourceTree = "<group>"; };
 		E0FCFEFE1E5BEEF400CCA191 /* CAMotionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAMotionManager.h; sourceTree = "<group>"; };
 		E0FCFF001E5BEEF400CCA191 /* CAMotionManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CAMotionManager.mm; sourceTree = "<group>"; };
 		E0FCFF161E5C1F4300CCA191 /* CAImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImagePickerController.h; sourceTree = "<group>"; };
@@ -1054,8 +1046,6 @@
 			children = (
 				D69DA69A1EE54F9B00590961 /* CAFontProcesstor.mm */,
 				D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */,
-				E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */,
-				E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */,
 				B07E81151C33B36700A39C95 /* CATextView.mm */,
 				022160781C1FAD42009FFCFC /* CATextField.mm */,
 				B0C3BD471ADE726B009BE71A /* CAClipboard.mm */,
@@ -1066,8 +1056,6 @@
 				0460ED2A1957019600D13001 /* CCApplication.mm */,
 				0460ED2B1957019600D13001 /* CCEGLView.h */,
 				0460ED2C1957019600D13001 /* CCEGLView.mm */,
-				1551A47C158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h */,
-				1551A47D158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm */,
 				1551A482158F2ADE00E66CFE /* CACommon.mm */,
 				1551A483158F2ADE00E66CFE /* CAApplicationCaller.h */,
 				1551A484158F2ADE00E66CFE /* CAApplicationCaller.mm */,
@@ -1837,7 +1825,6 @@
 				1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */,
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
 				D6ADC6741E56A72800750771 /* CAImageCube.h in Headers */,
-				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
 				D6ADC67C1E56A72800750771 /* gif_lib_private.h in Headers */,
 				D6ADC6B71E56A72800750771 /* CCRenderCommand.h in Headers */,
 				D6ADC60C1E56A72800750771 /* CAPointExtension.h in Headers */,
@@ -1923,7 +1910,6 @@
 				D6ADC66E1E56A72800750771 /* CAGif.h in Headers */,
 				D66F533C1ED8402300546E5E /* CAData.h in Headers */,
 				D6ADC6261E56A72800750771 /* CAButton.h in Headers */,
-				E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */,
 				D6ADC6F81E56A72800750771 /* shapes.h in Headers */,
 				D6ADC6E71E56A72800750771 /* features.h in Headers */,
 				D6ADC6F91E56A72800750771 /* utils.h in Headers */,
@@ -2103,7 +2089,6 @@
 				D6ADC6FD1E56A72800750771 /* cdt.cc in Sources */,
 				D6ADC6D31E56A72800750771 /* ccUTF8.cpp in Sources */,
 				D6ADC7111E56A72800750771 /* unzip.cpp in Sources */,
-				1551A729158F2ADE00E66CFE /* AccelerometerDelegateWrapper.mm in Sources */,
 				1551A72E158F2ADE00E66CFE /* CACommon.mm in Sources */,
 				D6ADC6941E56A72800750771 /* WebSocket.cpp in Sources */,
 				D6ADC6A01E56A72800750771 /* CCGLProgramState.cpp in Sources */,
@@ -2202,7 +2187,6 @@
 				D6ADC6F21E56A72800750771 /* LocalStorage.cpp in Sources */,
 				D6C7299B1EEE74740094B191 /* CACollectionView.cpp in Sources */,
 				D6ADC6981E56A72800750771 /* CCCustomCommand.cpp in Sources */,
-				E0AAB3691CCA3E7500353011 /* CAAccelerometer.mm in Sources */,
 				D6ADC69E1E56A72800750771 /* CCGLProgramCache.cpp in Sources */,
 				D6ADC6B01E56A72800750771 /* CCPrimitiveCommand.cpp in Sources */,
 				D6C729951EEE74740094B191 /* CAAutoCollectionView.cpp in Sources */,

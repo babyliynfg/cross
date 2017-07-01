@@ -703,6 +703,15 @@ ca.DRect.intersectsRect = function (r1, r2)
     return true;
 };
 
+ca.CAMotionManager.Data = function()
+{
+    return  {
+        x: 0,
+        y: 0,
+        z: 0,
+        timestamp: 0,
+    };
+};
 
 ca.CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
 ca.CROSSAPP_CCLOG_NOTIFICATION = "CROSSAPP_CCLOG_NOTIFICATION";

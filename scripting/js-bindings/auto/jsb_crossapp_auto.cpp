@@ -12098,6 +12098,32 @@ bool js_crossapp_CAApplication_resetMatrixStack(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAApplication_resetMatrixStack : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAApplication_getMotionManager(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAApplication* cobj = (CrossApp::CAApplication *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAApplication_getMotionManager : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAMotionManager* ret = cobj->getMotionManager();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAMotionManager>(cx, (CrossApp::CAMotionManager*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAApplication_getMotionManager : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CAApplication_getStatusBarStyle(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -12607,32 +12633,6 @@ bool js_crossapp_CAApplication_setThemeManager(JSContext *cx, uint32_t argc, jsv
     }
 
     JS_ReportError(cx, "js_crossapp_CAApplication_setThemeManager : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAApplication_getAccelerometer(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAApplication* cobj = (CrossApp::CAApplication *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAApplication_getAccelerometer : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAAccelerometer* ret = cobj->getAccelerometer();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAccelerometer>(cx, (CrossApp::CAAccelerometer*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAApplication_getAccelerometer : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAApplication_restart(JSContext *cx, uint32_t argc, jsval *vp)
@@ -13213,6 +13213,7 @@ void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global) 
         JS_FN("setDepthTest", js_crossapp_CAApplication_setDepthTest, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSecondsPerFrame", js_crossapp_CAApplication_getSecondsPerFrame, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resetMatrixStack", js_crossapp_CAApplication_resetMatrixStack, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getMotionManager", js_crossapp_CAApplication_getMotionManager, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStatusBarStyle", js_crossapp_CAApplication_getStatusBarStyle, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAApplication_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScheduler", js_crossapp_CAApplication_setScheduler, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -13237,7 +13238,6 @@ void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global) 
         JS_FN("getTotalFrames", js_crossapp_CAApplication_getTotalFrames, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pause", js_crossapp_CAApplication_pause, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setThemeManager", js_crossapp_CAApplication_setThemeManager, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getAccelerometer", js_crossapp_CAApplication_getAccelerometer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("restart", js_crossapp_CAApplication_restart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadIdentityMatrix", js_crossapp_CAApplication_loadIdentityMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDisplayStats", js_crossapp_CAApplication_isDisplayStats, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -46656,7 +46656,7 @@ bool js_crossapp_CADownloadManager_getDownloadIdsFromTextTag(JSContext *cx, uint
         std::vector<int> ret;
         for (auto var : cobj->getDownloadIdsFromTextTag(arg0))
         {
-            ret.push_back(var);
+            ret.push_back((int)var);
         }
         jsval jsret = JSVAL_NULL;
         jsret = std_vector_int_to_jsval(cx, ret);
@@ -48609,55 +48609,6 @@ bool js_crossapp_CAMotionManager_stopGyroscope(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CAMotionManager_stopGyroscope : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAMotionManager* cobj = (CrossApp::CAMotionManager *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAMotionManager_startGyroscope : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void (const CrossApp::CAMotionManager::Data *)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](const CrossApp::CAMotionManager::Data* larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            do {
-		            if (larg0) {
-		                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAMotionManager::Data>(cx, (CrossApp::CAMotionManager::Data*)larg0);
-		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
-		            } else {
-		                largv[0] = JSVAL_NULL;
-		            }
-		        } while (0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAMotionManager_startGyroscope : Error processing arguments");
-        cobj->startGyroscope(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAMotionManager_startGyroscope : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAMotionManager_setGyroInterval(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -48679,11 +48630,53 @@ bool js_crossapp_CAMotionManager_setGyroInterval(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAMotionManager_setGyroInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAMotionManager_create(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAMotionManager* cobj = (CrossApp::CAMotionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAMotionManager_startGyroscope : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (const CAValueMap&)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](const CAValueMap& larg4) -> void {
+                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                    jsval largv[1];
+                    largv[0] = cavaluemap_to_jsval(cx, larg4);
+                    JS::RootedValue rval(cx);
+                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    if (!succeed && JS_IsExceptionPending(cx)) {
+                        JS_ReportPendingException(cx);
+                    }
+                };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAMotionManager_startGyroscope : Error processing arguments");
+        cobj->startGyroscope(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAMotionManager_startGyroscope : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAMotionManager_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
-        CrossApp::CAMotionManager* ret = CrossApp::CAMotionManager::create();
+        CrossApp::CAMotionManager* ret = CrossApp::CAMotionManager::getInstance();
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -48696,14 +48689,51 @@ bool js_crossapp_CAMotionManager_create(JSContext *cx, uint32_t argc, jsval *vp)
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_crossapp_CAMotionManager_create : wrong number of arguments");
+    JS_ReportError(cx, "js_crossapp_CAMotionManager_getInstance : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CAMotionManager_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::CAMotionManager* cobj = new (std::nothrow) CrossApp::CAMotionManager();
+    TypeTest<CrossApp::CAMotionManager> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::CAMotionManager");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
 
 extern JSObject *jsb_CrossApp_CAObject_prototype;
 
 void js_CrossApp_CAMotionManager_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (CAMotionManager)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::CAMotionManager *nobj = static_cast<CrossApp::CAMotionManager *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
 }
 void js_register_crossapp_CAMotionManager(JSContext *cx, JS::HandleObject global) {
     jsb_CrossApp_CAMotionManager_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -48725,13 +48755,13 @@ void js_register_crossapp_CAMotionManager(JSContext *cx, JS::HandleObject global
 
     static JSFunctionSpec funcs[] = {
         JS_FN("stopGyroscope", js_crossapp_CAMotionManager_stopGyroscope, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("startGyroscope", js_crossapp_CAMotionManager_startGyroscope, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setGyroInterval", js_crossapp_CAMotionManager_setGyroInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("startGyroscope", js_crossapp_CAMotionManager_startGyroscope, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
     static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_crossapp_CAMotionManager_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getInstance", js_crossapp_CAMotionManager_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -48739,7 +48769,7 @@ void js_register_crossapp_CAMotionManager(JSContext *cx, JS::HandleObject global
         cx, global,
         JS::RootedObject(cx, jsb_CrossApp_CAObject_prototype),
         jsb_CrossApp_CAMotionManager_class,
-        dummy_constructor<CrossApp::CAMotionManager>, 0, // no constructor
+        js_crossapp_CAMotionManager_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties

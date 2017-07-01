@@ -170,7 +170,6 @@ platform/platform.cpp \
 platform/CCEGLViewProtocol.cpp \
 platform/android/CADensityDpi.cpp \
 platform/android/CCEGLView.cpp \
-platform/android/CAAccelerometer.cpp \
 platform/android/CCApplication.cpp \
 platform/android/CACommon.cpp \
 platform/android/CCFileUtilsAndroid.cpp \
@@ -182,7 +181,6 @@ platform/android/CAAlertViewImpl.cpp \
 platform/android/CAFontProcesstor.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppHelper.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppRenderer.cpp \
-platform/android/jni/Java_org_CrossApp_lib_CrossAppAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/TouchesJni.cpp \
 device/android/CADevice.cpp \
