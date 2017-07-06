@@ -680,37 +680,27 @@ ca.DRectEquals = function (r1, r2)
 
 ca.DRect.intersectsRect = function (r1, r2)
 {
-    if (r1.origin.x + r1.size.width < r2.origin.x)
+    if (r1.x + r1.width < r2.x)
     {
         return false;
     }
     
-    if (r2.origin.x + r2.size.width < r1.origin.x)
+    if (r2.x + r2.width < r1.x)
     {
         return false;
     }
     
-    if (r1.origin.y + r1.size.height < r2.origin.y)
+    if (r1.y + r1.height < r2.y)
     {
         return false;
     }
     
-    if (r2.origin.y + r2.size.height < r1.origin.y)
+    if (r2.y + r2.height < r1.y)
     {
         return false;
     }
     
     return true;
-};
-
-ca.CAMotionManager.Data = function()
-{
-    return  {
-        x: 0,
-        y: 0,
-        z: 0,
-        timestamp: 0,
-    };
 };
 
 ca.CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";

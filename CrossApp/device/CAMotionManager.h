@@ -27,7 +27,9 @@ public:
      *  @       "z"         double
      *  @       "timestamp" float
      */
-    typedef std::function<void(const CAValueMap&)> Callback;
+    typedef std::function<void(const CAValue&)> Callback;
+
+    
 public:
 
     CAMotionManager();
@@ -45,9 +47,7 @@ public:
 private:
     
     void* m_pMotionManager{nullptr};
-    
-    CAValueMap m_obData;
-    
+
     CAMotionManager::Callback m_callback{nullptr};
 };
 

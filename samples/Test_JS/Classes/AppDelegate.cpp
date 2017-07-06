@@ -28,7 +28,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore* sc = ScriptingCore::getInstance();
   
     sc->addRegisterCallback(register_all_crossapp);
-    sc->addRegisterCallback(register_crossapp_js_core);
+    //sc->addRegisterCallback(register_crossapp_js_core);
     sc->addRegisterCallback(register_all_crossapp_delegates_manual);
 
     sc->start();
@@ -36,10 +36,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->runScript("script/jsb_boot.js");
     
-    sc->enableDebugger();
+    //sc->enableDebugger();
     sc->runScript("script/jsb_crossapp.js");
     
-    CAScriptEngineManager::sharedManager()->setScriptEngine(sc);
+    CAScriptEngineManager::createScriptEngineManager()->setScriptEngine(sc);
     sc->runScript("js/main.js");
 
     

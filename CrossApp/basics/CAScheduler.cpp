@@ -8,6 +8,36 @@
 
 NS_CC_BEGIN
 
+class CC_DLL Timer : public CAObject
+{
+protected:
+    
+    Timer();
+public:
+    
+    inline float getInterval() const { return _interval; };
+    
+    inline void setInterval(float interval) { _interval = interval; };
+    
+    void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
+    
+    virtual void trigger(float dt) = 0;
+    virtual void cancel() = 0;
+    
+    void update(float dt);
+    
+protected:
+    
+    CAScheduler* _scheduler;
+    float _elapsed;
+    bool _runForever;
+    bool _useDelay;
+    unsigned int _timesExecuted;
+    unsigned int _repeat;
+    float _delay;
+    float _interval;
+};
+
 // data structures
 // A list double-linked list used for "updates with priority"
 typedef struct _listEntry
@@ -40,36 +70,6 @@ typedef struct _hashSelectorEntry
     bool                paused;
     UT_hash_handle      hh;
 } tHashTimerEntry;
-
-class CC_DLL Timer : public CAObject
-{
-protected:
-    
-    Timer();
-public:
-    
-    inline float getInterval() const { return _interval; };
-    
-    inline void setInterval(float interval) { _interval = interval; };
-    
-    void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
-    
-    virtual void trigger(float dt) = 0;
-    virtual void cancel() = 0;
-    
-    void update(float dt);
-    
-protected:
-    
-    CAScheduler* _scheduler;
-    float _elapsed;
-    bool _runForever;
-    bool _useDelay;
-    unsigned int _timesExecuted;
-    unsigned int _repeat;
-    float _delay;
-    float _interval;
-};
 
 class CC_DLL TimerTargetSelector : public Timer
 {

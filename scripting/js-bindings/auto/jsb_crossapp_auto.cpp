@@ -46655,9 +46655,7 @@ bool js_crossapp_CADownloadManager_getDownloadIdsFromTextTag(JSContext *cx, uint
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADownloadManager_getDownloadIdsFromTextTag : Error processing arguments");
         std::vector<int> ret;
         for (auto var : cobj->getDownloadIdsFromTextTag(arg0))
-        {
-            ret.push_back((int)var);
-        }
+            ret.push_back(var);
         jsval jsret = JSVAL_NULL;
         jsret = std_vector_int_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -48640,21 +48638,21 @@ bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, js
     CrossApp::CAMotionManager* cobj = (CrossApp::CAMotionManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAMotionManager_startGyroscope : Invalid Native Object");
     if (argc == 1) {
-        std::function<void (const CAValueMap&)> arg0;
+        std::function<void (const CrossApp::CAValue &)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](const CAValueMap& larg4) -> void {
-                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-                    jsval largv[1];
-                    largv[0] = cavaluemap_to_jsval(cx, larg4);
-                    JS::RootedValue rval(cx);
-                    bool succeed = func->invoke(1, &largv[0], &rval);
-                    if (!succeed && JS_IsExceptionPending(cx)) {
-                        JS_ReportPendingException(cx);
-                    }
-                };
+		        auto lambda = [=, &ok](const CrossApp::CAValue & larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = cavalue_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
 		        arg0 = lambda;
 		    }
 		    else

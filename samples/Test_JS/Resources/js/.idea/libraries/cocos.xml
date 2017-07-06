@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="crossapp" type="javaScript">
+  <library name="cocos" type="javaScript">
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js" />
@@ -10,8 +10,6 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/js_create_cross_apis.js" />
-      <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/js_create_apis.js" />
       <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js" />
       <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb.js" />
       <root url="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_boot.js" />

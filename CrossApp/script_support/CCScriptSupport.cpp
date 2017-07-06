@@ -16,29 +16,10 @@ CAScriptHandlerEntry::~CAScriptHandlerEntry(void)
 {
 	if (m_nHandler != 0)
 	{
-        CAScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
+        CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
         m_nHandler = 0;
     }
 }
-
-CASchedulerScriptHandlerEntry* CASchedulerScriptHandlerEntry::create(int nHandler, float fInterval, bool bPaused)
-{
-    CASchedulerScriptHandlerEntry* pEntry = new CASchedulerScriptHandlerEntry(nHandler);
-    pEntry->init(fInterval, bPaused);
-    pEntry->autorelease();
-    return pEntry;
-}
-
-bool CASchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
-{
-    m_bPaused = bPaused;
-    return true;
-}
-
-CASchedulerScriptHandlerEntry::~CASchedulerScriptHandlerEntry(void)
-{
-}
-
 
 CATouchScriptHandlerEntry* CATouchScriptHandlerEntry::create(int nHandler,
                                                              bool bIsMultiTouches,
@@ -55,7 +36,7 @@ CATouchScriptHandlerEntry::~CATouchScriptHandlerEntry(void)
 {
     if (m_nHandler != 0)
     {
-        CAScriptEngineManager::sharedManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
+        CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->removeScriptHandler(m_nHandler);
         m_nHandler = 0;
     }
 }
@@ -69,7 +50,16 @@ bool CATouchScriptHandlerEntry::init(bool bIsMultiTouches, int nPriority, bool b
     return true;
 }
 
-static CAScriptEngineManager* s_pSharedScriptEngineManager = NULL;
+static CAScriptEngineManager* s_pSharedScriptEngineManager = nullptr;
+
+CAScriptEngineManager* CAScriptEngineManager::createScriptEngineManager(void)
+{
+    if (!s_pSharedScriptEngineManager)
+    {
+        s_pSharedScriptEngineManager = new CAScriptEngineManager();
+    }
+    return s_pSharedScriptEngineManager;
+}
 
 CAScriptEngineManager::~CAScriptEngineManager(void)
 {
@@ -90,14 +80,7 @@ void CAScriptEngineManager::removeScriptEngine(void)
     }
 }
 
-CAScriptEngineManager* CAScriptEngineManager::sharedManager(void)
-{
-    if (!s_pSharedScriptEngineManager)
-    {
-        s_pSharedScriptEngineManager = new CAScriptEngineManager();
-    }
-    return s_pSharedScriptEngineManager;
-}
+
 
 CAScriptEngineManager* CAScriptEngineManager::getScriptEngineManager(void)
 {
@@ -115,7 +98,7 @@ void CAScriptEngineManager::purgeSharedManager(void)
 
 bool CAScriptEngineManager::sendViewControllerEventToJS(CAViewController* node, int action)
 {
-    auto scriptEngine = sharedManager()->getScriptEngine();
+    auto scriptEngine = getScriptEngineManager()->getScriptEngine();
     
     if (scriptEngine->isCalledFromScript())
     {

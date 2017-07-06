@@ -11,11 +11,20 @@ var AlertViewTest = ca.CAViewController.extend({
         btn1.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(240, 0.5), ca.DVerticalLayout_H_C(54, 0.25)));
         btn1.setTitleForState(ca.CAControl.State.Normal, "Click-1");
         btn1.addTarget(function () {
-            var alertView = ca.CAAlertView.create("Alert","this is a alert!");
-            alertView.show(function (btnIndex)
-            {
-                log("btnIndex=="+btnIndex);
+            //var alertView = ca.CAAlertView.create("Alert","this is a alert!");
+            //alertView.show(function (btnIndex)
+            //{
+            //    ca.log("btnIndex=="+btnIndex);
+            //});
+
+            ca.CAMotionManager.getInstance().startGyroscope(function(data){
+
+
+                ca.logArray(data);
+
+                ca.CAMotionManager.getInstance().stopGyroscope();
             });
+
         }, ca.CAButton.Event.TouchUpInSide);
         this.getView().addSubview(btn1);
 
@@ -27,7 +36,7 @@ var AlertViewTest = ca.CAViewController.extend({
             alertView.setButtonTitles(["ok","close"]);
             alertView.show(function (btnIndex)
             {
-                log("btnIndex=="+btnIndex);
+                ca.log("btnIndex=="+btnIndex);
             });
         },ca.CAButton.Event.TouchUpInSide);
         this.getView().addSubview(btn2);
@@ -48,7 +57,7 @@ var AlertViewTest = ca.CAViewController.extend({
             alertView.setButtonTitles(["ok","close","button3","button4","button5","button6","button7"]);
             alertView.show(function (btnIndex)
             {
-                log("btnIndex=="+btnIndex);
+                ca.log("btnIndex=="+btnIndex);
             });
         }, ca.CAButton.Event.TouchUpInSide);
         this.getView().addSubview(btn3);

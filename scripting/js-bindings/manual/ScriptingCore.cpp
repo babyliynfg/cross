@@ -329,13 +329,6 @@ ScriptingCore* ScriptingCore::getInstance()
     return instance;
 }
 
-void ScriptingCore::releaseThis()
-{
-    instance = nullptr;
-    CAScriptEngineManager::getScriptEngineManager()->setScriptEngine(nullptr);
-    delete this;
-}
-
 void ScriptingCore::addRegisterCallback(sc_register_sth callback) {
     registrationList.push_back(callback);
 }
@@ -1051,12 +1044,9 @@ void ScriptingCore::enableDebugger(unsigned int port)
         
         _debugGlobal = new (std::nothrow) JS::PersistentRootedObject(_cx, NewGlobalObject(_cx, true));
         // Adds the debugger object to root, otherwise it may be collected by GC.
-        //AddObjectRoot(_cx, &*_debugGlobal); no need, it's persistent rooted now
-        //JS_WrapObject(_cx, &*_debugGlobal); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
         JS::RootedObject rootedDebugObj(_cx, _debugGlobal->get());
         JSAutoCompartment ac(_cx, rootedDebugObj);
         // these are used in the debug program
-        JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_enterNestedEventLoop", JSBDebug_enterNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -1073,10 +1063,6 @@ void ScriptingCore::enableDebugger(unsigned int port)
         if (!ok) {
             JS_ReportPendingException(_cx);
         }
-        
-        // start bg thread
-//        auto t = std::thread(&serverEntryPoint,port);
-//        t.detach();
 
         CAScheduler::getScheduler()->schedule(schedule_selector(SimpleRunLoop::update), this->_runLoop, 0);
     }

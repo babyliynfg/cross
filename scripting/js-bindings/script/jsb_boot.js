@@ -1345,6 +1345,17 @@ var _initSys = function () {
 
 _initSys();
 
+log = function (){};
+ca.log = function (str){log(str);};
+
+ca.logArray = function (array)
+{
+    for (var key in array)
+    {
+        ca.log( key + ": " + array[key]);
+    }
+}
+
 
 ca._engineLoaded = false;
 

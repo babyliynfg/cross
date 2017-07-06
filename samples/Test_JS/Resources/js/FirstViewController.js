@@ -55,12 +55,6 @@ var FirstViewController = ca.CAViewController.extend({
         this._collectionView.setNumberOfItemsAtIndexPathCallback(this.numberOfItemsInSection.bind(this));
         this._collectionView.setNumberOfSectionsCallback(this.numberOfSections.bind(this));
 
-
-        var motion = ca.CAMotionManager.create().startGyroscope(function(data){
-
-            ca.CAAlertView.create("提示", "AAA").show(function(){});
-            motion.stopGyroscope();
-        });
     },
     collectionViewDidSelectCellAtIndexPath: function (section, item)
     {

@@ -53,9 +53,7 @@ public:
      * @return @~english The ScriptingCore instance.
      */
     static ScriptingCore* getInstance();
-    
-    virtual void releaseThis();
-    
+
     /**@~english
      * Gets the script type, for ScriptingCore, it will return `CrossApp::kScriptTypeJavascript`
      * @return `CrossApp::kScriptTypeJavascript`

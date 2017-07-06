@@ -11,12 +11,7 @@ typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
-class Timer;
-class CCLayer;
-class CCMenuItem;
-class CCNotificationCenter;
-class CCCallFunc;
-class CCAcceleration;
+class CANotificationCenter;
 
 enum ccScriptType {
     kScriptTypeNone = 0,
@@ -49,44 +44,6 @@ protected:
     
     int m_nHandler;
     int m_nEntryId;
-};
-
-class CASchedulerScriptHandlerEntry : public CAScriptHandlerEntry
-{
-public:
-    
-    static CASchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
-    ~CASchedulerScriptHandlerEntry(void);
-    
-    CrossApp::Timer* getTimer(void) {
-        return m_pTimer;
-    }
-    
-    bool isPaused(void) {
-        return m_bPaused;
-    }
-    
-    void markedForDeletion(void) {
-        m_bMarkedForDeletion = true;
-    }
-    
-    bool isMarkedForDeletion(void) {
-        return m_bMarkedForDeletion;
-    }
-    
-private:
-    CASchedulerScriptHandlerEntry(int nHandler)
-    : CAScriptHandlerEntry(nHandler)
-    , m_pTimer(nullptr)
-    , m_bPaused(false)
-    , m_bMarkedForDeletion(false)
-    {
-    }
-    bool init(float fInterval, bool bPaused);
-    
-    CrossApp::Timer*    m_pTimer;
-    bool                m_bPaused;
-    bool                m_bMarkedForDeletion;
 };
 
 class CATouchScriptHandlerEntry : public CAScriptHandlerEntry
@@ -185,8 +142,6 @@ public:
     virtual void releaseScriptObject(CrossApp::CAObject* owner, CrossApp::CAObject* target) = 0;
 
     virtual void releaseAllSubviewsRecursive(CrossApp::CAView* view) = 0;
-    
-    virtual void releaseThis() = 0;
 };
 
 class CC_DLL CAScriptEngineManager
@@ -194,17 +149,21 @@ class CC_DLL CAScriptEngineManager
 public:
     ~CAScriptEngineManager(void);
     
-    CAScriptEngineProtocol* getScriptEngine(void) {
+    static CAScriptEngineManager* getScriptEngineManager(void);
+    
+    static CAScriptEngineManager* createScriptEngineManager(void);
+    
+    static void purgeSharedManager(void);
+
+    static bool sendViewControllerEventToJS(CAViewController* node, int action);
+    
+    CAScriptEngineProtocol* getScriptEngine(void)
+    {
         return m_pScriptEngine;
     }
     void setScriptEngine(CAScriptEngineProtocol *pScriptEngine);
     void removeScriptEngine(void);
     
-    static CAScriptEngineManager* sharedManager(void);
-    static CAScriptEngineManager* getScriptEngineManager(void);
-    static void purgeSharedManager(void);
-
-    static bool sendViewControllerEventToJS(CAViewController* node, int action);
     
 private:
     CAScriptEngineManager(void)

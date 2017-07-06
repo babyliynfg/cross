@@ -102,10 +102,10 @@ void CAViewController::viewOnEnterTransitionDidFinish()
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
 
-        if(CAScriptEngineManager::sharedManager()->getScriptEngine())
+        if(CAScriptEngineManager::getScriptEngineManager()->getScriptEngine())
         {
 #if CC_ENABLE_SCRIPT_BINDING
-            if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+            if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
                 if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidLoad));
             }
@@ -129,10 +129,10 @@ void CAViewController::viewOnExitTransitionDidStart()
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
         
-        if(CAScriptEngineManager::sharedManager()->getScriptEngine())
+        if(CAScriptEngineManager::getScriptEngineManager()->getScriptEngine())
         {
 #if CC_ENABLE_SCRIPT_BINDING
-            if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+            if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
                 if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidUnload));
             }
@@ -153,10 +153,10 @@ void CAViewController::viewOnSizeTransitionDidChanged()
 {
     if (m_bLifeLock)
     {
-        if(CAScriptEngineManager::sharedManager()->getScriptEngine())
+        if(CAScriptEngineManager::getScriptEngineManager()->getScriptEngine())
         {
 #if CC_ENABLE_SCRIPT_BINDING
-            if (CAScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+            if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
                 if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewSizeDidChanged));
             }

@@ -85,16 +85,18 @@ void CAMotionManager::startGyroscope(const CAMotionManager::Callback& callback)
                      CCASSERT(false, "unknow orientation");
              }
              
-             m_obData["x"] = CAValue(x);
-             m_obData["y"] = CAValue(y);
-             m_obData["z"] = CAValue(z);
-             m_obData["timestamp"] = CAValue(timestamp);
+             static CAValueMap s_data;
+             
+             s_data["x"] = CAValue(x);
+             s_data["y"] = CAValue(y);
+             s_data["z"] = CAValue(z);
+             s_data["timestamp"] = CAValue(timestamp);
              
              CAScheduler::getScheduler()->performFunctionInUIThread([&]()
              {
                  if (m_callback)
                  {
-                     m_callback(m_obData);
+                     m_callback(CAValue(s_data));
                  }
              });
              
