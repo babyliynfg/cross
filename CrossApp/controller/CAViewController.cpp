@@ -102,7 +102,7 @@ void CAViewController::viewOnEnterTransitionDidFinish()
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
 
-        if(CAScriptEngineManager::getScriptEngineManager()->getScriptEngine())
+        if(CAScriptEngineManager::getScriptEngineManager())
         {
 #if CC_ENABLE_SCRIPT_BINDING
             if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
@@ -129,7 +129,7 @@ void CAViewController::viewOnExitTransitionDidStart()
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
         
-        if(CAScriptEngineManager::getScriptEngineManager()->getScriptEngine())
+        if(CAScriptEngineManager::getScriptEngineManager())
         {
 #if CC_ENABLE_SCRIPT_BINDING
             if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
@@ -153,7 +153,7 @@ void CAViewController::viewOnSizeTransitionDidChanged()
 {
     if (m_bLifeLock)
     {
-        if(CAScriptEngineManager::getScriptEngineManager()->getScriptEngine())
+        if(CAScriptEngineManager::getScriptEngineManager())
         {
 #if CC_ENABLE_SCRIPT_BINDING
             if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)

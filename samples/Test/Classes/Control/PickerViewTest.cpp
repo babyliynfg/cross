@@ -105,7 +105,7 @@ void PickerViewTest::viewDidLoad()
     {
         CADatePickerView* dpv = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::Date);
         //dpv->setDate(2004, 2, 16, false);
-        dpv->setSelectRowCallback(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
+        dpv->onSelectRow(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
         
         CAView* view2 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view2->addSubview(dpv);
@@ -115,7 +115,7 @@ void PickerViewTest::viewDidLoad()
     else if(PickerViewNum == 2)
     {
         CADatePickerView* dpv3 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::DateAndTime);
-        dpv3->setSelectRowCallback(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
+        dpv3->onSelectRow(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
     
         CAView* view3 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view3->addSubview(dpv3);
@@ -125,7 +125,7 @@ void PickerViewTest::viewDidLoad()
     else if(PickerViewNum == 3)
     {
         CADatePickerView* dpv4 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::Time);
-        dpv4->setSelectRowCallback(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
+        dpv4->onSelectRow(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
     
         CAView* view4 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view4->addSubview(dpv4);
@@ -135,7 +135,7 @@ void PickerViewTest::viewDidLoad()
     else
     {
         CADatePickerView* dpv5 = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::CountDownTimer);
-        dpv5->setSelectRowCallback(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
+        dpv5->onSelectRow(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
     
         CAView* view5 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
         view5->addSubview(dpv5);

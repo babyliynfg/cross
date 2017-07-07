@@ -27,11 +27,11 @@ class CC_DLL CAWebView : public CAView
 public:
     // event listeners.
     
-    CC_LISTENING_FUNCTION(bool(const std::string&), StartLoadingCallback);
+    CC_LISTENING_FUNCTION(bool(const std::string&), StartLoading);
     
-    CC_LISTENING_FUNCTION(void(const std::string&), FinishLoadingCallback);
+    CC_LISTENING_FUNCTION(void(const std::string&), FinishLoading);
     
-    CC_LISTENING_FUNCTION(void(const std::string&), FailLoadingCallback);
+    CC_LISTENING_FUNCTION(void(const std::string&), FailLoading);
     
     CC_LISTENING_FUNCTION(void(const std::string&), JSCallback);
 

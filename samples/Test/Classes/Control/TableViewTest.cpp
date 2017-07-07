@@ -36,16 +36,16 @@ void TableViewTest::viewDidLoad()
     m_pTableView->setSelectRowAtIndexPath(2, 1);
     this->getView()->addSubview(m_pTableView);
     
-    m_pTableView->setCellAtIndexPathCallBack(CALLBACK_BIND_3(TableViewTest::tableCellAtIndex, this));
-    m_pTableView->setCellHeightAtIndexPathCallback(CALLBACK_BIND_2(TableViewTest::tableViewHeightForRowAtIndexPath, this));
-    m_pTableView->setNumberOfRowsAtIndexPathCallback(CALLBACK_BIND_1(TableViewTest::numberOfRowsInSection, this));
-    m_pTableView->setNumberOfSectionsCallback(CALLBACK_BIND_0(TableViewTest::numberOfSections, this));
-    m_pTableView->setSectionViewForHeaderInSectionCallback(CALLBACK_BIND_2(TableViewTest::tableViewSectionViewForHeaderInSection, this));
-    m_pTableView->setHeightForHeaderInSectionCallback(CALLBACK_BIND_1(TableViewTest::tableViewHeightForHeaderInSection, this));
-    m_pTableView->setSectionViewForFooterInSectionCallback(CALLBACK_BIND_2(TableViewTest::tableViewSectionViewForFooterInSection, this));
-    m_pTableView->setHeightForFooterInSectionCallback(CALLBACK_BIND_1(TableViewTest::tableViewHeightForFooterInSection, this));
-    m_pTableView->setDidSelectCellAtIndexPathCallback(CALLBACK_BIND_2(TableViewTest::tableViewDidSelectRowAtIndexPath, this));
-    m_pTableView->setDidDeselectCellAtIndexPathCallback(CALLBACK_BIND_2(TableViewTest::tableViewDidDeselectRowAtIndexPath, this));
+    m_pTableView->onCellAtIndexPath(CALLBACK_BIND_3(TableViewTest::tableCellAtIndex, this));
+    m_pTableView->onCellHeightAtIndexPath(CALLBACK_BIND_2(TableViewTest::tableViewHeightForRowAtIndexPath, this));
+    m_pTableView->onNumberOfRowsAtIndexPath(CALLBACK_BIND_1(TableViewTest::numberOfRowsInSection, this));
+    m_pTableView->onNumberOfSections(CALLBACK_BIND_0(TableViewTest::numberOfSections, this));
+    m_pTableView->onSectionViewForHeaderInSection(CALLBACK_BIND_2(TableViewTest::tableViewSectionViewForHeaderInSection, this));
+    m_pTableView->onHeightForHeaderInSection(CALLBACK_BIND_1(TableViewTest::tableViewHeightForHeaderInSection, this));
+    m_pTableView->onSectionViewForFooterInSection(CALLBACK_BIND_2(TableViewTest::tableViewSectionViewForFooterInSection, this));
+    m_pTableView->onHeightForFooterInSection(CALLBACK_BIND_1(TableViewTest::tableViewHeightForFooterInSection, this));
+    m_pTableView->onDidSelectCellAtIndexPath(CALLBACK_BIND_2(TableViewTest::tableViewDidSelectRowAtIndexPath, this));
+    m_pTableView->onDidDeselectCellAtIndexPath(CALLBACK_BIND_2(TableViewTest::tableViewDidDeselectRowAtIndexPath, this));
     
 }
 

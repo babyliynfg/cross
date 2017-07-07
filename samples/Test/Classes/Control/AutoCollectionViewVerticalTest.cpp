@@ -146,7 +146,7 @@ CACollectionViewCell* EAutoCollectionViewVertical::collectionCellAtIndex(CAAutoC
     return Cell;
 }
 
-DSize EAutoCollectionViewVertical::collectionViewCellSizeAtIndexPathCallback(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+DSize EAutoCollectionViewVertical::collectionViewCellSizeAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
     return DSize(CCRANDOM_0_1() * 200 + 130, CCRANDOM_0_1() * 200 + 130);
 }
@@ -347,7 +347,7 @@ CACollectionViewCell* AutoCollectionViewVerticalTest::collectionCellAtIndex(CAAu
     
 }
 
-DSize AutoCollectionViewVerticalTest::collectionViewCellSizeAtIndexPathCallback(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+DSize AutoCollectionViewVerticalTest::collectionViewCellSizeAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
     return DSize(230, 230);
 }

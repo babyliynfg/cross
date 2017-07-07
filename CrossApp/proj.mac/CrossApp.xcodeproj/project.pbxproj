@@ -68,7 +68,6 @@
 		04EAB0B81956D75600198A8E /* CAImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0B51956D74D00198A8E /* CAImageCache.cpp */; };
 		04EAB0B91956D75600198A8E /* CAImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0B61956D74D00198A8E /* CAImageCache.h */; };
 		04EAB10A1956D75600198A8E /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1201956D74D00198A8E /* CCApplicationProtocol.h */; };
-		04EAB10B1956D75600198A8E /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1211956D74D00198A8E /* CAAccelerometerDelegate.h */; };
 		04EAB10C1956D75600198A8E /* CACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1221956D74D00198A8E /* CACommon.h */; };
 		04EAB1131956D75600198A8E /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA1291956D74D00198A8E /* CCPlatformConfig.h */; };
 		04EAB1141956D75600198A8E /* CCPlatformMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA12A1956D74D00198A8E /* CCPlatformMacros.h */; };
@@ -251,7 +250,6 @@
 		D66BCD511D3DC27700587C65 /* CGSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D66BCD4D1D3DC27700587C65 /* CGSpriteFrameCache.h */; };
 		D66F52A51ED7CE4500546E5E /* CAData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66F52A31ED7CE4500546E5E /* CAData.cpp */; };
 		D66F52A61ED7CE4500546E5E /* CAData.h in Headers */ = {isa = PBXBuildFile; fileRef = D66F52A41ED7CE4500546E5E /* CAData.h */; };
-		D673ABF21E52E2A0007E7A5B /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = D673AB891E52E2A0007E7A5B /* CAAccelerometer.h */; };
 		D673ABF31E52E2A0007E7A5B /* CAApplicationCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D673AB8A1E52E2A0007E7A5B /* CAApplicationCaller.h */; };
 		D673ABF41E52E2A0007E7A5B /* CAApplicationCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673AB8B1E52E2A0007E7A5B /* CAApplicationCaller.mm */; };
 		D673ABF51E52E2A0007E7A5B /* CAClipboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673AB8C1E52E2A0007E7A5B /* CAClipboard.mm */; };
@@ -492,7 +490,6 @@
 		04EAA0B51956D74D00198A8E /* CAImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAImageCache.cpp; sourceTree = "<group>"; };
 		04EAA0B61956D74D00198A8E /* CAImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImageCache.h; sourceTree = "<group>"; };
 		04EAA1201956D74D00198A8E /* CCApplicationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationProtocol.h; sourceTree = "<group>"; };
-		04EAA1211956D74D00198A8E /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
 		04EAA1221956D74D00198A8E /* CACommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACommon.h; sourceTree = "<group>"; };
 		04EAA1291956D74D00198A8E /* CCPlatformConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformConfig.h; sourceTree = "<group>"; };
 		04EAA12A1956D74D00198A8E /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
@@ -692,7 +689,6 @@
 		D66BCD4D1D3DC27700587C65 /* CGSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSpriteFrameCache.h; sourceTree = "<group>"; };
 		D66F52A31ED7CE4500546E5E /* CAData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAData.cpp; sourceTree = "<group>"; };
 		D66F52A41ED7CE4500546E5E /* CAData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAData.h; sourceTree = "<group>"; };
-		D673AB891E52E2A0007E7A5B /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
 		D673AB8A1E52E2A0007E7A5B /* CAApplicationCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplicationCaller.h; sourceTree = "<group>"; };
 		D673AB8B1E52E2A0007E7A5B /* CAApplicationCaller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAApplicationCaller.mm; sourceTree = "<group>"; };
 		D673AB8C1E52E2A0007E7A5B /* CAClipboard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAClipboard.mm; sourceTree = "<group>"; };
@@ -1121,7 +1117,6 @@
 				04EAA1771956D74D00198A8E /* platform.h */,
 				B01F64F71964FE2F005C14FC /* CADensityDpi.h */,
 				04EAA1201956D74D00198A8E /* CCApplicationProtocol.h */,
-				04EAA1211956D74D00198A8E /* CAAccelerometerDelegate.h */,
 				04EAA1221956D74D00198A8E /* CACommon.h */,
 				D65AFE891D3F6ED30067B290 /* CAFileUtils.cpp */,
 				D65AFE8A1D3F6ED30067B290 /* CAFileUtils.h */,
@@ -1520,7 +1515,6 @@
 			children = (
 				D69DA6911EE50BA300590961 /* CAFontProcesstor.mm */,
 				D6596E321E57048600A55CF9 /* CAAlertViewImpl.mm */,
-				D673AB891E52E2A0007E7A5B /* CAAccelerometer.h */,
 				D673AB8A1E52E2A0007E7A5B /* CAApplicationCaller.h */,
 				D673AB8B1E52E2A0007E7A5B /* CAApplicationCaller.mm */,
 				D673AB8C1E52E2A0007E7A5B /* CAClipboard.mm */,
@@ -1809,7 +1803,6 @@
 				D673ABFE1E52E2A0007E7A5B /* CCEGLView.h in Headers */,
 				D64A8C9A1D34912200F75021 /* CAPoint3D.h in Headers */,
 				B093DB421CBC8ADE00E98AD6 /* CALayout.h in Headers */,
-				D673ABF21E52E2A0007E7A5B /* CAAccelerometer.h in Headers */,
 				04EAB0AD1956D75600198A8E /* CAProtocols.h in Headers */,
 				D673ABFC1E52E2A0007E7A5B /* CCApplication.h in Headers */,
 				04EAB0AF1956D75600198A8E /* CATouch.h in Headers */,
@@ -1842,7 +1835,6 @@
 				D6596E2A1E57043900A55CF9 /* CAPointExtension.h in Headers */,
 				04EAB10A1956D75600198A8E /* CCApplicationProtocol.h in Headers */,
 				D6C72A121EEE748D0094B191 /* CAListView.h in Headers */,
-				04EAB10B1956D75600198A8E /* CAAccelerometerDelegate.h in Headers */,
 				04EAB10C1956D75600198A8E /* CACommon.h in Headers */,
 				E070BB011E5EE941000746FA /* CAMotionManager.h in Headers */,
 				B07E827B1C33E7F700A39C95 /* CATextView.h in Headers */,

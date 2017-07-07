@@ -41086,7 +41086,7 @@ bool js_crossapp_CAWebView_onFailLoadingCallback(JSContext *cx, uint32_t argc, j
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_onFailLoadingCallback : Error processing arguments");
-        cobj->onFailLoadingCallback(arg0);
+        cobj->onFailLoading(arg0);
         args.rval().setUndefined();
         return true;
     }
@@ -41327,7 +41327,7 @@ bool js_crossapp_CAWebView_onStartLoadingCallback(JSContext *cx, uint32_t argc, 
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_onStartLoadingCallback : Error processing arguments");
-        cobj->onStartLoadingCallback(arg0);
+        cobj->onStartLoading(arg0);
         args.rval().setUndefined();
         return true;
     }
@@ -41535,7 +41535,7 @@ bool js_crossapp_CAWebView_onFinishLoadingCallback(JSContext *cx, uint32_t argc,
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_onFinishLoadingCallback : Error processing arguments");
-        cobj->onFinishLoadingCallback(arg0);
+        cobj->onFinishLoading(arg0);
         args.rval().setUndefined();
         return true;
     }

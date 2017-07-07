@@ -521,7 +521,7 @@ CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCo
     return p_Cell;
 }
 
-DSize CDUIShowAutoCollectionView::collectionViewCellSizeAtIndexPathCallback(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+DSize CDUIShowAutoCollectionView::collectionViewCellSizeAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
     return DSize(230, 230);
 }
