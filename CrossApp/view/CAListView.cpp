@@ -326,9 +326,9 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Normal);
 			}
-            if (m_obDidDeselectCellAtIndexPathCallback)
+            if (m_obDidDeselectCellAtIndexPath)
             {
-                m_obDidDeselectCellAtIndexPathCallback(iSelectIndex);
+                m_obDidDeselectCellAtIndexPath(iSelectIndex);
             }
             else if (m_pListViewDelegate)
 			{
@@ -342,9 +342,9 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Selected);
 			}
-            if (m_obDidSelectCellAtIndexPathCallback)
+            if (m_obDidSelectCellAtIndexPath)
             {
-                m_obDidSelectCellAtIndexPathCallback(iSelectIndex);
+                m_obDidSelectCellAtIndexPath(iSelectIndex);
             }
 			else if (m_pListViewDelegate)
 			{
@@ -453,9 +453,9 @@ void CAListView::reloadViewSizeData()
     
     m_nIndexs = 0;
     
-    if (m_obNumberOfRowsAtIndexPathCallback)
+    if (m_obNumberOfRowsAtIndexPath)
     {
-        m_nIndexs = m_obNumberOfRowsAtIndexPathCallback();
+        m_nIndexs = m_obNumberOfRowsAtIndexPath();
     }
     else if (m_pListViewDataSource)
     {
@@ -468,9 +468,9 @@ void CAListView::reloadViewSizeData()
     {
         unsigned int cellHeight = 0;
         
-        if (m_obCellHeightAtIndexPathCallback)
+        if (m_obCellHeightAtIndexPath)
         {
-           cellHeight = m_obCellHeightAtIndexPathCallback(i);
+           cellHeight = m_obCellHeightAtIndexPath(i);
         }
         else if (m_pListViewDataSource)
         {
@@ -634,9 +634,9 @@ void CAListView::loadCell()
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
         CAListViewCell* cell = nullptr;
-        if (m_obCellAtIndexPathCallback)
+        if (m_obCellAtIndexPath)
         {
-            cell = m_obCellAtIndexPathCallback(cellRect.size, index);
+            cell = m_obCellAtIndexPath(cellRect.size, index);
         }
         else if (m_pListViewDataSource)
         {
@@ -658,9 +658,9 @@ void CAListView::loadCell()
 			cell->setControlState(CAControl::State::Selected);
 		}
         
-        if (m_obWillDisplayCellAtIndexPathCallback)
+        if (m_obWillDisplayCellAtIndexPath)
         {
-            m_obWillDisplayCellAtIndexPathCallback(cell, index);
+            m_obWillDisplayCellAtIndexPath(cell, index);
         }
         else if (m_pListViewDataSource)
         {

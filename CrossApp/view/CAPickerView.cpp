@@ -116,18 +116,18 @@ void CAPickerView::setContentSize(const DSize& size)
             if (CATableView* tableView = m_tableViews.at(i))
             {
                 int maxRow = 0;
-                if (m_obNumberOfRowsInComponentCallback)
+                if (m_obNumberOfRowsInComponent)
                 {
-                    maxRow = m_obNumberOfRowsInComponentCallback((unsigned int)i);
+                    maxRow = m_obNumberOfRowsInComponent((unsigned int)i);
                 }
                 else if (m_dataSource)
                 {
                     maxRow = m_dataSource->numberOfRowsInComponent(this, (unsigned int)i);
                 }
                 unsigned int rowHeight = 0;
-                if (m_obHeightForComponentCallback)
+                if (m_obHeightForComponent)
                 {
-                    rowHeight = m_obHeightForComponentCallback((unsigned int)i);
+                    rowHeight = m_obHeightForComponent((unsigned int)i);
                 }
                 else if (m_dataSource)
                 {
@@ -158,9 +158,9 @@ float CAPickerView::calcTotalWidth(unsigned int component)
     for (int i=0; i<component; i++)
     {
         unsigned int width = 0;
-        if (m_obWidthForComponentCallback)
+        if (m_obWidthForComponent)
         {
-            width = m_obWidthForComponentCallback(i);
+            width = m_obWidthForComponent(i);
         }
         else if (m_dataSource)
         {
@@ -186,9 +186,9 @@ void CAPickerView::reloadAllComponents()
     
     // reload data
     unsigned int component = 1;
-    if (m_obNumberOfComponentsCallback)
+    if (m_obNumberOfComponents)
     {
-        component = m_obNumberOfComponentsCallback();
+        component = m_obNumberOfComponents();
     }
     else if (m_dataSource)
     {
@@ -207,9 +207,9 @@ void CAPickerView::reloadAllComponents()
         m_componentOffsetX[i] = start_x;
     
         unsigned int rowHeight = 0;
-        if (m_obHeightForComponentCallback)
+        if (m_obHeightForComponent)
         {
-            rowHeight = m_obHeightForComponentCallback(i);
+            rowHeight = m_obHeightForComponent(i);
         }
         else if (m_dataSource)
         {
@@ -219,9 +219,9 @@ void CAPickerView::reloadAllComponents()
         m_displayRow[i] = m_obContentSize.height / rowHeight;
         unsigned int tableHeight = MAX(rowHeight, rowHeight * m_displayRow[i]) ;
         unsigned int tableWidth = 0;
-        if (m_obWidthForComponentCallback)
+        if (m_obWidthForComponent)
         {
-            tableWidth = m_obWidthForComponentCallback(i);
+            tableWidth = m_obWidthForComponent(i);
         }
         else if (m_dataSource)
         {
@@ -252,9 +252,9 @@ void CAPickerView::reloadAllComponents()
         DSize selectSize = DSize(tableWidth, rowHeight);
         
         CAView* selectedView = nullptr;
-        if (m_obViewForSelectedCallback)
+        if (m_obViewForSelected)
         {
-            selectedView = m_obViewForSelectedCallback(i, selectSize);
+            selectedView = m_obViewForSelected(i, selectSize);
         }
         else if (m_dataSource)
         {
@@ -290,9 +290,9 @@ void CAPickerView::reloadComponent(unsigned int _row,unsigned int component, boo
 {
     // reload component
     unsigned int row = 0;
-    if (m_obNumberOfRowsInComponentCallback)
+    if (m_obNumberOfRowsInComponent)
     {
-        row = m_obNumberOfRowsInComponentCallback(component);
+        row = m_obNumberOfRowsInComponent(component);
     }
     else if (m_dataSource)
     {
@@ -356,9 +356,9 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, DSize size)
     }
     
     CAView* view = nullptr;
-    if (m_obViewForRowCallback)
+    if (m_obViewForRow)
     {
-        view = m_obViewForRowCallback(index, component);
+        view = m_obViewForRow(index, component);
     }
     else if (m_dataSource)
     {
@@ -368,9 +368,9 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, DSize size)
     if (view == nullptr)
     {
         std::string title;
-        if (m_obTitleForRowCallback)
+        if (m_obTitleForRow)
         {
-            title = m_obTitleForRowCallback(row, component);
+            title = m_obTitleForRow(row, component);
         }
         else if (m_dataSource)
         {
@@ -429,9 +429,9 @@ unsigned int CAPickerView::tableViewHeightForRowAtIndexPath(CATableView* table, 
 {
     unsigned int component = (unsigned int)m_tableViews.getIndex(table);
     unsigned int rowHeight = 0;
-    if (m_obHeightForComponentCallback)
+    if (m_obHeightForComponent)
     {
-        rowHeight = m_obHeightForComponentCallback(component);
+        rowHeight = m_obHeightForComponent(component);
     }
     else if (m_dataSource)
     {
@@ -447,18 +447,18 @@ void CAPickerView::selectRow(unsigned int row, unsigned int component, bool anim
     if (tableView)
     {
         unsigned int maxRow = 0;
-        if (m_obNumberOfRowsInComponentCallback)
+        if (m_obNumberOfRowsInComponent)
         {
-            maxRow = m_obNumberOfRowsInComponentCallback(component);
+            maxRow = m_obNumberOfRowsInComponent(component);
         }
         else if (m_dataSource)
         {
             maxRow = m_dataSource->numberOfRowsInComponent(this, component);
         }
         unsigned int rowHeight = 0;
-        if (m_obHeightForComponentCallback)
+        if (m_obHeightForComponent)
         {
-            rowHeight = m_obHeightForComponentCallback(component);
+            rowHeight = m_obHeightForComponent(component);
         }
         else if (m_dataSource)
         {
@@ -505,9 +505,9 @@ void CAPickerView::visitEve()
         unsigned int component = (unsigned int)m_tableViews.getIndex(tableView);
         
         unsigned int row = 0;
-        if (m_obNumberOfRowsInComponentCallback)
+        if (m_obNumberOfRowsInComponent)
         {
-            row = m_obNumberOfRowsInComponentCallback(component);
+            row = m_obNumberOfRowsInComponent(component);
         }
         else if (m_dataSource)
         {
@@ -515,9 +515,9 @@ void CAPickerView::visitEve()
         }
         
         unsigned int rowHeight = 0;
-        if (m_obHeightForComponentCallback)
+        if (m_obHeightForComponent)
         {
-            rowHeight = m_obHeightForComponentCallback(i);
+            rowHeight = m_obHeightForComponent(i);
         }
         else if (m_dataSource)
         {
@@ -587,9 +587,9 @@ void CAPickerView::visitEve()
                 if (m_selected[component] != selected)
                 {
                     m_selected[component] = selected;
-                    if (m_obDidSelectRowCallback)
+                    if (m_obDidSelectRow)
                     {
-                        m_obDidSelectRowCallback(m_componentsIndex[component][m_selected[component]], component);
+                        m_obDidSelectRow(m_componentsIndex[component][m_selected[component]], component);
                     }
                     else if (m_delegate)
                     {

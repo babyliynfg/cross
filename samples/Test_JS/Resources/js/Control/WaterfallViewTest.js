@@ -25,14 +25,14 @@ var WaterfallViewTest = ca.CAViewController.extend({
         this.Waterfall.setColumnCount(2);
         this.Waterfall.setAllowsSelection(true);
 
-        this.Waterfall.setCellAtIndexPathCallback(this.waterfallCellAtIndex.bind(this)) ;
-        this.Waterfall.setCellHeightAtIndexPathCallback(this.waterfallViewHeightForItemAtIndex.bind(this));
-        this.Waterfall.setNumberOfItemsAtIndexPathCallback(this.numberOfItems.bind(this)) ;
-        this.Waterfall.setWillDisplayCellAtIndexPathCallback(this.waterfallViewWillDisplayCellAtIndex.bind(this)) ;
-        this.Waterfall.setDidSelectCellAtIndexPathCallback(this.waterfallViewDidSelectCellAtIndexPath.bind(this)) ;
-        this.Waterfall.setDidDeselectCellAtIndexPathCallback(this.waterfallViewDidDeselectCellAtIndexPath.bind(this)) ;
-        this.Waterfall.setHeaderBeginRefreshingCallback(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
-        this.Waterfall.setFooterBeginRefreshingCallback(this.scrollViewFooterBeginRefreshing.bind(this)) ;
+        this.Waterfall.onCellAtIndexPath(this.waterfallCellAtIndex.bind(this)) ;
+        this.Waterfall.onCellHeightAtIndexPath(this.waterfallViewHeightForItemAtIndex.bind(this));
+        this.Waterfall.onNumberOfItemsAtIndexPath(this.numberOfItems.bind(this)) ;
+        this.Waterfall.onWillDisplayCellAtIndexPath(this.waterfallViewWillDisplayCellAtIndex.bind(this)) ;
+        this.Waterfall.onDidSelectCellAtIndexPath(this.waterfallViewDidSelectCellAtIndexPath.bind(this)) ;
+        this.Waterfall.onDidDeselectCellAtIndexPath(this.waterfallViewDidDeselectCellAtIndexPath.bind(this)) ;
+        this.Waterfall.onHeaderBeginRefreshing(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
+        this.Waterfall.onFooterBeginRefreshing(this.scrollViewFooterBeginRefreshing.bind(this)) ;
 
 
 

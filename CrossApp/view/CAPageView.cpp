@@ -201,9 +201,9 @@ void CAPageView::setCurrPage(int var, bool animated, bool listener)
 
     if (m_nCurrPage != var && m_bListener)
     {
-        if (m_obBeginTurningCallback)
+        if (m_obBeginTurning)
         {
-            m_obBeginTurningCallback();
+            m_obBeginTurning();
         }
         else if (m_pPageViewDelegate)
         {
@@ -258,9 +258,9 @@ void CAPageView::contentOffsetFinish()
 {
     if (m_bListener && m_vTouches.empty())
     {
-        if (m_obEndTurningCallback)
+        if (m_obEndTurning)
         {
-            m_obEndTurningCallback();
+            m_obEndTurning();
         }
         else if (m_pPageViewDelegate)
         {
@@ -368,9 +368,9 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (!pTouch->isDelta())
     {
-        if (m_obDidSelectedPageAtIndexCallback)
+        if (m_obDidSelectedPageAtIndex)
         {
-            m_obDidSelectedPageAtIndexCallback(this->getCurrPage(), this->convertTouchToNodeSpace(pTouch));
+            m_obDidSelectedPageAtIndex(this->getCurrPage(), this->convertTouchToNodeSpace(pTouch));
         }
         else if (m_pPageViewDelegate)
         {

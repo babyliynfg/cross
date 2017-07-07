@@ -1,15 +1,14 @@
-//
-//  CAGyroscope.mm
-//  CrossApp
-//
-//  Created by 秦乐 on 2017/2/20.
-//  Copyright © 2017年 . All rights reserved.
-//
+
 
 #include "CAMotionManager.h"
 #include "basics/CAScheduler.h"
-
+#include "basics/CAApplication.h"
 NS_CC_BEGIN
+
+CAMotionManager* CAMotionManager::getInstance()
+{
+    return CAApplication::getApplication()->getMotionManager();
+}
 
 CAMotionManager::CAMotionManager()
 {

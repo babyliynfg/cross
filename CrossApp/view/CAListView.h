@@ -60,18 +60,18 @@ public:
 public:
 
     // event listeners. If these functions are set, the corresponding function of CAListViewDataSource will fail.
-    CC_LISTENING_FUNCTION(CAListViewCell*(DSize cellSize, unsigned int index), CellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(CAListViewCell*(DSize cellSize, unsigned int index), CellAtIndexPath);
 
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), CellHeightAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int index), CellHeightAtIndexPath);
 
-    CC_LISTENING_FUNCTION(unsigned int(), NumberOfRowsAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfRowsAtIndexPath);
         
-    CC_LISTENING_FUNCTION(void(CAListViewCell* cell, unsigned int index), WillDisplayCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(CAListViewCell* cell, unsigned int index), WillDisplayCellAtIndexPath);
 
     // event listeners. If these functions are set, the corresponding function of CAListViewDelegate will fail.
-    CC_LISTENING_FUNCTION(void(unsigned int index), DidSelectCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int index), DidSelectCellAtIndexPath);
 
-    CC_LISTENING_FUNCTION(void(unsigned int index), DidDeselectCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int index), DidDeselectCellAtIndexPath);
 
 public:
     

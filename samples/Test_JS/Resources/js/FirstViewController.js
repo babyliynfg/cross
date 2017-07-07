@@ -49,11 +49,11 @@ var FirstViewController = ca.CAViewController.extend({
 
         this.getView().addSubview(this._collectionView);
 
-        this._collectionView.setDidSelectCellAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this));
-        this._collectionView.setCellAtIndexPathCallback(this.collectionCellAtIndex.bind(this));
-        this._collectionView.setCellSizeAtIndexPathCallback(this.collectionViewSizeForItemAtIndexPath.bind(this));
-        this._collectionView.setNumberOfItemsAtIndexPathCallback(this.numberOfItemsInSection.bind(this));
-        this._collectionView.setNumberOfSectionsCallback(this.numberOfSections.bind(this));
+        this._collectionView.onDidSelectCellAtIndexPath(this.collectionViewDidSelectCellAtIndexPath.bind(this));
+        this._collectionView.onCellAtIndexPath(this.collectionCellAtIndex.bind(this));
+        this._collectionView.onCellSizeAtIndexPath(this.collectionViewSizeForItemAtIndexPath.bind(this));
+        this._collectionView.onNumberOfItemsAtIndexPath(this.numberOfItemsInSection.bind(this));
+        this._collectionView.onNumberOfSections(this.numberOfSections.bind(this));
 
     },
     collectionViewDidSelectCellAtIndexPath: function (section, item)

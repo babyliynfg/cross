@@ -42,11 +42,11 @@ public:
     
 public:
     // event listeners. If these functions are set, the corresponding function of CAPageViewDelegate will fail.
-    CC_LISTENING_FUNCTION(void(), BeginTurningCallback);
+    CC_LISTENING_FUNCTION(void(), BeginTurning);
         
-    CC_LISTENING_FUNCTION(void(), EndTurningCallback);
+    CC_LISTENING_FUNCTION(void(), EndTurning);
         
-    CC_LISTENING_FUNCTION(void(unsigned int, DPoint), DidSelectedPageAtIndexCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int, DPoint), DidSelectedPageAtIndex);
 
 public:
 

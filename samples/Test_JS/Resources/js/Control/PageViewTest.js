@@ -21,9 +21,9 @@ var PageViewTest = ca.CAViewController.extend({
         this._pageView.setViews(views);
         this.getView().addSubview(this._pageView);
 
-        this._pageView.setBeginTurningCallback(this.pageViewDidBeginTurning.bind(this)) ;
-        this._pageView.setEndTurningCallback(this.pageViewDidEndTurning.bind(this)) ;
-        this._pageView.setDidSelectedPageAtIndexCallback(this.pageViewDidSelectPageAtIndex.bind(this)) ;
+        this._pageView.onBeginTurning(this.pageViewDidBeginTurning.bind(this)) ;
+        this._pageView.onEndTurning(this.pageViewDidEndTurning.bind(this)) ;
+        this._pageView.onDidSelectedPageAtIndex(this.pageViewDidSelectPageAtIndex.bind(this)) ;
 
 
         this.pageControl = ca.CAPageControl.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(100, 0.5), ca.DVerticalLayout_T_H(30, 50)));

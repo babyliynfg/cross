@@ -426,9 +426,9 @@ void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, 
             break;
     }
     
-    if (m_obSelectRowCallback)
+    if (m_obSelectRow)
     {
-        m_obSelectRowCallback(m_tTM);
+        m_obSelectRow(m_tTM);
     }
 }
 

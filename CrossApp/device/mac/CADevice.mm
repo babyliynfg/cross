@@ -1,10 +1,4 @@
-//
-//  CADevice.cpp
-//  CrossApp
-//
-//  Created by 秦乐 on 2017/2/21.
-//  Copyright © 2017年 CrossApp. All rights reserved.
-//
+
 
 #include "CADevice.h"
 #import <Foundation/Foundation.h>

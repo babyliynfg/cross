@@ -18,29 +18,15 @@ var CollectionViewTest = ca.CAViewController.extend({
         this.p_Conllection = ca.CACollectionView.createWithLayout(ca.DLayoutFill);
         this.p_Conllection.setAllowsSelection(true);
 
-        //this.p_Conllection.setHeaderBeginRefreshingCallback(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
-        //this.p_Conllection.setFooterBeginRefreshingCallback(this.scrollViewFooterBeginRefreshing.bind(this)) ;
-        //
-        //this.p_Conllection.setDidSelectCellAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this));//<----
-        //this.p_Conllection.setDidDeselectCellAtIndexPathCallback(this.collectionViewDidDeselectCellAtIndexPath.bind(this));//<----
-        //this.p_Conllection.setCellAtIndexPathCallBack(this.collectionCellAtIndex.bind(this)) ;//<----
-        //
-        //this.p_Conllection.setNumberOfSectionsCallback(this.numberOfSections.bind(this)) ;
-        //this.p_Conllection.setNumberOfRowsInSectionCallback(this.numberOfRowsInSection.bind(this));
-        //this.p_Conllection.setNumberOfItemsInRowsInSectionCallback(this.numberOfItemsInRowsInSection.bind(this)) ;//<----
-        //this.p_Conllection.setHeightForRowAtIndexPathCallback(ths.collectionViewHeightForRowAtIndexPath.bind(this));
-
-
-
-        this.p_Conllection.setCellAtIndexPathCallback(this.collectionCellAtIndex.bind(this)) ;
-        this.p_Conllection.setCellHeightAtIndexPathCallback(this.collectionViewHeightForRowAtIndexPath.bind(this));
-        this.p_Conllection.setNumberOfItemsAtIndexPathCallback(this.numberOfItemsInRowsInSection.bind(this)) ;
-        this.p_Conllection.setNumberOfRowsAtIndexPathCallback(this.numberOfRowsInSection.bind(this));
-        this.p_Conllection.setNumberOfSectionsCallback(this.numberOfSections.bind(this)) ;
-        this.p_Conllection.setDidSelectCellAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this)) ;
-        this.p_Conllection.setDidDeselectCellAtIndexPathCallback(this.collectionViewDidDeselectCellAtIndexPath.bind(this)) ;
-        this.p_Conllection.setHeaderBeginRefreshingCallback(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
-        this.p_Conllection.setFooterBeginRefreshingCallback(this.scrollViewFooterBeginRefreshing.bind(this)) ;
+        this.p_Conllection.onCellAtIndexPath(this.collectionCellAtIndex.bind(this)) ;
+        this.p_Conllection.onCellHeightAtIndexPath(this.collectionViewHeightForRowAtIndexPath.bind(this));
+        this.p_Conllection.onNumberOfItemsAtIndexPath(this.numberOfItemsInRowsInSection.bind(this)) ;
+        this.p_Conllection.onNumberOfRowsAtIndexPath(this.numberOfRowsInSection.bind(this));
+        this.p_Conllection.onNumberOfSections(this.numberOfSections.bind(this)) ;
+        this.p_Conllection.onDidSelectCellAtIndexPath(this.collectionViewDidSelectCellAtIndexPath.bind(this)) ;
+        this.p_Conllection.onDidDeselectCellAtIndexPath(this.collectionViewDidDeselectCellAtIndexPath.bind(this)) ;
+        this.p_Conllection.onHeaderBeginRefreshing(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
+        this.p_Conllection.onFooterBeginRefreshing(this.scrollViewFooterBeginRefreshing.bind(this)) ;
 
 
 

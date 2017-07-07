@@ -330,9 +330,9 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Normal);
 			}
-            if (m_obDidDeselectCellAtIndexPathCallback)
+            if (m_obDidDeselectCellAtIndexPath)
             {
-                m_obDidDeselectCellAtIndexPathCallback(deselectedIndexPath.section, deselectedIndexPath.item);
+                m_obDidDeselectCellAtIndexPath(deselectedIndexPath.section, deselectedIndexPath.item);
             }
             else if (m_pCollectionViewDelegate)
 			{
@@ -346,9 +346,9 @@ void CAAutoCollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Selected);
 			}
-            if (m_obDidSelectCellAtIndexPathCallback)
+            if (m_obDidSelectCellAtIndexPath)
             {
-                m_obDidSelectCellAtIndexPathCallback(selectedIndexPath.section, selectedIndexPath.item);
+                m_obDidSelectCellAtIndexPath(selectedIndexPath.section, selectedIndexPath.item);
             }
 			else if (m_pCollectionViewDelegate)
 			{
@@ -489,9 +489,9 @@ void CAAutoCollectionView::reloadViewSizeData()
 	clearData();
 
     unsigned int nSections = 1;
-    if (m_obNumberOfSectionsCallback)
+    if (m_obNumberOfSections)
     {
-        nSections = m_obNumberOfSectionsCallback();
+        nSections = m_obNumberOfSections();
     }
     else if (m_pCollectionViewDataSource)
     {
@@ -504,9 +504,9 @@ void CAAutoCollectionView::reloadViewSizeData()
     {
 		CollectionViewSection& cvs = m_rCollectionViewSection[i];
         cvs.nSectionHeaderHeight = 0;
-        if (m_obHeightForHeaderInSectionCallback)
+        if (m_obHeightForHeaderInSection)
         {
-            cvs.nSectionHeaderHeight = m_obHeightForHeaderInSectionCallback(i);
+            cvs.nSectionHeaderHeight = m_obHeightForHeaderInSection(i);
         }
         else if (m_pCollectionViewDataSource)
         {
@@ -514,9 +514,9 @@ void CAAutoCollectionView::reloadViewSizeData()
         }
         
         cvs.nSectionFooterHeight = 0;
-        if (m_obHeightForFooterInSectionCallback)
+        if (m_obHeightForFooterInSection)
         {
-            cvs.nSectionFooterHeight = m_obHeightForFooterInSectionCallback(i);
+            cvs.nSectionFooterHeight = m_obHeightForFooterInSection(i);
         }
         else if (m_pCollectionViewDataSource)
         {
@@ -524,9 +524,9 @@ void CAAutoCollectionView::reloadViewSizeData()
         }
         
         unsigned int itemCount = 0;
-        if (m_obNumberOfItemsAtIndexPathCallback)
+        if (m_obNumberOfItemsAtIndexPath)
         {
-            itemCount = m_obNumberOfItemsAtIndexPathCallback(i);
+            itemCount = m_obNumberOfItemsAtIndexPath(i);
         }
         else if (m_pCollectionViewDataSource)
         {
@@ -535,13 +535,13 @@ void CAAutoCollectionView::reloadViewSizeData()
 		for (int j = 0; j < itemCount; j++)
 		{
             DSize rSize = DSizeZero;
-            if (m_obCellSizeAtIndexPathCallback)
+            if (m_obCellSizeAtIndexPath)
             {
-                rSize = m_obCellSizeAtIndexPathCallback(i, j);
+                rSize = m_obCellSizeAtIndexPath(i, j);
             }
             else if (m_pCollectionViewDataSource)
             {
-                rSize = m_pCollectionViewDataSource->collectionViewCellSizeAtIndexPathCallback(this, i, j);
+                rSize = m_pCollectionViewDataSource->collectionViewCellSizeAtIndexPath(this, i, j);
             }
             
 			if (!fillSectionRowData(r, rSize))
@@ -749,9 +749,9 @@ int CAAutoCollectionView::calculateAllRects()
 		if (iSectionHeaderHeight > 0)
 		{
             CAView* pSectionHeaderView = nullptr;
-            if (m_obSectionViewForHeaderInSectionCallback)
+            if (m_obSectionViewForHeaderInSection)
             {
-                pSectionHeaderView = m_obSectionViewForHeaderInSectionCallback(sectionHeaderRect.size, i);
+                pSectionHeaderView = m_obSectionViewForHeaderInSection(sectionHeaderRect.size, i);
             }
             else if (m_pCollectionViewDataSource)
             {
@@ -785,9 +785,9 @@ int CAAutoCollectionView::calculateAllRects()
 		if (iSectionFooterHeight > 0)
 		{
             CAView* pSectionFooterView = nullptr;
-            if (m_obSectionViewForFooterInSectionCallback)
+            if (m_obSectionViewForFooterInSection)
             {
-                pSectionFooterView = m_obSectionViewForFooterInSectionCallback(sectionHeaderRect.size, i);
+                pSectionFooterView = m_obSectionViewForFooterInSection(sectionHeaderRect.size, i);
             }
             else if (m_pCollectionViewDataSource)
             {
@@ -911,9 +911,9 @@ void CAAutoCollectionView::loadCollectionCell()
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
         CACollectionViewCell* cell = nullptr;
-        if (m_obCellAtIndexPathCallback)
+        if (m_obCellAtIndexPath)
         {
-            cell = m_obCellAtIndexPathCallback(cellRect.size, r.section, r.item);
+            cell = m_obCellAtIndexPath(cellRect.size, r.section, r.item);
         }
         else if (m_pCollectionViewDataSource)
         {
@@ -935,9 +935,9 @@ void CAAutoCollectionView::loadCollectionCell()
 				cell->setControlState(CAControl::State::Selected);
 			}
             
-            if (m_obWillDisplayCellAtIndexPathCallback)
+            if (m_obWillDisplayCellAtIndexPath)
             {
-                m_obWillDisplayCellAtIndexPathCallback(cell, r.section, r.item);
+                m_obWillDisplayCellAtIndexPath(cell, r.section, r.item);
             }
             else if (m_pCollectionViewDataSource)
             {

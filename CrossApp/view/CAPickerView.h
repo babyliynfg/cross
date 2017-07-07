@@ -45,22 +45,22 @@ class CC_DLL CAPickerView : public CAView, public CATableViewDataSource , public
 {
 public:
     // event listeners. If these functions are set, the corresponding function of CAPickerViewDataSource will fail.
-    CC_LISTENING_FUNCTION(unsigned int(), NumberOfComponentsCallback);
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfComponents);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), NumberOfRowsInComponentCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), NumberOfRowsInComponent);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), WidthForComponentCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), WidthForComponent);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), HeightForComponentCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int component), HeightForComponent);
     
-    CC_LISTENING_FUNCTION(std::string(unsigned int row, unsigned int component), TitleForRowCallback);
+    CC_LISTENING_FUNCTION(std::string(unsigned int row, unsigned int component), TitleForRow);
     
-    CC_LISTENING_FUNCTION(CAView*(unsigned int row, unsigned int component), ViewForRowCallback);
+    CC_LISTENING_FUNCTION(CAView*(unsigned int row, unsigned int component), ViewForRow);
     
-    CC_LISTENING_FUNCTION(CAView*(unsigned int component, DSize size), ViewForSelectedCallback);
+    CC_LISTENING_FUNCTION(CAView*(unsigned int component, DSize size), ViewForSelected);
     
     // event listeners. If these functions are set, the corresponding function of CAPickerViewDelegate will fail.
-    CC_LISTENING_FUNCTION(void(unsigned int row, unsigned int component), DidSelectRowCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int row, unsigned int component), DidSelectRow);
     
 public:
     

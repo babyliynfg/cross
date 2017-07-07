@@ -1,10 +1,3 @@
-//
-//  CAAddressBook.h
-//  CrossApp
-//
-//  Created by 秦乐 on 2017/2/21.
-//  Copyright © 2017年 CrossApp. All rights reserved.
-//
 
 #ifndef CAAddressBook_h
 #define CAAddressBook_h

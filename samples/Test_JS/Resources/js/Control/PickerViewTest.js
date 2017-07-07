@@ -50,12 +50,12 @@ var PickerViewTest = ca.CAViewController.extend({
         this.p_pickerView = ca.CAPickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(10, 10), ca.DVerticalLayout_T_H(200, 400)));
 
 
-        this.p_pickerView.setDidSelectRowCallback(this.didSelectRow.bind(this)) ;
-        this.p_pickerView.setNumberOfComponentsCallback(this.numberOfComponentsInPickerView.bind(this)) ;
-        this.p_pickerView.setNumberOfRowsInComponentCallback(this.numberOfRowsInComponent.bind(this)) ;
-        this.p_pickerView.setWidthForComponentCallback(this.widthForComponent.bind(this)) ;
-        this.p_pickerView.setHeightForComponentCallback(this.rowHeightForComponent.bind(this)) ;
-        this.p_pickerView.setTitleForRowCallback(this.titleForRow.bind(this)) ;
+        this.p_pickerView.onDidSelectRow(this.didSelectRow.bind(this)) ;
+        this.p_pickerView.onNumberOfComponents(this.numberOfComponentsInPickerView.bind(this)) ;
+        this.p_pickerView.onNumberOfRowsInComponent(this.numberOfRowsInComponent.bind(this)) ;
+        this.p_pickerView.onWidthForComponent(this.widthForComponent.bind(this)) ;
+        this.p_pickerView.onHeightForComponent(this.rowHeightForComponent.bind(this)) ;
+        this.p_pickerView.onTitleForRow(this.titleForRow.bind(this)) ;
 
 
         this.p_pickerView.setFontSizeNormal(40);

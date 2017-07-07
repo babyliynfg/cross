@@ -82,29 +82,29 @@ class CC_DLL CATableView: public CAScrollView
 public:
     
     // event listeners. If these functions are set, the corresponding function of CATableViewDataSource will fail.
-    CC_LISTENING_FUNCTION(CATableViewCell*(DSize cellSize, unsigned int section, unsigned int row), CellAtIndexPathCallBack);
+    CC_LISTENING_FUNCTION(CATableViewCell*(DSize cellSize, unsigned int section, unsigned int row), CellAtIndexPath);
 
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), CellHeightAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), CellHeightAtIndexPath);
 
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfRowsAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfRowsAtIndexPath);
     
-    CC_LISTENING_FUNCTION(unsigned int(), NumberOfSectionsCallback);
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfSections);
     
-    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForHeaderInSectionCallback);
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForHeaderInSection);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForHeaderInSectionCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForHeaderInSection);
     
-    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForFooterInSectionCallback);
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForFooterInSection);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForFooterInSectionCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForFooterInSection);
     
-    CC_LISTENING_FUNCTION(void(CATableViewCell* cell, unsigned int section, unsigned int row), WillDisplayCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(CATableViewCell* cell, unsigned int section, unsigned int row), WillDisplayCellAtIndexPath);
     
     // event listeners. If these functions are set, the corresponding function of CATableViewDelegate will fail.
     
-    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidSelectCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidSelectCellAtIndexPath);
     
-    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidDeselectCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row), DidDeselectCellAtIndexPath);
 
 public:
     

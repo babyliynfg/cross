@@ -19237,89 +19237,40 @@ bool js_crossapp_CAScrollView_isTracking(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CAScrollView_isTracking : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_isZooming(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_startDeaccelerateScroll(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isZooming : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_startDeaccelerateScroll : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->isZooming();
+        cobj->startDeaccelerateScroll();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScrollView_startDeaccelerateScroll : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAScrollView_isBounceVertical(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isBounceVertical : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isBounceVertical();
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isZooming : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScrollView_getHeaderRefreshView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_getHeaderRefreshView : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAPullToRefreshView* ret = cobj->getHeaderRefreshView();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAPullToRefreshView>(cx, (CrossApp::CAPullToRefreshView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_getHeaderRefreshView : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScrollView_setDidMovedCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setDidMovedCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setDidMovedCallback : Error processing arguments");
-        cobj->setDidMovedCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setDidMovedCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isBounceVertical : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_isShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19341,23 +19292,25 @@ bool js_crossapp_CAScrollView_isShowsScrollIndicators(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_crossapp_CAScrollView_isShowsScrollIndicators : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isShowsHorizontalScrollIndicator();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator : Error processing arguments");
+        cobj->setShowsHorizontalScrollIndicator(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_setTouchEnabledAtSubviews(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19381,6 +19334,36 @@ bool js_crossapp_CAScrollView_setTouchEnabledAtSubviews(JSContext *cx, uint32_t 
     JS_ReportError(cx, "js_crossapp_CAScrollView_setTouchEnabledAtSubviews : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAScrollView_getSubviewByTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_getSubviewByTag : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_getSubviewByTag : Error processing arguments");
+        CrossApp::CAView* ret = cobj->getSubviewByTag(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScrollView_getSubviewByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAScrollView_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -19400,75 +19383,23 @@ bool js_crossapp_CAScrollView_getZoomScale(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CAScrollView_getZoomScale : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_insertSubview(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_isDecelerating(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_insertSubview : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CAView* arg0 = nullptr;
-        int arg1 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_insertSubview : Error processing arguments");
-        cobj->insertSubview(arg0, arg1);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isDecelerating : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isDecelerating();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_insertSubview : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAScrollView_setDidZoomCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setDidZoomCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setDidZoomCallback : Error processing arguments");
-        cobj->setDidZoomCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setDidZoomCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isDecelerating : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_endFooterRefresh(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19488,23 +19419,46 @@ bool js_crossapp_CAScrollView_endFooterRefresh(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CAScrollView_endFooterRefresh : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_isBounceHorizontal(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_onTouchUpWithoutMoved(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isBounceHorizontal : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isBounceHorizontal();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onTouchUpWithoutMoved : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (CrossApp::DPoint)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DPoint larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = dpoint_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onTouchUpWithoutMoved : Error processing arguments");
+        cobj->onTouchUpWithoutMoved(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isBounceHorizontal : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onTouchUpWithoutMoved : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_setFooterRefreshView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19536,23 +19490,30 @@ bool js_crossapp_CAScrollView_setFooterRefreshView(JSContext *cx, uint32_t argc,
     JS_ReportError(cx, "js_crossapp_CAScrollView_setFooterRefreshView : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_isBounceVertical(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_getHeaderRefreshView(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isBounceVertical : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_getHeaderRefreshView : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->isBounceVertical();
+        CrossApp::CAPullToRefreshView* ret = cobj->getHeaderRefreshView();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAPullToRefreshView>(cx, (CrossApp::CAPullToRefreshView*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isBounceVertical : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_getHeaderRefreshView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_addSubview(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19626,46 +19587,6 @@ bool js_crossapp_CAScrollView_setContentOffset(JSContext *cx, uint32_t argc, jsv
     }
 
     JS_ReportError(cx, "js_crossapp_CAScrollView_setContentOffset : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAScrollView_setStopMovedCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setStopMovedCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setStopMovedCallback : Error processing arguments");
-        cobj->setStopMovedCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setStopMovedCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_init(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19790,21 +19711,84 @@ bool js_crossapp_CAScrollView_setHeaderRefreshView(JSContext *cx, uint32_t argc,
     JS_ReportError(cx, "js_crossapp_CAScrollView_setHeaderRefreshView : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_startDeaccelerateScroll(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_onDidEndDragging(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_startDeaccelerateScroll : Invalid Native Object");
-    if (argc == 0) {
-        cobj->startDeaccelerateScroll();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onDidEndDragging : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onDidEndDragging : Error processing arguments");
+        cobj->onDidEndDragging(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_startDeaccelerateScroll : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onDidEndDragging : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAScrollView_onHeaderBeginRefreshing(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onHeaderBeginRefreshing : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onHeaderBeginRefreshing : Error processing arguments");
+        cobj->onHeaderBeginRefreshing(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onHeaderBeginRefreshing : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_getScrollViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19894,7 +19878,7 @@ bool js_crossapp_CAScrollView_setViewSize(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CAScrollView_setViewSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_setWillBeginDraggingCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_insertSubview(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -19902,7 +19886,38 @@ bool js_crossapp_CAScrollView_setWillBeginDraggingCallback(JSContext *cx, uint32
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setWillBeginDraggingCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_insertSubview : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::CAView* arg0 = nullptr;
+        int arg1 = 0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_insertSubview : Error processing arguments");
+        cobj->insertSubview(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScrollView_insertSubview : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CAScrollView_onWillBeginDragging(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onWillBeginDragging : Invalid Native Object");
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
@@ -19925,13 +19940,13 @@ bool js_crossapp_CAScrollView_setWillBeginDraggingCallback(JSContext *cx, uint32
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setWillBeginDraggingCallback : Error processing arguments");
-        cobj->setWillBeginDraggingCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onWillBeginDragging : Error processing arguments");
+        cobj->onWillBeginDragging(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setWillBeginDraggingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onWillBeginDragging : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19976,7 +19991,7 @@ bool js_crossapp_CAScrollView_removeSubviewByTag(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAScrollView_removeSubviewByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_getSubviewByTag(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_onFooterBeginRefreshing(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -19984,26 +19999,36 @@ bool js_crossapp_CAScrollView_getSubviewByTag(JSContext *cx, uint32_t argc, jsva
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_getSubviewByTag : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onFooterBeginRefreshing : Invalid Native Object");
     if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_getSubviewByTag : Error processing arguments");
-        CrossApp::CAView* ret = cobj->getSubviewByTag(arg0);
-        jsval jsret = JSVAL_NULL;
+        std::function<void ()> arg0;
         do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onFooterBeginRefreshing : Error processing arguments");
+        cobj->onFooterBeginRefreshing(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_getSubviewByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onFooterBeginRefreshing : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_isBounces(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20141,44 +20166,23 @@ bool js_crossapp_CAScrollView_isReachBoundaryDown(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CAScrollView_isReachBoundaryDown : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_setFooterBeginRefreshingCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_isZooming(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setFooterBeginRefreshingCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setFooterBeginRefreshingCallback : Error processing arguments");
-        cobj->setFooterBeginRefreshingCallback(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isZooming : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isZooming();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setFooterBeginRefreshingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isZooming : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20210,7 +20214,7 @@ bool js_crossapp_CAScrollView_setBackgroundImage(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAScrollView_setBackgroundImage : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_setTouchUpWithoutMovedCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_onStopMoved(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -20218,49 +20222,7 @@ bool js_crossapp_CAScrollView_setTouchUpWithoutMovedCallback(JSContext *cx, uint
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setTouchUpWithoutMovedCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void (CrossApp::DPoint)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DPoint larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = dpoint_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setTouchUpWithoutMovedCallback : Error processing arguments");
-        cobj->setTouchUpWithoutMovedCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setTouchUpWithoutMovedCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScrollView_setHeaderBeginRefreshingCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setHeaderBeginRefreshingCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onStopMoved : Invalid Native Object");
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
@@ -20283,13 +20245,32 @@ bool js_crossapp_CAScrollView_setHeaderBeginRefreshingCallback(JSContext *cx, ui
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setHeaderBeginRefreshingCallback : Error processing arguments");
-        cobj->setHeaderBeginRefreshingCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onStopMoved : Error processing arguments");
+        cobj->onStopMoved(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setHeaderBeginRefreshingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onStopMoved : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isShowsHorizontalScrollIndicator();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20330,6 +20311,46 @@ bool js_crossapp_CAScrollView_isReachBoundaryUp(JSContext *cx, uint32_t argc, js
     }
 
     JS_ReportError(cx, "js_crossapp_CAScrollView_isReachBoundaryUp : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAScrollView_onDragging(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onDragging : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onDragging : Error processing arguments");
+        cobj->onDragging(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onDragging : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_isReachBoundaryLeft(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20377,27 +20398,6 @@ bool js_crossapp_CAScrollView_getFooterRefreshView(JSContext *cx, uint32_t argc,
     JS_ReportError(cx, "js_crossapp_CAScrollView_getFooterRefreshView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator : Error processing arguments");
-        cobj->setShowsHorizontalScrollIndicator(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAScrollView_stopDeaccelerateScroll(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -20415,7 +20415,7 @@ bool js_crossapp_CAScrollView_stopDeaccelerateScroll(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_crossapp_CAScrollView_stopDeaccelerateScroll : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_setDraggingCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_onDidMoved(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -20423,7 +20423,7 @@ bool js_crossapp_CAScrollView_setDraggingCallback(JSContext *cx, uint32_t argc, 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setDraggingCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onDidMoved : Invalid Native Object");
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
@@ -20446,32 +20446,13 @@ bool js_crossapp_CAScrollView_setDraggingCallback(JSContext *cx, uint32_t argc, 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setDraggingCallback : Error processing arguments");
-        cobj->setDraggingCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onDidMoved : Error processing arguments");
+        cobj->onDidMoved(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setDraggingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScrollView_isDecelerating(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isDecelerating : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isDecelerating();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isDecelerating : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onDidMoved : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_isTouchEnabledAtSubviews(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20493,26 +20474,7 @@ bool js_crossapp_CAScrollView_isTouchEnabledAtSubviews(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_crossapp_CAScrollView_isTouchEnabledAtSubviews : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_isReachBoundaryRight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isReachBoundaryRight : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isReachBoundaryRight();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isReachBoundaryRight : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScrollView_setDidEndDraggingCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_onDidZoom(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -20520,7 +20482,7 @@ bool js_crossapp_CAScrollView_setDidEndDraggingCallback(JSContext *cx, uint32_t 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setDidEndDraggingCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onDidZoom : Invalid Native Object");
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
@@ -20543,13 +20505,51 @@ bool js_crossapp_CAScrollView_setDidEndDraggingCallback(JSContext *cx, uint32_t 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setDidEndDraggingCallback : Error processing arguments");
-        cobj->setDidEndDraggingCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_onDidZoom : Error processing arguments");
+        cobj->onDidZoom(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setDidEndDraggingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_onDidZoom : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAScrollView_isReachBoundaryRight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isReachBoundaryRight : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isReachBoundaryRight();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isReachBoundaryRight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAScrollView_isBounceHorizontal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isBounceHorizontal : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isBounceHorizontal();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isBounceHorizontal : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_setMinimumZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20855,38 +20855,38 @@ void js_register_crossapp_CAScrollView(JSContext *cx, JS::HandleObject global) {
         JS_FN("setBounceVertical", js_crossapp_CAScrollView_setBounceVertical, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllSubviews", js_crossapp_CAScrollView_removeAllSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isTracking", js_crossapp_CAScrollView_isTracking, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isZooming", js_crossapp_CAScrollView_isZooming, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getHeaderRefreshView", js_crossapp_CAScrollView_getHeaderRefreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidMovedCallback", js_crossapp_CAScrollView_setDidMovedCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isShowsScrollIndicators", js_crossapp_CAScrollView_isShowsScrollIndicators, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isShowsHorizontalScrollIndicator", js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTouchEnabledAtSubviews", js_crossapp_CAScrollView_setTouchEnabledAtSubviews, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getZoomScale", js_crossapp_CAScrollView_getZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("insertSubview", js_crossapp_CAScrollView_insertSubview, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidZoomCallback", js_crossapp_CAScrollView_setDidZoomCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("endFooterRefresh", js_crossapp_CAScrollView_endFooterRefresh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isBounceHorizontal", js_crossapp_CAScrollView_isBounceHorizontal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setFooterRefreshView", js_crossapp_CAScrollView_setFooterRefreshView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("startDeaccelerateScroll", js_crossapp_CAScrollView_startDeaccelerateScroll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isBounceVertical", js_crossapp_CAScrollView_isBounceVertical, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isShowsScrollIndicators", js_crossapp_CAScrollView_isShowsScrollIndicators, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setShowsHorizontalScrollIndicator", js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTouchEnabledAtSubviews", js_crossapp_CAScrollView_setTouchEnabledAtSubviews, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getSubviewByTag", js_crossapp_CAScrollView_getSubviewByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getZoomScale", js_crossapp_CAScrollView_getZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isDecelerating", js_crossapp_CAScrollView_isDecelerating, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("endFooterRefresh", js_crossapp_CAScrollView_endFooterRefresh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onTouchUpWithoutMoved", js_crossapp_CAScrollView_onTouchUpWithoutMoved, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setFooterRefreshView", js_crossapp_CAScrollView_setFooterRefreshView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getHeaderRefreshView", js_crossapp_CAScrollView_getHeaderRefreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addSubview", js_crossapp_CAScrollView_addSubview, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsVerticalScrollIndicator", js_crossapp_CAScrollView_setShowsVerticalScrollIndicator, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setContentOffset", js_crossapp_CAScrollView_setContentOffset, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setStopMovedCallback", js_crossapp_CAScrollView_setStopMovedCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAScrollView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isShowsVerticalScrollIndicator", js_crossapp_CAScrollView_isShowsVerticalScrollIndicator, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("startPullToHeaderRefreshView", js_crossapp_CAScrollView_startPullToHeaderRefreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSubviews", js_crossapp_CAScrollView_getSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMultitouchGesture", js_crossapp_CAScrollView_getMultitouchGesture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setHeaderRefreshView", js_crossapp_CAScrollView_setHeaderRefreshView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("startDeaccelerateScroll", js_crossapp_CAScrollView_startDeaccelerateScroll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidEndDragging", js_crossapp_CAScrollView_onDidEndDragging, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHeaderBeginRefreshing", js_crossapp_CAScrollView_onHeaderBeginRefreshing, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScrollViewDelegate", js_crossapp_CAScrollView_getScrollViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBounces", js_crossapp_CAScrollView_setBounces, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentOffset", js_crossapp_CAScrollView_getContentOffset, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setViewSize", js_crossapp_CAScrollView_setViewSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWillBeginDraggingCallback", js_crossapp_CAScrollView_setWillBeginDraggingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("insertSubview", js_crossapp_CAScrollView_insertSubview, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onWillBeginDragging", js_crossapp_CAScrollView_onWillBeginDragging, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CAScrollView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeSubviewByTag", js_crossapp_CAScrollView_removeSubviewByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getSubviewByTag", js_crossapp_CAScrollView_getSubviewByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onFooterBeginRefreshing", js_crossapp_CAScrollView_onFooterBeginRefreshing, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isBounces", js_crossapp_CAScrollView_isBounces, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundColor", js_crossapp_CAScrollView_setBackgroundColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMaximumZoomScale", js_crossapp_CAScrollView_getMaximumZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -20894,21 +20894,21 @@ void js_register_crossapp_CAScrollView(JSContext *cx, JS::HandleObject global) {
         JS_FN("setMaximumZoomScale", js_crossapp_CAScrollView_setMaximumZoomScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAScrollView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isReachBoundaryDown", js_crossapp_CAScrollView_isReachBoundaryDown, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setFooterBeginRefreshingCallback", js_crossapp_CAScrollView_setFooterBeginRefreshingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isZooming", js_crossapp_CAScrollView_isZooming, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundImage", js_crossapp_CAScrollView_setBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTouchUpWithoutMovedCallback", js_crossapp_CAScrollView_setTouchUpWithoutMovedCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHeaderBeginRefreshingCallback", js_crossapp_CAScrollView_setHeaderBeginRefreshingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onStopMoved", js_crossapp_CAScrollView_onStopMoved, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isShowsHorizontalScrollIndicator", js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("switchPCMode", js_crossapp_CAScrollView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isReachBoundaryUp", js_crossapp_CAScrollView_isReachBoundaryUp, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDragging", js_crossapp_CAScrollView_onDragging, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isReachBoundaryLeft", js_crossapp_CAScrollView_isReachBoundaryLeft, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFooterRefreshView", js_crossapp_CAScrollView_getFooterRefreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setShowsHorizontalScrollIndicator", js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stopDeaccelerateScroll", js_crossapp_CAScrollView_stopDeaccelerateScroll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDraggingCallback", js_crossapp_CAScrollView_setDraggingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isDecelerating", js_crossapp_CAScrollView_isDecelerating, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidMoved", js_crossapp_CAScrollView_onDidMoved, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isTouchEnabledAtSubviews", js_crossapp_CAScrollView_isTouchEnabledAtSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidZoom", js_crossapp_CAScrollView_onDidZoom, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isReachBoundaryRight", js_crossapp_CAScrollView_isReachBoundaryRight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidEndDraggingCallback", js_crossapp_CAScrollView_setDidEndDraggingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isBounceHorizontal", js_crossapp_CAScrollView_isBounceHorizontal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMinimumZoomScale", js_crossapp_CAScrollView_setMinimumZoomScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("endHeaderRefresh", js_crossapp_CAScrollView_endHeaderRefresh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMinimumZoomScale", js_crossapp_CAScrollView_getMinimumZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -20978,7 +20978,7 @@ bool js_crossapp_CAPageView_setSpacing(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAPageView_setSpacing : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAPageView_setEndTurningCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAPageView_onEndTurning(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -20986,7 +20986,7 @@ bool js_crossapp_CAPageView_setEndTurningCallback(JSContext *cx, uint32_t argc, 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CAPageView* cobj = (CAPageView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_setEndTurningCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_onEndTurning : Invalid Native Object");
     if (argc == 1) {
         std::function<void ()> arg0;
         do {
@@ -21009,32 +21009,89 @@ bool js_crossapp_CAPageView_setEndTurningCallback(JSContext *cx, uint32_t argc, 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPageView_setEndTurningCallback : Error processing arguments");
-        cobj->setEndTurningCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPageView_onEndTurning : Error processing arguments");
+        cobj->onEndTurning(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAPageView_setEndTurningCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAPageView_onEndTurning : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAPageView_getPageCount(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAPageView_setViews(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    bool ok = true;
+    CAPageView* cobj = nullptr;
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (CAPageView *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_setViews : Invalid Native Object");
+    do {
+        if (argc == 1) {
+            CrossApp::CAVector<CrossApp::CAView *> arg0;
+            ok &= jsval_to_cavector(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setViews(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            CrossApp::CADeque<CrossApp::CAView *> arg0;
+            ok &= jsval_to_cadeque(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setViews(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_crossapp_CAPageView_setViews : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAPageView_onBeginTurning(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CAPageView* cobj = (CAPageView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_getPageCount : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getPageCount();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_onBeginTurning : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPageView_onBeginTurning : Error processing arguments");
+        cobj->onBeginTurning(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAPageView_getPageCount : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAPageView_onBeginTurning : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAPageView_getOrientation(JSContext *cx, uint32_t argc, jsval *vp)
@@ -21155,7 +21212,26 @@ bool js_crossapp_CAPageView_getPageViewDelegate(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAPageView_getPageViewDelegate : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAPageView_setDidSelectedPageAtIndexCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAPageView_getPageCount(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CAPageView* cobj = (CAPageView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_getPageCount : Invalid Native Object");
+    if (argc == 0) {
+        uint32_t ret = cobj->getPageCount();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAPageView_getPageCount : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAPageView_onDidSelectedPageAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -21163,7 +21239,7 @@ bool js_crossapp_CAPageView_setDidSelectedPageAtIndexCallback(JSContext *cx, uin
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CAPageView* cobj = (CAPageView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_setDidSelectedPageAtIndexCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_onDidSelectedPageAtIndex : Invalid Native Object");
     if (argc == 1) {
         std::function<void (unsigned int, CrossApp::DPoint)> arg0;
         do {
@@ -21189,53 +21265,13 @@ bool js_crossapp_CAPageView_setDidSelectedPageAtIndexCallback(JSContext *cx, uin
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPageView_setDidSelectedPageAtIndexCallback : Error processing arguments");
-        cobj->setDidSelectedPageAtIndexCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPageView_onDidSelectedPageAtIndex : Error processing arguments");
+        cobj->onDidSelectedPageAtIndex(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAPageView_setDidSelectedPageAtIndexCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAPageView_setBeginTurningCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CAPageView* cobj = (CAPageView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_setBeginTurningCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPageView_setBeginTurningCallback : Error processing arguments");
-        cobj->setBeginTurningCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPageView_setBeginTurningCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAPageView_onDidSelectedPageAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAPageView_getSubViewAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -21266,42 +21302,6 @@ bool js_crossapp_CAPageView_getSubViewAtIndex(JSContext *cx, uint32_t argc, jsva
     }
 
     JS_ReportError(cx, "js_crossapp_CAPageView_getSubViewAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAPageView_setViews(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    bool ok = true;
-    CAPageView* cobj = nullptr;
-
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (CAPageView *)(proxy ? proxy->ptr : nullptr);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPageView_setViews : Invalid Native Object");
-    do {
-        if (argc == 1) {
-            CrossApp::CAVector<CrossApp::CAView *> arg0;
-            ok &= jsval_to_cavector(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            cobj->setViews(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    do {
-        if (argc == 1) {
-            CrossApp::CADeque<CrossApp::CAView *> arg0;
-            ok &= jsval_to_cadeque(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            cobj->setViews(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_crossapp_CAPageView_setViews : wrong number of arguments");
     return false;
 }
 bool js_crossapp_CAPageView_createWithFrame(JSContext *cx, uint32_t argc, jsval *vp)
@@ -21448,17 +21448,17 @@ void js_register_crossapp_CAPageView(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setSpacing", js_crossapp_CAPageView_setSpacing, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setEndTurningCallback", js_crossapp_CAPageView_setEndTurningCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getPageCount", js_crossapp_CAPageView_getPageCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onEndTurning", js_crossapp_CAPageView_onEndTurning, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setViews", js_crossapp_CAPageView_setViews, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onBeginTurning", js_crossapp_CAPageView_onBeginTurning, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOrientation", js_crossapp_CAPageView_getOrientation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSpacing", js_crossapp_CAPageView_getSpacing, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCurrPage", js_crossapp_CAPageView_getCurrPage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCurrPage", js_crossapp_CAPageView_setCurrPage, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPageViewDelegate", js_crossapp_CAPageView_getPageViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidSelectedPageAtIndexCallback", js_crossapp_CAPageView_setDidSelectedPageAtIndexCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBeginTurningCallback", js_crossapp_CAPageView_setBeginTurningCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPageCount", js_crossapp_CAPageView_getPageCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidSelectedPageAtIndex", js_crossapp_CAPageView_onDidSelectedPageAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSubViewAtIndex", js_crossapp_CAPageView_getSubViewAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setViews", js_crossapp_CAPageView_setViews, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -31530,6 +31530,156 @@ bool js_crossapp_CACell_getContentView(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CACell_getContentView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CACell_getViewWithID(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_getViewWithID : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_getViewWithID : Error processing arguments");
+        CrossApp::CAView* ret = cobj->getViewWithID(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_getViewWithID : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACell_onSelectedState(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_onSelectedState : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_onSelectedState : Error processing arguments");
+        cobj->onSelectedState(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_onSelectedState : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACell_onNormalState(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_onNormalState : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_onNormalState : Error processing arguments");
+        cobj->onNormalState(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_onNormalState : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACell_initWithReuseIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_initWithReuseIdentifier : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_initWithReuseIdentifier : Error processing arguments");
+        bool ret = cobj->initWithReuseIdentifier(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_initWithReuseIdentifier : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACell_setControlStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateSelected : Invalid Native Object");
+    if (argc == 0) {
+        cobj->setControlStateSelected();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_setControlStateSelected : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CACell_setReuseIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -31570,6 +31720,234 @@ bool js_crossapp_CACell_isAllowsSelected(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CACell_isAllowsSelected : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CACell_isControlStateEffect(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_isControlStateEffect : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isControlStateEffect();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_isControlStateEffect : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACell_setControlStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateNormal : Invalid Native Object");
+    if (argc == 0) {
+        cobj->setControlStateNormal();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_setControlStateNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACell_setBackgroundView(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setBackgroundView : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAView* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_setBackgroundView : Error processing arguments");
+        cobj->setBackgroundView(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_setBackgroundView : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACell_onHighlightedState(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_onHighlightedState : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_onHighlightedState : Error processing arguments");
+        cobj->onHighlightedState(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_onHighlightedState : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACell_setControlStateHighlighted(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateHighlighted : Invalid Native Object");
+    if (argc == 0) {
+        cobj->setControlStateHighlighted();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_setControlStateHighlighted : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACell_onRecovery(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_onRecovery : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_onRecovery : Error processing arguments");
+        cobj->onRecovery(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_onRecovery : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACell_onDsabledState(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_onDsabledState : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_onDsabledState : Error processing arguments");
+        cobj->onDsabledState(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_onDsabledState : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACell_getBackgroundView(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_getBackgroundView : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAView* ret = cobj->getBackgroundView();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_getBackgroundView : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CACell_getReuseIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -31589,42 +31967,23 @@ bool js_crossapp_CACell_getReuseIdentifier(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CACell_getReuseIdentifier : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CACell_setAllowsSelected(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setAllowsSelected : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_setAllowsSelected : Error processing arguments");
-        cobj->setAllowsSelected(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_setAllowsSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACell_setControlStateHighlighted(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACell_getControlState(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateHighlighted : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_getControlState : Invalid Native Object");
     if (argc == 0) {
-        cobj->setControlStateHighlighted();
-        args.rval().setUndefined();
+        int ret = (int)cobj->getControlState();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACell_setControlStateHighlighted : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CACell_getControlState : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CACell_setControlStateEffect(JSContext *cx, uint32_t argc, jsval *vp)
@@ -31669,52 +32028,7 @@ bool js_crossapp_CACell_setControlState(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CACell_setControlState : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACell_getBackgroundView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_getBackgroundView : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAView* ret = cobj->getBackgroundView();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_getBackgroundView : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACell_getControlState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_getControlState : Invalid Native Object");
-    if (argc == 0) {
-        int ret = (int)cobj->getControlState();
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_getControlState : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACell_getViewWithID(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACell_setAllowsSelected(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -31722,102 +32036,17 @@ bool js_crossapp_CACell_getViewWithID(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_getViewWithID : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setAllowsSelected : Invalid Native Object");
     if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_getViewWithID : Error processing arguments");
-        CrossApp::CAView* ret = cobj->getViewWithID(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_getViewWithID : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACell_isControlStateEffect(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_isControlStateEffect : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isControlStateEffect();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_isControlStateEffect : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACell_setControlStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateNormal : Invalid Native Object");
-    if (argc == 0) {
-        cobj->setControlStateNormal();
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_setAllowsSelected : Error processing arguments");
+        cobj->setAllowsSelected(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACell_setControlStateNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACell_setControlStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateSelected : Invalid Native Object");
-    if (argc == 0) {
-        cobj->setControlStateSelected();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_setControlStateSelected : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACell_initWithReuseIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_initWithReuseIdentifier : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_initWithReuseIdentifier : Error processing arguments");
-        bool ret = cobj->initWithReuseIdentifier(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_initWithReuseIdentifier : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CACell_setAllowsSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACell_setControlStateDisabled(JSContext *cx, uint32_t argc, jsval *vp)
@@ -31835,35 +32064,6 @@ bool js_crossapp_CACell_setControlStateDisabled(JSContext *cx, uint32_t argc, js
     }
 
     JS_ReportError(cx, "js_crossapp_CACell_setControlStateDisabled : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACell_setBackgroundView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setBackgroundView : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAView* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_setBackgroundView : Error processing arguments");
-        cobj->setBackgroundView(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_setBackgroundView : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACell_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -31967,22 +32167,27 @@ void js_register_crossapp_CACell(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("getContentView", js_crossapp_CACell_getContentView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getViewWithID", js_crossapp_CACell_getViewWithID, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onSelectedState", js_crossapp_CACell_onSelectedState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNormalState", js_crossapp_CACell_onNormalState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithReuseIdentifier", js_crossapp_CACell_initWithReuseIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setControlStateSelected", js_crossapp_CACell_setControlStateSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setReuseIdentifier", js_crossapp_CACell_setReuseIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsSelected", js_crossapp_CACell_isAllowsSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getReuseIdentifier", js_crossapp_CACell_getReuseIdentifier, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAllowsSelected", js_crossapp_CACell_setAllowsSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setControlStateHighlighted", js_crossapp_CACell_setControlStateHighlighted, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setControlStateEffect", js_crossapp_CACell_setControlStateEffect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setControlState", js_crossapp_CACell_setControlState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBackgroundView", js_crossapp_CACell_getBackgroundView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getControlState", js_crossapp_CACell_getControlState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getViewWithID", js_crossapp_CACell_getViewWithID, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isControlStateEffect", js_crossapp_CACell_isControlStateEffect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setControlStateNormal", js_crossapp_CACell_setControlStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setControlStateSelected", js_crossapp_CACell_setControlStateSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initWithReuseIdentifier", js_crossapp_CACell_initWithReuseIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setControlStateDisabled", js_crossapp_CACell_setControlStateDisabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundView", js_crossapp_CACell_setBackgroundView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHighlightedState", js_crossapp_CACell_onHighlightedState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setControlStateHighlighted", js_crossapp_CACell_setControlStateHighlighted, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onRecovery", js_crossapp_CACell_onRecovery, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDsabledState", js_crossapp_CACell_onDsabledState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBackgroundView", js_crossapp_CACell_getBackgroundView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getReuseIdentifier", js_crossapp_CACell_getReuseIdentifier, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getControlState", js_crossapp_CACell_getControlState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setControlStateEffect", js_crossapp_CACell_setControlStateEffect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setControlState", js_crossapp_CACell_setControlState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAllowsSelected", js_crossapp_CACell_setAllowsSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setControlStateDisabled", js_crossapp_CACell_setControlStateDisabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_crossapp_CACell_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -32082,49 +32287,6 @@ bool js_crossapp_CAListView_setListFooterHeight(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAListView_setListFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAListView_setNumberOfRowsAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_setNumberOfRowsAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_setNumberOfRowsAtIndexPathCallback : Error processing arguments");
-        cobj->setNumberOfRowsAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAListView_setNumberOfRowsAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAListView_setSeparatorColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -32210,6 +32372,48 @@ bool js_crossapp_CAListView_getSeparatorViewHeight(JSContext *cx, uint32_t argc,
     }
 
     JS_ReportError(cx, "js_crossapp_CAListView_getSeparatorViewHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAListView_onDidSelectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_onDidSelectCellAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_onDidSelectCellAtIndexPath : Error processing arguments");
+        cobj->onDidSelectCellAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAListView_onDidSelectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAListView_init(JSContext *cx, uint32_t argc, jsval *vp)
@@ -32402,51 +32606,6 @@ bool js_crossapp_CAListView_setListHeaderView(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_crossapp_CAListView_setListHeaderView : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAListView_setCellHeightAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_setCellHeightAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_setCellHeightAtIndexPathCallback : Error processing arguments");
-        cobj->setCellHeightAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAListView_setCellHeightAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAListView_getListFooterHeight(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -32464,6 +32623,60 @@ bool js_crossapp_CAListView_getListFooterHeight(JSContext *cx, uint32_t argc, js
     }
 
     JS_ReportError(cx, "js_crossapp_CAListView_getListFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAListView_onCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_onCellAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAListViewCell *(CrossApp::DSize, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAListViewCell* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAListViewCell* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAListViewCell*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_onCellAtIndexPath : Error processing arguments");
+        cobj->onCellAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAListView_onCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAListView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp)
@@ -32508,7 +32721,7 @@ bool js_crossapp_CAListView_setListHeaderHeight(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAListView_setListHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAListView_setWillDisplayCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAListView_onWillDisplayCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -32516,7 +32729,7 @@ bool js_crossapp_CAListView_setWillDisplayCellAtIndexPathCallback(JSContext *cx,
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_setWillDisplayCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_onWillDisplayCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
         std::function<void (CrossApp::CAListViewCell *, unsigned int)> arg0;
         do {
@@ -32549,13 +32762,13 @@ bool js_crossapp_CAListView_setWillDisplayCellAtIndexPathCallback(JSContext *cx,
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_setWillDisplayCellAtIndexPathCallback : Error processing arguments");
-        cobj->setWillDisplayCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_onWillDisplayCellAtIndexPath : Error processing arguments");
+        cobj->onWillDisplayCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAListView_setWillDisplayCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAListView_onWillDisplayCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAListView_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
@@ -32575,33 +32788,7 @@ bool js_crossapp_CAListView_onExitTransitionDidStart(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_crossapp_CAListView_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAListView_getListHeaderView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_getListHeaderView : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAView* ret = cobj->getListHeaderView();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAListView_getListHeaderView : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAListView_setDidSelectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAListView_onNumberOfRowsAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -32609,22 +32796,23 @@ bool js_crossapp_CAListView_setDidSelectCellAtIndexPathCallback(JSContext *cx, u
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_setDidSelectCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_onNumberOfRowsAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        std::function<void (unsigned int)> arg0;
+        std::function<unsigned int ()> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> void {
+		        auto lambda = [=, &ok]() -> unsigned int {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            bool succeed = func->invoke(0, nullptr, &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
 		        };
 		        arg0 = lambda;
 		    }
@@ -32634,13 +32822,32 @@ bool js_crossapp_CAListView_setDidSelectCellAtIndexPathCallback(JSContext *cx, u
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_setDidSelectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidSelectCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_onNumberOfRowsAtIndexPath : Error processing arguments");
+        cobj->onNumberOfRowsAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAListView_setDidSelectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAListView_onNumberOfRowsAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAListView_getListHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_getListHeaderHeight : Invalid Native Object");
+    if (argc == 0) {
+        uint32_t ret = cobj->getListHeaderHeight();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAListView_getListHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAListView_setSeparatorViewHeight(JSContext *cx, uint32_t argc, jsval *vp)
@@ -32685,26 +32892,7 @@ bool js_crossapp_CAListView_setOrientation(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CAListView_setOrientation : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAListView_getListHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_getListHeaderHeight : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getListHeaderHeight();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAListView_getListHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAListView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAListView_onCellHeightAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -32712,17 +32900,41 @@ bool js_crossapp_CAListView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_switchPCMode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_onCellHeightAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_switchPCMode : Error processing arguments");
-        cobj->switchPCMode(arg0);
+        std::function<unsigned int (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_onCellHeightAtIndexPath : Error processing arguments");
+        cobj->onCellHeightAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAListView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAListView_onCellHeightAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAListView_setListFooterView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -32752,6 +32964,48 @@ bool js_crossapp_CAListView_setListFooterView(JSContext *cx, uint32_t argc, jsva
     }
 
     JS_ReportError(cx, "js_crossapp_CAListView_setListFooterView : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAListView_onDidDeselectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_onDidDeselectCellAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_onDidDeselectCellAtIndexPath : Error processing arguments");
+        cobj->onDidDeselectCellAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAListView_onDidDeselectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAListView_getListFooterView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -32810,7 +33064,7 @@ bool js_crossapp_CAListView_cellForRowAtIndex(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_crossapp_CAListView_cellForRowAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAListView_setDidDeselectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAListView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -32818,92 +33072,17 @@ bool js_crossapp_CAListView_setDidDeselectCellAtIndexPathCallback(JSContext *cx,
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_setDidDeselectCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_switchPCMode : Invalid Native Object");
     if (argc == 1) {
-        std::function<void (unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_setDidDeselectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidDeselectCellAtIndexPathCallback(arg0);
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_switchPCMode : Error processing arguments");
+        cobj->switchPCMode(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAListView_setDidDeselectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAListView_setCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_setCellAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CAListViewCell *(CrossApp::DSize, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAListViewCell* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = dsize_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CAListViewCell* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAListViewCell*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAListView_setCellAtIndexPathCallback : Error processing arguments");
-        cobj->setCellAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAListView_setCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAListView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAListView_setUnSelectAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -32972,6 +33151,32 @@ bool js_crossapp_CAListView_onEnterTransitionDidFinish(JSContext *cx, uint32_t a
     }
 
     JS_ReportError(cx, "js_crossapp_CAListView_onEnterTransitionDidFinish : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAListView_getListHeaderView(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_getListHeaderView : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAView* ret = cobj->getListHeaderView();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAListView_getListHeaderView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAListView_createWithFrame(JSContext *cx, uint32_t argc, jsval *vp)
@@ -33111,11 +33316,11 @@ void js_register_crossapp_CAListView(JSContext *cx, JS::HandleObject global) {
         JS_FN("isAllowsSelection", js_crossapp_CAListView_isAllowsSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOrientation", js_crossapp_CAListView_getOrientation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setListFooterHeight", js_crossapp_CAListView_setListFooterHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfRowsAtIndexPathCallback", js_crossapp_CAListView_setNumberOfRowsAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparatorColor", js_crossapp_CAListView_setSeparatorColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getListViewDelegate", js_crossapp_CAListView_getListViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSelectAtIndex", js_crossapp_CAListView_setSelectAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSeparatorViewHeight", js_crossapp_CAListView_getSeparatorViewHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidSelectCellAtIndexPath", js_crossapp_CAListView_onDidSelectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAListView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getListViewDataSource", js_crossapp_CAListView_getListViewDataSource, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSeparatorColor", js_crossapp_CAListView_getSeparatorColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -33125,26 +33330,26 @@ void js_register_crossapp_CAListView(JSContext *cx, JS::HandleObject global) {
         JS_FN("isAllowsMultipleSelection", js_crossapp_CAListView_isAllowsMultipleSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("displayingListCell", js_crossapp_CAListView_displayingListCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setListHeaderView", js_crossapp_CAListView_setListHeaderView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellHeightAtIndexPathCallback", js_crossapp_CAListView_setCellHeightAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getListFooterHeight", js_crossapp_CAListView_getListFooterHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellAtIndexPath", js_crossapp_CAListView_onCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CAListView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setListHeaderHeight", js_crossapp_CAListView_setListHeaderHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWillDisplayCellAtIndexPathCallback", js_crossapp_CAListView_setWillDisplayCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onWillDisplayCellAtIndexPath", js_crossapp_CAListView_onWillDisplayCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAListView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getListHeaderView", js_crossapp_CAListView_getListHeaderView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidSelectCellAtIndexPathCallback", js_crossapp_CAListView_setDidSelectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfRowsAtIndexPath", js_crossapp_CAListView_onNumberOfRowsAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getListHeaderHeight", js_crossapp_CAListView_getListHeaderHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparatorViewHeight", js_crossapp_CAListView_setSeparatorViewHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOrientation", js_crossapp_CAListView_setOrientation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getListHeaderHeight", js_crossapp_CAListView_getListHeaderHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("switchPCMode", js_crossapp_CAListView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellHeightAtIndexPath", js_crossapp_CAListView_onCellHeightAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setListFooterView", js_crossapp_CAListView_setListFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidDeselectCellAtIndexPath", js_crossapp_CAListView_onDidDeselectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getListFooterView", js_crossapp_CAListView_getListFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("cellForRowAtIndex", js_crossapp_CAListView_cellForRowAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidDeselectCellAtIndexPathCallback", js_crossapp_CAListView_setDidDeselectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellAtIndexPathCallback", js_crossapp_CAListView_setCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("switchPCMode", js_crossapp_CAListView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUnSelectAtIndex", js_crossapp_CAListView_setUnSelectAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("dequeueReusableCellWithIdentifier", js_crossapp_CAListView_dequeueReusableCellWithIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CAListView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getListHeaderView", js_crossapp_CAListView_getListHeaderView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -33374,7 +33579,7 @@ bool js_crossapp_CATableView_isAllowsSelection(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CATableView_isAllowsSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CATableView_setNumberOfSectionsCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_onHeightForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -33382,50 +33587,7 @@ bool js_crossapp_CATableView_setNumberOfSectionsCallback(JSContext *cx, uint32_t
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setNumberOfSectionsCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setNumberOfSectionsCallback : Error processing arguments");
-        cobj->setNumberOfSectionsCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATableView_setNumberOfSectionsCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CATableView_setHeightForHeaderInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setHeightForHeaderInSectionCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onHeightForHeaderInSection : Invalid Native Object");
     if (argc == 1) {
         std::function<unsigned int (unsigned int)> arg0;
         do {
@@ -33453,16 +33615,16 @@ bool js_crossapp_CATableView_setHeightForHeaderInSectionCallback(JSContext *cx, 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setHeightForHeaderInSectionCallback : Error processing arguments");
-        cobj->setHeightForHeaderInSectionCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onHeightForHeaderInSection : Error processing arguments");
+        cobj->onHeightForHeaderInSection(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_setHeightForHeaderInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_onHeightForHeaderInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATableView_setSectionViewForFooterInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_setTableHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -33470,50 +33632,36 @@ bool js_crossapp_CATableView_setSectionViewForFooterInSectionCallback(JSContext 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setSectionViewForFooterInSectionCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setTableHeaderHeight : Invalid Native Object");
     if (argc == 1) {
-        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = dsize_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CAView* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setSectionViewForFooterInSectionCallback : Error processing arguments");
-        cobj->setSectionViewForFooterInSectionCallback(arg0);
+        uint32_t arg0 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setTableHeaderHeight : Error processing arguments");
+        cobj->setTableHeaderHeight(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_setSectionViewForFooterInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_setTableHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CATableView_isAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_isAlwaysBottomSectionFooter : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAlwaysBottomSectionFooter();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_isAlwaysBottomSectionFooter : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CATableView_getSectionFooterHeightInSection(JSContext *cx, uint32_t argc, jsval *vp)
@@ -33537,51 +33685,6 @@ bool js_crossapp_CATableView_getSectionFooterHeightInSection(JSContext *cx, uint
     }
 
     JS_ReportError(cx, "js_crossapp_CATableView_getSectionFooterHeightInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CATableView_setNumberOfRowsAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setNumberOfRowsAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setNumberOfRowsAtIndexPathCallback : Error processing arguments");
-        cobj->setNumberOfRowsAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATableView_setNumberOfRowsAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_setSeparatorColor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -33626,7 +33729,7 @@ bool js_crossapp_CATableView_setTableFooterHeight(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CATableView_setTableFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATableView_setTableHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_onSectionViewForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -33634,53 +33737,31 @@ bool js_crossapp_CATableView_setTableHeaderHeight(JSContext *cx, uint32_t argc, 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setTableHeaderHeight : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onSectionViewForFooterInSection : Invalid Native Object");
     if (argc == 1) {
-        uint32_t arg0 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setTableHeaderHeight : Error processing arguments");
-        cobj->setTableHeaderHeight(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATableView_setTableHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CATableView_setCellAtIndexPathCallBack(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setCellAtIndexPathCallBack : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CATableViewCell *(CrossApp::DSize, unsigned int, unsigned int)> arg0;
+        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1, unsigned int larg2) -> CATableViewCell* {
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[3];
+		            jsval largv[2];
 		            largv[0] = dsize_to_jsval(cx, larg0);
 		            largv[1] = uint32_to_jsval(cx, larg1);
-		            largv[2] = uint32_to_jsval(cx, larg2);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(3, &largv[0], &rval);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
-		            CrossApp::CATableViewCell* ret;
+		            CrossApp::CAView* ret;
 		            do {
 		            if (rval.isNull()) { ret = nullptr; break; }
 		            if (!rval.isObject()) { ok = false; break; }
 		            js_proxy_t *jsProxy;
 		            JSObject *tmpObj = rval.toObjectOrNull();
 		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CATableViewCell*)(jsProxy ? jsProxy->ptr : NULL);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
 		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
 		        } while (0);
 		            return ret;
@@ -33693,35 +33774,16 @@ bool js_crossapp_CATableView_setCellAtIndexPathCallBack(JSContext *cx, uint32_t 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setCellAtIndexPathCallBack : Error processing arguments");
-        cobj->setCellAtIndexPathCallBack(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onSectionViewForFooterInSection : Error processing arguments");
+        cobj->onSectionViewForFooterInSection(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_setCellAtIndexPathCallBack : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_onSectionViewForFooterInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATableView_isAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_isAlwaysBottomSectionFooter : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isAlwaysBottomSectionFooter();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATableView_isAlwaysBottomSectionFooter : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CATableView_setHeightForFooterInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_setAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -33729,19 +33791,38 @@ bool js_crossapp_CATableView_setHeightForFooterInSectionCallback(JSContext *cx, 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setHeightForFooterInSectionCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setAlwaysTopSectionHeader : Invalid Native Object");
     if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setAlwaysTopSectionHeader : Error processing arguments");
+        cobj->setAlwaysTopSectionHeader(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_setAlwaysTopSectionHeader : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CATableView_onNumberOfSections(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onNumberOfSections : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int ()> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		        auto lambda = [=, &ok]() -> unsigned int {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            bool succeed = func->invoke(0, nullptr, &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
@@ -33757,13 +33838,13 @@ bool js_crossapp_CATableView_setHeightForFooterInSectionCallback(JSContext *cx, 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setHeightForFooterInSectionCallback : Error processing arguments");
-        cobj->setHeightForFooterInSectionCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onNumberOfSections : Error processing arguments");
+        cobj->onNumberOfSections(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_setHeightForFooterInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_onNumberOfSections : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_getRowHeightInSectionInRow(JSContext *cx, uint32_t argc, jsval *vp)
@@ -33907,6 +33988,81 @@ bool js_crossapp_CATableView_setSelectRowAtIndexPath(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_crossapp_CATableView_setSelectRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
+bool js_crossapp_CATableView_onDidSelectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onDidSelectCellAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onDidSelectCellAtIndexPath : Error processing arguments");
+        cobj->onDidSelectCellAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_onDidSelectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CATableView_cellForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_cellForRowAtIndexPath : Invalid Native Object");
+    if (argc == 2) {
+        uint32_t arg0 = 0;
+        uint32_t arg1 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_cellForRowAtIndexPath : Error processing arguments");
+        CrossApp::CATableViewCell* ret = cobj->cellForRowAtIndexPath(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CATableViewCell>(cx, (CrossApp::CATableViewCell*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_cellForRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
 bool js_crossapp_CATableView_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -33966,6 +34122,51 @@ bool js_crossapp_CATableView_isAllowsMultipleSelection(JSContext *cx, uint32_t a
     }
 
     JS_ReportError(cx, "js_crossapp_CATableView_isAllowsMultipleSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CATableView_onHeightForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onHeightForFooterInSection : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onHeightForFooterInSection : Error processing arguments");
+        cobj->onHeightForFooterInSection(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_onHeightForFooterInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_getSeparatorColor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34065,7 +34266,7 @@ bool js_crossapp_CATableView_getTableFooterHeight(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CATableView_getTableFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CATableView_setCellHeightAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_onCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -34073,25 +34274,34 @@ bool js_crossapp_CATableView_setCellHeightAtIndexPathCallback(JSContext *cx, uin
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setCellHeightAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        std::function<unsigned int (unsigned int, unsigned int)> arg0;
+        std::function<CrossApp::CATableViewCell *(CrossApp::DSize, unsigned int, unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> unsigned int {
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1, unsigned int larg2) -> CATableViewCell* {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
+		            jsval largv[3];
+		            largv[0] = dsize_to_jsval(cx, larg0);
 		            largv[1] = uint32_to_jsval(cx, larg1);
+		            largv[2] = uint32_to_jsval(cx, larg2);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            bool succeed = func->invoke(3, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            CrossApp::CATableViewCell* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CATableViewCell*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
 		            return ret;
 		        };
 		        arg0 = lambda;
@@ -34102,34 +34312,13 @@ bool js_crossapp_CATableView_setCellHeightAtIndexPathCallback(JSContext *cx, uin
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setCellHeightAtIndexPathCallback : Error processing arguments");
-        cobj->setCellHeightAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onCellAtIndexPath : Error processing arguments");
+        cobj->onCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_setCellHeightAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CATableView_setAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setAlwaysTopSectionHeader : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setAlwaysTopSectionHeader : Error processing arguments");
-        cobj->setAlwaysTopSectionHeader(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATableView_setAlwaysTopSectionHeader : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_onCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34153,7 +34342,7 @@ bool js_crossapp_CATableView_setShowsScrollIndicators(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_crossapp_CATableView_setShowsScrollIndicators : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATableView_cellForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_onSectionViewForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -34161,28 +34350,50 @@ bool js_crossapp_CATableView_cellForRowAtIndexPath(JSContext *cx, uint32_t argc,
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_cellForRowAtIndexPath : Invalid Native Object");
-    if (argc == 2) {
-        uint32_t arg0 = 0;
-        uint32_t arg1 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_cellForRowAtIndexPath : Error processing arguments");
-        CrossApp::CATableViewCell* ret = cobj->cellForRowAtIndexPath(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onSectionViewForHeaderInSection : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
         do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CATableViewCell>(cx, (CrossApp::CATableViewCell*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onSectionViewForHeaderInSection : Error processing arguments");
+        cobj->onSectionViewForHeaderInSection(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_cellForRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_crossapp_CATableView_onSectionViewForHeaderInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_displayingTableCell(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34230,7 +34441,7 @@ bool js_crossapp_CATableView_getTableHeaderView(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CATableView_getTableHeaderView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CATableView_setWillDisplayCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_onWillDisplayCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -34238,7 +34449,7 @@ bool js_crossapp_CATableView_setWillDisplayCellAtIndexPathCallback(JSContext *cx
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setWillDisplayCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onWillDisplayCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
         std::function<void (CrossApp::CATableViewCell *, unsigned int, unsigned int)> arg0;
         do {
@@ -34272,13 +34483,13 @@ bool js_crossapp_CATableView_setWillDisplayCellAtIndexPathCallback(JSContext *cx
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setWillDisplayCellAtIndexPathCallback : Error processing arguments");
-        cobj->setWillDisplayCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onWillDisplayCellAtIndexPath : Error processing arguments");
+        cobj->onWillDisplayCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_setWillDisplayCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_onWillDisplayCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_setAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34319,6 +34530,51 @@ bool js_crossapp_CATableView_onExitTransitionDidStart(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_crossapp_CATableView_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CATableView_onNumberOfRowsAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onNumberOfRowsAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onNumberOfRowsAtIndexPath : Error processing arguments");
+        cobj->onNumberOfRowsAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_onNumberOfRowsAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CATableView_isAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -34336,49 +34592,6 @@ bool js_crossapp_CATableView_isAlwaysTopSectionHeader(JSContext *cx, uint32_t ar
     }
 
     JS_ReportError(cx, "js_crossapp_CATableView_isAlwaysTopSectionHeader : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CATableView_setDidSelectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setDidSelectCellAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void (unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setDidSelectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidSelectCellAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATableView_setDidSelectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_setTableFooterView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34431,7 +34644,7 @@ bool js_crossapp_CATableView_setSeparatorViewHeight(JSContext *cx, uint32_t argc
     JS_ReportError(cx, "js_crossapp_CATableView_setSeparatorViewHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_onCellHeightAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -34439,33 +34652,25 @@ bool js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback(JSContext 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onCellHeightAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
+        std::function<unsigned int (unsigned int, unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> unsigned int {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
-		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[0] = uint32_to_jsval(cx, larg0);
 		            largv[1] = uint32_to_jsval(cx, larg1);
 		            JS::RootedValue rval(cx);
 		            bool succeed = func->invoke(2, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
-		            CrossApp::CAView* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
 		            return ret;
 		        };
 		        arg0 = lambda;
@@ -34476,16 +34681,16 @@ bool js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback(JSContext 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback : Error processing arguments");
-        cobj->setSectionViewForHeaderInSectionCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onCellHeightAtIndexPath : Error processing arguments");
+        cobj->onCellHeightAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_onCellHeightAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATableView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_onDidDeselectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -34493,17 +34698,39 @@ bool js_crossapp_CATableView_switchPCMode(JSContext *cx, uint32_t argc, jsval *v
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_switchPCMode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_onDidDeselectCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_switchPCMode : Error processing arguments");
-        cobj->switchPCMode(arg0);
+        std::function<void (unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_onDidDeselectCellAtIndexPath : Error processing arguments");
+        cobj->onDidDeselectCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_onDidDeselectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_getNumberOfRowsInSection(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34601,7 +34828,7 @@ bool js_crossapp_CATableView_getSectionHeaderHeightInSection(JSContext *cx, uint
     JS_ReportError(cx, "js_crossapp_CATableView_getSectionHeaderHeightInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATableView_setDidDeselectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATableView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -34609,39 +34836,17 @@ bool js_crossapp_CATableView_setDidDeselectCellAtIndexPathCallback(JSContext *cx
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_setDidDeselectCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_switchPCMode : Invalid Native Object");
     if (argc == 1) {
-        std::function<void (unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_setDidDeselectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidDeselectCellAtIndexPathCallback(arg0);
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATableView_switchPCMode : Error processing arguments");
+        cobj->switchPCMode(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATableView_setDidDeselectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CATableView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATableView_dequeueReusableCellWithIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
@@ -34846,51 +35051,51 @@ void js_register_crossapp_CATableView(JSContext *cx, JS::HandleObject global) {
     static JSFunctionSpec funcs[] = {
         JS_FN("getTableFooterView", js_crossapp_CATableView_getTableFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsSelection", js_crossapp_CATableView_isAllowsSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfSectionsCallback", js_crossapp_CATableView_setNumberOfSectionsCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHeightForHeaderInSectionCallback", js_crossapp_CATableView_setHeightForHeaderInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSectionViewForFooterInSectionCallback", js_crossapp_CATableView_setSectionViewForFooterInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHeightForHeaderInSection", js_crossapp_CATableView_onHeightForHeaderInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTableHeaderHeight", js_crossapp_CATableView_setTableHeaderHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAlwaysBottomSectionFooter", js_crossapp_CATableView_isAlwaysBottomSectionFooter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSectionFooterHeightInSection", js_crossapp_CATableView_getSectionFooterHeightInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfRowsAtIndexPathCallback", js_crossapp_CATableView_setNumberOfRowsAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparatorColor", js_crossapp_CATableView_setSeparatorColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTableFooterHeight", js_crossapp_CATableView_setTableFooterHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTableHeaderHeight", js_crossapp_CATableView_setTableHeaderHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellAtIndexPathCallBack", js_crossapp_CATableView_setCellAtIndexPathCallBack, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isAlwaysBottomSectionFooter", js_crossapp_CATableView_isAlwaysBottomSectionFooter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHeightForFooterInSectionCallback", js_crossapp_CATableView_setHeightForFooterInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onSectionViewForFooterInSection", js_crossapp_CATableView_onSectionViewForFooterInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAlwaysTopSectionHeader", js_crossapp_CATableView_setAlwaysTopSectionHeader, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfSections", js_crossapp_CATableView_onNumberOfSections, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRowHeightInSectionInRow", js_crossapp_CATableView_getRowHeightInSectionInRow, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTableHeaderView", js_crossapp_CATableView_setTableHeaderView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfSections", js_crossapp_CATableView_getNumberOfSections, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSeparatorViewHeight", js_crossapp_CATableView_getSeparatorViewHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTableViewDataSource", js_crossapp_CATableView_getTableViewDataSource, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSelectRowAtIndexPath", js_crossapp_CATableView_setSelectRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidSelectCellAtIndexPath", js_crossapp_CATableView_onDidSelectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("cellForRowAtIndexPath", js_crossapp_CATableView_cellForRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CATableView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSectionHeightInSection", js_crossapp_CATableView_getSectionHeightInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsMultipleSelection", js_crossapp_CATableView_isAllowsMultipleSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHeightForFooterInSection", js_crossapp_CATableView_onHeightForFooterInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSeparatorColor", js_crossapp_CATableView_getSeparatorColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowsSelection", js_crossapp_CATableView_setAllowsSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("reloadData", js_crossapp_CATableView_reloadData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowsMultipleSelection", js_crossapp_CATableView_setAllowsMultipleSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTableFooterHeight", js_crossapp_CATableView_getTableFooterHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellHeightAtIndexPathCallback", js_crossapp_CATableView_setCellHeightAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAlwaysTopSectionHeader", js_crossapp_CATableView_setAlwaysTopSectionHeader, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellAtIndexPath", js_crossapp_CATableView_onCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CATableView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("cellForRowAtIndexPath", js_crossapp_CATableView_cellForRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onSectionViewForHeaderInSection", js_crossapp_CATableView_onSectionViewForHeaderInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("displayingTableCell", js_crossapp_CATableView_displayingTableCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTableHeaderView", js_crossapp_CATableView_getTableHeaderView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWillDisplayCellAtIndexPathCallback", js_crossapp_CATableView_setWillDisplayCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onWillDisplayCellAtIndexPath", js_crossapp_CATableView_onWillDisplayCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlwaysBottomSectionFooter", js_crossapp_CATableView_setAlwaysBottomSectionFooter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CATableView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfRowsAtIndexPath", js_crossapp_CATableView_onNumberOfRowsAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAlwaysTopSectionHeader", js_crossapp_CATableView_isAlwaysTopSectionHeader, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidSelectCellAtIndexPathCallback", js_crossapp_CATableView_setDidSelectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTableFooterView", js_crossapp_CATableView_setTableFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparatorViewHeight", js_crossapp_CATableView_setSeparatorViewHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSectionViewForHeaderInSectionCallback", js_crossapp_CATableView_setSectionViewForHeaderInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("switchPCMode", js_crossapp_CATableView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellHeightAtIndexPath", js_crossapp_CATableView_onCellHeightAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidDeselectCellAtIndexPath", js_crossapp_CATableView_onDidDeselectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfRowsInSection", js_crossapp_CATableView_getNumberOfRowsInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUnSelectRowAtIndexPath", js_crossapp_CATableView_setUnSelectRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTableViewDelegate", js_crossapp_CATableView_getTableViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSectionHeaderHeightInSection", js_crossapp_CATableView_getSectionHeaderHeightInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidDeselectCellAtIndexPathCallback", js_crossapp_CATableView_setDidDeselectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("switchPCMode", js_crossapp_CATableView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("dequeueReusableCellWithIdentifier", js_crossapp_CATableView_dequeueReusableCellWithIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CATableView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTableHeaderHeight", js_crossapp_CATableView_getTableHeaderHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -35161,7 +35366,7 @@ bool js_crossapp_CACollectionView_setCollectionFooterHeight(JSContext *cx, uint3
     JS_ReportError(cx, "js_crossapp_CACollectionView_setCollectionFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACollectionView_setNumberOfSectionsCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_onHeightForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -35169,50 +35374,7 @@ bool js_crossapp_CACollectionView_setNumberOfSectionsCallback(JSContext *cx, uin
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setNumberOfSectionsCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setNumberOfSectionsCallback : Error processing arguments");
-        cobj->setNumberOfSectionsCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setNumberOfSectionsCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACollectionView_setHeightForHeaderInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setHeightForHeaderInSectionCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onHeightForHeaderInSection : Invalid Native Object");
     if (argc == 1) {
         std::function<unsigned int (unsigned int)> arg0;
         do {
@@ -35240,67 +35402,32 @@ bool js_crossapp_CACollectionView_setHeightForHeaderInSectionCallback(JSContext 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setHeightForHeaderInSectionCallback : Error processing arguments");
-        cobj->setHeightForHeaderInSectionCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onHeightForHeaderInSection : Error processing arguments");
+        cobj->onHeightForHeaderInSection(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setHeightForHeaderInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onHeightForHeaderInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACollectionView_setSectionViewForFooterInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_isAllowsSelection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setSectionViewForFooterInSectionCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = dsize_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CAView* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setSectionViewForFooterInSectionCallback : Error processing arguments");
-        cobj->setSectionViewForFooterInSectionCallback(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_isAllowsSelection : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAllowsSelection();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setSectionViewForFooterInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_isAllowsSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CACollectionView_setCollectionHeaderView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -35351,6 +35478,25 @@ bool js_crossapp_CACollectionView_getVertInterval(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CACollectionView_getVertInterval : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CACollectionView_isAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_isAlwaysBottomSectionFooter : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAlwaysBottomSectionFooter();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_isAlwaysBottomSectionFooter : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CACollectionView_setCollectionFooterView(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -35380,51 +35526,6 @@ bool js_crossapp_CACollectionView_setCollectionFooterView(JSContext *cx, uint32_
     JS_ReportError(cx, "js_crossapp_CACollectionView_setCollectionFooterView : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACollectionView_setNumberOfRowsAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setNumberOfRowsAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setNumberOfRowsAtIndexPathCallback : Error processing arguments");
-        cobj->setNumberOfRowsAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setNumberOfRowsAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CACollectionView_getCollectionFooterView(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -35451,6 +35552,60 @@ bool js_crossapp_CACollectionView_getCollectionFooterView(JSContext *cx, uint32_
     JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionFooterView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CACollectionView_onSectionViewForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onSectionViewForFooterInSection : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onSectionViewForFooterInSection : Error processing arguments");
+        cobj->onSectionViewForFooterInSection(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onSectionViewForFooterInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CACollectionView_setAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -35472,26 +35627,7 @@ bool js_crossapp_CACollectionView_setAlwaysTopSectionHeader(JSContext *cx, uint3
     JS_ReportError(cx, "js_crossapp_CACollectionView_setAlwaysTopSectionHeader : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACollectionView_isAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_isAlwaysBottomSectionFooter : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isAlwaysBottomSectionFooter();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_isAlwaysBottomSectionFooter : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACollectionView_setHeightForFooterInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_onNumberOfSections(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -35499,19 +35635,17 @@ bool js_crossapp_CACollectionView_setHeightForFooterInSectionCallback(JSContext 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setHeightForFooterInSectionCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onNumberOfSections : Invalid Native Object");
     if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
+        std::function<unsigned int ()> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		        auto lambda = [=, &ok]() -> unsigned int {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            bool succeed = func->invoke(0, nullptr, &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
@@ -35527,13 +35661,13 @@ bool js_crossapp_CACollectionView_setHeightForFooterInSectionCallback(JSContext 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setHeightForFooterInSectionCallback : Error processing arguments");
-        cobj->setHeightForFooterInSectionCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onNumberOfSections : Error processing arguments");
+        cobj->onNumberOfSections(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setHeightForFooterInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onNumberOfSections : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACollectionView_getHoriInterval(JSContext *cx, uint32_t argc, jsval *vp)
@@ -35618,6 +35752,84 @@ bool js_crossapp_CACollectionView_setSelectRowAtIndexPath(JSContext *cx, uint32_
     JS_ReportError(cx, "js_crossapp_CACollectionView_setSelectRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
+bool js_crossapp_CACollectionView_onDidSelectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onDidSelectCellAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (unsigned int, unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1, unsigned int larg2) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[3];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            largv[2] = uint32_to_jsval(cx, larg2);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(3, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onDidSelectCellAtIndexPath : Error processing arguments");
+        cobj->onDidSelectCellAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onDidSelectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACollectionView_cellForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_cellForRowAtIndexPath : Invalid Native Object");
+    if (argc == 3) {
+        uint32_t arg0 = 0;
+        uint32_t arg1 = 0;
+        uint32_t arg2 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_cellForRowAtIndexPath : Error processing arguments");
+        CrossApp::CACollectionViewCell* ret = cobj->cellForRowAtIndexPath(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACollectionViewCell>(cx, (CrossApp::CACollectionViewCell*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_cellForRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
 bool js_crossapp_CACollectionView_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -35656,7 +35868,7 @@ bool js_crossapp_CACollectionView_isAllowsMultipleSelection(JSContext *cx, uint3
     JS_ReportError(cx, "js_crossapp_CACollectionView_isAllowsMultipleSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CACollectionView_setNumberOfItemsAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_onHeightForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -35664,20 +35876,19 @@ bool js_crossapp_CACollectionView_setNumberOfItemsAtIndexPathCallback(JSContext 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setNumberOfItemsAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onHeightForFooterInSection : Invalid Native Object");
     if (argc == 1) {
-        std::function<unsigned int (unsigned int, unsigned int)> arg0;
+        std::function<unsigned int (unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> unsigned int {
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
+		            jsval largv[1];
 		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
@@ -35693,13 +35904,13 @@ bool js_crossapp_CACollectionView_setNumberOfItemsAtIndexPathCallback(JSContext 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setNumberOfItemsAtIndexPathCallback : Error processing arguments");
-        cobj->setNumberOfItemsAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onHeightForFooterInSection : Error processing arguments");
+        cobj->onHeightForFooterInSection(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setNumberOfItemsAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onHeightForFooterInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACollectionView_setAllowsSelection(JSContext *cx, uint32_t argc, jsval *vp)
@@ -35787,7 +35998,7 @@ bool js_crossapp_CACollectionView_getCollectionHeaderView(JSContext *cx, uint32_
     JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionHeaderView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CACollectionView_setCellHeightAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_onCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -35795,25 +36006,35 @@ bool js_crossapp_CACollectionView_setCellHeightAtIndexPathCallback(JSContext *cx
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setCellHeightAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        std::function<unsigned int (unsigned int, unsigned int)> arg0;
+        std::function<CrossApp::CACollectionViewCell *(CrossApp::DSize, unsigned int, unsigned int, unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> unsigned int {
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1, unsigned int larg2, unsigned int larg3) -> CACollectionViewCell* {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
+		            jsval largv[4];
+		            largv[0] = dsize_to_jsval(cx, larg0);
 		            largv[1] = uint32_to_jsval(cx, larg1);
+		            largv[2] = uint32_to_jsval(cx, larg2);
+		            largv[3] = uint32_to_jsval(cx, larg3);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            bool succeed = func->invoke(4, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            CrossApp::CACollectionViewCell* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CACollectionViewCell*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
 		            return ret;
 		        };
 		        arg0 = lambda;
@@ -35824,13 +36045,13 @@ bool js_crossapp_CACollectionView_setCellHeightAtIndexPathCallback(JSContext *cx
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setCellHeightAtIndexPathCallback : Error processing arguments");
-        cobj->setCellHeightAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onCellAtIndexPath : Error processing arguments");
+        cobj->onCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setCellHeightAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACollectionView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp)
@@ -35854,7 +36075,7 @@ bool js_crossapp_CACollectionView_setShowsScrollIndicators(JSContext *cx, uint32
     JS_ReportError(cx, "js_crossapp_CACollectionView_setShowsScrollIndicators : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACollectionView_cellForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_onSectionViewForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -35862,46 +36083,85 @@ bool js_crossapp_CACollectionView_cellForRowAtIndexPath(JSContext *cx, uint32_t 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_cellForRowAtIndexPath : Invalid Native Object");
-    if (argc == 3) {
-        uint32_t arg0 = 0;
-        uint32_t arg1 = 0;
-        uint32_t arg2 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_cellForRowAtIndexPath : Error processing arguments");
-        CrossApp::CACollectionViewCell* ret = cobj->cellForRowAtIndexPath(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onSectionViewForHeaderInSection : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
         do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACollectionViewCell>(cx, (CrossApp::CACollectionViewCell*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onSectionViewForHeaderInSection : Error processing arguments");
+        cobj->onSectionViewForHeaderInSection(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_cellForRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 3);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onSectionViewForHeaderInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACollectionView_getCollectionViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_displayingCollectionCell(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_getCollectionViewDelegate : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_displayingCollectionCell : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CACollectionViewDelegate* ret = cobj->getCollectionViewDelegate();
+        const CrossApp::CAVector<CrossApp::CACollectionViewCell *>& ret = cobj->displayingCollectionCell();
+        jsval jsret = JSVAL_NULL;
+        jsret = cavector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_displayingCollectionCell : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACollectionView_getCollectionViewDataSource(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_getCollectionViewDataSource : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CACollectionViewDataSource* ret = cobj->getCollectionViewDataSource();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACollectionViewDelegate>(cx, (CrossApp::CACollectionViewDelegate*)ret);
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACollectionViewDataSource>(cx, (CrossApp::CACollectionViewDataSource*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -35911,10 +36171,10 @@ bool js_crossapp_CACollectionView_getCollectionViewDelegate(JSContext *cx, uint3
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionViewDelegate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionViewDataSource : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CACollectionView_setWillDisplayCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_onWillDisplayCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -35922,7 +36182,7 @@ bool js_crossapp_CACollectionView_setWillDisplayCellAtIndexPathCallback(JSContex
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setWillDisplayCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onWillDisplayCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
         std::function<void (CrossApp::CACollectionViewCell *, unsigned int, unsigned int, unsigned int)> arg0;
         do {
@@ -35957,39 +36217,13 @@ bool js_crossapp_CACollectionView_setWillDisplayCellAtIndexPathCallback(JSContex
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setWillDisplayCellAtIndexPathCallback : Error processing arguments");
-        cobj->setWillDisplayCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onWillDisplayCellAtIndexPath : Error processing arguments");
+        cobj->onWillDisplayCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setWillDisplayCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACollectionView_getCollectionViewDataSource(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_getCollectionViewDataSource : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CACollectionViewDataSource* ret = cobj->getCollectionViewDataSource();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACollectionViewDataSource>(cx, (CrossApp::CACollectionViewDataSource*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionViewDataSource : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onWillDisplayCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACollectionView_setAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
@@ -36030,23 +36264,49 @@ bool js_crossapp_CACollectionView_onExitTransitionDidStart(JSContext *cx, uint32
     JS_ReportError(cx, "js_crossapp_CACollectionView_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CACollectionView_displayingCollectionCell(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_onNumberOfRowsAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_displayingCollectionCell : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAVector<CrossApp::CACollectionViewCell *>& ret = cobj->displayingCollectionCell();
-        jsval jsret = JSVAL_NULL;
-        jsret = cavector_to_jsval(cx, ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onNumberOfRowsAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onNumberOfRowsAtIndexPath : Error processing arguments");
+        cobj->onNumberOfRowsAtIndexPath(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_displayingCollectionCell : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onNumberOfRowsAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACollectionView_isAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp)
@@ -36068,7 +36328,26 @@ bool js_crossapp_CACollectionView_isAlwaysTopSectionHeader(JSContext *cx, uint32
     JS_ReportError(cx, "js_crossapp_CACollectionView_isAlwaysTopSectionHeader : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CACollectionView_setDidSelectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_getCollectionHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_getCollectionHeaderHeight : Invalid Native Object");
+    if (argc == 0) {
+        uint32_t ret = cobj->getCollectionHeaderHeight();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACollectionView_onCellHeightAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -36076,7 +36355,119 @@ bool js_crossapp_CACollectionView_setDidSelectCellAtIndexPathCallback(JSContext 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setDidSelectCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onCellHeightAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int (unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onCellHeightAtIndexPath : Error processing arguments");
+        cobj->onCellHeightAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onCellHeightAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACollectionView_getCollectionViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_getCollectionViewDelegate : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CACollectionViewDelegate* ret = cobj->getCollectionViewDelegate();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACollectionViewDelegate>(cx, (CrossApp::CACollectionViewDelegate*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionViewDelegate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACollectionView_getCollectionFooterHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_getCollectionFooterHeight : Invalid Native Object");
+    if (argc == 0) {
+        uint32_t ret = cobj->getCollectionFooterHeight();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CACollectionView_setVertInterval(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setVertInterval : Invalid Native Object");
+    if (argc == 1) {
+        uint32_t arg0 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setVertInterval : Error processing arguments");
+        cobj->setVertInterval(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_setVertInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACollectionView_onDidDeselectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onDidDeselectCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
         std::function<void (unsigned int, unsigned int, unsigned int)> arg0;
         do {
@@ -36103,16 +36494,16 @@ bool js_crossapp_CACollectionView_setDidSelectCellAtIndexPathCallback(JSContext 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setDidSelectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidSelectCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onDidDeselectCellAtIndexPath : Error processing arguments");
+        cobj->onDidDeselectCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setDidSelectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onDidDeselectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACollectionView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_onNumberOfItemsAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -36120,54 +36511,25 @@ bool js_crossapp_CACollectionView_switchPCMode(JSContext *cx, uint32_t argc, jsv
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_switchPCMode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_onNumberOfItemsAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_switchPCMode : Error processing arguments");
-        cobj->switchPCMode(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACollectionView_setSectionViewForHeaderInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setSectionViewForHeaderInSectionCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
+        std::function<unsigned int (unsigned int, unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> unsigned int {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
-		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[0] = uint32_to_jsval(cx, larg0);
 		            largv[1] = uint32_to_jsval(cx, larg1);
 		            JS::RootedValue rval(cx);
 		            bool succeed = func->invoke(2, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
-		            CrossApp::CAView* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
 		            return ret;
 		        };
 		        arg0 = lambda;
@@ -36178,72 +36540,13 @@ bool js_crossapp_CACollectionView_setSectionViewForHeaderInSectionCallback(JSCon
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setSectionViewForHeaderInSectionCallback : Error processing arguments");
-        cobj->setSectionViewForHeaderInSectionCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_onNumberOfItemsAtIndexPath : Error processing arguments");
+        cobj->onNumberOfItemsAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setSectionViewForHeaderInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACollectionView_setVertInterval(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setVertInterval : Invalid Native Object");
-    if (argc == 1) {
-        uint32_t arg0 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setVertInterval : Error processing arguments");
-        cobj->setVertInterval(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setVertInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACollectionView_getCollectionHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_getCollectionHeaderHeight : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getCollectionHeaderHeight();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACollectionView_getCollectionFooterHeight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_getCollectionFooterHeight : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getCollectionFooterHeight();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_getCollectionFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_onNumberOfItemsAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACollectionView_setCollectionHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
@@ -36318,7 +36621,7 @@ bool js_crossapp_CACollectionView_getHighlightCollectionCell(JSContext *cx, uint
     JS_ReportError(cx, "js_crossapp_CACollectionView_getHighlightCollectionCell : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CACollectionView_setDidDeselectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACollectionView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -36326,115 +36629,17 @@ bool js_crossapp_CACollectionView_setDidDeselectCellAtIndexPathCallback(JSContex
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setDidDeselectCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_switchPCMode : Invalid Native Object");
     if (argc == 1) {
-        std::function<void (unsigned int, unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1, unsigned int larg2) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[3];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            largv[2] = uint32_to_jsval(cx, larg2);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(3, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setDidDeselectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidDeselectCellAtIndexPathCallback(arg0);
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_switchPCMode : Error processing arguments");
+        cobj->switchPCMode(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setDidDeselectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACollectionView_setCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_setCellAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CACollectionViewCell *(CrossApp::DSize, unsigned int, unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1, unsigned int larg2, unsigned int larg3) -> CACollectionViewCell* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[4];
-		            largv[0] = dsize_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            largv[2] = uint32_to_jsval(cx, larg2);
-		            largv[3] = uint32_to_jsval(cx, larg3);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(4, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CACollectionViewCell* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CACollectionViewCell*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACollectionView_setCellAtIndexPathCallback : Error processing arguments");
-        cobj->setCellAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_setCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CACollectionView_isAllowsSelection(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_isAllowsSelection : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isAllowsSelection();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACollectionView_isAllowsSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CACollectionView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CACollectionView_dequeueReusableCellWithIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
@@ -36619,50 +36824,50 @@ void js_register_crossapp_CACollectionView(JSContext *cx, JS::HandleObject globa
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setCollectionFooterHeight", js_crossapp_CACollectionView_setCollectionFooterHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfSectionsCallback", js_crossapp_CACollectionView_setNumberOfSectionsCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHeightForHeaderInSectionCallback", js_crossapp_CACollectionView_setHeightForHeaderInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSectionViewForFooterInSectionCallback", js_crossapp_CACollectionView_setSectionViewForFooterInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHeightForHeaderInSection", js_crossapp_CACollectionView_onHeightForHeaderInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAllowsSelection", js_crossapp_CACollectionView_isAllowsSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCollectionHeaderView", js_crossapp_CACollectionView_setCollectionHeaderView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVertInterval", js_crossapp_CACollectionView_getVertInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCollectionFooterView", js_crossapp_CACollectionView_setCollectionFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfRowsAtIndexPathCallback", js_crossapp_CACollectionView_setNumberOfRowsAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCollectionFooterView", js_crossapp_CACollectionView_getCollectionFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAlwaysTopSectionHeader", js_crossapp_CACollectionView_setAlwaysTopSectionHeader, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAlwaysBottomSectionFooter", js_crossapp_CACollectionView_isAlwaysBottomSectionFooter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHeightForFooterInSectionCallback", js_crossapp_CACollectionView_setHeightForFooterInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCollectionFooterView", js_crossapp_CACollectionView_setCollectionFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCollectionFooterView", js_crossapp_CACollectionView_getCollectionFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onSectionViewForFooterInSection", js_crossapp_CACollectionView_onSectionViewForFooterInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAlwaysTopSectionHeader", js_crossapp_CACollectionView_setAlwaysTopSectionHeader, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfSections", js_crossapp_CACollectionView_onNumberOfSections, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHoriInterval", js_crossapp_CACollectionView_getHoriInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("clearData", js_crossapp_CACollectionView_clearData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setHoriInterval", js_crossapp_CACollectionView_setHoriInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSelectRowAtIndexPath", js_crossapp_CACollectionView_setSelectRowAtIndexPath, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidSelectCellAtIndexPath", js_crossapp_CACollectionView_onDidSelectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("cellForRowAtIndexPath", js_crossapp_CACollectionView_cellForRowAtIndexPath, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CACollectionView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsMultipleSelection", js_crossapp_CACollectionView_isAllowsMultipleSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfItemsAtIndexPathCallback", js_crossapp_CACollectionView_setNumberOfItemsAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHeightForFooterInSection", js_crossapp_CACollectionView_onHeightForFooterInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowsSelection", js_crossapp_CACollectionView_setAllowsSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("reloadData", js_crossapp_CACollectionView_reloadData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowsMultipleSelection", js_crossapp_CACollectionView_setAllowsMultipleSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionHeaderView", js_crossapp_CACollectionView_getCollectionHeaderView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellHeightAtIndexPathCallback", js_crossapp_CACollectionView_setCellHeightAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellAtIndexPath", js_crossapp_CACollectionView_onCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CACollectionView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("cellForRowAtIndexPath", js_crossapp_CACollectionView_cellForRowAtIndexPath, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCollectionViewDelegate", js_crossapp_CACollectionView_getCollectionViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWillDisplayCellAtIndexPathCallback", js_crossapp_CACollectionView_setWillDisplayCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onSectionViewForHeaderInSection", js_crossapp_CACollectionView_onSectionViewForHeaderInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("displayingCollectionCell", js_crossapp_CACollectionView_displayingCollectionCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionViewDataSource", js_crossapp_CACollectionView_getCollectionViewDataSource, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onWillDisplayCellAtIndexPath", js_crossapp_CACollectionView_onWillDisplayCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlwaysBottomSectionFooter", js_crossapp_CACollectionView_setAlwaysBottomSectionFooter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CACollectionView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("displayingCollectionCell", js_crossapp_CACollectionView_displayingCollectionCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfRowsAtIndexPath", js_crossapp_CACollectionView_onNumberOfRowsAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAlwaysTopSectionHeader", js_crossapp_CACollectionView_isAlwaysTopSectionHeader, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidSelectCellAtIndexPathCallback", js_crossapp_CACollectionView_setDidSelectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("switchPCMode", js_crossapp_CACollectionView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSectionViewForHeaderInSectionCallback", js_crossapp_CACollectionView_setSectionViewForHeaderInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setVertInterval", js_crossapp_CACollectionView_setVertInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionHeaderHeight", js_crossapp_CACollectionView_getCollectionHeaderHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellHeightAtIndexPath", js_crossapp_CACollectionView_onCellHeightAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCollectionViewDelegate", js_crossapp_CACollectionView_getCollectionViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionFooterHeight", js_crossapp_CACollectionView_getCollectionFooterHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setVertInterval", js_crossapp_CACollectionView_setVertInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidDeselectCellAtIndexPath", js_crossapp_CACollectionView_onDidDeselectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfItemsAtIndexPath", js_crossapp_CACollectionView_onNumberOfItemsAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCollectionHeaderHeight", js_crossapp_CACollectionView_setCollectionHeaderHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUnSelectRowAtIndexPath", js_crossapp_CACollectionView_setUnSelectRowAtIndexPath, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHighlightCollectionCell", js_crossapp_CACollectionView_getHighlightCollectionCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidDeselectCellAtIndexPathCallback", js_crossapp_CACollectionView_setDidDeselectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellAtIndexPathCallback", js_crossapp_CACollectionView_setCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isAllowsSelection", js_crossapp_CACollectionView_isAllowsSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("switchPCMode", js_crossapp_CACollectionView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("dequeueReusableCellWithIdentifier", js_crossapp_CACollectionView_dequeueReusableCellWithIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CACollectionView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -36910,7 +37115,7 @@ bool js_crossapp_CAAutoCollectionView_setCollectionFooterHeight(JSContext *cx, u
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setCollectionFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_setNumberOfSectionsCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_onHeightForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -36918,50 +37123,7 @@ bool js_crossapp_CAAutoCollectionView_setNumberOfSectionsCallback(JSContext *cx,
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setNumberOfSectionsCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setNumberOfSectionsCallback : Error processing arguments");
-        cobj->setNumberOfSectionsCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setNumberOfSectionsCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_setHeightForHeaderInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setHeightForHeaderInSectionCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onHeightForHeaderInSection : Invalid Native Object");
     if (argc == 1) {
         std::function<unsigned int (unsigned int)> arg0;
         do {
@@ -36989,13 +37151,32 @@ bool js_crossapp_CAAutoCollectionView_setHeightForHeaderInSectionCallback(JSCont
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setHeightForHeaderInSectionCallback : Error processing arguments");
-        cobj->setHeightForHeaderInSectionCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onHeightForHeaderInSection : Error processing arguments");
+        cobj->onHeightForHeaderInSection(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setHeightForHeaderInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onHeightForHeaderInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_isAllowsSelection(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_isAllowsSelection : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAllowsSelection();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_isAllowsSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_getCellVertAlign(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37015,60 +37196,6 @@ bool js_crossapp_CAAutoCollectionView_getCellVertAlign(JSContext *cx, uint32_t a
     }
 
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCellVertAlign : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_setSectionViewForFooterInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setSectionViewForFooterInSectionCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = dsize_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CAView* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setSectionViewForFooterInSectionCallback : Error processing arguments");
-        cobj->setSectionViewForFooterInSectionCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setSectionViewForFooterInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_setCollectionHeaderView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37117,6 +37244,25 @@ bool js_crossapp_CAAutoCollectionView_getOrientation(JSContext *cx, uint32_t arg
     }
 
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getOrientation : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_isAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_isAlwaysBottomSectionFooter : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAlwaysBottomSectionFooter();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_isAlwaysBottomSectionFooter : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_setCollectionFooterView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37174,6 +37320,60 @@ bool js_crossapp_CAAutoCollectionView_getCollectionFooterView(JSContext *cx, uin
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionFooterView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAAutoCollectionView_onSectionViewForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onSectionViewForFooterInSection : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onSectionViewForFooterInSection : Error processing arguments");
+        cobj->onSectionViewForFooterInSection(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onSectionViewForFooterInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAAutoCollectionView_setHoriCellInterval(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -37195,52 +37395,6 @@ bool js_crossapp_CAAutoCollectionView_setHoriCellInterval(JSContext *cx, uint32_
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setHoriCellInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_setCellSizeAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setCellSizeAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::DSize (unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> DSize {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::DSize ret;
-		            ok &= jsval_to_dsize(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setCellSizeAtIndexPathCallback : Error processing arguments");
-        cobj->setCellSizeAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setCellSizeAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAAutoCollectionView_getCellHoriAlign(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -37260,89 +37414,6 @@ bool js_crossapp_CAAutoCollectionView_getCellHoriAlign(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCellHoriAlign : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_getHoriMargins(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getHoriMargins : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getHoriMargins();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getHoriMargins : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_isAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_isAlwaysBottomSectionFooter : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isAlwaysBottomSectionFooter();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_isAlwaysBottomSectionFooter : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_setHeightForFooterInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setHeightForFooterInSectionCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setHeightForFooterInSectionCallback : Error processing arguments");
-        cobj->setHeightForFooterInSectionCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setHeightForFooterInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAAutoCollectionView_getVertMargins(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -37360,6 +37431,49 @@ bool js_crossapp_CAAutoCollectionView_getVertMargins(JSContext *cx, uint32_t arg
     }
 
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getVertMargins : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_onNumberOfSections(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onNumberOfSections : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onNumberOfSections : Error processing arguments");
+        cobj->onNumberOfSections(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onNumberOfSections : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_setCellHoriAlign(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37404,6 +37518,81 @@ bool js_crossapp_CAAutoCollectionView_setSelectRowAtIndexPath(JSContext *cx, uin
     }
 
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setSelectRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_onDidSelectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onDidSelectCellAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onDidSelectCellAtIndexPath : Error processing arguments");
+        cobj->onDidSelectCellAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onDidSelectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath : Invalid Native Object");
+    if (argc == 2) {
+        uint32_t arg0 = 0;
+        uint32_t arg1 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath : Error processing arguments");
+        CrossApp::CACollectionViewCell* ret = cobj->cellForRowAtIndexPath(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACollectionViewCell>(cx, (CrossApp::CACollectionViewCell*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_init(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37463,7 +37652,7 @@ bool js_crossapp_CAAutoCollectionView_isAllowsMultipleSelection(JSContext *cx, u
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_isAllowsMultipleSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_setNumberOfItemsAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_onHeightForFooterInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -37471,7 +37660,7 @@ bool js_crossapp_CAAutoCollectionView_setNumberOfItemsAtIndexPathCallback(JSCont
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setNumberOfItemsAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onHeightForFooterInSection : Invalid Native Object");
     if (argc == 1) {
         std::function<unsigned int (unsigned int)> arg0;
         do {
@@ -37499,13 +37688,13 @@ bool js_crossapp_CAAutoCollectionView_setNumberOfItemsAtIndexPathCallback(JSCont
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setNumberOfItemsAtIndexPathCallback : Error processing arguments");
-        cobj->setNumberOfItemsAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onHeightForFooterInSection : Error processing arguments");
+        cobj->onHeightForFooterInSection(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setNumberOfItemsAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onHeightForFooterInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_setVertMargins(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37614,6 +37803,61 @@ bool js_crossapp_CAAutoCollectionView_getCollectionHeaderView(JSContext *cx, uin
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionHeaderView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAAutoCollectionView_onCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onCellAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CACollectionViewCell *(CrossApp::DSize, unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1, unsigned int larg2) -> CACollectionViewCell* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[3];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            largv[2] = uint32_to_jsval(cx, larg2);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(3, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CACollectionViewCell* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CACollectionViewCell*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onCellAtIndexPath : Error processing arguments");
+        cobj->onCellAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAAutoCollectionView_setAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -37656,7 +37900,7 @@ bool js_crossapp_CAAutoCollectionView_setShowsScrollIndicators(JSContext *cx, ui
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setShowsScrollIndicators : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -37664,44 +37908,85 @@ bool js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath(JSContext *cx, uint3
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath : Invalid Native Object");
-    if (argc == 2) {
-        uint32_t arg0 = 0;
-        uint32_t arg1 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath : Error processing arguments");
-        CrossApp::CACollectionViewCell* ret = cobj->cellForRowAtIndexPath(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
         do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACollectionViewCell>(cx, (CrossApp::CACollectionViewCell*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection : Error processing arguments");
+        cobj->onSectionViewForHeaderInSection(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_getCollectionViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_displayingCollectionCell(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getCollectionViewDelegate : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_displayingCollectionCell : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CAAutoCollectionViewDelegate* ret = cobj->getCollectionViewDelegate();
+        const CrossApp::CAVector<CrossApp::CACollectionViewCell *>& ret = cobj->displayingCollectionCell();
+        jsval jsret = JSVAL_NULL;
+        jsret = cavector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_displayingCollectionCell : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_getCollectionViewDataSource(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getCollectionViewDataSource : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAAutoCollectionViewDataSource* ret = cobj->getCollectionViewDataSource();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAutoCollectionViewDelegate>(cx, (CrossApp::CAAutoCollectionViewDelegate*)ret);
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAutoCollectionViewDataSource>(cx, (CrossApp::CAAutoCollectionViewDataSource*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -37711,10 +37996,10 @@ bool js_crossapp_CAAutoCollectionView_getCollectionViewDelegate(JSContext *cx, u
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionViewDelegate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionViewDataSource : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_setWillDisplayCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_onWillDisplayCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -37722,7 +38007,7 @@ bool js_crossapp_CAAutoCollectionView_setWillDisplayCellAtIndexPathCallback(JSCo
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setWillDisplayCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onWillDisplayCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
         std::function<void (CrossApp::CACollectionViewCell *, unsigned int, unsigned int)> arg0;
         do {
@@ -37756,39 +38041,13 @@ bool js_crossapp_CAAutoCollectionView_setWillDisplayCellAtIndexPathCallback(JSCo
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setWillDisplayCellAtIndexPathCallback : Error processing arguments");
-        cobj->setWillDisplayCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onWillDisplayCellAtIndexPath : Error processing arguments");
+        cobj->onWillDisplayCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setWillDisplayCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_getCollectionViewDataSource(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getCollectionViewDataSource : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAAutoCollectionViewDataSource* ret = cobj->getCollectionViewDataSource();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAutoCollectionViewDataSource>(cx, (CrossApp::CAAutoCollectionViewDataSource*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionViewDataSource : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onWillDisplayCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_setAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37850,25 +38109,6 @@ bool js_crossapp_CAAutoCollectionView_setCellVertAlign(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setCellVertAlign : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_displayingCollectionCell(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_displayingCollectionCell : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAVector<CrossApp::CACollectionViewCell *>& ret = cobj->displayingCollectionCell();
-        jsval jsret = JSVAL_NULL;
-        jsret = cavector_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_displayingCollectionCell : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAAutoCollectionView_isAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -37888,7 +38128,26 @@ bool js_crossapp_CAAutoCollectionView_isAlwaysTopSectionHeader(JSContext *cx, ui
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_isAlwaysTopSectionHeader : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_setDidSelectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight : Invalid Native Object");
+    if (argc == 0) {
+        uint32_t ret = cobj->getCollectionHeaderHeight();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_setOrientation(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -37896,7 +38155,92 @@ bool js_crossapp_CAAutoCollectionView_setDidSelectCellAtIndexPathCallback(JSCont
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setDidSelectCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setOrientation : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAAutoCollectionView::Orientation arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setOrientation : Error processing arguments");
+        cobj->setOrientation(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setOrientation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_getCollectionViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getCollectionViewDelegate : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAAutoCollectionViewDelegate* ret = cobj->getCollectionViewDelegate();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAutoCollectionViewDelegate>(cx, (CrossApp::CAAutoCollectionViewDelegate*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionViewDelegate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_getVertCellInterval(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getVertCellInterval : Invalid Native Object");
+    if (argc == 0) {
+        uint32_t ret = cobj->getVertCellInterval();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getVertCellInterval : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_getCollectionFooterHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getCollectionFooterHeight : Invalid Native Object");
+    if (argc == 0) {
+        uint32_t ret = cobj->getCollectionFooterHeight();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAAutoCollectionView_onDidDeselectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onDidDeselectCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
         std::function<void (unsigned int, unsigned int)> arg0;
         do {
@@ -37922,16 +38266,16 @@ bool js_crossapp_CAAutoCollectionView_setDidSelectCellAtIndexPathCallback(JSCont
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setDidSelectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidSelectCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onDidDeselectCellAtIndexPath : Error processing arguments");
+        cobj->onDidDeselectCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setDidSelectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onDidDeselectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_onNumberOfItemsAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -37939,75 +38283,24 @@ bool js_crossapp_CAAutoCollectionView_switchPCMode(JSContext *cx, uint32_t argc,
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_switchPCMode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onNumberOfItemsAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_switchPCMode : Error processing arguments");
-        cobj->switchPCMode(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_setOrientation(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setOrientation : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAAutoCollectionView::Orientation arg0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setOrientation : Error processing arguments");
-        cobj->setOrientation(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setOrientation : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_setSectionViewForHeaderInSectionCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setSectionViewForHeaderInSectionCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CAView *(CrossApp::DSize, unsigned int)> arg0;
+        std::function<unsigned int (unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAView* {
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = dsize_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
-		            CrossApp::CAView* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
 		            return ret;
 		        };
 		        arg0 = lambda;
@@ -38018,70 +38311,59 @@ bool js_crossapp_CAAutoCollectionView_setSectionViewForHeaderInSectionCallback(J
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setSectionViewForHeaderInSectionCallback : Error processing arguments");
-        cobj->setSectionViewForHeaderInSectionCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onNumberOfItemsAtIndexPath : Error processing arguments");
+        cobj->onNumberOfItemsAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setSectionViewForHeaderInSectionCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onNumberOfItemsAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_getVertCellInterval(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_onCellSizeAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getVertCellInterval : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getVertCellInterval();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_onCellSizeAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::DSize (unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> DSize {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::DSize ret;
+		            ok &= jsval_to_dsize(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_onCellSizeAtIndexPath : Error processing arguments");
+        cobj->onCellSizeAtIndexPath(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getVertCellInterval : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getCollectionHeaderHeight();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_getCollectionFooterHeight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getCollectionFooterHeight : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getCollectionFooterHeight();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getCollectionFooterHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onCellSizeAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_setHoriMargins(JSContext *cx, uint32_t argc, jsval *vp)
@@ -38196,7 +38478,7 @@ bool js_crossapp_CAAutoCollectionView_setVertCellInterval(JSContext *cx, uint32_
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setVertCellInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_setDidDeselectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_switchPCMode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -38204,113 +38486,36 @@ bool js_crossapp_CAAutoCollectionView_setDidDeselectCellAtIndexPathCallback(JSCo
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setDidDeselectCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_switchPCMode : Invalid Native Object");
     if (argc == 1) {
-        std::function<void (unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setDidDeselectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidDeselectCellAtIndexPathCallback(arg0);
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_switchPCMode : Error processing arguments");
+        cobj->switchPCMode(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setDidDeselectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAAutoCollectionView_setCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_setCellAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CACollectionViewCell *(CrossApp::DSize, unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1, unsigned int larg2) -> CACollectionViewCell* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[3];
-		            largv[0] = dsize_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            largv[2] = uint32_to_jsval(cx, larg2);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(3, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CACollectionViewCell* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CACollectionViewCell*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAutoCollectionView_setCellAtIndexPathCallback : Error processing arguments");
-        cobj->setCellAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_setCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAAutoCollectionView_isAllowsSelection(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAAutoCollectionView_getHoriMargins(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_isAllowsSelection : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_getHoriMargins : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->isAllowsSelection();
+        uint32_t ret = cobj->getHoriMargins();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = uint32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_isAllowsSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_getHoriMargins : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAAutoCollectionView_dequeueReusableCellWithIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
@@ -38495,58 +38700,58 @@ void js_register_crossapp_CAAutoCollectionView(JSContext *cx, JS::HandleObject g
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setCollectionFooterHeight", js_crossapp_CAAutoCollectionView_setCollectionFooterHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfSectionsCallback", js_crossapp_CAAutoCollectionView_setNumberOfSectionsCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHeightForHeaderInSectionCallback", js_crossapp_CAAutoCollectionView_setHeightForHeaderInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHeightForHeaderInSection", js_crossapp_CAAutoCollectionView_onHeightForHeaderInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAllowsSelection", js_crossapp_CAAutoCollectionView_isAllowsSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCellVertAlign", js_crossapp_CAAutoCollectionView_getCellVertAlign, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSectionViewForFooterInSectionCallback", js_crossapp_CAAutoCollectionView_setSectionViewForFooterInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCollectionHeaderView", js_crossapp_CAAutoCollectionView_setCollectionHeaderView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOrientation", js_crossapp_CAAutoCollectionView_getOrientation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAlwaysBottomSectionFooter", js_crossapp_CAAutoCollectionView_isAlwaysBottomSectionFooter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCollectionFooterView", js_crossapp_CAAutoCollectionView_setCollectionFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionFooterView", js_crossapp_CAAutoCollectionView_getCollectionFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onSectionViewForFooterInSection", js_crossapp_CAAutoCollectionView_onSectionViewForFooterInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setHoriCellInterval", js_crossapp_CAAutoCollectionView_setHoriCellInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellSizeAtIndexPathCallback", js_crossapp_CAAutoCollectionView_setCellSizeAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCellHoriAlign", js_crossapp_CAAutoCollectionView_getCellHoriAlign, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getHoriMargins", js_crossapp_CAAutoCollectionView_getHoriMargins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isAlwaysBottomSectionFooter", js_crossapp_CAAutoCollectionView_isAlwaysBottomSectionFooter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHeightForFooterInSectionCallback", js_crossapp_CAAutoCollectionView_setHeightForFooterInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVertMargins", js_crossapp_CAAutoCollectionView_getVertMargins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfSections", js_crossapp_CAAutoCollectionView_onNumberOfSections, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCellHoriAlign", js_crossapp_CAAutoCollectionView_setCellHoriAlign, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSelectRowAtIndexPath", js_crossapp_CAAutoCollectionView_setSelectRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidSelectCellAtIndexPath", js_crossapp_CAAutoCollectionView_onDidSelectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("cellForRowAtIndexPath", js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAAutoCollectionView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHoriCellInterval", js_crossapp_CAAutoCollectionView_getHoriCellInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsMultipleSelection", js_crossapp_CAAutoCollectionView_isAllowsMultipleSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfItemsAtIndexPathCallback", js_crossapp_CAAutoCollectionView_setNumberOfItemsAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHeightForFooterInSection", js_crossapp_CAAutoCollectionView_onHeightForFooterInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVertMargins", js_crossapp_CAAutoCollectionView_setVertMargins, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowsSelection", js_crossapp_CAAutoCollectionView_setAllowsSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("reloadData", js_crossapp_CAAutoCollectionView_reloadData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowsMultipleSelection", js_crossapp_CAAutoCollectionView_setAllowsMultipleSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionHeaderView", js_crossapp_CAAutoCollectionView_getCollectionHeaderView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellAtIndexPath", js_crossapp_CAAutoCollectionView_onCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlwaysTopSectionHeader", js_crossapp_CAAutoCollectionView_setAlwaysTopSectionHeader, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CAAutoCollectionView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("cellForRowAtIndexPath", js_crossapp_CAAutoCollectionView_cellForRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCollectionViewDelegate", js_crossapp_CAAutoCollectionView_getCollectionViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWillDisplayCellAtIndexPathCallback", js_crossapp_CAAutoCollectionView_setWillDisplayCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onSectionViewForHeaderInSection", js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("displayingCollectionCell", js_crossapp_CAAutoCollectionView_displayingCollectionCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionViewDataSource", js_crossapp_CAAutoCollectionView_getCollectionViewDataSource, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onWillDisplayCellAtIndexPath", js_crossapp_CAAutoCollectionView_onWillDisplayCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlwaysBottomSectionFooter", js_crossapp_CAAutoCollectionView_setAlwaysBottomSectionFooter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAAutoCollectionView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCellVertAlign", js_crossapp_CAAutoCollectionView_setCellVertAlign, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("displayingCollectionCell", js_crossapp_CAAutoCollectionView_displayingCollectionCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAlwaysTopSectionHeader", js_crossapp_CAAutoCollectionView_isAlwaysTopSectionHeader, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidSelectCellAtIndexPathCallback", js_crossapp_CAAutoCollectionView_setDidSelectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("switchPCMode", js_crossapp_CAAutoCollectionView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setOrientation", js_crossapp_CAAutoCollectionView_setOrientation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSectionViewForHeaderInSectionCallback", js_crossapp_CAAutoCollectionView_setSectionViewForHeaderInSectionCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getVertCellInterval", js_crossapp_CAAutoCollectionView_getVertCellInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionHeaderHeight", js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setOrientation", js_crossapp_CAAutoCollectionView_setOrientation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCollectionViewDelegate", js_crossapp_CAAutoCollectionView_getCollectionViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getVertCellInterval", js_crossapp_CAAutoCollectionView_getVertCellInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionFooterHeight", js_crossapp_CAAutoCollectionView_getCollectionFooterHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidDeselectCellAtIndexPath", js_crossapp_CAAutoCollectionView_onDidDeselectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfItemsAtIndexPath", js_crossapp_CAAutoCollectionView_onNumberOfItemsAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellSizeAtIndexPath", js_crossapp_CAAutoCollectionView_onCellSizeAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setHoriMargins", js_crossapp_CAAutoCollectionView_setHoriMargins, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCollectionHeaderHeight", js_crossapp_CAAutoCollectionView_setCollectionHeaderHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUnSelectRowAtIndexPath", js_crossapp_CAAutoCollectionView_setUnSelectRowAtIndexPath, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHighlightCollectionCell", js_crossapp_CAAutoCollectionView_getHighlightCollectionCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVertCellInterval", js_crossapp_CAAutoCollectionView_setVertCellInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidDeselectCellAtIndexPathCallback", js_crossapp_CAAutoCollectionView_setDidDeselectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellAtIndexPathCallback", js_crossapp_CAAutoCollectionView_setCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isAllowsSelection", js_crossapp_CAAutoCollectionView_isAllowsSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("switchPCMode", js_crossapp_CAAutoCollectionView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getHoriMargins", js_crossapp_CAAutoCollectionView_getHoriMargins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("dequeueReusableCellWithIdentifier", js_crossapp_CAAutoCollectionView_dequeueReusableCellWithIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CAAutoCollectionView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -38766,48 +38971,6 @@ bool js_crossapp_CAWaterfallView_isAlwaysBottomSectionFooter(JSContext *cx, uint
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_isAlwaysBottomSectionFooter : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAWaterfallView_setDidSelectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_setDidSelectCellAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void (unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_setDidSelectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidSelectCellAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_setDidSelectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAWaterfallView_getWaterfallHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -38919,6 +39082,48 @@ bool js_crossapp_CAWaterfallView_setSelectRowAtIndexPath(JSContext *cx, uint32_t
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_setSelectRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAWaterfallView_onDidSelectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_onDidSelectCellAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_onDidSelectCellAtIndexPath : Error processing arguments");
+        cobj->onDidSelectCellAtIndexPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_onDidSelectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAWaterfallView_setWaterfallHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -38976,49 +39181,6 @@ bool js_crossapp_CAWaterfallView_isAllowsMultipleSelection(JSContext *cx, uint32
     }
 
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_isAllowsMultipleSelection : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAWaterfallView_setNumberOfItemsAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_setNumberOfItemsAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_setNumberOfItemsAtIndexPathCallback : Error processing arguments");
-        cobj->setNumberOfItemsAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_setNumberOfItemsAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWaterfallView_getHighlightWaterfallCell(JSContext *cx, uint32_t argc, jsval *vp)
@@ -39106,7 +39268,7 @@ bool js_crossapp_CAWaterfallView_setAllowsMultipleSelection(JSContext *cx, uint3
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_setAllowsMultipleSelection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAWaterfallView_setCellHeightAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWaterfallView_onCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -39114,24 +39276,33 @@ bool js_crossapp_CAWaterfallView_setCellHeightAtIndexPathCallback(JSContext *cx,
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_setCellHeightAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_onCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
+        std::function<CrossApp::CAWaterfallViewCell *(CrossApp::DSize, unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAWaterfallViewCell* {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
+		            jsval largv[2];
+		            largv[0] = dsize_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            CrossApp::CAWaterfallViewCell* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAWaterfallViewCell*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
 		            return ret;
 		        };
 		        arg0 = lambda;
@@ -39142,13 +39313,13 @@ bool js_crossapp_CAWaterfallView_setCellHeightAtIndexPathCallback(JSContext *cx,
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_setCellHeightAtIndexPathCallback : Error processing arguments");
-        cobj->setCellHeightAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_onCellAtIndexPath : Error processing arguments");
+        cobj->onCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_setCellHeightAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_onCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWaterfallView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp)
@@ -39250,7 +39421,33 @@ bool js_crossapp_CAWaterfallView_getColumnMargin(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_getColumnMargin : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAWaterfallView_setWillDisplayCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWaterfallView_getWaterfallFooterView(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_getWaterfallFooterView : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAView* ret = cobj->getWaterfallFooterView();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_getWaterfallFooterView : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAWaterfallView_onWillDisplayCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -39258,7 +39455,7 @@ bool js_crossapp_CAWaterfallView_setWillDisplayCellAtIndexPathCallback(JSContext
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_setWillDisplayCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_onWillDisplayCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
         std::function<void (CrossApp::CAWaterfallViewCell *, unsigned int)> arg0;
         do {
@@ -39291,13 +39488,13 @@ bool js_crossapp_CAWaterfallView_setWillDisplayCellAtIndexPathCallback(JSContext
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_setWillDisplayCellAtIndexPathCallback : Error processing arguments");
-        cobj->setWillDisplayCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_onWillDisplayCellAtIndexPath : Error processing arguments");
+        cobj->onWillDisplayCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_setWillDisplayCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_onWillDisplayCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWaterfallView_setAlwaysBottomSectionFooter(JSContext *cx, uint32_t argc, jsval *vp)
@@ -39338,30 +39535,25 @@ bool js_crossapp_CAWaterfallView_onExitTransitionDidStart(JSContext *cx, uint32_
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAWaterfallView_getWaterfallFooterView(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWaterfallView_setItemMargin(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_getWaterfallFooterView : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAView* ret = cobj->getWaterfallFooterView();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_setItemMargin : Invalid Native Object");
+    if (argc == 1) {
+        uint32_t arg0 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_setItemMargin : Error processing arguments");
+        cobj->setItemMargin(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_getWaterfallFooterView : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_setItemMargin : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWaterfallView_isAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp)
@@ -39402,7 +39594,7 @@ bool js_crossapp_CAWaterfallView_displayingWaterfallCell(JSContext *cx, uint32_t
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_displayingWaterfallCell : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAWaterfallView_setItemMargin(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWaterfallView_onCellHeightAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -39410,20 +39602,63 @@ bool js_crossapp_CAWaterfallView_setItemMargin(JSContext *cx, uint32_t argc, jsv
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_setItemMargin : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_onCellHeightAtIndexPath : Invalid Native Object");
     if (argc == 1) {
-        uint32_t arg0 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_setItemMargin : Error processing arguments");
-        cobj->setItemMargin(arg0);
+        std::function<unsigned int (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_onCellHeightAtIndexPath : Error processing arguments");
+        cobj->onCellHeightAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_setItemMargin : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_onCellHeightAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAWaterfallView_setDidDeselectCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWaterfallView_getItemMargin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_getItemMargin : Invalid Native Object");
+    if (argc == 0) {
+        uint32_t ret = cobj->getItemMargin();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_getItemMargin : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAWaterfallView_onDidDeselectCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -39431,7 +39666,7 @@ bool js_crossapp_CAWaterfallView_setDidDeselectCellAtIndexPathCallback(JSContext
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_setDidDeselectCellAtIndexPathCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_onDidDeselectCellAtIndexPath : Invalid Native Object");
     if (argc == 1) {
         std::function<void (unsigned int)> arg0;
         do {
@@ -39456,32 +39691,56 @@ bool js_crossapp_CAWaterfallView_setDidDeselectCellAtIndexPathCallback(JSContext
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_setDidDeselectCellAtIndexPathCallback : Error processing arguments");
-        cobj->setDidDeselectCellAtIndexPathCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_onDidDeselectCellAtIndexPath : Error processing arguments");
+        cobj->onDidDeselectCellAtIndexPath(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_setDidDeselectCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_onDidDeselectCellAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAWaterfallView_getItemMargin(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWaterfallView_onNumberOfItemsAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_getItemMargin : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getItemMargin();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_onNumberOfItemsAtIndexPath : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_onNumberOfItemsAtIndexPath : Error processing arguments");
+        cobj->onNumberOfItemsAtIndexPath(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_getItemMargin : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_onNumberOfItemsAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWaterfallView_setUnSelectRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp)
@@ -39543,60 +39802,6 @@ bool js_crossapp_CAWaterfallView_switchPCMode(JSContext *cx, uint32_t argc, jsva
     }
 
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAWaterfallView_setCellAtIndexPathCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_setCellAtIndexPathCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CAWaterfallViewCell *(CrossApp::DSize, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::DSize larg0, unsigned int larg1) -> CAWaterfallViewCell* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = dsize_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CAWaterfallViewCell* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAWaterfallViewCell*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWaterfallView_setCellAtIndexPathCallback : Error processing arguments");
-        cobj->setCellAtIndexPathCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAWaterfallView_setCellAtIndexPathCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWaterfallView_dequeueReusableCellWithIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
@@ -39788,38 +39993,38 @@ void js_register_crossapp_CAWaterfallView(JSContext *cx, JS::HandleObject global
         JS_FN("setAlwaysTopSectionHeader", js_crossapp_CAWaterfallView_setAlwaysTopSectionHeader, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getWaterfallViewDelegate", js_crossapp_CAWaterfallView_getWaterfallViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAlwaysBottomSectionFooter", js_crossapp_CAWaterfallView_isAlwaysBottomSectionFooter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidSelectCellAtIndexPathCallback", js_crossapp_CAWaterfallView_setDidSelectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getWaterfallHeaderHeight", js_crossapp_CAWaterfallView_getWaterfallHeaderHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setColumnCount", js_crossapp_CAWaterfallView_setColumnCount, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWaterfallHeaderView", js_crossapp_CAWaterfallView_setWaterfallHeaderView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWaterfallFooterHeight", js_crossapp_CAWaterfallView_setWaterfallFooterHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSelectRowAtIndexPath", js_crossapp_CAWaterfallView_setSelectRowAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidSelectCellAtIndexPath", js_crossapp_CAWaterfallView_onDidSelectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWaterfallHeaderHeight", js_crossapp_CAWaterfallView_setWaterfallHeaderHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAWaterfallView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsMultipleSelection", js_crossapp_CAWaterfallView_isAllowsMultipleSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfItemsAtIndexPathCallback", js_crossapp_CAWaterfallView_setNumberOfItemsAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHighlightWaterfallCell", js_crossapp_CAWaterfallView_getHighlightWaterfallCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowsSelection", js_crossapp_CAWaterfallView_setAllowsSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("reloadData", js_crossapp_CAWaterfallView_reloadData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowsMultipleSelection", js_crossapp_CAWaterfallView_setAllowsMultipleSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellHeightAtIndexPathCallback", js_crossapp_CAWaterfallView_setCellHeightAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellAtIndexPath", js_crossapp_CAWaterfallView_onCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CAWaterfallView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("cellForRowAtIndexPath", js_crossapp_CAWaterfallView_cellForRowAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWaterfallFooterView", js_crossapp_CAWaterfallView_setWaterfallFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getColumnMargin", js_crossapp_CAWaterfallView_getColumnMargin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWillDisplayCellAtIndexPathCallback", js_crossapp_CAWaterfallView_setWillDisplayCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getWaterfallFooterView", js_crossapp_CAWaterfallView_getWaterfallFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onWillDisplayCellAtIndexPath", js_crossapp_CAWaterfallView_onWillDisplayCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlwaysBottomSectionFooter", js_crossapp_CAWaterfallView_setAlwaysBottomSectionFooter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAWaterfallView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getWaterfallFooterView", js_crossapp_CAWaterfallView_getWaterfallFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setItemMargin", js_crossapp_CAWaterfallView_setItemMargin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAlwaysTopSectionHeader", js_crossapp_CAWaterfallView_isAlwaysTopSectionHeader, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("displayingWaterfallCell", js_crossapp_CAWaterfallView_displayingWaterfallCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setItemMargin", js_crossapp_CAWaterfallView_setItemMargin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidDeselectCellAtIndexPathCallback", js_crossapp_CAWaterfallView_setDidDeselectCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onCellHeightAtIndexPath", js_crossapp_CAWaterfallView_onCellHeightAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getItemMargin", js_crossapp_CAWaterfallView_getItemMargin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidDeselectCellAtIndexPath", js_crossapp_CAWaterfallView_onDidDeselectCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfItemsAtIndexPath", js_crossapp_CAWaterfallView_onNumberOfItemsAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUnSelectRowAtIndexPath", js_crossapp_CAWaterfallView_setUnSelectRowAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getWaterfallFooterHeight", js_crossapp_CAWaterfallView_getWaterfallFooterHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("switchPCMode", js_crossapp_CAWaterfallView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCellAtIndexPathCallback", js_crossapp_CAWaterfallView_setCellAtIndexPathCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("dequeueReusableCellWithIdentifier", js_crossapp_CAWaterfallView_dequeueReusableCellWithIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CAWaterfallView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -40847,7 +41052,7 @@ bool js_crossapp_CAWebView_draw(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAWebView_draw : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
-bool js_crossapp_CAWebView_setFinishLoadingCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWebView_onFailLoadingCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -40855,7 +41060,7 @@ bool js_crossapp_CAWebView_setFinishLoadingCallback(JSContext *cx, uint32_t argc
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWebView* cobj = (CrossApp::CAWebView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_setFinishLoadingCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_onFailLoadingCallback : Invalid Native Object");
     if (argc == 1) {
         std::function<void (const std::basic_string<char> &)> arg0;
         do {
@@ -40880,55 +41085,13 @@ bool js_crossapp_CAWebView_setFinishLoadingCallback(JSContext *cx, uint32_t argc
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_setFinishLoadingCallback : Error processing arguments");
-        cobj->setFinishLoadingCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_onFailLoadingCallback : Error processing arguments");
+        cobj->onFailLoadingCallback(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWebView_setFinishLoadingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAWebView_setJSCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAWebView* cobj = (CrossApp::CAWebView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_setJSCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void (const std::basic_string<char> &)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](const std::basic_string<char> & larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = std_string_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_setJSCallback : Error processing arguments");
-        cobj->setJSCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAWebView_setJSCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAWebView_onFailLoadingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWebView_canGoBack(JSContext *cx, uint32_t argc, jsval *vp)
@@ -40973,7 +41136,7 @@ bool js_crossapp_CAWebView_loadHTMLString(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CAWebView_loadHTMLString : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAWebView_setStartLoadingCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWebView_onJSCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -40981,14 +41144,14 @@ bool js_crossapp_CAWebView_setStartLoadingCallback(JSContext *cx, uint32_t argc,
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWebView* cobj = (CrossApp::CAWebView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_setStartLoadingCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_onJSCallback : Invalid Native Object");
     if (argc == 1) {
-        std::function<bool (const std::basic_string<char> &)> arg0;
+        std::function<void (const std::basic_string<char> &)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](const std::basic_string<char> & larg0) -> bool {
+		        auto lambda = [=, &ok](const std::basic_string<char> & larg0) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
 		            largv[0] = std_string_to_jsval(cx, larg0);
@@ -40997,9 +41160,6 @@ bool js_crossapp_CAWebView_setStartLoadingCallback(JSContext *cx, uint32_t argc,
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
-		            bool ret;
-		            ret = JS::ToBoolean(rval);
-		            return ret;
 		        };
 		        arg0 = lambda;
 		    }
@@ -41009,30 +41169,13 @@ bool js_crossapp_CAWebView_setStartLoadingCallback(JSContext *cx, uint32_t argc,
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_setStartLoadingCallback : Error processing arguments");
-        cobj->setStartLoadingCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_onJSCallback : Error processing arguments");
+        cobj->onJSCallback(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWebView_setStartLoadingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAWebView_reload(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAWebView* cobj = (CrossApp::CAWebView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_reload : Invalid Native Object");
-    if (argc == 0) {
-        cobj->reload();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAWebView_reload : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAWebView_onJSCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWebView_goForward(JSContext *cx, uint32_t argc, jsval *vp)
@@ -41145,6 +41288,51 @@ bool js_crossapp_CAWebView_loadFile(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAWebView_loadFile : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAWebView_onStartLoadingCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAWebView* cobj = (CrossApp::CAWebView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_onStartLoadingCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<bool (const std::basic_string<char> &)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](const std::basic_string<char> & larg0) -> bool {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = std_string_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            bool ret;
+		            ret = JS::ToBoolean(rval);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_onStartLoadingCallback : Error processing arguments");
+        cobj->onStartLoadingCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAWebView_onStartLoadingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWebView_loadURL(JSContext *cx, uint32_t argc, jsval *vp)
@@ -41296,7 +41484,24 @@ bool js_crossapp_CAWebView_stopLoading(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAWebView_stopLoading : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAWebView_setFailLoadingCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWebView_reload(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAWebView* cobj = (CrossApp::CAWebView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_reload : Invalid Native Object");
+    if (argc == 0) {
+        cobj->reload();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAWebView_reload : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAWebView_onFinishLoadingCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -41304,7 +41509,7 @@ bool js_crossapp_CAWebView_setFailLoadingCallback(JSContext *cx, uint32_t argc, 
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWebView* cobj = (CrossApp::CAWebView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_setFailLoadingCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWebView_onFinishLoadingCallback : Invalid Native Object");
     if (argc == 1) {
         std::function<void (const std::basic_string<char> &)> arg0;
         do {
@@ -41329,13 +41534,13 @@ bool js_crossapp_CAWebView_setFailLoadingCallback(JSContext *cx, uint32_t argc, 
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_setFailLoadingCallback : Error processing arguments");
-        cobj->setFailLoadingCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAWebView_onFinishLoadingCallback : Error processing arguments");
+        cobj->onFinishLoadingCallback(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWebView_setFailLoadingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAWebView_onFinishLoadingCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAWebView_getHTMLSource(JSContext *cx, uint32_t argc, jsval *vp)
@@ -41587,18 +41792,17 @@ void js_register_crossapp_CAWebView(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("draw", js_crossapp_CAWebView_draw, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setFinishLoadingCallback", js_crossapp_CAWebView_setFinishLoadingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setJSCallback", js_crossapp_CAWebView_setJSCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onFailLoadingCallback", js_crossapp_CAWebView_onFailLoadingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("canGoBack", js_crossapp_CAWebView_canGoBack, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadHTMLString", js_crossapp_CAWebView_loadHTMLString, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setStartLoadingCallback", js_crossapp_CAWebView_setStartLoadingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("reload", js_crossapp_CAWebView_reload, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onJSCallback", js_crossapp_CAWebView_onJSCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("goForward", js_crossapp_CAWebView_goForward, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("goBack", js_crossapp_CAWebView_goBack, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScalesPageToFit", js_crossapp_CAWebView_setScalesPageToFit, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAWebView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("showNativeWeb", js_crossapp_CAWebView_showNativeWeb, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadFile", js_crossapp_CAWebView_loadFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onStartLoadingCallback", js_crossapp_CAWebView_onStartLoadingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadURL", js_crossapp_CAWebView_loadURL, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("evaluateJS", js_crossapp_CAWebView_evaluateJS, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("showLoadingActivity", js_crossapp_CAWebView_showLoadingActivity, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -41606,7 +41810,8 @@ void js_register_crossapp_CAWebView(JSContext *cx, JS::HandleObject global) {
         JS_FN("setActivityView", js_crossapp_CAWebView_setActivityView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAWebView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stopLoading", js_crossapp_CAWebView_stopLoading, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setFailLoadingCallback", js_crossapp_CAWebView_setFailLoadingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reload", js_crossapp_CAWebView_reload, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onFinishLoadingCallback", js_crossapp_CAWebView_onFinishLoadingCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHTMLSource", js_crossapp_CAWebView_getHTMLSource, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("canGoForward", js_crossapp_CAWebView_canGoForward, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setJavascriptInterfaceScheme", js_crossapp_CAWebView_setJavascriptInterfaceScheme, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -42321,106 +42526,6 @@ void js_register_crossapp_CAAlertView(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_CrossApp_CAPickerView_class;
 JSObject *jsb_CrossApp_CAPickerView_prototype;
 
-bool js_crossapp_CAPickerView_setViewForSelectedCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setViewForSelectedCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CAView *(unsigned int, CrossApp::DSize)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, CrossApp::DSize larg1) -> CAView* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = dsize_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CAView* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setViewForSelectedCallback : Error processing arguments");
-        cobj->setViewForSelectedCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setViewForSelectedCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAPickerView_setTitleForRowCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setTitleForRowCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<std::basic_string<char> (unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            std::string ret;
-		            ok &= jsval_to_std_string(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setTitleForRowCallback : Error processing arguments");
-        cobj->setTitleForRowCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setTitleForRowCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAPickerView_setFontSizeNormal(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -42463,7 +42568,7 @@ bool js_crossapp_CAPickerView_setFontSizeSelected(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CAPickerView_setFontSizeSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAPickerView_setHeightForComponentCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAPickerView_onHeightForComponent(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -42471,7 +42576,7 @@ bool js_crossapp_CAPickerView_setHeightForComponentCallback(JSContext *cx, uint3
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setHeightForComponentCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_onHeightForComponent : Invalid Native Object");
     if (argc == 1) {
         std::function<unsigned int (unsigned int)> arg0;
         do {
@@ -42499,16 +42604,16 @@ bool js_crossapp_CAPickerView_setHeightForComponentCallback(JSContext *cx, uint3
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setHeightForComponentCallback : Error processing arguments");
-        cobj->setHeightForComponentCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_onHeightForComponent : Error processing arguments");
+        cobj->onHeightForComponent(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setHeightForComponentCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAPickerView_onHeightForComponent : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAPickerView_setDidSelectRowCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAPickerView_onViewForRow(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -42516,14 +42621,14 @@ bool js_crossapp_CAPickerView_setDidSelectRowCallback(JSContext *cx, uint32_t ar
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setDidSelectRowCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_onViewForRow : Invalid Native Object");
     if (argc == 1) {
-        std::function<void (unsigned int, unsigned int)> arg0;
+        std::function<CrossApp::CAView *(unsigned int, unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> void {
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> CAView* {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = uint32_to_jsval(cx, larg0);
@@ -42533,6 +42638,17 @@ bool js_crossapp_CAPickerView_setDidSelectRowCallback(JSContext *cx, uint32_t ar
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
 		        };
 		        arg0 = lambda;
 		    }
@@ -42542,13 +42658,13 @@ bool js_crossapp_CAPickerView_setDidSelectRowCallback(JSContext *cx, uint32_t ar
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setDidSelectRowCallback : Error processing arguments");
-        cobj->setDidSelectRowCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_onViewForRow : Error processing arguments");
+        cobj->onViewForRow(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setDidSelectRowCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAPickerView_onViewForRow : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAPickerView_getFontSizeNormal(JSContext *cx, uint32_t argc, jsval *vp)
@@ -42613,6 +42729,51 @@ bool js_crossapp_CAPickerView_reloadAllComponents(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CAPickerView_reloadAllComponents : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAPickerView_onWidthForComponent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_onWidthForComponent : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int (unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_onWidthForComponent : Error processing arguments");
+        cobj->onWidthForComponent(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAPickerView_onWidthForComponent : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAPickerView_getPickerViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -42637,6 +42798,49 @@ bool js_crossapp_CAPickerView_getPickerViewDelegate(JSContext *cx, uint32_t argc
     }
 
     JS_ReportError(cx, "js_crossapp_CAPickerView_getPickerViewDelegate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAPickerView_onNumberOfComponents(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_onNumberOfComponents : Invalid Native Object");
+    if (argc == 1) {
+        std::function<unsigned int ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> unsigned int {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            uint32_t ret;
+		            ok &= jsval_to_uint32(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_onNumberOfComponents : Error processing arguments");
+        cobj->onNumberOfComponents(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAPickerView_onNumberOfComponents : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAPickerView_getFontSizeSelected(JSContext *cx, uint32_t argc, jsval *vp)
@@ -42677,7 +42881,7 @@ bool js_crossapp_CAPickerView_init(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAPickerView_init : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAPickerView_setNumberOfComponentsCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAPickerView_onNumberOfRowsInComponent(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -42685,17 +42889,19 @@ bool js_crossapp_CAPickerView_setNumberOfComponentsCallback(JSContext *cx, uint3
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setNumberOfComponentsCallback : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_onNumberOfRowsInComponent : Invalid Native Object");
     if (argc == 1) {
-        std::function<unsigned int ()> arg0;
+        std::function<unsigned int (unsigned int)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> unsigned int {
+		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = uint32_to_jsval(cx, larg0);
 		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
@@ -42711,102 +42917,13 @@ bool js_crossapp_CAPickerView_setNumberOfComponentsCallback(JSContext *cx, uint3
 		    }
 		} while(0)
 		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setNumberOfComponentsCallback : Error processing arguments");
-        cobj->setNumberOfComponentsCallback(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_onNumberOfRowsInComponent : Error processing arguments");
+        cobj->onNumberOfRowsInComponent(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setNumberOfComponentsCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAPickerView_reloadComponent(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_reloadComponent : Invalid Native Object");
-    if (argc == 2) {
-        uint32_t arg0 = 0;
-        uint32_t arg1 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_reloadComponent : Error processing arguments");
-        cobj->reloadComponent(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-    if (argc == 3) {
-        uint32_t arg0 = 0;
-        uint32_t arg1 = 0;
-        bool arg2;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-        arg2 = JS::ToBoolean(args.get(2));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_reloadComponent : Error processing arguments");
-        cobj->reloadComponent(arg0, arg1, arg2);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPickerView_reloadComponent : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAPickerView_setViewForRowCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setViewForRowCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<CrossApp::CAView *(unsigned int, unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> CAView* {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[2];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            largv[1] = uint32_to_jsval(cx, larg1);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(2, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            CrossApp::CAView* ret;
-		            do {
-		            if (rval.isNull()) { ret = nullptr; break; }
-		            if (!rval.isObject()) { ok = false; break; }
-		            js_proxy_t *jsProxy;
-		            JSObject *tmpObj = rval.toObjectOrNull();
-		            jsProxy = jsb_get_js_proxy(tmpObj);
-		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
-		        } while (0);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setViewForRowCallback : Error processing arguments");
-        cobj->setViewForRowCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setViewForRowCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAPickerView_onNumberOfRowsInComponent : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAPickerView_getFontColorSelected(JSContext *cx, uint32_t argc, jsval *vp)
@@ -42864,51 +42981,6 @@ bool js_crossapp_CAPickerView_setBackgroundColor(JSContext *cx, uint32_t argc, j
     }
 
     JS_ReportError(cx, "js_crossapp_CAPickerView_setBackgroundColor : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAPickerView_setNumberOfRowsInComponentCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setNumberOfRowsInComponentCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setNumberOfRowsInComponentCallback : Error processing arguments");
-        cobj->setNumberOfRowsInComponentCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setNumberOfRowsInComponentCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAPickerView_setFontColorNormal(JSContext *cx, uint32_t argc, jsval *vp)
@@ -43003,7 +43075,7 @@ bool js_crossapp_CAPickerView_selectRow(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAPickerView_selectRow : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAPickerView_setWidthForComponentCallback(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAPickerView_reloadComponent(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -43011,41 +43083,31 @@ bool js_crossapp_CAPickerView_setWidthForComponentCallback(JSContext *cx, uint32
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setWidthForComponentCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<unsigned int (unsigned int)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0) -> unsigned int {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = uint32_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		            uint32_t ret;
-		            ok &= jsval_to_uint32(cx, rval, &ret);
-		            return ret;
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setWidthForComponentCallback : Error processing arguments");
-        cobj->setWidthForComponentCallback(arg0);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_reloadComponent : Invalid Native Object");
+    if (argc == 2) {
+        uint32_t arg0 = 0;
+        uint32_t arg1 = 0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_reloadComponent : Error processing arguments");
+        cobj->reloadComponent(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 3) {
+        uint32_t arg0 = 0;
+        uint32_t arg1 = 0;
+        bool arg2;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        arg2 = JS::ToBoolean(args.get(2));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_reloadComponent : Error processing arguments");
+        cobj->reloadComponent(arg0, arg1, arg2);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setWidthForComponentCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAPickerView_reloadComponent : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_crossapp_CAPickerView_setFontColorSelected(JSContext *cx, uint32_t argc, jsval *vp)
@@ -43113,6 +43175,52 @@ bool js_crossapp_CAPickerView_setSeparateColor(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CAPickerView_setSeparateColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAPickerView_onTitleForRow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_onTitleForRow : Invalid Native Object");
+    if (argc == 1) {
+        std::function<std::basic_string<char> (unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            std::string ret;
+		            ok &= jsval_to_std_string(cx, rval, &ret);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_onTitleForRow : Error processing arguments");
+        cobj->onTitleForRow(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAPickerView_onTitleForRow : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAPickerView_getFontColorNormal(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -43132,6 +43240,49 @@ bool js_crossapp_CAPickerView_getFontColorNormal(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAPickerView_getFontColorNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAPickerView_onDidSelectRow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_onDidSelectRow : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (unsigned int, unsigned int)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = uint32_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_onDidSelectRow : Error processing arguments");
+        cobj->onDidSelectRow(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAPickerView_onDidSelectRow : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAPickerView_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -43147,6 +43298,60 @@ bool js_crossapp_CAPickerView_onEnterTransitionDidFinish(JSContext *cx, uint32_t
     }
 
     JS_ReportError(cx, "js_crossapp_CAPickerView_onEnterTransitionDidFinish : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAPickerView_onViewForSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_onViewForSelected : Invalid Native Object");
+    if (argc == 1) {
+        std::function<CrossApp::CAView *(unsigned int, CrossApp::DSize)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok](unsigned int larg0, CrossApp::DSize larg1) -> CAView* {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = uint32_to_jsval(cx, larg0);
+		            largv[1] = dsize_to_jsval(cx, larg1);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(2, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		            CrossApp::CAView* ret;
+		            do {
+		            if (rval.isNull()) { ret = nullptr; break; }
+		            if (!rval.isObject()) { ok = false; break; }
+		            js_proxy_t *jsProxy;
+		            JSObject *tmpObj = rval.toObjectOrNull();
+		            jsProxy = jsb_get_js_proxy(tmpObj);
+		            ret = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+		            JSB_PRECONDITION2( ret, cx, 0, "Invalid Native Object");
+		        } while (0);
+		            return ret;
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_onViewForSelected : Error processing arguments");
+        cobj->onViewForSelected(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAPickerView_onViewForSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAPickerView_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -43303,35 +43508,35 @@ void js_register_crossapp_CAPickerView(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("setViewForSelectedCallback", js_crossapp_CAPickerView_setViewForSelectedCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleForRowCallback", js_crossapp_CAPickerView_setTitleForRowCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontSizeNormal", js_crossapp_CAPickerView_setFontSizeNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontSizeSelected", js_crossapp_CAPickerView_setFontSizeSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHeightForComponentCallback", js_crossapp_CAPickerView_setHeightForComponentCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDidSelectRowCallback", js_crossapp_CAPickerView_setDidSelectRowCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onHeightForComponent", js_crossapp_CAPickerView_onHeightForComponent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onViewForRow", js_crossapp_CAPickerView_onViewForRow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFontSizeNormal", js_crossapp_CAPickerView_getFontSizeNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPickerViewDataSource", js_crossapp_CAPickerView_getPickerViewDataSource, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("reloadAllComponents", js_crossapp_CAPickerView_reloadAllComponents, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onWidthForComponent", js_crossapp_CAPickerView_onWidthForComponent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPickerViewDelegate", js_crossapp_CAPickerView_getPickerViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfComponents", js_crossapp_CAPickerView_onNumberOfComponents, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFontSizeSelected", js_crossapp_CAPickerView_getFontSizeSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAPickerView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfComponentsCallback", js_crossapp_CAPickerView_setNumberOfComponentsCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("reloadComponent", js_crossapp_CAPickerView_reloadComponent, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setViewForRowCallback", js_crossapp_CAPickerView_setViewForRowCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onNumberOfRowsInComponent", js_crossapp_CAPickerView_onNumberOfRowsInComponent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFontColorSelected", js_crossapp_CAPickerView_getFontColorSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("visitEve", js_crossapp_CAPickerView_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundColor", js_crossapp_CAPickerView_setBackgroundColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNumberOfRowsInComponentCallback", js_crossapp_CAPickerView_setNumberOfRowsInComponentCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontColorNormal", js_crossapp_CAPickerView_setFontColorNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAPickerView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSeparateColor", js_crossapp_CAPickerView_getSeparateColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("selectRow", js_crossapp_CAPickerView_selectRow, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWidthForComponentCallback", js_crossapp_CAPickerView_setWidthForComponentCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reloadComponent", js_crossapp_CAPickerView_reloadComponent, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontColorSelected", js_crossapp_CAPickerView_setFontColorSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("selectedRowInComponent", js_crossapp_CAPickerView_selectedRowInComponent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparateColor", js_crossapp_CAPickerView_setSeparateColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onTitleForRow", js_crossapp_CAPickerView_onTitleForRow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFontColorNormal", js_crossapp_CAPickerView_getFontColorNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onDidSelectRow", js_crossapp_CAPickerView_onDidSelectRow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CAPickerView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onViewForSelected", js_crossapp_CAPickerView_onViewForSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -43407,6 +43612,7 @@ bool js_crossapp_CADatePickerView_onExit(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CADatePickerView_onExit : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+
 bool js_crossapp_CADatePickerView_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -48628,48 +48834,6 @@ bool js_crossapp_CAMotionManager_setGyroInterval(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAMotionManager_setGyroInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAMotionManager* cobj = (CrossApp::CAMotionManager *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAMotionManager_startGyroscope : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void (const CrossApp::CAValue &)> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](const CrossApp::CAValue & larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            largv[0] = cavalue_to_jsval(cx, larg0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAMotionManager_startGyroscope : Error processing arguments");
-        cobj->startGyroscope(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAMotionManager_startGyroscope : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAMotionManager_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -48754,7 +48918,6 @@ void js_register_crossapp_CAMotionManager(JSContext *cx, JS::HandleObject global
     static JSFunctionSpec funcs[] = {
         JS_FN("stopGyroscope", js_crossapp_CAMotionManager_stopGyroscope, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setGyroInterval", js_crossapp_CAMotionManager_setGyroInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("startGyroscope", js_crossapp_CAMotionManager_startGyroscope, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

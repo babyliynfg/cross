@@ -14,16 +14,16 @@ var TableViewTest = ca.CAViewController.extend({
 
         this.p_TableView = ca.CATableView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0, 0), ca.DVerticalLayoutFill));
 
-        this.p_TableView.setDidSelectCellAtIndexPathCallback(this.tableViewDidSelectRowAtIndexPath.bind(this)) ;
-        this.p_TableView.setDidDeselectCellAtIndexPathCallback(this.tableViewDidDeselectRowAtIndexPath.bind(this)) ;
-        this.p_TableView.setCellAtIndexPathCallBack(this.tableCellAtIndex.bind(this)) ;
-        this.p_TableView.setSectionViewForHeaderInSectionCallback(this.tableViewSectionViewForHeaderInSection.bind(this)) ;
-        this.p_TableView.setSectionViewForFooterInSectionCallback(this.tableViewSectionViewForFooterInSection.bind(this)) ;
-        this.p_TableView.setNumberOfRowsAtIndexPathCallback(this.numberOfRowsInSection.bind(this));
-        this.p_TableView.setNumberOfSectionsCallback(this.numberOfSections.bind(this)) ;
-        this.p_TableView.setCellHeightAtIndexPathCallback(this.tableViewHeightForRowAtIndexPath.bind(this));
-        this.p_TableView.setHeightForHeaderInSectionCallback(this.tableViewHeightForHeaderInSection.bind(this));
-        this.p_TableView.setHeightForFooterInSectionCallback(this.tableViewHeightForFooterInSection.bind(this)) ;
+        this.p_TableView.onDidSelectCellAtIndexPath(this.tableViewDidSelectRowAtIndexPath.bind(this)) ;
+        this.p_TableView.onDidDeselectCellAtIndexPath(this.tableViewDidDeselectRowAtIndexPath.bind(this)) ;
+        this.p_TableView.onCellAtIndexPath(this.tableCellAtIndex.bind(this)) ;
+        this.p_TableView.onSectionViewForHeaderInSection(this.tableViewSectionViewForHeaderInSection.bind(this)) ;
+        this.p_TableView.onSectionViewForFooterInSection(this.tableViewSectionViewForFooterInSection.bind(this)) ;
+        this.p_TableView.onNumberOfRowsAtIndexPath(this.numberOfRowsInSection.bind(this));
+        this.p_TableView.onNumberOfSections(this.numberOfSections.bind(this)) ;
+        this.p_TableView.onCellHeightAtIndexPath(this.tableViewHeightForRowAtIndexPath.bind(this));
+        this.p_TableView.onHeightForHeaderInSection(this.tableViewHeightForHeaderInSection.bind(this));
+        this.p_TableView.onHeightForFooterInSection(this.tableViewHeightForFooterInSection.bind(this)) ;
 
         this.p_TableView.setAllowsSelection(true);
         this.p_TableView.setAllowsMultipleSelection(false);

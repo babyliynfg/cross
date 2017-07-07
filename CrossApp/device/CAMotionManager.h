@@ -1,10 +1,4 @@
-//
-//  CAMotionManager.h
-//  CrossApp
-//
-//  Created by 秦乐 on 2017/2/20.
-//  Copyright © 2017年 . All rights reserved.
-//
+
 
 #ifndef CAMotionManager_h
 #define CAMotionManager_h
@@ -21,15 +15,16 @@ class CC_DLL CAMotionManager : public CAObject
 {
 public:
     
-    /**
-     *  @       "x"         double
-     *  @       "y"         double
-     *  @       "z"         double
-     *  @       "timestamp" float
-     */
-    typedef std::function<void(const CAValue&)> Callback;
-
+    struct Data
+    {
+        double x{0.f};
+        double y{0.f};
+        double z{0.f};
+        float timestamp{0.f};
+    };
     
+    typedef std::function<void(const CAMotionManager::Data&)> Callback;
+
 public:
 
     CAMotionManager();

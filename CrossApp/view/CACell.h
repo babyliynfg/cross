@@ -15,9 +15,22 @@
 NS_CC_BEGIN
 
 class CAUIEditorParser;
+
 class CC_DLL CACell: public CAControl
 {
 
+public:
+    
+    CC_LISTENING_FUNCTION(void(), NormalState);
+    
+    CC_LISTENING_FUNCTION(void(), HighlightedState);
+    
+    CC_LISTENING_FUNCTION(void(), SelectedState);
+    
+    CC_LISTENING_FUNCTION(void(), DsabledState);
+    
+    CC_LISTENING_FUNCTION(void(), Recovery);
+    
 public:
     
     CACell();
@@ -51,7 +64,7 @@ public:
     void setControlStateSelected();
     
     void setControlStateDisabled();
-    
+
 public:
     
     virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);

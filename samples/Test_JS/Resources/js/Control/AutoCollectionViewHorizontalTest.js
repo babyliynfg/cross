@@ -28,11 +28,11 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
             this.autoCollection.setOrientation(ca.CAAutoCollectionView.Orientation.Horizontal);
             this.autoCollection.setHoriCellInterval(20);
             this.autoCollection.setVertCellInterval(20);
-            this.autoCollection.setDidSelectCellAtIndexPathCallback(this.collectionViewDidSelectCellAtIndexPath.bind(this));
-            this.autoCollection.setCellAtIndexPathCallback(this.collectionCellAtIndex.bind(this));
-            this.autoCollection.setCellSizeAtIndexPathCallback(this.collectionViewSizeForItemAtIndexPath.bind(this));
-            this.autoCollection.setNumberOfItemsAtIndexPathCallback(this.numberOfItemsInSection.bind(this));
-            this.autoCollection.setNumberOfSectionsCallback(this.numberOfSections.bind(this));
+            this.autoCollection.onDidSelectCellAtIndexPath(this.collectionViewDidSelectCellAtIndexPath.bind(this));
+            this.autoCollection.onCellAtIndexPath(this.collectionCellAtIndex.bind(this));
+            this.autoCollection.onCellSizeAtIndexPath(this.collectionViewSizeForItemAtIndexPath.bind(this));
+            this.autoCollection.onNumberOfItemsAtIndexPath(this.numberOfItemsInSection.bind(this));
+            this.autoCollection.onNumberOfSections(this.numberOfSections.bind(this));
 
             this.getView().addSubview(this.autoCollection);
 

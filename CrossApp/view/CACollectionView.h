@@ -96,31 +96,31 @@ public:
     
     // event listeners. If these functions are set, the corresponding function of CACollectionViewDataSource will fail.
     
-    CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int row, unsigned int item), CellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(CACollectionViewCell*(DSize cellSize, unsigned int section, unsigned int row, unsigned int item), CellAtIndexPath);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), CellHeightAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), CellHeightAtIndexPath);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), NumberOfItemsAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section, unsigned int row), NumberOfItemsAtIndexPath);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfRowsAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), NumberOfRowsAtIndexPath);
     
-    CC_LISTENING_FUNCTION(unsigned int(), NumberOfSectionsCallback);
+    CC_LISTENING_FUNCTION(unsigned int(), NumberOfSections);
     
-    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForHeaderInSectionCallback);
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForHeaderInSection);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForHeaderInSectionCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForHeaderInSection);
     
-    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForFooterInSectionCallback);
+    CC_LISTENING_FUNCTION(CAView*(DSize viewSize, unsigned int section), SectionViewForFooterInSection);
     
-    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForFooterInSectionCallback);
+    CC_LISTENING_FUNCTION(unsigned int(unsigned int section), HeightForFooterInSection);
     
-    CC_LISTENING_FUNCTION(void(CACollectionViewCell* cell, unsigned int section, unsigned int row, unsigned int item), WillDisplayCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(CACollectionViewCell* cell, unsigned int section, unsigned int row, unsigned int item), WillDisplayCellAtIndexPath);
     
     // event listeners. If these functions are set, the corresponding function of CACollectionViewDelegate will fail.
     
-    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row, unsigned int item), DidSelectCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row, unsigned int item), DidSelectCellAtIndexPath);
     
-    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row, unsigned int item), DidDeselectCellAtIndexPathCallback);
+    CC_LISTENING_FUNCTION(void(unsigned int section, unsigned int row, unsigned int item), DidDeselectCellAtIndexPath);
     
 public:
 	CACollectionView();

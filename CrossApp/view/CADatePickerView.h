@@ -28,7 +28,7 @@ public:
     
 public:
 
-    CC_LISTENING_FUNCTION(void(const struct tm&), SelectRowCallback)
+    CC_LISTENING_FUNCTION(void(const struct tm&), SelectRow)
         
 public:
     static CADatePickerView* create(CADatePickerView::Mode m_mode);

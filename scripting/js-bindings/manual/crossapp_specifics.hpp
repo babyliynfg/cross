@@ -65,13 +65,11 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 }
 
 JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);
-void register_crossapp_js_core(JSContext* cx, JS::HandleObject obj);
-
-JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);
-
-bool js_crossapp_retain(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_release(JSContext *cx, uint32_t argc, jsval *vp);
-
 void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj);
 
+void register_crossapp_js_core(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_retain(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_release(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_onSelectRow(JSContext *cx, uint32_t argc, jsval *vp);
 #endif

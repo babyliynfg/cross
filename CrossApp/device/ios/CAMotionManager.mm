@@ -55,28 +55,29 @@ void CAMotionManager::startGyroscope(const CAMotionManager::Callback& callback)
          {
              //convert(m_pMotionManager).deviceMotionUpdateInterval = 0.1f;
              
-             double x = motion.gravity.x;
-             double y = motion.gravity.y;
-             double z = motion.gravity.z;
-             float timestamp = convert(m_pMotionManager).deviceMotionUpdateInterval;
+             static CAMotionManager::Data s_data;
+             s_data.x = motion.gravity.x;
+             s_data.y = motion.gravity.y;
+             s_data.z = motion.gravity.z;
+             s_data.timestamp = convert(m_pMotionManager).deviceMotionUpdateInterval;
              
-             double tmp = x;
+             double tmp = s_data.x;
              
              switch ([[UIApplication sharedApplication] statusBarOrientation])
              {
                  case UIInterfaceOrientationLandscapeRight:
-                     x = -y;
-                     y = tmp;
+                     s_data.x = -s_data.y;
+                     s_data.y = tmp;
                      break;
                      
                  case UIInterfaceOrientationLandscapeLeft:
-                     x = y;
-                     y = -tmp;
+                     s_data.x = s_data.y;
+                     s_data.y = -tmp;
                      break;
                      
                  case UIInterfaceOrientationPortraitUpsideDown:
-                     x = -y;
-                     y = -tmp;
+                     s_data.x = -s_data.y;
+                     s_data.y = -tmp;
                      break;
                      
                  case UIInterfaceOrientationPortrait:
@@ -85,18 +86,11 @@ void CAMotionManager::startGyroscope(const CAMotionManager::Callback& callback)
                      CCASSERT(false, "unknow orientation");
              }
              
-             static CAValueMap s_data;
-             
-             s_data["x"] = CAValue(x);
-             s_data["y"] = CAValue(y);
-             s_data["z"] = CAValue(z);
-             s_data["timestamp"] = CAValue(timestamp);
-             
              CAScheduler::getScheduler()->performFunctionInUIThread([&]()
              {
                  if (m_callback)
                  {
-                     m_callback(CAValue(s_data));
+                     m_callback(s_data);
                  }
              });
              

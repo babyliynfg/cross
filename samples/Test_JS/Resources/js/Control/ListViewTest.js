@@ -37,12 +37,12 @@ var list1DataSourceDelegate = {
         this.listview.setSeparatorColor(ca.CAColor4F.CLEAR);
 
 
-        this.listview.setDidSelectCellAtIndexPathCallback(this.listViewDidSelectCellAtIndex.bind(this));
-        this.listview.setDidDeselectCellAtIndexPathCallback(this.listViewDidDeselectCellAtIndex.bind(this));
-        this.listview.setNumberOfRowsAtIndexPathCallback(this.numberOfIndex.bind(this));
-        this.listview.setCellHeightAtIndexPathCallback(this.listViewHeightForIndex.bind(this));
-        this.listview.setWillDisplayCellAtIndexPathCallback(this.listViewWillDisplayCellAtIndex.bind(this)) ;
-        this.listview.setCellAtIndexPathCallback(this.listViewCellAtIndex.bind(this)) ;
+        this.listview.onDidSelectCellAtIndexPath(this.listViewDidSelectCellAtIndex.bind(this));
+        this.listview.onDidDeselectCellAtIndexPath(this.listViewDidDeselectCellAtIndex.bind(this));
+        this.listview.onNumberOfRowsAtIndexPath(this.numberOfIndex.bind(this));
+        this.listview.onCellHeightAtIndexPath(this.listViewHeightForIndex.bind(this));
+        this.listview.onWillDisplayCellAtIndexPath(this.listViewWillDisplayCellAtIndex.bind(this)) ;
+        this.listview.onCellAtIndexPath(this.listViewCellAtIndex.bind(this)) ;
     },
 
     numberOfIndex: function () {
@@ -93,12 +93,12 @@ var list2DataSourceDelegate = {
         this.listview.setSeparatorColor(ca.CAColor4F.CLEAR);
 
 
-        this.listview.setDidSelectCellAtIndexPathCallback(this.listViewDidSelectCellAtIndex.bind(this));
-        this.listview.setDidDeselectCellAtIndexPathCallback(this.listViewDidDeselectCellAtIndex.bind(this));
-        this.listview.setNumberOfRowsAtIndexPathCallback(this.numberOfIndex.bind(this));
-        this.listview.setCellHeightAtIndexPathCallback(this.listViewHeightForIndex.bind(this));
-        this.listview.setWillDisplayCellAtIndexPathCallback(this.listViewWillDisplayCellAtIndex.bind(this)) ;
-        this.listview.setCellAtIndexPathCallback(this.listViewCellAtIndex.bind(this)) ;
+        this.listview.onDidSelectCellAtIndexPath(this.listViewDidSelectCellAtIndex.bind(this));
+        this.listview.onDidDeselectCellAtIndexPath(this.listViewDidDeselectCellAtIndex.bind(this));
+        this.listview.onNumberOfRowsAtIndexPath(this.numberOfIndex.bind(this));
+        this.listview.onCellHeightAtIndexPath(this.listViewHeightForIndex.bind(this));
+        this.listview.onWillDisplayCellAtIndexPath(this.listViewWillDisplayCellAtIndex.bind(this)) ;
+        this.listview.onCellAtIndexPath(this.listViewCellAtIndex.bind(this)) ;
     },
 
     numberOfIndex: function () {

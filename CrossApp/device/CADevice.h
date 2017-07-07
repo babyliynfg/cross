@@ -1,10 +1,4 @@
-//
-//  CADevice.h
-//  CrossApp
-//
-//  Created by 秦乐 on 2017/2/21.
-//  Copyright © 2017年 CrossApp. All rights reserved.
-//
+
 
 #ifndef CADevice_h
 #define CADevice_h

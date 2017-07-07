@@ -59,23 +59,23 @@ public:
 public:
     // event listeners. If these functions are set, the corresponding function of CAScrollViewDelegate will fail.
     
-    CC_LISTENING_FUNCTION(void(), DidMovedCallback);
+    CC_LISTENING_FUNCTION(void(), DidMoved);
     
-    CC_LISTENING_FUNCTION(void(), StopMovedCallback);
+    CC_LISTENING_FUNCTION(void(), StopMoved);
     
-    CC_LISTENING_FUNCTION(void(), WillBeginDraggingCallback);
+    CC_LISTENING_FUNCTION(void(), WillBeginDragging);
     
-    CC_LISTENING_FUNCTION(void(), DraggingCallback);
+    CC_LISTENING_FUNCTION(void(), Dragging);
     
-    CC_LISTENING_FUNCTION(void(), DidEndDraggingCallback);
+    CC_LISTENING_FUNCTION(void(), DidEndDragging);
     
-    CC_LISTENING_FUNCTION(void(), DidZoomCallback);
+    CC_LISTENING_FUNCTION(void(), DidZoom);
     
-    CC_LISTENING_FUNCTION(void(DPoint), TouchUpWithoutMovedCallback);
+    CC_LISTENING_FUNCTION(void(DPoint), TouchUpWithoutMoved);
     
-    CC_LISTENING_FUNCTION(void(), HeaderBeginRefreshingCallback);
+    CC_LISTENING_FUNCTION(void(), HeaderBeginRefreshing);
     
-    CC_LISTENING_FUNCTION(void(), FooterBeginRefreshingCallback);
+    CC_LISTENING_FUNCTION(void(), FooterBeginRefreshing);
     
 public:
 

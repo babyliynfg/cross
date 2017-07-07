@@ -295,9 +295,9 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Normal);
 			}
-            if (m_obDidDeselectCellAtIndexPathCallback)
+            if (m_obDidDeselectCellAtIndexPath)
             {
-                m_obDidDeselectCellAtIndexPathCallback(deselectedIndex);
+                m_obDidDeselectCellAtIndexPath(deselectedIndex);
             }
             else if (m_pWaterfallViewDelegate)
 			{
@@ -311,9 +311,9 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			{
 				cell->setControlState(CAControl::State::Selected);
 			}
-            if (m_obDidSelectCellAtIndexPathCallback)
+            if (m_obDidSelectCellAtIndexPath)
             {
-                m_obDidSelectCellAtIndexPathCallback(selectedIndex);
+                m_obDidSelectCellAtIndexPath(selectedIndex);
             }
 			else if (m_pWaterfallViewDelegate)
 			{
@@ -412,9 +412,9 @@ void CAWaterfallView::reloadViewSizeData()
 	unsigned int viewHeight = 0;
 
     int nItemCount = 0;
-    if (m_obNumberOfItemsAtIndexPathCallback)
+    if (m_obNumberOfItemsAtIndexPath)
     {
-        nItemCount = m_obNumberOfItemsAtIndexPathCallback();
+        nItemCount = m_obNumberOfItemsAtIndexPath();
     }
     else if (m_pWaterfallViewDataSource)
     {
@@ -424,9 +424,9 @@ void CAWaterfallView::reloadViewSizeData()
 	for (int i = 0; i < nItemCount; i++)
 	{
         unsigned int nColumnHeight = 0;
-        if (m_obCellHeightAtIndexPathCallback)
+        if (m_obCellHeightAtIndexPath)
         {
-            nColumnHeight = m_obCellHeightAtIndexPathCallback(i);
+            nColumnHeight = m_obCellHeightAtIndexPath(i);
         }
         else if (m_pWaterfallViewDataSource)
         {
@@ -586,9 +586,9 @@ void CAWaterfallView::loadWaterfallCell()
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
         CAWaterfallViewCell* cell = nullptr;
-        if (m_obCellAtIndexPathCallback)
+        if (m_obCellAtIndexPath)
         {
-            cell = m_obCellAtIndexPathCallback(cellRect.size, index);
+            cell = m_obCellAtIndexPath(cellRect.size, index);
         }
         else if (m_pWaterfallViewDataSource)
         {
@@ -609,9 +609,9 @@ void CAWaterfallView::loadWaterfallCell()
 				cell->setControlState(CAControl::State::Selected);
 			}
 
-            if (m_obWillDisplayCellAtIndexPathCallback)
+            if (m_obWillDisplayCellAtIndexPath)
             {
-                m_obWillDisplayCellAtIndexPathCallback(cell, index);
+                m_obWillDisplayCellAtIndexPath(cell, index);
             }
 			else if (m_pWaterfallViewDataSource)
 			{
