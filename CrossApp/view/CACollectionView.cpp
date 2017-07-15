@@ -559,7 +559,7 @@ void CACollectionView::reloadData()
 	{
 		m_pCollectionHeaderView->setDisplayRange(true);
 		m_pCollectionHeaderView->setFrame(DRect(0, y, width, m_nCollectionHeaderHeight));
-		addSubview(m_pCollectionHeaderView);
+		this->addSubview(m_pCollectionHeaderView);
 		y += m_nCollectionHeaderHeight;
 	}
     
@@ -586,7 +586,7 @@ void CACollectionView::reloadData()
 			{
 				pSectionHeaderView->setDisplayRange(true);
 				pSectionHeaderView->setFrame(sectionHeaderRect);
-				insertSubview(pSectionHeaderView, 1);
+				this->insertSubview(pSectionHeaderView, 1);
 				m_pSectionHeaderViews[i] = pSectionHeaderView;
 				y += iSectionHeaderHeight;
 			}
@@ -635,7 +635,7 @@ void CACollectionView::reloadData()
                 }
 				if (cell)
 				{
-					addSubview(cell);
+					this->addSubview(cell);
 					cell->setFrame(cellRect);
 					cell->m_nSection = i;
 					cell->m_nRow = j;
@@ -673,7 +673,7 @@ void CACollectionView::reloadData()
 			{
 				pSectionFooterView->setDisplayRange(true);
 				pSectionFooterView->setFrame(sectionFooterRect);
-				insertSubview(pSectionFooterView, 1);
+				this->insertSubview(pSectionFooterView, 1);
 				m_pSectionFooterViews[i] = pSectionFooterView;
 				y += iSectionFooterHeight;
 			}
@@ -689,7 +689,7 @@ void CACollectionView::reloadData()
 	if (m_nCollectionFooterHeight > 0 && m_pCollectionFooterView)
 	{
 		m_pCollectionFooterView->setFrame(DRect(0, y, width, m_nCollectionFooterHeight));
-		addSubview(m_pCollectionFooterView);
+		this->addSubview(m_pCollectionFooterView);
 		y += m_nCollectionFooterHeight;
 	}
     
@@ -749,7 +749,7 @@ void CACollectionView::loadCollectionCell()
         }
         else if (m_pCollectionViewDataSource)
         {
-            m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, r.section, r.row, r.item);
+            cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, r.section, r.row, r.item);
         }
         
 		if (cell)

@@ -152,10 +152,10 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 /*******************/
 /** Notifications **/
 /*******************/
-/** @def CAAnimationFrameDisplayedNotification
+/** @def CACustomAnimationFrameDisplayedNotification
  Notification name when a CAImageFrame is displayed
  */
-#define CAAnimationFrameDisplayedNotification "CAAnimationFrameDisplayedNotification"
+#define CACustomAnimationFrameDisplayedNotification "CACustomAnimationFrameDisplayedNotification"
 
 /**
 * This header is used for defining event types using in CANotificationCenter

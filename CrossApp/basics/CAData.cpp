@@ -69,7 +69,9 @@ std::string CAData::toString()
 
 void CAData::clear()
 {
-    free(m_pBytes);
+    delete [] m_pBytes;
+    
+    //free(m_pBytes);
     m_pBytes = nullptr;
     m_iLength = 0;
 }

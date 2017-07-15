@@ -1,10 +1,3 @@
-//
-//  CAAlertView.h
-//  CrossApp
-//
-//  Created by Zhujian on 14-6-10.
-//  Copyright (c) 2014 http://www.9miao.com All rights reserved.
-//
 
 
 #ifndef __CAAlertView__

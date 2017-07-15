@@ -14,7 +14,7 @@
 #include "view/CAScale9ImageView.h"
 #include "dispatcher/CATouchDispatcher.h"
 #include "animation/CAViewAnimation.h"
-#include "animation/CAAnimation.h"
+#include "animation/CACustomAnimation.h"
 #include "support/CAUIEditorParser.h"
 #include "device/CADevice.h"
 #include "script_support/CCScriptSupport.h"
@@ -1007,7 +1007,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        CAAnimation::schedule([&](const CAAnimation::Model& model)
+        CACustomAnimation::schedule([&](const CACustomAnimation::Model& model)
         {
             m_fProgress = model.now / model.total;
             
@@ -1718,7 +1718,7 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
-        CAAnimation::schedule([&](const CAAnimation::Model& model)
+        CACustomAnimation::schedule([&](const CACustomAnimation::Model& model)
         {
             m_fProgress = model.now / model.total;
             

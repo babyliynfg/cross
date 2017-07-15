@@ -8,7 +8,7 @@
 
 #include "CAPageView.h"
 #include "basics/CAScheduler.h"
-#include "animation/CAAnimation.h"
+#include "animation/CACustomAnimation.h"
 
 CAPageView::CAPageView(CAPageView::Orientation type)
 :m_eOrientation(type)
@@ -272,7 +272,7 @@ void CAPageView::contentOffsetFinish()
 
 bool CAPageView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (CAAnimation::isSchedule("contentOffset:" + m_s__StrID))
+    if (CACustomAnimation::isSchedule("contentOffset:" + m_s__StrID))
     {
         return false;
     }

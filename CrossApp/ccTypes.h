@@ -193,7 +193,7 @@ typedef struct
     ccT2F_Quad texCoords;
     float delay;
     DSize size; 
-} CAAnimationFrameData;
+} CACustomAnimationFrameData;
 
 enum class CAStatusBarStyle
 {

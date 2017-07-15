@@ -1,7 +1,7 @@
 
 
-#ifndef __CCSCENE_H__
-#define __CCSCENE_H__
+#ifndef __CAWINDOW_H__
+#define __CAWINDOW_H__
 
 #include "CAView.h"
 #include "controller/CAViewController.h"
@@ -59,4 +59,4 @@ protected:
 
 NS_CC_END
 
-#endif // __CCSCENE_H__
+#endif // __CAWINDOW_H__

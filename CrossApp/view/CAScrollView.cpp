@@ -15,7 +15,7 @@
 #include "basics/CAPointExtension.h"
 #include "CCEGLView.h"
 #include "animation/CAViewAnimation.h"
-#include "animation/CAAnimation.h"
+#include "animation/CACustomAnimation.h"
 #include "support/CAThemeManager.h"
 #include "support/ccUtils.h"
 NS_CC_BEGIN
@@ -364,7 +364,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
         m_tInertia = DPointZero;
         m_tCloseToPoint = point;
         m_tInitialPoint = m_pContainer->m_obPoint;
-        CAAnimation::schedule([&](const CAAnimation::Model& model)
+        CACustomAnimation::schedule([&](const CACustomAnimation::Model& model)
         {
             if (model.now < model.total)
             {
@@ -502,7 +502,7 @@ bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
         
         if (m_vTouches.size() == 1)
         {
-            CAAnimation::unschedule("contentOffset:" + m_s__StrID);
+            CACustomAnimation::unschedule("contentOffset:" + m_s__StrID);
             this->stopDeaccelerateScroll();
             m_tCloseToPoint = this->getViewSize();
             m_tInitialPoint = m_tCloseToPoint;
@@ -866,7 +866,7 @@ void CAScrollView::stopDeaccelerateScroll()
 void CAScrollView::startDeaccelerateScroll()
 {
     CC_RETURN_IF(!m_bRunning);
-    CAAnimation::unschedule("contentOffset:" + m_s__StrID);
+    CACustomAnimation::unschedule("contentOffset:" + m_s__StrID);
     CAScheduler::getScheduler()->unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     CAScheduler::getScheduler()->schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
     m_bDecelerating = true;

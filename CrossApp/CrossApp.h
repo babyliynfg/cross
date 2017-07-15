@@ -22,7 +22,7 @@
 #include "ccTypes.h"
 
 // animation
-#include "animation/CAAnimation.h"
+#include "animation/CACustomAnimation.h"
 #include "animation/CAViewAnimation.h"
 
 //basics
@@ -101,6 +101,7 @@
 #include "view/CARenderImage.h"
 #include "view/CAClippingView.h"
 #include "view/CAAlertView.h"
+#include "view/CAAVPlayerView.h"
 #include "view/CAPickerView.h"
 #include "view/CADatePickerView.h"
 #include "view/CAActivityIndicatorView.h"

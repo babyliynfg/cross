@@ -28,7 +28,6 @@ void CollectionViewTest::viewDidLoad()
     
     p_Conllection = CACollectionView::createWithLayout(DLayoutFill);
     p_Conllection->setAllowsSelection(true);
-//    p_Conllection->setAllowsMultipleSelection(true);
     p_Conllection->setCollectionViewDelegate(this);
     p_Conllection->setCollectionViewDataSource(this);
     p_Conllection->setScrollViewDelegate(this);
