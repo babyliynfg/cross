@@ -37,10 +37,11 @@ static void playerLayer_play(AVPlayer* player, const std::function<void()>& call
     if (s_pAVPlayerLayer == nil)
     {
         s_pAVPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
-        s_pAVPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
-        s_pAVPlayerLayer.hidden = YES;
+        [s_pAVPlayerLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+        [s_pAVPlayerLayer setHidden:YES];
         
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+        [s_pAVPlayerLayer setBackgroundColor:[NSColor blackColor].CGColor];
         NSWindow* window = [[NSApplication sharedApplication] mainWindow];
         if (window.contentView.layer == nil)
         {
@@ -49,6 +50,7 @@ static void playerLayer_play(AVPlayer* player, const std::function<void()>& call
         
         [window.contentView.layer addSublayer:s_pAVPlayerLayer];
 #else
+        [s_pAVPlayerLayer setBackgroundColor:[UIColor blackColor].CGColor];
         UIWindow* window = [[UIApplication sharedApplication] keyWindow];
         [window.layer addSublayer:s_pAVPlayerLayer];
 #endif
@@ -60,17 +62,14 @@ static void playerLayer_play(AVPlayer* player, const std::function<void()>& call
         [s_pAVPlayerLayer setPlayer:player];
     }
     
-    s_pAVPlayerLayer.position = CGPointMake(size.width/2, size.height/2);
-    s_pAVPlayerLayer.bounds = CGRectMake(0, 0, size.width, size.height);
+    [s_pAVPlayerLayer setPosition:CGPointMake(size.width/2, size.height/2)];
+    [s_pAVPlayerLayer setBounds:CGRectMake(0, 0, size.width, size.height)];
     
     [player play];
     
     NSLog(@"%lld", player.currentItem.duration.value);
     
-    
-    
-    
-    
+
     CrossApp::CAScheduler::getScheduler()->schedule([=](float dt)
     {
         callback();
