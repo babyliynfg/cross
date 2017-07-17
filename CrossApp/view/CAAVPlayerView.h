@@ -38,7 +38,9 @@ public:
     
     float getCurrentTime();
     
-    CC_LISTENING_FUNCTION(void(float), PeriodicTime);
+    CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime);
+    
+    CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime);
     
 protected:
 

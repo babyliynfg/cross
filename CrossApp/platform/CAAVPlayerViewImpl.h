@@ -16,6 +16,8 @@ class CC_DLL CAAVPlayerViewImpl
 {
 public:
     
+    static CAImage* getFirstFrameImageWithFilePath(const std::string& filePath);
+    
     CAAVPlayerViewImpl(CAAVPlayerView* playerView);
     
     virtual ~CAAVPlayerViewImpl();
@@ -31,8 +33,6 @@ public:
     float getDuration();
     
     float getCurrentTime();
-    
-    
     
 private:
     

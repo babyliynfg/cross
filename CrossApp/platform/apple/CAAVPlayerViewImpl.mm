@@ -67,9 +67,6 @@ static void playerLayer_play(AVPlayer* player, const std::function<void()>& call
     
     [player play];
     
-    NSLog(@"%lld", player.currentItem.duration.value);
-    
-
     CrossApp::CAScheduler::getScheduler()->schedule([=](float dt)
     {
         callback();
@@ -85,6 +82,48 @@ static void playerLayer_pause(AVPlayer* player)
     }
 }
 
+static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
+{
+    CrossApp::CAImage* image = nullptr;
+    
+    do
+    {
+        AVURLAsset *asset = [[[AVURLAsset alloc] initWithURL:url options:nil] autorelease];
+        AVAssetImageGenerator *assetGen = [[[AVAssetImageGenerator alloc] initWithAsset:asset] autorelease];
+        
+        assetGen.appliesPreferredTrackTransform = YES;
+        CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+        NSError *error = nil;
+        CMTime actualTime;
+        CGImageRef videoImage = [assetGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+        
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+        NSSize size = NSMakeSize(CGImageGetWidth(videoImage), CGImageGetHeight(videoImage));
+        NSImage* nsImage = [[NSImage alloc] initWithCGImage:videoImage size:size];
+        NSData* nsData = [nsImage TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:1];
+#else
+        UIImage* uiImage = [UIImage imageWithCGImage:videoImage];
+        NSData *nsData = UIImagePNGRepresentation(uiImage);
+#endif
+        
+        ssize_t length = [nsData length];
+        
+        unsigned char* data = (unsigned char*)malloc(length);
+        [nsData getBytes:data length:length];
+        
+        CrossApp::CAData* cross_data = new CrossApp::CAData();
+        cross_data->fastSet(data, length);
+        
+        image = CrossApp::CAImage::createWithImageDataNoCache(cross_data);
+        
+        cross_data->release();
+        CGImageRelease(videoImage);
+        
+    } while (0);
+    
+    return image;
+}
+
 @interface NativeAVPlayer : NSObject <AVPlayerItemOutputPullDelegate>
 {
     AVPlayerItemVideoOutput* _videoOutPut;
@@ -94,7 +133,8 @@ static void playerLayer_pause(AVPlayer* player)
     
     id observer;
 }
-@property (nonatomic, assign, setter=onPeriodicTime:) std::function<void(float)> periodicTime;
+@property (nonatomic, assign, setter=onPeriodicTime:) std::function<void(float, float)> periodicTime;
+@property (nonatomic, assign, setter=onLoadedTime:) std::function<void(float, float)> loadedTime;
 
 - (id)initWithCallback:(std::function<void(CrossApp::CAImage*)>)function;
 - (void)setUrl:(std::string)url;
@@ -126,100 +166,62 @@ static void playerLayer_pause(AVPlayer* player)
 
 - (void)setUrl:(std::string)url
 {
-    if (_player)
-    {
-        [self pause];
-        [_player release];
-    }
-    
-    NSURL* videoURL = [NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]];
-    
-    //初始化播放地址
-    AVPlayerItem* item = [AVPlayerItem playerItemWithURL:videoURL];
-    //添加输出流
-    [item addOutput:_videoOutPut];
-    
-    _player = [[AVPlayer playerWithPlayerItem:item] retain];
+    [self setup:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]] load:NO];
 }
 
 - (void)setFilePath:(std::string)filePath
 {
-    if (_player)
-    {
-        [self pause];
-        [_player release];
-    }
-    
     std::string resource;
     std::string type;
     size_t pos = filePath.find_last_of(".");
     resource = filePath.substr(0, pos);
     type = filePath.substr(pos + 1, filePath.length() - pos - 1);
     
-    
     NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:resource.c_str()]
                                                    ofType:[NSString stringWithUTF8String:type.c_str()]];
-    NSURL* videoURL = [NSURL fileURLWithPath:path];
+    
+    [self setup:[NSURL fileURLWithPath:path] load:YES];
+}
+
+- (void)setup:(NSURL*)videoURL load:(BOOL)load
+{
+    if (_player)
+    {
+        [self pause];
+        [_player.currentItem removeOutput:_videoOutPut];
+        [_player.currentItem removeObserver:self forKeyPath:@"status"];
+        [_player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+        [_player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
+        [_player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+        [_player removeObserver:self forKeyPath:@"rate"];
+    }
     
     //初始化播放地址
     AVPlayerItem* item = [AVPlayerItem playerItemWithURL:videoURL];
-    //添加输出流
-    [item addOutput:_videoOutPut];
-    
-    _player = [[AVPlayer playerWithPlayerItem:item] retain];
 
-/**************获取第一帧图片******************/
-    
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
-    AVAssetImageGenerator *assetGen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-    
-    assetGen.appliesPreferredTrackTransform = YES;
-    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
-    NSError *error = nil;
-    CMTime actualTime;
-    CGImageRef videoImage = [assetGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-    NSSize size = NSMakeSize(CGImageGetWidth(videoImage), CGImageGetHeight(videoImage));
-    NSImage* nsImage = [[NSImage alloc] initWithCGImage:videoImage size:size];
-    NSData* nsData = [nsImage TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:1];
-#else
-    UIImage* uiImage = [UIImage imageWithCGImage:videoImage];
-    NSData *nsData = UIImagePNGRepresentation(uiImage);
-#endif
-    
-    ssize_t length = [nsData length];
-    
-    unsigned char* data = (unsigned char*)malloc(length);
-    [nsData getBytes:data length:length];
-    
-    CrossApp::CAData* cross_data = new CrossApp::CAData();
-    cross_data->fastSet(data, length);
-    
-    CrossApp::CAImage* image = CrossApp::CAImage::createWithImageDataNoCache(cross_data);
-    
-    if (_function)
+    if (_player == nil)
     {
-        _function(image);
+        _player = [[AVPlayer playerWithPlayerItem:item] retain];
     }
-    cross_data->release();
-    CGImageRelease(videoImage);
-/********************************/
-}
-
-- (void)play
-{
+    else
+    {
+        [_player replaceCurrentItemWithPlayerItem:item];
+    }
+    
+    //添加输出流
+    [_player.currentItem addOutput:_videoOutPut];
+    
     //需要时时显示播放的进度
     //根据播放的帧数、速率，进行时间的异步(在子线程中完成)获取
     observer = [_player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_global_queue(0, 0) usingBlock:^(CMTime time) {
         //获取时间
         //获取当前播放时间(根据帧数和播放速率，视频资源的总长度得到的CMTime)
         float current = CMTimeGetSeconds(_player.currentItem.currentTime);
-//        //总时间
+        //        //总时间
         float duratuon = CMTimeGetSeconds(_player.currentItem.duration);
-//        //CMTimeGetSeconds 将描述视频时间的结构体转化为float（秒）
-
-//        //回到主线程刷新UI
+        //        //CMTimeGetSeconds 将描述视频时间的结构体转化为float（秒）
+        
+        //        //回到主线程刷新UI
         dispatch_async(dispatch_get_main_queue(), ^{
             //要考虑到代码的健壮性
             /*1、在向对象发送消息前，要判断对象是否为空
@@ -230,7 +232,7 @@ static void playerLayer_pause(AVPlayer* player)
              */
             if (self.periodicTime)
             {
-                self.periodicTime(current);
+                self.periodicTime(current, duratuon);
             }
             
             if (current >= duratuon)
@@ -241,6 +243,66 @@ static void playerLayer_pause(AVPlayer* player)
         
     }];
     
+    [_player.currentItem.asset loadValuesAsynchronouslyForKeys:@[@"duration"] completionHandler:^{
+        NSError *error = nil;
+        AVKeyValueStatus tracksStatus = [_player.currentItem.asset statusOfValueForKey:@"duration" error:&error];
+        switch (tracksStatus) {
+            case AVKeyValueStatusLoaded:
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (!CMTIME_IS_INDEFINITE(_player.currentItem.asset.duration)) {
+                        CGFloat second = _player.currentItem.asset.duration.value / _player.currentItem.asset.duration.timescale;
+                        NSLog(@"loadValuesAsynchronouslyForKeys %f", second);
+                    }
+                });
+            }
+                break;
+            case AVKeyValueStatusFailed:
+            {
+                NSLog(@"AVKeyValueStatusFailed失败,请检查网络,或查看plist中是否添加App Transport Security Settings");
+            }
+                break;
+            case AVKeyValueStatusCancelled:
+            {
+                NSLog(@"AVKeyValueStatusCancelled取消");
+            }
+                break;
+            case AVKeyValueStatusUnknown:
+            {
+                NSLog(@"AVKeyValueStatusUnknown未知");
+            }
+                break;
+            case AVKeyValueStatusLoading:
+            {
+                NSLog(@"AVKeyValueStatusLoading正在加载");
+            }
+                break;
+        }
+    }];
+
+    
+    //监听状态属性
+    [_player.currentItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    //监听网络加载情况属性
+    [_player.currentItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
+    //监听播放的区域缓存是否为空
+    [_player.currentItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
+    //缓存可以播放的时候调用
+    [_player.currentItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+    //监听暂停或者播放中
+    [_player addObserver:self forKeyPath:@"rate" options:NSKeyValueObservingOptionNew context:nil];
+    
+    /**************获取第一帧图片******************/
+    if (load && _function)
+    {
+        CrossApp::CAImage* image = get_first_frame_image_with_filePath(videoURL);
+        _function(image);
+    }
+}
+
+
+- (void)play
+{
     playerLayer_play(_player, [=]
     {
         [self outputMediaData];
@@ -249,8 +311,6 @@ static void playerLayer_pause(AVPlayer* player)
 
 - (void)pause;
 {
-    [_player removeTimeObserver:observer];
-    observer = nil;
     playerLayer_pause(_player);
 }
 
@@ -315,9 +375,82 @@ static void playerLayer_pause(AVPlayer* player)
     
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"status"])
+    {
+        AVPlayerItemStatus itemStatus = (AVPlayerItemStatus)[[change objectForKey:NSKeyValueChangeNewKey] integerValue];
+        
+        switch (itemStatus) {
+            case AVPlayerItemStatusUnknown:
+            {
+                NSLog(@"AVPlayerItemStatusUnknown");
+            }
+                break;
+            case AVPlayerItemStatusReadyToPlay:
+            {
+                NSLog(@"AVPlayerItemStatusReadyToPlay");
+            }
+                break;
+            case AVPlayerItemStatusFailed:
+            {
+                NSLog(@"AVPlayerItemStatusFailed");
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    else if ([keyPath isEqualToString:@"loadedTimeRanges"])
+    {  //监听播放器的下载进度
+        NSArray *loadedTimeRanges = [_player.currentItem loadedTimeRanges];
+        CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];// 获取缓冲区域
+        float startSeconds = CMTimeGetSeconds(timeRange.start);
+        float durationSeconds = CMTimeGetSeconds(timeRange.duration);
+        float timeInterval = startSeconds + durationSeconds;// 计算缓冲总进度
+        float totalDuration = CMTimeGetSeconds(_player.currentItem.duration);
+        
+        if (self.loadedTime)
+        {
+            self.loadedTime(timeInterval, totalDuration);
+        }
+    }
+    else if ([keyPath isEqualToString:@"playbackBufferEmpty"])
+    { //监听播放器在缓冲数据的状态
+//        _status = SBPlayerStatusBuffering;
+//        if (!self.activityIndeView.isAnimating) {
+//            [self.activityIndeView startAnimating];
+//        }
+    }
+    else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"])
+    {
+        NSLog(@"缓冲达到可播放");
+    }
+    else if ([keyPath isEqualToString:@"rate"])
+    {//当rate==0时为暂停,rate==1时为播放,当rate等于负数时为回放
+        
+        NSInteger rate = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
+        
+        if (rate == 0)
+        {
+            NSLog(@"暂停");
+        }
+        else if (rate == 1)
+        {
+            NSLog(@"播放");
+        }
+        else if (rate < 0)
+        {
+            NSLog(@"回放");
+        }
+    }
+    
+}
+
 - (void)dealloc
 {
     [self pause];
+    [_player removeTimeObserver:observer];
     [_player release];
     [_videoOutPut release];
     [super dealloc];
@@ -327,6 +460,28 @@ static void playerLayer_pause(AVPlayer* player)
 
 
 NS_CC_BEGIN
+
+CAImage* CAAVPlayerViewImpl::getFirstFrameImageWithFilePath(const std::string& filePath)
+{
+    if (filePath.length() == 0)
+    {
+        return nullptr;
+    }
+    
+    std::string resource;
+    std::string type;
+    size_t pos = filePath.find_last_of(".");
+    resource = filePath.substr(0, pos);
+    type = filePath.substr(pos + 1, filePath.length() - pos - 1);
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:resource.c_str()]
+                                                     ofType:[NSString stringWithUTF8String:type.c_str()]];
+    
+    NSURL* url = [NSURL fileURLWithPath:path];
+    
+    return get_first_frame_image_with_filePath(url);
+}
+
 CAAVPlayerViewImpl::CAAVPlayerViewImpl(CAAVPlayerView* playerView)
 : m_pPlayerView(playerView)
 {
@@ -335,13 +490,21 @@ CAAVPlayerViewImpl::CAAVPlayerViewImpl(CAAVPlayerView* playerView)
         m_pPlayerView->setImage(image);
     }];
     
-    [NATIVE_IMPL onPeriodicTime:[&](float currTime)
+    [NATIVE_IMPL onPeriodicTime:[&](float currTime, float duratuon)
     {
         if (m_pPlayerView->m_obPeriodicTime)
         {
-            m_pPlayerView->m_obPeriodicTime(currTime);
+            m_pPlayerView->m_obPeriodicTime(currTime, duratuon);
         }
     }];
+    
+    [NATIVE_IMPL onLoadedTime:[&](float currTime, float duratuon)
+     {
+         if (m_pPlayerView->m_obLoadedTime)
+         {
+             m_pPlayerView->m_obLoadedTime(currTime, duratuon);
+         }
+     }];
 }
 
 CAAVPlayerViewImpl::~CAAVPlayerViewImpl()
