@@ -11,18 +11,13 @@
 
 NS_CC_BEGIN
 
-class ImageCallback
-{
-public:
-    ImageCallback(const std::function<void(CAImage*)>& callback)
-    :_callback(callback)
-    {}
-    
-    std::function<void(CAImage*)> _callback;
-};
 
-static std::map<int , CAAVPlayerViewImpl*> s_map;
-static std::map<int , ImageCallback*> s_ImageCallback_map;
+static std::map<int , CAAVPlayerView*> s_map;
+static std::map<int , std::function<void(CAImage*)> > s_ImageCallback_map;
+static std::map<int , std::function<void(float current, float duratuon)> > s_PeriodicTime_map;
+static std::map<int , std::function<void(float current, float duratuon)> > s_LoadedTime_map;
+static std::map<int , std::function<void()> > s_DidPlayToEndTime_map;
+static std::map<int , std::function<void()> > s_TimeJumped_map;
 
 
 void removePlayer(int key)
@@ -38,19 +33,48 @@ void removePlayer(int key)
 CAAVPlayerViewImpl::CAAVPlayerViewImpl(CAAVPlayerView* playerView)
 : m_pPlayerView(playerView)
 {
-    s_map[m_pPlayerView->m_u__ID] = this;
-    ImageCallback* imageCallback = new ImageCallback([&](CAImage* image)
+    s_map[m_pPlayerView->m_u__ID] = m_pPlayerView;
+    
+    s_ImageCallback_map[m_pPlayerView->m_u__ID] = [&](CAImage* image)
     {
         m_pPlayerView->setImage(image);
-    });
-    s_ImageCallback_map[m_pPlayerView->m_u__ID] = imageCallback;
+    };
+    
+    s_PeriodicTime_map[m_pPlayerView->m_u__ID] = [&](float current, float duratuon)
+    {
+        if(m_pPlayerView->m_obPeriodicTime)
+            m_pPlayerView->m_obPeriodicTime(current,duratuon) ;
+    };
+    
+    s_LoadedTime_map[m_pPlayerView->m_u__ID] = [&](float current, float duratuon)
+    {
+        if(m_pPlayerView->m_obLoadedTime)
+            m_pPlayerView->m_obLoadedTime(current,duratuon) ;
+    };
+    
+    
+    s_DidPlayToEndTime_map[m_pPlayerView->m_u__ID] = [&]()
+    {
+        if(m_pPlayerView->m_obDidPlayToEndTime)
+            m_pPlayerView->m_obDidPlayToEndTime() ;
+    };
+    s_TimeJumped_map[m_pPlayerView->m_u__ID] = [&]()
+    {
+        if(m_pPlayerView->m_obTimeJumped)
+            m_pPlayerView->m_obTimeJumped() ;
+    };
+    
 }
 
 CAAVPlayerViewImpl::~CAAVPlayerViewImpl()
 {
     s_map.erase(m_pPlayerView->m_u__ID);
-    delete s_ImageCallback_map[m_pPlayerView->m_u__ID];
     s_ImageCallback_map.erase(m_pPlayerView->m_u__ID);
+    s_PeriodicTime_map.erase(m_pPlayerView->m_u__ID);
+    s_LoadedTime_map.erase(m_pPlayerView->m_u__ID);
+    s_DidPlayToEndTime_map.erase(m_pPlayerView->m_u__ID);
+    s_TimeJumped_map.erase(m_pPlayerView->m_u__ID);
+    
     removePlayer(m_pPlayerView->m_u__ID) ;
 }
 
@@ -124,6 +148,46 @@ float CAAVPlayerViewImpl::getCurrentTime()
     return (float)current ;
 }
 
+void CAAVPlayerViewImpl::stop()
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "stop4native", "(I)V"))
+    {
+        jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        jni.env->DeleteLocalRef(jni.classID);
+    }
+}
+
+void CAAVPlayerViewImpl::setCurrentTime(float current)
+{
+    jint progress = (jint)current ;
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setCurrentTime4native", "(II)V"))
+    {
+        jni.env->CallStaticIntMethod(jni.classID, jni.methodID, progress , (jint)m_pPlayerView->m_u__ID );
+        jni.env->DeleteLocalRef(jni.classID);
+    }
+}
+
+
+const DSize& CAAVPlayerViewImpl::getPresentationSize()
+{
+    DSize size = DSize(0, 0) ;
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "getPresentationSize4native", "(I)[I"))
+    {
+        jintArray arr = (jintArray)jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        
+        jint* elems =jni.env-> GetIntArrayElements(arr, 0);
+        size.width = (int)elems[0] ;
+        size.height = (int)elems[1] ;
+        
+        jni.env->DeleteLocalRef(jni.classID);
+        jni.env->ReleaseIntArrayElements(arr, elems, 0);
+    }
+    return size ;
+    
+}
 
 extern "C"
 {
@@ -140,15 +204,68 @@ extern "C"
         
         if (s_ImageCallback_map.count((int)key) > 0)
         {
-            const std::function<void(CAImage*)>& callback = s_ImageCallback_map.at((int)key)->_callback;
-            
-            if (callback)
+            if (auto& callback = s_ImageCallback_map.at((int)key))
             {
                 callback(image);
             }
         }
         
     }
+    
+    // 监听播放进度
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onPeriodicTime(JNIEnv *env, jclass cls, jint key, jfloat current,jfloat duration)
+    {
+
+        if (s_PeriodicTime_map.count((int)key) > 0)
+        {
+            if (auto& callback = s_PeriodicTime_map.at((int)key))
+            {
+                callback((float)current,(float)duration);
+            }
+        }
+        
+    }
+    
+    // 监听缓冲进度
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onLoadedTime(JNIEnv *env, jclass cls, jint key, jfloat current,jfloat duration)
+    {
+        if (s_LoadedTime_map.count((int)key) > 0)
+        {
+            if (auto& callback = s_LoadedTime_map.at((int)key))
+            {
+                callback((float)current,(float)duration);
+            }
+        }
+        
+    }
+    
+    // 监听播放完毕
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onDidPlayToEndTime(JNIEnv *env, jclass cls, jint key)
+    {
+        
+       if (s_DidPlayToEndTime_map.count((int)key) > 0)
+        {
+            if (auto& callback = s_DidPlayToEndTime_map.at((int)key))
+            {
+                callback();
+            }
+        }
+        
+    }
+    
+    // 监听快进或者慢进或者跳过某段播放
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onTimeJumped(JNIEnv *env, jclass cls, jint key)
+    {
+        if (s_TimeJumped_map.count((int)key) > 0)
+        {
+            if (auto& callback = s_TimeJumped_map.at((int)key))
+            {
+                callback();
+            }
+        }
+    }
+    
+    
 }
 
 
