@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import org.CrossApp.lib.CrossAppHelper.CrossAppHelperListener;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.ClipboardManager;
@@ -23,6 +24,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
 import org.CrossApp.lib.CrossAppVolumeControl;
 import org.CrossApp.lib.CrossAppNetWorkManager;
 import org.CrossApp.lib.CrossAppDevice;
@@ -216,8 +218,8 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
         }
 		return "";
     }
-
-
+    
+    
     private void toast(String str)
     {
     	System.out.println(str);
@@ -238,6 +240,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
+	 @TargetApi(11)
 	private void exeHandler(){
 		if(mLightHandler ==null){
 			mLightHandler = new Handler(){
@@ -256,7 +259,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		 }
         if(msHandler ==null){
             msHandler = new Handler(){
-
+            		
                 @Override
                 public void handleMessage(Message msg) {
                     String value = (String)msg.obj;
@@ -264,22 +267,20 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
                     ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     if(what == 0)
                     {
-
+                    	
                         cmb.setText(value);
                     }
                 }
             };
         }
 	}
-		
+	
 	public static void saveBrightness(ContentResolver resolver, int brightness) {
         Uri uri = android.provider.Settings.System.getUriFor("screen_brightness");
         android.provider.Settings.System.putInt(resolver, "screen_brightness",brightness);
         resolver.notifyChange(uri, null);
     }
 	
-
-
 	@Override
 	public void runOnGLThread(final Runnable pRunnable) {
 		this.mGLSurfaceView.queueEvent(pRunnable);
