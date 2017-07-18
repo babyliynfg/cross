@@ -2649,6 +2649,7 @@ const char* CAImage::getImageFileType()
     return text;
 }
 static CAImage* s_white_image           = nullptr;
+static CAImage* s_black_image           = nullptr;
 static CAImage* s_shadow_left_image     = nullptr;
 static CAImage* s_shadow_right_image    = nullptr;
 static CAImage* s_shadow_top_image      = nullptr;
@@ -2667,6 +2668,21 @@ CAImage* CAImage::CC_WHITE_IMAGE()
         s_white_image->m_bMonochrome = true;
     }
     return s_white_image;
+}
+
+CAImage* CAImage::CC_BLACK_IMAGE()
+{
+    if (s_black_image == nullptr)
+    {
+        unsigned int pixels = 0xff000000;
+        CAData* data = CAData::create();
+        data->copy((const unsigned char *)&pixels, 4);
+        
+        s_black_image = new CAImage();
+        s_black_image->initWithRawData(data, CAImage::PixelFormat::RGBA8888, 1, 1);
+        s_black_image->m_bMonochrome = true;
+    }
+    return s_black_image;
 }
 
 CAImage* CAImage::CC_SHADOW_LEFT_IMAGE()

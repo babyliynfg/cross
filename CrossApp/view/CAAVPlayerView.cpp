@@ -129,12 +129,16 @@ const DSize& CAAVPlayerView::getPresentationSize()
 
 void CAAVPlayerView::setImage(CAImage* image)
 {
-    CAView::setImage(image);
     if (image)
     {
+        CAView::setImage(image);
         DRect rect = DRectZero;
         rect.size = image->getContentSize();
         this->setImageRect(rect);
+    }
+    else
+    {
+        CAView::setImage(CAImage::CC_BLACK_IMAGE());
     }
 }
 

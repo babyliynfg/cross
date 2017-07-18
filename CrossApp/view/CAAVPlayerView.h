@@ -4,7 +4,20 @@
 #define __CAAVPlayerView_H__
 
 #include "CAView.h"
+
 NS_CC_BEGIN
+
+//缓冲为空，正在缓冲
+const std::string PlaybackBufferEmpty = "PlaybackBufferEmpty";
+//缓冲达到可播放
+const std::string PlaybackLikelyToKeepUp = "PlaybackLikelyToKeepUp";
+
+//暂停
+const std::string PlayStatePause = "PlayStatePause";
+//播放中
+const std::string PlayStatePlaying = "PlayStatePlaying";
+//回放中
+const std::string PlayStatePlayback = "PlayStatePlayback";
 
 class CC_DLL CAAVPlayerViewImpl;
 class CC_DLL CAAVPlayerView : public CAView
@@ -52,6 +65,9 @@ public:
     
     CC_LISTENING_FUNCTION(void(), TimeJumped); // 监听快进或者慢进或者跳过某段播放
     
+    CC_LISTENING_FUNCTION(void(const std::string&), PlayBufferLoadingState); // 监听缓冲状态
+    
+    CC_LISTENING_FUNCTION(void(const std::string&), PlayState); // 监听播放状态
     
     
 protected:

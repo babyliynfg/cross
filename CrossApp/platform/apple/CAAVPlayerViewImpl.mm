@@ -134,11 +134,14 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     id observer;
     
     CrossApp::DSize _presentationSize;
+    CrossApp::CAImage* _firstFrameImage;
 }
 @property (nonatomic, assign, setter=onPeriodicTime:) std::function<void(float, float)> periodicTime;
 @property (nonatomic, assign, setter=onLoadedTime:) std::function<void(float, float)> loadedTime;
 @property (nonatomic, assign, setter=onDidPlayToEndTime:) std::function<void()> didPlayToEndTime;
 @property (nonatomic, assign, setter=onTimeJumped:) std::function<void()> timeJumped;
+@property (nonatomic, assign, setter=onPlayBufferLoadingState:) std::function<void(const std::string&)> playBufferLoadingState;
+@property (nonatomic, assign, setter=onPlayState:) std::function<void(const std::string&)> playState;
 
 - (id)initWithCallback:(std::function<void(CrossApp::CAImage*)>)function;
 - (void)setUrl:(std::string)url;
@@ -166,6 +169,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     _function = function;
     
     _presentationSize = CrossApp::DSizeZero;
+    _firstFrameImage = nullptr;
     //初始化输出流
     _videoOutPut = [[AVPlayerItemVideoOutput alloc] init];
     return self;
@@ -173,11 +177,14 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 
 - (void)setUrl:(std::string)url
 {
-    [self setup:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]] load:NO];
+
+    NSURL* videoUrl = [NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]];
+    [self setup:videoUrl load:NO];
 }
 
 - (void)setFilePath:(std::string)filePath
 {
+
     std::string resource;
     std::string type;
     size_t pos = filePath.find_last_of(".");
@@ -187,10 +194,11 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:resource.c_str()]
                                                    ofType:[NSString stringWithUTF8String:type.c_str()]];
     
-    [self setup:[NSURL fileURLWithPath:path] load:YES];
+    NSURL* videoUrl = [NSURL fileURLWithPath:path];
+    [self setup:videoUrl load:YES];
 }
 
-- (void)setup:(NSURL*)videoURL load:(BOOL)load
+- (void)setup:(NSURL*)videoUrl load:(BOOL)load
 {
     if (_player)
     {
@@ -205,7 +213,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     }
     
     //初始化播放地址
-    AVPlayerItem* item = [AVPlayerItem playerItemWithURL:videoURL];
+    AVPlayerItem* item = [AVPlayerItem playerItemWithURL:videoUrl];
 
     if (_player == nil)
     {
@@ -310,8 +318,12 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     /**************获取第一帧图片******************/
     if (load && _function)
     {
-        CrossApp::CAImage* image = get_first_frame_image_with_filePath(videoURL);
+        CrossApp::CAImage* image = get_first_frame_image_with_filePath(videoUrl);
         _function(image);
+        CC_SAFE_RETAIN(image);
+        CC_SAFE_RELEASE(_firstFrameImage);
+        _firstFrameImage = image;
+        
     }
     
     _presentationSize = CrossApp::DSize(_player.currentItem.presentationSize.width, _player.currentItem.presentationSize.height);
@@ -335,6 +347,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 {
     [_player seekToTime:kCMTimeZero];
     playerLayer_pause(_player);
+    _function(_firstFrameImage);
 }
 
 - (void)playToEndTimeNotification:(NSNotification*)notification
@@ -462,10 +475,18 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     else if ([keyPath isEqualToString:@"playbackBufferEmpty"])
     { //监听播放器在缓冲数据的状态
         NSLog(@"正在缓冲");
+        if (self.playBufferLoadingState)
+        {
+            self.playBufferLoadingState(CrossApp::PlaybackBufferEmpty);
+        }
     }
     else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"])
     {
         NSLog(@"缓冲达到可播放");
+        if (self.playBufferLoadingState)
+        {
+            self.playBufferLoadingState(CrossApp::PlaybackLikelyToKeepUp);
+        }
     }
     else if ([keyPath isEqualToString:@"rate"])
     {//当rate==0时为暂停,rate==1时为播放,当rate等于负数时为回放
@@ -484,6 +505,22 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         {
             NSLog(@"回放");
         }
+        
+        if (self.playState)
+        {
+            if (rate == 0)
+            {
+                self.playState(CrossApp::PlayStatePause);
+            }
+            else if (rate == 1)
+            {
+                self.playState(CrossApp::PlayStatePlaying);
+            }
+            else if (rate < 0)
+            {
+                self.playState(CrossApp::PlayStatePlayback);
+            }
+        }
     }
     
 }
@@ -491,9 +528,13 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 - (void)dealloc
 {
     [self pause];
-    [_player removeTimeObserver:observer];
-    [_player release];
+    if (_player)
+    {
+        [_player removeTimeObserver:observer];
+        [_player release];
+    }
     [_videoOutPut release];
+    CC_SAFE_RELEASE(_firstFrameImage);
     [super dealloc];
 }
 
@@ -544,6 +585,38 @@ CAAVPlayerViewImpl::CAAVPlayerViewImpl(CAAVPlayerView* playerView)
          if (m_pPlayerView->m_obLoadedTime)
          {
              m_pPlayerView->m_obLoadedTime(currTime, duratuon);
+         }
+     }];
+    
+    [NATIVE_IMPL onDidPlayToEndTime:[&]
+    {
+        if (m_pPlayerView->m_obDidPlayToEndTime)
+        {
+            m_pPlayerView->m_obDidPlayToEndTime();
+        }
+    }];
+    
+    [NATIVE_IMPL onTimeJumped:[&]
+     {
+         if (m_pPlayerView->m_obTimeJumped)
+         {
+             m_pPlayerView->m_obTimeJumped();
+         }
+     }];
+    
+    [NATIVE_IMPL onPlayBufferLoadingState:[&](const std::string& var)
+     {
+         if (m_pPlayerView->m_obPlayBufferLoadingState)
+         {
+             m_pPlayerView->m_obPlayBufferLoadingState(var);
+         }
+     }];
+    
+    [NATIVE_IMPL onPlayState:[&](const std::string& var)
+     {
+         if (m_pPlayerView->m_obPlayState)
+         {
+             m_pPlayerView->m_obPlayState(var);
          }
      }];
 }
