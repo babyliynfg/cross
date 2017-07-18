@@ -122,6 +122,11 @@ void CAAVPlayerView::setCurrentTime(float current)
     m_pImpl->setCurrentTime(current);
 }
 
+const DSize& CAAVPlayerView::getPresentationSize()
+{
+    return m_pImpl->getPresentationSize();
+}
+
 void CAAVPlayerView::setImage(CAImage* image)
 {
     CAView::setImage(image);

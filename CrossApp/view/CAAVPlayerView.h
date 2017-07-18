@@ -42,6 +42,8 @@ public:
     
     void setCurrentTime(float current); // 跳转到指定的时间
     
+    const DSize& getPresentationSize();
+    
     CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime); // 监听播放进度
     
     CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime); // 监听缓冲进度

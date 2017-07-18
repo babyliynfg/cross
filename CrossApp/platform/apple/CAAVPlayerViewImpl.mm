@@ -32,7 +32,7 @@ static void playerLayer_play(AVPlayer* player, const std::function<void()>& call
         CrossApp::CAScheduler::getScheduler()->unschedule(ANIMATION_ID, CrossApp::CAApplication::getApplication());
     }
     
-    const CGSize& size = s_pAVPlayerLayer.player.currentItem.presentationSize;
+    //const CGSize& size = s_pAVPlayerLayer.player.currentItem.presentationSize;
     
     if (s_pAVPlayerLayer == nil)
     {
@@ -62,8 +62,8 @@ static void playerLayer_play(AVPlayer* player, const std::function<void()>& call
         [s_pAVPlayerLayer setPlayer:player];
     }
     
-    [s_pAVPlayerLayer setPosition:CGPointMake(size.width/2, size.height/2)];
-    [s_pAVPlayerLayer setBounds:CGRectMake(0, 0, size.width, size.height)];
+    [s_pAVPlayerLayer setPosition:CGPointMake(2, 2)];
+    [s_pAVPlayerLayer setBounds:CGRectMake(0, 0, 2, 2)];
     
     [player play];
     
@@ -132,6 +132,8 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     AVPlayer* _player;
     
     id observer;
+    
+    CrossApp::DSize _presentationSize;
 }
 @property (nonatomic, assign, setter=onPeriodicTime:) std::function<void(float, float)> periodicTime;
 @property (nonatomic, assign, setter=onLoadedTime:) std::function<void(float, float)> loadedTime;
@@ -147,6 +149,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 - (float)getDuration;
 - (float)getCurrentTime;
 - (void)setCurrentTime:(float)current;
+- (CrossApp::DSize)getPresentationSize;
 
 - (void)outputMediaData;
 - (void)dealloc;
@@ -162,6 +165,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     }
     _function = function;
     
+    _presentationSize = CrossApp::DSizeZero;
     //初始化输出流
     _videoOutPut = [[AVPlayerItemVideoOutput alloc] init];
     return self;
@@ -309,6 +313,8 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         CrossApp::CAImage* image = get_first_frame_image_with_filePath(videoURL);
         _function(image);
     }
+    
+    _presentationSize = CrossApp::DSize(_player.currentItem.presentationSize.width, _player.currentItem.presentationSize.height);
 }
 
 
@@ -363,6 +369,11 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     //CMTimeMultiplyByFloat64 将总时长，当前进度，转化成为CMTime
     //seekToTime 跳转到指定的时间
     [_player seekToTime:CMTimeMultiplyByFloat64(dur, current)];
+}
+
+- (CrossApp::DSize)getPresentationSize
+{
+    return _presentationSize;
 }
 
 - (void)outputMediaData;
@@ -580,6 +591,11 @@ float CAAVPlayerViewImpl::getCurrentTime()
 void CAAVPlayerViewImpl::setCurrentTime(float current)
 {
     [NATIVE_IMPL setCurrentTime:current];
+}
+
+const DSize& CAAVPlayerViewImpl::getPresentationSize()
+{
+    return [NATIVE_IMPL getPresentationSize];
 }
 
 NS_CC_END

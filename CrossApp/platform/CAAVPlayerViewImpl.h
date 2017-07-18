@@ -8,7 +8,7 @@
 #include <vector>
 #include <functional>
 #include "ccMacros.h"
-
+#include "basics/CASize.h"
 NS_CC_BEGIN
 class CC_DLL CAImage;
 class CC_DLL CAAVPlayerView;
@@ -37,6 +37,8 @@ public:
     float getCurrentTime();
     
     void setCurrentTime(float current);
+    
+    const DSize& getPresentationSize();
     
 private:
     
