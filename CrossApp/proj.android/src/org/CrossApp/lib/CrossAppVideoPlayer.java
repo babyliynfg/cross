@@ -175,9 +175,10 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		player.stop();
 	}
 	
-	public static void setCurrentTime4native(int current,int key){
+	public static void setCurrentTime4native(final float current,final int key){
 		CrossAppVideoPlayer player = getPlayerByKey(key) ;
-		player.getMediaPlayer().seekTo(current);
+		player.getMediaPlayer().seekTo((int)current);
+		
 	}
 	
 	public static int[] getPresentationSize4native(int key){
@@ -230,8 +231,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	/**																			子类实现																								  ****/
 	/*********************************************************************************************************************************/
 	
-    private String TEXTUREVIDEO_TAG = "liuguoyan";
-    
     private String url;
     
     public VideoState mState;
@@ -354,7 +353,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
             getPlayingProgress();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TEXTUREVIDEO_TAG , e.toString());
         }
     }
     
@@ -394,7 +392,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        Log.e(TEXTUREVIDEO_TAG,"onsurfacetexture available");
         
         if (mMediaPlayer==null){
             mMediaPlayer = new MediaPlayer();

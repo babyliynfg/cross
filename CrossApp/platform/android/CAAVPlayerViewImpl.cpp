@@ -101,7 +101,7 @@ void CAAVPlayerViewImpl::setFilePath(const std::string& filePath)
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
-    
+
 void CAAVPlayerViewImpl::play()
 {
     JniMethodInfo jni;
@@ -111,7 +111,7 @@ void CAAVPlayerViewImpl::play()
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
-    
+
 void CAAVPlayerViewImpl::pause()
 {
     JniMethodInfo jni;
@@ -153,18 +153,18 @@ void CAAVPlayerViewImpl::stop()
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "stop4native", "(I)V"))
     {
-        jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
 
 void CAAVPlayerViewImpl::setCurrentTime(float current)
 {
-    jint progress = (jint)current ;
+    
     JniMethodInfo jni;
-    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setCurrentTime4native", "(II)V"))
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setCurrentTime4native", "(FI)V"))
     {
-        jni.env->CallStaticIntMethod(jni.classID, jni.methodID, progress , (jint)m_pPlayerView->m_u__ID );
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID, (jfloat)current , (jint)m_pPlayerView->m_u__ID );
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
@@ -176,7 +176,7 @@ const DSize& CAAVPlayerViewImpl::getPresentationSize()
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "getPresentationSize4native", "(I)[I"))
     {
-        jintArray arr = (jintArray)jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        jintArray arr = (jintArray)jni.env->CallStaticObjectMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
         
         jint* elems =jni.env-> GetIntArrayElements(arr, 0);
         size.width = (int)elems[0] ;
@@ -194,7 +194,7 @@ extern "C"
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onFrameAttached(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint width, jint height)
     {
-
+        
         ssize_t length = width * height * 4;
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * length);
         env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
@@ -215,7 +215,7 @@ extern "C"
     // 监听播放进度
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onPeriodicTime(JNIEnv *env, jclass cls, jint key, jfloat current,jfloat duration)
     {
-
+        
         if (s_PeriodicTime_map.count((int)key) > 0)
         {
             if (auto& callback = s_PeriodicTime_map.at((int)key))
@@ -243,7 +243,7 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onDidPlayToEndTime(JNIEnv *env, jclass cls, jint key)
     {
         
-       if (s_DidPlayToEndTime_map.count((int)key) > 0)
+        if (s_DidPlayToEndTime_map.count((int)key) > 0)
         {
             if (auto& callback = s_DidPlayToEndTime_map.at((int)key))
             {
