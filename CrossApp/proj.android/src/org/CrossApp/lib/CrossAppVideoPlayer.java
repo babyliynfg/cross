@@ -4,7 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -12,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -56,6 +59,17 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	 */
 	public static void play4native(final  int key){
 		
+		if(players.size()>0){
+			Set<Integer> keys = players.keySet() ; 
+			Iterator<Integer> it = keys.iterator() ; 
+			while (it.hasNext()) {
+				Integer integer = (Integer) it.next();
+				if (players.get(integer).getMediaPlayer().isPlaying()) {
+					players.get(integer).getMediaPlayer().pause();
+				}
+			}
+		}
+		
 		final CrossAppVideoPlayer player = getPlayerByKey(key) ; 
 		
 		CrossAppActivity.getContext().runOnUiThread(new Runnable() {
@@ -74,6 +88,10 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		            @Override
 		            public void onPlaying(int duration, int percent) {
 		            	//调用native 的进度方法
+		            	CrossAppVideoPlayer p = getPlayerByKey(key) ;
+		            	if (p.getMediaPlayer().isPlaying()) {
+		            		onPeriodicTime(key, percent, duration);
+						}
 		            }
 		            @Override
 		            public void onPause() {
@@ -84,6 +102,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		            @Override
 		            public void onPlayingFinish() {
 		            	//调用native 的方法
+		            	onDidPlayToEndTime(key);
 		            }
 		            @Override
 		            public void onTextureDestory() {
@@ -107,6 +126,20 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 						});
 		            	
 		            }
+		            
+		            @Override
+		            public void onBufferCached(int current) {
+		            	CrossAppVideoPlayer p = getPlayerByKey(key) ;
+		            	if (p.getMediaPlayer().isPlaying()) {
+		            		onLoadedTime(key, current, 100);
+		            	}
+		            }
+		            
+		            @Override
+		            public void onSeekChanged(MediaPlayer arg0) {
+		            	onTimeJumped(key);
+		            }
+		            
 		        });
 			}
 		});
@@ -136,10 +169,29 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		return getPlayerByKey(key).getMediaPlayer().getCurrentPosition() ; 
 	}
 	
+	
+	public static void stop4native(int key){
+		CrossAppVideoPlayer player = getPlayerByKey(key) ;
+		player.stop();
+	}
+	
+	public static void setCurrentTime4native(int current,int key){
+		CrossAppVideoPlayer player = getPlayerByKey(key) ;
+		player.getMediaPlayer().seekTo(current);
+	}
+	
+	public static int[] getPresentationSize4native(int key){
+		CrossAppVideoPlayer player = getPlayerByKey(key) ;
+		int[] size = {player.getMediaPlayer().getVideoWidth() , player.getMediaPlayer().getVideoHeight()};
+		return size ; 
+	}
+	
+	
 	public static CrossAppVideoPlayer getPlayerByKey(int key){
 		CrossAppVideoPlayer player = players.get(key) ; 
 		if (player == null) {
 			player = create(key) ; 
+			player.setKey(key);
 			players.put(key, player) ; 
 		}
 		return player ;
@@ -151,6 +203,15 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	}
 	
 	public static  native void onFrameAttached(int key , byte[] bytes, int width , int height) ; 
+	
+	public static native void onPeriodicTime(int key , float current, float duratuon) ; // 监听播放进度
+	
+	public static native void onLoadedTime(int key , float current, float duratuon) ; // 监听缓冲进度
+	
+	public static native void onDidPlayToEndTime(int key);// 监听播放完毕
+	
+	public static native void onTimeJumped(int key);// 监听快进或者慢进或者跳过某段播放
+	
 	
 	/**  
      * 把Bitmap转Byte  
@@ -190,10 +251,15 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     private int mVideoWidth;//视频宽度
     private int mVideoHeight;//视频高度
-
     
+    private int key = -1 ; 
     
-    //回调监听
+    public void setKey(int key){
+    	this.key = key  ; 
+    }
+    public int getKey(){
+    	return key ; 
+    }
     public interface OnVideoPlayingListener {
         void onVideoSizeChanged(int vWidth,int vHeight);
         void onStart();
@@ -203,6 +269,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         void onPlayingFinish();
         void onTextureDestory();
         void onFrameGet(Bitmap bitmap) ;
+        void onBufferCached(int percent) ; 
+        void onSeekChanged(MediaPlayer mp) ; 
     }
     
     
@@ -219,7 +287,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     public void setOnVideoPlayingListener(OnVideoPlayingListener listener){
         this.listener = listener;
     }
-
+    
     public CrossAppVideoPlayer(Context context) {
         super(context);
         init();
@@ -277,6 +345,12 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
             mMediaPlayer.start();
             mState = VideoState.palying;
             if (listener!=null) listener.onStart();
+            mMediaPlayer.setOnSeekCompleteListener(new OnSeekCompleteListener() {
+				@Override
+				public void onSeekComplete(MediaPlayer mp) {
+					listener.onSeekChanged(mp);
+				}
+			});
             getPlayingProgress();
         } catch (IOException e) {
             e.printStackTrace();
@@ -343,7 +417,9 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
                 @Override
                 public void onBufferingUpdate(MediaPlayer mp, int percent) {
                     //此方法获取的是缓冲的状态
-                    Log.e(TEXTUREVIDEO_TAG,"缓冲中:"+percent);
+                    if(listener != null){
+                    	listener.onBufferCached(percent);
+                    }
                 }
             });
             
