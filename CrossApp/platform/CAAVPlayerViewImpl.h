@@ -30,9 +30,13 @@ public:
     
     void pause();
     
+    void stop();
+    
     float getDuration();
     
     float getCurrentTime();
+    
+    void setCurrentTime(float current);
     
 private:
     

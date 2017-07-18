@@ -26,27 +26,37 @@ public:
     
     bool init() override;
     
-    void setUrl(const std::string& url);
+    void setUrl(const std::string& uri);// 网络url地址
     
-    void setFilePath(const std::string& filePath);
+    void setFilePath(const std::string& uri);// 本地路径
     
-    void play();
+    void play(); // 播放
     
-    void pause();
+    void pause(); // 暂停
+    
+    void stop(); // 停止
   
     float getDuration();
     
     float getCurrentTime();
     
-    CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime);
+    void setCurrentTime(float current); // 跳转到指定的时间
     
-    CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime);
+    CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime); // 监听播放进度
+    
+    CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime); // 监听缓冲进度
+    
+    CC_LISTENING_FUNCTION(void(), DidPlayToEndTime); // 监听播放完毕
+    
+    CC_LISTENING_FUNCTION(void(), TimeJumped); // 监听快进或者慢进或者跳过某段播放
+    
+    
     
 protected:
 
-    virtual void setImage(CAImage* image) override;
+    void setImage(CAImage* image) override;
     
-    virtual void updateImageRect() override;
+    void updateImageRect() override;
     
 private:
     

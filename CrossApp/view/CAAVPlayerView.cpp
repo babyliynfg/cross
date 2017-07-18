@@ -82,14 +82,14 @@ bool CAAVPlayerView::init()
     return true;
 }
 
-void CAAVPlayerView::setUrl(const std::string& url)
+void CAAVPlayerView::setUrl(const std::string& uri)
 {
-    m_pImpl->setUrl(url);
+    m_pImpl->setUrl(uri);
 }
 
-void CAAVPlayerView::setFilePath(const std::string& filePath)
+void CAAVPlayerView::setFilePath(const std::string& uri)
 {
-    m_pImpl->setFilePath(filePath);
+    m_pImpl->setFilePath(uri);
 }
 
 void CAAVPlayerView::play()
@@ -102,6 +102,11 @@ void CAAVPlayerView::pause()
     m_pImpl->pause();
 }
 
+void CAAVPlayerView::stop()
+{
+    m_pImpl->stop();
+}
+
 float CAAVPlayerView::getDuration()
 {
     return m_pImpl->getDuration();
@@ -110,6 +115,11 @@ float CAAVPlayerView::getDuration()
 float CAAVPlayerView::getCurrentTime()
 {
     return m_pImpl->getCurrentTime();
+}
+
+void CAAVPlayerView::setCurrentTime(float current)
+{
+    m_pImpl->setCurrentTime(current);
 }
 
 void CAAVPlayerView::setImage(CAImage* image)

@@ -135,12 +135,15 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 }
 @property (nonatomic, assign, setter=onPeriodicTime:) std::function<void(float, float)> periodicTime;
 @property (nonatomic, assign, setter=onLoadedTime:) std::function<void(float, float)> loadedTime;
+@property (nonatomic, assign, setter=onDidPlayToEndTime:) std::function<void()> didPlayToEndTime;
+@property (nonatomic, assign, setter=onTimeJumped:) std::function<void()> timeJumped;
 
 - (id)initWithCallback:(std::function<void(CrossApp::CAImage*)>)function;
 - (void)setUrl:(std::string)url;
 - (void)setFilePath:(std::string)filePath;
 - (void)play;
 - (void)pause;
+- (void)stop;
 - (float)getDuration;
 - (float)getCurrentTime;
 - (void)setCurrentTime:(float)current;
@@ -193,6 +196,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         [_player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
         [_player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
         [_player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+        [[NSNotificationCenter defaultCenter] removeObserver:_player.currentItem];
         [_player removeObserver:self forKeyPath:@"rate"];
     }
     
@@ -292,6 +296,13 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     //监听暂停或者播放中
     [_player addObserver:self forKeyPath:@"rate" options:NSKeyValueObservingOptionNew context:nil];
     
+    //监听当视频播放结束时
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playToEndTimeNotification:) name:AVPlayerItemDidPlayToEndTimeNotification object:_player.currentItem];
+    //监听当视频开始或快进或者慢进或者跳过某段播放
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(timeJumpedNotification:) name:AVPlayerItemTimeJumpedNotification object:_player.currentItem];
+    
+
+    
     /**************获取第一帧图片******************/
     if (load && _function)
     {
@@ -309,9 +320,31 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     });
 }
 
-- (void)pause;
+- (void)pause
 {
     playerLayer_pause(_player);
+}
+
+- (void)stop
+{
+    [self setCurrentTime:0];
+    playerLayer_pause(_player);
+}
+
+- (void)playToEndTimeNotification:(NSNotification*)notification
+{
+    if (self.didPlayToEndTime)
+    {
+        self.didPlayToEndTime();
+    }
+}
+
+- (void)timeJumpedNotification:(NSNotification*)notification
+{
+    if (self.timeJumped)
+    {
+        self.timeJumped();
+    }
 }
 
 - (float)getDuration
@@ -417,10 +450,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     }
     else if ([keyPath isEqualToString:@"playbackBufferEmpty"])
     { //监听播放器在缓冲数据的状态
-//        _status = SBPlayerStatusBuffering;
-//        if (!self.activityIndeView.isAnimating) {
-//            [self.activityIndeView startAnimating];
-//        }
+        NSLog(@"正在缓冲");
     }
     else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"])
     {
@@ -532,6 +562,11 @@ void CAAVPlayerViewImpl::pause()
     [NATIVE_IMPL pause];
 }
 
+void CAAVPlayerViewImpl::stop()
+{
+    [NATIVE_IMPL stop];
+}
+
 float CAAVPlayerViewImpl::getDuration()
 {
     return [NATIVE_IMPL getDuration];
@@ -542,5 +577,9 @@ float CAAVPlayerViewImpl::getCurrentTime()
     return [NATIVE_IMPL getCurrentTime];
 }
 
+void CAAVPlayerViewImpl::setCurrentTime(float current)
+{
+    [NATIVE_IMPL setCurrentTime:current];
+}
 
 NS_CC_END
