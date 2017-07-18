@@ -333,7 +333,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 
 - (void)stop
 {
-    [self setCurrentTime:0];
+    [_player seekToTime:kCMTimeZero];
     playerLayer_pause(_player);
 }
 
@@ -365,10 +365,10 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 
 - (void)setCurrentTime:(float)current
 {
-    CMTime dur = _player.currentItem.duration;
-    //CMTimeMultiplyByFloat64 将总时长，当前进度，转化成为CMTime
     //seekToTime 跳转到指定的时间
-    [_player seekToTime:CMTimeMultiplyByFloat64(dur, current)];
+    CMTimeScale timescale = _player.currentItem.currentTime.timescale;
+    CMTime pointTime = CMTimeMake(current * timescale, timescale);
+    [_player seekToTime:pointTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
 }
 
 - (CrossApp::DSize)getPresentationSize

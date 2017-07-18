@@ -36,13 +36,13 @@ public:
     
     void stop(); // 停止
   
-    float getDuration();
+    float getDuration(); // 获取媒体总时间
     
-    float getCurrentTime();
+    float getCurrentTime(); // 获取媒体当前时间
     
     void setCurrentTime(float current); // 跳转到指定的时间
     
-    const DSize& getPresentationSize();
+    const DSize& getPresentationSize(); // 获取媒体分辨率
     
     CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime); // 监听播放进度
     

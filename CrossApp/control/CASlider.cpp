@@ -206,6 +206,20 @@ void CASlider::setValue(float value)
         m_fValue = value;
         m_fValue = MAX(m_fValue, m_fMinValue);
         m_fValue = MIN(m_fValue, m_fMaxValue);
+        if (m_bTouchClick == false)
+        {
+            this->layoutSubViews();
+        }
+    }
+}
+
+void CASlider::_setValue(float value)
+{
+    if (m_fValue != value)
+    {
+        m_fValue = value;
+        m_fValue = MAX(m_fValue, m_fMinValue);
+        m_fValue = MIN(m_fValue, m_fMaxValue);
         this->layoutSubViews();
     }
 }
@@ -317,7 +331,7 @@ void CASlider::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     DRect bounds = getBounds();
     float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
-    this->setValue(value);
+    this->_setValue(value);
     
     if (m_function)
         m_function(m_fValue);
@@ -328,15 +342,13 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     if (!this->isTouchClick())
         return;
     
-	m_bTouchClick = false;
-
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
     DRect bounds = getBounds();
     if (bounds.containsPoint(point))
     {
         float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
-        this->setValue(value);
+        this->_setValue(value);
         
         if (m_function)
             m_function(m_fValue);
@@ -344,6 +356,13 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     if (m_functionTouchUpSide)
         m_functionTouchUpSide(m_fValue);
+    
+    m_bTouchClick = false;
+}
+
+void CASlider::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
+{
+    m_bTouchClick = false;
 }
 
 void CASlider::setTarget(const std::function<void(float)>& function)

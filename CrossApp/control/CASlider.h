@@ -70,12 +70,15 @@ public:
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void layoutSubViews();
     
 protected:
     
     void setContentSize(const DSize & var);
+    
+    void _setValue(float value);
     
 protected:
     
