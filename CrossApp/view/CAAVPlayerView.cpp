@@ -1,6 +1,6 @@
 
 #include "CAAVPlayerView.h"
-#include "CAAVPlayerViewImpl.h"
+#include "platform/CAAVPlayerViewImpl.h"
 #include "images/CAImageCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"

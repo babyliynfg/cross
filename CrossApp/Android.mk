@@ -19,7 +19,7 @@ endif
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
 animation/CAViewAnimation.cpp \
-animation/CAAnimation.cpp \
+animation/CACustomAnimation.cpp \
 basics/CAApplication.cpp \
 basics/CAAutoreleasePool.cpp \
 basics/CALayout.cpp \
@@ -108,6 +108,7 @@ support/xxhash/xxhash.c \
 network/HttpClient.cpp \
 network/DownloadManager.cpp \
 network/WebSocket.cpp \
+view/CAAVPlayerView.cpp \
 view/CAClippingView.cpp \
 view/CAImageView.cpp \
 view/CALabel.cpp \
@@ -178,6 +179,7 @@ platform/android/CATextField.cpp \
 platform/android/CATextView.cpp \
 platform/android/CAClipboard.cpp \
 platform/android/CAAlertViewImpl.cpp \
+platform/android/CAAVPlayerViewImpl.cpp \
 platform/android/CAFontProcesstor.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppHelper.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppRenderer.cpp \

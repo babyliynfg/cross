@@ -46,6 +46,7 @@ extern "C"
         }
     }
 }
+static CAMotionManager::Callback s_callback = nullptr;
 
 CAMotionManager* CAMotionManager::getInstance()
 {
@@ -58,14 +59,13 @@ CAMotionManager::CAMotionManager()
 
 CAMotionManager::~CAMotionManager()
 {
+    s_callback = nullptr;
 }
-
-
 
 void CAMotionManager::startGyroscope(const CAMotionManager::Callback& callback)
 {
     CAMotionManager::getInstance()->m_callback = callback;
-    
+    s_callback = callback;
     JAVAStartGyroscope();
 }
 
@@ -83,12 +83,13 @@ extern "C"
 {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppGyroscope_onGyroSensorChanged(                             JNIEnv *env,jobject obj,jfloat px,jfloat py,jfloat pz,jfloat pTime)
     {
-        CAMotionManager::getInstance()->m_obData["x"] = CAValue((double)px);
-        CAMotionManager::getInstance()->m_obData["y"] = CAValue((double)py);
-        CAMotionManager::getInstance()->m_obData["z"] = CAValue((double)pz);
-        CAMotionManager::getInstance()->m_obData["timestamp"] = CAValue((float)pTime);
+        static CAMotionManager::Data s_data;
+        s_data.x = px;
+        s_data.y = py;
+        s_data.z = pz;
+        s_data.timestamp = pTime;
         
-        CAMotionManager::getInstance()->m_callback(CAMotionManager::getInstance()->m_obData);
+        s_callback(s_data);
     }
 }
 

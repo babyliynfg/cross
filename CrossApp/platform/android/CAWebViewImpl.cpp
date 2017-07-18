@@ -330,9 +330,9 @@ bool CAWebViewImpl::shouldStartLoading(const int viewTag, const std::string &url
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
-		if (webView && webView->m_obStartLoadingCallback)
+		if (webView && webView->m_obStartLoading)
         {
-			if (!webView->m_obStartLoadingCallback(url))
+			if (!webView->m_obStartLoading(url))
 				return false;
 		}
 	}
@@ -343,9 +343,9 @@ void CAWebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
-		if (webView && webView->m_obFinishLoadingCallback)
+		if (webView && webView->m_obFinishLoading)
         {
-			webView->m_obFinishLoadingCallback(url);
+			webView->m_obFinishLoading(url);
 		}
 	}
 }
@@ -355,9 +355,9 @@ void CAWebViewImpl::didFailLoading(const int viewTag, const std::string &url){
 	std::map<int, CAWebViewImpl*>::iterator it = s_WebViewImpls.find(viewTag);
 	if (it != s_WebViewImpls.end()) {
 		CAWebView* webView = it->second->_webView;
-		if (webView && webView->m_obFailLoadingCallback)
+		if (webView && webView->m_obFailLoading)
         {
-			webView->m_obFailLoadingCallback(url);
+			webView->m_obFailLoading(url);
 		}
 	}
 }
