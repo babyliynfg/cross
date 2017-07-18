@@ -65,13 +65,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 				player.setOnVideoPlayingListener(new CrossAppVideoPlayer.OnVideoPlayingListener() {
 		            @Override
 		            public void onVideoSizeChanged(int vWidth, int vHeight) {
-//		                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) player.getLayoutParams();
-//		                params.width = CrossAppActivity.getContext().getResources().getDisplayMetrics().widthPixels;
-//		                params.height = (int) ((float)params.width/(float)vWidth*(float)vHeight);
-		            	
-//		            	  FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) player.getLayoutParams();
-//			              params.width = vWidth ; 
-//			              params.height = vHeight ; 
 		            	
 		            }
 		            
