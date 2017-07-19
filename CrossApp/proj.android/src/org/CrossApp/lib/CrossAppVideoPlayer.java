@@ -76,11 +76,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			Set<Integer> keys = players.keySet() ; 
 			Iterator<Integer> it = keys.iterator() ; 
 			while (it.hasNext()) {
-				Integer integer = (Integer) it.next();
-				
-				if (integer == key && players.get(integer).isPlaying()) return ; 
-				
-				if (players.get(integer).getMediaPlayer().isPlaying()) {
+				Integer integer = (Integer) it.next();				
+				if (integer != key && players.get(integer).getMediaPlayer().isPlaying()) {
 					players.get(integer).getMediaPlayer().pause();
 					players.get(integer).setVideoState(VideoState.pause);
 				}
@@ -322,7 +319,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         super(context);
         init();
     }
-
+    
     public CrossAppVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -368,6 +365,14 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     public void play(){
         if (mMediaPlayer==null ) return;
         
+        if(mState == VideoState.pause){
+        	mMediaPlayer.start(); 
+        	return ; 
+        }
+        if(mMediaPlayer.isPlaying()){
+        	return ; 
+        }
+        
         try {
             mMediaPlayer.reset();
             mMediaPlayer.setDataSource(url);
@@ -404,8 +409,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     public void stop(){
         if (mMediaPlayer.isPlaying()){
-            mMediaPlayer.stop();
-            setVideoState(VideoState.init);
+            mMediaPlayer.pause();
+            setVideoState(VideoState.pause);
         }
     }
     
@@ -417,10 +422,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     private Handler mProgressHandler = null ; 
     
-    
-    public boolean isPlaying(){
-        return mMediaPlayer.isPlaying();
-    }
     
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -493,7 +494,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         this.requestLayout();
     }
     
-
+    
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
         mMediaPlayer.pause();
@@ -502,7 +503,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         if (listener!=null)listener.onTextureDestory();
         return false;
     }
-
+    
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
     	
