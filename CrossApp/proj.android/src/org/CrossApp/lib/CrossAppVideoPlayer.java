@@ -185,9 +185,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	
 	public static void stop4native(int key){
 		CrossAppVideoPlayer player = getPlayerByKey(key) ;
-		player.getMediaPlayer().seekTo(0);
 		player.stop();
-		CrossAppVideoPlayer.onPeriodicTime(key, 0, player.getMediaPlayer().getDuration());
+//		CrossAppVideoPlayer.onPeriodicTime(key, 0, player.getMediaPlayer().getDuration());
 	}
 	
 	public static void setCurrentTime4native(final float current,final int key){
@@ -258,7 +257,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     private final int FRAME_RATE = 30 ; 
     
     /** 刷新进度的速率 */
-    private static final int PROGRESS_RATE =1000 ; 
+    private static final int PROGRESS_RATE =50 ; 
     
     /** 刷新进度消息 */
     private static final int WHAT_PROGRESS = 0 ; 
@@ -299,7 +298,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         init,palying,pause
     }
     
-    
     public void setVideoState(VideoState state){
     	mState = state ; 
     	if (state == VideoState.palying) {
@@ -308,7 +306,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			onPlayState(getKey(), PlayStatePause);
 		}
     }
-    
     
     private OnVideoPlayingListener listener;
     public void setOnVideoPlayingListener(OnVideoPlayingListener listener){
@@ -360,34 +357,49 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     public void setUrl(String url){
         this.url = url;
+        try {
+        	
+        	CrossAppActivity.getContext().runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						mMediaPlayer.reset();
+			            mMediaPlayer.setDataSource(CrossAppVideoPlayer.this.url);
+			            mMediaPlayer.prepare();
+			            
+			            mMediaPlayer.setOnSeekCompleteListener(new OnSeekCompleteListener() {
+							@Override
+							public void onSeekComplete(MediaPlayer mp) {
+								listener.onSeekChanged(mp);
+							}
+						});
+			            
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+		        	
+				}
+			});
+        	
+		} catch (Exception e) {
+			e.printStackTrace();  
+		}
+    }
+    
+    public void onSetUrl(){
+    	
     }
     
     public void play(){
         if (mMediaPlayer==null ) return;
         
-        if(mState == VideoState.pause){
-        	mMediaPlayer.start(); 
-        	return ; 
-        }
-        if(mMediaPlayer.isPlaying()){
-        	return ; 
-        }
-        
         try {
-            mMediaPlayer.reset();
-            mMediaPlayer.setDataSource(url);
-            mMediaPlayer.prepare();
             mMediaPlayer.start();
             setVideoState(VideoState.palying);
             if (listener!=null) listener.onStart();
-            mMediaPlayer.setOnSeekCompleteListener(new OnSeekCompleteListener() {
-				@Override
-				public void onSeekComplete(MediaPlayer mp) {
-					listener.onSeekChanged(mp);
-				}
-			});
             getPlayingProgress();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -421,7 +433,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     }
     
     private Handler mProgressHandler = null ; 
-    
     
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -480,9 +491,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         //把surface
         mMediaPlayer.setSurface(mediaSurface);
         setVideoState(VideoState.palying);
-        
     }
-
+    
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
     }
@@ -493,7 +503,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         params.height = mVideoHeight ; 
         this.requestLayout();
     }
-    
     
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
@@ -508,9 +517,5 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
     	
     }
-
     
-    
-
-
 }

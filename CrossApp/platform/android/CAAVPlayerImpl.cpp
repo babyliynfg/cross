@@ -1,5 +1,5 @@
 #include "../CAAVPlayerImpl.h"
-#include "view/CAAVPlayer.h"
+#include "view/CAAVPlayerView.h"
 #include "images/CAImage.h"
 #include "basics/CAApplication.h"
 #include <map>
@@ -49,12 +49,7 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
             m_pPlayer->m_obLoadedTime(current,duratuon) ;
     };
     
-<<<<<<< HEAD:CrossApp/platform/android/CAAVPlayerViewImpl.cpp
-    s_DidPlayToEndTime_map[m_pPlayerView->m_u__ID] = [&]()
-=======
-    
     s_DidPlayToEndTime_map[m_pPlayer->m_u__ID] = [&]()
->>>>>>> 1a382f4241dafe1a8a65820ae9adcf9043ae18bc:CrossApp/platform/android/CAAVPlayerImpl.cpp
     {
         if(m_pPlayer->m_obDidPlayToEndTime)
             m_pPlayer->m_obDidPlayToEndTime() ;
@@ -65,40 +60,30 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
             m_pPlayer->m_obTimeJumped() ;
     };
     
-    s_PlayBufferLoadingState_map[m_pPlayerView->m_u__ID] = [&](const std::string& str)
+    s_PlayBufferLoadingState_map[m_pPlayer->m_u__ID] = [&](const std::string& str)
     {
-        if(m_pPlayerView->m_obPlayBufferLoadingState)
-            m_pPlayerView->m_obPlayBufferLoadingState(str) ;
+        if(m_pPlayer->m_obPlayBufferLoadingState)
+            m_pPlayer->m_obPlayBufferLoadingState(str) ;
     };
     
-    s_PlayState_map[m_pPlayerView->m_u__ID] = [&](const std::string& str)
+    s_PlayState_map[m_pPlayer->m_u__ID] = [&](const std::string& str)
     {
-        if(m_pPlayerView->m_obPlayState)
-            m_pPlayerView->m_obPlayState(str) ;
+        if(m_pPlayer->m_obPlayState)
+            m_pPlayer->m_obPlayState(str) ;
     };
     
 }
 
 CAAVPlayerImpl::~CAAVPlayerImpl()
 {
-<<<<<<< HEAD:CrossApp/platform/android/CAAVPlayerViewImpl.cpp
-    s_map.erase(m_pPlayerView->m_u__ID);
-    s_ImageCallback_map.erase(m_pPlayerView->m_u__ID);
-    s_PeriodicTime_map.erase(m_pPlayerView->m_u__ID);
-    s_LoadedTime_map.erase(m_pPlayerView->m_u__ID);
-    s_DidPlayToEndTime_map.erase(m_pPlayerView->m_u__ID);
-    s_TimeJumped_map.erase(m_pPlayerView->m_u__ID);
-    s_PlayBufferLoadingState_map.erase(m_pPlayerView->m_u__ID);
-    s_PlayState_map.erase(m_pPlayerView->m_u__ID);
-=======
     s_map.erase(m_pPlayer->m_u__ID);
     s_ImageCallback_map.erase(m_pPlayer->m_u__ID);
     s_PeriodicTime_map.erase(m_pPlayer->m_u__ID);
     s_LoadedTime_map.erase(m_pPlayer->m_u__ID);
     s_DidPlayToEndTime_map.erase(m_pPlayer->m_u__ID);
     s_TimeJumped_map.erase(m_pPlayer->m_u__ID);
->>>>>>> 1a382f4241dafe1a8a65820ae9adcf9043ae18bc:CrossApp/platform/android/CAAVPlayerImpl.cpp
-    
+    s_PlayBufferLoadingState_map.erase(m_pPlayer->m_u__ID);
+    s_PlayState_map.erase(m_pPlayer->m_u__ID);    
     removePlayer(m_pPlayer->m_u__ID) ;
 }
 
