@@ -67,6 +67,11 @@ void CAAVPlayer::play()
     m_pImpl->play();
 }
 
+void CAAVPlayer::playWithRate(float rate)
+{
+    m_pImpl->playWithRate(rate);
+}
+
 void CAAVPlayer::pause()
 {
     m_pImpl->pause();
@@ -90,16 +95,6 @@ float CAAVPlayer::getCurrentTime()
 void CAAVPlayer::setCurrentTime(float current)
 {
     m_pImpl->setCurrentTime(current);
-}
-
-float CAAVPlayer::getRate()
-{
-    return m_pImpl->getRate();
-}
-
-void CAAVPlayer::setRate(float rate)
-{
-    m_pImpl->setRate(rate);
 }
 
 const DSize& CAAVPlayer::getPresentationSize()

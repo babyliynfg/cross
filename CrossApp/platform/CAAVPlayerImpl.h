@@ -28,6 +28,8 @@ public:
     
     void play();
     
+    void playWithRate(float rate);
+    
     void pause();
     
     void stop();

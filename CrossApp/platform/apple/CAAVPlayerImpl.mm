@@ -24,7 +24,7 @@ const char* ANIMATION_ID = "__AVPlayerLayer_play__";
 
 static AVPlayerLayer* s_pAVPlayerLayer = nil;
 
-static void playerLayer_play(AVPlayer* player, const std::function<void()>& callback)
+static void playerLayer_play(AVPlayer* player, float rate, const std::function<void()>& callback)
 {
     if (s_pAVPlayerLayer)
     {
@@ -66,6 +66,27 @@ static void playerLayer_play(AVPlayer* player, const std::function<void()>& call
     [s_pAVPlayerLayer setBounds:CGRectMake(0, 0, 2, 2)];
     
     [player play];
+    if (rate != 1.0f)
+    {
+        for (AVPlayerItemTrack *track in player.currentItem.tracks)
+        {
+            if ([track.assetTrack.mediaType isEqual:AVMediaTypeAudio])
+            {
+                track.enabled = YES;
+            }
+        }
+        [player setRate:rate];
+    }
+    else
+    {
+        for (AVPlayerItemTrack *track in player.currentItem.tracks)
+        {
+            if ([track.assetTrack.mediaType isEqual:AVMediaTypeAudio])
+            {
+                track.enabled = NO;
+            }
+        }
+    }
     
     CrossApp::CAScheduler::getScheduler()->schedule([=](float dt)
     {
@@ -145,13 +166,12 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 - (void)setUrl:(std::string)url;
 - (void)setFilePath:(std::string)filePath;
 - (void)play;
+- (void)playWithRate:(float)rate;
 - (void)pause;
 - (void)stop;
 - (float)getDuration;
 - (float)getCurrentTime;
 - (void)setCurrentTime:(float)current;
-- (void)setRate:(float)rate;
-- (float)rate;
 - (const CrossApp::DSize&)getPresentationSize;
 - (void)timerCurrentTime;
 - (void)outputMediaData;
@@ -270,7 +290,22 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     }
     _timer = [NSTimer timerWithTimeInterval:0.05f target:self selector:@selector(timerCurrentTime) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-    playerLayer_play(_player, [=]
+    playerLayer_play(_player, 1.0f, [=]
+    {
+        [self outputMediaData];
+    });
+}
+
+- (void)playWithRate:(float)rate
+{
+    if (_timer)
+    {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    _timer = [NSTimer timerWithTimeInterval:0.05f target:self selector:@selector(timerCurrentTime) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+    playerLayer_play(_player, rate, [=]
     {
         [self outputMediaData];
     });
@@ -340,16 +375,6 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     [_player seekToTime:pointTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero completionHandler:^(BOOL finished) {
         _pasueTimer = NO;
     }];
-}
-
-- (void)setRate:(float)rate
-{
-    [_player setRate:rate];
-}
-
-- (float)rate
-{
-    return [_player rate];
 }
 
 - (const CrossApp::DSize&)getPresentationSize
@@ -628,6 +653,11 @@ void CAAVPlayerImpl::setFilePath(const std::string& filePath)
 void CAAVPlayerImpl::play()
 {
     [NATIVE_IMPL play];
+}
+
+void CAAVPlayerImpl::playWithRate(float rate)
+{
+    [NATIVE_IMPL playWithRate:rate];
 }
 
 void CAAVPlayerImpl::pause()

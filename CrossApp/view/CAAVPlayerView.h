@@ -41,6 +41,8 @@ public:
     
     void play(); // 播放
     
+    void playWithRate(float rate); // 按照某个速率播放，默认速率为1.0f
+    
     void pause(); // 暂停
     
     void stop(); // 停止
