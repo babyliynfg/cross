@@ -92,6 +92,16 @@ void CAAVPlayer::setCurrentTime(float current)
     m_pImpl->setCurrentTime(current);
 }
 
+float CAAVPlayer::getRate()
+{
+    return m_pImpl->getRate();
+}
+
+void CAAVPlayer::setRate(float rate)
+{
+    m_pImpl->setRate(rate);
+}
+
 const DSize& CAAVPlayer::getPresentationSize()
 {
     return m_pImpl->getPresentationSize();
@@ -236,9 +246,5 @@ void CAAVPlayerController::showAVPlayerController(CAAVPlayer* player)
     CAAVPlayerControllerImpl::showAVPlayerController(player);
 }
 
-void CAAVPlayerController::closeAVPlayerController()
-{
-    CAAVPlayerControllerImpl::closeAVPlayerController();
-}
 
 NS_CC_END

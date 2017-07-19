@@ -21,6 +21,7 @@ const std::string PlayStatePlayback = "PlayStatePlayback";
 
 class CC_DLL CAAVPlayerImpl;
 class CC_DLL CAAVPlayerView;
+
 class CC_DLL CAAVPlayer : public CAObject
 {
 
@@ -49,6 +50,10 @@ public:
     float getCurrentTime(); // 获取媒体当前时间
     
     void setCurrentTime(float current); // 跳转到指定的时间
+    
+    float getRate();
+    
+    void setRate(float rate);
     
     const DSize& getPresentationSize(); // 获取媒体分辨率
     
@@ -125,8 +130,6 @@ class CC_DLL CAAVPlayerController : public CAObject
 public:
     
     static void showAVPlayerController(CAAVPlayer* player);
-    
-    static void closeAVPlayerController();
 };
 
 NS_CC_END

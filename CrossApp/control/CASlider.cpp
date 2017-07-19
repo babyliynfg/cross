@@ -344,15 +344,11 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-    DRect bounds = getBounds();
-    if (bounds.containsPoint(point))
-    {
-        float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
-        this->_setValue(value);
-        
-        if (m_function)
-            m_function(m_fValue);
-    }
+    float value = (m_fMaxValue - m_fMinValue) * (point.x / m_obContentSize.width) + m_fMinValue;
+    this->_setValue(value);
+    
+    if (m_function)
+        m_function(m_fValue);
     
     if (m_functionTouchUpSide)
         m_functionTouchUpSide(m_fValue);

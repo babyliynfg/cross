@@ -38,6 +38,10 @@ public:
     
     void setCurrentTime(float current);
     
+    float getRate();
+    
+    void setRate(float rate);
+    
     const DSize& getPresentationSize();
 
 private:
@@ -56,8 +60,6 @@ class CC_DLL CAAVPlayerControllerImpl
 public:
     
     static void showAVPlayerController(CAAVPlayer* player);
-    
-    static void closeAVPlayerController();
 };
 
 NS_CC_END
