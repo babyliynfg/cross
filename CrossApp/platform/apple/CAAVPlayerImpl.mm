@@ -538,6 +538,8 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 }
 
 @end
+
+/*
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 @interface NativeAVPlayerView: AVPlayerView
 {}
@@ -552,10 +554,10 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 }
 @end
 #endif
-
+*/
 NS_CC_BEGIN
 
-static std::map<CAAVPlayer*, NativeAVPlayer*> s_map;
+//static std::map<CAAVPlayer*, NativeAVPlayer*> s_map;
 
 CAImage* CAAVPlayerImpl::getFirstFrameImageWithFilePath(const std::string& filePath)
 {
@@ -583,7 +585,7 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* player)
 {
     m_pNativeImpl = [[NativeAVPlayer alloc] init];
     
-    s_map[m_pPlayer] = NATIVE_IMPL;
+    //s_map[m_pPlayer] = NATIVE_IMPL;
     
     [NATIVE_IMPL onPeriodicTime:[&](float currTime, float duratuon)
     {
@@ -636,7 +638,7 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* player)
 
 CAAVPlayerImpl::~CAAVPlayerImpl()
 {
-    s_map.erase(m_pPlayer);
+    //s_map.erase(m_pPlayer);
     [NATIVE_IMPL release];
 }
 
