@@ -19,29 +19,24 @@ const std::string PlayStatePlaying = "PlayStatePlaying";
 //回放中
 const std::string PlayStatePlayback = "PlayStatePlayback";
 
-class CC_DLL CAAVPlayerViewImpl;
-class CC_DLL CAAVPlayerView : public CAView
+class CC_DLL CAAVPlayerImpl;
+class CC_DLL CAAVPlayerView;
+class CC_DLL CAAVPlayer : public CAObject
 {
 
 public:
 
-    CAAVPlayerView();
+    CAAVPlayer();
     
-    virtual ~CAAVPlayerView();
+    virtual ~CAAVPlayer();
     
-    static CAAVPlayerView *create(void);
+    static CAAVPlayer *createWithUrl(const std::string& uri);// 网络url地址
     
-    static CAAVPlayerView* createWithFrame(const DRect& rect);
+    static CAAVPlayer *createWithFilePath(const std::string& uri);// 本地路径
     
-    static CAAVPlayerView* createWithCenter(const DRect& rect);
+    bool initWithUrl(const std::string& uri);// 网络url地址
     
-    static CAAVPlayerView* createWithLayout(const DLayout& layout);
-    
-    bool init() override;
-    
-    void setUrl(const std::string& uri);// 网络url地址
-    
-    void setFilePath(const std::string& uri);// 本地路径
+    bool initWithFilePath(const std::string& uri);// 本地路径
     
     void play(); // 播放
     
@@ -57,6 +52,8 @@ public:
     
     const DSize& getPresentationSize(); // 获取媒体分辨率
     
+public:
+    
     CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime); // 监听播放进度
     
     CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime); // 监听缓冲进度
@@ -68,10 +65,44 @@ public:
     CC_LISTENING_FUNCTION(void(const std::string&), PlayBufferLoadingState); // 监听缓冲状态
     
     CC_LISTENING_FUNCTION(void(const std::string&), PlayState); // 监听播放状态
+
+protected:
     
+    void onImage(const std::function<void(CAImage*)>& function);
+        
+    CAAVPlayerImpl* m_pImpl;
+    
+    friend class CAAVPlayerImpl;
+    
+    friend class CAAVPlayerView;
+};
+
+
+class CC_DLL CAAVPlayerView : public CAView
+{
+    
+public:
+    
+    CAAVPlayerView();
+    
+    virtual ~CAAVPlayerView();
+    
+    static CAAVPlayerView *create(void);
+    
+    static CAAVPlayerView* createWithFrame(const DRect& rect);
+    
+    static CAAVPlayerView* createWithCenter(const DRect& rect);
+    
+    static CAAVPlayerView* createWithLayout(const DLayout& layout);
+    
+    bool init() override;
+    
+    CAAVPlayer* getPlayer();
+    
+    void setPlayer(CAAVPlayer* player);
     
 protected:
-
+    
     void setImage(CAImage* image) override;
     
     void updateImageRect() override;
@@ -86,9 +117,12 @@ private:
     
     float m_fHeight;
     
-    CAAVPlayerViewImpl* m_pImpl;
+    CAAVPlayer* m_pPlayer;
+};
+
+class CC_DLL CAAVPlayerController : public CAObject
+{
     
-    friend class CAAVPlayerViewImpl;
 };
 
 NS_CC_END

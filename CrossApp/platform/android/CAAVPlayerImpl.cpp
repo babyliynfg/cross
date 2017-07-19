@@ -1,5 +1,5 @@
-#include "../CAAVPlayerViewImpl.h"
-#include "view/CAAVPlayerView.h"
+#include "../CAAVPlayerImpl.h"
+#include "view/CAAVPlayer.h"
 #include "images/CAImage.h"
 #include "basics/CAApplication.h"
 #include <map>
@@ -12,7 +12,7 @@
 NS_CC_BEGIN
 
 
-static std::map<int , CAAVPlayerView*> s_map;
+static std::map<int , CAAVPlayer*> s_map;
 static std::map<int , std::function<void(CAImage*)> > s_ImageCallback_map;
 static std::map<int , std::function<void(float current, float duratuon)> > s_PeriodicTime_map;
 static std::map<int , std::function<void(float current, float duratuon)> > s_LoadedTime_map;
@@ -30,153 +30,148 @@ void removePlayer(int key)
     }
 }
 
-CAAVPlayerViewImpl::CAAVPlayerViewImpl(CAAVPlayerView* playerView)
-: m_pPlayerView(playerView)
+CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
+: m_pPlayer(Player)
 {
-    s_map[m_pPlayerView->m_u__ID] = m_pPlayerView;
+    s_map[m_pPlayer->m_u__ID] = m_pPlayer;
     
-    s_ImageCallback_map[m_pPlayerView->m_u__ID] = [&](CAImage* image)
+    s_PeriodicTime_map[m_pPlayer->m_u__ID] = [&](float current, float duratuon)
     {
-        m_pPlayerView->setImage(image);
+        if(m_pPlayer->m_obPeriodicTime)
+            m_pPlayer->m_obPeriodicTime(current,duratuon) ;
     };
     
-    s_PeriodicTime_map[m_pPlayerView->m_u__ID] = [&](float current, float duratuon)
+    s_LoadedTime_map[m_pPlayer->m_u__ID] = [&](float current, float duratuon)
     {
-        if(m_pPlayerView->m_obPeriodicTime)
-            m_pPlayerView->m_obPeriodicTime(current,duratuon) ;
-    };
-    
-    s_LoadedTime_map[m_pPlayerView->m_u__ID] = [&](float current, float duratuon)
-    {
-        if(m_pPlayerView->m_obLoadedTime)
-            m_pPlayerView->m_obLoadedTime(current,duratuon) ;
+        if(m_pPlayer->m_obLoadedTime)
+            m_pPlayer->m_obLoadedTime(current,duratuon) ;
     };
     
     
-    s_DidPlayToEndTime_map[m_pPlayerView->m_u__ID] = [&]()
+    s_DidPlayToEndTime_map[m_pPlayer->m_u__ID] = [&]()
     {
-        if(m_pPlayerView->m_obDidPlayToEndTime)
-            m_pPlayerView->m_obDidPlayToEndTime() ;
+        if(m_pPlayer->m_obDidPlayToEndTime)
+            m_pPlayer->m_obDidPlayToEndTime() ;
     };
-    s_TimeJumped_map[m_pPlayerView->m_u__ID] = [&]()
+    s_TimeJumped_map[m_pPlayer->m_u__ID] = [&]()
     {
-        if(m_pPlayerView->m_obTimeJumped)
-            m_pPlayerView->m_obTimeJumped() ;
+        if(m_pPlayer->m_obTimeJumped)
+            m_pPlayer->m_obTimeJumped() ;
     };
     
 }
 
-CAAVPlayerViewImpl::~CAAVPlayerViewImpl()
+CAAVPlayerImpl::~CAAVPlayerImpl()
 {
-    s_map.erase(m_pPlayerView->m_u__ID);
-    s_ImageCallback_map.erase(m_pPlayerView->m_u__ID);
-    s_PeriodicTime_map.erase(m_pPlayerView->m_u__ID);
-    s_LoadedTime_map.erase(m_pPlayerView->m_u__ID);
-    s_DidPlayToEndTime_map.erase(m_pPlayerView->m_u__ID);
-    s_TimeJumped_map.erase(m_pPlayerView->m_u__ID);
+    s_map.erase(m_pPlayer->m_u__ID);
+    s_ImageCallback_map.erase(m_pPlayer->m_u__ID);
+    s_PeriodicTime_map.erase(m_pPlayer->m_u__ID);
+    s_LoadedTime_map.erase(m_pPlayer->m_u__ID);
+    s_DidPlayToEndTime_map.erase(m_pPlayer->m_u__ID);
+    s_TimeJumped_map.erase(m_pPlayer->m_u__ID);
     
-    removePlayer(m_pPlayerView->m_u__ID) ;
+    removePlayer(m_pPlayer->m_u__ID) ;
 }
 
 
-void CAAVPlayerViewImpl::setUrl(const std::string& url)
+void CAAVPlayerImpl::setUrl(const std::string& url)
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setDataSource", "(Ljava/lang/String;I)V"))
     {
         jstring jFilePath = jni.env->NewStringUTF(url.c_str());
-        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , jFilePath , (jint)m_pPlayerView->m_u__ID);
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , jFilePath , (jint)m_pPlayer->m_u__ID);
         jni.env->DeleteLocalRef(jni.classID);
     }
     
 }
 
-void CAAVPlayerViewImpl::setFilePath(const std::string& filePath)
+void CAAVPlayerImpl::setFilePath(const std::string& filePath)
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setDataSource", "(Ljava/lang/String;I)V"))
     {
         jstring jFilePath = jni.env->NewStringUTF(filePath.c_str());
-        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , jFilePath , (jint)m_pPlayerView->m_u__ID);
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , jFilePath , (jint)m_pPlayer->m_u__ID);
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
     
-void CAAVPlayerViewImpl::play()
+void CAAVPlayerImpl::play()
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "play4native", "(I)V"))
     {
-        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , (jint)m_pPlayerView->m_u__ID);
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , (jint)m_pPlayer->m_u__ID);
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
     
-void CAAVPlayerViewImpl::pause()
+void CAAVPlayerImpl::pause()
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "pause4native", "(I)V"))
     {
-        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID, (jint)m_pPlayer->m_u__ID );
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
 
-float CAAVPlayerViewImpl::getDuration()
+float CAAVPlayerImpl::getDuration()
 {
     jint duration = 0 ;
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "getDuration", "(I)I"))
     {
-        duration = jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        duration = jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayer->m_u__ID );
         jni.env->DeleteLocalRef(jni.classID);
     }
     
     return (float)duration ;
 }
 
-float CAAVPlayerViewImpl::getCurrentTime()
+float CAAVPlayerImpl::getCurrentTime()
 {
     jint current = 0 ;
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "getCurrentTime", "(I)I"))
     {
-        current = jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        current = jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayer->m_u__ID );
         jni.env->DeleteLocalRef(jni.classID);
     }
     
     return (float)current ;
 }
 
-void CAAVPlayerViewImpl::stop()
+void CAAVPlayerImpl::stop()
 {
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "stop4native", "(I)V"))
     {
-        jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayer->m_u__ID );
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
 
-void CAAVPlayerViewImpl::setCurrentTime(float current)
+void CAAVPlayerImpl::setCurrentTime(float current)
 {
     jint progress = (jint)current ;
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setCurrentTime4native", "(II)V"))
     {
-        jni.env->CallStaticIntMethod(jni.classID, jni.methodID, progress , (jint)m_pPlayerView->m_u__ID );
+        jni.env->CallStaticIntMethod(jni.classID, jni.methodID, progress , (jint)m_pPlayer->m_u__ID );
         jni.env->DeleteLocalRef(jni.classID);
     }
 }
 
 
-const DSize& CAAVPlayerViewImpl::getPresentationSize()
+const DSize& CAAVPlayerImpl::getPresentationSize()
 {
     DSize size = DSize(0, 0) ;
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "getPresentationSize4native", "(I)[I"))
     {
-        jintArray arr = (jintArray)jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayerView->m_u__ID );
+        jintArray arr = (jintArray)jni.env->CallStaticIntMethod(jni.classID, jni.methodID, (jint)m_pPlayer->m_u__ID );
         
         jint* elems =jni.env-> GetIntArrayElements(arr, 0);
         size.width = (int)elems[0] ;
@@ -187,6 +182,11 @@ const DSize& CAAVPlayerViewImpl::getPresentationSize()
     }
     return size ;
     
+}
+
+void CAAVPlayerImpl::onImage(const std::function<void(CAImage*)>& function)
+{
+    s_ImageCallback_map[m_pPlayer->m_u__ID] = function;
 }
 
 extern "C"

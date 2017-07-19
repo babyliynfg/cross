@@ -179,7 +179,7 @@ platform/android/CATextField.cpp \
 platform/android/CATextView.cpp \
 platform/android/CAClipboard.cpp \
 platform/android/CAAlertViewImpl.cpp \
-platform/android/CAAVPlayerViewImpl.cpp \
+platform/android/CAAVPlayerImpl.cpp \
 platform/android/CAFontProcesstor.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppHelper.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppRenderer.cpp \

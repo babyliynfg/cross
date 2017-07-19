@@ -1,6 +1,6 @@
 
 
-#include "../CAAVPlayerViewImpl.h"
+#include "../CAAVPlayerImpl.h"
 #include "view/CAAVPlayerView.h"
 #include "images/CAImage.h"
 #include "basics/CAApplication.h"
@@ -127,7 +127,6 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 @interface NativeAVPlayer : NSObject <AVPlayerItemOutputPullDelegate>
 {
     AVPlayerItemVideoOutput* _videoOutPut;
-    std::function<void(CrossApp::CAImage*)> _function;
     
     AVPlayer* _player;
     
@@ -142,8 +141,10 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 @property (nonatomic, assign, setter=onTimeJumped:) std::function<void()> timeJumped;
 @property (nonatomic, assign, setter=onPlayBufferLoadingState:) std::function<void(const std::string&)> playBufferLoadingState;
 @property (nonatomic, assign, setter=onPlayState:) std::function<void(const std::string&)> playState;
+@property (nonatomic, assign, setter=onImage:) std::function<void(CrossApp::CAImage*)> onImage;
 
-- (id)initWithCallback:(std::function<void(CrossApp::CAImage*)>)function;
+
+- (id)init;
 - (void)setUrl:(std::string)url;
 - (void)setFilePath:(std::string)filePath;
 - (void)play;
@@ -152,7 +153,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 - (float)getDuration;
 - (float)getCurrentTime;
 - (void)setCurrentTime:(float)current;
-- (CrossApp::DSize)getPresentationSize;
+- (const CrossApp::DSize&)getPresentationSize;
 
 - (void)outputMediaData;
 - (void)dealloc;
@@ -160,16 +161,16 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 
 @implementation NativeAVPlayer
 
-- (id)initWithCallback:(std::function<void(CrossApp::CAImage*)>)function
+- (id)init
 {
     if (![super init])
     {
         return nil;
     }
-    _function = function;
     
     _presentationSize = CrossApp::DSizeZero;
     _firstFrameImage = nullptr;
+    _onImage = nullptr;
     //初始化输出流
     _videoOutPut = [[AVPlayerItemVideoOutput alloc] init];
     return self;
@@ -316,10 +317,10 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 
     
     /**************获取第一帧图片******************/
-    if (load && _function)
+    if (load && _onImage)
     {
         CrossApp::CAImage* image = get_first_frame_image_with_filePath(videoUrl);
-        _function(image);
+        _onImage(image);
         CC_SAFE_RETAIN(image);
         CC_SAFE_RELEASE(_firstFrameImage);
         _firstFrameImage = image;
@@ -347,7 +348,10 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 {
     [_player seekToTime:kCMTimeZero];
     playerLayer_pause(_player);
-    _function(_firstFrameImage);
+    if (_onImage)
+    {
+        _onImage(_firstFrameImage);
+    }
 }
 
 - (void)playToEndTimeNotification:(NSNotification*)notification
@@ -384,18 +388,20 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     [_player seekToTime:pointTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
 }
 
-- (CrossApp::DSize)getPresentationSize
+- (const CrossApp::DSize&)getPresentationSize
 {
     return _presentationSize;
 }
 
 - (void)outputMediaData;
 {
-    CMTime itemTime = _player.currentItem.currentTime;
-    CVPixelBufferRef pixelBuffer = [_videoOutPut copyPixelBufferForItemTime:itemTime itemTimeForDisplay:nil];
-    
     do
     {
+        CC_BREAK_IF(_onImage == nullptr);
+        
+        CMTime itemTime = _player.currentItem.currentTime;
+        CVPixelBufferRef pixelBuffer = [_videoOutPut copyPixelBufferForItemTime:itemTime itemTimeForDisplay:nil];
+        
         CC_BREAK_IF(pixelBuffer == nil);
         
         CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
@@ -422,10 +428,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         
         CrossApp::CAImage* image = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, (unsigned int)width, (unsigned int)height);
         
-        if (_function)
-        {
-            _function(image);
-        }
+        _onImage(image);
         cross_data->release();
 
     } while (0);
@@ -543,7 +546,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 
 NS_CC_BEGIN
 
-CAImage* CAAVPlayerViewImpl::getFirstFrameImageWithFilePath(const std::string& filePath)
+CAImage* CAAVPlayerImpl::getFirstFrameImageWithFilePath(const std::string& filePath)
 {
     if (filePath.length() == 0)
     {
@@ -564,111 +567,113 @@ CAImage* CAAVPlayerViewImpl::getFirstFrameImageWithFilePath(const std::string& f
     return get_first_frame_image_with_filePath(url);
 }
 
-CAAVPlayerViewImpl::CAAVPlayerViewImpl(CAAVPlayerView* playerView)
-: m_pPlayerView(playerView)
+CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* player)
+: m_pPlayer(player)
 {
-    m_pNativeImpl = [[NativeAVPlayer alloc] initWithCallback:[&](CAImage* image)
-    {
-        m_pPlayerView->setImage(image);
-    }];
+    m_pNativeImpl = [[NativeAVPlayer alloc] init];
     
     [NATIVE_IMPL onPeriodicTime:[&](float currTime, float duratuon)
     {
-        if (m_pPlayerView->m_obPeriodicTime)
+        if (m_pPlayer->m_obPeriodicTime)
         {
-            m_pPlayerView->m_obPeriodicTime(currTime, duratuon);
+            m_pPlayer->m_obPeriodicTime(currTime, duratuon);
         }
     }];
     
     [NATIVE_IMPL onLoadedTime:[&](float currTime, float duratuon)
      {
-         if (m_pPlayerView->m_obLoadedTime)
+         if (m_pPlayer->m_obLoadedTime)
          {
-             m_pPlayerView->m_obLoadedTime(currTime, duratuon);
+             m_pPlayer->m_obLoadedTime(currTime, duratuon);
          }
      }];
     
     [NATIVE_IMPL onDidPlayToEndTime:[&]
     {
-        if (m_pPlayerView->m_obDidPlayToEndTime)
+        if (m_pPlayer->m_obDidPlayToEndTime)
         {
-            m_pPlayerView->m_obDidPlayToEndTime();
+            m_pPlayer->m_obDidPlayToEndTime();
         }
     }];
     
     [NATIVE_IMPL onTimeJumped:[&]
      {
-         if (m_pPlayerView->m_obTimeJumped)
+         if (m_pPlayer->m_obTimeJumped)
          {
-             m_pPlayerView->m_obTimeJumped();
+             m_pPlayer->m_obTimeJumped();
          }
      }];
     
     [NATIVE_IMPL onPlayBufferLoadingState:[&](const std::string& var)
      {
-         if (m_pPlayerView->m_obPlayBufferLoadingState)
+         if (m_pPlayer->m_obPlayBufferLoadingState)
          {
-             m_pPlayerView->m_obPlayBufferLoadingState(var);
+             m_pPlayer->m_obPlayBufferLoadingState(var);
          }
      }];
     
     [NATIVE_IMPL onPlayState:[&](const std::string& var)
      {
-         if (m_pPlayerView->m_obPlayState)
+         if (m_pPlayer->m_obPlayState)
          {
-             m_pPlayerView->m_obPlayState(var);
+             m_pPlayer->m_obPlayState(var);
          }
      }];
 }
 
-CAAVPlayerViewImpl::~CAAVPlayerViewImpl()
+CAAVPlayerImpl::~CAAVPlayerImpl()
 {
     [NATIVE_IMPL release];
 }
 
-void CAAVPlayerViewImpl::setUrl(const std::string& url)
+void CAAVPlayerImpl::setUrl(const std::string& url)
 {
     [NATIVE_IMPL setUrl:url];
 }
 
-void CAAVPlayerViewImpl::setFilePath(const std::string& filePath)
+void CAAVPlayerImpl::setFilePath(const std::string& filePath)
 {
     [NATIVE_IMPL setFilePath:filePath];
 }
 
-void CAAVPlayerViewImpl::play()
+void CAAVPlayerImpl::play()
 {
     [NATIVE_IMPL play];
 }
 
-void CAAVPlayerViewImpl::pause()
+void CAAVPlayerImpl::pause()
 {
     [NATIVE_IMPL pause];
 }
 
-void CAAVPlayerViewImpl::stop()
+void CAAVPlayerImpl::stop()
 {
     [NATIVE_IMPL stop];
 }
 
-float CAAVPlayerViewImpl::getDuration()
+float CAAVPlayerImpl::getDuration()
 {
     return [NATIVE_IMPL getDuration];
 }
 
-float CAAVPlayerViewImpl::getCurrentTime()
+float CAAVPlayerImpl::getCurrentTime()
 {
     return [NATIVE_IMPL getCurrentTime];
 }
 
-void CAAVPlayerViewImpl::setCurrentTime(float current)
+void CAAVPlayerImpl::setCurrentTime(float current)
 {
     [NATIVE_IMPL setCurrentTime:current];
 }
 
-const DSize& CAAVPlayerViewImpl::getPresentationSize()
+const DSize& CAAVPlayerImpl::getPresentationSize()
 {
     return [NATIVE_IMPL getPresentationSize];
+}
+
+void CAAVPlayerImpl::onImage(const std::function<void(CAImage*)>& function)
+{
+    [NATIVE_IMPL onImage:function];
 }
 
 NS_CC_END

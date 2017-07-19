@@ -11,16 +11,16 @@
 #include "basics/CASize.h"
 NS_CC_BEGIN
 class CC_DLL CAImage;
-class CC_DLL CAAVPlayerView;
-class CC_DLL CAAVPlayerViewImpl
+class CC_DLL CAAVPlayer;
+class CC_DLL CAAVPlayerImpl
 {
 public:
     
     static CAImage* getFirstFrameImageWithFilePath(const std::string& filePath);
     
-    CAAVPlayerViewImpl(CAAVPlayerView* playerView);
+    CAAVPlayerImpl(CAAVPlayer* player);
     
-    virtual ~CAAVPlayerViewImpl();
+    virtual ~CAAVPlayerImpl();
     
     void setUrl(const std::string& url);
     
@@ -39,12 +39,16 @@ public:
     void setCurrentTime(float current);
     
     const DSize& getPresentationSize();
-    
+
 private:
     
+    void onImage(const std::function<void(CAImage*)>& function);
+        
     void* m_pNativeImpl;
     
-    CAAVPlayerView* m_pPlayerView;
+    CAAVPlayer* m_pPlayer;
+    
+    friend class CAAVPlayer;
 };
 
 NS_CC_END

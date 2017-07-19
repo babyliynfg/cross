@@ -1,6 +1,6 @@
 
 #include "CAAVPlayerView.h"
-#include "platform/CAAVPlayerViewImpl.h"
+#include "platform/CAAVPlayerImpl.h"
 #include "images/CAImageCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
@@ -9,19 +9,111 @@
 #include "basics/CAScheduler.h"
 NS_CC_BEGIN
 
+
+CAAVPlayer::CAAVPlayer()
+{
+    m_pImpl = new CAAVPlayerImpl(this);
+}
+
+CAAVPlayer::~CAAVPlayer()
+{
+    CC_SAFE_DELETE(m_pImpl);
+}
+
+CAAVPlayer *CAAVPlayer::createWithUrl(const std::string &uri)
+{
+    CAAVPlayer *pRet = new CAAVPlayer();
+    if (pRet && pRet->initWithUrl(uri))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
+    }
+}
+
+CAAVPlayer *CAAVPlayer::createWithFilePath(const std::string &uri)
+{
+    CAAVPlayer *pRet = new CAAVPlayer();
+    if (pRet && pRet->initWithFilePath(uri))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+        return NULL;
+    }
+}
+
+bool CAAVPlayer::initWithUrl(const std::string& uri)
+{
+    m_pImpl->setUrl(uri);
+    return true;
+}
+
+bool CAAVPlayer::initWithFilePath(const std::string& uri)
+{
+    m_pImpl->setFilePath(uri);
+    return true;
+}
+
+void CAAVPlayer::play()
+{
+    m_pImpl->play();
+}
+
+void CAAVPlayer::pause()
+{
+    m_pImpl->pause();
+}
+
+void CAAVPlayer::stop()
+{
+    m_pImpl->stop();
+}
+
+float CAAVPlayer::getDuration()
+{
+    return m_pImpl->getDuration();
+}
+
+float CAAVPlayer::getCurrentTime()
+{
+    return m_pImpl->getCurrentTime();
+}
+
+void CAAVPlayer::setCurrentTime(float current)
+{
+    m_pImpl->setCurrentTime(current);
+}
+
+const DSize& CAAVPlayer::getPresentationSize()
+{
+    return m_pImpl->getPresentationSize();
+}
+
+void CAAVPlayer::onImage(const std::function<void(CAImage*)>& function)
+{
+    m_pImpl->onImage(function);
+}
+
 CAAVPlayerView::CAAVPlayerView()
 : m_fX(0)
 , m_fY(0)
 , m_fWidth(0)
 , m_fHeight(0)
-, m_pImpl(nullptr)
+, m_pPlayer(nullptr)
 {
 
 }
 
 CAAVPlayerView::~CAAVPlayerView()
 {
-    CC_SAFE_DELETE(m_pImpl);
 }
 
 CAAVPlayerView* CAAVPlayerView::createWithFrame(const DRect& rect)
@@ -78,67 +170,37 @@ CAAVPlayerView *CAAVPlayerView::create()
 
 bool CAAVPlayerView::init()
 {
-    m_pImpl = new CAAVPlayerViewImpl(this);
     return true;
 }
 
-void CAAVPlayerView::setUrl(const std::string& uri)
+void CAAVPlayerView::setPlayer(CrossApp::CAAVPlayer *player)
 {
-    m_pImpl->setUrl(uri);
-}
-
-void CAAVPlayerView::setFilePath(const std::string& uri)
-{
-    m_pImpl->setFilePath(uri);
-}
-
-void CAAVPlayerView::play()
-{
-    m_pImpl->play();
-}
-
-void CAAVPlayerView::pause()
-{
-    m_pImpl->pause();
-}
-
-void CAAVPlayerView::stop()
-{
-    m_pImpl->stop();
-}
-
-float CAAVPlayerView::getDuration()
-{
-    return m_pImpl->getDuration();
-}
-
-float CAAVPlayerView::getCurrentTime()
-{
-    return m_pImpl->getCurrentTime();
-}
-
-void CAAVPlayerView::setCurrentTime(float current)
-{
-    m_pImpl->setCurrentTime(current);
-}
-
-const DSize& CAAVPlayerView::getPresentationSize()
-{
-    return m_pImpl->getPresentationSize();
+    if (m_pPlayer)
+    {
+        m_pPlayer->onImage(nullptr);
+    }
+    
+    if (player)
+    {
+        player->onImage([&](CAImage* image)
+        {
+            this->setImage(image);
+        });
+    }
+    
+    CC_SAFE_RETAIN(player);
+    CC_SAFE_RELEASE(m_pPlayer);
+    m_pPlayer = player;
 }
 
 void CAAVPlayerView::setImage(CAImage* image)
 {
+    CAView::setImage(image);
     if (image)
     {
-        CAView::setImage(image);
         DRect rect = DRectZero;
         rect.size = image->getContentSize();
         this->setImageRect(rect);
-    }
-    else
-    {
-        CAView::setImage(CAImage::CC_BLACK_IMAGE());
     }
 }
 

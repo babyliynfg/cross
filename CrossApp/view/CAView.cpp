@@ -164,7 +164,7 @@ CAView * CAView::create(void)
 
 bool CAView::init()
 {
-    this->setImage(CAImage::CC_WHITE_IMAGE());
+    this->setImage(CAImage::WHITE_IMAGE());
     return true;
 }
 
