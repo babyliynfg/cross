@@ -40,17 +40,12 @@ public:
 
 public:
     
-	CC_SYNTHESIZE_READONLY(CAImage*, m_onImage, OnImage);
-	CC_SYNTHESIZE_READONLY(CAImage*, m_offImage, OffImage);
-	CC_SYNTHESIZE_READONLY(CAImage*, m_thumbTintImage, ThumbTintImage);
-    
-    CC_SYNTHESIZE_IS_READONLY(bool, m_bIsOn, On);
+	CC_PROPERTY(CAImage*, m_onImage, OnImage);
+	CC_PROPERTY(CAImage*, m_offImage, OffImage);
+	CC_PROPERTY(CAImage*, m_thumbTintImage, ThumbTintImage);
     
     bool isOn();
     void setIsOn(bool on, bool animated);
-    void setOnImage(CAImage* onImage);
-    void setOffImage(CAImage* offImage);
-    void setThumbTintImage(CAImage* thumbTintImage);
     
 public:
     
@@ -70,7 +65,7 @@ protected:
     CASwitch::Type m_eType;
     
     bool m_bPrevIsOn;
-    
+    bool m_bIsOn;
     CAImageView *m_pOnImageView;
     CAImageView *m_pOffImageView;
     CAImageView *m_pThumbTintImageView;

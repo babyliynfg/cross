@@ -64,14 +64,14 @@
 		B0C3BD481ADE726B009BE71A /* CAClipboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0C3BD471ADE726B009BE71A /* CAClipboard.mm */; };
 		B0CA5A3B1A77A8B400BECD89 /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */; };
 		B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */; };
-		D644B38B1F19F59700E90A86 /* CAAVPlayerViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B38A1F19F59700E90A86 /* CAAVPlayerViewImpl.h */; };
+		D644B38B1F19F59700E90A86 /* CAAVPlayerImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B38A1F19F59700E90A86 /* CAAVPlayerImpl.h */; };
 		D644B38E1F19F79D00E90A86 /* CACustomAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D644B38C1F19F79D00E90A86 /* CACustomAnimation.cpp */; };
 		D644B38F1F19F79D00E90A86 /* CACustomAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B38D1F19F79D00E90A86 /* CACustomAnimation.h */; };
 		D644B3921F19F8CB00E90A86 /* CAAVPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D644B3901F19F8CB00E90A86 /* CAAVPlayerView.cpp */; };
 		D644B3931F19F8CB00E90A86 /* CAAVPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B3911F19F8CB00E90A86 /* CAAVPlayerView.h */; };
 		D644B3951F19FA0000E90A86 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D644B3941F19FA0000E90A86 /* AVFoundation.framework */; };
 		D644B3971F19FA1200E90A86 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D644B3961F19FA1200E90A86 /* CoreMedia.framework */; };
-		D644B39F1F1A02F600E90A86 /* CAAVPlayerViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D644B39E1F1A02F600E90A86 /* CAAVPlayerViewImpl.mm */; };
+		D644B39F1F1A02F600E90A86 /* CAAVPlayerImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D644B39E1F1A02F600E90A86 /* CAAVPlayerImpl.mm */; };
 		D6596E0D1E56D1C200A55CF9 /* CAAlertViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */; };
 		D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */; };
 		D66F533B1ED8402300546E5E /* CAData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66F53391ED8402300546E5E /* CAData.cpp */; };
@@ -507,14 +507,14 @@
 		B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebViewImpl.mm; sourceTree = "<group>"; };
 		B0D7FA7C1B21506B004B2B86 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../the_third_party/curl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
 		B0D7FA7D1B21506B004B2B86 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../the_third_party/curl/prebuilt/ios/libssl.a; sourceTree = "<group>"; };
-		D644B38A1F19F59700E90A86 /* CAAVPlayerViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerViewImpl.h; sourceTree = "<group>"; };
+		D644B38A1F19F59700E90A86 /* CAAVPlayerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerImpl.h; sourceTree = "<group>"; };
 		D644B38C1F19F79D00E90A86 /* CACustomAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACustomAnimation.cpp; sourceTree = "<group>"; };
 		D644B38D1F19F79D00E90A86 /* CACustomAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACustomAnimation.h; sourceTree = "<group>"; };
 		D644B3901F19F8CB00E90A86 /* CAAVPlayerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAVPlayerView.cpp; sourceTree = "<group>"; };
 		D644B3911F19F8CB00E90A86 /* CAAVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerView.h; sourceTree = "<group>"; };
 		D644B3941F19FA0000E90A86 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D644B3961F19FA1200E90A86 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		D644B39E1F1A02F600E90A86 /* CAAVPlayerViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAVPlayerViewImpl.mm; sourceTree = "<group>"; };
+		D644B39E1F1A02F600E90A86 /* CAAVPlayerImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAVPlayerImpl.mm; sourceTree = "<group>"; };
 		D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlertViewImpl.mm; sourceTree = "<group>"; };
 		D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertViewImpl.h; sourceTree = "<group>"; };
 		D66F53391ED8402300546E5E /* CAData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAData.cpp; sourceTree = "<group>"; };
@@ -1041,7 +1041,7 @@
 				1551A47B158F2ADE00E66CFE /* ios */,
 				D69DA6981EE54F4E00590961 /* CAFontProcesstor.h */,
 				D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */,
-				D644B38A1F19F59700E90A86 /* CAAVPlayerViewImpl.h */,
+				D644B38A1F19F59700E90A86 /* CAAVPlayerImpl.h */,
 				B07E81131C33B34800A39C95 /* CATextView.h */,
 				022160761C1FAD38009FFCFC /* CATextField.h */,
 				B0C3BD451ADE7264009BE71A /* CAClipboard.h */,
@@ -1110,7 +1110,7 @@
 		D644B39D1F1A02F600E90A86 /* apple */ = {
 			isa = PBXGroup;
 			children = (
-				D644B39E1F1A02F600E90A86 /* CAAVPlayerViewImpl.mm */,
+				D644B39E1F1A02F600E90A86 /* CAAVPlayerImpl.mm */,
 			);
 			path = apple;
 			sourceTree = "<group>";
@@ -1819,7 +1819,7 @@
 			files = (
 				D6ADC6C41E56A72800750771 /* CCVertexIndexBuffer.h in Headers */,
 				D6ADC6021E56A72800750771 /* CALayout.h in Headers */,
-				D644B38B1F19F59700E90A86 /* CAAVPlayerViewImpl.h in Headers */,
+				D644B38B1F19F59700E90A86 /* CAAVPlayerImpl.h in Headers */,
 				D6ADC6C81E56A72800750771 /* CCScriptSupport.h in Headers */,
 				D6ADC68B1E56A72800750771 /* CAVertex.h in Headers */,
 				D6ADC5F41E56A72800750771 /* CAAutoreleasePool.h in Headers */,
@@ -2213,7 +2213,7 @@
 				D6ADC6A21E56A72800750771 /* CCGLProgramStateCache.cpp in Sources */,
 				D6ADC6271E56A72800750771 /* CAControl.cpp in Sources */,
 				D6ADC68A1E56A72800750771 /* CAVertex.cpp in Sources */,
-				D644B39F1F1A02F600E90A86 /* CAAVPlayerViewImpl.mm in Sources */,
+				D644B39F1F1A02F600E90A86 /* CAAVPlayerImpl.mm in Sources */,
 				D6ADC5F11E56A72800750771 /* CAApplication.cpp in Sources */,
 				D6ADC6451E56A72800750771 /* CATouch.cpp in Sources */,
 				D6ADC6EE1E56A72800750771 /* json_writer.cpp in Sources */,
@@ -2369,7 +2369,7 @@
 					CROSSAPP_JAVASCRIPT,
 					USE_FILE32API,
 					CC_TARGET_OS_IPHONE,
-					"CROSSAPP_DEBUG=1",
+					"CROSSAPP_DEBUG=0",
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",

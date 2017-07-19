@@ -122,7 +122,11 @@ private:
 
 class CC_DLL CAAVPlayerController : public CAObject
 {
+public:
     
+    static void showAVPlayerController(CAAVPlayer* player);
+    
+    static void closeAVPlayerController();
 };
 
 NS_CC_END

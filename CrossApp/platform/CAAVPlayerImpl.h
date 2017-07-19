@@ -51,6 +51,15 @@ private:
     friend class CAAVPlayer;
 };
 
+class CC_DLL CAAVPlayerControllerImpl
+{
+public:
+    
+    static void showAVPlayerController(CAAVPlayer* player);
+    
+    static void closeAVPlayerController();
+};
+
 NS_CC_END
 
 #endif    // __CAAVPlayerViewImpl_H__

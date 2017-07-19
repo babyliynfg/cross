@@ -161,6 +161,11 @@ void CASwitch::setIsOn(bool on, bool animated)
     }
 }
 
+CAImage* CASwitch::getOnImage()
+{
+    return m_onImage;
+}
+
 void CASwitch::setOnImage(CAImage* onImage)
 {
     if (m_onImage != onImage)
@@ -175,6 +180,11 @@ void CASwitch::setOnImage(CAImage* onImage)
     }
 }
 
+CAImage* CASwitch::getOffImage()
+{
+    return m_offImage;
+}
+
 void CASwitch::setOffImage(CAImage* offImage)
 {
     if (m_offImage != offImage)
@@ -187,6 +197,11 @@ void CASwitch::setOffImage(CAImage* offImage)
             m_pOffImageView->setImage(m_offImage);
         }
     }
+}
+
+CAImage* CASwitch::getThumbTintImage()
+{
+    return m_thumbTintImage;
 }
 
 void CASwitch::setThumbTintImage(CAImage* thumbTintImage)
