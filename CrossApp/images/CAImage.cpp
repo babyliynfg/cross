@@ -2650,39 +2650,55 @@ const char* CAImage::getImageFileType()
 }
 static CAImage* s_white_image           = nullptr;
 static CAImage* s_black_image           = nullptr;
+static CAImage* s_clear_image           = nullptr;
 static CAImage* s_shadow_left_image     = nullptr;
 static CAImage* s_shadow_right_image    = nullptr;
 static CAImage* s_shadow_top_image      = nullptr;
 static CAImage* s_shadow_bottom_image   = nullptr;
 
-CAImage* CAImage::CC_WHITE_IMAGE()
+CAImage* CAImage::WHITE_IMAGE()
 {
     if (s_white_image == nullptr)
     {
-        unsigned int pixels = 0xffffffff;
+        unsigned char pixels = 0xff;
         CAData* data = CAData::create();
-        data->copy((const unsigned char *)&pixels, 4);
+        data->copy((const unsigned char *)&pixels, 3);
         
         s_white_image = new CAImage();
-        s_white_image->initWithRawData(data, CAImage::PixelFormat::RGBA8888, 1, 1);
+        s_white_image->initWithRawData(data, CAImage::PixelFormat::I8, 1, 1);
         s_white_image->m_bMonochrome = true;
     }
     return s_white_image;
 }
 
-CAImage* CAImage::CC_BLACK_IMAGE()
+CAImage* CAImage::BLACK_IMAGE()
 {
     if (s_black_image == nullptr)
     {
-        unsigned int pixels = 0xff000000;
+        unsigned char pixels = 0x0;
         CAData* data = CAData::create();
-        data->copy((const unsigned char *)&pixels, 4);
+        data->copy((const unsigned char *)&pixels, 3);
         
         s_black_image = new CAImage();
-        s_black_image->initWithRawData(data, CAImage::PixelFormat::RGBA8888, 1, 1);
+        s_black_image->initWithRawData(data, CAImage::PixelFormat::I8, 1, 1);
         s_black_image->m_bMonochrome = true;
     }
     return s_black_image;
+}
+
+CAImage* CAImage::CLEAR_IMAGE()
+{
+    if (s_clear_image == nullptr)
+    {
+        unsigned char pixels = 0x0;
+        CAData* data = CAData::create();
+        data->copy((const unsigned char *)&pixels, 1);
+        
+        s_clear_image = new CAImage();
+        s_clear_image->initWithRawData(data, CAImage::PixelFormat::A8, 1, 1);
+        s_clear_image->m_bMonochrome = true;
+    }
+    return s_clear_image;
 }
 
 CAImage* CAImage::CC_SHADOW_LEFT_IMAGE()

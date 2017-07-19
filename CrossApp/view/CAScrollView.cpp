@@ -438,7 +438,7 @@ void CAScrollView::setBackgroundImage(CAImage* image)
 
 void CAScrollView::setBackgroundColor(const CAColor4B &color)
 {
-    CAView::setImage(CAImage::CC_WHITE_IMAGE());
+    CAView::setImage(CAImage::WHITE_IMAGE());
     CAView::setColor(color);
 }
 

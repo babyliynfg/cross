@@ -179,10 +179,12 @@ public:
     
     float getAspectRatio();
     
-    static CAImage* CC_WHITE_IMAGE();
+    static CAImage* WHITE_IMAGE();
     
-    static CAImage* CC_BLACK_IMAGE();
+    static CAImage* BLACK_IMAGE();
 
+    static CAImage* CLEAR_IMAGE();
+    
     static CAImage* CC_SHADOW_LEFT_IMAGE();
     
     static CAImage* CC_SHADOW_RIGHT_IMAGE();

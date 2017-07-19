@@ -148,6 +148,9 @@ public: virtual void set##funName(varType var)   \
 protected: std::function<FUNCTION> m_ob##VARNAME{nullptr};\
 public: void on##VARNAME(const std::function<FUNCTION>& var){ m_ob##VARNAME = var; }
 
+#define CC_LISTENING_FUNCTION_D(FUNCTION, VARNAME)\
+protected: std::function<FUNCTION> m_ob##VARNAME{nullptr};\
+public: void on##VARNAME(const std::function<FUNCTION>& var);
 
 #define CC_SAFE_DELETE(p)           do { if(p) { delete (p); (p) = 0; } } while(0)
 #define CC_SAFE_DELETE_ARRAY(p)     do { if(p) { delete[] (p); (p) = 0; } } while(0)

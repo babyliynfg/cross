@@ -174,10 +174,10 @@
 		D644B35E1F17891100E90A86 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76701E4B05BA007D9771 /* QuartzCore.framework */; };
 		D644B3781F18657600E90A86 /* CAAVPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D644B3761F18657600E90A86 /* CAAVPlayerView.cpp */; };
 		D644B3791F18657600E90A86 /* CAAVPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B3771F18657600E90A86 /* CAAVPlayerView.h */; };
-		D644B37D1F186AA100E90A86 /* CAAVPlayerViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B37C1F186AA100E90A86 /* CAAVPlayerViewImpl.h */; };
+		D644B37D1F186AA100E90A86 /* CAAVPlayerImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B37C1F186AA100E90A86 /* CAAVPlayerImpl.h */; };
 		D644B3801F18B72800E90A86 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 485203E71E63C73D00571433 /* CoreMedia.framework */; };
 		D644B3821F18B72D00E90A86 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D644B3811F18B72D00E90A86 /* AVFoundation.framework */; };
-		D644B39C1F1A02E500E90A86 /* CAAVPlayerViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D644B39B1F1A02E500E90A86 /* CAAVPlayerViewImpl.mm */; };
+		D644B39C1F1A02E500E90A86 /* CAAVPlayerImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D644B39B1F1A02E500E90A86 /* CAAVPlayerImpl.mm */; };
 		D649B2811D3C64480020414A /* CGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D649B27D1D3C64480020414A /* CGNode.cpp */; };
 		D649B2821D3C64480020414A /* CGNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D649B27E1D3C64480020414A /* CGNode.h */; };
 		D649B2831D3C64480020414A /* CGSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D649B27F1D3C64480020414A /* CGSprite.cpp */; };
@@ -612,9 +612,9 @@
 		B0FCA6781C2BECBB0014CDCF /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
 		D644B3761F18657600E90A86 /* CAAVPlayerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAVPlayerView.cpp; sourceTree = "<group>"; };
 		D644B3771F18657600E90A86 /* CAAVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerView.h; sourceTree = "<group>"; };
-		D644B37C1F186AA100E90A86 /* CAAVPlayerViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerViewImpl.h; sourceTree = "<group>"; };
+		D644B37C1F186AA100E90A86 /* CAAVPlayerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerImpl.h; sourceTree = "<group>"; };
 		D644B3811F18B72D00E90A86 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		D644B39B1F1A02E500E90A86 /* CAAVPlayerViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAVPlayerViewImpl.mm; sourceTree = "<group>"; };
+		D644B39B1F1A02E500E90A86 /* CAAVPlayerImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAVPlayerImpl.mm; sourceTree = "<group>"; };
 		D649B27D1D3C64480020414A /* CGNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGNode.cpp; sourceTree = "<group>"; };
 		D649B27E1D3C64480020414A /* CGNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGNode.h; sourceTree = "<group>"; };
 		D649B27F1D3C64480020414A /* CGSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGSprite.cpp; sourceTree = "<group>"; };
@@ -1125,7 +1125,7 @@
 				D673AB881E52E2A0007E7A5B /* mac */,
 				D69DA68B1EE4FB6900590961 /* CAFontProcesstor.h */,
 				D6596E2B1E57044700A55CF9 /* CAAlertViewImpl.h */,
-				D644B37C1F186AA100E90A86 /* CAAVPlayerViewImpl.h */,
+				D644B37C1F186AA100E90A86 /* CAAVPlayerImpl.h */,
 				B07E827A1C33E7F700A39C95 /* CATextView.h */,
 				B0FCA6781C2BECBB0014CDCF /* CATextField.h */,
 				B0C3BD401ADE70B3009BE71A /* CAClipboard.h */,
@@ -1435,7 +1435,7 @@
 		D644B39A1F1A02E500E90A86 /* apple */ = {
 			isa = PBXGroup;
 			children = (
-				D644B39B1F1A02E500E90A86 /* CAAVPlayerViewImpl.mm */,
+				D644B39B1F1A02E500E90A86 /* CAAVPlayerImpl.mm */,
 			);
 			path = apple;
 			sourceTree = "<group>";
@@ -1885,7 +1885,7 @@
 				D69B76411E4AFE12007D9771 /* CCRenderer.h in Headers */,
 				04EAB15D1956D75600198A8E /* platform.h in Headers */,
 				B0A11DAA1AE8C5C500933BF6 /* gif_lib.h in Headers */,
-				D644B37D1F186AA100E90A86 /* CAAVPlayerViewImpl.h in Headers */,
+				D644B37D1F186AA100E90A86 /* CAAVPlayerImpl.h in Headers */,
 				D649B2C21D3CD6A80020414A /* CGActionTween.h in Headers */,
 				D6596E1E1E57040B00A55CF9 /* HttpClient.h in Headers */,
 				D673AC071E52E2A0007E7A5B /* CCWindow.h in Headers */,
@@ -2040,7 +2040,7 @@
 				04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */,
 				D6C729FF1EEE748D0094B191 /* CACell.cpp in Sources */,
 				04EAB06B1956D75600198A8E /* CACamera.cpp in Sources */,
-				D644B39C1F1A02E500E90A86 /* CAAVPlayerViewImpl.mm in Sources */,
+				D644B39C1F1A02E500E90A86 /* CAAVPlayerImpl.mm in Sources */,
 				D6596E1B1E57040B00A55CF9 /* DownloadManager.cpp in Sources */,
 				B074A8B71A722B5200F34F79 /* CAViewAnimation.cpp in Sources */,
 				D649B2C71D3CD6A80020414A /* CGTweenFunction.cpp in Sources */,
