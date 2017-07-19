@@ -1,5 +1,5 @@
 #include "../CAAVPlayerImpl.h"
-#include "view/CAAVPlayer.h"
+#include "view/CAAVPlayerView.h"
 #include "images/CAImage.h"
 #include "basics/CAApplication.h"
 #include <map>
@@ -19,6 +19,8 @@ static std::map<int , std::function<void(float current, float duratuon)> > s_Loa
 static std::map<int , std::function<void()> > s_DidPlayToEndTime_map;
 static std::map<int , std::function<void()> > s_TimeJumped_map;
 
+static std::map<int , std::function<void(const std::string&)> > s_PlayBufferLoadingState_map;
+static std::map<int , std::function<void(const std::string&)> > s_PlayState_map;
 
 void removePlayer(int key)
 {
@@ -47,7 +49,6 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
             m_pPlayer->m_obLoadedTime(current,duratuon) ;
     };
     
-    
     s_DidPlayToEndTime_map[m_pPlayer->m_u__ID] = [&]()
     {
         if(m_pPlayer->m_obDidPlayToEndTime)
@@ -57,6 +58,18 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
     {
         if(m_pPlayer->m_obTimeJumped)
             m_pPlayer->m_obTimeJumped() ;
+    };
+    
+    s_PlayBufferLoadingState_map[m_pPlayer->m_u__ID] = [&](const std::string& str)
+    {
+        if(m_pPlayer->m_obPlayBufferLoadingState)
+            m_pPlayer->m_obPlayBufferLoadingState(str) ;
+    };
+    
+    s_PlayState_map[m_pPlayer->m_u__ID] = [&](const std::string& str)
+    {
+        if(m_pPlayer->m_obPlayState)
+            m_pPlayer->m_obPlayState(str) ;
     };
     
 }
@@ -69,7 +82,8 @@ CAAVPlayerImpl::~CAAVPlayerImpl()
     s_LoadedTime_map.erase(m_pPlayer->m_u__ID);
     s_DidPlayToEndTime_map.erase(m_pPlayer->m_u__ID);
     s_TimeJumped_map.erase(m_pPlayer->m_u__ID);
-    
+    s_PlayBufferLoadingState_map.erase(m_pPlayer->m_u__ID);
+    s_PlayState_map.erase(m_pPlayer->m_u__ID);    
     removePlayer(m_pPlayer->m_u__ID) ;
 }
 
@@ -264,6 +278,33 @@ extern "C"
             }
         }
     }
+    
+    // 监听缓冲状态
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onPlayBufferLoadingState(JNIEnv *env, jclass cls, jint key , jint state)
+    {
+        if (s_PlayBufferLoadingState_map.count((int)key) > 0)
+        {
+            if (auto& callback = s_PlayBufferLoadingState_map.at((int)key))
+            {
+                int s = (int)state ;
+                callback(   s == 0 ?  CrossApp::PlaybackBufferEmpty : CrossApp::PlaybackLikelyToKeepUp  );
+            }
+        }
+    }
+    
+    // 监听播放状态
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onPlayState(JNIEnv *env, jclass cls, jint key , jint state)
+    {
+        if (s_PlayState_map.count((int)key) > 0)
+        {
+            if (auto& callback = s_PlayState_map.at((int)key))
+            {
+                int s = (int)state ;
+                callback(  s == 0 ? CrossApp::PlayStatePause: ( s == 1 ? CrossApp::PlayStatePlaying  : CrossApp::PlayStatePlayback )  );
+            }
+        }
+    }
+    
     
     
 }
