@@ -57,13 +57,14 @@ private:
     friend class CAAVPlayer;
 };
 
+/*
 class CC_DLL CAAVPlayerControllerImpl
 {
 public:
     
     static void showAVPlayerController(CAAVPlayer* player);
 };
-
+*/
 NS_CC_END
 
 #endif    // __CAAVPlayerViewImpl_H__

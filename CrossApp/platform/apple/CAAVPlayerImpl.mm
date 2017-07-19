@@ -685,16 +685,6 @@ void CAAVPlayerImpl::setCurrentTime(float current)
     [NATIVE_IMPL setCurrentTime:current];
 }
 
-float CAAVPlayerImpl::getRate()
-{
-    return [NATIVE_IMPL rate];
-}
-
-void CAAVPlayerImpl::setRate(float rate)
-{
-    [NATIVE_IMPL setRate:rate];
-}
-
 const DSize& CAAVPlayerImpl::getPresentationSize()
 {
     return [NATIVE_IMPL getPresentationSize];
@@ -704,7 +694,7 @@ void CAAVPlayerImpl::onImage(const std::function<void(CAImage*)>& function)
 {
     [NATIVE_IMPL onImage:function];
 }
-
+/*
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 void CAAVPlayerControllerImpl::showAVPlayerController(CAAVPlayer* player)
@@ -733,7 +723,7 @@ void CAAVPlayerControllerImpl::showAVPlayerController(CAAVPlayer* player)
 }
 
 #endif
-
+*/
 
 
 NS_CC_END

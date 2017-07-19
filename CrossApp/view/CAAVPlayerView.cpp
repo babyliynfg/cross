@@ -236,10 +236,5 @@ void CAAVPlayerView::updateImageRect()
     m_sQuad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
 }
 
-void CAAVPlayerController::showAVPlayerController(CAAVPlayer* player)
-{
-    CAAVPlayerControllerImpl::showAVPlayerController(player);
-}
-
 
 NS_CC_END

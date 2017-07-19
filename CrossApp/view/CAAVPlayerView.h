@@ -127,12 +127,6 @@ private:
     CAAVPlayer* m_pPlayer;
 };
 
-class CC_DLL CAAVPlayerController : public CAObject
-{
-public:
-    
-    static void showAVPlayerController(CAAVPlayer* player);
-};
 
 NS_CC_END
 
