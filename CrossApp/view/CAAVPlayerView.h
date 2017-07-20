@@ -40,9 +40,7 @@ public:
     bool initWithFilePath(const std::string& uri);// 本地路径
     
     void play(); // 播放
-    
-    void playWithRate(float rate); // 按照某个速率播放，默认速率为1.0f
-    
+
     void pause(); // 暂停
     
     void stop(); // 停止
@@ -52,10 +50,6 @@ public:
     float getCurrentTime(); // 获取媒体当前时间
     
     void setCurrentTime(float current); // 跳转到指定的时间
-    
-    float getRate();
-    
-    void setRate(float rate);
     
     const DSize& getPresentationSize(); // 获取媒体分辨率
     

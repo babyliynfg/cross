@@ -4,7 +4,7 @@
 #include "support/data_support/utlist.h"
 #include "support/data_support/ccCArray.h"
 #include "cocoa/CCSet.h"
-#include "script_support/CCScriptSupport.h"
+#include "script_support/CAScriptSupport.h"
 
 NS_CC_BEGIN
 

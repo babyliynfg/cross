@@ -1,6 +1,6 @@
 
 
-#include "script_support/CCScriptSupport.h"
+#include "script_support/CAScriptSupport.h"
 #include "basics/CAScheduler.h"
 
 NS_CC_BEGIN

@@ -67,11 +67,6 @@ void CAAVPlayer::play()
     m_pImpl->play();
 }
 
-void CAAVPlayer::playWithRate(float rate)
-{
-    m_pImpl->playWithRate(rate);
-}
-
 void CAAVPlayer::pause()
 {
     m_pImpl->pause();
@@ -181,6 +176,11 @@ CAAVPlayerView *CAAVPlayerView::create()
 bool CAAVPlayerView::init()
 {
     return true;
+}
+
+CAAVPlayer* CAAVPlayerView::getPlayer()
+{
+    return m_pPlayer;
 }
 
 void CAAVPlayerView::setPlayer(CrossApp::CAAVPlayer *player)

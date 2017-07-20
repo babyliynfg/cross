@@ -27,10 +27,6 @@
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
-		480EDE161D95397800C758DA /* CAVideoPlayerControlViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE0B1D95397800C758DA /* CAVideoPlayerControlViewMac.cpp */; };
-		480EDE181D95397800C758DA /* CAVideoPlayerDecoderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE0E1D95397800C758DA /* CAVideoPlayerDecoderMac.cpp */; };
-		480EDE1A1D95397800C758DA /* CAVideoPlayerRenderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE111D95397800C758DA /* CAVideoPlayerRenderMac.cpp */; };
-		480EDE1C1D95397800C758DA /* CAVideoPlayerViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE141D95397800C758DA /* CAVideoPlayerViewMac.cpp */; };
 		480EDE1E1D953A0900C758DA /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE1D1D953A0900C758DA /* libiconv.tbd */; };
 		480EDE201D953A2A00C758DA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE1F1D953A2A00C758DA /* Security.framework */; };
 		480EDE221D953A3400C758DA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE211D953A3400C758DA /* VideoToolbox.framework */; };
@@ -81,7 +77,6 @@
 		04EAA0371956D14600198A8E /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.mac/CrossApp.xcodeproj; sourceTree = "<group>"; };
 		15C1580E168315CE00D239F2 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		15C1580F168315CE00D239F2 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
-		15C158D4168315E500D239F2 /* ExtensionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionMacros.h; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -112,14 +107,6 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
-		480EDE0A1D95397800C758DA /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerControlView.h; path = video/CAVideoPlayerControlView.h; sourceTree = "<group>"; };
-		480EDE0B1D95397800C758DA /* CAVideoPlayerControlViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerControlViewMac.cpp; path = video/CAVideoPlayerControlViewMac.cpp; sourceTree = "<group>"; };
-		480EDE0D1D95397800C758DA /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerDecoder.h; path = video/CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
-		480EDE0E1D95397800C758DA /* CAVideoPlayerDecoderMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerDecoderMac.cpp; path = video/CAVideoPlayerDecoderMac.cpp; sourceTree = "<group>"; };
-		480EDE101D95397800C758DA /* CAVideoPlayerRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerRender.h; path = video/CAVideoPlayerRender.h; sourceTree = "<group>"; };
-		480EDE111D95397800C758DA /* CAVideoPlayerRenderMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerRenderMac.cpp; path = video/CAVideoPlayerRenderMac.cpp; sourceTree = "<group>"; };
-		480EDE131D95397800C758DA /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerView.h; path = video/CAVideoPlayerView.h; sourceTree = "<group>"; };
-		480EDE141D95397800C758DA /* CAVideoPlayerViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerViewMac.cpp; path = video/CAVideoPlayerViewMac.cpp; sourceTree = "<group>"; };
 		480EDE1D1D953A0900C758DA /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		480EDE1F1D953A2A00C758DA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		480EDE211D953A3400C758DA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
@@ -150,7 +137,6 @@
 		48E1411A1CED67970029BABC /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
 		48E1445A1CED67B60029BABC /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		48E1445C1CED68760029BABC /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = "../../../scripting/js-bindings/spidermonkey/prebuilt/mac/libjs_static.a"; sourceTree = "<group>"; };
-		B05637581952735100C63FAA /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		B0621C291AC3DCB2005EBCA7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
@@ -230,17 +216,6 @@
 			path = include;
 			sourceTree = "<group>";
 		};
-		15C1589C168315E500D239F2 /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				480EDE081D95396500C758DA /* video */,
-				B05637581952735100C63FAA /* CrossAppExt.h */,
-				15C158D4168315E500D239F2 /* ExtensionMacros.h */,
-			);
-			name = extensions;
-			path = ../../../extensions;
-			sourceTree = "<group>";
-		};
 		15D8B231168318C3006C7997 /* mac */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,7 +249,6 @@
 				48E141091CED67970029BABC /* js-bindings */,
 				04EAA0371956D14600198A8E /* CrossApp.xcodeproj */,
 				15C157F7168315CE00D239F2 /* CocosDenshion */,
-				15C1589C168315E500D239F2 /* extensions */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				15AA9C4015B7EC450033D6C2 /* Classes */,
 				41BC70D815BF818D006A0A6C /* mac */,
@@ -335,21 +309,6 @@
 			);
 			path = en.lproj;
 			sourceTree = SOURCE_ROOT;
-		};
-		480EDE081D95396500C758DA /* video */ = {
-			isa = PBXGroup;
-			children = (
-				480EDE0A1D95397800C758DA /* CAVideoPlayerControlView.h */,
-				480EDE0B1D95397800C758DA /* CAVideoPlayerControlViewMac.cpp */,
-				480EDE0D1D95397800C758DA /* CAVideoPlayerDecoder.h */,
-				480EDE0E1D95397800C758DA /* CAVideoPlayerDecoderMac.cpp */,
-				480EDE101D95397800C758DA /* CAVideoPlayerRender.h */,
-				480EDE111D95397800C758DA /* CAVideoPlayerRenderMac.cpp */,
-				480EDE131D95397800C758DA /* CAVideoPlayerView.h */,
-				480EDE141D95397800C758DA /* CAVideoPlayerViewMac.cpp */,
-			);
-			name = video;
-			sourceTree = "<group>";
 		};
 		48E141091CED67970029BABC /* js-bindings */ = {
 			isa = PBXGroup;
@@ -505,21 +464,17 @@
 			files = (
 				48E144341CED67980029BABC /* jsb_crossapp_auto.cpp in Sources */,
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
-				480EDE1C1D95397800C758DA /* CAVideoPlayerViewMac.cpp in Sources */,
 				B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
 				48E144391CED67980029BABC /* ScriptingCore.cpp in Sources */,
-				480EDE161D95397800C758DA /* CAVideoPlayerControlViewMac.cpp in Sources */,
 				483B3C1F1E9B7BCC00065B02 /* jsb_websocket.cpp in Sources */,
 				15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
-				480EDE1A1D95397800C758DA /* CAVideoPlayerRenderMac.cpp in Sources */,
 				48E144381CED67980029BABC /* js_manual_conversions.cpp in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
 				4851EDB31D81717E00863BD1 /* crossapp_specifics.cpp in Sources */,
 				48E144371CED67980029BABC /* js_bindings_core.cpp in Sources */,
-				480EDE181D95397800C758DA /* CAVideoPlayerDecoderMac.cpp in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
 				48D960971D58A15300158611 /* js_crossapp_delegates_manual.cpp in Sources */,
