@@ -119,6 +119,11 @@ CAAVPlayerView::CAAVPlayerView()
 
 CAAVPlayerView::~CAAVPlayerView()
 {
+    if (m_pPlayer)
+    {
+        m_pPlayer->onImage(nullptr);
+    }
+    CC_SAFE_RELEASE(m_pPlayer);
 }
 
 CAAVPlayerView* CAAVPlayerView::createWithFrame(const DRect& rect)

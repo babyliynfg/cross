@@ -26,7 +26,7 @@ static AVPlayerLayer* s_pAVPlayerLayer = nil;
 
 static void playerLayer_play(AVPlayer* player, float rate, const std::function<void()>& callback)
 {
-    if (s_pAVPlayerLayer)
+    if (s_pAVPlayerLayer && s_pAVPlayerLayer.player)
     {
         [s_pAVPlayerLayer.player pause];
         CrossApp::CAScheduler::getScheduler()->unschedule(ANIMATION_ID, CrossApp::CAApplication::getApplication());
@@ -77,16 +77,7 @@ static void playerLayer_play(AVPlayer* player, float rate, const std::function<v
         }
         [player setRate:rate];
     }
-    else
-    {
-        for (AVPlayerItemTrack *track in player.currentItem.tracks)
-        {
-            if ([track.assetTrack.mediaType isEqual:AVMediaTypeAudio])
-            {
-                track.enabled = NO;
-            }
-        }
-    }
+
     
     CrossApp::CAScheduler::getScheduler()->schedule([=](float dt)
     {
@@ -99,6 +90,7 @@ static void playerLayer_pause(AVPlayer* player)
     if (s_pAVPlayerLayer && player && s_pAVPlayerLayer.player == player)
     {
         [s_pAVPlayerLayer.player pause];
+        [s_pAVPlayerLayer setPlayer:nil];
         CrossApp::CAScheduler::getScheduler()->unschedule(ANIMATION_ID, CrossApp::CAApplication::getApplication());
     }
 }
@@ -173,6 +165,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 - (float)getCurrentTime;
 - (void)setCurrentTime:(float)current;
 - (const CrossApp::DSize&)getPresentationSize;
+- (void)remove;
 - (void)timerCurrentTime;
 - (void)outputMediaData;
 - (void)dealloc;
@@ -527,14 +520,33 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 
 - (void)dealloc
 {
-    [self pause];
     if (_player)
     {
+        [_player.currentItem removeOutput:_videoOutPut];
+        [_player.currentItem removeObserver:self forKeyPath:@"status"];
+        [_player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+        [_player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
+        [_player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+        [[NSNotificationCenter defaultCenter] removeObserver:_player.currentItem];
+        [_player removeObserver:self forKeyPath:@"rate"];
         [_player release];
     }
     [_videoOutPut release];
     CC_SAFE_RELEASE(_firstFrameImage);
     [super dealloc];
+}
+
+- (void)remove
+{
+    [self pause];
+    self.periodicTime = nullptr;
+    self.loadedTime = nullptr;
+    self.didPlayToEndTime = nullptr;
+    self.timeJumped = nullptr;
+    self.playBufferLoadingState = nullptr;
+    self.playState = nullptr;
+    self.onImage = nullptr;
+    [self autorelease];
 }
 
 @end
@@ -639,7 +651,7 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* player)
 CAAVPlayerImpl::~CAAVPlayerImpl()
 {
     //s_map.erase(m_pPlayer);
-    [NATIVE_IMPL release];
+    [NATIVE_IMPL remove];
 }
 
 void CAAVPlayerImpl::setUrl(const std::string& url)

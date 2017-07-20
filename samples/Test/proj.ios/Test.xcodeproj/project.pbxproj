@@ -24,7 +24,6 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E6489171B412CF600643640 /* libiconv.dylib */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
-		B039AF8D1BC7BFB1002C1FDB /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF8C1BC7BFB1002C1FDB /* libbz2.1.0.tbd */; };
 		B039AF8F1BC7BFB7002C1FDB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF8E1BC7BFB7002C1FDB /* VideoToolbox.framework */; };
 		B039AF911BC7BFC0002C1FDB /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF901BC7BFC0002C1FDB /* CoreVideo.framework */; };
 		B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF971BC7C52D002C1FDB /* CoreAudio.framework */; };
@@ -59,7 +58,7 @@
 		B0CF18D41CA236A1007AA1B0 /* TableViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18B41CA236A1007AA1B0 /* TableViewTest.cpp */; };
 		B0CF18D51CA236A1007AA1B0 /* TextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18B61CA236A1007AA1B0 /* TextFieldTest.cpp */; };
 		B0CF18D61CA236A1007AA1B0 /* TextViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18B81CA236A1007AA1B0 /* TextViewTest.cpp */; };
-		B0CF18D71CA236A1007AA1B0 /* VideoPlayerControlViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18BA1CA236A1007AA1B0 /* VideoPlayerControlViewTest.cpp */; };
+		B0CF18D71CA236A1007AA1B0 /* AVPlayerViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18BA1CA236A1007AA1B0 /* AVPlayerViewTest.cpp */; };
 		B0CF18D81CA236A1007AA1B0 /* ViewAnimationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18BC1CA236A1007AA1B0 /* ViewAnimationTest.cpp */; };
 		B0CF18D91CA236A1007AA1B0 /* WebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0CF18BE1CA236A1007AA1B0 /* WebViewTest.cpp */; };
 		B0DB988F1B1452EC00710982 /* CDWebViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DB98831B1452EC00710982 /* CDWebViewController.cpp */; };
@@ -80,19 +79,6 @@
 		D609D6521E7123C700F82D5A /* CheckboxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D609D64E1E7123C700F82D5A /* CheckboxTest.cpp */; };
 		D609D6531E7123C700F82D5A /* PageControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D609D6501E7123C700F82D5A /* PageControlTest.cpp */; };
 		D6409C0C1EEBD296009EE629 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6409C0B1EEBD296009EE629 /* CoreMedia.framework */; };
-		D6B036B11D95273200388A90 /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036A51D95273200388A90 /* CAVideoPlayerControlView.cpp */; };
-		D6B036B31D95273200388A90 /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036A81D95273200388A90 /* CAVideoPlayerDecoder.cpp */; };
-		D6B036B51D95273200388A90 /* CAVideoPlayerRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036AB1D95273200388A90 /* CAVideoPlayerRender.cpp */; };
-		D6B036B71D95273200388A90 /* CAVideoPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B036AE1D95273200388A90 /* CAVideoPlayerView.cpp */; };
-		D6B036C01D9527D800388A90 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B036B91D9527D800388A90 /* libavcodec.a */; };
-		D6B036C11D9527D800388A90 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B036BA1D9527D800388A90 /* libavdevice.a */; };
-		D6B036C21D9527D800388A90 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B036BB1D9527D800388A90 /* libavfilter.a */; };
-		D6B036C31D9527D800388A90 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B036BC1D9527D800388A90 /* libavformat.a */; };
-		D6B036C41D9527D800388A90 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B036BD1D9527D800388A90 /* libavutil.a */; };
-		D6B036C51D9527D800388A90 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B036BE1D9527D800388A90 /* libswresample.a */; };
-		D6B036C61D9527D800388A90 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B036BF1D9527D800388A90 /* libswscale.a */; };
-		D6B036C81D9527EA00388A90 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B036C71D9527EA00388A90 /* libSDL2.a */; };
-		D6EB4B081F138B5B00650417 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6EB4B071F138B5B00650417 /* AVKit.framework */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
 		EB1818D819388001002856FF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D719388001002856FF /* AddressBook.framework */; };
 		EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D919388005002856FF /* AddressBookUI.framework */; };
@@ -118,7 +104,6 @@
 /* Begin PBXFileReference section */
 		026964AC1BEB419E00C8BCD7 /* CrossApp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CrossApp.xib; sourceTree = "<group>"; };
 		026964B51BEB450400C8BCD7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = SOURCE_ROOT; };
-		15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionMacros.h; sourceTree = "<group>"; };
 		15A3DA821682F8A6002FB0C5 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		15A3DA831682F8A6002FB0C5 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
 		15A3DA851682F8A6002FB0C5 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
@@ -144,7 +129,6 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4E6489171B412CF600643640 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
-		B00CC60D19792FF800A62E4C /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B039AF8C1BC7BFB1002C1FDB /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		B039AF8E1BC7BFB7002C1FDB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
@@ -212,8 +196,8 @@
 		B0CF18B71CA236A1007AA1B0 /* TextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextFieldTest.h; path = ../Classes/Control/TextFieldTest.h; sourceTree = "<group>"; };
 		B0CF18B81CA236A1007AA1B0 /* TextViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextViewTest.cpp; path = ../Classes/Control/TextViewTest.cpp; sourceTree = "<group>"; };
 		B0CF18B91CA236A1007AA1B0 /* TextViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewTest.h; path = ../Classes/Control/TextViewTest.h; sourceTree = "<group>"; };
-		B0CF18BA1CA236A1007AA1B0 /* VideoPlayerControlViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoPlayerControlViewTest.cpp; path = ../Classes/Control/VideoPlayerControlViewTest.cpp; sourceTree = "<group>"; };
-		B0CF18BB1CA236A1007AA1B0 /* VideoPlayerControlViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoPlayerControlViewTest.h; path = ../Classes/Control/VideoPlayerControlViewTest.h; sourceTree = "<group>"; };
+		B0CF18BA1CA236A1007AA1B0 /* AVPlayerViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AVPlayerViewTest.cpp; path = ../Classes/Control/AVPlayerViewTest.cpp; sourceTree = "<group>"; };
+		B0CF18BB1CA236A1007AA1B0 /* AVPlayerViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVPlayerViewTest.h; path = ../Classes/Control/AVPlayerViewTest.h; sourceTree = "<group>"; };
 		B0CF18BC1CA236A1007AA1B0 /* ViewAnimationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ViewAnimationTest.cpp; path = ../Classes/Control/ViewAnimationTest.cpp; sourceTree = "<group>"; };
 		B0CF18BD1CA236A1007AA1B0 /* ViewAnimationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewAnimationTest.h; path = ../Classes/Control/ViewAnimationTest.h; sourceTree = "<group>"; };
 		B0CF18BE1CA236A1007AA1B0 /* WebViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebViewTest.cpp; path = ../Classes/Control/WebViewTest.cpp; sourceTree = "<group>"; };
@@ -244,14 +228,6 @@
 		D609D6501E7123C700F82D5A /* PageControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PageControlTest.cpp; path = ../Classes/Control/PageControlTest.cpp; sourceTree = "<group>"; };
 		D609D6511E7123C700F82D5A /* PageControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageControlTest.h; path = ../Classes/Control/PageControlTest.h; sourceTree = "<group>"; };
 		D6409C0B1EEBD296009EE629 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		D6B036A51D95273200388A90 /* CAVideoPlayerControlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerControlView.cpp; path = video/CAVideoPlayerControlView.cpp; sourceTree = "<group>"; };
-		D6B036A61D95273200388A90 /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerControlView.h; path = video/CAVideoPlayerControlView.h; sourceTree = "<group>"; };
-		D6B036A81D95273200388A90 /* CAVideoPlayerDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerDecoder.cpp; path = video/CAVideoPlayerDecoder.cpp; sourceTree = "<group>"; };
-		D6B036A91D95273200388A90 /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerDecoder.h; path = video/CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
-		D6B036AB1D95273200388A90 /* CAVideoPlayerRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerRender.cpp; path = video/CAVideoPlayerRender.cpp; sourceTree = "<group>"; };
-		D6B036AC1D95273200388A90 /* CAVideoPlayerRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerRender.h; path = video/CAVideoPlayerRender.h; sourceTree = "<group>"; };
-		D6B036AE1D95273200388A90 /* CAVideoPlayerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerView.cpp; path = video/CAVideoPlayerView.cpp; sourceTree = "<group>"; };
-		D6B036AF1D95273200388A90 /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerView.h; path = video/CAVideoPlayerView.h; sourceTree = "<group>"; };
 		D6B036B91D9527D800388A90 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../extensions/video/ffmpeg/prebuilt/ios/libavcodec.a; sourceTree = "<group>"; };
 		D6B036BA1D9527D800388A90 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../extensions/video/ffmpeg/prebuilt/ios/libavdevice.a; sourceTree = "<group>"; };
 		D6B036BB1D9527D800388A90 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../../extensions/video/ffmpeg/prebuilt/ios/libavfilter.a; sourceTree = "<group>"; };
@@ -271,22 +247,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6EB4B081F138B5B00650417 /* AVKit.framework in Frameworks */,
 				B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */,
 				D6409C0C1EEBD296009EE629 /* CoreMedia.framework in Frameworks */,
-				D6B036C81D9527EA00388A90 /* libSDL2.a in Frameworks */,
-				D6B036C01D9527D800388A90 /* libavcodec.a in Frameworks */,
-				D6B036C11D9527D800388A90 /* libavdevice.a in Frameworks */,
-				D6B036C21D9527D800388A90 /* libavfilter.a in Frameworks */,
-				D6B036C31D9527D800388A90 /* libavformat.a in Frameworks */,
-				D6B036C41D9527D800388A90 /* libavutil.a in Frameworks */,
-				D6B036C51D9527D800388A90 /* libswresample.a in Frameworks */,
-				D6B036C61D9527D800388A90 /* libswscale.a in Frameworks */,
-				B039AF8D1BC7BFB1002C1FDB /* libbz2.1.0.tbd in Frameworks */,
-				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
-				4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */,
-				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
-				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				B08BE2261CCDB61B001A0F36 /* CoreMotion.framework in Frameworks */,
 				B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */,
 				B039AF911BC7BFC0002C1FDB /* CoreVideo.framework in Frameworks */,
@@ -304,6 +266,10 @@
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
+				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
+				4E6489181B412CF600643640 /* libiconv.dylib in Frameworks */,
+				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,17 +290,6 @@
 			);
 			name = ios;
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		15A3D9B31682F826002FB0C5 /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				D6B036A41D95272600388A90 /* video */,
-				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
-				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
-			);
-			name = extensions;
-			path = ../../../extensions;
 			sourceTree = "<group>";
 		};
 		15A3DA6B1682F8A6002FB0C5 /* CocosDenshion */ = {
@@ -410,7 +365,6 @@
 				B056375B195276CF00C63FAA /* CrossApp.xcodeproj */,
 				15AA9C4015B7EC450033D6C2 /* Classes */,
 				15A3DA6B1682F8A6002FB0C5 /* CocosDenshion */,
-				15A3D9B31682F826002FB0C5 /* extensions */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -518,8 +472,8 @@
 				B0CF18B71CA236A1007AA1B0 /* TextFieldTest.h */,
 				B0CF18B81CA236A1007AA1B0 /* TextViewTest.cpp */,
 				B0CF18B91CA236A1007AA1B0 /* TextViewTest.h */,
-				B0CF18BA1CA236A1007AA1B0 /* VideoPlayerControlViewTest.cpp */,
-				B0CF18BB1CA236A1007AA1B0 /* VideoPlayerControlViewTest.h */,
+				B0CF18BA1CA236A1007AA1B0 /* AVPlayerViewTest.cpp */,
+				B0CF18BB1CA236A1007AA1B0 /* AVPlayerViewTest.h */,
 				B0CF18BC1CA236A1007AA1B0 /* ViewAnimationTest.cpp */,
 				B0CF18BD1CA236A1007AA1B0 /* ViewAnimationTest.h */,
 				B0CF18BE1CA236A1007AA1B0 /* WebViewTest.cpp */,
@@ -549,21 +503,6 @@
 				B0563760195276D000C63FAA /* libCrossApp.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D6B036A41D95272600388A90 /* video */ = {
-			isa = PBXGroup;
-			children = (
-				D6B036A51D95273200388A90 /* CAVideoPlayerControlView.cpp */,
-				D6B036A61D95273200388A90 /* CAVideoPlayerControlView.h */,
-				D6B036A81D95273200388A90 /* CAVideoPlayerDecoder.cpp */,
-				D6B036A91D95273200388A90 /* CAVideoPlayerDecoder.h */,
-				D6B036AB1D95273200388A90 /* CAVideoPlayerRender.cpp */,
-				D6B036AC1D95273200388A90 /* CAVideoPlayerRender.h */,
-				D6B036AE1D95273200388A90 /* CAVideoPlayerView.cpp */,
-				D6B036AF1D95273200388A90 /* CAVideoPlayerView.h */,
-			);
-			name = video;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -669,7 +608,6 @@
 				B0CF18CC1CA236A1007AA1B0 /* RenderImageTest.cpp in Sources */,
 				B0CF18C71CA236A1007AA1B0 /* LabelTest.cpp in Sources */,
 				B0CF18D21CA236A1007AA1B0 /* SwitchTest.cpp in Sources */,
-				D6B036B31D95273200388A90 /* CAVideoPlayerDecoder.cpp in Sources */,
 				B0DB98901B1452EC00710982 /* CommonHttpManager.cpp in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
 				B093DB4F1CBCDECD00E98AD6 /* AutoCollectionViewHorizontalTest.cpp in Sources */,
@@ -678,8 +616,7 @@
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
 				B0CF18D01CA236A1007AA1B0 /* SliderTest.cpp in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
-				B0CF18D71CA236A1007AA1B0 /* VideoPlayerControlViewTest.cpp in Sources */,
-				D6B036B71D95273200388A90 /* CAVideoPlayerView.cpp in Sources */,
+				B0CF18D71CA236A1007AA1B0 /* AVPlayerViewTest.cpp in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				B0CF18C31CA236A1007AA1B0 /* CollectionViewTest.cpp in Sources */,
 				B0CF18CD1CA236A1007AA1B0 /* Scale9ImageViewTest.cpp in Sources */,
@@ -687,11 +624,9 @@
 				B0CF18D51CA236A1007AA1B0 /* TextFieldTest.cpp in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				B0CF18C11CA236A1007AA1B0 /* AlertViewTest.cpp in Sources */,
-				D6B036B51D95273200388A90 /* CAVideoPlayerRender.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				B0CF18C91CA236A1007AA1B0 /* PageViewTest.cpp in Sources */,
 				B0CF18D41CA236A1007AA1B0 /* TableViewTest.cpp in Sources */,
-				D6B036B11D95273200388A90 /* CAVideoPlayerControlView.cpp in Sources */,
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
 				D609D6531E7123C700F82D5A /* PageControlTest.cpp in Sources */,
 				B0CF18C81CA236A1007AA1B0 /* ListViewTest.cpp in Sources */,
@@ -750,20 +685,13 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../CocosDenshion/include",
-					"\"$(SRCROOT)/../../../extensions\"",
-					"\"$(SRCROOT)/../../../CrossApp/kazmath/include\"",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crossapp.test;
 				PRODUCT_NAME = HelloCpp;
@@ -804,20 +732,13 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../CocosDenshion/include",
-					"\"$(SRCROOT)/../../../extensions\"",
-					"\"$(SRCROOT)/../../../CrossApp/kazmath/include\"",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crossapp.test;
 				PRODUCT_NAME = HelloCpp;
 				PROVISIONING_PROFILE = "";

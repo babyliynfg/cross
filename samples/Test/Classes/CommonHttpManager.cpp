@@ -412,7 +412,7 @@ void CommonHttpManager::get_image(const std::string& url,
     else if (_httpResponses.count(url) > 0)
     {
         std::string animationID = crossapp_format_string("wait:%s", url.c_str());
-        CAAnimation::schedule([=](const CAAnimation::Model& model)
+        CACustomAnimation::schedule([=](const CACustomAnimation::Model& model)
         {
             std::string key = MD5(url).md5();
             
@@ -430,7 +430,7 @@ void CommonHttpManager::get_image(const std::string& url,
                 {
                     callback(image, url);
                 }
-                CAAnimation::unschedule(animationID);
+                CACustomAnimation::unschedule(animationID);
             }
         }, animationID, 1.0f);
     }

@@ -28,10 +28,6 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		4800E4581E9CA23D00E4B8D9 /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4800E4561E9CA23D00E4B8D9 /* jsb_websocket.cpp */; };
 		480EDE2E1D953BC400C758DA /* crossapp_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE2C1D953BC400C758DA /* crossapp_specifics.cpp */; };
-		480EDE3D1D953C0300C758DA /* CAVideoPlayerControlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE311D953C0300C758DA /* CAVideoPlayerControlView.cpp */; };
-		480EDE3F1D953C0300C758DA /* CAVideoPlayerDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE341D953C0300C758DA /* CAVideoPlayerDecoder.cpp */; };
-		480EDE411D953C0300C758DA /* CAVideoPlayerRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE371D953C0300C758DA /* CAVideoPlayerRender.cpp */; };
-		480EDE431D953C0300C758DA /* CAVideoPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE3A1D953C0300C758DA /* CAVideoPlayerView.cpp */; };
 		480EDE461D953C8A00C758DA /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE451D953C8A00C758DA /* libiconv.tbd */; };
 		480EDE4E1D953C9E00C758DA /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE471D953C9E00C758DA /* libavcodec.a */; };
 		480EDE4F1D953C9E00C758DA /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE481D953C9E00C758DA /* libavdevice.a */; };
@@ -93,7 +89,6 @@
 		0264A31A1BE8FBF500ADB64D /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		026964B01BEB433600C8BCD7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = SOURCE_ROOT; };
 		026964B21BEB435100C8BCD7 /* CrossApp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CrossApp.xib; sourceTree = SOURCE_ROOT; };
-		15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionMacros.h; sourceTree = "<group>"; };
 		15A3DA821682F8A6002FB0C5 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		15A3DA831682F8A6002FB0C5 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
 		15A3DA851682F8A6002FB0C5 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
@@ -123,14 +118,6 @@
 		4800E4571E9CA23D00E4B8D9 /* jsb_websocket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_websocket.hpp; sourceTree = "<group>"; };
 		480EDE2C1D953BC400C758DA /* crossapp_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crossapp_specifics.cpp; sourceTree = "<group>"; };
 		480EDE2D1D953BC400C758DA /* crossapp_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = crossapp_specifics.hpp; sourceTree = "<group>"; };
-		480EDE311D953C0300C758DA /* CAVideoPlayerControlView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerControlView.cpp; path = video/CAVideoPlayerControlView.cpp; sourceTree = "<group>"; };
-		480EDE321D953C0300C758DA /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerControlView.h; path = video/CAVideoPlayerControlView.h; sourceTree = "<group>"; };
-		480EDE341D953C0300C758DA /* CAVideoPlayerDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerDecoder.cpp; path = video/CAVideoPlayerDecoder.cpp; sourceTree = "<group>"; };
-		480EDE351D953C0300C758DA /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerDecoder.h; path = video/CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
-		480EDE371D953C0300C758DA /* CAVideoPlayerRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerRender.cpp; path = video/CAVideoPlayerRender.cpp; sourceTree = "<group>"; };
-		480EDE381D953C0300C758DA /* CAVideoPlayerRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerRender.h; path = video/CAVideoPlayerRender.h; sourceTree = "<group>"; };
-		480EDE3A1D953C0300C758DA /* CAVideoPlayerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CAVideoPlayerView.cpp; path = video/CAVideoPlayerView.cpp; sourceTree = "<group>"; };
-		480EDE3B1D953C0300C758DA /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAVideoPlayerView.h; path = video/CAVideoPlayerView.h; sourceTree = "<group>"; };
 		480EDE451D953C8A00C758DA /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		480EDE471D953C9E00C758DA /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../extensions/video/ffmpeg/prebuilt/ios/libavcodec.a; sourceTree = "<group>"; };
 		480EDE481D953C9E00C758DA /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../../extensions/video/ffmpeg/prebuilt/ios/libavdevice.a; sourceTree = "<group>"; };
@@ -158,7 +145,6 @@
 		4875146D1CC0E4B800FF2062 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
 		48EAB9B11CE968A6009FAA3D /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		48F16C931D1A5EBF00CB6895 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../../../CrossApp/the_third_party/websockets/ios/lib/libwebsockets.a; sourceTree = "<group>"; };
-		B00CC60D19792FF800A62E4C /* CrossAppExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppExt.h; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B056375B195276CF00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
 		B0621BDB1AC3B871005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
@@ -241,17 +227,6 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		15A3D9B31682F826002FB0C5 /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				480EDE301D953BEE00C758DA /* video */,
-				B00CC60D19792FF800A62E4C /* CrossAppExt.h */,
-				15A3D9EB1682F826002FB0C5 /* ExtensionMacros.h */,
-			);
-			name = extensions;
-			path = ../../../extensions;
-			sourceTree = "<group>";
-		};
 		15A3DA6B1682F8A6002FB0C5 /* CocosDenshion */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,7 +288,6 @@
 				48750DE31CC0CAC300FF2062 /* js-bindings */,
 				15AA9C4015B7EC450033D6C2 /* Classes */,
 				15A3DA6B1682F8A6002FB0C5 /* CocosDenshion */,
-				15A3D9B31682F826002FB0C5 /* extensions */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -362,21 +336,6 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		480EDE301D953BEE00C758DA /* video */ = {
-			isa = PBXGroup;
-			children = (
-				480EDE311D953C0300C758DA /* CAVideoPlayerControlView.cpp */,
-				480EDE321D953C0300C758DA /* CAVideoPlayerControlView.h */,
-				480EDE341D953C0300C758DA /* CAVideoPlayerDecoder.cpp */,
-				480EDE351D953C0300C758DA /* CAVideoPlayerDecoder.h */,
-				480EDE371D953C0300C758DA /* CAVideoPlayerRender.cpp */,
-				480EDE381D953C0300C758DA /* CAVideoPlayerRender.h */,
-				480EDE3A1D953C0300C758DA /* CAVideoPlayerView.cpp */,
-				480EDE3B1D953C0300C758DA /* CAVideoPlayerView.h */,
-			);
-			name = video;
 			sourceTree = "<group>";
 		};
 		48173D3B1CC5CE5700209A95 /* component */ = {
@@ -566,19 +525,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
-				480EDE3D1D953C0300C758DA /* CAVideoPlayerControlView.cpp in Sources */,
 				4875146E1CC0E4B800FF2062 /* js_manual_conversions.cpp in Sources */,
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
-				480EDE431D953C0300C758DA /* CAVideoPlayerView.cpp in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
 				4800E4581E9CA23D00E4B8D9 /* jsb_websocket.cpp in Sources */,
-				480EDE3F1D953C0300C758DA /* CAVideoPlayerDecoder.cpp in Sources */,
 				48114A9C1CC7784A00A85EAA /* jsb_crossapp_auto.cpp in Sources */,
 				15A3DAEF1682F8A6002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				487514661CC0E19000FF2062 /* ScriptingCore.cpp in Sources */,
-				480EDE411D953C0300C758DA /* CAVideoPlayerRender.cpp in Sources */,
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
 				4875146A1CC0E25700FF2062 /* js_bindings_core.cpp in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
@@ -627,27 +582,15 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../CocosDenshion/include",
-					"\"$(SRCROOT)/../../../extensions\"",
-					"\"$(SRCROOT)/../../../CrossApp/kazmath/include\"",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/include/ios/include\"",
-					"\"$(SRCROOT)/../../../CrossApp/support/device\"",
-					"\"$(SRCROOT)/../../../CrossApp/support/zip_support\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"";
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_BUNDLE_IDENTIFIER = crossapp.com;
 				PRODUCT_NAME = HelloJavacript;
@@ -685,27 +628,15 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../CocosDenshion/include",
-					"\"$(SRCROOT)/../../../extensions\"",
-					"\"$(SRCROOT)/../../../CrossApp/kazmath/include\"",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/include/ios/include\"",
-					"\"$(SRCROOT)/../../../CrossApp/support/device\"",
-					"\"$(SRCROOT)/../../../CrossApp/support/zip_support\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"";
 				PRODUCT_BUNDLE_IDENTIFIER = crossapp.com;
 				PRODUCT_NAME = HelloJavacript;
 				PROVISIONING_PROFILE = "";

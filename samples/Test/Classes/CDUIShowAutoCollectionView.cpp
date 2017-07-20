@@ -29,7 +29,7 @@
 #include "StepperTest.h"
 #include "RenderImageTest.h"
 #include "ViewAnimationTest.h"
-#include "VideoPlayerControlViewTest.h"
+#include "AVPlayerViewTest.h"
 #include "AutoCollectionViewHorizontalTest.h"
 #include "AutoCollectionViewVerticalTest.h"
 #include "WaterfallViewTest.h"
@@ -72,7 +72,7 @@ CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNa
     m_vTitle.push_back("WebView");
     m_vTitle.push_back("GifView");
     
-    m_vTitle.push_back("VideoPlayer");
+    m_vTitle.push_back("AVPlayer");
     m_vTitle.push_back("RenderImage");
     m_vTitle.push_back("Animation");
 }
@@ -440,11 +440,11 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             
         case 27:
         {
-            VideoPlayerControlViewTest* ViewContrllerVideoPlayerControlViewTest = new VideoPlayerControlViewTest();
-            ViewContrllerVideoPlayerControlViewTest->init();
-            ViewContrllerVideoPlayerControlViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerVideoPlayerControlViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerVideoPlayerControlViewTest, true);
+            AVPlayerViewTest* avplayerViewTest = new AVPlayerViewTest();
+            avplayerViewTest->init();
+            avplayerViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
+            avplayerViewTest->autorelease();
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(avplayerViewTest, true);
             break;
         }
         case 28:
