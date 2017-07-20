@@ -38,7 +38,6 @@ public class CrossAppHelper {
 	private static String sFileDirectory;
 	private static Context sContext = null;
 	private static CrossAppHelperListener sCrossAppHelperListener;
-    private static CrossAppSDL sSDL;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -57,7 +56,6 @@ public class CrossAppHelper {
 		CrossAppHelper.sCrossAppMusic = new CrossAppMusic(pContext);
 		CrossAppHelper.sCrossAppound = new CrossAppSound(pContext);
 		CrossAppHelper.sAssetManager = pContext.getAssets();
-		CrossAppHelper.sSDL = new CrossAppSDL(pContext);
 		CrossAppBitmap.setContext(pContext);
 	}
 

@@ -34,6 +34,16 @@ void removePlayer(int key)
     }
 }
 
+void addPlayer(int key)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "addVideoByKey", "(I)V"))
+    {
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , key);
+        jni.env->DeleteLocalRef(jni.classID);
+    }
+}
+
 CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
 : m_pPlayer(Player)
 {
@@ -73,6 +83,7 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
         if(m_pPlayer->m_obPlayState)
             m_pPlayer->m_obPlayState(str) ;
     };
+    addPlayer(m_pPlayer->m_u__ID) ;
     
 }
 

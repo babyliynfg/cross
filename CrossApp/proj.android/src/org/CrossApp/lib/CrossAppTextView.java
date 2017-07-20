@@ -8,7 +8,9 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Map.Entry;
+
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -327,6 +329,7 @@ import android.widget.TextView.OnEditorActionListener;
             	params.leftMargin = x; 
             	params.topMargin = y;
             	textView.setLayoutParams(params);
+            	textView.requestLayout();
             }
         });
     }
@@ -344,6 +347,7 @@ import android.widget.TextView.OnEditorActionListener;
             	params.width = width;
             	params.height = height;
             	textView.setLayoutParams(params);
+            	textView.requestLayout();
             	
             	TimerTask task = new TimerTask()
         		{    
@@ -487,7 +491,8 @@ import android.widget.TextView.OnEditorActionListener;
             }
         });
     }
-
+    
+    @TargetApi(16)
     public void removeThis()
     {
     	textView.removeTextChangedListener(textWatcher);
