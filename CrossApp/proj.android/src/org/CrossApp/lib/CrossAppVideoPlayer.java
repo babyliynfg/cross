@@ -209,9 +209,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		CrossAppVideoPlayer player = getPlayerByKey(key) ;
 		player.block_progress_update(true);
 		player.getMediaPlayer().seekTo((int)current);
-		
-		Log.d("liuguoyan", "setCurrentTime4native........") ;
-		
 	}
 	
 	public static int[] getPresentationSize4native(int key){
@@ -312,7 +309,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     	if(!block_progress_update){
     		mProgressHandler.sendEmptyMessage(WHAT_PROGRESS);
     	}
-    	
     }
     
     public void setIsAssert(boolean bool){
