@@ -18,7 +18,6 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.os.Handler;
 import android.os.Message;
-import android.util.AttributeSet;
 import android.view.Surface;
 import android.view.TextureView;
 import android.widget.FrameLayout;
@@ -75,12 +74,9 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		
 		p.setIsLocalVideo(true);
 		p.setUrl(path);
-		
-		
+
 		p.sendFirsttFrame();  
-		
-		
-		
+
 	}
 	
 	
@@ -346,16 +342,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     public CrossAppVideoPlayer(Context context) {
         super(context);
-        init();
-    }
-    
-    public CrossAppVideoPlayer(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-    
-    public CrossAppVideoPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
         init();
     }
     
