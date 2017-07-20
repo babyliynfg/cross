@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.os.Handler;
 import android.os.Message;
@@ -70,7 +71,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	public static void setFilePath(String path , int key){
 		
 		final CrossAppVideoPlayer  p = getPlayerByKey(key);
-		
 		if (!path.startsWith("/")) {
 			p.setIsAssert(true);
 		}
@@ -79,7 +79,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		p.setUrl(path);
 
 		p.sendFirsttFrame();  
-
+		
 	}
 	
 	
@@ -87,6 +87,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	 * 播放
 	 */
 	public static void play4native(final  int key){
+		
+		Log.d("liuguoyan", "play4native") ;
 		
 		if(players.size()>0){
 			Set<Integer> keys = players.keySet() ; 
@@ -119,7 +121,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		            public void onPlaying(int duration, int percent) {
 		            	//调用native 的进度方法
 		            	CrossAppVideoPlayer p = getPlayerByKey(key) ;
-		            	if (p.getMediaPlayer().isPlaying()) {
+		            	if (p != null && p.getMediaPlayer()!= null && p.getMediaPlayer().isPlaying()) {
 		            		onPeriodicTime(key, percent, duration);
 						}
 		            }
@@ -171,7 +173,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		            public void onSeekChanged(MediaPlayer arg0) {
 		            	onTimeJumped(key);
 		            }
-		            
 		        });
 			}
 		});
@@ -219,18 +220,30 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	
 	public static CrossAppVideoPlayer getPlayerByKey(int key){
 		CrossAppVideoPlayer player = players.get(key) ; 
-		if (player == null) {
-			player = create(key) ; 
-			player.setKey(key);
-			players.put(key, player) ; 
-		}
 		return player ;
 	}
 	
 	/** 删除Map中的Player */
-	public static void removeById(int key){
-		players.remove(key) ; 
+	public static void removeById(final int key){
+		
+		CrossAppActivity.getContext().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				CrossAppVideoPlayer player = getPlayerByKey(key) ;
+				player.onDestroy = true ; 
+				player.destoryMediaPlayer();
+				CrossAppActivity.getFrameLayout().removeView(player);
+				players.remove(key) ; 
+				player = null ; 
+			}
+		});
 	}
+	
+	public static void addVideoByKey(int key){
+		CrossAppVideoPlayer p = CrossAppVideoPlayer.create(key) ; 
+		players.put(key, p) ; 
+	}
+	
 	
 	public static  native void onFrameAttached(int key , byte[] bytes, int width , int height) ; 
 	
@@ -296,6 +309,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     /** 阻塞更新进度条 */
     private boolean block_progress_update = false ; 
     
+    public boolean onDestroy = false ;
+    
     public void setKey(int key){
     	this.key = key  ; 
     }
@@ -330,6 +345,11 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     public MediaPlayer getMediaPlayer(){
     	return mMediaPlayer ; 
+    }
+    public void destoryMediaPlayer(){
+    	mMediaPlayer.stop();  
+    	mMediaPlayer.release();
+    	mMediaPlayer = null ; 
     }
     
     //播放状态
@@ -369,14 +389,10 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			        @Override
 			        public void handleMessage(Message msg) {
 			            super.handleMessage(msg);
+			            if(onDestroy) return ; 
 			            if (msg.what == WHAT_PROGRESS){
-			                if (listener!=null && mState == VideoState.palying && !block_progress_update){
-			                	CrossAppActivity.getContext().runOnGLThread(new Runnable() {
-									@Override
-									public void run() {
-										listener.onPlaying(mMediaPlayer.getDuration(),mMediaPlayer.getCurrentPosition());
-									}
-								});
+			                if (listener!=null  &&  mMediaPlayer.isPlaying() && !block_progress_update){
+			                	listener.onPlaying(mMediaPlayer.getDuration(),mMediaPlayer.getCurrentPosition());
 			                    sendEmptyMessageDelayed(WHAT_PROGRESS,PROGRESS_RATE);
 			                }
 			            }else if (msg.what == WHAT_REFRESH_FRAME ) {
@@ -404,8 +420,10 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         
         try {
         	if (currentUrl .equals(url)) {
+        		Log.d("liuguyan", "直接start");
         		mMediaPlayer.start();
 			}else {
+				Log.d("liuguyan", "最新的start");
 				mMediaPlayer.reset();
 				if(assert_res){
 					AssetFileDescriptor descriptor = null;  
@@ -420,8 +438,14 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 				}else {
 					mMediaPlayer.setDataSource(CrossAppVideoPlayer.this.url);
 				}
-	            mMediaPlayer.prepare();
-	            mMediaPlayer.start();
+	            mMediaPlayer.prepareAsync();
+	            mMediaPlayer.setOnPreparedListener(new  OnPreparedListener() {
+					@Override
+					public void onPrepared(MediaPlayer mp) {
+						mMediaPlayer.start();
+					}
+				});
+	            
 	            currentUrl = url ; 
 			}
         	
@@ -539,7 +563,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         mProgressHandler.sendEmptyMessage(WHAT_REFRESH_FRAME) ; 
     }
     
-    private Handler mProgressHandler = null ; 
+    public Handler mProgressHandler = null ; 
     
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {

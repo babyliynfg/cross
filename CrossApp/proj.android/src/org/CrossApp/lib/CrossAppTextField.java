@@ -8,7 +8,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -485,6 +487,7 @@ import android.widget.TextView.OnEditorActionListener;
             	params.leftMargin = x; 
             	params.topMargin = y;
             	textField.setLayoutParams(params);
+            	textField.requestLayout();
             	
             	if (clearButton != null) 
             	{
@@ -494,6 +497,7 @@ import android.widget.TextView.OnEditorActionListener;
 					btnParams.leftMargin = params.leftMargin + params.width - btnParams.width;
 					btnParams.topMargin = params.topMargin;
 	            	clearButton.setLayoutParams(btnParams);
+	            	clearButton.requestLayout();  
 				}
             }
         });
@@ -512,6 +516,7 @@ import android.widget.TextView.OnEditorActionListener;
             	params.width = contentSizeW;
             	params.height = contentSizeH;
             	textField.setLayoutParams(params);
+            	textField.requestLayout();  
             	
             	TimerTask task = new TimerTask()
         		{    
@@ -715,6 +720,7 @@ import android.widget.TextView.OnEditorActionListener;
         });
     }
     
+    @TargetApi(16)
     public void removeThis()
     {
     	textField.removeTextChangedListener(textWatcher);
