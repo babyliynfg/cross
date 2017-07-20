@@ -29,10 +29,10 @@ CADrawerController::CADrawerController()
     
     m_pView->setColor(CAColor4B::CLEAR);
     
-    m_pView->setTouchBeganCallback(CALLBACK_BIND_2(CADrawerController::ccTouchBegan, this));
-    m_pView->setTouchMovedCallback(CALLBACK_BIND_2(CADrawerController::ccTouchMoved, this));
-    m_pView->setTouchEndedCallback(CALLBACK_BIND_2(CADrawerController::ccTouchEnded, this));
-    m_pView->setTouchCancelledCallback(CALLBACK_BIND_2(CADrawerController::ccTouchCancelled, this));
+    m_pView->onTouchBegan(CALLBACK_BIND_2(CADrawerController::ccTouchBegan, this));
+    m_pView->onTouchMoved(CALLBACK_BIND_2(CADrawerController::ccTouchMoved, this));
+    m_pView->onTouchEnded(CALLBACK_BIND_2(CADrawerController::ccTouchEnded, this));
+    m_pView->onTouchCancelled(CALLBACK_BIND_2(CADrawerController::ccTouchCancelled, this));
     
     memset(m_pContainer, NULL, sizeof(CAView*) * 2);
     

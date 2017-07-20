@@ -103,16 +103,44 @@ void CACell::setControlState(CAControl::State var)
     switch (m_eState)
     {
         case CAControl::State::Normal:
-            this->normalCell();
+            if (m_obNormalState)
+            {
+                m_obNormalState();
+            }
+            else
+            {
+                this->normalCell();
+            }
             break;
         case CAControl::State::Highlighted:
-            this->highlightedCell();
+            if (m_obHighlightedState)
+            {
+                m_obHighlightedState();
+            }
+            else
+            {
+                this->highlightedCell();
+            }
             break;
         case CAControl::State::Selected:
-            this->selectedCell();
+            if (m_obSelectedState)
+            {
+                m_obSelectedState();
+            }
+            else
+            {
+                this->selectedCell();
+            }
             break;
         case CAControl::State::Disabled:
-            this->disabledCell();
+            if (m_obDsabledState)
+            {
+                m_obDsabledState();
+            }
+            else
+            {
+                this->disabledCell();
+            }
             break;
         default:
             break;

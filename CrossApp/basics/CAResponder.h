@@ -72,37 +72,37 @@ public:
     virtual bool isReachBoundaryDown() {return false;}
     
 
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<bool(CATouch*, CAEvent*)>, m_obTouchBegan, TouchBeganCallback);
+    CC_LISTENING_FUNCTION(bool(CATouch*, CAEvent*), TouchBegan);
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     /**
      * @lua NA
      */
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obTouchMoved, TouchMovedCallback);
+    CC_LISTENING_FUNCTION(void(CATouch*, CAEvent*), TouchMoved);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
     /**
      * @lua NA
      */
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obTouchEnded, TouchEndedCallback);
+    CC_LISTENING_FUNCTION(void(CATouch*, CAEvent*), TouchEnded);
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     /**
      * @lua NA
      */
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obTouchCancelled, TouchCancelledCallback);
+    CC_LISTENING_FUNCTION(void(CATouch*, CAEvent*), TouchCancelled);
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     /**
      * @lua NA
      */
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obMouseMoved, MouseMovedCallback);
+    CC_LISTENING_FUNCTION(void(CATouch*, CAEvent*), MouseMoved);
     virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
     /**
      * @lua NA
      */
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obMouseMovedOutSide, MouseMovedOutSideCallback);
+    CC_LISTENING_FUNCTION(void(CATouch*, CAEvent*), MouseMovedOutSide);
     virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
     /**
      * @lua NA
      */
-    CC_SYNTHESIZE_PASS_BY_REF(std::function<void(CATouch*, CAEvent*)>, m_obMouseScrollWheel, MouseScrollWheelCallback);
+    CC_LISTENING_FUNCTION(void(CATouch*, CAEvent*), MouseScrollWheel);
     virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
     
 protected:

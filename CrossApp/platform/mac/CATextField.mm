@@ -26,6 +26,13 @@
 
 #define MAC_SCALE 1//[[NSScreen mainScreen] backingScaleFactor]
 
+static std::map<CrossApp::CATextField*, std::function<bool()> > s_ShouldBeginEditing_map;
+static std::map<CrossApp::CATextField*, std::function<bool()> > s_ShouldEndEditing_map;
+static std::map<CrossApp::CATextField*, std::function<void()> > s_ShouldReturn_map;
+static std::map<CrossApp::CATextField*, std::function<void(int height)> > s_KeyBoardHeight_map;
+static std::map<CrossApp::CATextField*, std::function<bool(ssize_t, ssize_t, const std::string&)> > s_ShouldChangeCharacters_map;
+static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_map;
+
 @interface MACTextFieldCell: NSTextFieldCell
 {
 }
@@ -231,9 +238,9 @@
     [self setWantsLayer:YES];
 }
 
-- (unsigned int)getLocationWithBefore:(NSString*)before Current:(NSString*)current
+- (ssize_t)getLocationWithBefore:(NSString*)before Current:(NSString*)current
 {
-    unsigned int location = 0;
+    ssize_t location = 0;
     
     for(unsigned int i=0; i<before.length; i++)
     {
@@ -258,11 +265,11 @@
     return location;
 }
 
-- (unsigned int)getLengthWithBefore:(NSString*)before Current:(NSString*)current Location:(unsigned int)location
+- (ssize_t)getLengthWithBefore:(NSString*)before Current:(NSString*)current Location:(ssize_t)location
 {
-    unsigned int length = 0;
+    ssize_t length = 0;
     
-    for(unsigned int i=location; i<before.length; i++)
+    for(ssize_t i=location; i<before.length; i++)
     {
         if (i == current.length)
         {
@@ -303,9 +310,9 @@
     NSString* before = [NSString stringWithString:[self beforeText]];
     NSString* current = [NSString stringWithString:[self stringValue]];;
     
-    unsigned int location = [self getLocationWithBefore:before Current:current];
-    unsigned int length = [self getLengthWithBefore:before Current:current Location:location];
-    unsigned int addLength = MAX((long)(current.length - (before.length - (long)length)), 0);
+    ssize_t location = [self getLocationWithBefore:before Current:current];
+    ssize_t length = [self getLengthWithBefore:before Current:current Location:location];
+    ssize_t addLength = MAX((ssize_t)(current.length - (before.length - (ssize_t)length)), 0);
 
     std::string changedText = "";
     
@@ -333,16 +340,30 @@
     }
     else
     {
-        if (_textField->getDelegate() && !_textField->getDelegate()->textFieldShouldChangeCharacters(_textField, location, length, changedText))
+        bool changedFlag = true;
+        if (s_ShouldChangeCharacters_map.count(_textField) > 0 && s_ShouldChangeCharacters_map[_textField])
+        {
+            changedFlag = s_ShouldChangeCharacters_map[_textField](location, length, changedText);
+        }
+        else if (_textField->getDelegate())
+        {
+            changedFlag = _textField->getDelegate()->textFieldShouldChangeCharacters(_textField, (unsigned)location, (unsigned)length, changedText);
+        }
+        
+        if (!changedFlag)
         {
             [self setStringValue:before];
         }
         else
         {
-            
             [self setBeforeText:current];
             [self setStringValue:current];
-            if (_textField->getDelegate())
+            
+            if (s_DidChangeText_map.count(_textField) > 0 && s_DidChangeText_map[_textField])
+            {
+                s_DidChangeText_map[_textField]();
+            }
+            else if (_textField->getDelegate())
             {
                 _textField->getDelegate()->textFieldDidChangeText(_textField);
             }
@@ -360,7 +381,11 @@
             _textField->resignFirstResponder();
         }
         
-        if (_textField->getDelegate())
+        if (s_ShouldReturn_map.count(_textField) > 0 && s_ShouldReturn_map[_textField])
+        {
+            s_ShouldReturn_map[_textField]();
+        }
+        else if (_textField->getDelegate())
         {
             _textField->getDelegate()->textFieldShouldReturn(_textField);
         }
@@ -431,6 +456,13 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
+    s_ShouldBeginEditing_map.erase(this);
+    s_ShouldEndEditing_map.erase(this);
+    s_ShouldReturn_map.erase(this);
+    s_KeyBoardHeight_map.erase(this);
+    s_ShouldChangeCharacters_map.erase(this);
+    s_DidChangeText_map.erase(this);
+
     [[NSNotificationCenter defaultCenter] removeObserver:textField_MAC];
     [textField_MAC removeFromSuperview];
     m_pDelegate = NULL;
@@ -455,7 +487,11 @@ void CATextField::onExitTransitionDidStart()
 
 bool CATextField::resignFirstResponder()
 {
-    if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    {
+        return s_ShouldEndEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
     {
         return false;
     }
@@ -475,7 +511,11 @@ bool CATextField::resignFirstResponder()
 
 bool CATextField::becomeFirstResponder()
 {
-    if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    {
+        return s_ShouldBeginEditing_map[this]();
+    }
+    else if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
     {
         return false;
     }
@@ -963,6 +1003,43 @@ int CATextField::getMaxLength()
 {
     return m_iMaxLength;
 }
+
+void CATextField::onShouldBeginEditing(const std::function<bool ()> &var)
+{
+    m_obShouldBeginEditing = var;
+    s_ShouldBeginEditing_map[this] = var;
+}
+
+void CATextField::onShouldEndEditing(const std::function<bool ()> &var)
+{
+    m_obShouldEndEditing = var;
+    s_ShouldEndEditing_map[this] = var;
+}
+
+void CATextField::onShouldReturn(const std::function<void ()> &var)
+{
+    m_obShouldReturn = var;
+    s_ShouldReturn_map[this] = var;
+}
+
+void CATextField::onKeyBoardHeight(const std::function<void (int)> &var)
+{
+    m_obKeyBoardHeight = var;
+    s_KeyBoardHeight_map[this] = var;
+}
+
+void CATextField::onShouldChangeCharacters(const std::function<bool (ssize_t, ssize_t, const std::string &)> &var)
+{
+    m_obShouldChangeCharacters = var;
+    s_ShouldChangeCharacters_map[this] = var;
+}
+
+void CATextField::onDidChangeText(const std::function<void ()> &var)
+{
+    m_obDidChangeText = var;
+    s_DidChangeText_map[this] = var;
+}
+
 
 
 NS_CC_END
