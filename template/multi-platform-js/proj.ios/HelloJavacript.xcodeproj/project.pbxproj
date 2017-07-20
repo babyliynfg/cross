@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0264A3151BE8FBE000ADB64D /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0264A3141BE8FBE000ADB64D /* libbz2.1.0.tbd */; };
 		0264A3171BE8FBE700ADB64D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0264A3161BE8FBE700ADB64D /* VideoToolbox.framework */; };
 		0264A3191BE8FBEE00ADB64D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0264A3181BE8FBEE00ADB64D /* CoreVideo.framework */; };
 		0264A31B1BE8FBF500ADB64D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0264A31A1BE8FBF500ADB64D /* CoreAudio.framework */; };
@@ -28,17 +27,7 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		4800E4581E9CA23D00E4B8D9 /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4800E4561E9CA23D00E4B8D9 /* jsb_websocket.cpp */; };
 		480EDE2E1D953BC400C758DA /* crossapp_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE2C1D953BC400C758DA /* crossapp_specifics.cpp */; };
-		480EDE461D953C8A00C758DA /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE451D953C8A00C758DA /* libiconv.tbd */; };
-		480EDE4E1D953C9E00C758DA /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE471D953C9E00C758DA /* libavcodec.a */; };
-		480EDE4F1D953C9E00C758DA /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE481D953C9E00C758DA /* libavdevice.a */; };
-		480EDE501D953C9E00C758DA /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE491D953C9E00C758DA /* libavfilter.a */; };
-		480EDE511D953C9E00C758DA /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE4A1D953C9E00C758DA /* libavformat.a */; };
-		480EDE521D953C9E00C758DA /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE4B1D953C9E00C758DA /* libavutil.a */; };
-		480EDE531D953C9E00C758DA /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE4C1D953C9E00C758DA /* libswresample.a */; };
-		480EDE541D953C9E00C758DA /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE4D1D953C9E00C758DA /* libswscale.a */; };
-		480EDE561D953CB900C758DA /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE551D953CB900C758DA /* libSDL2.a */; };
 		48114A9C1CC7784A00A85EAA /* jsb_crossapp_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48114A9A1CC7784A00A85EAA /* jsb_crossapp_auto.cpp */; };
-		481DCA261D4B19C000C31DA9 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 481DCA251D4B19C000C31DA9 /* libwebsockets.a */; };
 		481DCA281D4B23B300C31DA9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481DCA271D4B23B300C31DA9 /* CoreMotion.framework */; };
 		4840494A1CC8C66400BECCC7 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 484049491CC8C66400BECCC7 /* js */; };
 		484F77271D2CE2ED005BB3BE /* js_crossapp_delegates_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 484F77251D2CE2ED005BB3BE /* js_crossapp_delegates_manual.cpp */; };
@@ -60,6 +49,8 @@
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		D6B1E79F1F20B25500723750 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E79E1F20B25500723750 /* CoreImage.framework */; };
+		D6B1E7A11F20B26C00723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A01F20B26C00723750 /* CoreMedia.framework */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
 		EB1818D819388001002856FF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D719388001002856FF /* AddressBook.framework */; };
 		EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D919388005002856FF /* AddressBookUI.framework */; };
@@ -162,6 +153,8 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		D6B1E79E1F20B25500723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		D6B1E7A01F20B26C00723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB1818D719388001002856FF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		EB1818D919388005002856FF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -172,20 +165,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				480EDE561D953CB900C758DA /* libSDL2.a in Frameworks */,
-				480EDE4E1D953C9E00C758DA /* libavcodec.a in Frameworks */,
-				480EDE4F1D953C9E00C758DA /* libavdevice.a in Frameworks */,
-				480EDE501D953C9E00C758DA /* libavfilter.a in Frameworks */,
-				480EDE511D953C9E00C758DA /* libavformat.a in Frameworks */,
-				480EDE521D953C9E00C758DA /* libavutil.a in Frameworks */,
-				480EDE531D953C9E00C758DA /* libswresample.a in Frameworks */,
-				480EDE541D953C9E00C758DA /* libswscale.a in Frameworks */,
-				480EDE461D953C8A00C758DA /* libiconv.tbd in Frameworks */,
-				481DCA261D4B19C000C31DA9 /* libwebsockets.a in Frameworks */,
-				0264A3151BE8FBE000ADB64D /* libbz2.1.0.tbd in Frameworks */,
-				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
-				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
-				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
+				D6B1E7A11F20B26C00723750 /* CoreMedia.framework in Frameworks */,
+				D6B1E79F1F20B25500723750 /* CoreImage.framework in Frameworks */,
 				481DCA281D4B23B300C31DA9 /* CoreMotion.framework in Frameworks */,
 				0264A31B1BE8FBF500ADB64D /* CoreAudio.framework in Frameworks */,
 				0264A3191BE8FBEE00ADB64D /* CoreVideo.framework in Frameworks */,
@@ -196,7 +177,6 @@
 				EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */,
 				EB1818D819388001002856FF /* AddressBook.framework in Frameworks */,
 				EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */,
-				487514431CC0CC4A00FF2062 /* libjs_static.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -205,6 +185,10 @@
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
+				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
+				487514431CC0CC4A00FF2062 /* libjs_static.a in Frameworks */,
+				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +283,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B1E7A01F20B26C00723750 /* CoreMedia.framework */,
+				D6B1E79E1F20B25500723750 /* CoreImage.framework */,
 				480EDE551D953CB900C758DA /* libSDL2.a */,
 				480EDE471D953C9E00C758DA /* libavcodec.a */,
 				480EDE481D953C9E00C758DA /* libavdevice.a */,
