@@ -45,7 +45,7 @@ bool CALabel::init()
         return false;
     }
     
-    this->setTouchBeganCallback([=](CATouch *pTouch, CAEvent *pEvent)
+    this->onTouchBegan([=](CATouch *pTouch, CAEvent *pEvent)
     {
         CAScheduler::getScheduler()->scheduleOnce([&](float de)
         {
@@ -59,17 +59,17 @@ bool CALabel::init()
         return true;
     });
     
-    this->setTouchMovedCallback([=](CATouch *pTouch, CAEvent *pEvent)
+    this->onTouchMoved([=](CATouch *pTouch, CAEvent *pEvent)
     {
         CAScheduler::getScheduler()->unschedule("function", this);
     });
     
-    this->setTouchEndedCallback([=](CATouch *pTouch, CAEvent *pEvent)
+    this->onTouchEnded([=](CATouch *pTouch, CAEvent *pEvent)
     {
         CAScheduler::getScheduler()->unschedule("function", this);
     });
     
-    this->setTouchCancelledCallback([=](CATouch *pTouch, CAEvent *pEvent)
+    this->onTouchCancelled([=](CATouch *pTouch, CAEvent *pEvent)
     {
         CAScheduler::getScheduler()->unschedule("function", this);
     });

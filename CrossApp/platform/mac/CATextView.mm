@@ -17,6 +17,13 @@
 
 #define MAC_SCALE 1//[[NSScreen mainScreen] backingScaleFactor]
 
+static std::map<CrossApp::CATextView*, std::function<bool()> > s_ShouldBeginEditing_map;
+static std::map<CrossApp::CATextView*, std::function<bool()> > s_ShouldEndEditing_map;
+static std::map<CrossApp::CATextView*, std::function<void()> > s_ShouldReturn_map;
+static std::map<CrossApp::CATextView*, std::function<void(int height)> > s_KeyBoardHeight_map;
+static std::map<CrossApp::CATextView*, std::function<bool(ssize_t, ssize_t, const std::string&)> > s_ShouldChangeCharacters_map;
+static std::map<CrossApp::CATextView*, std::function<void()> > s_DidChangeText_map;
+
 @interface MacTextView: NSTextField
 {
     
@@ -86,11 +93,11 @@
     
 }
 
-- (unsigned int)getLocationWithBefore:(NSString*)before Current:(NSString*)current
+- (ssize_t)getLocationWithBefore:(NSString*)before Current:(NSString*)current
 {
-    unsigned int location = 0;
+    ssize_t location = 0;
     
-    for(unsigned int i=0; i<before.length; i++)
+    for(ssize_t i=0; i<before.length; i++)
     {
         if (i == current.length)
         {
@@ -107,17 +114,17 @@
             break;
         }
         
-        location = (unsigned int)before.length;
+        location = (ssize_t)before.length;
     }
     
     return location;
 }
 
-- (unsigned int)getLengthWithBefore:(NSString*)before Current:(NSString*)current Location:(unsigned int)location
+- (ssize_t)getLengthWithBefore:(NSString*)before Current:(NSString*)current Location:(ssize_t)location
 {
-    unsigned int length = 0;
+    ssize_t length = 0;
     
-    for(unsigned int i=location; i<before.length; i++)
+    for(ssize_t i=location; i<before.length; i++)
     {
         if (i == current.length)
         {
@@ -147,7 +154,7 @@
             break;
         }
         
-        length = (unsigned int)(before.length - location);
+        length = (ssize_t)(before.length - location);
     }
     
     return length;
@@ -158,9 +165,9 @@
     NSString* before = [NSString stringWithString:[self beforeText]];
     NSString* current = [NSString stringWithString:[self stringValue]];;
     
-    unsigned int location = [self getLocationWithBefore:before Current:current];
-    unsigned int length = [self getLengthWithBefore:before Current:current Location:location];
-    unsigned int addLength = (unsigned int)MAX(current.length - (before.length - length), 0);;
+    ssize_t location = [self getLocationWithBefore:before Current:current];
+    ssize_t length = [self getLengthWithBefore:before Current:current Location:location];
+    ssize_t addLength = MAX(current.length - (before.length - length), 0);
     
     std::string changedText = "";
     
@@ -172,8 +179,17 @@
     {
         changedText = "";
     }
+    bool changedFlag = true;
+    if (s_ShouldChangeCharacters_map.count(_textView) > 0 && s_ShouldChangeCharacters_map[_textView])
+    {
+        changedFlag = s_ShouldChangeCharacters_map[_textView](location, length, changedText);
+    }
+    else if (_textView->getDelegate())
+    {
+        changedFlag = _textView->getDelegate()->textViewShouldChangeCharacters(_textView, (unsigned)location, (unsigned)length, changedText);
+    }
     
-    if (_textView->getDelegate() && !_textView->getDelegate()->textViewShouldChangeCharacters(_textView, location, length, changedText))
+    if (!changedFlag)
     {
         [self setStringValue:before];
     }
@@ -182,6 +198,15 @@
         
         [self setBeforeText:current];
         [self setStringValue:current];
+        
+        if (s_DidChangeText_map.count(_textView) > 0 && s_DidChangeText_map[_textView])
+        {
+            s_DidChangeText_map[_textView]();
+        }
+        else if (_textView->getDelegate())
+        {
+            _textView->getDelegate()->textViewDidChangeText(_textView);
+        }
     }
 }
 
@@ -239,6 +264,13 @@ CATextView::CATextView()
 
 CATextView::~CATextView()
 {
+    s_ShouldBeginEditing_map.erase(this);
+    s_ShouldEndEditing_map.erase(this);
+    s_ShouldReturn_map.erase(this);
+    s_KeyBoardHeight_map.erase(this);
+    s_ShouldChangeCharacters_map.erase(this);
+    s_DidChangeText_map.erase(this);
+    
     [[NSNotificationCenter defaultCenter] removeObserver:textView_Mac];
     [textView_Mac removeFromSuperview];
     m_pDelegate = NULL;
@@ -564,6 +596,40 @@ CATextView::ReturnType CATextView::getReturnType()
     return m_eReturnType;
 }
 
+void CATextView::onShouldBeginEditing(const std::function<bool ()> &var)
+{
+    m_obShouldBeginEditing = var;
+    s_ShouldBeginEditing_map[this] = var;
+}
 
+void CATextView::onShouldEndEditing(const std::function<bool ()> &var)
+{
+    m_obShouldEndEditing = var;
+    s_ShouldEndEditing_map[this] = var;
+}
+
+void CATextView::onShouldReturn(const std::function<void ()> &var)
+{
+    m_obShouldReturn = var;
+    s_ShouldReturn_map[this] = var;
+}
+
+void CATextView::onKeyBoardHeight(const std::function<void (int)> &var)
+{
+    m_obKeyBoardHeight = var;
+    s_KeyBoardHeight_map[this] = var;
+}
+
+void CATextView::onShouldChangeCharacters(const std::function<bool (ssize_t, ssize_t, const std::string &)> &var)
+{
+    m_obShouldChangeCharacters = var;
+    s_ShouldChangeCharacters_map[this] = var;
+}
+
+void CATextView::onDidChangeText(const std::function<void ()> &var)
+{
+    m_obDidChangeText = var;
+    s_DidChangeText_map[this] = var;
+}
 
 NS_CC_END

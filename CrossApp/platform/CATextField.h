@@ -90,6 +90,20 @@ public:
 	};
     
 public:
+        
+    CC_LISTENING_FUNCTION_D(bool(), ShouldBeginEditing);
+        
+    CC_LISTENING_FUNCTION_D(bool(), ShouldEndEditing);
+        
+    CC_LISTENING_FUNCTION_D(void(), ShouldReturn);
+        
+    CC_LISTENING_FUNCTION_D(void(int height), KeyBoardHeight);
+        
+    //Warning!!! Warning!!! Warning!!!  This method is not on the OpenGL thread.
+    CC_LISTENING_FUNCTION_D(bool(ssize_t location, ssize_t length, const std::string& changedText), ShouldChangeCharacters);
+        
+    CC_LISTENING_FUNCTION_D(void(), DidChangeText);
+public:
     
     CATextField();
     

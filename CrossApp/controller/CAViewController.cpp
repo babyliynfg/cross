@@ -302,10 +302,10 @@ CANavigationController::CANavigationController()
     m_pView->setColor(CAColor4B::CLEAR);
     m_pView->setDisplayRange(false);
     
-    m_pView->setTouchBeganCallback(CALLBACK_BIND_2(CANavigationController::ccTouchBegan, this));
-    m_pView->setTouchMovedCallback(CALLBACK_BIND_2(CANavigationController::ccTouchMoved, this));
-    m_pView->setTouchEndedCallback(CALLBACK_BIND_2(CANavigationController::ccTouchEnded, this));
-    m_pView->setTouchCancelledCallback(CALLBACK_BIND_2(CANavigationController::ccTouchCancelled, this));
+    m_pView->onTouchBegan(CALLBACK_BIND_2(CANavigationController::ccTouchBegan, this));
+    m_pView->onTouchMoved(CALLBACK_BIND_2(CANavigationController::ccTouchMoved, this));
+    m_pView->onTouchEnded(CALLBACK_BIND_2(CANavigationController::ccTouchEnded, this));
+    m_pView->onTouchCancelled(CALLBACK_BIND_2(CANavigationController::ccTouchCancelled, this));
     
     
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CANavigationBar");
@@ -1220,10 +1220,10 @@ CATabBarController::CATabBarController()
 {
     m_pView->setColor(CAColor4B::CLEAR);
     m_pView->setDisplayRange(false);
-    m_pView->setTouchBeganCallback(CALLBACK_BIND_2(CATabBarController::ccTouchBegan, this));
-    m_pView->setTouchMovedCallback(CALLBACK_BIND_2(CATabBarController::ccTouchMoved, this));
-    m_pView->setTouchEndedCallback(CALLBACK_BIND_2(CATabBarController::ccTouchEnded, this));
-    m_pView->setTouchCancelledCallback(CALLBACK_BIND_2(CATabBarController::ccTouchCancelled, this));
+    m_pView->onTouchBegan(CALLBACK_BIND_2(CATabBarController::ccTouchBegan, this));
+    m_pView->onTouchMoved(CALLBACK_BIND_2(CATabBarController::ccTouchMoved, this));
+    m_pView->onTouchEnded(CALLBACK_BIND_2(CATabBarController::ccTouchEnded, this));
+    m_pView->onTouchCancelled(CALLBACK_BIND_2(CATabBarController::ccTouchCancelled, this));
     
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATabBar");
     

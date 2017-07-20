@@ -2315,7 +2315,6 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
-					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../the_third_party/png/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/mac\"",
@@ -2356,7 +2355,6 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
-					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../the_third_party/png/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/mac\"",

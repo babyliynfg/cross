@@ -328,7 +328,7 @@ void CAListView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			}
             if (m_obDidDeselectCellAtIndexPath)
             {
-                m_obDidDeselectCellAtIndexPath(iSelectIndex);
+                m_obDidDeselectCellAtIndexPath(iDeSelectIndex);
             }
             else if (m_pListViewDelegate)
 			{

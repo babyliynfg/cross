@@ -67,6 +67,11 @@ void CAAVPlayer::play()
     m_pImpl->play();
 }
 
+void CAAVPlayer::playWithRate(float rate)
+{
+    m_pImpl->playWithRate(rate);
+}
+
 void CAAVPlayer::pause()
 {
     m_pImpl->pause();
@@ -114,6 +119,11 @@ CAAVPlayerView::CAAVPlayerView()
 
 CAAVPlayerView::~CAAVPlayerView()
 {
+    if (m_pPlayer)
+    {
+        m_pPlayer->onImage(nullptr);
+    }
+    CC_SAFE_RELEASE(m_pPlayer);
 }
 
 CAAVPlayerView* CAAVPlayerView::createWithFrame(const DRect& rect)
@@ -231,14 +241,5 @@ void CAAVPlayerView::updateImageRect()
     m_sQuad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
 }
 
-void CAAVPlayerController::showAVPlayerController(CAAVPlayer* player)
-{
-    CAAVPlayerControllerImpl::showAVPlayerController(player);
-}
-
-void CAAVPlayerController::closeAVPlayerController()
-{
-    CAAVPlayerControllerImpl::closeAVPlayerController();
-}
 
 NS_CC_END

@@ -24,9 +24,9 @@ const char* ANIMATION_ID = "__AVPlayerLayer_play__";
 
 static AVPlayerLayer* s_pAVPlayerLayer = nil;
 
-static void playerLayer_play(AVPlayer* player, const std::function<void()>& callback)
+static void playerLayer_play(AVPlayer* player, float rate, const std::function<void()>& callback)
 {
-    if (s_pAVPlayerLayer)
+    if (s_pAVPlayerLayer && s_pAVPlayerLayer.player)
     {
         [s_pAVPlayerLayer.player pause];
         CrossApp::CAScheduler::getScheduler()->unschedule(ANIMATION_ID, CrossApp::CAApplication::getApplication());
@@ -66,6 +66,18 @@ static void playerLayer_play(AVPlayer* player, const std::function<void()>& call
     [s_pAVPlayerLayer setBounds:CGRectMake(0, 0, 2, 2)];
     
     [player play];
+    if (rate != 1.0f)
+    {
+        for (AVPlayerItemTrack *track in player.currentItem.tracks)
+        {
+            if ([track.assetTrack.mediaType isEqual:AVMediaTypeAudio])
+            {
+                track.enabled = YES;
+            }
+        }
+        [player setRate:rate];
+    }
+
     
     CrossApp::CAScheduler::getScheduler()->schedule([=](float dt)
     {
@@ -78,6 +90,7 @@ static void playerLayer_pause(AVPlayer* player)
     if (s_pAVPlayerLayer && player && s_pAVPlayerLayer.player == player)
     {
         [s_pAVPlayerLayer.player pause];
+        [s_pAVPlayerLayer setPlayer:nil];
         CrossApp::CAScheduler::getScheduler()->unschedule(ANIMATION_ID, CrossApp::CAApplication::getApplication());
     }
 }
@@ -145,12 +158,14 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 - (void)setUrl:(std::string)url;
 - (void)setFilePath:(std::string)filePath;
 - (void)play;
+- (void)playWithRate:(float)rate;
 - (void)pause;
 - (void)stop;
 - (float)getDuration;
 - (float)getCurrentTime;
 - (void)setCurrentTime:(float)current;
 - (const CrossApp::DSize&)getPresentationSize;
+- (void)remove;
 - (void)timerCurrentTime;
 - (void)outputMediaData;
 - (void)dealloc;
@@ -268,7 +283,22 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     }
     _timer = [NSTimer timerWithTimeInterval:0.05f target:self selector:@selector(timerCurrentTime) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-    playerLayer_play(_player, [=]
+    playerLayer_play(_player, 1.0f, [=]
+    {
+        [self outputMediaData];
+    });
+}
+
+- (void)playWithRate:(float)rate
+{
+    if (_timer)
+    {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    _timer = [NSTimer timerWithTimeInterval:0.05f target:self selector:@selector(timerCurrentTime) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+    playerLayer_play(_player, rate, [=]
     {
         [self outputMediaData];
     });
@@ -291,7 +321,9 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         [_timer invalidate];
         _timer = nil;
     }
-    [_player seekToTime:kCMTimeZero];
+    [_player seekToTime:kCMTimeZero completionHandler:^(BOOL finished) {
+        [self timerCurrentTime];
+    }];
     playerLayer_pause(_player);
     if (_onImage)
     {
@@ -333,11 +365,8 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     CMTimeScale timescale = _player.currentItem.currentTime.timescale;
     CMTime pointTime = CMTimeMake(current * timescale, timescale);
     
-    [_player seekToTime:pointTime completionHandler:^(BOOL finished) {
-        if (finished)
-        {
-            _pasueTimer = NO;
-        }
+    [_player seekToTime:pointTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero completionHandler:^(BOOL finished) {
+        _pasueTimer = NO;
     }];
 }
 
@@ -491,9 +520,15 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
 
 - (void)dealloc
 {
-    [self pause];
     if (_player)
     {
+        [_player.currentItem removeOutput:_videoOutPut];
+        [_player.currentItem removeObserver:self forKeyPath:@"status"];
+        [_player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+        [_player.currentItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
+        [_player.currentItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+        [[NSNotificationCenter defaultCenter] removeObserver:_player.currentItem];
+        [_player removeObserver:self forKeyPath:@"rate"];
         [_player release];
     }
     [_videoOutPut release];
@@ -501,12 +536,40 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     [super dealloc];
 }
 
+- (void)remove
+{
+    [self pause];
+    self.periodicTime = nullptr;
+    self.loadedTime = nullptr;
+    self.didPlayToEndTime = nullptr;
+    self.timeJumped = nullptr;
+    self.playBufferLoadingState = nullptr;
+    self.playState = nullptr;
+    self.onImage = nullptr;
+    [self autorelease];
+}
+
 @end
 
+/*
+#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+@interface NativeAVPlayerView: AVPlayerView
+{}
+- (void)close;
+@end
 
+@implementation NativeAVPlayerView
+- (void)close
+{
+    [self.player pause];
+    [self removeFromSuperview];
+}
+@end
+#endif
+*/
 NS_CC_BEGIN
 
-static std::map<CAAVPlayer*, NativeAVPlayer*> s_map;
+//static std::map<CAAVPlayer*, NativeAVPlayer*> s_map;
 
 CAImage* CAAVPlayerImpl::getFirstFrameImageWithFilePath(const std::string& filePath)
 {
@@ -534,7 +597,7 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* player)
 {
     m_pNativeImpl = [[NativeAVPlayer alloc] init];
     
-    s_map[m_pPlayer] = NATIVE_IMPL;
+    //s_map[m_pPlayer] = NATIVE_IMPL;
     
     [NATIVE_IMPL onPeriodicTime:[&](float currTime, float duratuon)
     {
@@ -587,8 +650,8 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* player)
 
 CAAVPlayerImpl::~CAAVPlayerImpl()
 {
-    s_map.erase(m_pPlayer);
-    [NATIVE_IMPL release];
+    //s_map.erase(m_pPlayer);
+    [NATIVE_IMPL remove];
 }
 
 void CAAVPlayerImpl::setUrl(const std::string& url)
@@ -604,6 +667,11 @@ void CAAVPlayerImpl::setFilePath(const std::string& filePath)
 void CAAVPlayerImpl::play()
 {
     [NATIVE_IMPL play];
+}
+
+void CAAVPlayerImpl::playWithRate(float rate)
+{
+    [NATIVE_IMPL playWithRate:rate];
 }
 
 void CAAVPlayerImpl::pause()
@@ -640,48 +708,36 @@ void CAAVPlayerImpl::onImage(const std::function<void(CAImage*)>& function)
 {
     [NATIVE_IMPL onImage:function];
 }
-
+/*
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-static AVPlayerView* s_playerView = nil;
 
 void CAAVPlayerControllerImpl::showAVPlayerController(CAAVPlayer* player)
 {
-    if (s_playerView)
-    {
-        CAAVPlayerControllerImpl::closeAVPlayerController();
-    }
-    s_playerView = [[[AVPlayerView alloc] init] autorelease];
-    [s_playerView setPlayer:s_map[player].player];
-    NSView* contentView = [EAGLView sharedEGLView];
-    [s_playerView setFrame:contentView.bounds];
-    [contentView addSubview:s_playerView];
+    NativeAVPlayerView* playerView = [[[NativeAVPlayerView alloc] init] autorelease];
+    [playerView setPlayer:s_map[player].player];
+    NSView* contentView = [[NSApplication sharedApplication] mainWindow].contentView;
+    [playerView setFrame:contentView.bounds];
+    [contentView addSubview:playerView];
+    
+    NSButton* closeBtn = [[[NSButton alloc] initWithFrame:NSMakeRect(0, [[EAGLView sharedEGLView] getHeight] - 40, 80, 40)] autorelease];
+    [closeBtn setTitle:@"Done"];
+    [playerView addSubview:closeBtn];
+    [closeBtn setTarget:playerView];
+    [closeBtn setAction:@selector(close)];
 }
 
-void CAAVPlayerControllerImpl::closeAVPlayerController()
-{
-    [s_playerView setPlayer:nil];
-    [s_playerView removeFromSuperview];
-    s_playerView = nil;
-}
 #else
-static AVPlayerViewController* s_playerViewController = nil;
 
 void CAAVPlayerControllerImpl::showAVPlayerController(CAAVPlayer* player)
 {
-    s_playerViewController = [[[AVPlayerViewController alloc] init] autorelease];
-    [s_playerViewController setPlayer:s_map[player].player];
+    AVPlayerViewController* playerViewController = [[[AVPlayerViewController alloc] init] autorelease];
+    [playerViewController setPlayer:s_map[player].player];
     UIWindow* window = [[UIApplication sharedApplication] keyWindow];
-    [window.rootViewController presentViewController:s_playerViewController animated:YES completion:nil];
+    [window.rootViewController presentViewController:playerViewController animated:YES completion:nil];
 }
 
-void CAAVPlayerControllerImpl::closeAVPlayerController()
-{
-    [s_playerViewController dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
 #endif
-
+*/
 
 
 NS_CC_END

@@ -55,6 +55,8 @@
 		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
 		B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */; };
 		B09FC0BC1AD3A25F0009C2D7 /* r in Resources */ = {isa = PBXBuildFile; fileRef = B09FC0BB1AD3A25F0009C2D7 /* r */; };
+		D6B1E77C1F204D6200723750 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E77B1F204D6200723750 /* AVFoundation.framework */; };
+		D6B1E77E1F204D6700723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E77D1F204D6700723750 /* CoreMedia.framework */; };
 		D6C72A461EF29BF00094B191 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6C72A451EF29BF00094B191 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -153,6 +155,8 @@
 		B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		B0621C291AC3DCB2005EBCA7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
 		B09FC0BB1AD3A25F0009C2D7 /* r */ = {isa = PBXFileReference; lastKnownFileType = folder; path = r; sourceTree = "<group>"; };
+		D6B1E77B1F204D6200723750 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D6B1E77D1F204D6700723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D6C72A451EF29BF00094B191 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -161,6 +165,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B1E77E1F204D6700723750 /* CoreMedia.framework in Frameworks */,
+				D6B1E77C1F204D6200723750 /* AVFoundation.framework in Frameworks */,
 				D6C72A461EF29BF00094B191 /* WebKit.framework in Frameworks */,
 				480EDE221D953A3400C758DA /* VideoToolbox.framework in Frameworks */,
 				480EDE201D953A2A00C758DA /* Security.framework in Frameworks */,
@@ -281,6 +287,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B1E77D1F204D6700723750 /* CoreMedia.framework */,
+				D6B1E77B1F204D6200723750 /* AVFoundation.framework */,
 				D6C72A451EF29BF00094B191 /* WebKit.framework */,
 				480EDE291D953A9B00C758DA /* libbz2.1.0.tbd */,
 				480EDE271D953A5B00C758DA /* CoreVideo.framework */,
@@ -573,8 +581,6 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../CocosDenshion/include",
-					"\"$(SRCROOT)/../../../CrossApp/kazmath/include\"",
-					"\"$(SRCROOT)/../../../extensions\"",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
@@ -583,15 +589,9 @@
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/jpeg/include/mac/\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/tiff/include/mac/\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/webp/include/mac/\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/mac\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/mac\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/mac\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/mac\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = "Test-js";
@@ -624,8 +624,6 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../CocosDenshion/include",
-					"\"$(SRCROOT)/../../../CrossApp/kazmath/include\"",
-					"\"$(SRCROOT)/../../../extensions\"",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
 					"\"$(SRCROOT)/../../../Classes\"",
@@ -634,15 +632,9 @@
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/jpeg/include/mac/\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/tiff/include/mac/\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/webp/include/mac/\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/mac\"",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/mac\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/mac\"",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/mac\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "Test-js";
 				SDKROOT = macosx;

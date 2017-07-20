@@ -168,4 +168,10 @@ void ListViewTest::didSelectCellAtIndex(unsigned int index)
 void ListViewTest::didDeselectCellAtIndex(unsigned int index)
 {
     m_sDidSelectCellAtIndexs.erase(index);
+    std::string text;
+    for (auto& i : m_sDidSelectCellAtIndexs)
+    {
+        text += crossapp_format_string("%u >", i);
+    }
+    CCLog("%s", text.c_str());
 }

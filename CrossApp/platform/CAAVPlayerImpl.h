@@ -28,6 +28,8 @@ public:
     
     void play();
     
+    void playWithRate(float rate);
+    
     void pause();
     
     void stop();
@@ -37,6 +39,10 @@ public:
     float getCurrentTime();
     
     void setCurrentTime(float current);
+    
+    float getRate();
+    
+    void setRate(float rate);
     
     const DSize& getPresentationSize();
 
@@ -51,15 +57,14 @@ private:
     friend class CAAVPlayer;
 };
 
+/*
 class CC_DLL CAAVPlayerControllerImpl
 {
 public:
     
     static void showAVPlayerController(CAAVPlayer* player);
-    
-    static void closeAVPlayerController();
 };
-
+*/
 NS_CC_END
 
 #endif    // __CAAVPlayerViewImpl_H__

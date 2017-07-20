@@ -23,8 +23,9 @@ public:
     
     enum class Type : int
     {
+        Custom = 0,
         SquareRect,
-        RoundedRect,
+        RoundedRect
     };
     
     CACheckbox(const CACheckbox::Type& type);
