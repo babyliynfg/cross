@@ -11,6 +11,13 @@
 #define textView_iOS ((IOSTextView*)m_pTextView)
 #define textView_iOS1 [textView_iOS iosTextView]
 
+static std::map<CrossApp::CATextView*, std::function<bool()> > s_ShouldBeginEditing_map;
+static std::map<CrossApp::CATextView*, std::function<bool()> > s_ShouldEndEditing_map;
+static std::map<CrossApp::CATextView*, std::function<void()> > s_ShouldReturn_map;
+static std::map<CrossApp::CATextView*, std::function<void(int height)> > s_KeyBoardHeight_map;
+static std::map<CrossApp::CATextView*, std::function<bool(ssize_t, ssize_t, const std::string&)> > s_ShouldChangeCharacters_map;
+static std::map<CrossApp::CATextView*, std::function<void()> > s_DidChangeText_map;
+
 @interface IOSTextView : UIView <UITextViewDelegate>
 {
 
@@ -71,7 +78,11 @@
         {
             //判断输入的字是否是回车，即按下return
             //在这里做你响应return键的代码
-            if (_textView->getDelegate())
+            if (s_ShouldReturn_map.count(_textView) > 0 && s_ShouldReturn_map[_textView])
+            {
+                s_ShouldReturn_map[_textView]();
+            }
+            else if (_textView->getDelegate())
             {
                 _textView->getDelegate()->textViewShouldReturn(_textView);
             }
@@ -80,15 +91,14 @@
         }
     }
     
-    if (_textView->getDelegate())
+    if (s_ShouldChangeCharacters_map.count(_textView) > 0 && s_ShouldChangeCharacters_map[_textView])
     {
-        std::string text = [string UTF8String];
-        return _textView->getDelegate()->textViewShouldChangeCharacters(_textView,
-                                                                          (unsigned int)range.location,
-                                                                          (unsigned int)range.length,
-                                                                          text);
+        return s_ShouldChangeCharacters_map[_textView](range.location, range.length, [string UTF8String]);
     }
-    
+    else if (_textView->getDelegate())
+    {
+        return _textView->getDelegate()->textViewShouldChangeCharacters(_textView, (unsigned)range.location, (unsigned)range.length, [string UTF8String]);
+    }
     
     return YES;
 }
@@ -105,18 +115,33 @@
     {
         CGFloat scale  = [[UIScreen mainScreen] scale];
         int height = CrossApp::s_px_to_dip(keyBoardHeight * scale);
-        if (_textView->getDelegate() && [self.iosTextView isFirstResponder])
+        
+        if ([self.iosTextView isFirstResponder])
         {
-            _textView->getDelegate()->keyBoardHeight(_textView, height);
+            if (s_KeyBoardHeight_map.count(_textView) > 0 && s_KeyBoardHeight_map[_textView])
+            {
+                s_KeyBoardHeight_map[_textView](height);
+            }
+            else if (_textView->getDelegate())
+            {
+                _textView->getDelegate()->keyBoardHeight(_textView, height);
+            }
         }
     }
 }
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
-    if (_textView->getDelegate() && [self.iosTextView isFirstResponder])
+    if ([self.iosTextView isFirstResponder])
     {
-        _textView->getDelegate()->keyBoardHeight(_textView, 0);
+        if (s_KeyBoardHeight_map.count(_textView) > 0 && s_KeyBoardHeight_map[_textView])
+        {
+            s_KeyBoardHeight_map[_textView](0);
+        }
+        else if (_textView->getDelegate())
+        {
+            _textView->getDelegate()->keyBoardHeight(_textView, 0);
+        }
     }
 }
 
@@ -149,6 +174,13 @@ CATextView::CATextView()
 }
 CATextView::~CATextView()
 {
+    s_ShouldBeginEditing_map.erase(this);
+    s_ShouldEndEditing_map.erase(this);
+    s_ShouldReturn_map.erase(this);
+    s_KeyBoardHeight_map.erase(this);
+    s_ShouldChangeCharacters_map.erase(this);
+    s_DidChangeText_map.erase(this);
+    
     [textView_iOS removeTextView];
     m_pDelegate = NULL;
 }
@@ -223,7 +255,11 @@ void CATextView::onExitTransitionDidStart()
 }
 bool CATextView::resignFirstResponder()
 {
-    if (m_pDelegate && (!m_pDelegate->textViewShouldEndEditing(this)))
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    {
+        return s_ShouldEndEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textViewShouldEndEditing(this)))
     {
         return false;
     }
@@ -246,7 +282,11 @@ bool CATextView::resignFirstResponder()
 }
 bool CATextView::becomeFirstResponder()
 {
-    if (m_pDelegate &&( !m_pDelegate->textViewShouldBeginEditing(this)))
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    {
+        return s_ShouldBeginEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textViewShouldBeginEditing(this)))
     {
         return false;
     }
@@ -446,9 +486,46 @@ void CATextView::setAlign(CATextView::Align var)
     
     delayShowImage();
 }
+
 CATextView::Align CATextView::getAlign()
 {
     return m_eAlign;
+}
+
+void CATextView::onShouldBeginEditing(const std::function<bool ()> &var)
+{
+    m_obShouldBeginEditing = var;
+    s_ShouldBeginEditing_map[this] = var;
+}
+
+void CATextView::onShouldEndEditing(const std::function<bool ()> &var)
+{
+    m_obShouldEndEditing = var;
+    s_ShouldEndEditing_map[this] = var;
+}
+
+void CATextView::onShouldReturn(const std::function<void ()> &var)
+{
+    m_obShouldReturn = var;
+    s_ShouldReturn_map[this] = var;
+}
+
+void CATextView::onKeyBoardHeight(const std::function<void (int)> &var)
+{
+    m_obKeyBoardHeight = var;
+    s_KeyBoardHeight_map[this] = var;
+}
+
+void CATextView::onShouldChangeCharacters(const std::function<bool (ssize_t, ssize_t, const std::string &)> &var)
+{
+    m_obShouldChangeCharacters = var;
+    s_ShouldChangeCharacters_map[this] = var;
+}
+
+void CATextView::onDidChangeText(const std::function<void ()> &var)
+{
+    m_obDidChangeText = var;
+    s_DidChangeText_map[this] = var;
 }
 
 NS_CC_END

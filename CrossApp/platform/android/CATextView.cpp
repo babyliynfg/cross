@@ -21,6 +21,13 @@
 
 NS_CC_BEGIN
 
+static std::map<CrossApp::CATextView*, std::function<bool()> > s_ShouldBeginEditing_map;
+static std::map<CrossApp::CATextView*, std::function<bool()> > s_ShouldEndEditing_map;
+static std::map<CrossApp::CATextView*, std::function<void()> > s_ShouldReturn_map;
+static std::map<CrossApp::CATextView*, std::function<void(int height)> > s_KeyBoardHeight_map;
+static std::map<CrossApp::CATextView*, std::function<bool(ssize_t, ssize_t, const std::string&)> > s_ShouldChangeCharacters_map;
+static std::map<CrossApp::CATextView*, std::function<void()> > s_DidChangeText_map;
+
 static std::map<int, CATextView*> s_map;
 static bool s_lock = false;
 void textViewOnCreateView(int key)
@@ -236,7 +243,11 @@ extern "C"
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_keyBoardHeightReturn(JNIEnv *env, jclass cls, jint key, jint height)
     {
 		CATextView* textView = s_map[(int)key];
-        if (textView->getDelegate())
+        if (s_KeyBoardHeight_map.count(textView) > 0 && s_KeyBoardHeight_map[textView])
+        {
+            s_KeyBoardHeight_map[textView]((int)s_px_to_dip(height));
+        }
+        else if (textView->getDelegate())
         {
             textView->getDelegate()->keyBoardHeight(textView, (int)s_px_to_dip(height));
         }
@@ -247,8 +258,11 @@ extern "C"
         CATextView* textView = s_map[(int)key];
         
         textView->resignFirstResponder();
-        
-        if (textView->getDelegate())
+        if (s_ShouldReturn_map.count(textView) > 0 && s_ShouldReturn_map[textView])
+        {
+            s_ShouldReturn_map[textView]();
+        }
+        else if (textView->getDelegate())
         {
             textView->getDelegate()->textViewShouldReturn(textView);
         }
@@ -264,11 +278,14 @@ extern "C"
         env->ReleaseStringUTFChars(change, charChange);
         
 		CATextView* textView = s_map[(int)key];
-		if (textView->getDelegate())
-		{
-			return textView->getDelegate()->textViewShouldChangeCharacters(textView, arg0, arg1, strChange.c_str());
-		}
-
+        if (s_ShouldChangeCharacters_map.count(textView) > 0 && s_ShouldChangeCharacters_map[textView])
+        {
+            return s_ShouldChangeCharacters_map[textView](arg0, arg1, strChange.c_str());
+        }
+        else if (_textView->getDelegate())
+        {
+            return textView->getDelegate()->textViewShouldChangeCharacters(textView, arg0, arg1, strChange.c_str());
+        }
 		return true;
     }
     
@@ -315,6 +332,13 @@ CATextView::CATextView()
 
 CATextView::~CATextView()
 {
+    s_ShouldBeginEditing_map.erase(this);
+    s_ShouldEndEditing_map.erase(this);
+    s_ShouldReturn_map.erase(this);
+    s_KeyBoardHeight_map.erase(this);
+    s_ShouldChangeCharacters_map.erase(this);
+    s_DidChangeText_map.erase(this);
+    
     s_map.erase(m_u__ID);
     textViewOnRemoveView(m_u__ID);
     m_pDelegate = nullptr;
@@ -338,10 +362,14 @@ void CATextView::onExitTransitionDidStart()
 
 bool CATextView::resignFirstResponder()
 {
-	if (m_pDelegate && (!m_pDelegate->textViewShouldEndEditing(this)))
-	{
-		return false;
-	}
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    {
+        return s_ShouldEndEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textViewShouldEndEditing(this)))
+    {
+        return false;
+    }
 
     bool result = CAControl::resignFirstResponder();
 
@@ -354,10 +382,14 @@ bool CATextView::resignFirstResponder()
 
 bool CATextView::becomeFirstResponder()
 {
-	if (m_pDelegate &&( !m_pDelegate->textViewShouldBeginEditing(this)))
-	{
-		return false;
-	}
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    {
+        return s_ShouldBeginEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textViewShouldBeginEditing(this)))
+    {
+        return false;
+    }
 
 	bool result = CAControl::becomeFirstResponder();
 
@@ -595,7 +627,41 @@ CATextView::Align CATextView::getAlign()
     return m_eAlign;
 }
 
+void CATextView::onShouldBeginEditing(const std::function<bool ()> &var)
+{
+    m_obShouldBeginEditing = var;
+    s_ShouldBeginEditing_map[this] = var;
+}
 
+void CATextView::onShouldEndEditing(const std::function<bool ()> &var)
+{
+    m_obShouldEndEditing = var;
+    s_ShouldEndEditing_map[this] = var;
+}
+
+void CATextView::onShouldReturn(const std::function<void ()> &var)
+{
+    m_obShouldReturn = var;
+    s_ShouldReturn_map[this] = var;
+}
+
+void CATextView::onKeyBoardHeight(const std::function<void (int)> &var)
+{
+    m_obKeyBoardHeight = var;
+    s_KeyBoardHeight_map[this] = var;
+}
+
+void CATextView::onShouldChangeCharacters(const std::function<bool (ssize_t, ssize_t, const std::string &)> &var)
+{
+    m_obShouldChangeCharacters = var;
+    s_ShouldChangeCharacters_map[this] = var;
+}
+
+void CATextView::onDidChangeText(const std::function<void ()> &var)
+{
+    m_obDidChangeText = var;
+    s_DidChangeText_map[this] = var;
+}
 
 NS_CC_END
 

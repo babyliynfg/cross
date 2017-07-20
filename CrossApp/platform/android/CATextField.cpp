@@ -20,6 +20,13 @@
 #define CAColorToJavaColor(color) (color.b + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
 NS_CC_BEGIN
 
+static std::map<CrossApp::CATextField*, std::function<bool()> > s_ShouldBeginEditing_map;
+static std::map<CrossApp::CATextField*, std::function<bool()> > s_ShouldEndEditing_map;
+static std::map<CrossApp::CATextField*, std::function<void()> > s_ShouldReturn_map;
+static std::map<CrossApp::CATextField*, std::function<void(int height)> > s_KeyBoardHeight_map;
+static std::map<CrossApp::CATextField*, std::function<bool(ssize_t, ssize_t, const std::string&)> > s_ShouldChangeCharacters_map;
+static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_map;
+
 static std::map<int , CATextField*> s_map;
 static bool s_lock = false;
 void onCreateView(int key)
@@ -325,7 +332,12 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardHeightReturn(JNIEnv *env, jclass cls, jint key, jint height)
     {
         CATextField* textField = s_map[(int)key];
-        if (textField->getDelegate())
+        
+        if (s_KeyBoardHeight_map.count(textField) > 0 && s_KeyBoardHeight_map[textField])
+        {
+            s_KeyBoardHeight_map[textField]((int)s_px_to_dip(height));
+        }
+        else if (textField->getDelegate())
         {
             textField->getDelegate()->keyBoardHeight(textField, (int)s_px_to_dip(height));
         }
@@ -340,7 +352,11 @@ extern "C"
             textField->resignFirstResponder();
         }
         
-        if (textField->getDelegate())
+        if (s_ShouldReturn_map.count(textField) > 0 && s_ShouldReturn_map[textField])
+        {
+            s_ShouldReturn_map[textField]();
+        }
+        else if (textField->getDelegate())
         {
             textField->getDelegate()->textFieldShouldReturn(textField);
         }
@@ -356,20 +372,29 @@ extern "C"
         env->ReleaseStringUTFChars(change, charChange);
         
         CATextField* textField = s_map[(int)key];
-        if (textField->getDelegate())
+        
+        if (s_ShouldChangeCharacters_map.count(textField) > 0 && s_ShouldChangeCharacters_map[textField])
         {
-			return textField->getDelegate()->textFieldShouldChangeCharacters(textField, arg0, arg1, strChange.c_str());
+            return s_ShouldChangeCharacters_map[textField](range.location, range.length, [string UTF8String]);
         }
-
+        else if (textField->getDelegate())
+        {
+            return textField->getDelegate()->textFieldShouldChangeCharacters(textField, arg0, arg1, strChange.c_str());
+        }
+        
 		return true;
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_didTextChanged(JNIEnv *env, jclass cls, jint key)
     {
         CATextField* textField = s_map[(int)key];
-        if (textField->getDelegate())
+        if (s_DidChangeText_map.count(textField) > 0 && s_DidChangeText_map[textField])
         {
-            return textField->getDelegate()->textFieldDidChangeText(textField);
+            s_DidChangeText_map[textField]();
+        }
+        else if (textField->getDelegate())
+        {
+            textField->getDelegate()->textFieldDidChangeText(textField);
         }
     }
     
@@ -422,6 +447,13 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
+    s_ShouldBeginEditing_map.erase(this);
+    s_ShouldEndEditing_map.erase(this);
+    s_ShouldReturn_map.erase(this);
+    s_KeyBoardHeight_map.erase(this);
+    s_ShouldChangeCharacters_map.erase(this);
+    s_DidChangeText_map.erase(this);
+    
     s_map.erase(m_u__ID);
     onRemoveView(m_u__ID);
     m_pDelegate = nullptr;
@@ -460,10 +492,14 @@ void showClearButtonJNI(int key)
 
 bool CATextField::resignFirstResponder()
 {
-	if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
-	{
-		return false;
-	}
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    {
+        return s_ShouldEndEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
+    {
+        return false;
+    }
 
     bool result = CAControl::resignFirstResponder();
 
@@ -482,10 +518,14 @@ bool CATextField::resignFirstResponder()
 
 bool CATextField::becomeFirstResponder()
 {
-	if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
-	{
-		return false;
-	}
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    {
+        return s_ShouldBeginEditing_map[this]();
+    }
+    else if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
+    {
+        return false;
+    }
 
 	bool result = CAControl::becomeFirstResponder();
 
@@ -916,5 +956,40 @@ int CATextField::getMaxLength()
     return m_iMaxLength;
 }
 
+void CATextField::onShouldBeginEditing(const std::function<bool ()> &var)
+{
+    m_obShouldBeginEditing = var;
+    s_ShouldBeginEditing_map[this] = var;
+}
+
+void CATextField::onShouldEndEditing(const std::function<bool ()> &var)
+{
+    m_obShouldEndEditing = var;
+    s_ShouldEndEditing_map[this] = var;
+}
+
+void CATextField::onShouldReturn(const std::function<void ()> &var)
+{
+    m_obShouldReturn = var;
+    s_ShouldReturn_map[this] = var;
+}
+
+void CATextField::onKeyBoardHeight(const std::function<void (int)> &var)
+{
+    m_obKeyBoardHeight = var;
+    s_KeyBoardHeight_map[this] = var;
+}
+
+void CATextField::onShouldChangeCharacters(const std::function<bool (ssize_t, ssize_t, const std::string &)> &var)
+{
+    m_obShouldChangeCharacters = var;
+    s_ShouldChangeCharacters_map[this] = var;
+}
+
+void CATextField::onDidChangeText(const std::function<void ()> &var)
+{
+    m_obDidChangeText = var;
+    s_DidChangeText_map[this] = var;
+}
 NS_CC_END
 

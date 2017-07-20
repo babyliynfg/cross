@@ -1040,9 +1040,4 @@ void CATextField::onDidChangeText(const std::function<void ()> &var)
     s_DidChangeText_map[this] = var;
 }
 
-
-
 NS_CC_END
-
-
-
