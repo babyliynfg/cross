@@ -302,7 +302,7 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			}
             if (m_obDidDeselectCellAtIndexPath)
             {
-                m_obDidDeselectCellAtIndexPath(selectedIndexPath.section, selectedIndexPath.row, selectedIndexPath.item);
+                m_obDidDeselectCellAtIndexPath(deselectedIndexPath.section, deselectedIndexPath.row, deselectedIndexPath.item);
             }
             else if (m_pCollectionViewDelegate)
 			{
