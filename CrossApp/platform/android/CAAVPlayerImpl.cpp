@@ -13,6 +13,7 @@ NS_CC_BEGIN
 
 
 static std::map<int , CAAVPlayer*> s_map;
+static std::map<CAAVPlayer* , std::string> s_mapUrl;
 static std::map<int , std::function<void(CAImage*)> > s_ImageCallback_map;
 static std::map<int , std::function<void(float current, float duratuon)> > s_PeriodicTime_map;
 static std::map<int , std::function<void(float current, float duratuon)> > s_LoadedTime_map;
@@ -21,6 +22,7 @@ static std::map<int , std::function<void()> > s_TimeJumped_map;
 
 static std::map<int , std::function<void(const std::string&)> > s_PlayBufferLoadingState_map;
 static std::map<int , std::function<void(const std::string&)> > s_PlayState_map;
+
 
 void removePlayer(int key)
 {
@@ -77,6 +79,7 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
 CAAVPlayerImpl::~CAAVPlayerImpl()
 {
     s_map.erase(m_pPlayer->m_u__ID);
+    s_mapUrl.erase(m_pPlayer);
     s_ImageCallback_map.erase(m_pPlayer->m_u__ID);
     s_PeriodicTime_map.erase(m_pPlayer->m_u__ID);
     s_LoadedTime_map.erase(m_pPlayer->m_u__ID);
@@ -90,8 +93,9 @@ CAAVPlayerImpl::~CAAVPlayerImpl()
 
 void CAAVPlayerImpl::setUrl(const std::string& url)
 {
+    s_mapUrl[m_pPlayer] = url;
     JniMethodInfo jni;
-    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setDataSource", "(Ljava/lang/String;I)V"))
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setUrl", "(Ljava/lang/String;I)V"))
     {
         jstring jFilePath = jni.env->NewStringUTF(url.c_str());
         jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , jFilePath , (jint)m_pPlayer->m_u__ID);
@@ -102,8 +106,9 @@ void CAAVPlayerImpl::setUrl(const std::string& url)
 
 void CAAVPlayerImpl::setFilePath(const std::string& filePath)
 {
+    s_mapUrl[m_pPlayer] = filePath;
     JniMethodInfo jni;
-    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setDataSource", "(Ljava/lang/String;I)V"))
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setFilePath", "(Ljava/lang/String;I)V"))
     {
         jstring jFilePath = jni.env->NewStringUTF(filePath.c_str());
         jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , jFilePath , (jint)m_pPlayer->m_u__ID);
@@ -203,8 +208,48 @@ void CAAVPlayerImpl::onImage(const std::function<void(CAImage*)>& function)
     s_ImageCallback_map[m_pPlayer->m_u__ID] = function;
 }
 
+void CAAVPlayerControllerImpl::showAVPlayerController(CrossApp::CAAVPlayer* player)
+{
+    
+    
+}
+
+void CAAVPlayerControllerImpl::closeAVPlayerController()
+{
+}
+
+static CAImage* image_frame_getter =  nullptr ;
+CAImage* CAAVPlayerImpl::getFirstFrameImageWithFilePath(const std::string& filePath)
+{
+    
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "getFirstFrameImageWithFilePath", "(Ljava/lang/String;)V"))
+    {
+        jstring jFilePath = jni.env->NewStringUTF(filePath.c_str());
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID, jFilePath );
+        jni.env->DeleteLocalRef(jni.classID);
+    }
+    CAImage* image = image_frame_getter;
+    image_frame_getter= nullptr;
+    return image;
+}
+
 extern "C"
 {
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onBitmapFrameAttached(JNIEnv *env, jclass cls, jbyteArray buf, jint length)
+    {
+        
+        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * (ssize_t)length);
+        env->GetByteArrayRegion(buf, 0, (ssize_t)length, (jbyte *)data);
+        CrossApp::CAData* ca_data = CrossApp::CAData::create();
+        ca_data->fastSet(data, (ssize_t)length);
+        image_frame_getter = CAImage::createWithImageDataNoCache(ca_data);
+        
+
+        
+    }
+    
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onFrameAttached(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint width, jint height)
     {
@@ -225,6 +270,26 @@ extern "C"
         }
         
     }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onFrameImageAttached(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint length)
+    {
+        
+        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * (ssize_t)length);
+        env->GetByteArrayRegion(buf, 0, (ssize_t)length, (jbyte *)data);
+        CrossApp::CAData* ca_data = CrossApp::CAData::create();
+        ca_data->fastSet(data, (ssize_t)length);
+        CAImage* image = CAImage::createWithImageDataNoCache(ca_data);
+        
+        if (s_ImageCallback_map.count((int)key) > 0)
+        {
+            if (auto& callback = s_ImageCallback_map.at((int)key))
+            {
+                callback(image);
+            }
+        }
+        
+    }
+    
     
     // 监听播放进度
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppVideoPlayer_onPeriodicTime(JNIEnv *env, jclass cls, jint key, jfloat current,jfloat duration)
