@@ -282,7 +282,7 @@ extern "C"
         {
             return s_ShouldChangeCharacters_map[textView](arg0, arg1, strChange.c_str());
         }
-        else if (_textView->getDelegate())
+        else if (textView->getDelegate())
         {
             return textView->getDelegate()->textViewShouldChangeCharacters(textView, arg0, arg1, strChange.c_str());
         }
