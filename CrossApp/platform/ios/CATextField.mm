@@ -17,6 +17,13 @@
 
 #define textField_iOS ((IOSTextField*)m_pTextField)
 
+static std::map<CrossApp::CATextField*, std::function<bool()> > s_ShouldBeginEditing_map;
+static std::map<CrossApp::CATextField*, std::function<bool()> > s_ShouldEndEditing_map;
+static std::map<CrossApp::CATextField*, std::function<void()> > s_ShouldReturn_map;
+static std::map<CrossApp::CATextField*, std::function<void(int height)> > s_KeyBoardHeight_map;
+static std::map<CrossApp::CATextField*, std::function<bool(ssize_t, ssize_t, const std::string&)> > s_ShouldChangeCharacters_map;
+static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_map;
+
 @interface IOSTextFieldDelegate: NSObject<UITextFieldDelegate>
 {
     
@@ -56,7 +63,11 @@
         crossTextField->resignFirstResponder();
     }
     
-    if (crossTextField->getDelegate())
+    if (s_ShouldReturn_map.count(crossTextField) > 0 && s_ShouldReturn_map[crossTextField])
+    {
+        s_ShouldReturn_map[crossTextField]();
+    }
+    else if (crossTextField->getDelegate())
     {
         crossTextField->getDelegate()->textFieldShouldReturn(crossTextField);
     }
@@ -81,13 +92,16 @@
         }
     }
     
-    if (crossTextField->getDelegate())
+    if (s_ShouldChangeCharacters_map.count(crossTextField) > 0 && s_ShouldChangeCharacters_map[crossTextField])
     {
-        std::string text = [string UTF8String];
+        return s_ShouldChangeCharacters_map[crossTextField](range.location, range.length, [string UTF8String]);
+    }
+    else if (crossTextField->getDelegate())
+    {
         return crossTextField->getDelegate()->textFieldShouldChangeCharacters(crossTextField,
                                                                           (unsigned int)range.location,
                                                                           (unsigned int)range.length,
-                                                                          text);
+                                                                          [string UTF8String]);
     }
     
     
@@ -98,14 +112,15 @@
 {
     CrossApp::CATextField* crossTextField = ((IOSTextField*)self.textField).textField;
     
-    if (crossTextField->getDelegate())
+    if (s_ShouldChangeCharacters_map.count(crossTextField) > 0 && s_ShouldChangeCharacters_map[crossTextField])
     {
-        unsigned int location = 0;
-        unsigned int length = (unsigned int)[textField.text length];
-
+        return s_ShouldChangeCharacters_map[crossTextField](0, [textField.text length],"");
+    }
+    else if (crossTextField->getDelegate())
+    {
         return crossTextField->getDelegate()->textFieldShouldChangeCharacters(crossTextField,
-                                                                              location,
-                                                                              length,
+                                                                              0,
+                                                                              (unsigned int)[textField.text length],
                                                                               "");
     }
     return YES;
@@ -178,26 +193,48 @@
     {
         CGFloat scale  = [[UIScreen mainScreen] scale];
         int height = CrossApp::s_px_to_dip(keyBoardHeight * scale);
-        if (_textField->getDelegate() && [self isFirstResponder])
+        
+        if ([self isFirstResponder])
         {
-            _textField->getDelegate()->keyBoardHeight(_textField, height);
+            if (s_KeyBoardHeight_map.count(_textField) > 0 && s_KeyBoardHeight_map[_textField])
+            {
+                s_KeyBoardHeight_map[_textField](height);
+            }
+            else if (_textField->getDelegate())
+            {
+                _textField->getDelegate()->keyBoardHeight(_textField, height);
+            }
         }
     }
 }
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
-    if (_textField->getDelegate() && [self isFirstResponder])
+    if ([self isFirstResponder])
     {
-        _textField->getDelegate()->keyBoardHeight(_textField, 0);
+        if (s_KeyBoardHeight_map.count(_textField) > 0 && s_KeyBoardHeight_map[_textField])
+        {
+            s_KeyBoardHeight_map[_textField](0);
+        }
+        else if (_textField->getDelegate())
+        {
+            _textField->getDelegate()->keyBoardHeight(_textField, 0);
+        }
     }
 }
 
 - (void) textFieldDidChange:(NSNotification *) notif
 {
-    if (_textField->getDelegate() && [self isFirstResponder])
+    if ([self isFirstResponder])
     {
-        _textField->getDelegate()->textFieldDidChangeText(_textField);
+        if (s_DidChangeText_map.count(_textField) > 0 && s_DidChangeText_map[_textField])
+        {
+            s_DidChangeText_map[_textField]();
+        }
+        else if (_textField->getDelegate())
+        {
+            _textField->getDelegate()->textFieldDidChangeText(_textField);
+        }
     }
 }
 
@@ -245,6 +282,13 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
+    s_ShouldBeginEditing_map.erase(this);
+    s_ShouldEndEditing_map.erase(this);
+    s_ShouldReturn_map.erase(this);
+    s_KeyBoardHeight_map.erase(this);
+    s_ShouldChangeCharacters_map.erase(this);
+    s_DidChangeText_map.erase(this);
+    
     [textField_iOS removeTextField];
     m_pDelegate = NULL;
 }
@@ -267,7 +311,11 @@ void CATextField::onExitTransitionDidStart()
 
 bool CATextField::resignFirstResponder()
 {
-    if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    {
+        return s_ShouldEndEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
     {
         return false;
     }
@@ -289,7 +337,11 @@ bool CATextField::resignFirstResponder()
 
 bool CATextField::becomeFirstResponder()
 {
-    if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    {
+        return s_ShouldBeginEditing_map[this]();
+    }
+    else if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
     {
         return false;
     }
@@ -783,6 +835,42 @@ void CATextField::setMaxLength(int var)
 int CATextField::getMaxLength()
 {
     return m_iMaxLength;
+}
+
+void CATextField::onShouldBeginEditing(const std::function<bool ()> &var)
+{
+    m_obShouldBeginEditing = var;
+    s_ShouldBeginEditing_map[this] = var;
+}
+
+void CATextField::onShouldEndEditing(const std::function<bool ()> &var)
+{
+    m_obShouldEndEditing = var;
+    s_ShouldEndEditing_map[this] = var;
+}
+
+void CATextField::onShouldReturn(const std::function<void ()> &var)
+{
+    m_obShouldReturn = var;
+    s_ShouldReturn_map[this] = var;
+}
+
+void CATextField::onKeyBoardHeight(const std::function<void (int)> &var)
+{
+    m_obKeyBoardHeight = var;
+    s_KeyBoardHeight_map[this] = var;
+}
+
+void CATextField::onShouldChangeCharacters(const std::function<bool (ssize_t, ssize_t, const std::string &)> &var)
+{
+    m_obShouldChangeCharacters = var;
+    s_ShouldChangeCharacters_map[this] = var;
+}
+
+void CATextField::onDidChangeText(const std::function<void ()> &var)
+{
+    m_obDidChangeText = var;
+    s_DidChangeText_map[this] = var;
 }
 
 NS_CC_END

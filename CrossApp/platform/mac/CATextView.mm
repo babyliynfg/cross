@@ -84,7 +84,11 @@ static std::map<CrossApp::CATextView*, std::function<void()> > s_DidChangeText_m
             [theEvent keyCode] == 76)
         {
             _textView->resignFirstResponder();
-            if (_textView->getDelegate())
+            if (s_ShouldReturn_map.count(_textView) > 0 && s_ShouldReturn_map[_textView])
+            {
+                s_ShouldReturn_map[_textView]();
+            }
+            else if (_textView->getDelegate())
             {
                 _textView->getDelegate()->textViewShouldReturn(_textView);
             }
@@ -199,14 +203,14 @@ static std::map<CrossApp::CATextView*, std::function<void()> > s_DidChangeText_m
         [self setBeforeText:current];
         [self setStringValue:current];
         
-        if (s_DidChangeText_map.count(_textView) > 0 && s_DidChangeText_map[_textView])
-        {
-            s_DidChangeText_map[_textView]();
-        }
-        else if (_textView->getDelegate())
-        {
-            _textView->getDelegate()->textViewDidChangeText(_textView);
-        }
+//        if (s_DidChangeText_map.count(_textView) > 0 && s_DidChangeText_map[_textView])
+//        {
+//            s_DidChangeText_map[_textView]();
+//        }
+//        else if (_textView->getDelegate())
+//        {
+//            _textView->getDelegate()->textViewDidChangeText(_textView);
+//        }
     }
 }
 
@@ -349,7 +353,11 @@ void CATextView::onExitTransitionDidStart()
 
 bool CATextView::resignFirstResponder()
 {
-    if (m_pDelegate && (!m_pDelegate->textViewShouldEndEditing(this)))
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    {
+        return s_ShouldEndEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textViewShouldEndEditing(this)))
     {
         return false;
     }
@@ -370,7 +378,11 @@ bool CATextView::resignFirstResponder()
 
 bool CATextView::becomeFirstResponder()
 {
-    if (m_pDelegate &&( !m_pDelegate->textViewShouldBeginEditing(this)))
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    {
+        return s_ShouldBeginEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textViewShouldBeginEditing(this)))
     {
         return false;
     }

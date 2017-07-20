@@ -20,7 +20,12 @@
 #include "support/CAThemeManager.h"
 #include "support/ccUtils.h"
 NS_CC_BEGIN
-
+static std::map<CrossApp::CATextField*, std::function<bool()> > s_ShouldBeginEditing_map;
+static std::map<CrossApp::CATextField*, std::function<bool()> > s_ShouldEndEditing_map;
+static std::map<CrossApp::CATextField*, std::function<void()> > s_ShouldReturn_map;
+static std::map<CrossApp::CATextField*, std::function<void(int height)> > s_KeyBoardHeight_map;
+static std::map<CrossApp::CATextField*, std::function<bool(ssize_t, ssize_t, const std::string&)> > s_ShouldChangeCharacters_map;
+static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_map;
 
 class CATextFieldWin32 : public CAView, public CAIMEDelegate
 {
@@ -78,10 +83,16 @@ public:
                 m_pTextFieldX->resignFirstResponder();
 				EndMouseMoveArr();
             }
-			if (pDelegate)
-			{
-				pDelegate->textFieldShouldReturn(m_pTextFieldX);
-			}
+            
+            if (s_ShouldReturn_map.count(m_pTextFieldX) > 0 && s_ShouldReturn_map[m_pTextFieldX])
+            {
+                s_ShouldReturn_map[m_pTextFieldX]();
+            }
+            else if (pDelegate)
+            {
+                pDelegate->textFieldShouldReturn(m_pTextFieldX);
+            }
+
 			return;
 		}
 
@@ -236,13 +247,20 @@ public:
 	}
 	bool textValueChanged(int location, int length, const std::string& changedText)
 	{
-		if (m_bCallbackTextChanged && m_pTextFieldX->getDelegate())
+		if (m_bCallbackTextChanged)
 		{
 			std::u16string c1, c2;
 			StringUtils::UTF8ToUTF16(m_sText.substr(0, location), c1);
 			StringUtils::UTF8ToUTF16(m_sText.substr(location, length), c2);
 
-			return m_pTextFieldX->getDelegate()->textFieldShouldChangeCharacters(m_pTextFieldX, c1.size(), c2.size(), changedText);
+            if (s_ShouldChangeCharacters_map.count(m_pTextFieldX) > 0 && s_ShouldChangeCharacters_map[m_pTextFieldX])
+            {
+                return s_ShouldChangeCharacters_map[m_pTextFieldX](c1.size(), c2.size(), changedText);
+            }
+            else if (m_pTextFieldX->getDelegate())
+            {
+                return m_pTextFieldX->getDelegate()->textFieldShouldChangeCharacters(m_pTextFieldX, c1.size(), c2.size(), changedText);
+            }
 		}
 		return true;
 	}
@@ -647,6 +665,13 @@ CATextField::CATextField()
 
 CATextField::~CATextField()
 {
+    s_ShouldBeginEditing_map.erase(this);
+    s_ShouldEndEditing_map.erase(this);
+    s_ShouldReturn_map.erase(this);
+    s_KeyBoardHeight_map.erase(this);
+    s_ShouldChangeCharacters_map.erase(this);
+    s_DidChangeText_map.erase(this);
+    
     CAViewAnimation::removeAnimations(m_s__StrID + "showImage");
     m_pDelegate = NULL;
 }
@@ -669,10 +694,14 @@ void CATextField::onExitTransitionDidStart()
 
 bool CATextField::resignFirstResponder()
 {
-	if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
-	{
-		return false;
-	}
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    {
+        return s_ShouldEndEditing_map[this]();
+    }
+    else if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
+    {
+        return false;
+    }
 
     bool result = CAControl::resignFirstResponder();
 
@@ -685,10 +714,14 @@ bool CATextField::resignFirstResponder()
 
 bool CATextField::becomeFirstResponder()
 {
-	if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
-	{
-		return false;
-	}
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    {
+        return s_ShouldBeginEditing_map[this]();
+    }
+    else if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
+    {
+        return false;
+    }
 
 	bool result = CAControl::becomeFirstResponder();
 	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
@@ -1042,6 +1075,42 @@ void CATextField::setMaxLength(int var)
 int CATextField::getMaxLength()
 {
     return m_iMaxLength;
+}
+
+void CATextField::onShouldBeginEditing(const std::function<bool ()> &var)
+{
+    m_obShouldBeginEditing = var;
+    s_ShouldBeginEditing_map[this] = var;
+}
+
+void CATextField::onShouldEndEditing(const std::function<bool ()> &var)
+{
+    m_obShouldEndEditing = var;
+    s_ShouldEndEditing_map[this] = var;
+}
+
+void CATextField::onShouldReturn(const std::function<void ()> &var)
+{
+    m_obShouldReturn = var;
+    s_ShouldReturn_map[this] = var;
+}
+
+void CATextField::onKeyBoardHeight(const std::function<void (int)> &var)
+{
+    m_obKeyBoardHeight = var;
+    s_KeyBoardHeight_map[this] = var;
+}
+
+void CATextField::onShouldChangeCharacters(const std::function<bool (ssize_t, ssize_t, const std::string &)> &var)
+{
+    m_obShouldChangeCharacters = var;
+    s_ShouldChangeCharacters_map[this] = var;
+}
+
+void CATextField::onDidChangeText(const std::function<void ()> &var)
+{
+    m_obDidChangeText = var;
+    s_DidChangeText_map[this] = var;
 }
 
 NS_CC_END

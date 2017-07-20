@@ -79,6 +79,7 @@
 		D609D6521E7123C700F82D5A /* CheckboxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D609D64E1E7123C700F82D5A /* CheckboxTest.cpp */; };
 		D609D6531E7123C700F82D5A /* PageControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D609D6501E7123C700F82D5A /* PageControlTest.cpp */; };
 		D6409C0C1EEBD296009EE629 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6409C0B1EEBD296009EE629 /* CoreMedia.framework */; };
+		D6B1E7991F20AE5100723750 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7981F20AE5100723750 /* CoreImage.framework */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
 		EB1818D819388001002856FF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D719388001002856FF /* AddressBook.framework */; };
 		EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D919388005002856FF /* AddressBookUI.framework */; };
@@ -236,6 +237,7 @@
 		D6B036BE1D9527D800388A90 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../../extensions/video/ffmpeg/prebuilt/ios/libswresample.a; sourceTree = "<group>"; };
 		D6B036BF1D9527D800388A90 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../../extensions/video/ffmpeg/prebuilt/ios/libswscale.a; sourceTree = "<group>"; };
 		D6B036C71D9527EA00388A90 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../extensions/video/SDL/prebuilt/ios/libSDL2.a; sourceTree = "<group>"; };
+		D6B1E7981F20AE5100723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D6EB4B071F138B5B00650417 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB1818D719388001002856FF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -247,6 +249,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B1E7991F20AE5100723750 /* CoreImage.framework in Frameworks */,
 				B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */,
 				D6409C0C1EEBD296009EE629 /* CoreMedia.framework in Frameworks */,
 				B08BE2261CCDB61B001A0F36 /* CoreMotion.framework in Frameworks */,
@@ -376,6 +379,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B1E7981F20AE5100723750 /* CoreImage.framework */,
 				D6EB4B071F138B5B00650417 /* AVKit.framework */,
 				D6409C0B1EEBD296009EE629 /* CoreMedia.framework */,
 				D6B036C71D9527EA00388A90 /* libSDL2.a */,
