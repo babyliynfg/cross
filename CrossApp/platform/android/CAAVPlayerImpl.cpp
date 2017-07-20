@@ -126,6 +126,16 @@ void CAAVPlayerImpl::play()
     }
 }
 
+void CAAVPlayerImpl::playWithRate(float rate)
+{
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "play4native", "(I)V"))
+    {
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , (jint)m_pPlayer->m_u__ID);
+        jni.env->DeleteLocalRef(jni.classID);
+    }
+}
+
 void CAAVPlayerImpl::pause()
 {
     JniMethodInfo jni;
@@ -208,15 +218,7 @@ void CAAVPlayerImpl::onImage(const std::function<void(CAImage*)>& function)
     s_ImageCallback_map[m_pPlayer->m_u__ID] = function;
 }
 
-void CAAVPlayerControllerImpl::showAVPlayerController(CrossApp::CAAVPlayer* player)
-{
-    
-    
-}
 
-void CAAVPlayerControllerImpl::closeAVPlayerController()
-{
-}
 
 static CAImage* image_frame_getter =  nullptr ;
 CAImage* CAAVPlayerImpl::getFirstFrameImageWithFilePath(const std::string& filePath)

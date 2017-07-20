@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.tencent.smtt.utils.p;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -18,6 +20,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.widget.FrameLayout;
@@ -204,6 +207,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	
 	public static void setCurrentTime4native(final float current,final int key){
 		CrossAppVideoPlayer player = getPlayerByKey(key) ;
+		player.block_progress_update(true);
 		player.getMediaPlayer().seekTo((int)current);
 	}
 	
@@ -289,11 +293,22 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     /** 是否 assert 资源 */
     private boolean assert_res = false ; 
     
+    /** 阻塞更新进度条 */
+    private boolean block_progress_update = false ; 
+    
     public void setKey(int key){
     	this.key = key  ; 
     }
     public int getKey(){
     	return key ; 
+    }
+    
+    /** 阻塞进度更新 */
+    public synchronized void block_progress_update(boolean bool){
+    	this.block_progress_update  = bool ; 
+    	if(!block_progress_update){
+    		mProgressHandler.sendEmptyMessage(WHAT_PROGRESS);
+    	}
     }
     
     public void setIsAssert(boolean bool){
@@ -355,8 +370,13 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			        public void handleMessage(Message msg) {
 			            super.handleMessage(msg);
 			            if (msg.what == WHAT_PROGRESS){
-			                if (listener!=null && mState == VideoState.palying){
-			                    listener.onPlaying(mMediaPlayer.getDuration(),mMediaPlayer.getCurrentPosition());
+			                if (listener!=null && mState == VideoState.palying && !block_progress_update){
+			                	CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+									@Override
+									public void run() {
+										listener.onPlaying(mMediaPlayer.getDuration(),mMediaPlayer.getCurrentPosition());
+									}
+								});
 			                    sendEmptyMessageDelayed(WHAT_PROGRESS,PROGRESS_RATE);
 			                }
 			            }else if (msg.what == WHAT_REFRESH_FRAME ) {
@@ -411,6 +431,13 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 				@Override
 				public void onSeekComplete(MediaPlayer mp) {
 					listener.onSeekChanged(mp);
+					CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+						@Override
+						public void run() {
+							block_progress_update(false);
+						}
+					});
+					
 				}
 			});
             getPlayingProgress();

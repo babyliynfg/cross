@@ -375,7 +375,7 @@ extern "C"
         
         if (s_ShouldChangeCharacters_map.count(textField) > 0 && s_ShouldChangeCharacters_map[textField])
         {
-            return s_ShouldChangeCharacters_map[textField](range.location, range.length, [string UTF8String]);
+            return s_ShouldChangeCharacters_map[textField](arg0, arg1, strChange.c_str());
         }
         else if (textField->getDelegate())
         {
