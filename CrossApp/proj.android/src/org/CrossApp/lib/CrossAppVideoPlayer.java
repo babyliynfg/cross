@@ -88,8 +88,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	 */
 	public static void play4native(final  int key){
 		
-		Log.d("liuguoyan", "play4native") ;
-		
 		if(players.size()>0){
 			Set<Integer> keys = players.keySet() ; 
 			Iterator<Integer> it = keys.iterator() ; 
@@ -230,7 +228,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			@Override
 			public void run() {
 				CrossAppVideoPlayer player = getPlayerByKey(key) ;
-				player.onDestroy = true ; 
 				player.destoryMediaPlayer();
 				CrossAppActivity.getFrameLayout().removeView(player);
 				players.remove(key) ; 
@@ -241,6 +238,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	
 	public static void addVideoByKey(int key){
 		CrossAppVideoPlayer p = CrossAppVideoPlayer.create(key) ; 
+		p.setKey(key);
 		players.put(key, p) ; 
 	}
 	
@@ -309,11 +307,10 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     /** 阻塞更新进度条 */
     private boolean block_progress_update = false ; 
     
-    public boolean onDestroy = false ;
-    
     public void setKey(int key){
     	this.key = key  ; 
     }
+    
     public int getKey(){
     	return key ; 
     }
@@ -346,6 +343,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     public MediaPlayer getMediaPlayer(){
     	return mMediaPlayer ; 
     }
+    
     public void destoryMediaPlayer(){
     	mMediaPlayer.stop();  
     	mMediaPlayer.release();
@@ -363,6 +361,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     public void setVideoState(VideoState state){
     	mState = state ; 
+    	Log.d("liuguoyan", "setVideoState = " + state) ;
     	if (state == VideoState.palying) {
     		onPlayState(getKey(), PlayStatePlaying);
 		}else if (state == VideoState.pause) {
@@ -389,9 +388,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			        @Override
 			        public void handleMessage(Message msg) {
 			            super.handleMessage(msg);
-			            if(onDestroy) return ; 
 			            if (msg.what == WHAT_PROGRESS){
-			                if (listener!=null  &&  mMediaPlayer.isPlaying() && !block_progress_update){
+			                if (listener!=null  && mMediaPlayer!= null &&  mMediaPlayer.isPlaying() && !block_progress_update){
 			                	listener.onPlaying(mMediaPlayer.getDuration(),mMediaPlayer.getCurrentPosition());
 			                    sendEmptyMessageDelayed(WHAT_PROGRESS,PROGRESS_RATE);
 			                }
@@ -420,11 +418,11 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         
         try {
         	if (currentUrl .equals(url)) {
-        		Log.d("liuguyan", "直接start");
         		mMediaPlayer.start();
 			}else {
-				Log.d("liuguyan", "最新的start");
+				
 				mMediaPlayer.reset();
+				
 				if(assert_res){
 					AssetFileDescriptor descriptor = null;  
 			        try {  
@@ -438,13 +436,9 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 				}else {
 					mMediaPlayer.setDataSource(CrossAppVideoPlayer.this.url);
 				}
-	            mMediaPlayer.prepareAsync();
-	            mMediaPlayer.setOnPreparedListener(new  OnPreparedListener() {
-					@Override
-					public void onPrepared(MediaPlayer mp) {
-						mMediaPlayer.start();
-					}
-				});
+				
+	            mMediaPlayer.prepare();
+	            mMediaPlayer.start();
 	            
 	            currentUrl = url ; 
 			}
@@ -461,7 +455,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 							block_progress_update(false);
 						}
 					});
-					
 				}
 			});
             getPlayingProgress();
@@ -488,16 +481,19 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     }
     
     public void stop(){
-        if (mMediaPlayer.isPlaying()){
+        if (mState == VideoState.palying){
         	mMediaPlayer.seekTo(0);
         	mMediaPlayer.pause();
         	onPeriodicTime(getKey(), 0, mMediaPlayer.getDuration());
+        	Log.d("liuguoyan", "onPlaying and stop key = " + getKey());
             setVideoState(VideoState.pause);
             sendFirsttFrame();
-        } else if (!mMediaPlayer.isPlaying() && mState == VideoState.pause) {
+        }
+        else if (mState == VideoState.pause) {
         	mMediaPlayer.seekTo(0);
         	mMediaPlayer.pause();
         	onPeriodicTime(getKey(), 0, mMediaPlayer.getDuration());
+        	Log.d("liuguoyan", "onPause and stop key = " + getKey());
             setVideoState(VideoState.pause);
             sendFirsttFrame();
 		}
@@ -621,7 +617,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         Surface mediaSurface = new Surface(surface);
         //把surface
         mMediaPlayer.setSurface(mediaSurface);
-        setVideoState(VideoState.palying);
+        setVideoState(VideoState.init);
     }
     
     @Override
