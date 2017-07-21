@@ -77,12 +77,11 @@ static void playerLayer_play(AVPlayer* player, float rate, const std::function<v
         }
         [player setRate:rate];
     }
-
     
     CrossApp::CAScheduler::getScheduler()->schedule([=](float dt)
     {
         callback();
-    }, ANIMATION_ID, CrossApp::CAApplication::getApplication(), 0);
+    }, ANIMATION_ID, CrossApp::CAApplication::getApplication(), 1/40.f);
 }
 
 static void playerLayer_pause(AVPlayer* player)
