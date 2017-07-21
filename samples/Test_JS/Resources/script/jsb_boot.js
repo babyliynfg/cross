@@ -762,7 +762,7 @@ ca.fileUtils.setPopupNotify(false);
 ca.imageCache = ca.application.getImageCache();
 ca.scheduler = ca.application.getScheduler();
 ca.actionManagea = ca.application.getActionManager();
-
+ca.notificationCenter = ca.application.getNotificationCenter();
 /**
  * @type {Object}
  * @name jsb.fileUtils
@@ -1196,7 +1196,7 @@ var _initSys = function () {
      */
     //** 先注释掉
 //    sys.language = (function(){
-//                    var language = ca.CAApplication.getApplication().getCurrentLanguage();
+//                    var language = ca.application.getCurrentLanguage();
 //                    switch(language){
 //                    case 0: return sys.LANGUAGE_ENGLISH;
 //                    case 1: return sys.LANGUAGE_CHINESE;
@@ -1344,6 +1344,17 @@ var _initSys = function () {
 };
 
 _initSys();
+
+log = function (){};
+ca.log = function (str){log(str);};
+
+ca.logArray = function (array)
+{
+    for (var key in array)
+    {
+        ca.log( key + ": " + array[key]);
+    }
+}
 
 
 ca._engineLoaded = false;

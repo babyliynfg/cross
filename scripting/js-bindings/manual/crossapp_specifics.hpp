@@ -4,6 +4,7 @@
 
 #include "ScriptingCore.h"
 #include "platform/CASAXParser.h"
+#include <assert.h>
 
 /**
  * You don't need to manage the returned pointer. They live for the whole life of

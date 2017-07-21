@@ -205,8 +205,7 @@ game/actions/CGActionInstant.cpp \
 game/actions/CGActionManager.cpp \
 game/actions/CGActionInterval.cpp \
 game/actions/CGTweenFunction.cpp \
-script_support/JSViewController.cpp \
-script_support/CCScriptSupport.cpp \
+script_support/CAScriptSupport.cpp \
 
 
 
