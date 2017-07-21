@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.os.Handler;
 import android.os.Message;
@@ -229,6 +230,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     /** 阻塞更新进度条 */
     private boolean block_progress_update = false ; 
     
+    
     public void setKey(int key){
     	this.key = key  ; 
     }
@@ -241,7 +243,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     	CrossAppActivity.getContext().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				CrossAppVideoPlayer.this.play();  
+				CrossAppVideoPlayer.this.play(true);  
 				CrossAppVideoPlayer.this.setOnVideoPlayingListener(new CrossAppVideoPlayer.OnVideoPlayingListener() {
 		            @Override
 		            public void onVideoSizeChanged(int vWidth, int vHeight) {
@@ -413,17 +415,26 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     public void setUrl(String url){
         this.url = url;
+        
+        CrossAppActivity.msHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				play(false);
+			}
+		}, 200) ; 
+        
     }
     
-    public void play(){
+    public void play(boolean send_status){
         if (mMediaPlayer==null ) return;
         
         if (mMediaPlayer.isPlaying()) return ; 
         
         try {
-        	if (currentUrl .equals(url)) {
+        	
+        	if (_available_prepaired && currentUrl .equals(url)) {
         		mMediaPlayer.start();
-			}else {
+			} else {
 				
 				mMediaPlayer.reset();
 				
@@ -437,17 +448,19 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			        mMediaPlayer.setDataSource(descriptor.getFileDescriptor(),  
 		                    descriptor.getStartOffset(), descriptor.getLength());  
 		            descriptor.close();  
-				}else {
+				} else {
 					mMediaPlayer.setDataSource(CrossAppVideoPlayer.this.url);
 				}
 				
-	            mMediaPlayer.prepare();
-	            mMediaPlayer.start();
+//	            mMediaPlayer.prepare();
+//	            mMediaPlayer.start();
+	            
+	           mMediaPlayer.prepareAsync(); 
 	            
 	            currentUrl = url ; 
 			}
-        	
-            setVideoState(VideoState.palying);
+        	if(send_status)setVideoState(VideoState.palying);
+            
             if (listener!=null) listener.onStart();
             mMediaPlayer.setOnSeekCompleteListener(new OnSeekCompleteListener() {
 				@Override
@@ -555,6 +568,8 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         mProgressHandler.sendEmptyMessage(WHAT_REFRESH_FRAME) ; 
     }
     
+    private boolean _available_prepaired = false ; 
+    
     public Handler mProgressHandler = null ; 
     
     @Override
@@ -562,12 +577,12 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     	
         if (mMediaPlayer==null){
             mMediaPlayer = new MediaPlayer();
-            
             mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     //当MediaPlayer对象处于Prepared状态的时候，可以调整音频/视频的属性，如音量，播放时是否一直亮屏，循环播放等。
                     mMediaPlayer.setVolume(1f,1f);
+                    _available_prepaired = true ; 
                 }
             });
             mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -614,7 +629,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         //把surface
         mMediaPlayer.setSurface(mediaSurface);
         setVideoState(VideoState.init);
-        
     }
     
     @Override
