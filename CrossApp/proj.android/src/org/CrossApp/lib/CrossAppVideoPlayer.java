@@ -156,8 +156,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 				player = null ; 
 			}
 		});
-		
-		
 	}
 	
 	public static void addVideoByKey(int key){
@@ -319,7 +317,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		});
     }
     
-    
     /** 阻塞进度更新 */
     public synchronized void block_progress_update(boolean bool){
     	this.block_progress_update  = bool ; 
@@ -350,14 +347,12 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     }
     
     public void destoryMediaPlayer(){
-    	
     	if(mMediaPlayer!= null){
     		mMediaPlayer.stop();  
         	mMediaPlayer.reset(); 
         	mMediaPlayer.release();
         	mMediaPlayer = null ; 
     	}
-    	
     }
     
     //播放状态
@@ -516,7 +511,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     		            e.printStackTrace();  
     		        }  
     		        media.setDataSource(descriptor.getFileDescriptor(),  
-		                    descriptor.getStartOffset(), descriptor.getLength());  
+		            descriptor.getStartOffset(), descriptor.getLength());  
     		        bitmap = media.getFrameAtTime();
     	            descriptor.close();  
 				} catch (Exception e) {
@@ -529,19 +524,19 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     		
     		final byte[] bit = Bitmap2Bytes(bitmap) ; 
         	
-        	CrossAppActivity.getContext().runOnGLThread(new Runnable() {
-    			@Override
-    			public void run() {
-    				onFrameImageAttached(getKey(), bit, bit.length);
-    			}
-    		});
-    	}else {
-    		CrossAppActivity.getContext().runOnGLThread(new Runnable() {
-    			@Override
-    			public void run() {
-    				onFrameImageAttached(getKey(), new byte[0], 0);
-    			}
-    		});
+			CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+				@Override
+				public void run() {
+					onFrameImageAttached(getKey(), bit, bit.length);
+				}
+			});
+		} else {
+			CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+				@Override
+				public void run() {
+					onFrameImageAttached(getKey(), new byte[0], 0);
+				}
+			});
 		}
     }
     
@@ -619,6 +614,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
         //把surface
         mMediaPlayer.setSurface(mediaSurface);
         setVideoState(VideoState.init);
+        
     }
     
     @Override
@@ -635,10 +631,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
     	
-    	Log.d("liuguoyan", "onSurfaceTextureDestroyed") ; 
-    	
     	if (mMediaPlayer!= null) {
-    		Log.d("liuguoyan", "onSurfaceTextureDestroyed  release MediaPlayer ") ; 
     		mMediaPlayer.stop();  
         	mMediaPlayer.reset(); 
         	mMediaPlayer.release();
