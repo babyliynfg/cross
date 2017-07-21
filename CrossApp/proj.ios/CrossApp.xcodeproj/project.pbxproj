@@ -152,11 +152,6 @@
 		D6ADC63A1E56A72800750771 /* CAFont.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4871E56A72700750771 /* CAFont.h */; };
 		D6ADC63B1E56A72800750771 /* CAViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4881E56A72700750771 /* CAViewController.cpp */; };
 		D6ADC63C1E56A72800750771 /* CAViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4891E56A72700750771 /* CAViewController.h */; };
-		D6ADC63D1E56A72800750771 /* CAIMEDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC48D1E56A72700750771 /* CAIMEDelegate.h */; };
-		D6ADC63E1E56A72800750771 /* CAIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC48E1E56A72700750771 /* CAIMEDispatcher.cpp */; };
-		D6ADC63F1E56A72800750771 /* CAIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC48F1E56A72700750771 /* CAIMEDispatcher.h */; };
-		D6ADC6401E56A72800750771 /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4901E56A72700750771 /* CAKeypadDelegate.cpp */; };
-		D6ADC6411E56A72800750771 /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4911E56A72700750771 /* CAKeypadDelegate.h */; };
 		D6ADC6421E56A72800750771 /* CAKeypadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4921E56A72700750771 /* CAKeypadDispatcher.cpp */; };
 		D6ADC6431E56A72800750771 /* CAKeypadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4931E56A72700750771 /* CAKeypadDispatcher.h */; };
 		D6ADC6441E56A72800750771 /* CAProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4941E56A72700750771 /* CAProtocols.h */; };
@@ -290,10 +285,8 @@
 		D6ADC6C41E56A72800750771 /* CCVertexIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC54A1E56A72800750771 /* CCVertexIndexBuffer.h */; };
 		D6ADC6C51E56A72800750771 /* CCVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC54B1E56A72800750771 /* CCVertexIndexData.cpp */; };
 		D6ADC6C61E56A72800750771 /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC54C1E56A72800750771 /* CCVertexIndexData.h */; };
-		D6ADC6C71E56A72800750771 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC54F1E56A72800750771 /* CCScriptSupport.cpp */; };
-		D6ADC6C81E56A72800750771 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC5501E56A72800750771 /* CCScriptSupport.h */; };
-		D6ADC6C91E56A72800750771 /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC5511E56A72800750771 /* JSViewController.cpp */; };
-		D6ADC6CA1E56A72800750771 /* JSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC5521E56A72800750771 /* JSViewController.h */; };
+		D6ADC6C71E56A72800750771 /* CAScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC54F1E56A72800750771 /* CAScriptSupport.cpp */; };
+		D6ADC6C81E56A72800750771 /* CAScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC5501E56A72800750771 /* CAScriptSupport.h */; };
 		D6ADC6CB1E56A72800750771 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC5581E56A72800750771 /* base64.cpp */; };
 		D6ADC6CC1E56A72800750771 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC5591E56A72800750771 /* base64.h */; };
 		D6ADC6CD1E56A72800750771 /* CAProfiling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC55A1E56A72800750771 /* CAProfiling.cpp */; };
@@ -595,11 +588,6 @@
 		D6ADC4871E56A72700750771 /* CAFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFont.h; sourceTree = "<group>"; };
 		D6ADC4881E56A72700750771 /* CAViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewController.cpp; sourceTree = "<group>"; };
 		D6ADC4891E56A72700750771 /* CAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewController.h; sourceTree = "<group>"; };
-		D6ADC48D1E56A72700750771 /* CAIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIMEDelegate.h; sourceTree = "<group>"; };
-		D6ADC48E1E56A72700750771 /* CAIMEDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIMEDispatcher.cpp; sourceTree = "<group>"; };
-		D6ADC48F1E56A72700750771 /* CAIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIMEDispatcher.h; sourceTree = "<group>"; };
-		D6ADC4901E56A72700750771 /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
-		D6ADC4911E56A72700750771 /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
 		D6ADC4921E56A72700750771 /* CAKeypadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDispatcher.cpp; sourceTree = "<group>"; };
 		D6ADC4931E56A72700750771 /* CAKeypadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDispatcher.h; sourceTree = "<group>"; };
 		D6ADC4941E56A72700750771 /* CAProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAProtocols.h; sourceTree = "<group>"; };
@@ -781,10 +769,8 @@
 		D6ADC54B1E56A72800750771 /* CCVertexIndexData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexIndexData.cpp; sourceTree = "<group>"; };
 		D6ADC54C1E56A72800750771 /* CCVertexIndexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexData.h; sourceTree = "<group>"; };
 		D6ADC54D1E56A72800750771 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		D6ADC54F1E56A72800750771 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
-		D6ADC5501E56A72800750771 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
-		D6ADC5511E56A72800750771 /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
-		D6ADC5521E56A72800750771 /* JSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSViewController.h; sourceTree = "<group>"; };
+		D6ADC54F1E56A72800750771 /* CAScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScriptSupport.cpp; sourceTree = "<group>"; };
+		D6ADC5501E56A72800750771 /* CAScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScriptSupport.h; sourceTree = "<group>"; };
 		D6ADC5581E56A72800750771 /* base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base64.cpp; sourceTree = "<group>"; };
 		D6ADC5591E56A72800750771 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		D6ADC55A1E56A72800750771 /* CAProfiling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAProfiling.cpp; sourceTree = "<group>"; };
@@ -1237,11 +1223,6 @@
 		D6ADC48C1E56A72700750771 /* dispatcher */ = {
 			isa = PBXGroup;
 			children = (
-				D6ADC48D1E56A72700750771 /* CAIMEDelegate.h */,
-				D6ADC48E1E56A72700750771 /* CAIMEDispatcher.cpp */,
-				D6ADC48F1E56A72700750771 /* CAIMEDispatcher.h */,
-				D6ADC4901E56A72700750771 /* CAKeypadDelegate.cpp */,
-				D6ADC4911E56A72700750771 /* CAKeypadDelegate.h */,
 				D6ADC4921E56A72700750771 /* CAKeypadDispatcher.cpp */,
 				D6ADC4931E56A72700750771 /* CAKeypadDispatcher.h */,
 				D6ADC4941E56A72700750771 /* CAProtocols.h */,
@@ -1481,10 +1462,8 @@
 		D6ADC54E1E56A72800750771 /* script_support */ = {
 			isa = PBXGroup;
 			children = (
-				D6ADC54F1E56A72800750771 /* CCScriptSupport.cpp */,
-				D6ADC5501E56A72800750771 /* CCScriptSupport.h */,
-				D6ADC5511E56A72800750771 /* JSViewController.cpp */,
-				D6ADC5521E56A72800750771 /* JSViewController.h */,
+				D6ADC54F1E56A72800750771 /* CAScriptSupport.cpp */,
+				D6ADC5501E56A72800750771 /* CAScriptSupport.h */,
 			);
 			path = script_support;
 			sourceTree = "<group>";
@@ -1820,7 +1799,7 @@
 				D6ADC6C41E56A72800750771 /* CCVertexIndexBuffer.h in Headers */,
 				D6ADC6021E56A72800750771 /* CALayout.h in Headers */,
 				D644B38B1F19F59700E90A86 /* CAAVPlayerImpl.h in Headers */,
-				D6ADC6C81E56A72800750771 /* CCScriptSupport.h in Headers */,
+				D6ADC6C81E56A72800750771 /* CAScriptSupport.h in Headers */,
 				D6ADC68B1E56A72800750771 /* CAVertex.h in Headers */,
 				D6ADC5F41E56A72800750771 /* CAAutoreleasePool.h in Headers */,
 				D6ADC6BC1E56A72800750771 /* CCRenderState.h in Headers */,
@@ -1835,8 +1814,6 @@
 				D644B38F1F19F79D00E90A86 /* CACustomAnimation.h in Headers */,
 				D6ADC6661E56A72800750771 /* CGSprite.h in Headers */,
 				D6ADC6991E56A72800750771 /* CCCustomCommand.h in Headers */,
-				D6ADC6411E56A72800750771 /* CAKeypadDelegate.h in Headers */,
-				D6ADC63F1E56A72800750771 /* CAIMEDispatcher.h in Headers */,
 				D6ADC6201E56A72800750771 /* CCNS.h in Headers */,
 				D6ADC6441E56A72800750771 /* CAProtocols.h in Headers */,
 				B07E81141C33B34800A39C95 /* CATextView.h in Headers */,
@@ -2026,7 +2003,6 @@
 				D6C729961EEE74740094B191 /* CAAutoCollectionView.h in Headers */,
 				D6ADC6431E56A72800750771 /* CAKeypadDispatcher.h in Headers */,
 				D6ADC6931E56A72800750771 /* HttpResponse.h in Headers */,
-				D6ADC6CA1E56A72800750771 /* JSViewController.h in Headers */,
 				022160771C1FAD38009FFCFC /* CATextField.h in Headers */,
 				D6ADC6B31E56A72800750771 /* CCProperties.h in Headers */,
 				D6ADC6FC1E56A72800750771 /* advancing_front.h in Headers */,
@@ -2034,7 +2010,6 @@
 				D6ADC69F1E56A72800750771 /* CCGLProgramCache.h in Headers */,
 				D6ADC7021E56A72800750771 /* sweep_context.h in Headers */,
 				D6ADC6F01E56A72800750771 /* value.h in Headers */,
-				D6ADC63D1E56A72800750771 /* CAIMEDelegate.h in Headers */,
 				0460ED1D195700EE00D13001 /* CCEGLViewProtocol.h in Headers */,
 				0460ED2D1957019600D13001 /* CCApplication.h in Headers */,
 				D6C729BC1EEE74740094B191 /* CATextEditHelper.h in Headers */,
@@ -2124,7 +2099,7 @@
 				1551A72E158F2ADE00E66CFE /* CACommon.mm in Sources */,
 				D6ADC6941E56A72800750771 /* WebSocket.cpp in Sources */,
 				D6ADC6A01E56A72800750771 /* CCGLProgramState.cpp in Sources */,
-				D6ADC6C71E56A72800750771 /* CCScriptSupport.cpp in Sources */,
+				D6ADC6C71E56A72800750771 /* CAScriptSupport.cpp in Sources */,
 				1551A730158F2ADE00E66CFE /* CAApplicationCaller.mm in Sources */,
 				D6C729A91EEE74740094B191 /* CAListView.cpp in Sources */,
 				D6ADC6191E56A72800750771 /* CAValue.cpp in Sources */,
@@ -2225,7 +2200,6 @@
 				D6ADC6B01E56A72800750771 /* CCPrimitiveCommand.cpp in Sources */,
 				D6C729951EEE74740094B191 /* CAAutoCollectionView.cpp in Sources */,
 				D6ADC6791E56A72800750771 /* gif_hash.c in Sources */,
-				D6ADC63E1E56A72800750771 /* CAIMEDispatcher.cpp in Sources */,
 				D6ADC70C1E56A72800750771 /* CAUserDefaultAndroid.cpp in Sources */,
 				D6ADC70D1E56A72800750771 /* xxhash.c in Sources */,
 				D6ADC6131E56A72800750771 /* CASize.cpp in Sources */,
@@ -2235,7 +2209,6 @@
 				D6CA51851E604C4D00317AB9 /* CACheckbox.cpp in Sources */,
 				D6ADC6231E56A72800750771 /* CABar.cpp in Sources */,
 				B07E81161C33B36700A39C95 /* CATextView.mm in Sources */,
-				D6ADC6C91E56A72800750771 /* JSViewController.cpp in Sources */,
 				D6ADC6E11E56A72800750771 /* TGAlib.cpp in Sources */,
 				D6ADC6C31E56A72800750771 /* CCVertexIndexBuffer.cpp in Sources */,
 				D6ADC6631E56A72800750771 /* CGProgressTimer.cpp in Sources */,
@@ -2264,7 +2237,6 @@
 				D6ADC6CF1E56A72800750771 /* CAThemeManager.cpp in Sources */,
 				D6C7299F1EEE74740094B191 /* CADrawingPrimitives.cpp in Sources */,
 				D6ADC62F1E56A72800750771 /* CASlider.cpp in Sources */,
-				D6ADC6401E56A72800750771 /* CAKeypadDelegate.cpp in Sources */,
 				D644B3921F19F8CB00E90A86 /* CAAVPlayerView.cpp in Sources */,
 				B0C3BD481ADE726B009BE71A /* CAClipboard.mm in Sources */,
 				D6ADC6651E56A72800750771 /* CGSprite.cpp in Sources */,

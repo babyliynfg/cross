@@ -7,17 +7,6 @@
 
 NS_CC_BEGIN
 
-//缓冲为空，正在缓冲
-const std::string PlaybackBufferEmpty = "PlaybackBufferEmpty";
-//缓冲达到可播放
-const std::string PlaybackLikelyToKeepUp = "PlaybackLikelyToKeepUp";
-
-//暂停
-const std::string PlayStatePause = "PlayStatePause";
-//播放中
-const std::string PlayStatePlaying = "PlayStatePlaying";
-//回放中
-const std::string PlayStatePlayback = "PlayStatePlayback";
 
 class CC_DLL CAAVPlayerImpl;
 class CC_DLL CAAVPlayerView;
@@ -31,41 +20,48 @@ public:
     
     virtual ~CAAVPlayer();
     
-    static CAAVPlayer *createWithUrl(const std::string& uri);// 网络url地址
+    static CAAVPlayer *createWithUrl(const std::string& uri);       // 网络url地址
     
-    static CAAVPlayer *createWithFilePath(const std::string& uri);// 本地路径
+    static CAAVPlayer *createWithFilePath(const std::string& uri);  // 本地路径
     
-    bool initWithUrl(const std::string& uri);// 网络url地址
+    bool initWithUrl(const std::string& uri);                       // 网络url地址
     
-    bool initWithFilePath(const std::string& uri);// 本地路径
+    bool initWithFilePath(const std::string& uri);                  // 本地路径
     
-    void play(); // 播放
+    void play();                                                    // 播放
 
-    void pause(); // 暂停
+    void pause();                                                   // 暂停
     
-    void stop(); // 停止
+    void stop();                                                    // 停止
   
-    float getDuration(); // 获取媒体总时间
+    float getDuration();                                            // 获取媒体总时间
     
-    float getCurrentTime(); // 获取媒体当前时间
+    float getCurrentTime();                                         // 获取媒体当前时间
     
-    void setCurrentTime(float current); // 跳转到指定的时间
+    void setCurrentTime(float current);                             // 跳转到指定的时间
     
-    const DSize& getPresentationSize(); // 获取媒体分辨率
+    const DSize& getPresentationSize();                             // 获取媒体分辨率
     
 public:
     
-    CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime); // 监听播放进度
+    CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime);   // 监听播放进度
     
-    CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime); // 监听缓冲进度
+    CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime);     // 监听缓冲进度
     
-    CC_LISTENING_FUNCTION(void(), DidPlayToEndTime); // 监听播放完毕
+    CC_LISTENING_FUNCTION(void(), DidPlayToEndTime);                            // 监听播放完毕
     
-    CC_LISTENING_FUNCTION(void(), TimeJumped); // 监听快进或者慢进或者跳过某段播放
+    CC_LISTENING_FUNCTION(void(), TimeJumped);                                  // 监听快进或者慢进或者跳过某段播放
     
-    CC_LISTENING_FUNCTION(void(const std::string&), PlayBufferLoadingState); // 监听缓冲状态
+    typedef std::string PlayBufferLoadingState;
+    static const std::string PlaybackBufferEmpty;                               //缓冲为空，正在缓冲
+    static const std::string PlaybackLikelyToKeepUp;                            //缓冲达到可播放
+    CC_LISTENING_FUNCTION(void(const PlayBufferLoadingState&), PlayBufferLoadingState);    // 监听缓冲状态
     
-    CC_LISTENING_FUNCTION(void(const std::string&), PlayState); // 监听播放状态
+    typedef std::string PlayState;
+    static const std::string PlayStatePause;                                    //暂停
+    static const std::string PlayStatePlaying;                                  //播放中
+    static const std::string PlayStatePlayback;                                 //回放中
+    CC_LISTENING_FUNCTION(void(const PlayState&), PlayState);                 // 监听播放状态
 
 protected:
     

@@ -134,8 +134,6 @@
 		B047B91619E9181800F24BE6 /* CAScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B91219E9181800F24BE6 /* CAScriptSupport.cpp */; };
 		B047B91719E9181800F24BE6 /* CAScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B047B91319E9181800F24BE6 /* CAScriptSupport.h */; };
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
-		B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */; };
-		B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */; };
 		B0621A4F1AC3A22D005EBCA7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A4E1AC3A22D005EBCA7 /* libwebp.a */; };
 		B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A501AC3A23D005EBCA7 /* libtiff.a */; };
 		B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A521AC3A24D005EBCA7 /* libpng.a */; };
@@ -570,8 +568,6 @@
 		B047B91219E9181800F24BE6 /* CAScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScriptSupport.cpp; sourceTree = "<group>"; };
 		B047B91319E9181800F24BE6 /* CAScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScriptSupport.h; sourceTree = "<group>"; };
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
-		B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
-		B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
 		B0621A4C1AC3A208005EBCA7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../the_third_party/freetype/prebuilt/mac/libfreetype.a; sourceTree = "<group>"; };
 		B0621A4E1AC3A22D005EBCA7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../the_third_party/webp/prebuilt/mac/libwebp.a; sourceTree = "<group>"; };
 		B0621A501AC3A23D005EBCA7 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../the_third_party/tiff/prebuilt/mac/libtiff.a; sourceTree = "<group>"; };
@@ -1085,8 +1081,6 @@
 		04EAA0A01956D74D00198A8E /* dispatcher */ = {
 			isa = PBXGroup;
 			children = (
-				B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */,
-				B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */,
 				04EAA0A61956D74D00198A8E /* CAKeypadDispatcher.cpp */,
 				04EAA0A71956D74D00198A8E /* CAKeypadDispatcher.h */,
 				04EAA0A81956D74D00198A8E /* CAProtocols.h */,
@@ -1750,7 +1744,6 @@
 				D69B768C1E4B0713007D9771 /* advancing_front.h in Headers */,
 				D6C72A2A1EEE748D0094B191 /* CAWebView.h in Headers */,
 				04EAB0681956D75600198A8E /* CAApplication.h in Headers */,
-				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
 				04EAB06A1956D75600198A8E /* CAAutoreleasePool.h in Headers */,
 				D649B2B61D3CD6A80020414A /* CGActionInstant.h in Headers */,
 				3E21544D1B8180340075448E /* autolink.h in Headers */,
@@ -2066,7 +2059,6 @@
 				D649B2B71D3CD6A80020414A /* CGActionInterval.cpp in Sources */,
 				D673ABFF1E52E2A0007E7A5B /* CCEGLView.mm in Sources */,
 				D673AC081E52E2A0007E7A5B /* CCWindow.m in Sources */,
-				B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */,
 				04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */,
 				B08F4BB519C7D2EF008DE306 /* ConvertUTF.cpp in Sources */,
 				D66BCD481D3DBED700587C65 /* CAValue.cpp in Sources */,

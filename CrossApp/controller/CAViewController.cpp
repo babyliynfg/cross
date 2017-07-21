@@ -31,7 +31,6 @@ CAViewController::CAViewController()
 ,m_pTabBarItem(nullptr)
 ,m_sTitle("The Title")
 ,m_bLifeLock(false)
-,m_bKeypadEnabled(false)
 ,m_pParser(nullptr)
 {
     m_pView = CAView::createWithColor(CAColor4B::WHITE);
@@ -48,10 +47,6 @@ CAViewController::~CAViewController()
     CC_SAFE_RELEASE_NULL(m_pView);
     CC_SAFE_RELEASE_NULL(m_pTabBarItem);
     CC_SAFE_RELEASE_NULL(m_pNavigationBarItem);
-    if (m_bKeypadEnabled)
-    {
-        CAApplication::getApplication()->getKeypadDispatcher()->removeDelegate(this);
-    }
 }
 
 bool CAViewController::init()
@@ -194,31 +189,6 @@ void CAViewController::removeViewFromSuperview()
 bool CAViewController::isViewRunning()
 {
     return (bool)(m_pView->getSuperview() && m_pView->isVisible());
-}
-
-/// isKeypadEnabled getter
-bool CAViewController::isKeypadEnabled()
-{
-    return m_bKeypadEnabled;
-}
-
-/// isKeypadEnabled setter
-void CAViewController::setKeypadEnabled(bool enabled)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    if (enabled != m_bKeypadEnabled)
-    {
-        m_bKeypadEnabled = enabled;
-        if (enabled)
-        {
-            CAApplication::getApplication()->getKeypadDispatcher()->addDelegate(this);
-        }
-        else
-        {
-            CAApplication::getApplication()->getKeypadDispatcher()->removeDelegate(this);
-        }
-    }
-#endif
 }
 
 void CAViewController::setNavigationBarItem(CANavigationBarItem* item)

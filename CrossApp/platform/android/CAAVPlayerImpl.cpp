@@ -365,7 +365,7 @@ extern "C"
             if (auto& callback = s_PlayBufferLoadingState_map.at((int)key))
             {
                 int s = (int)state ;
-                callback(   s == 0 ?  CrossApp::PlaybackBufferEmpty : CrossApp::PlaybackLikelyToKeepUp  );
+                callback(   s == 0 ?  CrossApp::CAAVPlayer::PlaybackBufferEmpty : CrossApp::CAAVPlayer::PlaybackLikelyToKeepUp  );
             }
         }
     }
@@ -378,7 +378,7 @@ extern "C"
             if (auto& callback = s_PlayState_map.at((int)key))
             {
                 int s = (int)state ;
-                callback(  s == 0 ? CrossApp::PlayStatePause: ( s == 1 ? CrossApp::PlayStatePlaying  : CrossApp::PlayStatePlayback )  );
+                callback(  s == 0 ? CrossApp::CAAVPlayer::PlayStatePause: ( s == 1 ? CrossApp::CAAVPlayer::PlayStatePlaying  : CrossApp::CAAVPlayer::PlayStatePlayback )  );
             }
         }
     }

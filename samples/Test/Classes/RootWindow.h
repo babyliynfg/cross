@@ -6,9 +6,8 @@
 #include <iostream>
 #include "CDData.h"
 
-class RootWindow: public CAWindow, public CAKeypadDelegate
+class RootWindow: public CAWindow
 {
-    
 public:
 
     static RootWindow* getInstance();
@@ -22,8 +21,6 @@ public:
     CC_SYNTHESIZE_READONLY(CANavigationController*, m_pRootNavigationController, RootNavigationController);
     
     CC_SYNTHESIZE_READONLY(CADrawerController*, m_pRootDrawerController, DrawerController);
-
-    virtual void keyBackClicked();
 };
 
 

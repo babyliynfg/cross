@@ -59,7 +59,6 @@ controller/CABarItem.cpp \
 controller/CAViewController.cpp \
 controller/CADrawerController.cpp \
 controller/CAFont.cpp \
-dispatcher/CAKeypadDelegate.cpp \
 dispatcher/CAKeypadDispatcher.cpp \
 dispatcher/CATouchDispatcher.cpp \
 dispatcher/CATouch.cpp \

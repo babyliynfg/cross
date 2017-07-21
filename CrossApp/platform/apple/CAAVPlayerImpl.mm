@@ -470,7 +470,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         NSLog(@"正在缓冲");
         if (self.playBufferLoadingState)
         {
-            self.playBufferLoadingState(CrossApp::PlaybackBufferEmpty);
+            self.playBufferLoadingState(CrossApp::CAAVPlayer::PlaybackBufferEmpty);
         }
     }
     else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"])
@@ -478,7 +478,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         NSLog(@"缓冲达到可播放");
         if (self.playBufferLoadingState)
         {
-            self.playBufferLoadingState(CrossApp::PlaybackLikelyToKeepUp);
+            self.playBufferLoadingState(CrossApp::CAAVPlayer::PlaybackLikelyToKeepUp);
         }
     }
     else if ([keyPath isEqualToString:@"rate"])
@@ -503,15 +503,15 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         {
             if (rate == 0)
             {
-                self.playState(CrossApp::PlayStatePause);
+                self.playState(CrossApp::CAAVPlayer::PlayStatePause);
             }
             else if (rate == 1)
             {
-                self.playState(CrossApp::PlayStatePlaying);
+                self.playState(CrossApp::CAAVPlayer::PlayStatePlaying);
             }
             else if (rate < 0)
             {
-                self.playState(CrossApp::PlayStatePlayback);
+                self.playState(CrossApp::CAAVPlayer::PlayStatePlayback);
             }
         }
     }

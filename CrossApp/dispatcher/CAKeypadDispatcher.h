@@ -2,10 +2,7 @@
 
 #ifndef __CAKEYPAD_DISPATCHER_H__
 #define __CAKEYPAD_DISPATCHER_H__
-
-#include "CAKeypadDelegate.h"
 #include "basics/CASTLContainer.h"
-
 NS_CC_BEGIN
 
 
@@ -25,25 +22,15 @@ public:
     
     ~CAKeypadDispatcher();
 
-    void addDelegate(CAKeypadDelegate* pDelegate);
-
-    void removeDelegate(CAKeypadDelegate* pDelegate);
-
-    void forceAddDelegate(CAKeypadDelegate* pDelegate);
-
-    void forceRemoveDelegate(CAKeypadDelegate* pDelegate);
-
+    CC_LISTENING_FUNCTION(void(), BackClicked);
+    
+    CC_LISTENING_FUNCTION(void(), MenuClicked);
+    
     bool dispatchKeypadMSG(KeypadMSGType nMsgType);
 
 protected:
 
-    CAVector<CAObject*> m_vDelegates;
     bool m_bLocked;
-    bool m_bToAdd;
-    bool m_bToRemove;
-
-    std::vector<CAKeypadDelegate*> m_vHandlersToAdd;
-    std::vector<CAKeypadDelegate*> m_vHandlersToRemove;
 };
 
 // end of input group

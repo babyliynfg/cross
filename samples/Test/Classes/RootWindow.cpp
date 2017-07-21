@@ -27,12 +27,30 @@ RootWindow::RootWindow()
 :m_pRootNavigationController(NULL)
 ,m_pRootDrawerController(NULL)
 {
-    CAApplication::getApplication()->getKeypadDispatcher()->addDelegate(this);
+    CAApplication::getApplication()->getKeypadDispatcher()->onBackClicked([&]
+    {
+        if (this->getModalViewController())
+        {
+            this->dismissModalViewController(true);
+        }
+        else if (this->getDrawerController()->isShowLeftViewController())
+        {
+            this->getDrawerController()->hideLeftViewController(true);
+        }
+        else if (this->getRootNavigationController()->getViewControllerCount() > 1)
+        {
+            this->getRootNavigationController()->popViewControllerAnimated(true);
+        }
+        else
+        {
+            CAApplication::getApplication()->end();
+        }
+    });
 }
 
 RootWindow::~RootWindow()
 {
-    CAApplication::getApplication()->getKeypadDispatcher()->removeDelegate(this);
+    CAApplication::getApplication()->getKeypadDispatcher()->onBackClicked(nullptr);
 }
 
 bool RootWindow::init()
@@ -76,23 +94,3 @@ bool RootWindow::init()
     return true;
 }
 
-void RootWindow::keyBackClicked()
-{
-
-    if (this->getModalViewController())
-    {
-        this->dismissModalViewController(true);
-    }
-    else if (this->getDrawerController()->isShowLeftViewController())
-    {
-        this->getDrawerController()->hideLeftViewController(true);
-    }
-    else if (this->getRootNavigationController()->getViewControllerCount() > 1)
-    {
-        this->getRootNavigationController()->popViewControllerAnimated(true);
-    }
-    else
-    {
-        CAApplication::getApplication()->end();
-    }
-}

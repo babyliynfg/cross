@@ -329,8 +329,15 @@ ca.CASwitch.Type.SquareRect = 0;
 ca.CASwitch.Type.RoundedRect = 1;
 
 ca.CACheckbox.Type = {};
-ca.CACheckbox.Type.SquareRect = 0;
-ca.CACheckbox.Type.RoundedRect = 1;
+ca.CACheckbox.Type.Custom = 0;
+ca.CACheckbox.Type.SquareRect = 1;
+ca.CACheckbox.Type.RoundedRect = 2;
+
+ca.CAAVPlayer.PlaybackBufferEmpty = "PlaybackBufferEmpty";
+ca.CAAVPlayer.PlaybackLikelyToKeepUp = "PlaybackLikelyToKeepUp";
+ca.CAAVPlayer.PlayStatePause = "PlayStatePause";
+ca.CAAVPlayer.PlayStatePlaying = "PlayStatePlaying";
+ca.CAAVPlayer.PlayStatePlayback = "PlayStatePlayback";
 
 ca.NetworkStatus = {};
 ca.NetworkStatus.NotReachable     = 0,

@@ -12,8 +12,6 @@
 #include <iostream>
 #include "control/CABar.h"
 #include "view/CAPageView.h"
-#include "dispatcher/CAKeypadDelegate.h"
-#include "dispatcher/CAKeypadDispatcher.h"
 #include "basics/CAResponder.h"
 NS_CC_BEGIN
 
@@ -26,7 +24,6 @@ class CAUIEditorParser;
 class CC_DLL CAViewController
 : public CAObject
 , public CAContentContainer
-, public CAKeypadDelegate
 {
     
 public:
@@ -58,10 +55,6 @@ public:
     void presentModalViewController(CAViewController* controller, bool animated);
     
     void dismissModalViewController(bool animated);
-    
-    virtual bool isKeypadEnabled();
-    
-    virtual void setKeypadEnabled(bool value);
     
     CAView* getView();
     
@@ -118,9 +111,7 @@ private:
     CAView* m_pView;
     
     bool m_bLifeLock;
-    
-    bool m_bKeypadEnabled;
-    
+
     CAUIEditorParser* m_pParser;
 };
 

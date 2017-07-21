@@ -69,7 +69,6 @@
 //dispatcher
 #include "dispatcher/CATouch.h"
 #include "dispatcher/CATouchDispatcher.h"
-#include "dispatcher/CAKeypadDelegate.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "dispatcher/CAProtocols.h"
 
