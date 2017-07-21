@@ -206,7 +206,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     private MediaPlayer mMediaPlayer;
     
     /** 毫秒帧率  1000 / 每秒帧数 */
-    private final int FRAME_RATE = 30 ; 
+    private final int FRAME_RATE = 40 ; 
     
     /** 刷新进度的速率 */
     private static final int PROGRESS_RATE =25 ; 
