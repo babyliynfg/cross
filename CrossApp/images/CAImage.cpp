@@ -2995,6 +2995,10 @@ void CAImage::purgeCAImage()
 {
     CC_SAFE_DELETE(s_white_image);
     s_white_image = nullptr;
+    CC_SAFE_DELETE(s_black_image);
+    s_black_image = nullptr;
+    CC_SAFE_DELETE(s_clear_image);
+    s_clear_image = nullptr;
     CC_SAFE_DELETE(s_shadow_left_image);
     s_shadow_left_image = nullptr;
     CC_SAFE_DELETE(s_shadow_right_image);

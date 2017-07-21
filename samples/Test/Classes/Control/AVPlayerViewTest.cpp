@@ -39,7 +39,7 @@ void AVPlayerViewTest::viewDidLoad()
     slider->setZOrder(100);
     this->getView()->addSubview(slider);
     slider->setMaxTrackTintImage(CAImage::CLEAR_IMAGE());
-    slider->setTargetForTouchUpSide([=](float var)
+    slider->setTarget([=](float var)
     {
         float current = var * avplayer->getDuration();
         avplayer->setCurrentTime(current);
