@@ -131,13 +131,9 @@
 		B02CE48419AD869600B905FB /* CAPageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = B02CE48019AD869600B905FB /* CAPageControl.h */; };
 		B03407F81991CA27005DB179 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B03407F61991CA27005DB179 /* md5.cpp */; };
 		B03407F91991CA27005DB179 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B03407F71991CA27005DB179 /* md5.h */; };
-		B047B91619E9181800F24BE6 /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B91219E9181800F24BE6 /* CCScriptSupport.cpp */; };
-		B047B91719E9181800F24BE6 /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B047B91319E9181800F24BE6 /* CCScriptSupport.h */; };
-		B047B91819E9181800F24BE6 /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B91419E9181800F24BE6 /* JSViewController.cpp */; };
-		B047B91919E9181800F24BE6 /* JSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B047B91519E9181800F24BE6 /* JSViewController.h */; };
+		B047B91619E9181800F24BE6 /* CAScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047B91219E9181800F24BE6 /* CAScriptSupport.cpp */; };
+		B047B91719E9181800F24BE6 /* CAScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = B047B91319E9181800F24BE6 /* CAScriptSupport.h */; };
 		B04CF4321967B2EB00BA7030 /* CASTLContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = B04CF4301967B2EB00BA7030 /* CASTLContainer.h */; };
-		B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */; };
-		B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */; };
 		B0621A4F1AC3A22D005EBCA7 /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A4E1AC3A22D005EBCA7 /* libwebp.a */; };
 		B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A501AC3A23D005EBCA7 /* libtiff.a */; };
 		B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A521AC3A24D005EBCA7 /* libpng.a */; };
@@ -569,13 +565,9 @@
 		B039AF341BC7A683002C1FDB /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		B039AF361BC7A689002C1FDB /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B039AF7E1BC7B81F002C1FDB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		B047B91219E9181800F24BE6 /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
-		B047B91319E9181800F24BE6 /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
-		B047B91419E9181800F24BE6 /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
-		B047B91519E9181800F24BE6 /* JSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSViewController.h; sourceTree = "<group>"; };
+		B047B91219E9181800F24BE6 /* CAScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScriptSupport.cpp; sourceTree = "<group>"; };
+		B047B91319E9181800F24BE6 /* CAScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScriptSupport.h; sourceTree = "<group>"; };
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
-		B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAKeypadDelegate.cpp; sourceTree = "<group>"; };
-		B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAKeypadDelegate.h; sourceTree = "<group>"; };
 		B0621A4C1AC3A208005EBCA7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../the_third_party/freetype/prebuilt/mac/libfreetype.a; sourceTree = "<group>"; };
 		B0621A4E1AC3A22D005EBCA7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../the_third_party/webp/prebuilt/mac/libwebp.a; sourceTree = "<group>"; };
 		B0621A501AC3A23D005EBCA7 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../the_third_party/tiff/prebuilt/mac/libtiff.a; sourceTree = "<group>"; };
@@ -1089,8 +1081,6 @@
 		04EAA0A01956D74D00198A8E /* dispatcher */ = {
 			isa = PBXGroup;
 			children = (
-				B053DC9C19B6BEC00039E3FA /* CAKeypadDelegate.cpp */,
-				B053DC9D19B6BEC00039E3FA /* CAKeypadDelegate.h */,
 				04EAA0A61956D74D00198A8E /* CAKeypadDispatcher.cpp */,
 				04EAA0A71956D74D00198A8E /* CAKeypadDispatcher.h */,
 				04EAA0A81956D74D00198A8E /* CAProtocols.h */,
@@ -1334,10 +1324,8 @@
 		B047B91119E9181800F24BE6 /* script_support */ = {
 			isa = PBXGroup;
 			children = (
-				B047B91219E9181800F24BE6 /* CCScriptSupport.cpp */,
-				B047B91319E9181800F24BE6 /* CCScriptSupport.h */,
-				B047B91419E9181800F24BE6 /* JSViewController.cpp */,
-				B047B91519E9181800F24BE6 /* JSViewController.h */,
+				B047B91219E9181800F24BE6 /* CAScriptSupport.cpp */,
+				B047B91319E9181800F24BE6 /* CAScriptSupport.h */,
 			);
 			path = script_support;
 			sourceTree = "<group>";
@@ -1756,7 +1744,6 @@
 				D69B768C1E4B0713007D9771 /* advancing_front.h in Headers */,
 				D6C72A2A1EEE748D0094B191 /* CAWebView.h in Headers */,
 				04EAB0681956D75600198A8E /* CAApplication.h in Headers */,
-				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
 				04EAB06A1956D75600198A8E /* CAAutoreleasePool.h in Headers */,
 				D649B2B61D3CD6A80020414A /* CGActionInstant.h in Headers */,
 				3E21544D1B8180340075448E /* autolink.h in Headers */,
@@ -1873,7 +1860,7 @@
 				D6C72A1A1EEE748D0094B191 /* CARenderImage.h in Headers */,
 				D66BCD511D3DC27700587C65 /* CGSpriteFrameCache.h in Headers */,
 				04EAB1161956D75600198A8E /* CASAXParser.h in Headers */,
-				B047B91719E9181800F24BE6 /* CCScriptSupport.h in Headers */,
+				B047B91719E9181800F24BE6 /* CAScriptSupport.h in Headers */,
 				D69B76881E4B0713007D9771 /* shapes.h in Headers */,
 				D64A8CA11D34912200F75021 /* CASize.h in Headers */,
 				D649B2AE1D3CD6A80020414A /* CGActionCatmullRom.h in Headers */,
@@ -1917,7 +1904,6 @@
 				3E2154591B8180340075448E /* writer.h in Headers */,
 				3E2154581B8180340075448E /* value.h in Headers */,
 				D649B2B81D3CD6A80020414A /* CGActionInterval.h in Headers */,
-				B047B91919E9181800F24BE6 /* JSViewController.h in Headers */,
 				D6C72A161EEE748D0094B191 /* CAPickerView.h in Headers */,
 				04EABA761956D75A00198A8E /* base64.h in Headers */,
 				D6C72A0C1EEE748D0094B191 /* CAGifView.h in Headers */,
@@ -2030,7 +2016,6 @@
 				D69B76551E4AFE77007D9771 /* clipper.cpp in Sources */,
 				D649B2B91D3CD6A80020414A /* CGActionManager.cpp in Sources */,
 				D649B2AF1D3CD6A80020414A /* CGActionEase.cpp in Sources */,
-				B047B91819E9181800F24BE6 /* JSViewController.cpp in Sources */,
 				04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */,
 				B0DAEED21B256B6D0011E87D /* CAGif.cpp in Sources */,
 				D65AFE8F1D3F84A90067B290 /* CGProgressTimer.cpp in Sources */,
@@ -2060,7 +2045,7 @@
 				D69B76421E4AFE12007D9771 /* CCRenderState.cpp in Sources */,
 				04EAB08B1956D75600198A8E /* CCSet.cpp in Sources */,
 				D69B76351E4AFE12007D9771 /* CCPrimitive.cpp in Sources */,
-				B047B91619E9181800F24BE6 /* CCScriptSupport.cpp in Sources */,
+				B047B91619E9181800F24BE6 /* CAScriptSupport.cpp in Sources */,
 				D673ABF51E52E2A0007E7A5B /* CAClipboard.mm in Sources */,
 				B0B0A2E11AF06E0B00BAC0B0 /* CACustomAnimation.cpp in Sources */,
 				D69B768B1E4B0713007D9771 /* advancing_front.cc in Sources */,
@@ -2074,7 +2059,6 @@
 				D649B2B71D3CD6A80020414A /* CGActionInterval.cpp in Sources */,
 				D673ABFF1E52E2A0007E7A5B /* CCEGLView.mm in Sources */,
 				D673AC081E52E2A0007E7A5B /* CCWindow.m in Sources */,
-				B053DC9E19B6BEC00039E3FA /* CAKeypadDelegate.cpp in Sources */,
 				04EAB0971956D75600198A8E /* CAProgress.cpp in Sources */,
 				B08F4BB519C7D2EF008DE306 /* ConvertUTF.cpp in Sources */,
 				D66BCD481D3DBED700587C65 /* CAValue.cpp in Sources */,

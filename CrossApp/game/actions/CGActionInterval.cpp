@@ -9,7 +9,7 @@
 #include "game/CGSpriteFrame.h"
 #include "game/actions/CGActionInstant.h"
 #include "CCStdC.h"
-#include "script_support/CCScriptSupport.h"
+#include "script_support/CAScriptSupport.h"
 NS_CC_BEGIN
 
 // Extra action for making a Sequence or Spawn when only adding one action to it.

@@ -28,7 +28,7 @@ require('js/Control/TabBarControllerTest.js');
 require('js/Control/TableViewTest.js');
 require('js/Control/TextFieldTest.js');
 require('js/Control/TextViewTest.js');
-require('js/Control/VideoPlayerControlViewTest.js');
+require('js/Control/AVPlayerViewTest.js');
 require('js/Control/ViewAnimationTest.js');
 require('js/Control/WebViewTest.js');
 require('js/Control/WaterfallViewTest.js');

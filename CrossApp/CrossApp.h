@@ -69,7 +69,6 @@
 //dispatcher
 #include "dispatcher/CATouch.h"
 #include "dispatcher/CATouchDispatcher.h"
-#include "dispatcher/CAKeypadDelegate.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "dispatcher/CAProtocols.h"
 
@@ -187,8 +186,7 @@
 #include "device/CAAddressBook.h"
 
 //script_support
-#include "script_support/CCScriptSupport.h"
-#include "script_support/JSViewController.h"
+#include "script_support/CAScriptSupport.h"
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

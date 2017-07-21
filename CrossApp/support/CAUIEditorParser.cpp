@@ -2202,7 +2202,22 @@ bool CAUIEditorParser::initWithPath(const std::string& filePath, CAView* supervi
     this->init();
     
     unsigned long size = 0;
-    const char* data = (const char*)FileUtils::getInstance()->getFileData(filePath.c_str(), "rb", &size);
+    unsigned char* data = nullptr;
+    do
+    {
+        // read the file from hardware
+        const std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath.c_str());
+        FILE *fp = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), "rb");
+        CC_BREAK_IF(!fp);
+        
+        fseek(fp,0,SEEK_END);
+        size = ftell(fp);
+        fseek(fp,0,SEEK_SET);
+        data = (unsigned char*)malloc(size);
+        size = fread(data,sizeof(unsigned char), size,fp);
+        fclose(fp);
+    } while (0);
+    
     if (size > 0)
     {
         std::string str;
@@ -2213,7 +2228,7 @@ bool CAUIEditorParser::initWithPath(const std::string& filePath, CAView* supervi
         }
         
         m_pMyDocument = new tinyxml2::XMLDocument();
-		m_pMyDocument->Parse(data, size);
+		m_pMyDocument->Parse((const char*)data, size);
 		tinyxml2::XMLElement* rootElement = m_pMyDocument->RootElement();
         
         tinyxml2::XMLElement* entity = NULL;

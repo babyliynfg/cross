@@ -5,7 +5,7 @@
 #include "animation/CAViewAnimation.h"
 #include "dispatcher/CATouchDispatcher.h"
 #include "basics/CACamera.h"
-#include "script_support/CCScriptSupport.h"
+#include "script_support/CAScriptSupport.h"
 
 NS_CC_BEGIN
 

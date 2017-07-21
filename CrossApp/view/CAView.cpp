@@ -27,7 +27,7 @@
 #include "platform/CADensityDpi.h"
 #include "ccMacros.h"
 #include "game/CGNode.h"
-#include "script_support/CCScriptSupport.h"
+#include "script_support/CAScriptSupport.h"
 
 NS_CC_BEGIN;
 

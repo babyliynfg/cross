@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->runScript("script/jsb_boot.js");
     sc->runScript("script/jsb_crossapp.js");
     
-    CAScriptEngineManager::sharedManager()->setScriptEngine(sc);
+    CAScriptEngineManager::createScriptEngineManager()->setScriptEngine(sc);
     
     sc->runScript("js/main.js");
 

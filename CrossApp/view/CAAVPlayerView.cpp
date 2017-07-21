@@ -9,6 +9,17 @@
 #include "basics/CAScheduler.h"
 NS_CC_BEGIN
 
+//缓冲为空，正在缓冲
+const std::string CAAVPlayer::PlaybackBufferEmpty("PlaybackBufferEmpty");
+//缓冲达到可播放
+const std::string CAAVPlayer::PlaybackLikelyToKeepUp("PlaybackLikelyToKeepUp");
+
+//暂停
+const std::string CAAVPlayer::PlayStatePause("PlayStatePause");
+//播放中
+const std::string CAAVPlayer::PlayStatePlaying("PlayStatePlaying");
+//回放中
+const std::string CAAVPlayer::PlayStatePlayback("PlayStatePlayback");
 
 CAAVPlayer::CAAVPlayer()
 {
@@ -65,11 +76,6 @@ bool CAAVPlayer::initWithFilePath(const std::string& uri)
 void CAAVPlayer::play()
 {
     m_pImpl->play();
-}
-
-void CAAVPlayer::playWithRate(float rate)
-{
-    m_pImpl->playWithRate(rate);
 }
 
 void CAAVPlayer::pause()
@@ -181,6 +187,11 @@ CAAVPlayerView *CAAVPlayerView::create()
 bool CAAVPlayerView::init()
 {
     return true;
+}
+
+CAAVPlayer* CAAVPlayerView::getPlayer()
+{
+    return m_pPlayer;
 }
 
 void CAAVPlayerView::setPlayer(CrossApp::CAAVPlayer *player)

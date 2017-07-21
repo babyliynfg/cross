@@ -1038,24 +1038,34 @@ long
 },
 
 /**
- * @method purgeCAImage
+ * @method createWithRawData
+ * @param {ca.CAData} arg0
+ * @param {ca.CAImage::PixelFormat} arg1
+ * @param {unsigned int} arg2
+ * @param {unsigned int} arg3
+ * @param {String} arg4
+ * @return {ca.CAImage}
  */
-purgeCAImage : function (
+createWithRawData : function (
+cadata, 
+pixelformat, 
+int, 
+int, 
+str 
 )
 {
+    return ca.CAImage;
 },
 
 /**
- * @method scaleToNewImageWithImage
-* @param {ca.CAImage|ca.CAImage} caimage
-* @param {float|size_object} float
-* @param {float} float
-* @return {ca.CAImage|ca.CAImage}
-*/
-scaleToNewImageWithImage : function(
-caimage,
-float,
-float 
+ * @method createWithImageData
+ * @param {ca.CAData} arg0
+ * @param {String} arg1
+ * @return {ca.CAImage}
+ */
+createWithImageData : function (
+cadata, 
+str 
 )
 {
     return ca.CAImage;
@@ -1075,6 +1085,46 @@ str
 )
 {
     return 0;
+},
+
+/**
+ * @method CC_SHADOW_TOP_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_TOP_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method CC_SHADOW_RIGHT_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_RIGHT_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method BLACK_IMAGE
+ * @return {ca.CAImage}
+ */
+BLACK_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method WHITE_IMAGE
+ * @return {ca.CAImage}
+ */
+WHITE_IMAGE : function (
+)
+{
+    return ca.CAImage;
 },
 
 /**
@@ -1114,54 +1164,12 @@ str
 },
 
 /**
- * @method createWithRawData
- * @param {ca.CAData} arg0
- * @param {ca.CAImage::PixelFormat} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- * @param {String} arg4
- * @return {ca.CAImage}
- */
-createWithRawData : function (
-cadata, 
-pixelformat, 
-int, 
-int, 
-str 
-)
-{
-    return ca.CAImage;
-},
-
-/**
  * @method createWithImageDataNoCache
  * @param {ca.CAData} arg0
  * @return {ca.CAImage}
  */
 createWithImageDataNoCache : function (
 cadata 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method reloadAllImages
- */
-reloadAllImages : function (
-)
-{
-},
-
-/**
- * @method createWithImageData
- * @param {ca.CAData} arg0
- * @param {String} arg1
- * @return {ca.CAImage}
- */
-createWithImageData : function (
-cadata, 
-str 
 )
 {
     return ca.CAImage;
@@ -1190,28 +1198,6 @@ bool
 },
 
 /**
- * @method generateMipmapsWithImage
- * @param {ca.CAImage} arg0
- * @return {ca.CAImage}
- */
-generateMipmapsWithImage : function (
-caimage 
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method CC_SHADOW_TOP_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_TOP_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
  * @method CC_SHADOW_BOTTOM_IMAGE
  * @return {ca.CAImage}
  */
@@ -1222,13 +1208,35 @@ CC_SHADOW_BOTTOM_IMAGE : function (
 },
 
 /**
- * @method CC_WHITE_IMAGE
- * @return {ca.CAImage}
+ * @method reloadAllImages
  */
-CC_WHITE_IMAGE : function (
+reloadAllImages : function (
+)
+{
+},
+
+/**
+ * @method scaleToNewImageWithImage
+* @param {ca.CAImage|ca.CAImage} caimage
+* @param {float|size_object} float
+* @param {float} float
+* @return {ca.CAImage|ca.CAImage}
+*/
+scaleToNewImageWithImage : function(
+caimage,
+float,
+float 
 )
 {
     return ca.CAImage;
+},
+
+/**
+ * @method purgeCAImage
+ */
+purgeCAImage : function (
+)
+{
 },
 
 /**
@@ -1250,10 +1258,22 @@ int
 },
 
 /**
- * @method CC_SHADOW_RIGHT_IMAGE
+ * @method CLEAR_IMAGE
  * @return {ca.CAImage}
  */
-CC_SHADOW_RIGHT_IMAGE : function (
+CLEAR_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method generateMipmapsWithImage
+ * @param {ca.CAImage} arg0
+ * @return {ca.CAImage}
+ */
+generateMipmapsWithImage : function (
+caimage 
 )
 {
     return ca.CAImage;
@@ -1440,11 +1460,31 @@ bool
 },
 
 /**
+ * @method onTouchEnded
+ * @param {function} arg0
+ */
+onTouchEnded : function (
+func 
+)
+{
+},
+
+/**
  * @method setMouseScrollWheelEnabled
  * @param {bool} arg0
  */
 setMouseScrollWheelEnabled : function (
 bool 
+)
+{
+},
+
+/**
+ * @method onMouseScrollWheel
+ * @param {function} arg0
+ */
+onMouseScrollWheel : function (
+func 
 )
 {
 },
@@ -1460,10 +1500,10 @@ bool
 },
 
 /**
- * @method setMouseMovedOutSideCallback
+ * @method onMouseMoved
  * @param {function} arg0
  */
-setMouseMovedOutSideCallback : function (
+onMouseMoved : function (
 func 
 )
 {
@@ -1487,36 +1527,6 @@ isHaveNextResponder : function (
 )
 {
     return false;
-},
-
-/**
- * @method getMouseScrollWheelCallback
- * @return {function}
- */
-getMouseScrollWheelCallback : function (
-)
-{
-    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
-},
-
-/**
- * @method getMouseMovedOutSideCallback
- * @return {function}
- */
-getMouseMovedOutSideCallback : function (
-)
-{
-    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
-},
-
-/**
- * @method getTouchEndedCallback
- * @return {function}
- */
-getTouchEndedCallback : function (
-)
-{
-    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
 },
 
 /**
@@ -1560,10 +1570,10 @@ isFirstResponder : function (
 },
 
 /**
- * @method setTouchMovedCallback
+ * @method onMouseMovedOutSide
  * @param {function} arg0
  */
-setTouchMovedCallback : function (
+onMouseMovedOutSide : function (
 func 
 )
 {
@@ -1577,16 +1587,6 @@ isTouchEnabled : function (
 )
 {
     return false;
-},
-
-/**
- * @method getTouchBeganCallback
- * @return {function}
- */
-getTouchBeganCallback : function (
-)
-{
-    return std::function<bool (CrossApp::CATouch , CrossApp::CAEvent )>;
 },
 
 /**
@@ -1610,6 +1610,16 @@ bool
 },
 
 /**
+ * @method onTouchMoved
+ * @param {function} arg0
+ */
+onTouchMoved : function (
+func 
+)
+{
+},
+
+/**
  * @method getTouches
  * @return {Array}
  */
@@ -1620,26 +1630,6 @@ getTouches : function (
 },
 
 /**
- * @method getMouseMovedCallback
- * @return {function}
- */
-getMouseMovedCallback : function (
-)
-{
-    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
-},
-
-/**
- * @method setTouchBeganCallback
- * @param {function} arg0
- */
-setTouchBeganCallback : function (
-func 
-)
-{
-},
-
-/**
  * @method isPriorityScroll
  * @return {bool}
  */
@@ -1647,6 +1637,26 @@ isPriorityScroll : function (
 )
 {
     return false;
+},
+
+/**
+ * @method onTouchCancelled
+ * @param {function} arg0
+ */
+onTouchCancelled : function (
+func 
+)
+{
+},
+
+/**
+ * @method onTouchBegan
+ * @param {function} arg0
+ */
+onTouchBegan : function (
+func 
+)
+{
 },
 
 /**
@@ -1740,16 +1750,6 @@ isReachBoundaryHandOverToSuperview : function (
 },
 
 /**
- * @method setTouchEndedCallback
- * @param {function} arg0
- */
-setTouchEndedCallback : function (
-func 
-)
-{
-},
-
-/**
  * @method isReachBoundaryUp
  * @return {bool}
  */
@@ -1757,16 +1757,6 @@ isReachBoundaryUp : function (
 )
 {
     return false;
-},
-
-/**
- * @method setMouseMovedCallback
- * @param {function} arg0
- */
-setMouseMovedCallback : function (
-func 
-)
-{
 },
 
 /**
@@ -1790,16 +1780,6 @@ getScrollRunning : function (
 },
 
 /**
- * @method setMouseScrollWheelCallback
- * @param {function} arg0
- */
-setMouseScrollWheelCallback : function (
-func 
-)
-{
-},
-
-/**
  * @method isMouseScrollWheelEnabled
  * @return {bool}
  */
@@ -1817,16 +1797,6 @@ resignFirstResponder : function (
 )
 {
     return false;
-},
-
-/**
- * @method getTouchMovedCallback
- * @return {function}
- */
-getTouchMovedCallback : function (
-)
-{
-    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
 },
 
 /**
@@ -1870,16 +1840,6 @@ isMultipleTouchEnabled : function (
 },
 
 /**
- * @method getTouchCancelledCallback
- * @return {function}
- */
-getTouchCancelledCallback : function (
-)
-{
-    return std::function<void (CrossApp::CATouch , CrossApp::CAEvent )>;
-},
-
-/**
  * @method getZLevel
  * @return {unsigned long}
  */
@@ -1887,16 +1847,6 @@ getZLevel : function (
 )
 {
     return 0;
-},
-
-/**
- * @method setTouchCancelledCallback
- * @param {function} arg0
- */
-setTouchCancelledCallback : function (
-func 
-)
-{
 },
 
 /**
@@ -8096,7 +8046,7 @@ func
 * @param {Array|ca.CADeque<ca.CAView >} array
 */
 setViews : function(
-array
+cadeque<crossapp::caview > 
 )
 {
 },
@@ -8118,7 +8068,7 @@ func
 getOrientation : function (
 )
 {
-    return 0;
+    return CAPageView::Orientation;
 },
 
 /**
@@ -8154,6 +8104,7 @@ bool
 )
 {
 },
+
 /**
  * @method getPageCount
  * @return {unsigned int}
@@ -9930,9 +9881,9 @@ bool
 
 /**
  * @method isOn
-* @return {bool|bool}
-*/
-isOn : function(
+ * @return {bool}
+ */
+isOn : function (
 )
 {
     return false;
@@ -15364,6 +15315,16 @@ getInstance : function (
 ca.CAWebView = {
 
 /**
+ * @method onFinishLoading
+ * @param {function} arg0
+ */
+onFinishLoading : function (
+func 
+)
+{
+},
+
+/**
  * @method draw
  * @param {ca.Renderer} arg0
  * @param {ca.Mat4} arg1
@@ -15378,10 +15339,10 @@ int
 },
 
 /**
- * @method onFailLoadingCallback
+ * @method onStartLoading
  * @param {function} arg0
  */
-onFailLoadingCallback : function (
+onStartLoading : function (
 func 
 )
 {
@@ -15474,16 +15435,6 @@ str
 },
 
 /**
- * @method onStartLoadingCallback
- * @param {function} arg0
- */
-onStartLoadingCallback : function (
-func 
-)
-{
-},
-
-/**
  * @method loadURL
  * @param {String} arg0
  */
@@ -15511,6 +15462,16 @@ str
  */
 showLoadingActivity : function (
 bool 
+)
+{
+},
+
+/**
+ * @method onFailLoading
+ * @param {function} arg0
+ */
+onFailLoading : function (
+func 
 )
 {
 },
@@ -15555,16 +15516,6 @@ stopLoading : function (
  * @method reload
  */
 reload : function (
-)
-{
-},
-
-/**
- * @method onFinishLoadingCallback
- * @param {function} arg0
- */
-onFinishLoadingCallback : function (
-func 
 )
 {
 },
@@ -15878,6 +15829,306 @@ array
 )
 {
     return ca.CAAlertView;
+},
+
+};
+
+/**
+ * @class CAAVPlayer
+ */
+ca.CAAVPlayer = {
+
+/**
+ * @method onTimeJumped
+ * @param {function} arg0
+ */
+onTimeJumped : function (
+func 
+)
+{
+},
+
+/**
+ * @method onDidPlayToEndTime
+ * @param {function} arg0
+ */
+onDidPlayToEndTime : function (
+func 
+)
+{
+},
+
+/**
+ * @method play
+ */
+play : function (
+)
+{
+},
+
+/**
+ * @method pause
+ */
+pause : function (
+)
+{
+},
+
+/**
+ * @method initWithFilePath
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithFilePath : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method playWithRate
+ * @param {float} arg0
+ */
+playWithRate : function (
+float 
+)
+{
+},
+
+/**
+ * @method getPresentationSize
+ * @return {size_object}
+ */
+getPresentationSize : function (
+)
+{
+    return ca.DSize;
+},
+
+/**
+ * @method getDuration
+ * @return {float}
+ */
+getDuration : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method stop
+ */
+stop : function (
+)
+{
+},
+
+/**
+ * @method setCurrentTime
+ * @param {float} arg0
+ */
+setCurrentTime : function (
+float 
+)
+{
+},
+
+/**
+ * @method getCurrentTime
+ * @return {float}
+ */
+getCurrentTime : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getRate
+ * @return {float}
+ */
+getRate : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setRate
+ * @param {float} arg0
+ */
+setRate : function (
+float 
+)
+{
+},
+
+/**
+ * @method onPlayState
+ * @param {function} arg0
+ */
+onPlayState : function (
+func 
+)
+{
+},
+
+/**
+ * @method onLoadedTime
+ * @param {function} arg0
+ */
+onLoadedTime : function (
+func 
+)
+{
+},
+
+/**
+ * @method onPlayBufferLoadingState
+ * @param {function} arg0
+ */
+onPlayBufferLoadingState : function (
+func 
+)
+{
+},
+
+/**
+ * @method initWithUrl
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithUrl : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method onPeriodicTime
+ * @param {function} arg0
+ */
+onPeriodicTime : function (
+func 
+)
+{
+},
+
+/**
+ * @method createWithFilePath
+ * @param {String} arg0
+ * @return {ca.CAAVPlayer}
+ */
+createWithFilePath : function (
+str 
+)
+{
+    return ca.CAAVPlayer;
+},
+
+/**
+ * @method createWithUrl
+ * @param {String} arg0
+ * @return {ca.CAAVPlayer}
+ */
+createWithUrl : function (
+str 
+)
+{
+    return ca.CAAVPlayer;
+},
+
+/**
+ * @method CAAVPlayer
+ * @constructor
+ */
+CAAVPlayer : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAAVPlayerView
+ */
+ca.CAAVPlayerView = {
+
+/**
+ * @method getPlayer
+ * @return {ca.CAAVPlayer}
+ */
+getPlayer : function (
+)
+{
+    return ca.CAAVPlayer;
+},
+
+/**
+ * @method setPlayer
+ * @param {ca.CAAVPlayer} arg0
+ */
+setPlayer : function (
+caavplayer 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ca.CAAVPlayerView}
+ */
+create : function (
+)
+{
+    return ca.CAAVPlayerView;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @return {ca.CAAVPlayerView}
+ */
+createWithFrame : function (
+drect 
+)
+{
+    return ca.CAAVPlayerView;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @return {ca.CAAVPlayerView}
+ */
+createWithLayout : function (
+dlayout 
+)
+{
+    return ca.CAAVPlayerView;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @return {ca.CAAVPlayerView}
+ */
+createWithCenter : function (
+drect 
+)
+{
+    return ca.CAAVPlayerView;
+},
+
+/**
+ * @method CAAVPlayerView
+ * @constructor
+ */
+CAAVPlayerView : function (
+)
+{
 },
 
 };
@@ -16253,16 +16504,6 @@ onEnter : function (
  * @method onExit
  */
 onExit : function (
-)
-{
-},
-
-/**
- * @method onSelectRow
- * @param {function} arg0
- */
-onSelectRow : function (
-func 
 )
 {
 },
@@ -17693,6 +17934,16 @@ keyboardtype
 },
 
 /**
+ * @method setFontSize
+ * @param {int} arg0
+ */
+setFontSize : function (
+int 
+)
+{
+},
+
+/**
  * @method getText
  * @return {String}
  */
@@ -17805,6 +18056,26 @@ getClearButtonMode : function (
 },
 
 /**
+ * @method onShouldReturn
+ * @param {function} arg0
+ */
+onShouldReturn : function (
+func 
+)
+{
+},
+
+/**
+ * @method onShouldEndEditing
+ * @param {function} arg0
+ */
+onShouldEndEditing : function (
+func 
+)
+{
+},
+
+/**
  * @method getReturnType
  * @return {ca.CATextField::ReturnType}
  */
@@ -17830,6 +18101,16 @@ getPlaceHolderText : function (
  */
 setAllowkeyBoardHide : function (
 bool 
+)
+{
+},
+
+/**
+ * @method onShouldChangeCharacters
+ * @param {function} arg0
+ */
+onShouldChangeCharacters : function (
+func 
 )
 {
 },
@@ -17893,11 +18174,11 @@ int
 },
 
 /**
- * @method setFontSize
- * @param {int} arg0
+ * @method onShouldBeginEditing
+ * @param {function} arg0
  */
-setFontSize : function (
-int 
+onShouldBeginEditing : function (
+func 
 )
 {
 },
@@ -17930,16 +18211,6 @@ setReturnType : function (
 returntype 
 )
 {
-},
-
-/**
- * @method getDelegate
- * @return {ca.CATextFieldDelegate}
- */
-getDelegate : function (
-)
-{
-    return ca.CATextFieldDelegate;
 },
 
 /**
@@ -17985,6 +18256,16 @@ str
 },
 
 /**
+ * @method onDidChangeText
+ * @param {function} arg0
+ */
+onDidChangeText : function (
+func 
+)
+{
+},
+
+/**
  * @method getMarginLeft
  * @return {int}
  */
@@ -18020,6 +18301,16 @@ becomeFirstResponder : function (
  */
 setSecureTextEntry : function (
 bool 
+)
+{
+},
+
+/**
+ * @method onKeyBoardHeight
+ * @param {function} arg0
+ */
+onKeyBoardHeight : function (
+func 
 )
 {
 },
@@ -18095,16 +18386,6 @@ CATextField : function (
 ca.CATextView = {
 
 /**
- * @method getDelegate
- * @return {ca.CATextViewDelegate}
- */
-getDelegate : function (
-)
-{
-    return ca.CATextViewDelegate;
-},
-
-/**
  * @method getFontSize
  * @return {int}
  */
@@ -18115,81 +18396,13 @@ getFontSize : function (
 },
 
 /**
- * @method setAlign
- * @param {ca.CATextView::Align} arg0
+ * @method onShouldBeginEditing
+ * @param {function} arg0
  */
-setAlign : function (
-align 
+onShouldBeginEditing : function (
+func 
 )
 {
-},
-
-/**
- * @method resignFirstResponder
- * @return {bool}
- */
-resignFirstResponder : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setBackgroundImage
- * @param {ca.CAImage} arg0
- */
-setBackgroundImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method setText
- * @param {String} arg0
- */
-setText : function (
-str 
-)
-{
-},
-
-/**
- * @method setFontSize
- * @param {int} arg0
- */
-setFontSize : function (
-int 
-)
-{
-},
-
-/**
- * @method onExitTransitionDidStart
- */
-onExitTransitionDidStart : function (
-)
-{
-},
-
-/**
- * @method getTextColor
- * @return {color4b_object}
- */
-getTextColor : function (
-)
-{
-    return ca.CAColor4B;
-},
-
-/**
- * @method becomeFirstResponder
- * @return {bool}
- */
-becomeFirstResponder : function (
-)
-{
-    return false;
 },
 
 /**
@@ -18203,11 +18416,31 @@ getText : function (
 },
 
 /**
- * @method setTextColor
- * @param {color4b_object} arg0
+ * @method getTextColor
+ * @return {color4b_object}
  */
-setTextColor : function (
-cacolor4b 
+getTextColor : function (
+)
+{
+    return ca.CAColor4B;
+},
+
+/**
+ * @method onShouldReturn
+ * @param {function} arg0
+ */
+onShouldReturn : function (
+func 
+)
+{
+},
+
+/**
+ * @method onShouldEndEditing
+ * @param {function} arg0
+ */
+onShouldEndEditing : function (
+func 
 )
 {
 },
@@ -18223,6 +18456,54 @@ getReturnType : function (
 },
 
 /**
+ * @method onShouldChangeCharacters
+ * @param {function} arg0
+ */
+onShouldChangeCharacters : function (
+func 
+)
+{
+},
+
+/**
+ * @method setAlign
+ * @param {ca.CATextView::Align} arg0
+ */
+setAlign : function (
+align 
+)
+{
+},
+
+/**
+ * @method setBackgroundImage
+ * @param {ca.CAImage} arg0
+ */
+setBackgroundImage : function (
+caimage 
+)
+{
+},
+
+/**
+ * @method onExitTransitionDidStart
+ */
+onExitTransitionDidStart : function (
+)
+{
+},
+
+/**
+ * @method setFontSize
+ * @param {int} arg0
+ */
+setFontSize : function (
+int 
+)
+{
+},
+
+/**
  * @method getAlign
  * @return {ca.CATextView::Align}
  */
@@ -18233,9 +18514,11 @@ getAlign : function (
 },
 
 /**
- * @method onEnterTransitionDidFinish
+ * @method setTextColor
+ * @param {color4b_object} arg0
  */
-onEnterTransitionDidFinish : function (
+setTextColor : function (
+cacolor4b 
 )
 {
 },
@@ -18246,6 +18529,64 @@ onEnterTransitionDidFinish : function (
  */
 setReturnType : function (
 returntype 
+)
+{
+},
+
+/**
+ * @method resignFirstResponder
+ * @return {bool}
+ */
+resignFirstResponder : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setText
+ * @param {String} arg0
+ */
+setText : function (
+str 
+)
+{
+},
+
+/**
+ * @method onDidChangeText
+ * @param {function} arg0
+ */
+onDidChangeText : function (
+func 
+)
+{
+},
+
+/**
+ * @method becomeFirstResponder
+ * @return {bool}
+ */
+becomeFirstResponder : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method onKeyBoardHeight
+ * @param {function} arg0
+ */
+onKeyBoardHeight : function (
+func 
+)
+{
+},
+
+/**
+ * @method onEnterTransitionDidFinish
+ */
+onEnterTransitionDidFinish : function (
 )
 {
 },
@@ -23979,138 +24320,6 @@ sharedEngine : function (
  * @constructor
  */
 SimpleAudioEngine : function (
-)
-{
-},
-
-};
-
-/**
- * @class CAVideoPlayerControlView
- */
-ca.CAVideoPlayerControlView = {
-
-/**
- * @method getPlayerControlViewDelegate
- * @return {extension::CAVideoPlayerControlViewDelegate}
- */
-getPlayerControlViewDelegate : function (
-)
-{
-    return extension::CAVideoPlayerControlViewDelegate;
-},
-
-/**
- * @method setShowBackButton
- * @param {bool} arg0
- */
-setShowBackButton : function (
-bool 
-)
-{
-},
-
-/**
- * @method setTitle
- * @param {String} arg0
- */
-setTitle : function (
-str 
-)
-{
-},
-
-/**
- * @method setUrl
- * @param {String} arg0
- */
-setUrl : function (
-str 
-)
-{
-},
-
-/**
- * @method setPlayerControlViewDelegate
- * @param {extension::CAVideoPlayerControlViewDelegate} arg0
- */
-setPlayerControlViewDelegate : function (
-cavideoplayercontrolviewdelegate 
-)
-{
-},
-
-/**
- * @method getTitle
- * @return {String}
- */
-getTitle : function (
-)
-{
-    return ;
-},
-
-/**
- * @method setFullPath
- * @param {String} arg0
- */
-setFullPath : function (
-str 
-)
-{
-},
-
-/**
- * @method getShowBackButton
- * @return {bool}
- */
-getShowBackButton : function (
-)
-{
-    return false;
-},
-
-/**
- * @method createWithFrame
- * @param {rect_object} arg0
- * @return {extension::CAVideoPlayerControlView}
- */
-createWithFrame : function (
-drect 
-)
-{
-    return extension::CAVideoPlayerControlView;
-},
-
-/**
- * @method createWithLayout
- * @param {layout_object} arg0
- * @return {extension::CAVideoPlayerControlView}
- */
-createWithLayout : function (
-dlayout 
-)
-{
-    return extension::CAVideoPlayerControlView;
-},
-
-/**
- * @method createWithCenter
- * @param {rect_object} arg0
- * @return {extension::CAVideoPlayerControlView}
- */
-createWithCenter : function (
-drect 
-)
-{
-    return extension::CAVideoPlayerControlView;
-},
-
-/**
- * @method CAVideoPlayerControlView
- * @constructor
- */
-CAVideoPlayerControlView : function (
 )
 {
 },

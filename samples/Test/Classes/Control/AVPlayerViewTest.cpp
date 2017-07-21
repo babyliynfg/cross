@@ -15,8 +15,8 @@ AVPlayerViewTest::~AVPlayerViewTest()
 
 void AVPlayerViewTest::viewDidLoad()
 {
-    //CAAVPlayer* avplayer = CAAVPlayer::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
-    CAAVPlayer* avplayer = CAAVPlayer::createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
+    CAAVPlayer* avplayer = CAAVPlayer::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
+    //CAAVPlayer* avplayer = CAAVPlayer::createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
 
     avplayer->onDidPlayToEndTime([=]
     {
@@ -26,11 +26,6 @@ void AVPlayerViewTest::viewDidLoad()
     {
         CCLog("进度调整");
     });
-    avplayer->onPlayBufferLoadingState([=](const std::string& var)
-    {
-        CCLog("缓冲状态: %s", var.c_str());
-    });
-    
     
     CAAVPlayerView* playerView = CAAVPlayerView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 640)));
     playerView->setPlayer(avplayer);
@@ -44,7 +39,7 @@ void AVPlayerViewTest::viewDidLoad()
     slider->setZOrder(100);
     this->getView()->addSubview(slider);
     slider->setMaxTrackTintImage(CAImage::CLEAR_IMAGE());
-    slider->setTargetForTouchUpSide([=](float var)
+    slider->setTarget([=](float var)
     {
         float current = var * avplayer->getDuration();
         avplayer->setCurrentTime(current);
@@ -87,13 +82,13 @@ void AVPlayerViewTest::viewDidLoad()
     }, CAButton::Event::TouchUpInSide);
     
 
-    avplayer->onPlayState([=](const std::string& var)
+    avplayer->onPlayState([=](const CAAVPlayer::PlayState& var)
     {
-        if (var.compare(PlayStatePlaying) == 0)
+        if (var == CAAVPlayer::PlayStatePlaying)
         {
             btn0->setTitleForState(CAControl::State::Normal, "暂停");
         }
-        else if (var.compare(PlayStatePause) == 0)
+        else if (var == CAAVPlayer::PlayStatePause)
         {
             btn0->setTitleForState(CAControl::State::Normal, "播放");
         }
@@ -108,6 +103,22 @@ void AVPlayerViewTest::viewDidLoad()
     {
         avplayer->stop();
     }, CAButton::Event::TouchUpInSide);
+    
+    
+    CAActivityIndicatorView* activity = CAActivityIndicatorView::createWithLayout(DLayoutFill);
+    playerView->addSubview(activity);
+    
+    avplayer->onPlayBufferLoadingState([=](const CAAVPlayer::PlayBufferLoadingState& var)
+    {
+        if (var == CAAVPlayer::PlaybackBufferEmpty)
+        {
+            activity->startAnimating();
+        }
+        else if (var == CAAVPlayer::PlaybackLikelyToKeepUp)
+        {
+            activity->stopAnimating();
+        }
+    });
 }
 
 void AVPlayerViewTest::viewDidUnload()
