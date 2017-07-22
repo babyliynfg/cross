@@ -730,6 +730,43 @@ void CAImage::convertRGBA8888ToRGB5A1(const unsigned char* data, unsigned long d
     }
 }
 
+/*
+void convertYUVToRGB888(int y, int u, int v, unsigned char* r, unsigned char* g, unsigned char* b)
+{
+    u = u - 128;
+    v = v - 128;
+    
+    *r    = (unsigned char)(y + v + ((v * 103) >> 8));
+    *g  = (unsigned char)(y - ((u * 88) >> 8) - ((v * 183) >> 8));
+    *b   = (unsigned char)(y + u +((u * 198) >> 8));
+}
+
+//I420是yuv420格式，是3个plane，排列方式为(Y)(U)(V)
+void convertI420ToRGB888(const unsigned char* src, unsigned char* outData, unsigned int width, unsigned int height)
+{
+    unsigned int numOfPixel = width * height;
+    unsigned int positionOfV = numOfPixel;
+    unsigned int positionOfU = numOfPixel/4 + numOfPixel;
+    
+    for(int i=0; i<height; i++)
+    {
+        unsigned int startY = i*width;
+        unsigned int step = (i/2)*(width/2);
+        unsigned int startU = positionOfV + step;
+        unsigned int startV = positionOfU + step;
+        for(unsigned int j = 0; j < width; j++)
+        {
+            unsigned int Y = startY + j;
+            unsigned int U = startU + j/2;
+            unsigned int V = startV + j/2;
+            unsigned int index = Y * 3;
+            
+            this->convertYUVToRGB888(src[Y], src[U], src[V], &outData[index+0], &outData[index+1], &outData[index+2]);
+            
+        }
+    }
+}
+*/
 CAImage::PixelFormat CAImage::convertI8ToFormat(const unsigned char* data, unsigned long dataLen,  CAImage::PixelFormat format, unsigned char** outData, unsigned long* outDataLen)
 {
     switch (format)
@@ -1831,8 +1868,6 @@ bool CAImage::initWithTGAData(tImageTGA* tgaData)
     return ret;
 }
 
-
-
 bool CAImage::initWithRawData(CAData* data,
                               const CAImage::PixelFormat& pixelFormat,
                               unsigned int pixelsWide,
@@ -1845,17 +1880,6 @@ bool CAImage::initWithRawData(CAData* data,
     if (m_pData == nullptr || m_pData->isNull())
     {
         return false;
-    }
-    
-    unsigned int bitsPerPixel;
-    //Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
-    if(pixelFormat == CAImage::PixelFormat::RGB888)
-    {
-        bitsPerPixel = 24;
-    }
-    else
-    {
-        bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
     }
     
     m_tContentSize = DSize(pixelsWide, pixelsHigh);

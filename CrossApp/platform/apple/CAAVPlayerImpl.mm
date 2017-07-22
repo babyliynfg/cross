@@ -77,6 +77,7 @@ static void playerLayer_play(AVPlayer* player, float rate, const std::function<v
         }
         [player setRate:rate];
     }
+
     
     CrossApp::CAScheduler::getScheduler()->schedule([=](float dt)
     {
@@ -387,6 +388,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     do
     {
         CC_BREAK_IF(_onImage == nullptr);
+        CC_BREAK_IF(_pasueTimer);
         
         CMTime itemTime = _player.currentItem.currentTime;
         CVPixelBufferRef pixelBuffer = [_videoOutPut copyPixelBufferForItemTime:itemTime itemTimeForDisplay:nil];
