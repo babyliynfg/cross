@@ -6,7 +6,7 @@
 
 USING_NS_CC;
 
-class RenderImageTest: public CAViewController, public CAScrollViewDelegate
+class RenderImageTest: public CAViewController
 {
     
 public:
@@ -20,23 +20,7 @@ protected:
     void viewDidLoad();
     
     void viewDidUnload();
-    
-public:
-    
-    DSize winSize;
-    DRect winRect;
-    
-    CAView* renderImage;
-    CAClippingView* m_clvImage;
-    CAClippingView* m_clv;
-    CAButton* render_btn;
-    int dle_ren_index;
-    
-public:
 
-    void scheduleFuck(float dt);
-    
-    virtual void getSelectedImage(CAImage *image);
 };
 
 
