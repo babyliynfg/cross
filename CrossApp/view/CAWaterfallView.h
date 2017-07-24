@@ -112,9 +112,9 @@ public:
 
 	virtual void switchPCMode(bool var);
 
-	CC_SYNTHESIZE(CAWaterfallViewDataSource*, m_pWaterfallViewDataSource, WaterfallViewDataSource);
+	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAWaterfallViewDataSource*, m_pWaterfallViewDataSource, WaterfallViewDataSource);
 	
-	CC_SYNTHESIZE(CAWaterfallViewDelegate*, m_pWaterfallViewDelegate, WaterfallViewDelegate);
+	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAWaterfallViewDelegate*, m_pWaterfallViewDelegate, WaterfallViewDelegate);
 
 	CC_SYNTHESIZE_RETAIN(CAView*, m_pWaterfallHeaderView, WaterfallHeaderView);
 

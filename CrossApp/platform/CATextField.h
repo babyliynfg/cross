@@ -126,7 +126,7 @@ public:
     bool init();
     
 	//delegate
-	CC_SYNTHESIZE(CATextFieldDelegate*, m_pDelegate, Delegate);
+	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CATextFieldDelegate*, m_pDelegate, Delegate);
 
     //edit clearButton default:ClearButtonNone
     //MarginsRight set,clearbutton will be clear

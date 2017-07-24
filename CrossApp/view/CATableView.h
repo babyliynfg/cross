@@ -142,9 +142,9 @@ public:
     
     const CAVector<CATableViewCell*>& displayingTableCell();
     
-    CC_SYNTHESIZE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
+    CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CATableViewDataSource*, m_pTableViewDataSource, TableViewDataSource);
     
-    CC_SYNTHESIZE(CATableViewDelegate*, m_pTableViewDelegate, TableViewDelegate);
+    CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CATableViewDelegate*, m_pTableViewDelegate, TableViewDelegate);
     
     CC_SYNTHESIZE_RETAIN(CAView*, m_pTableHeaderView, TableHeaderView);
     

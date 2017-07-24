@@ -108,7 +108,7 @@ public:
     static CATextView* createWithLayout(const DLayout& layout);
     
     //delegate
-    CC_SYNTHESIZE(CATextViewDelegate*, m_pDelegate, Delegate);
+    CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CATextViewDelegate*, m_pDelegate, Delegate);
     
     //Text     Text/Color
     CC_PROPERTY_PASS_BY_REF(std::string, m_sText, Text);

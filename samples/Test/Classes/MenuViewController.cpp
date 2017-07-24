@@ -46,7 +46,7 @@ void MenuViewController::viewDidLoad()
     
     m_pTableView = CATableView::createWithLayout(tableViewLayout);
     m_pTableView->setAllowsSelection(true);
-    m_pTableView->setBackgroundColor(CAColor4B::CLEAR);
+    m_pTableView->setBackgroundImage(nullptr);
     m_pTableView->setSeparatorColor(ccc4(166, 166, 166,100));
     m_pTableView->setShowsScrollIndicators(false);
     m_pTableView->setScrollEnabled(false);

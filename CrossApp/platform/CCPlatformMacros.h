@@ -248,4 +248,75 @@ TypeName &operator =(const TypeName &);
 #define CC_UNUSED
 #endif
 
+
+
+#define CC_PROPERTY_IS_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE varType is##funName(void); \
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(varType var);
+
+#define CC_PROPERTY_IS_PASS_BY_REF_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE const varType& is##funName(void); \
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(const varType& var);
+
+#define CC_PROPERTY_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE varType get##funName(void); \
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(varType var);
+
+#define CC_PROPERTY_PASS_BY_REF_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE const varType& get##funName(void); \
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(const varType& var);
+
+#define CC_SYNTHESIZE_IS_READONLY_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: CC_DEPRECATED_ATTRIBUTE varName; \
+public: CC_DEPRECATED_ATTRIBUTE varType is##funName(void) const { return varName; }
+
+#define CC_SYNTHESIZE_IS_READONLY_PASS_BY_REF_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE const varType& is##funName(void) const { return varName; }
+
+#define CC_SYNTHESIZE_READONLY_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE varType get##funName(void) const { return varName; }
+
+#define CC_SYNTHESIZE_READONLY_PASS_BY_REF_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE const varType& get##funName(void) const { return varName; }
+
+#define CC_SYNTHESIZE_IS_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE varType is##funName(void) const { return varName; }\
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(varType var){ varName = var; }
+
+#define CC_SYNTHESIZE_IS_PASS_BY_REF_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE const varType& is##funName(void) const { return varName; }\
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(const varType& var){ varName = var; }
+
+#define CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName;\
+public: CC_DEPRECATED_ATTRIBUTE varType get##funName(void) const { return varName; }\
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(varType var){ varName = var; }
+
+#define CC_SYNTHESIZE_PASS_BY_REF_DEPRECATED_ATTRIBUTE(varType, varName, funName)\
+protected: varType varName;\
+public: CC_DEPRECATED_ATTRIBUTE const varType& get##funName(void) const { return varName; }\
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(const varType& var){ varName = var; }
+
+#define CC_SYNTHESIZE_RETAIN_DEPRECATED_ATTRIBUTE(varType, varName, funName)    \
+private: varType varName; \
+public: CC_DEPRECATED_ATTRIBUTE varType get##funName(void) const { return varName; } \
+public: CC_DEPRECATED_ATTRIBUTE void set##funName(varType var)   \
+{ \
+if (varName != var) \
+{ \
+CC_SAFE_RETAIN(var); \
+CC_SAFE_RELEASE(varName); \
+varName = var; \
+} \
+}
+
 #endif // __CC_PLATFORM_MACROS_H__

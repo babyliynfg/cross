@@ -38,7 +38,7 @@ void TabBarControllerTest::viewDidLoad()
     
     CATabBar* tabBar1 = CATabBar::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(98, 0.66)));
     tabBar1->setBackgroundImage(CAImage::create("image/tab_news_bg.png"));
-    tabBar1->setSelectedBackgroundColor(CAColor4B::CLEAR);
+    tabBar1->setSelectedBackgroundImage(nullptr);
     tabBar1->setItems(it1);
     tabBar1->setTag(100);
     tabBar1->setSelectedAtIndex(0);

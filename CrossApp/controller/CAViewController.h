@@ -117,7 +117,6 @@ private:
 
 class CC_DLL CANavigationController
 : public CAViewController
-, public CANavigationBarDelegate
 {
     
 public:
@@ -207,8 +206,6 @@ protected:
     void popToRootViewControllerFinish();
     
     void homingViewControllerFinish();
-    
-    void navigationPopViewController(CANavigationBar* navigationBar, bool animated);
 
     void update(float dt);
     
@@ -246,7 +243,7 @@ public:
     virtual ~CATabBarController();
     
     virtual bool initWithViewControllers(const CAVector<CAViewController*>& viewControllers,
-                                         CABarVerticalAlignment var = CABarVerticalAlignment::Bottom);
+                                         CATabBar::VerticalAlignment var = CATabBar::VerticalAlignment::Bottom);
     
     bool showSelectedViewController(CAViewController* viewController);
     
@@ -262,7 +259,7 @@ public:
     
     CC_SYNTHESIZE_IS_READONLY(bool, m_bTabBarHidden, TabBarHidden);
     
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CABarVerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CATabBar::VerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
     
     CC_PROPERTY(CAImage*, m_pTabBarBackgroundImage, TabBarBackgroundImage);
     

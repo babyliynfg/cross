@@ -1552,7 +1552,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("backgroundColor"))
         {
-            scrollView->setBackgroundColor(ccc4Int(atoi(value)));
+            scrollView->setBackgroundImage(CAImage::createWithColor4B(ccc4Int(atoi(value))));
         }
         
         if (const char* value = viewXml->Attribute("backgroundImage"))
@@ -1643,7 +1643,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("backgroundColor"))
         {
-            pageView->setBackgroundColor(ccc4Int(atoi(value)));
+            pageView->setBackgroundImage(CAImage::createWithColor4B(ccc4Int(atoi(value))));
         }
         
         if (const char* value = viewXml->Attribute("backgroundImage"))
@@ -1700,7 +1700,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
         if (const char* value = viewXml->Attribute("backgroundColor"))
         {
-            listView->setBackgroundColor(ccc4Int(atoi(value)));
+            listView->setBackgroundImage(CAImage::createWithColor4B(ccc4Int(atoi(value))));
         }
         
         if (const char* value = viewXml->Attribute("backgroundImage"))
@@ -1785,7 +1785,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("backgroundColor"))
         {
-            tableView->setBackgroundColor(ccc4Int(atoi(value)));
+            tableView->setBackgroundImage(CAImage::createWithColor4B(ccc4Int(atoi(value))));
         }
         
         if (const char* value = viewXml->Attribute("backgroundImage"))
@@ -1876,7 +1876,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("backgroundColor"))
         {
-            autoCollectionView->setBackgroundColor(ccc4Int(atoi(value)));
+            autoCollectionView->setBackgroundImage(CAImage::createWithColor4B(ccc4Int(atoi(value))));
         }
         
         if (const char* value = viewXml->Attribute("backgroundImage"))
@@ -1992,7 +1992,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("backgroundColor"))
         {
-            collectionView->setBackgroundColor(ccc4Int(atoi(value)));
+            collectionView->setBackgroundImage(CAImage::createWithColor4B(ccc4Int(atoi(value))));
         }
         
         if (const char* value = viewXml->Attribute("backgroundImage"))
@@ -2093,7 +2093,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         
         if (const char* value = viewXml->Attribute("backgroundColor"))
         {
-            waterfallView->setBackgroundColor(ccc4Int(atoi(value)));
+            waterfallView->setBackgroundImage(CAImage::createWithColor4B(ccc4Int(atoi(value))));
         }
         
         if (const char* value = viewXml->Attribute("backgroundImage"))

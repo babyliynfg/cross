@@ -113,10 +113,8 @@ public:
     
     DPoint getContentOffset();
     
-    void setBackgroundImage(CAImage* image);
+    void setBackgroundImage(CAImage* image, bool isScale9 = false);
 
-    void setBackgroundColor(const CAColor4B &color);
-    
     void setZoomScale(float zoom);
 
     virtual bool isReachBoundaryLeft();
@@ -135,7 +133,7 @@ public:
     
     CC_PROPERTY_IS(bool, m_bShowsVerticalScrollIndicator, ShowsVerticalScrollIndicator);// default is true
     
-    CC_SYNTHESIZE(CAScrollViewDelegate*, m_pScrollViewDelegate, ScrollViewDelegate);
+    CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAScrollViewDelegate*, m_pScrollViewDelegate, ScrollViewDelegate);
     
     CC_PROPERTY_IS(bool, m_bBounces, Bounces);
     
@@ -288,6 +286,8 @@ protected:
     DPoint m_tCloseToPoint;
     
     DPoint m_tInitialPoint;
+    
+    CAView* m_pBackgroundView;
     
     bool m_bPCMode;
 };

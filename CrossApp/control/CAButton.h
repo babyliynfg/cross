@@ -55,9 +55,12 @@ public:
     
     virtual bool init() override;
     
-    void setBackgroundViewForState(CAControl::State state, CAView *var);
-    CAView* getBackgroundViewForState(CAControl::State state);
+    CC_DEPRECATED_ATTRIBUTE void setBackgroundViewForState(CAControl::State state, CAView *var);
+    CC_DEPRECATED_ATTRIBUTE CAView* getBackgroundViewForState(CAControl::State state);
     
+    void setBackgroundImageForState(CAControl::State state, CAImage* image, bool isScale9);
+    CAImage* getBackgroundImageForState(CAControl::State state);
+        
     void setImageForState(CAControl::State state, CAImage* var);
     CAImage* getImageForState(CAControl::State state);
     

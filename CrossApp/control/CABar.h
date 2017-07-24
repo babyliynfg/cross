@@ -18,25 +18,9 @@
 
 NS_CC_BEGIN
 
-enum class CABarVerticalAlignment
-{
-    Top = 0,
-    Bottom
-};
-
-class CANavigationBar;
-class CC_DLL CANavigationBarDelegate
-{
-public:
-    
-    virtual void navigationPopViewController(CANavigationBar* navigationBar, bool animated) = 0;
-    
-};
-
 class CC_DLL CANavigationBar
 : public CAView
 {
-    
 public:
     
     CANavigationBar(bool clearance = false);
@@ -53,6 +37,8 @@ public:
     
     virtual void onExitTransitionDidStart();
     
+    CC_LISTENING_FUNCTION(void(), PopViewController);
+    
     virtual void setBackgroundView(CAView* var);
     
     CC_SYNTHESIZE_READONLY(CAView*, m_pBackgroundView, BackgroundView);
@@ -64,9 +50,7 @@ public:
     virtual void setButtonColor(const CAColor4B& color);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAColor4B, m_cButtonColor, ButtonColor);
-    
-    CC_SYNTHESIZE(CANavigationBarDelegate* , m_pDelegate, Delegate);
-    
+
     virtual void setItem(CANavigationBarItem* item);
     
     CC_SYNTHESIZE_READONLY(CANavigationBarItem*, m_pItem, Item);
@@ -132,6 +116,12 @@ class CC_DLL CATabBar
     
 public:
 
+    enum class VerticalAlignment
+    {
+        Top = 0,
+        Bottom
+    };
+    
     CATabBar(bool clearance = false);
     
     virtual ~CATabBar();
@@ -154,15 +144,9 @@ public:
     
     CC_PROPERTY(CAImage*, m_pBackgroundImage, BackgroundImage);
     
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sBackgroundColor, BackgroundColor);
-    
     CC_PROPERTY(CAImage*, m_pSelectedBackgroundImage, SelectedBackgroundImage);
-    
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedBackgroundColor, SelectedBackgroundColor);
 
     CC_PROPERTY(CAImage*, m_pSelectedIndicatorImage, SelectedIndicatorImage);
-    
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedIndicatorColor, SelectedIndicatorColor);
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTitleColor, TitleColorForNormal);
     

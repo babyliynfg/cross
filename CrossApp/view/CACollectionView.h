@@ -158,9 +158,9 @@ public:
     
     const CAVector<CACollectionViewCell*>& displayingCollectionCell();
     
-    CC_SYNTHESIZE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
+    CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CACollectionViewDataSource*, m_pCollectionViewDataSource, CollectionViewDataSource);
     
-	CC_SYNTHESIZE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
+	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CACollectionViewDelegate*, m_pCollectionViewDelegate, CollectionViewDelegate);
     
 	CC_SYNTHESIZE_RETAIN(CAView*, m_pCollectionHeaderView, CollectionHeaderView);
     

@@ -94,8 +94,8 @@ public:
 
 	virtual void setBackgroundColor(const CAColor4B& color);
 
-	CC_SYNTHESIZE(CAPickerViewDelegate*, m_delegate, PickerViewDelegate);
-	CC_SYNTHESIZE(CAPickerViewDataSource*, m_dataSource, PickerViewDataSource);
+	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAPickerViewDelegate*, m_delegate, PickerViewDelegate);
+	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAPickerViewDataSource*, m_dataSource, PickerViewDataSource);
     
     CC_SYNTHESIZE(float, m_fontSizeNormal, FontSizeNormal);
     CC_SYNTHESIZE(float, m_fontSizeSelected, FontSizeSelected);

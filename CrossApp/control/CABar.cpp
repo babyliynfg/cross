@@ -23,7 +23,6 @@ NS_CC_BEGIN
 CANavigationBar::CANavigationBar(bool clearance)
 :m_pContentView(nullptr)
 ,m_pTitle(nullptr)
-,m_pDelegate(nullptr)
 ,m_pBackgroundView(nullptr)
 ,m_cTitleColor(CAColor4B::WHITE)
 ,m_cButtonColor(CAColor4B::WHITE)
@@ -417,9 +416,9 @@ void CANavigationBar::showRightButton()
 
 void CANavigationBar::goBack()
 {
-    if (m_pDelegate)
+    if (m_obPopViewController)
     {
-        m_pDelegate->navigationPopViewController(this, true);
+        m_obPopViewController();
     }
 }
 
@@ -483,11 +482,8 @@ CATabBar::CATabBar(bool clearance)
 ,m_pBackgroundView(nullptr)
 ,m_pSelectedIndicatorView(nullptr)
 ,m_pBackgroundImage(nullptr)
-,m_sBackgroundColor(CAColor4B::WHITE)
 ,m_pSelectedBackgroundImage(nullptr)
-,m_sSelectedBackgroundColor(CAColor4B::WHITE)
 ,m_pSelectedIndicatorImage(nullptr)
-,m_sSelectedIndicatorColor(CAColor4B::WHITE)
 ,m_pSelectedItem(nullptr)
 ,m_cItemSize(DSizeZero)
 ,m_nSelectedIndex(-1)
@@ -627,20 +623,10 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
             btn->setImageForState(CAControl::State::Highlighted, selectedImage);
             btn->setImageForState(CAControl::State::Disabled, selectedImage);
             btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::CLEAR));
-            if (m_pSelectedBackgroundImage)
-            {
-                btn->setBackgroundViewForState(CAControl::State::Highlighted,
-                                               CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
-                btn->setBackgroundViewForState(CAControl::State::Disabled,
-                                               CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
-            }
-            else
-            {
-                btn->setBackgroundViewForState(CAControl::State::Highlighted,
-                                               CAView::createWithColor(m_sSelectedBackgroundColor));
-                btn->setBackgroundViewForState(CAControl::State::Disabled,
-                                               CAView::createWithColor(m_sSelectedBackgroundColor));
-            }
+            btn->setBackgroundViewForState(CAControl::State::Highlighted,
+                                           CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
+            btn->setBackgroundViewForState(CAControl::State::Disabled,
+                                           CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
             
             DRect badgeRect;
             badgeRect.origin = rect.origin + DPoint(rect.size.width - 55, 25);
@@ -743,7 +729,6 @@ void CATabBar::setBackgroundImage(CrossApp::CAImage *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pBackgroundImage);
     m_pBackgroundImage = var;
-    m_sBackgroundColor = CAColor4B::WHITE;
     this->showBackground();
 }
 
@@ -752,24 +737,12 @@ CAImage* CATabBar::getBackgroundImage()
     return m_pBackgroundImage;
 }
 
-void CATabBar::setBackgroundColor(const CAColor4B &var)
-{
-    m_sBackgroundColor = var;
-    CC_SAFE_RELEASE_NULL(m_pBackgroundImage);
-    this->showBackground();
-}
-
-const CAColor4B& CATabBar::getBackgroundColor()
-{
-    return m_sBackgroundColor;
-}
 
 void CATabBar::setSelectedBackgroundImage(CrossApp::CAImage *var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pSelectedBackgroundImage);
     m_pSelectedBackgroundImage = var;
-    m_sSelectedBackgroundColor = CAColor4B::WHITE;
     
     this->showSelectedBackground();
 }
@@ -779,24 +752,11 @@ CAImage* CATabBar::getSelectedBackgroundImage()
     return m_pSelectedBackgroundImage;
 }
 
-void CATabBar::setSelectedBackgroundColor(const CAColor4B &var)
-{
-    m_sSelectedBackgroundColor = var;
-    CC_SAFE_RELEASE_NULL(m_pSelectedBackgroundImage);
-    this->showSelectedBackground();
-}
-
-const CAColor4B& CATabBar::getSelectedBackgroundColor()
-{
-    return m_sSelectedBackgroundColor;
-};
-
 void CATabBar::setSelectedIndicatorImage(CrossApp::CAImage *var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorImage);
     m_pSelectedIndicatorImage = var;
-    m_sSelectedIndicatorColor = CAColor4B::WHITE;
     CC_RETURN_IF(var == NULL);
     
     this->showSelectedIndicatorView();
@@ -805,20 +765,6 @@ void CATabBar::setSelectedIndicatorImage(CrossApp::CAImage *var)
 CAImage* CATabBar::getSelectedIndicatorImage()
 {
     return m_pSelectedIndicatorImage;
-}
-
-
-void CATabBar::setSelectedIndicatorColor(const CAColor4B &var)
-{
-    m_sSelectedIndicatorColor = var;
-    CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorImage);
-    
-    this->showSelectedIndicatorView();
-}
-
-const CAColor4B& CATabBar::getSelectedIndicatorColor()
-{
-    return m_sSelectedIndicatorColor;
 }
 
 void CATabBar::setTitleColorForNormal(const CAColor4B &var)
@@ -887,14 +833,7 @@ void CATabBar::showBackground()
 {
     this->removeSubview(m_pBackgroundView);
     
-    if (m_pBackgroundImage)
-    {
-        m_pBackgroundView = CAScale9ImageView::createWithImage(m_pBackgroundImage);
-    }
-    else
-    {
-        m_pBackgroundView = CAView::createWithColor(m_sBackgroundColor);
-    }
+    m_pBackgroundView = CAScale9ImageView::createWithImage(m_pBackgroundImage);
     m_pBackgroundView->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(0, 0)));
     this->insertSubview(m_pBackgroundView, -1);
 }
@@ -915,20 +854,10 @@ void CATabBar::showSelectedBackground()
         btn->setImageForState(CAControl::State::Highlighted, selectedImage);
         btn->setImageForState(CAControl::State::Disabled, selectedImage);
         btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::CLEAR));
-        if (m_pSelectedBackgroundImage)
-        {
-            btn->setBackgroundViewForState(CAControl::State::Highlighted,
-                                           CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
-            btn->setBackgroundViewForState(CAControl::State::Disabled,
-                                           CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
-        }
-        else
-        {
-            btn->setBackgroundViewForState(CAControl::State::Highlighted,
-                                           CAView::createWithColor(m_sSelectedBackgroundColor));
-            btn->setBackgroundViewForState(CAControl::State::Disabled,
-                                           CAView::createWithColor(m_sSelectedBackgroundColor));
-        }
+        btn->setBackgroundViewForState(CAControl::State::Highlighted,
+                                       CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
+        btn->setBackgroundViewForState(CAControl::State::Disabled,
+                                       CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
         
         CABadgeView* badgeView = m_pBadgeViews.at(i);
         badgeView->setBadgeText(m_pItems.at(i)->getBadgeValue());
@@ -938,20 +867,13 @@ void CATabBar::showSelectedBackground()
 void CATabBar::showSelectedIndicatorView()
 {
     m_pContentView->removeSubview(m_pSelectedIndicatorView);
-    if (m_pSelectedIndicatorImage)
-    {
-        CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(m_pSelectedIndicatorImage);
-        DRect insetRect;
-        insetRect.origin = m_pSelectedIndicatorImage->getContentSize() / 2;
-        insetRect.origin = ccpSub(insetRect.origin, DPoint(1, 1));
-        insetRect.size = DPoint(2, 2);
-        imageView->setCapInsets(insetRect);
-        m_pSelectedIndicatorView = imageView;
-    }
-    else
-    {
-        m_pSelectedIndicatorView = CAView::createWithColor(m_sSelectedIndicatorColor);
-    }
+    CAScale9ImageView* imageView = CAScale9ImageView::createWithImage(m_pSelectedIndicatorImage);
+    DRect insetRect;
+    insetRect.origin = m_pSelectedIndicatorImage->getContentSize() / 2;
+    insetRect.origin = ccpSub(insetRect.origin, DPoint(1, 1));
+    insetRect.size = DPoint(2, 2);
+    imageView->setCapInsets(insetRect);
+    m_pSelectedIndicatorView = imageView;
     
     DLayout layout;
     layout.vertical.height = 8;

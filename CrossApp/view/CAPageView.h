@@ -64,7 +64,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(Orientation, m_eOrientation, Orientation);
     
-    CC_SYNTHESIZE(CAPageViewDelegate* , m_pPageViewDelegate, PageViewDelegate);
+    CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAPageViewDelegate* , m_pPageViewDelegate, PageViewDelegate);
     
     CC_PROPERTY_READONLY(int, m_nCurrPage, CurrPage);
     

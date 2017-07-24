@@ -570,7 +570,10 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
 
     navigationBar->setTitleColor(m_sNavigationBarTitleColor);
     container->insertSubview(navigationBar, 1);
-    navigationBar->setDelegate(this);
+    navigationBar->onPopViewController([&]
+    {
+        this->popViewControllerAnimated(true);
+    });
     m_pNavigationBars.pushBack(navigationBar);
     
     DLayout secondLayout;
@@ -946,11 +949,6 @@ CAViewController* CANavigationController::popViewControllerAtIndex(int index)
     return viewController;
 }
 
-void CANavigationController::navigationPopViewController(CANavigationBar* navigationBar, bool animated)
-{
-    this->popViewControllerAnimated(animated);
-}
-
 CAViewController* CANavigationController::getViewControllerAtIndex(int index)
 {
     do
@@ -1248,7 +1246,7 @@ void CATabBarController::setTabBarBackgroundColor(const CAColor4B &var)
     
     if (m_pTabBar)
     {
-        m_pTabBar->setBackgroundColor(m_sTabBarBackgroundColor);
+        m_pTabBar->setBackgroundImage(CAImage::createWithColor4B(m_sTabBarBackgroundColor));
     }
 }
 
@@ -1282,7 +1280,7 @@ void CATabBarController::setTabBarSelectedBackgroundColor(const CAColor4B &var)
     
     if (m_pTabBar)
     {
-        m_pTabBar->setSelectedBackgroundColor(m_sTabBarSelectedBackgroundColor);
+        m_pTabBar->setSelectedBackgroundImage(CAImage::createWithColor4B(m_sTabBarSelectedBackgroundColor));
     }
 }
 
@@ -1316,7 +1314,7 @@ void CATabBarController::setTabBarSelectedIndicatorColor(const CAColor4B &var)
     
     if (m_pTabBar)
     {
-        m_pTabBar->setSelectedIndicatorColor(m_sTabBarSelectedIndicatorColor);
+        m_pTabBar->setSelectedIndicatorImage(CAImage::createWithColor4B(m_sTabBarSelectedIndicatorColor));
     }
 }
 
@@ -1379,7 +1377,7 @@ void CATabBarController::showTabBarSelectedIndicator()
     }
 }
 
-bool CATabBarController::initWithViewControllers(const CAVector<CAViewController*>& viewControllers, CABarVerticalAlignment var)
+bool CATabBarController::initWithViewControllers(const CAVector<CAViewController*>& viewControllers, CATabBar::VerticalAlignment var)
 {
     CAViewController::init();
     
@@ -1427,7 +1425,7 @@ void CATabBarController::viewDidLoad()
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     if (atof(CADevice::getSystemVersion().version.c_str()) >= 7.0f
         && m_iTabBarHeight == 0
-        && m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
+        && m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
     {
         clearance = true;
     }
@@ -1438,7 +1436,7 @@ void CATabBarController::viewDidLoad()
     
     if (m_iTabBarHeight == 0)
     {
-        if (m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
+        if (m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
         {
             m_iTabBarHeight = clearance ? 138 : 98;
         }
@@ -1448,7 +1446,7 @@ void CATabBarController::viewDidLoad()
         }
     }
     
-    if (m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
+    if (m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
     {
         tabBarLayout.vertical.top = m_bTabBarHidden ? -m_iTabBarHeight : 0;
         tabBarLayout.vertical.height = m_iTabBarHeight;
@@ -1463,7 +1461,7 @@ void CATabBarController::viewDidLoad()
     DLayout viewLayout;
     viewLayout.horizontal = DHorizontalLayoutFill;
     
-    if (m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
+    if (m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
     {
         viewLayout.vertical = DVerticalLayout_T_B(tabBarLayout.vertical.top + tabBarLayout.vertical.height, 0);
     }
@@ -1484,7 +1482,7 @@ void CATabBarController::viewDidLoad()
     }
     else
     {
-        m_pTabBar->setBackgroundColor(m_sTabBarBackgroundColor);
+        m_pTabBar->setBackgroundImage(CAImage::createWithColor4B(m_sTabBarBackgroundColor));
     }
     
     
@@ -1494,7 +1492,7 @@ void CATabBarController::viewDidLoad()
     }
     else
     {
-        m_pTabBar->setSelectedBackgroundColor(m_sTabBarSelectedBackgroundColor);
+        m_pTabBar->setSelectedBackgroundImage(CAImage::createWithColor4B(m_sTabBarSelectedBackgroundColor));
     }
     
     
@@ -1504,7 +1502,7 @@ void CATabBarController::viewDidLoad()
     }
     else
     {
-        m_pTabBar->setSelectedIndicatorColor(m_sTabBarSelectedIndicatorColor);
+        m_pTabBar->setSelectedIndicatorImage(CAImage::createWithColor4B(m_sTabBarSelectedIndicatorColor));
     }
     
     
@@ -1646,6 +1644,7 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
     
     if (animated)
     {
+        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
         CACustomAnimation::schedule([&](const CACustomAnimation::Model& model)
         {
             m_fProgress = model.now / model.total;
@@ -1654,19 +1653,13 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
             {
                 this->update(0);
             }
+            
+            if (model.end)
+            {
+                CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+            }
+            
         }, "CATabBarController:" + m_s__StrID, 0.25f);
-        
-        CAViewAnimation::beginAnimations("");
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationWillStartSelector([]()
-        {
-            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
-        });
-        CAViewAnimation::setAnimationDidStopSelector([]()
-        {
-            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
-        });
-        CAViewAnimation::commitAnimations();
     }
     else
     {
@@ -1683,17 +1676,19 @@ void CATabBarController::setTabBarHidden(bool hidden, bool animated)
 void CATabBarController::update(float dt)
 {
     int y = this->getTabBarNowY();
-    
+
     switch (m_eTabBarVerticalAlignment)
     {
-        case CABarVerticalAlignment::Top:
+        case CATabBar::VerticalAlignment::Top:
         {
             m_obTabBarLayout.vertical.top = y;
+            m_obViewLayout.vertical.top = y + m_iTabBarHeight;
         }
             break;
-        case CABarVerticalAlignment::Bottom:
+        case CATabBar::VerticalAlignment::Bottom:
         {
             m_obTabBarLayout.vertical.bottom = y;
+            m_obViewLayout.vertical.bottom = y + m_iTabBarHeight;
         }
             break;
         default:
@@ -1701,6 +1696,11 @@ void CATabBarController::update(float dt)
     }
     
     m_pTabBar->setLayout(m_obTabBarLayout);
+    
+    for (auto &var : m_pViewControllers)
+    {
+        var->getView()->setLayout(m_obViewLayout);
+    }
 }
 
 NS_CC_END;

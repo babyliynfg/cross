@@ -189,6 +189,50 @@ void CAButton::setBackgroundViewRoundedRect()
     
 }
 
+void CAButton::setBackgroundImageForState(CAControl::State state, CAImage* image, bool isScale9)
+{
+    CCAssert(state != CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");
+    if (m_mBackgroundViews.contains(state))
+    {
+        this->removeSubview(m_mBackgroundViews.at(state));
+        m_mBackgroundViews.erase(state);
+    }
+    
+    if (isScale9)
+    {
+        CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
+        backgroundView->setLayout(DLayoutFill);
+        this->insertSubview(backgroundView, -1);
+        m_mBackgroundViews.insert(state, backgroundView);
+    }
+    else
+    {
+        CAImageView* backgroundView = CAImageView::createWithImage(image);
+        backgroundView->setLayout(DLayoutFill);
+        this->insertSubview(backgroundView, -1);
+        m_mBackgroundViews.insert(state, backgroundView);
+    }
+    
+    if (m_bRunning)
+    {
+        this->setControlState(m_eState);
+    }
+}
+
+CAImage* CAButton::getBackgroundImageForState(CAControl::State state)
+{
+    if (CAScale9ImageView* var = dynamic_cast<CAScale9ImageView*>(m_mBackgroundViews.at(state)))
+    {
+        return var->getImage();
+    }
+    else if (CAImageView* var = dynamic_cast<CAImageView*>(m_mBackgroundViews.at(state)))
+    {
+        return var->getImage();
+    }
+    return nullptr;
+}
+
+
 void CAButton::setBackgroundViewForState(CAControl::State state, CAView *var)
 {
     CCAssert(state != CAControl::State::Selected, "CAButton does not support the use of CAControl::State::Selected");

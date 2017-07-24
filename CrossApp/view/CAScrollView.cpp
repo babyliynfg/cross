@@ -51,6 +51,7 @@ CAScrollView::CAScrollView()
 ,m_eMultitouchGesture(MultitouchGesture::None)
 ,m_pHeaderRefreshView(nullptr)
 ,m_pFooterRefreshView(nullptr)
+,m_pBackgroundView(nullptr)
 ,m_bPCMode(false)
 {
     this->setPriorityScroll(true);
@@ -427,19 +428,27 @@ DPoint CAScrollView::getContentOffset()
     return ccpMult(ccpSub(m_pContainer->m_obPoint, ccpMult(m_pContainer->getAnchorPointInPoints(), m_pContainer->getScale())), -1);
 }
 
-void CAScrollView::setBackgroundImage(CAImage* image)
+void CAScrollView::setBackgroundImage(CAImage* image, bool isScale9)
 {
-    CAView::setImage(image);
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->removeFromSuperview();
+    }
     
-    DRect rect = DRectZero;
-    rect.size = image->getContentSize();
-    CAView::setImageRect(rect);
-}
-
-void CAScrollView::setBackgroundColor(const CAColor4B &color)
-{
-    CAView::setImage(CAImage::WHITE_IMAGE());
-    CAView::setColor(color);
+    if (isScale9)
+    {
+        CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
+        backgroundView->setLayout(DLayoutFill);
+        this->insertSubview(backgroundView, -1);
+        m_pBackgroundView = backgroundView;
+    }
+    else
+    {
+        CAImageView* backgroundView = CAImageView::createWithImage(image);
+        backgroundView->setLayout(DLayoutFill);
+        this->insertSubview(backgroundView, -1);
+        m_pBackgroundView = backgroundView;
+    }
 }
 
 void CAScrollView::setZoomScale(float zoom)

@@ -111,9 +111,9 @@ public:
     
 	CC_PROPERTY(CAListView::Orientation, m_eOrientation, Orientation);
 
-    CC_SYNTHESIZE(CAListViewDataSource*, m_pListViewDataSource, ListViewDataSource);
+    CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAListViewDataSource*, m_pListViewDataSource, ListViewDataSource);
     
-	CC_SYNTHESIZE(CAListViewDelegate*, m_pListViewDelegate, ListViewDelegate);
+	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAListViewDelegate*, m_pListViewDelegate, ListViewDelegate);
     
 	CC_SYNTHESIZE_RETAIN(CAView*, m_pListHeaderView, ListHeaderView);
 
