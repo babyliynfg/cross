@@ -7,16 +7,17 @@ var AVPlayerViewTest = ca.CAViewController.extend({
     },
     viewDidLoad: function() {
         var avplayer = ca.CAAVPlayer.createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
+        //var avplayer = ca.CAAVPlayer.createWithFilePath("/sdcard/abc.mp4");
 
         avplayer.onDidPlayToEndTime(function ()
         {
             avplayer.stop();
         });
 
-        avplayer.onTimeJumped(function ()
-        {
-            ca.log("进度调整");
-        });
+        //avplayer.onTimeJumped(function ()
+        //{
+        //    ca.log("进度调整");
+        //});
 
         var playerView = ca.CAAVPlayerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 640)));
         playerView.setPlayer(avplayer);
@@ -35,10 +36,10 @@ var AVPlayerViewTest = ca.CAViewController.extend({
             var current = value * avplayer.getDuration();
             avplayer.setCurrentTime(current);
         });
-        avplayer.onPeriodicTime(function (current, duration)
-        {
-            slider.setValue(current / duration);
-        });
+         //avplayer.onPeriodicTime(function (current, duration)
+         //{
+         //    slider.setValue(current / duration);
+         //});
 
         var progress = ca.CAProgress.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(3, 3), ca.DVerticalLayoutFill));
         progress.setProgress(0);
@@ -47,10 +48,10 @@ var AVPlayerViewTest = ca.CAViewController.extend({
         progress.setProgressTintImage(progress.getProgressTrackImage());
         progress.setProgressTintColor(ca.CAColor4B.RED);
         progress.setProgressTrackColor(ca.CAColor4B.YELLOW);
-        avplayer.onLoadedTime(function( current, duration)
-        {
-            progress.setProgress(current / duration);
-        });
+         //avplayer.onLoadedTime(function( current, duration)
+         //{
+         //    progress.setProgress(current / duration);
+         //});
 
 
         var btn0 = ca.CAButton.create(ca.CAButton.Type.RoundedRect);
@@ -97,17 +98,17 @@ var AVPlayerViewTest = ca.CAViewController.extend({
 
         var activity = ca.CAActivityIndicatorView.createWithLayout(ca.DLayoutFill);
         playerView.addSubview(activity);
-        avplayer.onPlayBufferLoadingState(function(state)
-        {
-            if (state == ca.CAAVPlayer.PlaybackBufferEmpty)
-            {
-                activity.startAnimating();
-            }
-        else if (state == ca.CAAVPlayer.PlaybackLikelyToKeepUp)
-            {
-                activity.stopAnimating();
-            }
-        });
+         avplayer.onPlayBufferLoadingState(function(state)
+         {
+             if (state == ca.CAAVPlayer.PlaybackBufferEmpty)
+             {
+                 activity.startAnimating();
+             }
+         else if (state == ca.CAAVPlayer.PlaybackLikelyToKeepUp)
+             {
+                 activity.stopAnimating();
+             }
+         });
 
     },
 

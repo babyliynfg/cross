@@ -54,7 +54,6 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* Player)
         if(m_pPlayer->m_obPeriodicTime)
             m_pPlayer->m_obPeriodicTime(current,duratuon) ;
     };
-    
     s_LoadedTime_map[m_pPlayer->m_u__ID] = [&](float current, float duratuon)
     {
         if(m_pPlayer->m_obLoadedTime)
@@ -247,6 +246,7 @@ CAImage* CAAVPlayerImpl::getFirstFrameImageWithFilePath(const std::string& fileP
     return image;
 }
 
+
 extern "C"
 {
     
@@ -312,7 +312,7 @@ extern "C"
         {
             if (auto& callback = s_PeriodicTime_map.at((int)key))
             {
-                callback((float)current,(float)duration);
+                callback((float) current, (float) duration);
             }
         }
         
@@ -325,7 +325,7 @@ extern "C"
         {
             if (auto& callback = s_LoadedTime_map.at((int)key))
             {
-                callback((float)current,(float)duration);
+                callback((float)current, (float)duration);
             }
         }
         
