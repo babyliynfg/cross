@@ -10,12 +10,14 @@ import java.util.Set;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnSeekCompleteListener;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -164,6 +166,23 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			}
 		});
 	}
+	
+	/**
+	 * 显示一个界面
+	 * @param url
+	 */
+	public static void showAVPlayerController(String url, int local){
+		String loadString = url ; 
+		if (local>0) {
+			loadString = "file:///android_asset/" + url;
+		}
+		Uri uri = Uri.parse(loadString);     
+		//调用系统自带的播放器
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setDataAndType(uri, "video/*");  
+		CrossAppActivity.getContext().startActivity(intent);
+	}
+	
 	
 	public static void addVideoByKey(int key){
 		CrossAppVideoPlayer p = CrossAppVideoPlayer.create(key) ; 

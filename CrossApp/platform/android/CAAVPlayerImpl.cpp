@@ -13,7 +13,7 @@ NS_CC_BEGIN
 
 
 static std::map<int , CAAVPlayer*> s_map;
-static std::map<CAAVPlayer* , std::string> s_mapUrl;
+static std::map<CAAVPlayer* , std::pair<bool, std::string> > s_mapUrl;
 static std::map<int , std::function<void(CAImage*)> > s_ImageCallback_map;
 static std::map<int , std::function<void(float current, float duratuon)> > s_PeriodicTime_map;
 static std::map<int , std::function<void(float current, float duratuon)> > s_LoadedTime_map;
@@ -22,7 +22,6 @@ static std::map<int , std::function<void()> > s_TimeJumped_map;
 
 static std::map<int , std::function<void(const std::string&)> > s_PlayBufferLoadingState_map;
 static std::map<int , std::function<void(const std::string&)> > s_PlayState_map;
-
 
 void removePlayer(int key)
 {
@@ -103,7 +102,7 @@ CAAVPlayerImpl::~CAAVPlayerImpl()
 
 void CAAVPlayerImpl::setUrl(const std::string& url)
 {
-    s_mapUrl[m_pPlayer] = url;
+    s_mapUrl[m_pPlayer] = std::pair<bool, std::string>(true, url);
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setUrl", "(Ljava/lang/String;I)V"))
     {
@@ -116,7 +115,7 @@ void CAAVPlayerImpl::setUrl(const std::string& url)
 
 void CAAVPlayerImpl::setFilePath(const std::string& filePath)
 {
-    s_mapUrl[m_pPlayer] = filePath;
+    s_mapUrl[m_pPlayer] = std::pair<bool, std::string>(false, filePath);
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setFilePath", "(Ljava/lang/String;I)V"))
     {
@@ -245,6 +244,27 @@ CAImage* CAAVPlayerImpl::getFirstFrameImageWithFilePath(const std::string& fileP
     image_frame_getter= nullptr;
     return image;
 }
+
+
+//void CAAVPlayerControllerImpl::showAVPlayerController(CAAVPlayer* player)
+//{
+//    JniMethodInfo jni;
+//    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "showAVPlayerController", "(Ljava/lang/String;I)V"))
+//    {
+//        int local = 0 ;
+//        bool b = s_mapUrl[player].first;
+//        std::string& url = s_mapUrl[player].second ;
+//        
+//        //本地
+//        if(!b)
+//        {
+//            local = 1 ;
+//        }
+//        
+//        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID, url.c_str() , local);
+//        jni.env->DeleteLocalRef(jni.classID);
+//    }
+//}
 
 
 extern "C"
