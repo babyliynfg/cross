@@ -1,6 +1,6 @@
 
 #include "ImageViewTest.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 int ImageViewNum = 0;
 
@@ -17,7 +17,7 @@ ImageViewTest::~ImageViewTest()
     ImageViewNum = 0;
 }
 
-void CDUIShowAutoCollectionView::ImageViewRightBtnRightcallback(CAButton* btn)
+void FirstViewController::ImageViewRightBtnRightcallback(CAButton* btn)
 {
     if (showImageViewNavigationBar >= 4)
     {

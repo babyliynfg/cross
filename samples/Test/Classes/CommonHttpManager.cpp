@@ -297,7 +297,7 @@ void CommonHttpManager::send_post(const std::string& url,
         }
         else
         {
-            CCLog("ResponseCode:%d, Error:%s",response->getResponseCode(),response->getErrorBuffer());
+            CCLog("ResponseCode:%ld, Error:%s",response->getResponseCode(),response->getErrorBuffer());
             if (callback)
             {
                 callback(CommonHttpManager::ResponseStatus::Faild, CSJson::Value());
@@ -375,7 +375,7 @@ void CommonHttpManager::send_postFile(const std::string& url,
         }
         else
         {
-            CCLog("ResponseCode:%d, Error:%s",response->getResponseCode(),response->getErrorBuffer());
+            CCLog("ResponseCode:%ld, Error:%s",response->getResponseCode(),response->getErrorBuffer());
             if (callback)
             {
                 callback(CommonHttpManager::ResponseStatus::Faild, CSJson::Value());

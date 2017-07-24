@@ -1,6 +1,6 @@
 
 #include "SliderTest.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 int SliderNum = 0;
 
@@ -17,7 +17,7 @@ SliderTest::~SliderTest()
     SliderNum = 0;
 }
 
-void CDUIShowAutoCollectionView::SliderRightBtnRightcallback(CAButton* btn)
+void FirstViewController::SliderRightBtnRightcallback(CAButton* btn)
 {
     if (showSliderNavigationBar >= 1)
     {

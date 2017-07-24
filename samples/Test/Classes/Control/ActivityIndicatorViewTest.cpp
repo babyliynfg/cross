@@ -1,6 +1,6 @@
 
 #include "ActivityIndicatorViewTest.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 int ActivityIndicatorNum = 0;
 
@@ -17,7 +17,7 @@ ActivityIndicatorViewTest::~ActivityIndicatorViewTest()
     ActivityIndicatorNum = 0;
 }
 
-void CDUIShowAutoCollectionView::ActivityIndicatorRightBtnRightcallback(CAButton* control)
+void FirstViewController::ActivityIndicatorRightBtnRightcallback(CAButton* control)
 {
     if (showActivityIndicatorNavigationBar >= 4)
     {

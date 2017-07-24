@@ -1,6 +1,6 @@
 
 #include "LabelTest.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 int LabelNum = 0;
 
@@ -17,7 +17,7 @@ LabelTest::~LabelTest()
     LabelNum = 0;
 }
 
-void CDUIShowAutoCollectionView::LabelRightBtnRightcallback(CAButton* btn)
+void FirstViewController::LabelRightBtnRightcallback(CAButton* btn)
 {
     if (showLabelNavigationBar >= 2)
     {

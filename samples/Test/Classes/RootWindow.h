@@ -4,7 +4,9 @@
 #define __HelloCpp__RootWindow__
 
 #include <iostream>
-#include "CDData.h"
+#include "CrossApp.h"
+
+USING_NS_CC;
 
 class RootWindow: public CAWindow
 {

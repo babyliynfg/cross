@@ -1,8 +1,8 @@
 
 #define CAColor_blueStyle CAColor4B(51,204,255,255)
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
-#include "CDWebViewController.h"
+#include "MyWebViewController.h"
 #include "AlertViewTest.h"
 #include "ButtonTest.h"
 #include "CheckboxTest.h"
@@ -36,7 +36,61 @@
 #include "ClippingViewTest.h"
 #include "DrawViewTest.h"
 
-CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNavigationBar(0),showSliderNavigationBar(0),showStepperNavigationBar(0),showLabelNavigationBar(0),showPickerViewNavigationBar(0),showViewAnimationNavigationBar(0),showAutoCollectionVerticalNavigationBar(0),showAutoCollectionHorizontalNavigationBar(0)
+static const char* iconTag[32] =
+{
+    "image/AlertView.png",
+    "image/button.png",
+    "image/Checkbox.png",
+    
+    "image/SegmentedControl.png",
+    "image/ImageView.png",
+    "image/Scale9ImageView.png",
+    
+    "image/indicatorView.png",
+    "image/Progress.png",
+    "image/slider.png",
+    
+    "image/Switch.png",
+    "image/Stepper.png",
+    "image/Label.png",
+    
+    "image/TextField.png",
+    "image/TextView.png",
+    "image/TabBar.png",
+    
+    "image/PageView.png",
+    "image/PageControl.png",
+    "image/ScrollView.png",
+    
+    "image/CollectionView.png",
+    "image/CollectionView.png",
+    "image/CollectionView.png",
+    
+    "image/CollectionView.png",
+    "image/ListView.png",
+    "image/TableView.png",
+    
+    "image/PickerView.png",
+    "image/WebView.png",
+    "image/GifView.png",
+    
+    "image/FlashView.png",
+    "image/Video.png",
+    "image/RenderImage.png",
+    "image/RenderImage.png",
+    "image/RenderImage.png",
+};
+
+
+FirstViewController::FirstViewController()
+:showActivityIndicatorNavigationBar(0)
+,showSliderNavigationBar(0)
+,showStepperNavigationBar(0)
+,showLabelNavigationBar(0)
+,showPickerViewNavigationBar(0)
+,showViewAnimationNavigationBar(0)
+,showAutoCollectionVerticalNavigationBar(0)
+,showAutoCollectionHorizontalNavigationBar(0)
 {
     m_vTitle.push_back("AlertView");
     m_vTitle.push_back("Button");
@@ -82,12 +136,12 @@ CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNa
     
 }
 
-CDUIShowAutoCollectionView::~CDUIShowAutoCollectionView()
+FirstViewController::~FirstViewController()
 {
     
 }
 
-void CDUIShowAutoCollectionView::viewDidLoad()
+void FirstViewController::viewDidLoad()
 {
     p_AutoCollection = CAAutoCollectionView::createWithLayout(DLayoutFill);
     p_AutoCollection->setAllowsSelection(true);
@@ -126,11 +180,11 @@ void CDUIShowAutoCollectionView::viewDidLoad()
     
 }
 
-void CDUIShowAutoCollectionView::viewDidUnload()
+void FirstViewController::viewDidUnload()
 {
 }
 
-void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+void FirstViewController::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     switch (item)
     {
@@ -177,7 +231,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             ImageViewNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* ImageViewRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            ImageViewRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::ImageViewRightBtnRightcallback, this, nullptr));
+            ImageViewRightBtn->setCallbackFunction(std::bind(&FirstViewController::ImageViewRightBtnRightcallback, this, nullptr));
             ImageViewNavigationBar->addRightButtonItem(ImageViewRightBtn);
             
             ImageViewTest* ViewContrllerImageViewTest = new ImageViewTest();
@@ -203,7 +257,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             ActivityIndicatorNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* ActivityIndicatorRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            ActivityIndicatorRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::ActivityIndicatorRightBtnRightcallback, this, nullptr));
+            ActivityIndicatorRightBtn->setCallbackFunction(std::bind(&FirstViewController::ActivityIndicatorRightBtnRightcallback, this, nullptr));
             ActivityIndicatorNavigationBar->addRightButtonItem(ActivityIndicatorRightBtn);
             
             ActivityIndicatorViewTest* ViewContrllerIndicatorViewTest = new ActivityIndicatorViewTest();
@@ -228,7 +282,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             SliderNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* SliderRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            SliderRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::SliderRightBtnRightcallback, this, nullptr));
+            SliderRightBtn->setCallbackFunction(std::bind(&FirstViewController::SliderRightBtnRightcallback, this, nullptr));
             SliderNavigationBar->addRightButtonItem(SliderRightBtn);
             
             SliderTest* ViewContrllerSliderTest = new SliderTest();
@@ -254,7 +308,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             StepperNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* StepperRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            StepperRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::StepperRightBtnRightcallback, this, nullptr));
+            StepperRightBtn->setCallbackFunction(std::bind(&FirstViewController::StepperRightBtnRightcallback, this, nullptr));
             StepperNavigationBar->addRightButtonItem(StepperRightBtn);
             
             StepperTest* ViewContrllerStepperTest = new StepperTest();
@@ -270,7 +324,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             LabelNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* LabelRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            LabelRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::LabelRightBtnRightcallback, this, nullptr));
+            LabelRightBtn->setCallbackFunction(std::bind(&FirstViewController::LabelRightBtnRightcallback, this, nullptr));
             LabelNavigationBar->addRightButtonItem(LabelRightBtn);
             
             LabelTest* ViewContrllerLabelTest = new LabelTest();
@@ -344,7 +398,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             AutoCollectionVerticalNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* AutoCollectionVerticalRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            AutoCollectionVerticalRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::AutoCollectionVerticalRightBtnRightcallback, this, nullptr));
+            AutoCollectionVerticalRightBtn->setCallbackFunction(std::bind(&FirstViewController::AutoCollectionVerticalRightBtnRightcallback, this, nullptr));
             AutoCollectionVerticalNavigationBar->addRightButtonItem(AutoCollectionVerticalRightBtn);
 
             AutoCollectionViewVerticalTest* ViewContrllerAutoCollectionViewVerticalTest = new AutoCollectionViewVerticalTest();
@@ -360,7 +414,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             AutoCollectionHorizontalNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* AutoCollectionHorizontalRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            AutoCollectionHorizontalRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::AutoCollectionHorizontalRightBtnRightcallback, this, nullptr));
+            AutoCollectionHorizontalRightBtn->setCallbackFunction(std::bind(&FirstViewController::AutoCollectionHorizontalRightBtnRightcallback, this, nullptr));
             AutoCollectionHorizontalNavigationBar->addRightButtonItem(AutoCollectionHorizontalRightBtn);
             
             AutoCollectionViewHorizontalTest* ViewContrllerAutoCollectionViewHorizontalTest = new AutoCollectionViewHorizontalTest();
@@ -414,7 +468,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             PickerViewNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* PickerViewRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            PickerViewRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::PickerViewRightBtnRightcallback, this, nullptr));
+            PickerViewRightBtn->setCallbackFunction(std::bind(&FirstViewController::PickerViewRightBtnRightcallback, this, nullptr));
             PickerViewNavigationBar->addRightButtonItem(PickerViewRightBtn);
             
             PickerViewTest* ViewContrllerPickerViewTest = new PickerViewTest();
@@ -467,7 +521,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             ViewAnimationNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
             
             CABarButtonItem* ViewAnimationRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            ViewAnimationRightBtn->setCallbackFunction(std::bind(&CDUIShowAutoCollectionView::ViewAnimationRightBtnRightcallback, this, nullptr));
+            ViewAnimationRightBtn->setCallbackFunction(std::bind(&FirstViewController::ViewAnimationRightBtnRightcallback, this, nullptr));
             ViewAnimationNavigationBar->addRightButtonItem(ViewAnimationRightBtn);
             
             ViewAnimationTest* ViewContrllerViewAnimationTest = new ViewAnimationTest();
@@ -506,12 +560,12 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
     }
 }
 
-void CDUIShowAutoCollectionView::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+void FirstViewController::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
 {
     CCLog("取消选中");
 }
 
-CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
+CACollectionViewCell* FirstViewController::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
 {
     CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
     if (p_Cell == NULL)
@@ -550,17 +604,17 @@ CACollectionViewCell* CDUIShowAutoCollectionView::collectionCellAtIndex(CAAutoCo
     return p_Cell;
 }
 
-DSize CDUIShowAutoCollectionView::collectionViewCellSizeAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+DSize FirstViewController::collectionViewCellSizeAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
 {
     return DSize(230, 230);
 }
 
-unsigned int CDUIShowAutoCollectionView::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
+unsigned int FirstViewController::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
 {
     return (unsigned int)m_vTitle.size();
 }
 
-unsigned int CDUIShowAutoCollectionView::numberOfSections(CAAutoCollectionView *collectionView)
+unsigned int FirstViewController::numberOfSections(CAAutoCollectionView *collectionView)
 {
     return 1;
 }

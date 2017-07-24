@@ -11,7 +11,7 @@
 
 #include "RootWindow.h"
 
-class MenuViewController : public CAViewController, CATableViewDelegate,CATableViewDataSource
+class MenuViewController : public CAViewController
 {
 public:
     
@@ -30,15 +30,14 @@ protected:
     void changeStatusBarOrientation(CAObject* obj);
     
 public:
-    virtual void tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
+    void tableViewDidSelectRowAtIndexPath(unsigned int section, unsigned int row);
     
-    virtual CATableViewCell* tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row);
-    virtual unsigned int numberOfRowsInSection(CATableView *table, unsigned int section);
-    virtual unsigned int numberOfSections(CATableView *table);
-    virtual unsigned int tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row);
+    CATableViewCell* tableCellAtIndex(const DSize& cellSize, unsigned int section, unsigned int row);
+    unsigned int numberOfRowsInSection(unsigned int section);
+    unsigned int tableViewHeightForRowAtIndexPath(unsigned int section, unsigned int row);
 private:
 
-    CATableView* tableView;
+    CATableView* m_pTableView;
     
     CAImageView* m_pLogo;
 };

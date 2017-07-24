@@ -2,8 +2,8 @@
 
 #include "RootWindow.h"
 #include "MenuViewController.h"
-#include "CDUIShowAutoCollectionView.h"
-#include "CDWebViewController.h"
+#include "FirstViewController.h"
+#include "MyWebViewController.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <jni.h>
 #include "platform/android/jni/JniHelper.h"
@@ -46,6 +46,8 @@ RootWindow::RootWindow()
             CAApplication::getApplication()->end();
         }
     });
+    
+    CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyle::LightContent);
 }
 
 RootWindow::~RootWindow()
@@ -60,33 +62,29 @@ bool RootWindow::init()
         return false;
     }
     
-    CAApplication::getApplication()->setStatusBarStyle(CAStatusBarStyle::LightContent);
-    
-    CDUIShowAutoCollectionView* viewController = new CDUIShowAutoCollectionView();
-    viewController->init();
-    viewController->autorelease();
-    
-    CANavigationBarItem* temp_nav = CANavigationBarItem::create(UTF8("控件展示"));
-    CABarButtonItem* item = CABarButtonItem::create("", CAImage::create("image/ic_category_list.png"), NULL);
-    item->setCallbackFunction([=]()
+    CANavigationBarItem* firstItem = CANavigationBarItem::create(UTF8("控件展示"));
+    CABarButtonItem* barButtonItem = CABarButtonItem::create("", CAImage::create("image/ic_category_list.png"), NULL);
+    barButtonItem->setCallbackFunction([=]()
     {
         this->getDrawerController()->showLeftViewController(true);
     });
-    temp_nav->addLeftButtonItem(item);
-    viewController->setNavigationBarItem(temp_nav);
+    firstItem->addLeftButtonItem(barButtonItem);
+    
+    FirstViewController* viewController = FirstViewController::create();
+    viewController->setNavigationBarItem(firstItem);
     
     m_pRootNavigationController = new CANavigationController();
     m_pRootNavigationController->initWithRootViewController(viewController);
+    m_pRootNavigationController->autorelease();
 
-    MenuViewController* _menuview = MenuViewController::create();
     
     CADrawerController* drawer = new CADrawerController();
-    drawer->initWithController(_menuview, m_pRootNavigationController);
+    drawer->initWithController(MenuViewController::create(), m_pRootNavigationController);
+    drawer->autorelease();
     drawer->setBackgroundImage(CAImage::create("image/bg.jpg"));
     drawer->setEffect3D(true);
     
     this->setRootViewController(drawer);
-    drawer->autorelease();
     
     m_pRootDrawerController = drawer;
     CAApplication::getApplication()->setNotificationView(NULL);

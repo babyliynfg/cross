@@ -1,6 +1,6 @@
 
 #include "StepperTest.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 int StepperNum = 0;
 
@@ -18,7 +18,7 @@ StepperTest::~StepperTest()
     StepperNum = 0;
 }
 
-void CDUIShowAutoCollectionView::StepperRightBtnRightcallback(CAButton* btn)
+void FirstViewController::StepperRightBtnRightcallback(CAButton* btn)
 {
     if (showStepperNavigationBar >= 1)
     {

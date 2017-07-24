@@ -1,6 +1,6 @@
 
 #include "AutoCollectionViewVerticalTest.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 std::vector<CAColor4B> VerticalcolorArr;
 
@@ -201,7 +201,7 @@ AutoCollectionViewVerticalTest::~AutoCollectionViewVerticalTest()
     AutoCollectionViewVerticalNum = 0;
 }
 
-void CDUIShowAutoCollectionView::AutoCollectionVerticalRightBtnRightcallback(CAButton* btn)
+void FirstViewController::AutoCollectionVerticalRightBtnRightcallback(CAButton* btn)
 {
     if (showAutoCollectionVerticalNavigationBar >= 1)
     {

@@ -1,6 +1,6 @@
 
 #include "ViewAnimationTest.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 int AnimationNum = 0;
 
@@ -17,7 +17,7 @@ ViewAnimationTest::~ViewAnimationTest()
     AnimationNum = 0;
 }
 
-void CDUIShowAutoCollectionView::ViewAnimationRightBtnRightcallback(CAButton* btn)
+void FirstViewController::ViewAnimationRightBtnRightcallback(CAButton* btn)
 {
     if (showViewAnimationNavigationBar >= 2)
     {

@@ -1,7 +1,7 @@
 ﻿
 #include "PickerViewTest.h"
 //#include "platform/CADevice.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 int PickerViewNum = 0;
 
@@ -56,7 +56,7 @@ static const CHAR* adressTag[34] =
     _T("澳门特别行政区"),
 };
 
-void CDUIShowAutoCollectionView::PickerViewRightBtnRightcallback(CAButton* btn)
+void FirstViewController::PickerViewRightBtnRightcallback(CAButton* btn)
 {
     if (showPickerViewNavigationBar >= 4)
     {

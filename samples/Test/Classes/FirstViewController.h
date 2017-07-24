@@ -1,17 +1,19 @@
-#ifndef __Test__CDUIShowAutoCollectionView__
-#define __Test__CDUIShowAutoCollectionView__
+#ifndef __Test__FirstViewController__
+#define __Test__FirstViewController__
 
 #include "RootWindow.h"
 
-class CDUIShowAutoCollectionView : public CAViewController, CAAutoCollectionViewDataSource, CAAutoCollectionViewDelegate, CAScrollViewDelegate
+class FirstViewController : public CAViewController, CAAutoCollectionViewDataSource, CAAutoCollectionViewDelegate, CAScrollViewDelegate
 {
     
 public:
     
-    CDUIShowAutoCollectionView();
+    FirstViewController();
     
-    virtual ~CDUIShowAutoCollectionView();
-    //CREATE_FUNC(CDUIShowCollectionView);
+    virtual ~FirstViewController();
+    
+    CREATE_FUNC(FirstViewController);
+    
 protected:
     
     void viewDidLoad();

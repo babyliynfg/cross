@@ -1,6 +1,6 @@
 
 #include "TabBarControllerTest.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "FirstViewController.h"
 
 TabBarControllerTest::TabBarControllerTest()
 {

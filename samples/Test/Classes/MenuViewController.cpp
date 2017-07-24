@@ -7,12 +7,17 @@
 //
 
 #include "MenuViewController.h"
-#include "CDWebViewController.h"
-#include "CDUIShowAutoCollectionView.h"
+#include "MyWebViewController.h"
+#include "FirstViewController.h"
+
+static const wchar_t* menuList[4] =
+{
+    L"CrossApp官网", L"9秒官网"
+};
 
 MenuViewController::MenuViewController()
 {
-    CANotificationCenter::getInstance()->addObserver(std::bind(&MenuViewController::changeStatusBarOrientation, this, std::placeholders::_1), this, CAApplicationDidChangeStatusBarOrientationNotification);
+    CANotificationCenter::getInstance()->addObserver(CALLBACK_BIND_1(MenuViewController::changeStatusBarOrientation, this), this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 MenuViewController::~MenuViewController()
@@ -39,16 +44,18 @@ void MenuViewController::viewDidLoad()
     }
     
     
-    tableView = CATableView::createWithLayout(DLayoutFill);
-    tableView->setLayout(tableViewLayout);
-    tableView->setAllowsSelection(true);
-    tableView->setTableViewDelegate(this);
-    tableView->setTableViewDataSource(this);
-    tableView->setBackgroundColor(CAColor4B::CLEAR);
-    tableView->setSeparatorColor(ccc4(166, 166, 166,100));
-    tableView->setShowsScrollIndicators(false);
-    tableView->setScrollEnabled(false);
-    this->getView()->addSubview(tableView);
+    m_pTableView = CATableView::createWithLayout(tableViewLayout);
+    m_pTableView->setAllowsSelection(true);
+    m_pTableView->setBackgroundColor(CAColor4B::CLEAR);
+    m_pTableView->setSeparatorColor(ccc4(166, 166, 166,100));
+    m_pTableView->setShowsScrollIndicators(false);
+    m_pTableView->setScrollEnabled(false);
+    this->getView()->addSubview(m_pTableView);
+    
+    m_pTableView->onCellAtIndexPath(CALLBACK_BIND_3(MenuViewController::tableCellAtIndex, this));
+    m_pTableView->onCellHeightAtIndexPath(CALLBACK_BIND_2(MenuViewController::tableViewHeightForRowAtIndexPath, this));
+    m_pTableView->onNumberOfRowsAtIndexPath(CALLBACK_BIND_1(MenuViewController::numberOfRowsInSection, this));
+    m_pTableView->onDidSelectCellAtIndexPath(CALLBACK_BIND_2(MenuViewController::tableViewDidSelectRowAtIndexPath, this));
     
     m_pLogo = CAImageView::createWithImage(CAImage::create("image/logo.png"));
     m_pLogo->setLayout(logoLayout);
@@ -78,41 +85,32 @@ void MenuViewController::changeStatusBarOrientation(CAObject* obj)
         logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
     }
     
-    tableView->setLayout(tableViewLayout);
+    m_pTableView->setLayout(tableViewLayout);
     m_pLogo->setLayout(logoLayout);
 }
 
-void MenuViewController::tableViewDidSelectRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
+void MenuViewController::tableViewDidSelectRowAtIndexPath(unsigned int section, unsigned int row)
 {
-    RootWindow::getInstance()->dismissModalViewController(true);
     if(row == 0)
     {
-        CDWebViewController* _webController = new CDWebViewController();
-        _webController->init();
-        _webController->setTitle(" ");
-        
-        _webController->autorelease();
-        RootWindow::getInstance()->getDrawerController()->hideLeftViewController(false);
-        RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
-        _webController->initWebView("http://crossapp.9miao.com");
+        MyWebViewController* webViewController = new MyWebViewController("http://crossapp.9miao.com");
+        webViewController->init();
+        webViewController->autorelease();
+        RootWindow::getInstance()->getRootNavigationController()->pushViewController(webViewController, true);
     }
     else if(row == 1)
     {
-        CDWebViewController* _webController = new CDWebViewController();
-        _webController->init();
-        _webController->setTitle(" ");
-        
-        _webController->autorelease();
-        RootWindow::getInstance()->getDrawerController()->hideLeftViewController(false);
-        RootWindow::getInstance()->getRootNavigationController()->pushViewController(_webController, true);
-        _webController->initWebView("http://www.9miao.com/");
+        MyWebViewController* webViewController = new MyWebViewController("http://www.9miao.com/");
+        webViewController->init();
+        webViewController->autorelease();
+        RootWindow::getInstance()->getRootNavigationController()->pushViewController(webViewController, true);
     }
-    
+    RootWindow::getInstance()->getDrawerController()->hideLeftViewController(false);
 }
 
-CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
+CATableViewCell* MenuViewController::tableCellAtIndex(const DSize& cellSize, unsigned int section, unsigned int row)
 {
-    CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
+    CATableViewCell* cell = m_pTableView->dequeueReusableCellWithIdentifier("CrossApp");
     if (cell == NULL)
     {
         cell = CATableViewCell::create("CrossApp");
@@ -130,24 +128,19 @@ CATableViewCell* MenuViewController::tableCellAtIndex(CATableView* table, const 
         cell->addSubview(arrow);
     }
 	CALabel* test = (CALabel*)cell->getSubviewByTag(100);
-	test->setText(unicode_to_utf8(menuList[row]));// menuList[row]);
+	test->setText(unicode_to_utf8(menuList[row]));
     CAImageView* arrow = (CAImageView*)cell->getSubviewByTag(101);
     arrow->setImage(CAImage::create("source_material/cell_btn_right.png"));
 
     return cell;
 }
 
-unsigned int MenuViewController::numberOfRowsInSection(CATableView *table, unsigned int section)
+unsigned int MenuViewController::numberOfRowsInSection(unsigned int section)
 {
     return 2;
 }
 
-unsigned int MenuViewController::numberOfSections(CATableView *table)
-{
-    return 1;
-}
-
-unsigned int MenuViewController::tableViewHeightForRowAtIndexPath(CATableView* table, unsigned int section, unsigned int row)
+unsigned int MenuViewController::tableViewHeightForRowAtIndexPath(unsigned int section, unsigned int row)
 {
     return 100;
 }
