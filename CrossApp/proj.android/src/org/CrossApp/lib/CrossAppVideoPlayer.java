@@ -315,9 +315,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		            }
 		            @Override
 		            public void onTextureDestory() {
-//		                if (CrossAppVideoPlayer.this != null){
-//		                	CrossAppVideoPlayer.this.pause();
-//		                }
 		                pause();
 		            }
 		            @Override
@@ -341,6 +338,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		            }	
 		            @Override
 		            public void onBufferCached(final int current) {
+		            	
 		            	CrossAppVideoPlayer p = getPlayerByKey(key) ;
 		            	if (p.getMediaPlayer().isPlaying()) {
 		            		CrossAppActivity.getContext().runOnGLThread(new Runnable() {
@@ -747,12 +745,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     	if (mMediaPlayer.isPlaying()) {
     		onDestoried_position = mMediaPlayer.getCurrentPosition() ; 
 		}
-    	
-//    	if (mMediaPlayer!= null) {
-//    		mMediaPlayer.pause();
-//        	mMediaPlayer.reset(); 
-//        	mMediaPlayer.release();
-//		}
     	
         if (listener!=null)listener.onTextureDestory();
         return false;
