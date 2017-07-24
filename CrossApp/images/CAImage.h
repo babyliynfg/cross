@@ -138,10 +138,7 @@ public:
     
     bool initWithImageData(CAData* data, bool isOpenGLThread = true);
     
-    bool initWithRawData(CAData* data,
-                         const CAImage::PixelFormat& pixelFormat,
-                         unsigned int pixelsWide,
-                         unsigned int pixelsHigh);
+    bool initWithRawData(CAData* data, const CAImage::PixelFormat& pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh);
     
     const char* description(void);
 

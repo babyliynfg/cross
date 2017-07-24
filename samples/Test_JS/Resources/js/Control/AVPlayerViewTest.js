@@ -31,7 +31,7 @@ var AVPlayerViewTest = ca.CAViewController.extend({
         slider.setZOrder(100);
         this.getView().addSubview(slider);
         slider.setMaxTrackTintImage(ca.CAImage.CLEAR_IMAGE());
-        slider.setTargetForTouchUpSide(function (value)
+        slider.setTarget(function (value)
         {
             var current = value * avplayer.getDuration();
             avplayer.setCurrentTime(current);

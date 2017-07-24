@@ -33,6 +33,8 @@
 #include "AutoCollectionViewHorizontalTest.h"
 #include "AutoCollectionViewVerticalTest.h"
 #include "WaterfallViewTest.h"
+#include "ClippingViewTest.h"
+#include "DrawViewTest.h"
 
 CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNavigationBar(0),showSliderNavigationBar(0),showStepperNavigationBar(0),showLabelNavigationBar(0),showPickerViewNavigationBar(0),showViewAnimationNavigationBar(0),showAutoCollectionVerticalNavigationBar(0),showAutoCollectionHorizontalNavigationBar(0)
 {
@@ -75,6 +77,9 @@ CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showActivityIndicatorNa
     m_vTitle.push_back("AVPlayer");
     m_vTitle.push_back("RenderImage");
     m_vTitle.push_back("Animation");
+    m_vTitle.push_back("ClippingView");
+    m_vTitle.push_back("DrawView");
+    
 }
 
 CDUIShowAutoCollectionView::~CDUIShowAutoCollectionView()
@@ -470,6 +475,30 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             ViewContrllerViewAnimationTest->setNavigationBarItem(ViewAnimationNavigationBar);
             ViewContrllerViewAnimationTest->autorelease();
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerViewAnimationTest, true);
+            break;
+        }
+        case 30:
+        {
+            showViewAnimationNavigationBar = 0;
+            ViewAnimationNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
+            
+            ClippingViewTest* clippingViewTest = new ClippingViewTest();
+            clippingViewTest->init();
+            clippingViewTest->setNavigationBarItem(ViewAnimationNavigationBar);
+            clippingViewTest->autorelease();
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(clippingViewTest, true);
+            break;
+        }
+        case 31:
+        {
+            showViewAnimationNavigationBar = 0;
+            ViewAnimationNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
+            
+            DrawViewTest* drawViewTest = new DrawViewTest();
+            drawViewTest->init();
+            drawViewTest->setNavigationBarItem(ViewAnimationNavigationBar);
+            drawViewTest->autorelease();
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(drawViewTest, true);
             break;
         }
         default:
