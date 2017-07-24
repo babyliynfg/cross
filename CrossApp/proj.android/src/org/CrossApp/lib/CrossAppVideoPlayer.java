@@ -54,7 +54,6 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 				CrossAppActivity.getFrameLayout().addView(player, p);
 			}
 		});
-		
 		return player ; 
 	}
 	
@@ -128,9 +127,15 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 	}
 	
 	public static void setCurrentTime4native(final float current,final int key){
-		CrossAppVideoPlayer player = getPlayerByKey(key) ;
+		final CrossAppVideoPlayer player = getPlayerByKey(key) ;
 		player.block_progress_update(true);
-		player.getMediaPlayer().seekTo((int)current);
+		CrossAppActivity.getContext().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				player.getMediaPlayer().seekTo((int)current);
+			}
+		});
+		
 	}
 	
 	public static int[] getPresentationSize4native(int key){
@@ -206,10 +211,10 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     private MediaPlayer mMediaPlayer;
     
     /** 毫秒帧率  1000 / 每秒帧数 */
-    private final int FRAME_RATE = 40 ; 
+    private final int FRAME_RATE = 50 ; 
     
     /** 刷新进度的速率 */
-    private static final int PROGRESS_RATE =25 ; 
+    private static final int PROGRESS_RATE =50 ; 
     
     /** 刷新进度消息 */
     private static final int WHAT_PROGRESS = 0 ; 
@@ -250,14 +255,25 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		            }
 		            @Override
 		            public void onStart() {
-		            	onPlayBufferLoadingState(key, PlaybackBufferEmpty);
+		            	CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+							@Override
+							public void run() {
+								onPlayBufferLoadingState(key, PlaybackBufferEmpty);
+							}
+						});
 		            }
 		            @Override
-		            public void onPlaying(int duration, int percent) {
+		            public void onPlaying(final int duration,final  int percent) {
 		            	//调用native 的进度方法
 		            	CrossAppVideoPlayer p = getPlayerByKey(key) ;
 		            	if (p != null && p.getMediaPlayer()!= null && p.getMediaPlayer().isPlaying()) {
-		            		onPeriodicTime(key, percent, duration);
+		            		CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+								@Override
+								public void run() {
+									onPeriodicTime(key, (float)percent, (float)duration);
+								}
+							});
+		            		
 						}
 		            }
 		            @Override
@@ -269,7 +285,13 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 		            @Override
 		            public void onPlayingFinish() {
 		            	//调用native 的方法
-		            	onDidPlayToEndTime(key);
+		            	CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+							@Override
+							public void run() {
+								onDidPlayToEndTime(key);
+							}
+						});
+		            	
 		            }
 		            @Override
 		            public void onTextureDestory() {
@@ -295,12 +317,18 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 								}
 							});
 						}
-		            }
+		            }	
 		            @Override
-		            public void onBufferCached(int current) {
+		            public void onBufferCached(final int current) {
 		            	CrossAppVideoPlayer p = getPlayerByKey(key) ;
 		            	if (p.getMediaPlayer().isPlaying()) {
-		            		onLoadedTime(key, current, 100);
+		            		CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+								@Override
+								public void run() {
+									onLoadedTime(key, current, 100);
+								}
+							});
+		            		
 		            		if(current == 100) onPlayBufferLoadingState(key, PlaybackLikelyToKeepUp);
 		            	}
 		            }
@@ -323,7 +351,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     public synchronized void block_progress_update(boolean bool){
     	this.block_progress_update  = bool ; 
     	if(!block_progress_update){
-    		mProgressHandler.sendEmptyMessage(WHAT_PROGRESS);
+    		getPlayingProgress(); 
     	}
     }
     
@@ -368,11 +396,17 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
     
     public void setVideoState(VideoState state){
     	mState = state ; 
-    	if (state == VideoState.palying) {
-    		onPlayState(getKey(), PlayStatePlaying);
-		}else if (state == VideoState.pause) {
-			onPlayState(getKey(), PlayStatePause);
-		}
+    	CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+			@Override
+			public void run() {
+				if (mState == VideoState.palying) {
+		    		onPlayState(getKey(), PlayStatePlaying);
+				}else if (mState == VideoState.pause) {
+					onPlayState(getKey(), PlayStatePause);
+				}
+			}
+		});
+    	
     }
     
     private OnVideoPlayingListener listener;
@@ -401,7 +435,7 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
 			                }
 			            }else if (msg.what == WHAT_REFRESH_FRAME ) {
 							//刷新帧
-			            	if (mState == VideoState.palying && listener!= null) {
+			            	if (mState == VideoState.palying && listener!= null && !block_progress_update) {
 								listener.onFrameGet(CrossAppVideoPlayer.this.getBitmap() );
 			            		sendEmptyMessageDelayed(WHAT_REFRESH_FRAME, FRAME_RATE) ; 
 							}

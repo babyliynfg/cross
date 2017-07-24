@@ -42706,8 +42706,8 @@ bool js_crossapp_CAAVPlayer_onPeriodicTime(JSContext *cx, uint32_t argc, jsval *
 		        auto lambda = [=, &ok](float larg0, float larg1) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
-		            largv[0] = DOUBLE_TO_JSVAL(larg0);
-		            largv[1] = DOUBLE_TO_JSVAL(larg1);
+		            largv[0] = DOUBLE_TO_JSVAL((double)larg0);
+		            largv[1] = DOUBLE_TO_JSVAL((double)larg1);
 		            JS::RootedValue rval(cx);
 		            bool succeed = func->invoke(2, &largv[0], &rval);
 		            if (!succeed && JS_IsExceptionPending(cx)) {
