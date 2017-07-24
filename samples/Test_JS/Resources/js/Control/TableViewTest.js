@@ -49,17 +49,37 @@ var TableViewTest = ca.CAViewController.extend({
             cell = ca.CATableViewCell.create("CrossApp");
             var image = ca.CAImageView.createWithLayout(ca.DLayoutFill);
             image.setImage(ca.CAImage.create("source_material/second_2.png"));
-            cell.addSubview(image);
+            cell.getContentView().addSubview(image);
 
             var cellText = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(150, 10), ca.DVerticalLayout_T_B(10, 10)));
             cellText.setTag(100);
             cellText.setFontSize(30);
             cellText.setTextAlignment(ca.CATextAlignment.Left);
             cellText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            cell.addSubview(cellText);
+            cell.getContentView().addSubview(cellText);
+
+            var deleteBtn = ca.CAButton.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_R_W(0, 180), ca.DVerticalLayoutFill), ca.CAButton.Type.Custom);
+            deleteBtn.setBackgroundImageForState(ca.CAControl.State.Normal, ca.CAImage.createWithColor4B(ca.CAColor4B.RED), false);
+            deleteBtn.setBackgroundImageForState(ca.CAControl.State.Highlighted, ca.CAImage.createWithColor4B(ca.CAColor4B.ORANGE), false);
+            deleteBtn.setTitleForState(ca.CAControl.State.Normal, "Delete");
+            deleteBtn.setTitleColorForState(ca.CAControl.State.Normal, ca.CAColor4B.WHITE);
+            deleteBtn.setTitleColorForState(ca.CAControl.State.Highlighted, ca.CAColor4B.WHITE);
+            deleteBtn.setTitleFontSize(32);
+            deleteBtn.setTag(101);
+            cell.insertSubview(deleteBtn, -1);
         }
-        var cellText = cell.getSubviewByTag(100);
+        cell.setDraggingLength(180);
+                                               
+        var cellText = cell.getContentView().getSubviewByTag(100);
         cellText.setText(this.sectionTitle[section]+"-"+row);
+
+        var deleteBtn = cell.getSubviewByTag(101);
+        deleteBtn.addTarget(function ()
+        {
+            ca.log("button at (section: %d, row: %d)", section, row);
+
+        }, ca.CAButton.Event.TouchUpInSide);
+
         return cell;
 
     }

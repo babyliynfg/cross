@@ -80,13 +80,15 @@ CATableViewCell* TableViewTest::tableCellAtIndex(DSize cellSize, unsigned int se
         cellText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
         cell->getContentView()->addSubview(cellText);
         
-        CAButton* cellBtn = CAButton::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 180), DVerticalLayoutFill), CAButton::Type::Custom);
-        cellBtn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::BLUE));
-        cellBtn->setTitleForState(CAControl::State::Normal, "Btn");
-        cellBtn->setTitleFontSize(32);
-        cellBtn->setTitleColorForState(CAControl::State::Normal, CAColor4B::WHITE);
-        cellBtn->setTag(101);
-        cell->insertSubview(cellBtn, -1);
+        CAButton* deleteBtn = CAButton::createWithLayout(DLayout(DHorizontalLayout_R_W(0, 180), DVerticalLayoutFill), CAButton::Type::Custom);
+        deleteBtn->setBackgroundImageForState(CAControl::State::Normal, CAImage::createWithColor4B(CAColor4B::RED), false);
+        deleteBtn->setBackgroundImageForState(CAControl::State::Highlighted, CAImage::createWithColor4B(CAColor4B::ORANGE), false);
+        deleteBtn->setTitleForState(CAControl::State::Normal, "Delete");
+        deleteBtn->setTitleColorForState(CAControl::State::Normal, CAColor4B::WHITE);
+        deleteBtn->setTitleColorForState(CAControl::State::Highlighted, CAColor4B::WHITE);
+        deleteBtn->setTitleFontSize(32);
+        deleteBtn->setTag(101);
+        cell->insertSubview(deleteBtn, -1);
     }
     
     cell->setDraggingLength(180);
@@ -96,10 +98,11 @@ CATableViewCell* TableViewTest::tableCellAtIndex(DSize cellSize, unsigned int se
     CALabel* cellText = (CALabel*)cell->getContentView()->getSubviewByTag(100);
     cellText->setText(order);
     
-    CAButton* cellBtn = (CAButton*)cell->getSubviewByTag(101);
-    cellBtn->addTarget([=]()
+    CAButton* deleteBtn = (CAButton*)cell->getSubviewByTag(101);
+    deleteBtn->addTarget([=]()
     {
         CCLog("button at (section: %d, row: %d)", section, row);
+        
     }, CAButton::Event::TouchUpInSide);
     
     return cell;

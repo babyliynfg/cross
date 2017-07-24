@@ -477,14 +477,10 @@ loadImg: function (url, option, cb){
     var l = arguments.length;
     if(l == 2) cb = option;
     
-    var cachedTex = ca.textureCache.getTextureForKey(url);
-    if (cachedTex) {
-        cb && cb(null, cachedTex);
-    }
-    else if (url.match(jsb.urlRegExp)) {
-        jsb.loadRemoteImg(url, function(succeed, tex) {
+    if (url.match(jsb.urlRegExp)) {
+        jsb.loadRemoteImg(url, function(succeed, image) {
                           if (succeed) {
-                          cb && cb(null, tex);
+                          cb && cb(null, image);
                           }
                           else {
                           cb && cb("Load image failed");
@@ -492,9 +488,9 @@ loadImg: function (url, option, cb){
                           });
     }
     else {
-        ca.textureCache._addImageAsync(url, function (tex){
-                                       if (tex instanceof ca.Texture2D)
-                                       cb && cb(null, tex);
+        ca.imageCache.addImageAsync(url, function (image){
+                                       if (image instanceof ca.CAImage)
+                                       cb && cb(null, image);
                                        else cb && cb("Load image failed");
                                        });
     }
@@ -556,7 +552,6 @@ _loadResIterator: function (item, index, cb) {
                 }
                 });
 },
-    
     /**
      * Get url with basePath.
      * @param {string} basePath
@@ -584,8 +579,7 @@ getUrl: function (basePath, url) {
     }
     return url;
 },
-    
-    /**
+ /**
      * Load resources then call the callback.
      * @param {string} resources
      * @param {function} [option] callback or trigger
@@ -627,8 +621,9 @@ getUrl: function (basePath, url) {
                                          option.cb, option.cbTarget);
         asyncPool.flow();
         return asyncPool;
-    },
+    },   
     
+
     /**
      * <p>
      *     Loads alias map from the contents of a filename.                                        <br/>
@@ -695,24 +690,6 @@ register: function (extNames, loader) {
         var realUrl = this.getUrl(basePath, url);
         return loader.load(realUrl, url);
     },
-    
-    /**
-     * Release the cache of resource by url.
-     * @param url
-     */
-jsRelease: function (url) {
-    var cache = this.cache;
-    delete cache[url];
-},
-    
-    /**
-     * Resource cache of all resources.
-     */
-jsReleaseAll: function () {
-    var locCache = this.cache;
-    for (var key in locCache)
-        delete locCache[key];
-}
 };
 ca.defineGetterSetter(ca.loader, "resPath", function(){
                       return this._resPath;
@@ -775,29 +752,17 @@ ca.formatStr = function(){
 
 //+++++++++++++++++++++++++Engine initialization function begin+++++++++++++++++++++++++++
 
-ca.director = ca.CAApplication.getApplication();
-ca.winSize = ca.director.getWinSize();
+ca.application = ca.CAApplication.getApplication();
+ca.winSize = ca.application.getWinSize();
 
 // File utils (Temporary, won't be accessible)
 ca.fileUtils = ca.FileUtils.getInstance();
 ca.fileUtils.setPopupNotify(false);
 
-ca.screen = {
-    init: function() {},
-    fullScreen: function() {
-        return true;
-    },
-    requestFullScreen: function(element, onFullScreenChange) {
-        onFullScreenChange.call();
-    },
-    exitFullScreen: function() {
-        return false;
-    },
-    autoFullScreen: function(element, onFullScreenChange) {
-        onFullScreenChange.call();
-    }
-};
-
+ca.imageCache = ca.application.getImageCache();
+ca.scheduler = ca.application.getScheduler();
+ca.actionManagea = ca.application.getActionManager();
+ca.notificationCenter = ca.application.getNotificationCenter();
 /**
  * @type {Object}
  * @name jsb.fileUtils
@@ -807,7 +772,6 @@ ca.screen = {
  */
 jsb.fileUtils = ca.fileUtils;
 delete ca.FileUtils;
-delete ca.fileUtils;
 
 /**
  * @type {Object}
@@ -1232,7 +1196,7 @@ var _initSys = function () {
      */
     //** 先注释掉
 //    sys.language = (function(){
-//                    var language = ca.CAApplication.getApplication().getCurrentLanguage();
+//                    var language = ca.application.getCurrentLanguage();
 //                    switch(language){
 //                    case 0: return sys.LANGUAGE_ENGLISH;
 //                    case 1: return sys.LANGUAGE_CHINESE;
@@ -1285,34 +1249,6 @@ var _initSys = function () {
      */
 //    sys.windowPixelResolution = ca.view.getFrameSize();
     sys.windowPixelResolution = ca.winSize;
-    
-    /**
-     * The capabilities of the current platform
-     * @memberof ca.sys
-     * @name capabilities
-     * @type {Object}
-     */
-    var capabilities = sys.capabilities = {
-        "canvas": false,
-        "opengl": true
-    };
-    if( sys.isMobile ) {
-        capabilities["accelerometer"] = true;
-        capabilities["touches"] = true;
-        if (platform === sys.WINRT || platform === sys.WP8) {
-            capabilities["keyboard"] = true;
-        }
-    } else {
-        // desktop
-        capabilities["keyboard"] = true;
-        capabilities["mouse"] = true;
-        // winrt can't suppot mouse in current version
-        if (platform === sys.WINRT || platform === sys.WP8)
-        {
-            capabilities["touches"] = true;
-            capabilities["mouse"] = false;
-        }
-    }
     
     /**
      * Forces the garbage collection, only available in JSB
@@ -1394,7 +1330,7 @@ var _initSys = function () {
      * @param {String} url
      */
     sys.openURL = function(url){
-        ca.CAApplication.getApplication().openURL(url);
+        ca.CADevice.openURL(url);
     }
     
     // JS to Native bridges
@@ -1409,62 +1345,17 @@ var _initSys = function () {
 
 _initSys();
 
+log = function (){};
+ca.log = function (str){log(str);};
 
-/**
- * Init Debug setting.
- * @function
- */
-ca._initDebugSetting = function (mode) {
-    var caApp = ca.app;
-    var bakLog = ca._cocosplayerLog || ca.log || log;
-    ca.log = ca.warn = ca.error = ca.assert = function(){};
-    
-    ca.log = function(){
-        
-        var string = ca.formatStr.apply(ca, arguments);
-        bakLog.call(this, string);
-        
-        // if (ca.CAApplication.getApplication().isCrossAppCCLogNotification() == true)
-        // {
-        //     ca.CANotificationCenter.getInstance().postNotificationWithStringValue(ca.CROSSAPP_CCLOG_NOTIFICATION, string);
-        // }
-        
-    };
-    ca.assert = function(cond, msg) {
-        if (!cond && msg) {
-            var args = [];
-            for (var i = 1; i < arguments.length; i++)
-                args.push(arguments[i]);
-            bakLog("Assert: " + ca.formatStr.apply(ca, args));
-        }
-    };
-    ca.error = function(){
-        bakLog.call(this, "ERROR :  " + ca.formatStr.apply(ca, arguments));
-    };
-    
-//    if(mode == caApp.DEBUG_MODE_NONE){
-//    }else{
-//        ca.error = function(){
-//            bakLog.call(this, "ERROR :  " + ca.formatStr.apply(ca, arguments));
-//        };
-//        ca.assert = function(cond, msg) {
-//            if (!cond && msg) {
-//                var args = [];
-//                for (var i = 1; i < arguments.length; i++)
-//                    args.push(arguments[i]);
-//                bakLog("Assert: " + ca.formatStr.apply(ca, args));
-//            }
-//        };
-//        if(mode != ccGame.DEBUG_MODE_ERROR && mode != caApp.DEBUG_MODE_ERROR_FOR_WEB_PAGE){
-//            ca.warn = function(){
-//                bakLog.call(this, "WARN :  " + ca.formatStr.apply(ca, arguments));
-//            };
-//        }
-//        if(mode == ccGame.DEBUG_MODE_INFO || mode == caApp.DEBUG_MODE_INFO_FOR_WEB_PAGE){
-//            
-//        }
-//    }
-};
+ca.logArray = function (array)
+{
+    for (var key in array)
+    {
+        ca.log( key + ": " + array[key]);
+    }
+}
+
 
 ca._engineLoaded = false;
 
@@ -1476,236 +1367,6 @@ ca.initEngine = function (config, cb) {
     ca.log(ca.ENGINE_VERSION);
     if (cb) cb();
 };
-
-//+++++++++++++++++++++++++something about App begin+++++++++++++++++++++++++++
-
-/**
- * An object to boot the app.
- * @class
- * @name ca.app
- */
-ca.app = /** @lends ca.app# */{
-    DEBUG_MODE_NONE: 0,
-    DEBUG_MODE_INFO: 1,
-    DEBUG_MODE_WARN: 2,
-    DEBUG_MODE_ERROR: 3,
-    DEBUG_MODE_INFO_FOR_WEB_PAGE: 4,
-    DEBUG_MODE_WARN_FOR_WEB_PAGE: 5,
-    DEBUG_MODE_ERROR_FOR_WEB_PAGE: 6,
-    
-    EVENT_HIDE: "game_on_hide",
-    EVENT_SHOW: "game_on_show",
-    EVENT_RESIZE: "game_on_resize",
-    
-    RENDER_TYPE_CANVAS: 0,
-    RENDER_TYPE_WEBGL: 1,
-    RENDER_TYPE_OPENGL: 2,
-    
-    _eventHide: null,
-    _eventShow: null,
-    
-    /**
-     * Key of config
-     * @constant
-     * @type {Object}
-     */
-    CONFIG_KEY: {
-        width: "width",
-        height: "height",
-        engineDir: "engineDir",
-        modules: "modules",
-        debugMode: "debugMode",
-        showFPS: "showFPS",
-        frameRate: "frameRate",
-        id: "id",
-        renderMode: "renderMode",
-        jsList: "jsList"
-    },
-    
-    // states
-    _paused: false,//whether the game is paused
-    _prepareCalled: false,//whether the prepare function has been called
-    _prepared: false,//whether the engine has prepared
-    
-    _intervalId: null,//interval target of main
-
-    /**
-     * Config of game
-     * @type {Object}
-     */
-    config: null,
-    
-    /**
-     * Callback when the scripts of engine have been load.
-     * @type {Function}
-     */
-    onStart: null,
-    
-    /**
-     * Callback when game exits.
-     * @type {Function}
-     */
-    onStop: null,
-    
-//@Public Methods
-    
-    //  @Game play control
-    /**
-     * Set frameRate of game.
-     * @param frameRate
-     */
-    setFrameRate: function (frameRate) {
-        var self = this, config = self.config, CONFIG_KEY = self.CONFIG_KEY;
-        config[CONFIG_KEY.frameRate] = frameRate;
-        ca.director.setAnimationInterval(1.0/frameRate);
-    },
-    
-    /**
-     * Run the game frame by frame.
-     */
-    step: function () {
-        ca.director.mainLoop();
-    },
-    
-    /**
-     * Pause the game.
-     */
-    pause: function () {
-        this._paused = true;
-        ca.director.pause();
-    },
-    
-    /**
-     * Resume the game from pause.
-     */
-    resume: function () {
-        this._paused = false;
-        ca.director.resume();
-    },
-    
-    /**
-     * Check whether the game is paused.
-     */
-    isPaused: function () {
-        return this._paused;
-    },
-    
-    /**
-     * Restart game.
-     */
-    restart: function () {
-        __restartVM();
-    },
-    
-//  @Game loading
-    /**
-     * Prepare game.
-     * @param cb
-     */
-    prepare: function (cb) {
-        var self = this,
-        config = self.config,
-        CONFIG_KEY = self.CONFIG_KEY;
-    
-        this._loadConfig();
-    
-        // Already prepared
-        if (this._prepared) {
-            if (cb) cb();
-            return;
-        }
-        // Prepare called, but not done yet
-        if (this._prepareCalled) {
-            return;
-        }
-        // Prepare never called and engine ready
-        if (ca._engineLoaded) {
-            this._prepareCalled = true;
-        
-            // Load game scripts
-            var jsList = config[CONFIG_KEY.jsList];
-            if (jsList) {
-                ca.loader.loadJsWithImg(jsList, function (err) {
-                                    if (err) throw new Error(err);
-                                    self._prepared = true;
-                                    if (cb) cb();
-                });
-            }
-            else {
-            if (cb) cb();
-            }
-        
-            return;
-        }
-    
-        // Engine not loaded yet
-        ca.initEngine(this.config, function () {
-                      self.prepare(cb);
-        });
-    },
-    
-    /**
-     * Run game with configuration object and onStart function.
-     * @param {Object|Function} [config] Pass configuration object or onStart function
-     * @param {onStart} [onStart] onStart function to be executed after game initialized
-     */
-    run: function (config, onStart) {
-        if (typeof config === 'function') {
-            ca.app.onStart = config;
-        }
-        else {
-            if (config) {
-                ca.app.config = config;
-            }
-            if (typeof onStart === 'function') {
-                ca.app.onStart = onStart;
-            }
-        }
-    
-        this.prepare(ca.app.onStart && ca.app.onStart.bind(ca.app));
-    },
-
-    //@Private Methods
-    
-    _loadConfig: function () {
-        // Load config
-        // Already loaded
-        if (this.config) {
-            this._initConfig(this.config);
-        }
-        // Load from project.json
-        else {
-            try {
-                var txt = jsb.fileUtils.getFileString("project.json");
-                var data = JSON.parse(txt);
-                this._initConfig(data || {});
-            } catch (e) {
-                console.log("Failed to read or parse project.json");
-                this._initConfig({});
-            }
-        }
-    },
-    
-    _initConfig: function (config) {
-        var CONFIG_KEY = this.CONFIG_KEY;
-    
-        // Configs adjustment
-        config[CONFIG_KEY.showFPS] = typeof config[CONFIG_KEY.showFPS] === 'undefined' ? true : config[CONFIG_KEY.showFPS];
-        config[CONFIG_KEY.engineDir] = config[CONFIG_KEY.engineDir] || "frameworks/cocos2d-html5";
-        if (config[CONFIG_KEY.debugMode] == null)
-            config[CONFIG_KEY.debugMode] = 0;
-        config[CONFIG_KEY.frameRate] = config[CONFIG_KEY.frameRate] || 60;
-        if (config[CONFIG_KEY.renderMode] == null)
-            config[CONFIG_KEY.renderMode] = 0;
-    
-        this.config = config;
-    
-//        ca.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
-//        ca.director.setAnimationInterval(1.0/this.config[CONFIG_KEY.frameRate]);
-    }
-};
-
-//+++++++++++++++++++++++++something about App end+++++++++++++++++++++++++++++
 
 jsb.urlRegExp = new RegExp(
                            "^" +

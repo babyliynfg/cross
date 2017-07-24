@@ -329,8 +329,15 @@ ca.CASwitch.Type.SquareRect = 0;
 ca.CASwitch.Type.RoundedRect = 1;
 
 ca.CACheckbox.Type = {};
-ca.CACheckbox.Type.SquareRect = 0;
-ca.CACheckbox.Type.RoundedRect = 1;
+ca.CACheckbox.Type.Custom = 0;
+ca.CACheckbox.Type.SquareRect = 1;
+ca.CACheckbox.Type.RoundedRect = 2;
+
+ca.CAAVPlayer.PlaybackBufferEmpty = "PlaybackBufferEmpty";
+ca.CAAVPlayer.PlaybackLikelyToKeepUp = "PlaybackLikelyToKeepUp";
+ca.CAAVPlayer.PlayStatePause = "PlayStatePause";
+ca.CAAVPlayer.PlayStatePlaying = "PlayStatePlaying";
+ca.CAAVPlayer.PlayStatePlayback = "PlayStatePlayback";
 
 ca.NetworkStatus = {};
 ca.NetworkStatus.NotReachable     = 0,
@@ -523,7 +530,8 @@ ca.DHorizontalLayoutFill   = ca.DHorizontalLayout_L_R(0, 0);
 ca.DVerticalLayoutFill     = ca.DVerticalLayout_T_B(0, 0);
 ca.DLayoutFill             = ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill);
 
-ca.CAFontShadow = function(){
+ca.CAFontShadow = function()
+{
     return  {
     shadowEnabled: false,
     shadowOffset: ca.DSizeZero,
@@ -532,7 +540,8 @@ ca.CAFontShadow = function(){
     };
 };
 
-ca.CAFontStroke = function(){
+ca.CAFontStroke = function()
+{
     return  {
     strokeEnabled: false,
     strokeColor: ca.CAColor4B.BLACK,
@@ -540,7 +549,8 @@ ca.CAFontStroke = function(){
     };
 };
 
-ca.CAFont = function(){
+ca.CAFont = function()
+{
     return  {
     bold: false,
     underLine: false,
@@ -677,29 +687,28 @@ ca.DRectEquals = function (r1, r2)
 
 ca.DRect.intersectsRect = function (r1, r2)
 {
-    if (r1.origin.x + r1.size.width < r2.origin.x)
+    if (r1.x + r1.width < r2.x)
     {
         return false;
     }
     
-    if (r2.origin.x + r2.size.width < r1.origin.x)
+    if (r2.x + r2.width < r1.x)
     {
         return false;
     }
     
-    if (r1.origin.y + r1.size.height < r2.origin.y)
+    if (r1.y + r1.height < r2.y)
     {
         return false;
     }
     
-    if (r2.origin.y + r2.size.height < r1.origin.y)
+    if (r2.y + r2.height < r1.y)
     {
         return false;
     }
     
     return true;
 };
-
 
 ca.CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
 ca.CROSSAPP_CCLOG_NOTIFICATION = "CROSSAPP_CCLOG_NOTIFICATION";

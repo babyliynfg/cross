@@ -45,9 +45,9 @@ var ButtonTest = ca.CAViewController.extend({
         //设置Button的标题颜色和状态
         btn4.setTitleColorForState(ca.CAControl.State.Normal,ca.CAColor4B.WHITE);
         //设置Button的背景View
-        btn4.setBackgroundViewForState(ca.CAControl.State.Normal, ca.CAScale9ImageView.createWithImage(ca.CAImage.create("image/button_normal.png")));
+        btn4.setBackgroundImageForState(ca.CAControl.State.Normal, ca.CAImage.create("image/button_normal.png"), true);
         //设置Button的背景View
-        btn4.setBackgroundViewForState(ca.CAControl.State.Highlighted,  ca.CAScale9ImageView.createWithImage( ca.CAImage.create("image/button_down.png")));
+        btn4.setBackgroundImageForState(ca.CAControl.State.Highlighted, ca.CAImage.create("image/button_down.png"), true);
         //添加回调事件
         btn4.addTarget(function(){ log("Button Custom");}, ca.CAButton.Event.TouchDown );
         this.getView().addSubview(btn4);

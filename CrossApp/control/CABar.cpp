@@ -622,11 +622,9 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
             : m_pItems.at(i)->getImage();
             btn->setImageForState(CAControl::State::Highlighted, selectedImage);
             btn->setImageForState(CAControl::State::Disabled, selectedImage);
-            btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::CLEAR));
-            btn->setBackgroundViewForState(CAControl::State::Highlighted,
-                                           CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
-            btn->setBackgroundViewForState(CAControl::State::Disabled,
-                                           CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
+            btn->setBackgroundImageForState(CAControl::State::Normal, CAImage::CLEAR_IMAGE(), false);
+            btn->setBackgroundImageForState(CAControl::State::Highlighted, m_pSelectedBackgroundImage, true);
+            btn->setBackgroundImageForState(CAControl::State::Disabled, m_pSelectedBackgroundImage, true);
             
             DRect badgeRect;
             badgeRect.origin = rect.origin + DPoint(rect.size.width - 55, 25);
@@ -853,11 +851,9 @@ void CATabBar::showSelectedBackground()
         : m_pItems.at(i)->getImage();
         btn->setImageForState(CAControl::State::Highlighted, selectedImage);
         btn->setImageForState(CAControl::State::Disabled, selectedImage);
-        btn->setBackgroundViewForState(CAControl::State::Normal, CAView::createWithColor(CAColor4B::CLEAR));
-        btn->setBackgroundViewForState(CAControl::State::Highlighted,
-                                       CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
-        btn->setBackgroundViewForState(CAControl::State::Disabled,
-                                       CAScale9ImageView::createWithImage(m_pSelectedBackgroundImage));
+        btn->setBackgroundImageForState(CAControl::State::Normal, CAImage::CLEAR_IMAGE(), false);
+        btn->setBackgroundImageForState(CAControl::State::Highlighted, m_pSelectedBackgroundImage, true);
+        btn->setBackgroundImageForState(CAControl::State::Disabled, m_pSelectedBackgroundImage, true);
         
         CABadgeView* badgeView = m_pBadgeViews.at(i);
         badgeView->setBadgeText(m_pItems.at(i)->getBadgeValue());

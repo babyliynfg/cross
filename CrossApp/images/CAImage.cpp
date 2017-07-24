@@ -1931,7 +1931,7 @@ bool CAImage::initWithRawData(CAData* data,
 
 bool CAImage::initWithColor4B(const CAColor4B& color)
 {
-    unsigned int pixels = color.getUInt32();
+    unsigned char pixels[4] = {color.r, color.g, color.b, color.a};
     CAData* data = CAData::create();
     data->copy((const unsigned char *)&pixels, 4);
     

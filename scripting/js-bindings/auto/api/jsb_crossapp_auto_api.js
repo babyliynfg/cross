@@ -536,6 +536,16 @@ getShaderProgram : function (
 },
 
 /**
+ * @method setShaderProgram
+ * @param {ca.GLProgram} arg0
+ */
+setShaderProgram : function (
+glprogram 
+)
+{
+},
+
+/**
  * @method premultipliedImageData
  */
 premultipliedImageData : function (
@@ -574,11 +584,9 @@ float
 },
 
 /**
- * @method setShaderProgram
- * @param {ca.GLProgram} arg0
+ * @method setAntiAliasTexParameters
  */
-setShaderProgram : function (
-glprogram 
+setAntiAliasTexParameters : function (
 )
 {
 },
@@ -784,11 +792,15 @@ long
 },
 
 /**
- * @method setAntiAliasTexParameters
+ * @method initWithColor4B
+ * @param {color4b_object} arg0
+ * @return {bool}
  */
-setAntiAliasTexParameters : function (
+initWithColor4B : function (
+cacolor4b 
 )
 {
+    return false;
 },
 
 /**
@@ -1226,6 +1238,18 @@ scaleToNewImageWithImage : function(
 caimage,
 float,
 float 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method createWithColor4B
+ * @param {color4b_object} arg0
+ * @return {ca.CAImage}
+ */
+createWithColor4B : function (
+cacolor4b 
 )
 {
     return ca.CAImage;
@@ -5178,26 +5202,6 @@ dsize
 },
 
 /**
- * @method interruptTouchState
- */
-interruptTouchState : function (
-)
-{
-},
-
-/**
- * @method getBackgroundViewForState
- * @param {ca.CAControl::State} arg0
- * @return {ca.CAView}
- */
-getBackgroundViewForState : function (
-state 
-)
-{
-    return ca.CAView;
-},
-
-/**
  * @method addTarget
  * @param {function} arg0
  * @param {ca.CAButton::Event} arg1
@@ -5210,23 +5214,19 @@ event
 },
 
 /**
- * @method setTitleLabelSize
- * @param {size_object} arg0
+ * @method interruptTouchState
  */
-setTitleLabelSize : function (
-dsize 
+interruptTouchState : function (
 )
 {
 },
 
 /**
- * @method setBackgroundViewForState
- * @param {ca.CAControl::State} arg0
- * @param {ca.CAView} arg1
+ * @method setTitleLabelSize
+ * @param {size_object} arg0
  */
-setBackgroundViewForState : function (
-state, 
-caview 
+setTitleLabelSize : function (
+dsize 
 )
 {
 },
@@ -5272,6 +5272,18 @@ str
 },
 
 /**
+ * @method getBackgroundImageForState
+ * @param {ca.CAControl::State} arg0
+ * @return {ca.CAImage}
+ */
+getBackgroundImageForState : function (
+state 
+)
+{
+    return ca.CAImage;
+},
+
+/**
  * @method setImageForState
  * @param {ca.CAControl::State} arg0
  * @param {ca.CAImage} arg1
@@ -5303,6 +5315,20 @@ cacolor4b
 setImageColorForState : function (
 state, 
 cacolor4b 
+)
+{
+},
+
+/**
+ * @method setBackgroundImageForState
+ * @param {ca.CAControl::State} arg0
+ * @param {ca.CAImage} arg1
+ * @param {bool} arg2
+ */
+setBackgroundImageForState : function (
+state, 
+caimage, 
+bool 
 )
 {
 },
@@ -6358,6 +6384,16 @@ CATabBarItem : function (
 ca.CANavigationBar = {
 
 /**
+ * @method onPopViewController
+ * @param {function} arg0
+ */
+onPopViewController : function (
+func 
+)
+{
+},
+
+/**
  * @method getGoBackBarButtonItem
  * @return {ca.CABarButtonItem}
  */
@@ -6368,23 +6404,13 @@ getGoBackBarButtonItem : function (
 },
 
 /**
- * @method getDelegate
- * @return {ca.CANavigationBarDelegate}
+ * @method setTitleColor
+ * @param {color4b_object} arg0
  */
-getDelegate : function (
+setTitleColor : function (
+cacolor4b 
 )
 {
-    return ca.CANavigationBarDelegate;
-},
-
-/**
- * @method getItem
- * @return {ca.CANavigationBarItem}
- */
-getItem : function (
-)
-{
-    return ca.CANavigationBarItem;
 },
 
 /**
@@ -6405,16 +6431,6 @@ getTitleColor : function (
 )
 {
     return ca.CAColor4B;
-},
-
-/**
- * @method setGoBackBarButtonItem
- * @param {ca.CABarButtonItem} arg0
- */
-setGoBackBarButtonItem : function (
-cabarbuttonitem 
-)
-{
 },
 
 /**
@@ -6446,23 +6462,21 @@ onExitTransitionDidStart : function (
 },
 
 /**
- * @method setBackgroundView
- * @param {ca.CAView} arg0
+ * @method onEnterTransitionDidFinish
  */
-setBackgroundView : function (
-caview 
+onEnterTransitionDidFinish : function (
 )
 {
 },
 
 /**
- * @method setDelegate
- * @param {ca.CANavigationBarDelegate} arg0
+ * @method getItem
+ * @return {ca.CANavigationBarItem}
  */
-setDelegate : function (
-canavigationbardelegate 
+getItem : function (
 )
 {
+    return ca.CANavigationBarItem;
 },
 
 /**
@@ -6476,19 +6490,21 @@ getButtonColor : function (
 },
 
 /**
- * @method onEnterTransitionDidFinish
+ * @method setGoBackBarButtonItem
+ * @param {ca.CABarButtonItem} arg0
  */
-onEnterTransitionDidFinish : function (
+setGoBackBarButtonItem : function (
+cabarbuttonitem 
 )
 {
 },
 
 /**
- * @method setTitleColor
- * @param {color4b_object} arg0
+ * @method setBackgroundView
+ * @param {ca.CAView} arg0
  */
-setTitleColor : function (
-cacolor4b 
+setBackgroundView : function (
+caview 
 )
 {
 },
@@ -6562,11 +6578,11 @@ caimage
 },
 
 /**
- * @method setDelegate
- * @param {ca.CATabBarDelegate} arg0
+ * @method onSelectedItem
+ * @param {function} arg0
  */
-setDelegate : function (
-catabbardelegate 
+onSelectedItem : function (
+func 
 )
 {
 },
@@ -6591,26 +6607,6 @@ long,
 catabbaritem 
 )
 {
-},
-
-/**
- * @method getSelectedIndicatorColor
- * @return {color4b_object}
- */
-getSelectedIndicatorColor : function (
-)
-{
-    return ca.CAColor4B;
-},
-
-/**
- * @method getBackgroundColor
- * @return {color4b_object}
- */
-getBackgroundColor : function (
-)
-{
-    return ca.CAColor4B;
 },
 
 /**
@@ -6662,13 +6658,13 @@ int
 },
 
 /**
- * @method getItems
- * @return {Array}
+ * @method setTitleBoldForSelected
+ * @param {bool} arg0
  */
-getItems : function (
+setTitleBoldForSelected : function (
+bool 
 )
 {
-    return new Array();
 },
 
 /**
@@ -6732,13 +6728,13 @@ getBackgroundImage : function (
 },
 
 /**
- * @method setTitleBoldForSelected
- * @param {bool} arg0
+ * @method getItems
+ * @return {Array}
  */
-setTitleBoldForSelected : function (
-bool 
+getItems : function (
 )
 {
+    return new Array();
 },
 
 /**
@@ -6752,11 +6748,11 @@ caimage
 },
 
 /**
- * @method setBackgroundColor
- * @param {color4b_object} arg0
+ * @method onClickToForbidSelectedItem
+ * @param {function} arg0
  */
-setBackgroundColor : function (
-cacolor4b 
+onClickToForbidSelectedItem : function (
+func 
 )
 {
 },
@@ -6780,16 +6776,6 @@ onExitTransitionDidStart : function (
 },
 
 /**
- * @method setSelectedIndicatorColor
- * @param {color4b_object} arg0
- */
-setSelectedIndicatorColor : function (
-cacolor4b 
-)
-{
-},
-
-/**
  * @method getForbidSelectedIndexs
  * @return {std::set<int, std::less<int>, std::allocator<int> >}
  */
@@ -6797,36 +6783,6 @@ getForbidSelectedIndexs : function (
 )
 {
     return std::set<int, std::less<int>, std::allocator<int> >;
-},
-
-/**
- * @method getSelectedBackgroundColor
- * @return {color4b_object}
- */
-getSelectedBackgroundColor : function (
-)
-{
-    return ca.CAColor4B;
-},
-
-/**
- * @method setSelectedBackgroundColor
- * @param {color4b_object} arg0
- */
-setSelectedBackgroundColor : function (
-cacolor4b 
-)
-{
-},
-
-/**
- * @method getDelegate
- * @return {ca.CATabBarDelegate}
- */
-getDelegate : function (
-)
-{
-    return ca.CATabBarDelegate;
 },
 
 /**
@@ -7586,16 +7542,6 @@ func
 },
 
 /**
- * @method getScrollViewDelegate
- * @return {ca.CAScrollViewDelegate}
- */
-getScrollViewDelegate : function (
-)
-{
-    return ca.CAScrollViewDelegate;
-},
-
-/**
  * @method setBounces
  * @param {bool} arg0
  */
@@ -7688,13 +7634,13 @@ isBounces : function (
 },
 
 /**
- * @method setBackgroundColor
- * @param {color4b_object} arg0
+ * @method isTouchEnabledAtSubviews
+ * @return {bool}
  */
-setBackgroundColor : function (
-cacolor4b 
+isTouchEnabledAtSubviews : function (
 )
 {
+    return false;
 },
 
 /**
@@ -7758,9 +7704,11 @@ isZooming : function (
 /**
  * @method setBackgroundImage
  * @param {ca.CAImage} arg0
+ * @param {bool} arg1
  */
 setBackgroundImage : function (
-caimage 
+caimage, 
+bool 
 )
 {
 },
@@ -7851,16 +7799,6 @@ onDidMoved : function (
 func 
 )
 {
-},
-
-/**
- * @method isTouchEnabledAtSubviews
- * @return {bool}
- */
-isTouchEnabledAtSubviews : function (
-)
-{
-    return false;
 },
 
 /**
@@ -8268,16 +8206,6 @@ str
 },
 
 /**
- * @method isKeypadEnabled
- * @return {bool}
- */
-isKeypadEnabled : function (
-)
-{
-    return false;
-},
-
-/**
  * @method isViewRunning
  * @return {bool}
  */
@@ -8423,16 +8351,6 @@ getTabBarController : function (
  * @method viewDidUnload
  */
 viewDidUnload : function (
-)
-{
-},
-
-/**
- * @method setKeypadEnabled
- * @param {bool} arg0
- */
-setKeypadEnabled : function (
-bool 
 )
 {
 },
@@ -8812,16 +8730,6 @@ caimage
 },
 
 /**
- * @method isScrollEnabled
- * @return {bool}
- */
-isScrollEnabled : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setTabBarTitleColorForSelected
  * @param {color4b_object} arg0
  */
@@ -8916,16 +8824,6 @@ getTabBarSelectedBackgroundColor : function (
 },
 
 /**
- * @method setScrollEnabled
- * @param {bool} arg0
- */
-setScrollEnabled : function (
-bool 
-)
-{
-},
-
-/**
  * @method showSelectedViewController
  * @param {ca.CAViewController} arg0
  * @return {bool}
@@ -8979,7 +8877,7 @@ getTabBarBackgroundImage : function (
 
 /**
  * @method getTabBarVerticalAlignment
- * @return {ca.CABarVerticalAlignment}
+ * @return {ca.CATabBar::VerticalAlignment}
  */
 getTabBarVerticalAlignment : function (
 )
@@ -9038,12 +8936,12 @@ getTabBarSelectedIndicatorImage : function (
 /**
  * @method initWithViewControllers
  * @param {Array} arg0
- * @param {ca.CABarVerticalAlignment} arg1
+ * @param {ca.CATabBar::VerticalAlignment} arg1
  * @return {bool}
  */
 initWithViewControllers : function (
 array, 
-cabarverticalalignment 
+verticalalignment 
 )
 {
     return false;
@@ -9099,6 +8997,16 @@ isTabBarHidden : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getTabBar
+ * @return {ca.CATabBar}
+ */
+getTabBar : function (
+)
+{
+    return ca.CATabBar;
 },
 
 /**
@@ -12196,16 +12104,6 @@ cacolor4b
 },
 
 /**
- * @method getListViewDelegate
- * @return {ca.CAListViewDelegate}
- */
-getListViewDelegate : function (
-)
-{
-    return ca.CAListViewDelegate;
-},
-
-/**
  * @method setSelectAtIndex
  * @param {unsigned int} arg0
  */
@@ -12246,13 +12144,13 @@ init : function (
 },
 
 /**
- * @method getListViewDataSource
- * @return {ca.CAListViewDataSource}
+ * @method isAllowsMultipleSelection
+ * @return {bool}
  */
-getListViewDataSource : function (
+isAllowsMultipleSelection : function (
 )
 {
-    return ca.CAListViewDataSource;
+    return false;
 },
 
 /**
@@ -12291,16 +12189,6 @@ setAllowsMultipleSelection : function (
 bool 
 )
 {
-},
-
-/**
- * @method isAllowsMultipleSelection
- * @return {bool}
- */
-isAllowsMultipleSelection : function (
-)
-{
-    return false;
 },
 
 /**
@@ -12770,13 +12658,13 @@ getSeparatorViewHeight : function (
 },
 
 /**
- * @method getTableViewDataSource
- * @return {ca.CATableViewDataSource}
+ * @method getTableHeaderHeight
+ * @return {unsigned int}
  */
-getTableViewDataSource : function (
+getTableHeaderHeight : function (
 )
 {
-    return ca.CATableViewDataSource;
+    return 0;
 },
 
 /**
@@ -13068,16 +12956,6 @@ int
 },
 
 /**
- * @method getTableViewDelegate
- * @return {ca.CATableViewDelegate}
- */
-getTableViewDelegate : function (
-)
-{
-    return ca.CATableViewDelegate;
-},
-
-/**
  * @method getSectionHeaderHeightInSection
  * @param {unsigned int} arg0
  * @return {float}
@@ -13117,16 +12995,6 @@ char
 onEnterTransitionDidFinish : function (
 )
 {
-},
-
-/**
- * @method getTableHeaderHeight
- * @return {unsigned int}
- */
-getTableHeaderHeight : function (
-)
-{
-    return 0;
 },
 
 /**
@@ -13536,13 +13404,13 @@ displayingCollectionCell : function (
 },
 
 /**
- * @method getCollectionViewDataSource
- * @return {ca.CACollectionViewDataSource}
+ * @method getCollectionHeaderHeight
+ * @return {unsigned int}
  */
-getCollectionViewDataSource : function (
+getCollectionHeaderHeight : function (
 )
 {
-    return ca.CACollectionViewDataSource;
+    return 0;
 },
 
 /**
@@ -13594,16 +13462,6 @@ isAlwaysTopSectionHeader : function (
 },
 
 /**
- * @method getCollectionHeaderHeight
- * @return {unsigned int}
- */
-getCollectionHeaderHeight : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method onCellHeightAtIndexPath
  * @param {function} arg0
  */
@@ -13611,16 +13469,6 @@ onCellHeightAtIndexPath : function (
 func 
 )
 {
-},
-
-/**
- * @method getCollectionViewDelegate
- * @return {ca.CACollectionViewDelegate}
- */
-getCollectionViewDelegate : function (
-)
-{
-    return ca.CACollectionViewDelegate;
 },
 
 /**
@@ -14162,13 +14010,13 @@ displayingCollectionCell : function (
 },
 
 /**
- * @method getCollectionViewDataSource
- * @return {ca.CAAutoCollectionViewDataSource}
+ * @method getCollectionHeaderHeight
+ * @return {unsigned int}
  */
-getCollectionViewDataSource : function (
+getCollectionHeaderHeight : function (
 )
 {
-    return ca.CAAutoCollectionViewDataSource;
+    return 0;
 },
 
 /**
@@ -14220,16 +14068,6 @@ isAlwaysTopSectionHeader : function (
 },
 
 /**
- * @method getCollectionHeaderHeight
- * @return {unsigned int}
- */
-getCollectionHeaderHeight : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method setOrientation
  * @param {ca.CAAutoCollectionView::Orientation} arg0
  */
@@ -14237,16 +14075,6 @@ setOrientation : function (
 orientation 
 )
 {
-},
-
-/**
- * @method getCollectionViewDelegate
- * @return {ca.CAAutoCollectionViewDelegate}
- */
-getCollectionViewDelegate : function (
-)
-{
-    return ca.CAAutoCollectionViewDelegate;
 },
 
 /**
@@ -14454,13 +14282,13 @@ isAllowsSelection : function (
 },
 
 /**
- * @method getWaterfallViewDataSource
- * @return {ca.CAWaterfallViewDataSource}
+ * @method setWaterfallHeaderHeight
+ * @param {unsigned int} arg0
  */
-getWaterfallViewDataSource : function (
+setWaterfallHeaderHeight : function (
+int 
 )
 {
-    return ca.CAWaterfallViewDataSource;
 },
 
 /**
@@ -14501,16 +14329,6 @@ setAlwaysTopSectionHeader : function (
 bool 
 )
 {
-},
-
-/**
- * @method getWaterfallViewDelegate
- * @return {ca.CAWaterfallViewDelegate}
- */
-getWaterfallViewDelegate : function (
-)
-{
-    return ca.CAWaterfallViewDelegate;
 },
 
 /**
@@ -14579,16 +14397,6 @@ int
  */
 onDidSelectCellAtIndexPath : function (
 func 
-)
-{
-},
-
-/**
- * @method setWaterfallHeaderHeight
- * @param {unsigned int} arg0
- */
-setWaterfallHeaderHeight : function (
-int 
 )
 {
 },
@@ -15839,10 +15647,10 @@ array
 ca.CAAVPlayer = {
 
 /**
- * @method onTimeJumped
+ * @method onPlayBufferLoadingState
  * @param {function} arg0
  */
-onTimeJumped : function (
+onPlayBufferLoadingState : function (
 func 
 )
 {
@@ -15887,11 +15695,11 @@ str
 },
 
 /**
- * @method playWithRate
- * @param {float} arg0
+ * @method onTimeJumped
+ * @param {function} arg0
  */
-playWithRate : function (
-float 
+onTimeJumped : function (
+func 
 )
 {
 },
@@ -15945,26 +15753,6 @@ getCurrentTime : function (
 },
 
 /**
- * @method getRate
- * @return {float}
- */
-getRate : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setRate
- * @param {float} arg0
- */
-setRate : function (
-float 
-)
-{
-},
-
-/**
  * @method onPlayState
  * @param {function} arg0
  */
@@ -15979,16 +15767,6 @@ func
  * @param {function} arg0
  */
 onLoadedTime : function (
-func 
-)
-{
-},
-
-/**
- * @method onPlayBufferLoadingState
- * @param {function} arg0
- */
-onPlayBufferLoadingState : function (
 func 
 )
 {
@@ -16149,16 +15927,6 @@ float
 },
 
 /**
- * @method setFontSizeSelected
- * @param {float} arg0
- */
-setFontSizeSelected : function (
-float 
-)
-{
-},
-
-/**
  * @method onHeightForComponent
  * @param {function} arg0
  */
@@ -16189,16 +15957,6 @@ getFontSizeNormal : function (
 },
 
 /**
- * @method getPickerViewDataSource
- * @return {ca.CAPickerViewDataSource}
- */
-getPickerViewDataSource : function (
-)
-{
-    return ca.CAPickerViewDataSource;
-},
-
-/**
  * @method reloadAllComponents
  */
 reloadAllComponents : function (
@@ -16214,16 +15972,6 @@ onWidthForComponent : function (
 func 
 )
 {
-},
-
-/**
- * @method getPickerViewDelegate
- * @return {ca.CAPickerViewDelegate}
- */
-getPickerViewDelegate : function (
-)
-{
-    return ca.CAPickerViewDelegate;
 },
 
 /**
@@ -16416,6 +16164,16 @@ func
  * @method onEnterTransitionDidFinish
  */
 onEnterTransitionDidFinish : function (
+)
+{
+},
+
+/**
+ * @method setFontSizeSelected
+ * @param {float} arg0
+ */
+setFontSizeSelected : function (
+float 
 )
 {
 },
@@ -17934,11 +17692,11 @@ keyboardtype
 },
 
 /**
- * @method setFontSize
- * @param {int} arg0
+ * @method onShouldBeginEditing
+ * @param {function} arg0
  */
-setFontSize : function (
-int 
+onShouldBeginEditing : function (
+func 
 )
 {
 },
@@ -18174,11 +17932,11 @@ int
 },
 
 /**
- * @method onShouldBeginEditing
- * @param {function} arg0
+ * @method setFontSize
+ * @param {int} arg0
  */
-onShouldBeginEditing : function (
-func 
+setFontSize : function (
+int 
 )
 {
 },

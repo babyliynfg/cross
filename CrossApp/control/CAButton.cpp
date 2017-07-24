@@ -159,12 +159,9 @@ void CAButton::setBackgroundViewSquareRect()
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CAButton_SquareRect");
     
-    this->setBackgroundViewForState(CAControl::State::Normal,
-                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_normal"))));
-    this->setBackgroundViewForState(CAControl::State::Highlighted,
-                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_highlighted"))));
-    this->setBackgroundViewForState(CAControl::State::Disabled,
-                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_disabled"))));
+    this->setBackgroundImageForState(CAControl::State::Normal, CAImage::create(map.at("backgroundView_normal")), true);
+    this->setBackgroundImageForState(CAControl::State::Highlighted, CAImage::create(map.at("backgroundView_highlighted")), true);
+    this->setBackgroundImageForState(CAControl::State::Disabled, CAImage::create(map.at("backgroundView_disabled")), true);
     
     m_mTitleColors[CAControl::State::Normal] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
     m_mTitleColors[CAControl::State::Highlighted] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlighted")));
@@ -175,12 +172,9 @@ void CAButton::setBackgroundViewRoundedRect()
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CAButton_RoundedRect");
     
-    this->setBackgroundViewForState(CAControl::State::Normal,
-                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_normal"))));
-    this->setBackgroundViewForState(CAControl::State::Highlighted,
-                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_highlighted"))));
-    this->setBackgroundViewForState(CAControl::State::Disabled,
-                                    CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView_disabled"))));
+    this->setBackgroundImageForState(CAControl::State::Normal, CAImage::create(map.at("backgroundView_normal")), true);
+    this->setBackgroundImageForState(CAControl::State::Highlighted, CAImage::create(map.at("backgroundView_highlighted")), true);
+    this->setBackgroundImageForState(CAControl::State::Disabled, CAImage::create(map.at("backgroundView_disabled")), true);
     
     m_mTitleColors[CAControl::State::Normal] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
     m_mTitleColors[CAControl::State::Highlighted] = ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlighted")));
