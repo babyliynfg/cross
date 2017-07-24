@@ -62,6 +62,12 @@ bool RootWindow::init()
         return false;
     }
     
+    CAVector<CAViewController*> conttollers;
+    for (int i=0; i<3; i++)
+    {
+        conttollers.pushBack(FirstViewController::create());
+    }
+
     CANavigationBarItem* firstItem = CANavigationBarItem::create(UTF8("控件展示"));
     CABarButtonItem* barButtonItem = CABarButtonItem::create("", CAImage::create("image/ic_category_list.png"), NULL);
     barButtonItem->setCallbackFunction([=]()
@@ -70,11 +76,13 @@ bool RootWindow::init()
     });
     firstItem->addLeftButtonItem(barButtonItem);
     
-    FirstViewController* viewController = FirstViewController::create();
-    viewController->setNavigationBarItem(firstItem);
+    CATabBarController* tabBarConttoller = new CATabBarController();
+    tabBarConttoller->initWithViewControllers(conttollers);
+    tabBarConttoller->setNavigationBarItem(firstItem);
+    tabBarConttoller->autorelease();
     
     m_pRootNavigationController = new CANavigationController();
-    m_pRootNavigationController->initWithRootViewController(viewController);
+    m_pRootNavigationController->initWithRootViewController(tabBarConttoller);
     m_pRootNavigationController->autorelease();
 
     

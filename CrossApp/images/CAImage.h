@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 class CAFreeTypeFont;
 class GLProgram;
-
+class CAColor4B;
 class CC_DLL CAImage : public CAObject
 {
 public:
@@ -134,14 +134,18 @@ public:
                                       unsigned int pixelsHigh,
                                       const std::string& key);
     
+    static CAImage* createWithColor4B(const CAColor4B& color);
+    
     bool initWithImageFile(const std::string& file, bool isOpenGLThread = true);
     
     bool initWithImageData(CAData* data, bool isOpenGLThread = true);
     
     bool initWithRawData(CAData* data, const CAImage::PixelFormat& pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh);
     
-    const char* description(void);
+    bool initWithColor4B(const CAColor4B& color);
 
+    const char* description(void);
+    
     void drawAtPoint(const DPoint& point);
     
     void drawInRect(const DRect& rect);

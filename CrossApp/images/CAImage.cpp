@@ -1350,6 +1350,18 @@ CAImage* CAImage::createWithRawData(CAData* data,
     return image;
 }
 
+CAImage* CAImage::createWithColor4B(const CrossApp::CAColor4B &color)
+{
+    CAImage* image = new CAImage();
+    if (image && image->initWithColor4B(color))
+    {
+        image->autorelease();
+        return image;
+    }
+    CC_SAFE_DELETE(image);
+    return image;
+}
+
 bool CAImage::initWithImageFile(const std::string& file, bool isOpenGLThread)
 {
     CAData* data= FileUtils::getInstance()->getDataFromFile(file);
@@ -1915,6 +1927,15 @@ bool CAImage::initWithRawData(CAData* data,
     this->repremultipliedImageData();
     
     return true;
+}
+
+bool CAImage::initWithColor4B(const CAColor4B& color)
+{
+    unsigned int pixels = color.getUInt32();
+    CAData* data = CAData::create();
+    data->copy((const unsigned char *)&pixels, 4);
+    
+    return this->initWithRawData(data, CAImage::PixelFormat::RGBA8888, 1, 1);
 }
 
 void CAImage::convertToRawData()

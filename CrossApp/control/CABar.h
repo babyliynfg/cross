@@ -106,17 +106,6 @@ protected:
     bool m_bClearance;
 };
 
-class CATabBar;
-class CC_DLL CATabBarDelegate
-{
-public:
-    
-    virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index) = 0;
-    
-    virtual void tabBarClickToForbidSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index){};
-    
-};
-
 class CC_DLL CABadgeView: public CAView
 {
 public:
@@ -159,6 +148,10 @@ public:
     
     void setItems(const CAVector<CATabBarItem*>& items);
     
+    CC_LISTENING_FUNCTION(void(CATabBarItem* item, unsigned int index), SelectedItem)
+    
+    CC_LISTENING_FUNCTION(void(CATabBarItem* item, unsigned int index), ClickToForbidSelectedItem)
+    
     CC_PROPERTY(CAImage*, m_pBackgroundImage, BackgroundImage);
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sBackgroundColor, BackgroundColor);
@@ -176,8 +169,6 @@ public:
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedTitleColor, TitleColorForSelected);
     
     CC_PROPERTY(bool, m_bSelectedTitleBold, TitleBoldForSelected);
-    
-    CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CATabBarItem*>, m_pItems, Items);
     

@@ -1175,7 +1175,6 @@ CATabBarController::CATabBarController()
 :m_nSelectedIndex(0)
 ,m_nLastSelectedIndex(UINT_NONE)
 ,m_pTabBar(nullptr)
-,m_pContainer(nullptr)
 ,m_bTabBarHidden(false)
 ,m_pTabBarBackgroundImage(nullptr)
 ,m_pTabBarSelectedBackgroundImage(nullptr)
@@ -1187,9 +1186,10 @@ CATabBarController::CATabBarController()
 ,m_sTabBarTitleColor(CAColor4B::WHITE)
 ,m_sTabBarSelectedTitleColor(CAColor4B(50, 193, 255, 255))
 ,m_bShowTabBarSelectedIndicator(false)
+,m_obTabBarLayout(DLayoutZero)
+,m_obViewLayout(DLayoutZero)
 ,m_fProgress(1.0f)
 ,m_iTabBarHeight(0)
-,m_bScrollEnabled(false)
 {
     m_pView->setColor(CAColor4B::CLEAR);
     m_pView->setDisplayRange(false);
@@ -1216,6 +1216,11 @@ CATabBarController::~CATabBarController()
     CC_SAFE_RELEASE_NULL(m_pTabBarBackgroundImage);
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedBackgroundImage);
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedIndicatorImage);
+}
+
+CATabBar* CATabBarController::getTabBar()
+{
+    return m_pTabBar;
 }
 
 void CATabBarController::setTabBarBackgroundImage(CrossApp::CAImage *var)
@@ -1453,40 +1458,25 @@ void CATabBarController::viewDidLoad()
         tabBarLayout.vertical.bottom = m_bTabBarHidden ? -m_iTabBarHeight : 0;
         tabBarLayout.vertical.height = m_iTabBarHeight;
     }
+    m_obTabBarLayout = tabBarLayout;
     
-    DLayout containerLayout;
-    containerLayout.horizontal = DHorizontalLayoutFill;
+    DLayout viewLayout;
+    viewLayout.horizontal = DHorizontalLayoutFill;
     
     if (m_eTabBarVerticalAlignment == CABarVerticalAlignment::Top)
     {
-        containerLayout.vertical = DVerticalLayout_T_B(tabBarLayout.vertical.top + tabBarLayout.vertical.height, 0);
+        viewLayout.vertical = DVerticalLayout_T_B(tabBarLayout.vertical.top + tabBarLayout.vertical.height, 0);
     }
     else
     {
-        containerLayout.vertical = DVerticalLayout_T_B(0, tabBarLayout.vertical.bottom + tabBarLayout.vertical.height);
+        viewLayout.vertical = DVerticalLayout_T_B(0, tabBarLayout.vertical.bottom + tabBarLayout.vertical.height);
     }
-    
-    m_pContainer = CAPageView::createWithLayout(containerLayout, CAPageView::Orientation::Horizontal);
-    m_pContainer->setBackgroundColor(CAColor4B::CLEAR);
-    m_pContainer->setPageViewDelegate(this);
-    m_pContainer->setScrollViewDelegate(this);
-    m_pContainer->setScrollEnabled(m_bScrollEnabled);
-    m_pContainer->setDisplayRange(true);
-    this->getView()->addSubview(m_pContainer);
-    
-    CAVector<CAView*> views;
-    for (int i=0; i<m_pViewControllers.size(); i++)
-    {
-        CAView* view = new CAView();
-        views.pushBack(view);
-        view->release();
-    }
-    m_pContainer->setViews(views);
-    
-    m_pTabBar = CATabBar::createWithLayout(tabBarLayout, clearance);
+    m_obViewLayout = viewLayout;
+
+    m_pTabBar = CATabBar::createWithLayout(m_obTabBarLayout, clearance);
     m_pTabBar->setItems(items);
-    m_pTabBar->setDelegate(this);
-    this->getView()->addSubview(m_pTabBar);
+    m_pTabBar->onSelectedItem(CALLBACK_BIND_2(CATabBarController::tabBarSelectedItem, this));
+    this->getView()->insertSubview(m_pTabBar, 1);
     
     if (m_pTabBarBackgroundImage)
     {
@@ -1588,7 +1578,6 @@ bool CATabBarController::showSelectedViewControllerAtIndex(unsigned int index)
         CC_BREAK_IF(index >= m_pViewControllers.size());
         CC_BREAK_IF(index == m_nSelectedIndex);
 
-        m_pContainer->setCurrPage(index, false);
         if (m_pTabBar->getSelectedIndex() != index)
         {
             m_pTabBar->setSelectedAtIndex(index);
@@ -1610,43 +1599,10 @@ unsigned int CATabBarController::getSelectedViewControllerAtIndex()
     return m_nSelectedIndex;
 }
 
-void CATabBarController::tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index)
+void CATabBarController::tabBarSelectedItem(CATabBarItem* item, unsigned int index)
 {
     CC_RETURN_IF(m_nSelectedIndex == index);
     this->showSelectedViewControllerAtIndex(index);
-}
-
-void CATabBarController::pageViewDidEndTurning(CAPageView* pageView)
-{
-    m_pTabBar->setTouchEnabled(true);
-    
-    for (int i = MAX((int)m_nSelectedIndex - 1, 0);
-         i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
-         i++)
-    {
-        CC_CONTINUE_IF(i == pageView->getCurrPage());
-        m_pViewControllers.at(i)->getView()->setVisible(false);
-    }
-    CC_RETURN_IF(m_nSelectedIndex == pageView->getCurrPage());
-    this->showSelectedViewControllerAtIndex(pageView->getCurrPage());
-}
-
-void CATabBarController::scrollViewWillBeginDragging(CAScrollView* view)
-{
-    m_pTabBar->setTouchEnabled(false);
-    
-    for (int i = MAX((int)m_nSelectedIndex - 1, 0);
-         i < MIN((int)m_nSelectedIndex + 2, m_pViewControllers.size());
-         i++)
-    {
-        if (!m_pViewControllers.at(i)->getView()->getSuperview())
-        {
-            CAView* view = m_pContainer->getSubViewAtIndex(i);
-            m_pViewControllers.at(i)->addViewFromSuperview(view);
-        }
-        
-        m_pViewControllers.at(i)->getView()->setVisible(true);
-    }
 }
 
 void CATabBarController::renderingSelectedViewController()
@@ -1659,18 +1615,17 @@ void CATabBarController::renderingSelectedViewController()
     
     if (!m_pViewControllers.at(m_nSelectedIndex)->getView()->getSuperview())
     {
-        CAView* view = m_pContainer->getSubViewAtIndex(m_nSelectedIndex);
-        m_pViewControllers.at(m_nSelectedIndex)->addViewFromSuperview(view);
+        m_pViewControllers.at(m_nSelectedIndex)->getView()->setLayout(m_obViewLayout);
+        m_pViewControllers.at(m_nSelectedIndex)->addViewFromSuperview(this->getView());
     }
     
     m_pViewControllers.at(m_nSelectedIndex)->getView()->setVisible(true);
     m_pViewControllers.at(m_nSelectedIndex)->viewDidAppear();
 }
 
-
 int CATabBarController::getTabBarNowY()
-{
-    int y = 0;
+
+{    int y = 0;
 
     if (m_bTabBarHidden)
     {
@@ -1729,25 +1684,23 @@ void CATabBarController::update(float dt)
 {
     int y = this->getTabBarNowY();
     
-    DLayout tabBarLayout = m_pTabBar->getLayout();
-    
     switch (m_eTabBarVerticalAlignment)
     {
         case CABarVerticalAlignment::Top:
         {
-            tabBarLayout.vertical.top = y;
+            m_obTabBarLayout.vertical.top = y;
         }
             break;
         case CABarVerticalAlignment::Bottom:
         {
-            tabBarLayout.vertical.bottom = y;
+            m_obTabBarLayout.vertical.bottom = y;
         }
             break;
         default:
             break;
     }
     
-    m_pTabBar->setLayout(tabBarLayout);
+    m_pTabBar->setLayout(m_obTabBarLayout);
 }
 
 NS_CC_END;

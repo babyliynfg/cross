@@ -493,7 +493,6 @@ CATabBar::CATabBar(bool clearance)
 ,m_nSelectedIndex(-1)
 ,m_bSelectedTitleBold(false)
 ,m_bShowIndicator(false)
-,m_pDelegate(nullptr)
 ,m_bClearance(clearance)
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATabBar");
@@ -602,16 +601,16 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
                 {
                     this->setSelectedAtIndex(index);
                     
-                    if (m_pDelegate)
+                    if (m_obSelectedItem)
                     {
-                        m_pDelegate->tabBarSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
+                        m_obSelectedItem(m_pSelectedItem, m_nSelectedIndex);
                     }
                 }
                 else
                 {
-                    if (m_pDelegate)
+                    if (m_obClickToForbidSelectedItem)
                     {
-                        m_pDelegate->tabBarClickToForbidSelectedItem(this, m_pSelectedItem, m_nSelectedIndex);
+                        m_obClickToForbidSelectedItem(m_pSelectedItem, m_nSelectedIndex);
                     }
                 }
                 

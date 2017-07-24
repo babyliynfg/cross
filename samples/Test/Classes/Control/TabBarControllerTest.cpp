@@ -16,10 +16,10 @@ void TabBarControllerTest::viewDidLoad()
     CATabBarItem* item2 = CATabBarItem::create("item2", CAImage::create(""), CAImage::create(""));
     CATabBarItem* item3 = CATabBarItem::create("item3", CAImage::create(""), CAImage::create(""));
 
-    std::vector<CATabBarItem*> item;
-    item.push_back(item1);
-    item.push_back(item2);
-    item.push_back(item3);
+    CAVector<CATabBarItem*> item;
+    item.pushBack(item1);
+    item.pushBack(item2);
+    item.pushBack(item3);
     
     CATabBar* tabBar = CATabBar::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(98, 0.33)));
     tabBar->setItems(item);
@@ -31,15 +31,15 @@ void TabBarControllerTest::viewDidLoad()
     CATabBarItem* item5 = CATabBarItem::create("", CAImage::create("image/tab_image_btn_up.png"), CAImage::create("image/tab_image_btn_down.png"));
     CATabBarItem* item6 = CATabBarItem::create("", CAImage::create("image/tab_mine_btn_up.png"), CAImage::create("image/tab_mine_btn_down.png"));
     
-    std::vector<CATabBarItem*> it1;
-    it1.push_back(item4);
-    it1.push_back(item5);
-    it1.push_back(item6);
+    CAVector<CATabBarItem*> it1;
+    it1.pushBack(item4);
+    it1.pushBack(item5);
+    it1.pushBack(item6);
     
     CATabBar* tabBar1 = CATabBar::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(98, 0.66)));
-    tabBar1->setItems(it1);
     tabBar1->setBackgroundImage(CAImage::create("image/tab_news_bg.png"));
     tabBar1->setSelectedBackgroundColor(CAColor4B::CLEAR);
+    tabBar1->setItems(it1);
     tabBar1->setTag(100);
     tabBar1->setSelectedAtIndex(0);
     

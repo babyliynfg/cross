@@ -237,9 +237,6 @@ protected:
 
 class CC_DLL CATabBarController
 : public CAViewController
-, public CATabBarDelegate
-, public CAPageViewDelegate
-, public CAScrollViewDelegate
 {
     
 public:
@@ -284,8 +281,8 @@ public:
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedTitleColor, TabBarTitleColorForSelected);
     
     CC_PROPERTY(bool, m_bTabBarSelectedTitleBold, TabBarTitleBoldForSelected);
-    
-    CC_SYNTHESIZE_IS(bool, m_bScrollEnabled, ScrollEnabled);
+
+    CATabBar* getTabBar();
     
     void updateItem(CAViewController* viewController);
     
@@ -303,12 +300,8 @@ protected:
     
 protected:
     
-    virtual void tabBarSelectedItem(CATabBar* tabBar, CATabBarItem* item, unsigned int index);
+    virtual void tabBarSelectedItem(CATabBarItem* item, unsigned int index);
 
-    virtual void pageViewDidEndTurning(CAPageView* pageView);
-    
-    virtual void scrollViewWillBeginDragging(CAScrollView* view);
-    
     virtual void renderingSelectedViewController();
     
     void update(float dt);
@@ -328,10 +321,12 @@ protected:
     unsigned int m_nSelectedIndex;
     
     unsigned int m_nLastSelectedIndex;
-    
-    CAPageView* m_pContainer;
-    
+
     CATabBar* m_pTabBar;
+    
+    DLayout m_obTabBarLayout;
+    
+    DLayout m_obViewLayout;
 };
 
 
