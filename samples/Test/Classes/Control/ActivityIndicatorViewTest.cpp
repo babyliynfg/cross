@@ -6,14 +6,11 @@ int ActivityIndicatorNum = 0;
 
 ActivityIndicatorViewTest::ActivityIndicatorViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);   
+ 
 }
 
 ActivityIndicatorViewTest::~ActivityIndicatorViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
     ActivityIndicatorNum = 0;
 }
 

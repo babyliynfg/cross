@@ -3,14 +3,12 @@
 
 CollectionViewTest::CollectionViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
+
 }
 
 CollectionViewTest::~CollectionViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
+
 }
 
 void CollectionViewTest::viewDidLoad()

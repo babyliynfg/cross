@@ -3,14 +3,10 @@
 
 ListViewTest::ListViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 ListViewTest::~ListViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void ListViewTest::viewDidLoad()

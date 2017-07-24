@@ -3,14 +3,12 @@
 
 GifViewTest::GifViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
+
 }
 
 GifViewTest::~GifViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
+
 }
 
 void GifViewTest::viewDidLoad()

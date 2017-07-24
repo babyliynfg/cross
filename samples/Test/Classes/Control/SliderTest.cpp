@@ -6,14 +6,10 @@ int SliderNum = 0;
 
 SliderTest::SliderTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 SliderTest::~SliderTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
     SliderNum = 0;
 }
 

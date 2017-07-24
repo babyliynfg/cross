@@ -3,14 +3,10 @@
 
 SwitchTest::SwitchTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 SwitchTest::~SwitchTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void SwitchTest::viewDidLoad()

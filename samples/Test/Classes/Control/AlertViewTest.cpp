@@ -3,16 +3,10 @@
 
 AlertViewTest::AlertViewTest()
 {
-//    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-//    drawer->setTouchMoved(false);
-
 }
 
 AlertViewTest::~AlertViewTest()
 {
-//    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-//    drawer->setTouchMoved(true);
-
 }
 
 

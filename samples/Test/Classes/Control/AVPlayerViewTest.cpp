@@ -3,14 +3,12 @@
 
 AVPlayerViewTest::AVPlayerViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
+
 }
 
 AVPlayerViewTest::~AVPlayerViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
+
 }
 
 void AVPlayerViewTest::viewDidLoad()

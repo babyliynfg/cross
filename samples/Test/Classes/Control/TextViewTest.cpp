@@ -3,14 +3,10 @@
 
 TextViewTest::TextViewTest():pageViewIndex(0)
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 TextViewTest::~TextViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void TextViewTest::viewDidLoad()

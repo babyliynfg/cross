@@ -5,14 +5,10 @@ USING_NS_CC;
 
 TableViewTest::TableViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 TableViewTest::~TableViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void TableViewTest::viewDidLoad()

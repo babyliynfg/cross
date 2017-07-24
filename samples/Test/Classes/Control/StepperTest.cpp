@@ -6,15 +6,10 @@ int StepperNum = 0;
 
 StepperTest::StepperTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 StepperTest::~StepperTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
-    
     StepperNum = 0;
 }
 

@@ -2,16 +2,11 @@
 
 WaterfallViewTest::WaterfallViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
-    
     colorArr.clear();
 }
 
 WaterfallViewTest::~WaterfallViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void WaterfallViewTest::viewDidLoad()

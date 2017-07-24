@@ -228,6 +228,8 @@ protected:
     
     bool m_bPopViewController;
 
+    bool m_bTouchBeganRange;
+    
     int m_iNavigationBarHeight;
     
     bool m_bClearance;

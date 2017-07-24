@@ -6,14 +6,10 @@ int LabelNum = 0;
 
 LabelTest::LabelTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 LabelTest::~LabelTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
     LabelNum = 0;
 }
 

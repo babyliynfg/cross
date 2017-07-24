@@ -3,14 +3,10 @@
 
 Scale9ImageViewTest::Scale9ImageViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 Scale9ImageViewTest::~Scale9ImageViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void Scale9ImageViewTest::viewDidLoad()

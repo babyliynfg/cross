@@ -10,14 +10,12 @@
 
 CheckboxTest::CheckboxTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
+
 }
 
 CheckboxTest::~CheckboxTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
+
 }
 
 void CheckboxTest::viewDidLoad()

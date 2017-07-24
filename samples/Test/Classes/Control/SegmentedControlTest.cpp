@@ -3,14 +3,10 @@
 
 SegmentedControlTest::SegmentedControlTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 SegmentedControlTest::~SegmentedControlTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void SegmentedControlTest::viewDidLoad()

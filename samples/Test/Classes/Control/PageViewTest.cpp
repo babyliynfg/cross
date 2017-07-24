@@ -3,14 +3,10 @@
 
 PageViewTest::PageViewTest():pageViewIndex(0)
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 PageViewTest::~PageViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void PageViewTest::viewDidLoad()

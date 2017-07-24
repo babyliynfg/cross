@@ -4,14 +4,12 @@
 
 DrawViewTest::DrawViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
+
 }
 
 DrawViewTest::~DrawViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
+
 }
 
 void DrawViewTest::viewDidLoad()

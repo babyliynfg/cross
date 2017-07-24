@@ -6,14 +6,11 @@ int ImageViewNum = 0;
 
 ImageViewTest::ImageViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
+
 }
 
 ImageViewTest::~ImageViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
     ImageViewNum = 0;
 }
 

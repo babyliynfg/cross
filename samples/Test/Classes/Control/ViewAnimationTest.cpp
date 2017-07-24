@@ -6,14 +6,10 @@ int AnimationNum = 0;
 
 ViewAnimationTest::ViewAnimationTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 ViewAnimationTest::~ViewAnimationTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
     AnimationNum = 0;
 }
 

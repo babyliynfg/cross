@@ -7,14 +7,10 @@ int PickerViewNum = 0;
 
 PickerViewTest::PickerViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 PickerViewTest::~PickerViewTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
     PickerViewNum = 0;
 }
 

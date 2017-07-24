@@ -4,14 +4,10 @@
 
 TabBarControllerTest::TabBarControllerTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
 }
 
 TabBarControllerTest::~TabBarControllerTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
 }
 
 void TabBarControllerTest::viewDidLoad()
