@@ -353,41 +353,41 @@ void FirstViewController::collectionViewDidSelectCellAtIndexPath(unsigned int se
 
 CACollectionViewCell* FirstViewController::collectionCellAtIndex(const DSize& cellSize, unsigned int section, unsigned int item)
 {
-    CACollectionViewCell* p_Cell = m_pAutoCollection->dequeueReusableCellWithIdentifier("CrossApp");
-    if (p_Cell == NULL)
+    auto cell = m_pAutoCollection->dequeueReusableCellWithIdentifier("CrossApp");
+    if (cell == nullptr)
     {
-        p_Cell = CACollectionViewCell::create("CrossApp");
-        p_Cell->setAllowsSelected(false);
+        cell = CACollectionViewCell::create("CrossApp");
+        cell->setAllowsSelected(false);
         
         CAView* itemImage = CAView::createWithLayout(DLayout(DLayoutFill));
         itemImage->setTag(99);
-        p_Cell->addSubview(itemImage);
+        cell->getContentView()->addSubview(itemImage);
         
         CALabel* itemText = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(0,0), DVerticalLayout_B_H(5,80)));
         itemText->setTag(100);
         itemText->setFontSize(24);
         itemText->setTextAlignment(CATextAlignment::Center);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-        p_Cell->addSubview(itemText);
+        cell->getContentView()->addSubview(itemText);
         
         CAImageView* icon = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(30,30),DVerticalLayout_T_H(20, 123)));
         icon->setScaleType(CAImageView::ScaleType::FitImageInside);
         icon->setTag(101);
         icon->setScale(0.6f);
-        p_Cell->addSubview(icon);
+        cell->getContentView()->addSubview(icon);
     }
     
-    CAView* itemImageView = p_Cell->getSubviewByTag(99);
-    itemImageView->setColor(ccc4(244, 243, 243, 255));
+    CAView* itemImageView = cell->getContentView()->getSubviewByTag(99);
+    itemImageView->setColor(CAColor4B(244, 243, 243, 255));
     
-    CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(100);
+    CALabel* itemText = (CALabel*)cell->getContentView()->getSubviewByTag(100);
     itemText->setText(m_vTitles.at(item));
-    itemText->setColor(ccc4(34, 151, 254, 255));
+    itemText->setColor(CAColor4B(34, 151, 254, 255));
     
-    CAImageView* icon = (CAImageView*)p_Cell->getSubviewByTag(101);
+    CAImageView* icon = (CAImageView*)cell->getContentView()->getSubviewByTag(101);
     icon->setImage(CAImage::create(iconTag[item]));
     
-    return p_Cell;
+    return cell;
 }
 
 DSize FirstViewController::collectionViewCellSizeAtIndexPath(unsigned int section, unsigned int item)
