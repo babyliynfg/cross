@@ -14,17 +14,16 @@ var AVPlayerViewTest = ca.CAViewController.extend({
             avplayer.stop();
         });
 
-        //avplayer.onTimeJumped(function ()
-        //{
-        //    ca.log("进度调整");
-        //});
+        avplayer.onTimeJumped(function ()
+        {
+            ca.log("进度调整");
+        });
 
         var playerView = ca.CAAVPlayerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 640)));
         playerView.setPlayer(avplayer);
         this.getView().addSubview(playerView);
 
         playerView.insertSubview(ca.CAView.createWithLayout(ca.DLayoutFill, ca.CAColor4B.BLACK), -1);
-
 
         var slider = ca.CASlider.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(50, 50), ca.DVerticalLayout_B_H(200, 100)));
         slider.setValue(0);
@@ -34,12 +33,12 @@ var AVPlayerViewTest = ca.CAViewController.extend({
         slider.setTarget(function (value)
         {
             var current = value * avplayer.getDuration();
-            avplayer.setCurrentTime(current);
+            avplayer.setCurrentTime(current); //??
         });
-         //avplayer.onPeriodicTime(function (current, duration)
-         //{
-         //    slider.setValue(current / duration);
-         //});
+         avplayer.onPeriodicTime(function (current, duration)
+         {
+             slider.setValue(current / duration);
+         });
 
         var progress = ca.CAProgress.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(3, 3), ca.DVerticalLayoutFill));
         progress.setProgress(0);
@@ -48,10 +47,10 @@ var AVPlayerViewTest = ca.CAViewController.extend({
         progress.setProgressTintImage(progress.getProgressTrackImage());
         progress.setProgressTintColor(ca.CAColor4B.RED);
         progress.setProgressTrackColor(ca.CAColor4B.YELLOW);
-         //avplayer.onLoadedTime(function( current, duration)
-         //{
-         //    progress.setProgress(current / duration);
-         //});
+         avplayer.onLoadedTime(function( current, duration)
+         {
+             progress.setProgress(current / duration);
+         });
 
 
         var btn0 = ca.CAButton.create(ca.CAButton.Type.RoundedRect);
