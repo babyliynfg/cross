@@ -3,6 +3,7 @@
 
 SegmentedControlTest::SegmentedControlTest()
 {
+    this->setTitle("CASegmentedControl");
 }
 
 SegmentedControlTest::~SegmentedControlTest()

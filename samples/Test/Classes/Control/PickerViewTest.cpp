@@ -1,12 +1,11 @@
 ﻿
 #include "PickerViewTest.h"
-//#include "platform/CADevice.h"
-#include "FirstViewController.h"
 
 int PickerViewNum = 0;
 
 PickerViewTest::PickerViewTest()
 {
+    this->setTitle("CAPickerView");
 }
 
 PickerViewTest::~PickerViewTest()
@@ -51,25 +50,6 @@ static const CHAR* adressTag[34] =
     _T("香港特别行政区"),
     _T("澳门特别行政区"),
 };
-
-void FirstViewController::PickerViewRightBtnRightcallback(CAButton* btn)
-{
-    if (showPickerViewNavigationBar >= 4)
-    {
-        showPickerViewNavigationBar = 0;
-        PickerViewNum = showPickerViewNavigationBar;
-    }
-    else
-    {
-        PickerViewNum = ++showPickerViewNavigationBar;
-    }
-    PickerViewTest* ViewContrllerPickerViewTest = new PickerViewTest();
-    ViewContrllerPickerViewTest->init();
-    ViewContrllerPickerViewTest->setNavigationBarItem(PickerViewNavigationBar);
-    ViewContrllerPickerViewTest->autorelease();
-    RootWindow::getInstance()->getRootNavigationController()->replaceViewController(ViewContrllerPickerViewTest, false);
-}
-
 
 void PickerViewTest::viewDidLoad()
 {

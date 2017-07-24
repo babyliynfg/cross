@@ -16,6 +16,8 @@ public:
     
 	virtual ~ActivityIndicatorViewTest();
     
+    CREATE_FUNC(ActivityIndicatorViewTest);
+    
 protected:
     
     void viewDidLoad();

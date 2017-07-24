@@ -16,6 +16,8 @@ public:
     
 	virtual ~TextFieldTest();
     
+    CREATE_FUNC(TextFieldTest);
+    
 protected:
     
     void viewDidLoad();

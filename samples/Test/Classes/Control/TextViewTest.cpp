@@ -3,6 +3,7 @@
 
 TextViewTest::TextViewTest():pageViewIndex(0)
 {
+    this->setTitle("CATextView");
 }
 
 TextViewTest::~TextViewTest()

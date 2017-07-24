@@ -1,16 +1,17 @@
 
-#include "TabBarControllerTest.h"
+#include "TabBarTest.h"
 #include "FirstViewController.h"
 
-TabBarControllerTest::TabBarControllerTest()
+TabBarTest::TabBarTest()
+{
+    this->setTitle("CATabBar");
+}
+
+TabBarTest::~TabBarTest()
 {
 }
 
-TabBarControllerTest::~TabBarControllerTest()
-{
-}
-
-void TabBarControllerTest::viewDidLoad()
+void TabBarTest::viewDidLoad()
 {
     CATabBarItem* item1 = CATabBarItem::create("item1", CAImage::create(""), CAImage::create(""));
     CATabBarItem* item2 = CATabBarItem::create("item2", CAImage::create(""), CAImage::create(""));
@@ -52,7 +53,7 @@ void TabBarControllerTest::viewDidLoad()
 
 }
 
-void TabBarControllerTest::viewDidUnload()
+void TabBarTest::viewDidUnload()
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

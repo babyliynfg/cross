@@ -16,18 +16,13 @@ public:
     
 	virtual ~SliderTest();
     
+    CREATE_FUNC(SliderTest);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
-    
-public:
-    
-    CALabel* sliderValue1;
-    CALabel* sliderValue2;
-    CASlider* slider;
-    
 };
 
 

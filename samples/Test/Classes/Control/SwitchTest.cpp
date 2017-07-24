@@ -3,6 +3,7 @@
 
 SwitchTest::SwitchTest()
 {
+    this->setTitle("CASwitch");
 }
 
 SwitchTest::~SwitchTest()

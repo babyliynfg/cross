@@ -5,6 +5,7 @@ USING_NS_CC;
 
 TableViewTest::TableViewTest()
 {
+    this->setTitle("CATableView");
 }
 
 TableViewTest::~TableViewTest()

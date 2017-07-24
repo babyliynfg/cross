@@ -16,6 +16,8 @@ public:
     
 	virtual ~WaterfallViewTest();
     
+    CREATE_FUNC(WaterfallViewTest);
+    
 protected:
     
     void viewDidLoad();

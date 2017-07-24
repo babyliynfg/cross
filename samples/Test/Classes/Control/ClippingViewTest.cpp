@@ -4,7 +4,7 @@
 
 ClippingViewTest::ClippingViewTest()
 {
-
+    this->setTitle("ClippingViewTest");
 }
 
 ClippingViewTest::~ClippingViewTest()

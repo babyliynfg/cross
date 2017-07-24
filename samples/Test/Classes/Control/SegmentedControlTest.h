@@ -16,13 +16,13 @@ public:
     
 	virtual ~SegmentedControlTest();
     
+    CREATE_FUNC(SegmentedControlTest);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
-    
-    
 };
 
 

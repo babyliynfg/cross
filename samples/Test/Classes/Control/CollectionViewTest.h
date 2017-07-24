@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-class CollectionViewTest: public CAViewController, CACollectionViewDelegate, CACollectionViewDataSource, public CAScrollViewDelegate
+class CollectionViewTest: public CAViewController
 {
     
 public:
@@ -16,56 +16,33 @@ public:
     
 	virtual ~CollectionViewTest();
     
+    CREATE_FUNC(CollectionViewTest);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
     
-public:
+    void scrollViewHeaderBeginRefreshing();
     
-    CAPullToRefreshView* headerRefreshView;
-    CAPullToRefreshView* footerRefreshView;
+    void scrollViewFooterBeginRefreshing();
     
-    CAPageView* p_PageViewVec;
+    virtual void collectionViewDidSelectCellAtIndexPath(unsigned int section, unsigned int row, unsigned int item);
+        
+    virtual CACollectionViewCell* collectionCellAtIndex(const DSize& cellSize, unsigned int section, unsigned int row, unsigned int item);
     
-    int showIndex;
-    int showNum;
-    int pageViewIndex;
+    virtual unsigned int numberOfRowsInSection(unsigned int section);
     
-    CAVector<CAView* > VIEWLIST;
+    virtual unsigned int numberOfItemsInRowsInSection(unsigned int section, unsigned int row);
     
-public:
+    virtual unsigned int collectionViewHeightForRowAtIndexPath(unsigned int section, unsigned int row);
     
-    void refreshData1(float interval);
+private:
     
-    void refreshData2(float interval);
+    CACollectionView* m_pCollection;
     
-    void scrollViewHeaderBeginRefreshing(CAScrollView* view);
-    
-    void scrollViewFooterBeginRefreshing(CAScrollView* view);
-    
-    virtual void collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
-    
-    virtual void collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item);
-    
-    virtual CACollectionViewCell* collectionCellAtIndex(CACollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int row, unsigned int item);
-    
-    virtual unsigned int numberOfSections(CACollectionView *collectionView);
-    
-    virtual unsigned int numberOfRowsInSection(CACollectionView *collectionView, unsigned int section);
-    
-    virtual unsigned int numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row);
-    
-    virtual unsigned int collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row);
-    
-public:
-    
-    DSize size;
-    
-    CACollectionView* p_Conllection;
-    
-    std::vector<CAColor4B> colorArr;
+    std::vector<CAColor4B> m_vColors;
     
 };
 

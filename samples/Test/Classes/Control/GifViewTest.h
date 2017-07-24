@@ -16,6 +16,8 @@ public:
     
 	virtual ~GifViewTest();
     
+    CREATE_FUNC(GifViewTest);
+    
 protected:
     
     void viewDidLoad();

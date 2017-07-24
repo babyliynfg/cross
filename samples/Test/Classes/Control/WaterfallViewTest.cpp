@@ -2,7 +2,7 @@
 
 WaterfallViewTest::WaterfallViewTest()
 {
-    colorArr.clear();
+    this->setTitle("CAWaterfallView");
 }
 
 WaterfallViewTest::~WaterfallViewTest()

@@ -16,6 +16,8 @@ public:
     
 	virtual ~TextViewTest();
     
+    CREATE_FUNC(TextViewTest);
+    
 protected:
     
     void viewDidLoad();

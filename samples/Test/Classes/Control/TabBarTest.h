@@ -1,20 +1,22 @@
 
-#ifndef __Test__TabBarControllerTest__
-#define __Test__TabBarControllerTest__
+#ifndef __Test__TabBarTest__
+#define __Test__TabBarTest__
 
 #include <iostream>
 #include "CrossApp.h"
 
 USING_NS_CC;
 
-class TabBarControllerTest: public CAViewController
+class TabBarTest: public CAViewController
 {
     
 public:
 
-	TabBarControllerTest();
+	TabBarTest();
     
-	virtual ~TabBarControllerTest();
+	virtual ~TabBarTest();
+    
+    CREATE_FUNC(TabBarTest);
     
 protected:
     

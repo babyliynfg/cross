@@ -3,6 +3,7 @@
 
 ProgressTest::ProgressTest()
 {
+    this->setTitle("CAProgress");
 }
 
 ProgressTest::~ProgressTest()
@@ -13,19 +14,32 @@ void ProgressTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor4B::GRAY);
     
-    progress_value = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 50)));
-    progress_value->setTag(100);
-    progress_value->setText("");
-    progress_value->setFontSize(30);
-    progress_value->setColor(ccc4(51, 204, 255, 255));
-    progress_value->setTextAlignment(CATextAlignment::Center);
-    progress_value->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-    this->getView()->addSubview(progress_value);
+    auto label = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(300, 50)));
+    label->setTag(100);
+    label->setText("");
+    label->setFontSize(30);
+    label->setColor(CAColor4B(51, 204, 255, 255));
+    label->setTextAlignment(CATextAlignment::Center);
+    label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
+    this->getView()->addSubview(label);
     
-    progress = CAProgress::create();
-    progress->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(550, 0)));
-    CAScheduler::getScheduler()->schedule(schedule_selector(ProgressTest::progressValueChange), this, 0.01, false);
+    CAProgress* progress = CAProgress::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_H(550, 0)));
     this->getView()->addSubview(progress);
+    progress->setProgress(0.0f);
+    
+    CAScheduler::getScheduler()->schedule([=](float dt)
+    {
+        static float value = 0;
+        value += 0.01f;
+        if (value > 1.2f)
+        {
+            value = 0;
+        }
+        progress->setProgress(value);
+        label->setText(crossapp_format_string("%f", MIN(value, 1.0f)));
+    }, "progressValueChange", this, 0);
+    
+    
 }
 
 void ProgressTest::viewDidUnload()
@@ -34,13 +48,5 @@ void ProgressTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void ProgressTest::progressValueChange(float _t)
-{
-    char valueText[20] = "";
-    float currentValue = progress->getProgress() + 0.001;
-    progress->setProgress(currentValue);
-    sprintf(valueText,"%.02f%%",currentValue*100-0.1);
-    progress_value->setText(valueText);
-    
-}
+
 

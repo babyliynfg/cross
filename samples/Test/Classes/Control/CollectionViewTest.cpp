@@ -3,7 +3,15 @@
 
 CollectionViewTest::CollectionViewTest()
 {
-
+    this->setTitle("CACollectionView");
+    
+    for (int i = 0; i < 40; i++)
+    {
+        char r = CCRANDOM_0_1() * 255;
+        char g = CCRANDOM_0_1() * 255;
+        char b = CCRANDOM_0_1() * 255;
+        m_vColors.push_back(CAColor4B(r, g, b, 255));
+    }
 }
 
 CollectionViewTest::~CollectionViewTest()
@@ -12,31 +20,27 @@ CollectionViewTest::~CollectionViewTest()
 }
 
 void CollectionViewTest::viewDidLoad()
-{        
-    for (int i = 0; i < 40; i++)
-    {
-        char r = CCRANDOM_0_1() * 255;
-        char g = CCRANDOM_0_1() * 255;
-        char b = CCRANDOM_0_1() * 255;
-        colorArr.push_back(ccc4(r, g, b, 255));
-    }
+{
+    m_pCollection = CACollectionView::createWithLayout(DLayoutFill);
+    m_pCollection->setAllowsSelection(true);
+    m_pCollection->setHeaderRefreshView(CAPullToRefreshView::create(CAPullToRefreshView::Type::Header));
+    m_pCollection->setFooterRefreshView(CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer));
+    m_pCollection->setHoriInterval(20);
+    m_pCollection->setVertInterval(20);
+    this->getView()->addSubview(m_pCollection);
     
-    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Header);
-    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer);
+    m_pCollection->onCellAtIndexPath(CALLBACK_BIND_4(CollectionViewTest::collectionCellAtIndex, this));
+    m_pCollection->onCellHeightAtIndexPath(CALLBACK_BIND_2(CollectionViewTest::collectionViewHeightForRowAtIndexPath, this));
+    m_pCollection->onNumberOfRowsAtIndexPath(CALLBACK_BIND_1(CollectionViewTest::numberOfRowsInSection, this));
+    m_pCollection->onNumberOfItemsAtIndexPath(CALLBACK_BIND_2(CollectionViewTest::numberOfItemsInRowsInSection, this));
     
-    p_Conllection = CACollectionView::createWithLayout(DLayoutFill);
-    p_Conllection->setAllowsSelection(true);
-    p_Conllection->setCollectionViewDelegate(this);
-    p_Conllection->setCollectionViewDataSource(this);
-    p_Conllection->setScrollViewDelegate(this);
-    p_Conllection->setHeaderRefreshView(headerRefreshView);
-    p_Conllection->setFooterRefreshView(footerRefreshView);
-    p_Conllection->setHoriInterval(20);
-    p_Conllection->setVertInterval(20);
-    this->getView()->addSubview(p_Conllection);
+    m_pCollection->onDidSelectCellAtIndexPath(CALLBACK_BIND_3(CollectionViewTest::collectionViewDidSelectCellAtIndexPath, this));
     
-    p_Conllection->reloadData();
-    p_Conllection->startPullToHeaderRefreshView();
+    m_pCollection->onHeaderBeginRefreshing(CALLBACK_BIND_0(CollectionViewTest::scrollViewHeaderBeginRefreshing, this));
+    m_pCollection->onFooterBeginRefreshing(CALLBACK_BIND_0(CollectionViewTest::scrollViewFooterBeginRefreshing, this));
+    
+    m_pCollection->reloadData();
+    m_pCollection->startPullToHeaderRefreshView();
     
 }
 
@@ -46,45 +50,41 @@ void CollectionViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void CollectionViewTest::refreshData1(float interval)
+void CollectionViewTest::scrollViewHeaderBeginRefreshing()
 {
-    colorArr.clear();
-    for (int i = 0; i < 40; i++)
+    CAScheduler::getScheduler()->schedule([&](float dt)
     {
-        char r = CCRANDOM_0_1() * 255;
-        char g = CCRANDOM_0_1() * 255;
-        char b = CCRANDOM_0_1() * 255;
-        colorArr.push_back(ccc4(r, g, b, 255));
-    }
-    p_Conllection->reloadData();
+        m_vColors.clear();
+        for (int i = 0; i < 40; i++)
+        {
+            char r = CCRANDOM_0_1() * 255;
+            char g = CCRANDOM_0_1() * 255;
+            char b = CCRANDOM_0_1() * 255;
+            m_vColors.push_back(CAColor4B(r, g, b, 255));
+        }
+        m_pCollection->reloadData();
+    }, "scrollViewHeaderBeginRefreshing", this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
-void CollectionViewTest::refreshData2(float interval)
+void CollectionViewTest::scrollViewFooterBeginRefreshing()
 {
-    for (int i = 0; i < 40; i++)
+    CAScheduler::getScheduler()->schedule([&](float dt)
     {
-        char r = CCRANDOM_0_1() * 255;
-        char g = CCRANDOM_0_1() * 255;
-        char b = CCRANDOM_0_1() * 255;
-        colorArr.push_back(ccc4(r, g, b, 255));
-    }
-    p_Conllection->reloadData();
-}
-
-void CollectionViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
-{
-    CAScheduler::getScheduler()->schedule(schedule_selector(CollectionViewTest::refreshData1), this, 0.1, 0, 0.5f + CCRANDOM_0_1());
-}
-
-void CollectionViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
-{
-    CAScheduler::getScheduler()->schedule(schedule_selector(CollectionViewTest::refreshData2), this, 0.1, 0, 0.5f + CCRANDOM_0_1());
+        for (int i = 0; i < 40; i++)
+        {
+            char r = CCRANDOM_0_1() * 255;
+            char g = CCRANDOM_0_1() * 255;
+            char b = CCRANDOM_0_1() * 255;
+            m_vColors.push_back(CAColor4B(r, g, b, 255));
+        }
+        m_pCollection->reloadData();
+   }, "scrollViewFooterBeginRefreshing", this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
 
-void CollectionViewTest::collectionViewDidSelectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+void CollectionViewTest::collectionViewDidSelectCellAtIndexPath(unsigned int section, unsigned int row, unsigned int item)
 {
-    CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, row, item);
+    CACollectionViewCell* cell = m_pCollection->cellForRowAtIndexPath(section, row, item);
     cell->getContentView()->setRotation(-360);
     cell->getContentView()->setScale(0.5f);
     CAViewAnimation::beginAnimations("");
@@ -93,64 +93,53 @@ void CollectionViewTest::collectionViewDidSelectCellAtIndexPath(CACollectionView
     CAViewAnimation::commitAnimations();
 }
 
-void CollectionViewTest::collectionViewDidDeselectCellAtIndexPath(CACollectionView *collectionView, unsigned int section, unsigned int row, unsigned int item)
+CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(const DSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
 {
-
-}
-
-CACollectionViewCell* CollectionViewTest::collectionCellAtIndex(CACollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int row, unsigned int item)
-{
-    if (row * 3 + item >= colorArr.size())
+    if (row * 3 + item >= m_vColors.size())
     {
-        return NULL;
+        return nullptr;
     }
     
-    DSize _size = cellSize;
-    CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
-    if (p_Cell == NULL)
+    CACollectionViewCell* cell = m_pCollection->dequeueReusableCellWithIdentifier("CrossApp");
+    if (cell == nullptr)
     {
-        p_Cell = CACollectionViewCell::create("CrossApp");
+        cell = CACollectionViewCell::create("CrossApp");
         
         CAView* itemImage = CAView::createWithLayout(DLayoutFill);
         itemImage->setTag(99);
-        p_Cell->getContentView()->addSubview(itemImage);
+        cell->getContentView()->addSubview(itemImage);
         
         CALabel* itemText = CALabel::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(50, 50)));
         itemText->setTag(100);
         itemText->setFontSize(29);
         itemText->setTextAlignment(CATextAlignment::Center);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-        p_Cell->getContentView()->addSubview(itemText);
+        cell->getContentView()->addSubview(itemText);
     }
     
-    CAView* itemImageView = p_Cell->getContentView()->getSubviewByTag(99);
-    itemImageView->setColor(colorArr.at(row * 3 + item));
+    CAView* itemImageView = cell->getContentView()->getSubviewByTag(99);
+    itemImageView->setColor(m_vColors.at(row * 3 + item));
     CCLog("row = %d", item);
     
     char pos[20] = "";
     sprintf(pos, "(%d,%d,%d)", section, row, item);
-    CALabel* itemText = (CALabel*)p_Cell->getContentView()->getSubviewByTag(100);
+    CALabel* itemText = (CALabel*)cell->getContentView()->getSubviewByTag(100);
     itemText->setText(pos);
     
-    return p_Cell;
+    return cell;
 }
 
-unsigned int CollectionViewTest::numberOfSections(CACollectionView *collectionView)
+unsigned int CollectionViewTest::numberOfRowsInSection(unsigned int section)
 {
-    return 1;
+    return (unsigned int)(m_vColors.size() % 3 == 0 ? m_vColors.size() / 3 : m_vColors.size() / 3 + 1);
 }
 
-unsigned int CollectionViewTest::numberOfRowsInSection(CACollectionView *collectionView, unsigned int section)
-{
-    return (unsigned int)(colorArr.size() % 3 == 0 ? colorArr.size() / 3 : colorArr.size() / 3 + 1);
-}
-
-unsigned int CollectionViewTest::numberOfItemsInRowsInSection(CACollectionView *collectionView, unsigned int section, unsigned int row)
+unsigned int CollectionViewTest::numberOfItemsInRowsInSection(unsigned int section, unsigned int row)
 {
     return 3;
 }
 
-unsigned int CollectionViewTest::collectionViewHeightForRowAtIndexPath(CACollectionView* collectionView, unsigned int section, unsigned int row)
+unsigned int CollectionViewTest::collectionViewHeightForRowAtIndexPath(unsigned int section, unsigned int row)
 {
     return (this->getView()->getBounds().size.width - 20 * 4) / 3;
 }

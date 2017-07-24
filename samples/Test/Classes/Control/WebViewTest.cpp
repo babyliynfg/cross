@@ -3,6 +3,7 @@
 
 WebViewTest::WebViewTest()
 {
+    this->setTitle("CAWebView");
 }
 
 WebViewTest::~WebViewTest()

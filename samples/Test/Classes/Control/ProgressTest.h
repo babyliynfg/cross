@@ -16,21 +16,13 @@ public:
     
 	virtual ~ProgressTest();
     
+    CREATE_FUNC(ProgressTest);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
-    
-public:
-    
-    CALabel* progress_value;
-    CAProgress* progress;
-    
-public:
-    
-    void progressValueChange(float _t);
-    
 };
 
 

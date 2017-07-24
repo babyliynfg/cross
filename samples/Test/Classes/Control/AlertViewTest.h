@@ -16,6 +16,8 @@ public:
     
 	virtual ~AlertViewTest();
     
+    CREATE_FUNC(AlertViewTest);
+    
 protected:
     
     void viewDidLoad();

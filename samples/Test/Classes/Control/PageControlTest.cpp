@@ -10,6 +10,7 @@
 
 PageControlTest::PageControlTest()
 {
+    this->setTitle("CAPageControl");
 }
 
 PageControlTest::~PageControlTest()

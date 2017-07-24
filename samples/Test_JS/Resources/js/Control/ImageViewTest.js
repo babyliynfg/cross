@@ -6,7 +6,6 @@ var ImageViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
         this._imageViewNum = 0;
-        this._maxNum = 4 ;
     },
 
     viewDidLoad: function() {
@@ -79,16 +78,16 @@ var ImageViewTest = ca.CAViewController.extend({
         }
 
         var btn = ca.CAButton.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_NW_C(0.3,0.5) , ca.DVerticalLayout_B_H(20 ,50)),ca.CAButton.Type.RoundedRect);
-        btn.setTitleForState(0, "Switch Next");
+        btn.setTitleForState(ca.CAControl.State.Normal, "Switch Next");
         btn.addTarget(this.btncallback.bind(this), ca.CAButton.Event.TouchUpInSide);
         this.getView().addSubview(btn);
     },
 
-    btncallback: function (btn, point)
+    btncallback: function ()
     {
         this._imageViewNum += 1;
 
-        if(this._imageViewNum > this._maxNum)
+        if(this._imageViewNum > 4)
         {
             this._imageViewNum = 0;
         }

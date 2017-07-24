@@ -16,6 +16,8 @@ public:
     
 	virtual ~SwitchTest();
     
+    CREATE_FUNC(SwitchTest);
+    
 protected:
     
     void viewDidLoad();

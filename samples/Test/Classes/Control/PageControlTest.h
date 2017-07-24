@@ -22,6 +22,8 @@ public:
     
     virtual ~PageControlTest();
     
+    CREATE_FUNC(PageControlTest);
+    
 protected:
     
     void viewDidLoad();

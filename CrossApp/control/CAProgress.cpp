@@ -192,14 +192,13 @@ void CAProgress::setProgress(float progress, bool animated)
 {
 	progress = MIN(1.0f, progress);
 	progress = MAX(0.0f, progress);
-    m_fProgress = progress;
     
-	DPoint point = DPoint(this->getBounds().size.width * progress, 0);
+	DPoint point = DPoint(m_obContentSize.width * progress, 0);
 
 	if (animated)
 	{
         this->animatedBegin();
-		float time = fabsf(progress - m_fProgress) * 0.3f;
+		float time = fabsf(progress - m_fProgress) * 0.5f;
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(time);
         CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAProgress::animatedFinish, this));
@@ -208,6 +207,7 @@ void CAProgress::setProgress(float progress, bool animated)
 	}
 	else
 	{
+        m_fProgress = progress;
 		m_pIndicator->setFrameOrigin(point);
 
 		this->update(0);
@@ -221,18 +221,21 @@ float CAProgress::getProgress()
 
 void CAProgress::update(float dt)
 {
-	DRect rect = DRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
+    m_fProgress = m_pIndicator->getFrameOrigin().x / m_obContentSize.width;
+    
+	DRect rect = DRect(0, 0, m_pIndicator->getFrameOrigin().x, m_obContentSize.height);
 
 	m_pProgressImageView->setFrame(rect);
 }
 
 void CAProgress::animatedBegin()
 {
-	CAScheduler::getScheduler()->scheduleUpdate(this, 0, false);
+	CAScheduler::getScheduler()->scheduleUpdate(this, CAScheduler::PRIORITY_SYSTEM, false);
 }
 
 void CAProgress::animatedFinish()
 {
+    this->update(0);
     CAScheduler::getScheduler()->unscheduleUpdate(this);
 }
 

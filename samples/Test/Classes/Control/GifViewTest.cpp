@@ -3,7 +3,7 @@
 
 GifViewTest::GifViewTest()
 {
-
+    this->setTitle("CAGifView");
 }
 
 GifViewTest::~GifViewTest()

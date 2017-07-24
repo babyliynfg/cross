@@ -1,35 +1,16 @@
 
 #include "StepperTest.h"
-#include "FirstViewController.h"
 
 int StepperNum = 0;
 
 StepperTest::StepperTest()
 {
+    this->setTitle("CAStepper");
 }
 
 StepperTest::~StepperTest()
 {
     StepperNum = 0;
-}
-
-void FirstViewController::StepperRightBtnRightcallback(CAButton* btn)
-{
-    if (showStepperNavigationBar >= 1)
-    {
-        showStepperNavigationBar = 0;
-        StepperNum = showStepperNavigationBar;
-    }
-    else
-    {
-        StepperNum = ++showStepperNavigationBar;
-    }
-    
-    StepperTest* ViewContrllerStepperTest = new StepperTest();
-    ViewContrllerStepperTest->init();
-    ViewContrllerStepperTest->setNavigationBarItem(StepperNavigationBar);
-    ViewContrllerStepperTest->autorelease();
-    RootWindow::getInstance()->getRootNavigationController()->replaceViewController(ViewContrllerStepperTest, false);
 }
 
 void StepperTest::viewDidLoad()

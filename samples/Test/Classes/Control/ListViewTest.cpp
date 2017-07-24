@@ -3,6 +3,7 @@
 
 ListViewTest::ListViewTest()
 {
+    this->setTitle("CAListView");
 }
 
 ListViewTest::~ListViewTest()

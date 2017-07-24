@@ -16,12 +16,15 @@ public:
     
 	virtual ~LabelTest();
     
+    CREATE_FUNC(LabelTest);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
-        
+    
+    void showIndex(ssize_t index);
 };
 
 

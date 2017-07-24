@@ -15,6 +15,8 @@ public:
     
 	virtual ~RenderImageTest();
     
+    CREATE_FUNC(RenderImageTest);
+    
 protected:
     
     void viewDidLoad();

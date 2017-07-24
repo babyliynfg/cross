@@ -10,7 +10,7 @@
 
 CheckboxTest::CheckboxTest()
 {
-
+    this->setTitle("CACheckbox");
 }
 
 CheckboxTest::~CheckboxTest()

@@ -19,6 +19,8 @@ public:
     
 	virtual ~PickerViewTest();
     
+    CREATE_FUNC(PickerViewTest);
+    
 protected:
     
     void viewDidLoad();

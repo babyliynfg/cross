@@ -7,8 +7,6 @@
 
 USING_NS_CC;
 
-#define MAX_COUNT 5  
-
 class ImageViewTest: public CAViewController
 {
     
@@ -18,11 +16,15 @@ public:
     
 	virtual ~ImageViewTest();
     
+    CREATE_FUNC(ImageViewTest);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
+    
+    void showIndex(ssize_t index);
     
 public:
     

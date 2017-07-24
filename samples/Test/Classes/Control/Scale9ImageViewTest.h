@@ -16,6 +16,8 @@ public:
     
 	virtual ~Scale9ImageViewTest();
     
+    CREATE_FUNC(Scale9ImageViewTest);
+    
 protected:
     
     void viewDidLoad();

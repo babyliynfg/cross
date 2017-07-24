@@ -1,107 +1,46 @@
 
 #include "ActivityIndicatorViewTest.h"
-#include "FirstViewController.h"
-
-int ActivityIndicatorNum = 0;
 
 ActivityIndicatorViewTest::ActivityIndicatorViewTest()
 {
- 
+    this->setTitle("CAActivityIndicatorView");
 }
 
 ActivityIndicatorViewTest::~ActivityIndicatorViewTest()
 {
-    ActivityIndicatorNum = 0;
-}
 
-void FirstViewController::ActivityIndicatorRightBtnRightcallback(CAButton* control)
-{
-    if (showActivityIndicatorNavigationBar >= 4)
-    {
-        showActivityIndicatorNavigationBar = 0;
-        ActivityIndicatorNum = showActivityIndicatorNavigationBar;
-    }
-    else
-    {
-        ActivityIndicatorNum = ++showActivityIndicatorNavigationBar;
-    }
-    
-    ActivityIndicatorViewTest* ViewContrllerIndicatorViewTest = new ActivityIndicatorViewTest();
-    ViewContrllerIndicatorViewTest->init();
-    ViewContrllerIndicatorViewTest->setNavigationBarItem(ActivityIndicatorNavigationBar);
-    ViewContrllerIndicatorViewTest->autorelease();
-    RootWindow::getInstance()->getRootNavigationController()->replaceViewController(ViewContrllerIndicatorViewTest, false);
 }
 
 void ActivityIndicatorViewTest::viewDidLoad()
 {
-    CCLog("ActivityIndicatorNum == %d", ActivityIndicatorNum);
-    if (ActivityIndicatorNum == 0)
-    {
-        CAActivityIndicatorView* idc1 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        idc1->setStyle(CAActivityIndicatorView::Style::WhiteLarge);
-        idc1->startAnimating();
-        
-        CAView* view1 = CAView::createWithLayout(DLayoutFill);
-        view1->addSubview(idc1);
-        view1->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view1);
-    }
-    else if (ActivityIndicatorNum == 1)
-    {
-        CAActivityIndicatorView* idc2 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        idc2->setStyle(CAActivityIndicatorView::Style::GrayLarge);
-        idc2->startAnimating();
+    this->getView()->setColor(CAColor4B::GRAY);
     
-        CAView* view2 = CAView::createWithLayout(DLayoutFill);
-        view2->addSubview(idc2);
-        view2->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view2);
-    }
-    else if (ActivityIndicatorNum == 2)
-    {
-        CAActivityIndicatorView* idc3 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        idc3->setStyle(CAActivityIndicatorView::Style::White);
-        idc3->setCycleTime(1.0f);
-        idc3->setTimesOneCycle(12);
-        idc3->startAnimating();
+    auto idc1 = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_NH_C(0.2f, 1/6.f)));
+    idc1->setStyle(CAActivityIndicatorView::Style::WhiteLarge);
+    this->getView()->addSubview(idc1);
     
-        CAView* view3 = CAView::createWithLayout(DLayoutFill);
-        view3->addSubview(idc3);
-        view3->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view3);
-    }
-    else if (ActivityIndicatorNum == 3)
-    {
-        CAActivityIndicatorView* idc4 = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        idc4->setStyle(CAActivityIndicatorView::Style::Gray);
-        idc4->setCycleTime(1.0f);
-        idc4->setTimesOneCycle(12);
-        idc4->startAnimating();
+    auto idc2 = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_NH_C(0.2f, 2/6.f)));
+    idc2->setStyle(CAActivityIndicatorView::Style::GrayLarge);
+    this->getView()->addSubview(idc2);
     
-        CAView* view4 = CAView::createWithLayout(DLayoutFill);
-        view4->addSubview(idc4);
-        view4->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view4);
-    }
-    else
-    {
-        CAImage* image = CAImage::create("image/indicator2.png");
-        CAImageView* imageView = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100,100)));
-        imageView->setFrame(DRect(0, 0, 100, 100));
-        imageView->setImage(image);
-
-        CAActivityIndicatorView* idc5 = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100,100)));
-        idc5->setStyle(CAActivityIndicatorView::Style::Image);
-        idc5->setActivityIndicatorView(imageView);
-        idc5->startAnimating();
+    auto idc3 = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_NH_C(0.2f, 3/6.f)));
+    idc3->setStyle(CAActivityIndicatorView::Style::White);
+    this->getView()->addSubview(idc3);
     
-        CAView* view5 = CAView::createWithLayout(DLayoutFill);
-        view5->addSubview(idc5);
-        view5->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view5);
-    }
-
+    auto idc4 = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_NH_C(0.2f, 4/6.f)));
+    idc4->setStyle(CAActivityIndicatorView::Style::Gray);
+    this->getView()->addSubview(idc4);
+    
+    auto idc5 = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_NH_C(0.2f, 5/6.f)));
+    idc5->setStyle(CAActivityIndicatorView::Style::Image);
+    this->getView()->addSubview(idc5);
+    
+    CAImage* image = CAImage::create("image/indicator2.png");
+    CAImageView* imageView = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_T_B(100,100)));
+    imageView->setFrame(DRect(0, 0, 100, 100));
+    imageView->setImage(image);
+    
+    idc5->setActivityIndicatorView(imageView);
 }
 
 void ActivityIndicatorViewTest::viewDidUnload()

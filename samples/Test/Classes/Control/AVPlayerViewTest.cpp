@@ -3,7 +3,7 @@
 
 AVPlayerViewTest::AVPlayerViewTest()
 {
-
+    this->setTitle("CAAVPlayer");
 }
 
 AVPlayerViewTest::~AVPlayerViewTest()

@@ -3,6 +3,7 @@
 
 AlertViewTest::AlertViewTest()
 {
+    this->setTitle("CAAlertView");
 }
 
 AlertViewTest::~AlertViewTest()
@@ -12,9 +13,6 @@ AlertViewTest::~AlertViewTest()
 
 void AlertViewTest::viewDidLoad()
 {
-    this->getView()->setColor(CAColor4B::GRAY);
-    
-    //初始化viewList
     CAButton* btn1 = CAButton::create(CAButton::Type::RoundedRect);
     btn1->setLayout(DLayout(DHorizontalLayout_W_C(240, 0.5), DVerticalLayout_H_C(54, 0.25)));
     btn1->setTag(100);

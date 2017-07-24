@@ -4,7 +4,7 @@
 
 DrawViewTest::DrawViewTest()
 {
-
+    this->setTitle("CADrawView");
 }
 
 DrawViewTest::~DrawViewTest()

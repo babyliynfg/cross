@@ -22,6 +22,8 @@ public:
     
     virtual ~CheckboxTest();
     
+    CREATE_FUNC(CheckboxTest);
+    
 protected:
     
     void viewDidLoad();

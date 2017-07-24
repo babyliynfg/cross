@@ -2,82 +2,61 @@
 #include "ImageViewTest.h"
 #include "FirstViewController.h"
 
-int ImageViewNum = 0;
-
 ImageViewTest::ImageViewTest()
 {
-
+    this->setTitle("CAImageView");
 }
 
 ImageViewTest::~ImageViewTest()
 {
-    ImageViewNum = 0;
-}
-
-void FirstViewController::ImageViewRightBtnRightcallback(CAButton* btn)
-{
-    if (showImageViewNavigationBar >= 4)
-    {
-        showImageViewNavigationBar = 0;
-        ImageViewNum = showImageViewNavigationBar;
-    }
-    else
-    {
-        ImageViewNum = ++showImageViewNavigationBar;
-    }
-    
-    ImageViewTest* ViewContrllerImageViewTest = new ImageViewTest();
-    ViewContrllerImageViewTest->init();
-    ViewContrllerImageViewTest->setNavigationBarItem(ImageViewNavigationBar);
-    ViewContrllerImageViewTest->autorelease();
-    RootWindow::getInstance()->getRootNavigationController()->replaceViewController(ViewContrllerImageViewTest, false);
 
 }
 
 void ImageViewTest::viewDidLoad()
 {
-    if (ImageViewNum == 0)
+    this->showIndex(0);
+}
+
+void ImageViewTest::viewDidUnload()
+{
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+void ImageViewTest::showIndex(ssize_t index)
+{
+    this->getView()->removeAllSubviews();
+    
+    CAView* view = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 80)));
+    view->setColor(CAColor4B::GRAY);
+    this->getView()->addSubview(view);
+    
+    if (index == 0)
     {
         CAImageView* image1 = CAImageView::createWithImage(CAImage::create("image/h1.png"));
         image1->setLayout(DLayoutFill);
-    
-        CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
-        view1->addSubview(image1);
-        view1->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view1);
+        view->addSubview(image1);
     }
-    else if (ImageViewNum == 1)
+    else if (index == 1)
     {
-        CAImageView* image2 = CAImageView::createWithLayout(DLayoutFill);
+        CAImageView* image2 = CAImageView::createWithImage(CAImage::create("image/h1.png"));
         image2->setScaleType(CAImageView::ScaleType::FitImageXY);
-        image2->setImage(CAImage::create("image/h1.png"));
-    
-        CAView* view2 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
-        view2->addSubview(image2);
-        view2->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view2);
+        image2->setLayout(DLayoutFill);
+        view->addSubview(image2);
     }
-    else if (ImageViewNum == 2)
+    else if (index == 2)
     {
-        CAImageView* image3 = CAImageView::createWithLayout(DLayoutFill);
+        CAImageView* image3 = CAImageView::createWithImage(CAImage::create("image/h1.png"));
         image3->setScaleType(CAImageView::ScaleType::FitImageCrop);
-        image3->setImage(CAImage::create("image/h1.png"));
-    
-        CAView* view3 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
-        view3->addSubview(image3);
-        view3->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view3);
+        image3->setLayout(DLayoutFill);
+        view->addSubview(image3);
     }
-    else if (ImageViewNum == 3)
+    else if (index == 3)
     {
-        CAImageView* image4 = CAImageView::createWithLayout(DLayoutFill);
+        CAImageView* image4 = CAImageView::createWithImage(CAImage::create("image/h1.png"));
         image4->setScaleType(CAImageView::ScaleType::FitImageInside);
-        image4->setImage(CAImage::create("image/h1.png"));
-    
-        CAView* view4 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
-        view4->addSubview(image4);
-        view4->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view4);
+        image4->setLayout(DLayoutFill);
+        view->addSubview(image4);
     }
     else
     {
@@ -89,23 +68,26 @@ void ImageViewTest::viewDidLoad()
             CAImage* im = CAImage::create(temp);
             img.pushBack(im);
         }
-        CAImageView* image7 = CAImageView::createWithImage(CAImage::create("animation/npc_382-1.png"));
-        image7->setLayout(DLayoutFill);
+        CAImageView* image7 = CAImageView::createWithLayout(DLayoutFill);
         image7->setAnimationImages(img);
         image7->setAnimationDuration(0.2);
         image7->startAnimating();
-    
-        CAView* view7 = CAView::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(50, 50)));
-        view7->addSubview(image7);
-        view7->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view7);
+        view->addSubview(image7);
     }
+    
+    
+    static ssize_t s_index = 0;
+    auto btn = CAButton::createWithLayout(DLayout(DHorizontalLayout_NW_C(0.3,0.5), DVerticalLayout_B_H(20 ,50)), CAButton::Type::RoundedRect);
+    btn->setTitleForState(CAControl::State::Normal, "Switch Next");
+    btn->addTarget([&]
+    {
+        if (++s_index > 4)
+        {
+            s_index = 0;
+        }
+        this->showIndex(s_index);
+        
+    }, CAButton::Event::TouchUpInSide);
+    this->getView()->addSubview(btn);
 }
-
-void ImageViewTest::viewDidUnload()
-{
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 

@@ -4,6 +4,7 @@
 
 RenderImageTest::RenderImageTest()
 {
+    this->setTitle("CARenderImage");
 }
 
 RenderImageTest::~RenderImageTest()

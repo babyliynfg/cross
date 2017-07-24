@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-class PageViewTest: public CAViewController, public CAPageViewDelegate
+class PageViewTest: public CAViewController
 {
     
 public:
@@ -16,28 +16,25 @@ public:
     
 	virtual ~PageViewTest();
     
+    CREATE_FUNC(PageViewTest);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
-    
-public:
-    
-    CAPageView* p_PageViewVec;
 
-    int pageViewIndex;
+    void pageViewDidBeginTurning();
     
-    CAPageView* p_pageView;
-    CAPageControl* pageControl;
+    void pageViewDidEndTurning();
     
-public:
+    void pageViewDidSelectPageAtIndex(unsigned int index, const DPoint& point);
     
-    void pageViewDidBeginTurning(CAPageView* pageView);
+private:
     
-    void pageViewDidEndTurning(CAPageView* pageView);
+    CAPageView* m_pPageView;
     
-    void pageViewDidSelectPageAtIndex(CAPageView* pageView, unsigned int index, const DPoint& point);
+    CAPageControl* m_pPageControl;
 
 };
 

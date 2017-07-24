@@ -16,6 +16,10 @@ public:
     
 	virtual ~TableViewTest();
     
+    CREATE_FUNC(TableViewTest);
+    
+protected:
+    
     void viewDidLoad();
     
     void viewDidUnload();
@@ -33,7 +37,7 @@ public:
     unsigned int tableViewHeightForHeaderInSection(unsigned int section);
     unsigned int tableViewHeightForFooterInSection(unsigned int section);
     
-protected:
+private:
 
     CATableView* m_pTableView;
     

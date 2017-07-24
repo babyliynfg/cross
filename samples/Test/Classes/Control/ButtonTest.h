@@ -15,6 +15,8 @@ public:
     
 	virtual ~ButtonTest();
     
+    CREATE_FUNC(ButtonTest);
+    
 protected:
     
     void viewDidLoad();

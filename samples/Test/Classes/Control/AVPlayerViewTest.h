@@ -16,6 +16,8 @@ public:
     
 	virtual ~AVPlayerViewTest();
     
+    CREATE_FUNC(AVPlayerViewTest);
+    
 protected:
     
     void viewDidLoad();

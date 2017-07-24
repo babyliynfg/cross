@@ -16,6 +16,8 @@ public:
     
 	virtual ~WebViewTest();
     
+    CREATE_FUNC(WebViewTest);
+    
 protected:
     
     void viewDidLoad();

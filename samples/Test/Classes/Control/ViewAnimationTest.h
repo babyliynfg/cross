@@ -16,26 +16,15 @@ public:
     
 	virtual ~ViewAnimationTest();
     
+    CREATE_FUNC(ViewAnimationTest);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
     
-public:
-    
-    int heart_index;
-    
-    DSize winSize;
-    DRect winRect;
-    
-    //Animation
-    CAImageView* animation_1_view;
-    CATextField* animation_2_textfield;
-    CAButton* animation_2_btn_search;
-    CAButton* animation_2_btn_cancel;
-    CAImageView* animation_3_imageview;
-
+    void showIndex(ssize_t index);
 };
 
 

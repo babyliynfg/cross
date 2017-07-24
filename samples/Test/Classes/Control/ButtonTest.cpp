@@ -3,7 +3,7 @@
 
 ButtonTest::ButtonTest()
 {
-
+    this->setTitle("CAButton");
 }
 
 ButtonTest::~ButtonTest()

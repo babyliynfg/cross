@@ -16,7 +16,7 @@
 #include "TextFieldTest.h"
 #include "TextViewTest.h"
 #include "SegmentedControlTest.h"
-#include "TabBarControllerTest.h"
+#include "TabBarTest.h"
 #include "PageViewTest.h"
 #include "PageControlTest.h"
 #include "TableViewTest.h"
@@ -83,57 +83,49 @@ static const char* iconTag[32] =
 
 
 FirstViewController::FirstViewController()
-:showActivityIndicatorNavigationBar(0)
-,showSliderNavigationBar(0)
-,showStepperNavigationBar(0)
-,showLabelNavigationBar(0)
-,showPickerViewNavigationBar(0)
-,showViewAnimationNavigationBar(0)
-,showAutoCollectionVerticalNavigationBar(0)
-,showAutoCollectionHorizontalNavigationBar(0)
 {
-    m_vTitle.push_back("AlertView");
-    m_vTitle.push_back("Button");
-    m_vTitle.push_back("Checkbox");
+    m_vTitles.push_back("AlertView");
+    m_vTitles.push_back("Button");
+    m_vTitles.push_back("Checkbox");
     
-    m_vTitle.push_back("SegmentedControl");
-    m_vTitle.push_back("ImageView");
-    m_vTitle.push_back("Scale9ImageView");
+    m_vTitles.push_back("SegmentedControl");
+    m_vTitles.push_back("ImageView");
+    m_vTitles.push_back("Scale9ImageView");
     
-    m_vTitle.push_back("IndicatorView");
-    m_vTitle.push_back("Progress");
-    m_vTitle.push_back("Slider");
+    m_vTitles.push_back("IndicatorView");
+    m_vTitles.push_back("Progress");
+    m_vTitles.push_back("Slider");
     
-    m_vTitle.push_back("Switch");
-    m_vTitle.push_back("Stepper");
-    m_vTitle.push_back("Label");
+    m_vTitles.push_back("Switch");
+    m_vTitles.push_back("Stepper");
+    m_vTitles.push_back("Label");
     
-    m_vTitle.push_back("TextField");
-    m_vTitle.push_back("TextView");
-    m_vTitle.push_back("TabBar");
+    m_vTitles.push_back("TextField");
+    m_vTitles.push_back("TextView");
+    m_vTitles.push_back("TabBar");
     
-    m_vTitle.push_back("PageView");
-    m_vTitle.push_back("PageControl");
-    m_vTitle.push_back("ScrollView");
+    m_vTitles.push_back("PageView");
+    m_vTitles.push_back("PageControl");
+    m_vTitles.push_back("ScrollView");
     
-    m_vTitle.push_back("AutoCollectionView (Vertical)");
-    m_vTitle.push_back("AutoCollectionView (Horizontal)");
-    m_vTitle.push_back("CollectionView");
+    m_vTitles.push_back("AutoCollectionView (Vertical)");
+    m_vTitles.push_back("AutoCollectionView (Horizontal)");
+    m_vTitles.push_back("CollectionView");
     
-    m_vTitle.push_back("WaterfallView");
-    m_vTitle.push_back("ListView");
-    m_vTitle.push_back("TableView");
+    m_vTitles.push_back("WaterfallView");
+    m_vTitles.push_back("ListView");
+    m_vTitles.push_back("TableView");
     
-    m_vTitle.push_back("PickerView");
-    m_vTitle.push_back("WebView");
-    m_vTitle.push_back("GifView");
+    m_vTitles.push_back("PickerView");
+    m_vTitles.push_back("WebView");
+    m_vTitles.push_back("GifView");
     
-    m_vTitle.push_back("AVPlayer");
-    m_vTitle.push_back("RenderImage");
-    m_vTitle.push_back("Animation");
-    m_vTitle.push_back("ClippingView");
-    m_vTitle.push_back("DrawView");
-    
+    m_vTitles.push_back("AVPlayer");
+    m_vTitles.push_back("RenderImage");
+    m_vTitles.push_back("Animation");
+    m_vTitles.push_back("ClippingView");
+    m_vTitles.push_back("DrawView");
+
 }
 
 FirstViewController::~FirstViewController()
@@ -143,15 +135,17 @@ FirstViewController::~FirstViewController()
 
 void FirstViewController::viewDidLoad()
 {
-    p_AutoCollection = CAAutoCollectionView::createWithLayout(DLayoutFill);
-    p_AutoCollection->setAllowsSelection(true);
-    p_AutoCollection->setCollectionViewDelegate(this);
-    p_AutoCollection->setCollectionViewDataSource(this);
-    p_AutoCollection->setScrollViewDelegate(this);
-    p_AutoCollection->setHoriCellInterval(3);
-    p_AutoCollection->setVertCellInterval(3);
+    m_pAutoCollection = CAAutoCollectionView::createWithLayout(DLayoutFill);
+    m_pAutoCollection->setAllowsSelection(true);
+    m_pAutoCollection->setHoriCellInterval(3);
+    m_pAutoCollection->setVertCellInterval(3);
+    this->getView()->addSubview(m_pAutoCollection);
     
-    this->getView()->addSubview(p_AutoCollection);
+    m_pAutoCollection->onCellAtIndexPath(CALLBACK_BIND_3(FirstViewController::collectionCellAtIndex, this));
+    m_pAutoCollection->onNumberOfItemsAtIndexPath(CALLBACK_BIND_1(FirstViewController::numberOfItemsInSection, this));
+    m_pAutoCollection->onCellSizeAtIndexPath(CALLBACK_BIND_2(FirstViewController::collectionViewCellSizeAtIndexPath, this));
+    
+    m_pAutoCollection->onDidSelectCellAtIndexPath(CALLBACK_BIND_2(FirstViewController::collectionViewDidSelectCellAtIndexPath, this));
     
     /*
     CGSpriteFrameCache::getInstance()->addSpriteFramesWithFile("animation/monster_12000.plist");
@@ -184,375 +178,172 @@ void FirstViewController::viewDidUnload()
 {
 }
 
-void FirstViewController::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+void FirstViewController::collectionViewDidSelectCellAtIndexPath(unsigned int section, unsigned int item)
 {
     switch (item)
     {
         case 0:
         {
-            AlertViewTest* ViewContrllerAlertViewTest = new AlertViewTest();
-            ViewContrllerAlertViewTest->init();
-            ViewContrllerAlertViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerAlertViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAlertViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(AlertViewTest::create(), true);
             break;
         }
         case 1:
         {
-            ButtonTest* ViewContrllerButtonTest = new ButtonTest();
-            ViewContrllerButtonTest->init();
-            ViewContrllerButtonTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerButtonTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerButtonTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ButtonTest::create(), true);
             break;
         }
         case 2:
         {
-            CheckboxTest* ViewContrllerButtonTest = new CheckboxTest();
-            ViewContrllerButtonTest->init();
-            ViewContrllerButtonTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerButtonTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerButtonTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(CheckboxTest::create(), true);
             break;
         }
-            
         case 3:
         {
-            SegmentedControlTest* ViewContrllerSegmentedControlTest = new SegmentedControlTest();
-            ViewContrllerSegmentedControlTest->init();
-            ViewContrllerSegmentedControlTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerSegmentedControlTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerSegmentedControlTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(SegmentedControlTest::create(), true);
             break;
         }
         case 4:
         {
-            showImageViewNavigationBar = 0;
-            ImageViewNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* ImageViewRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            ImageViewRightBtn->setCallbackFunction(std::bind(&FirstViewController::ImageViewRightBtnRightcallback, this, nullptr));
-            ImageViewNavigationBar->addRightButtonItem(ImageViewRightBtn);
-            
-            ImageViewTest* ViewContrllerImageViewTest = new ImageViewTest();
-            ViewContrllerImageViewTest->init();
-            ViewContrllerImageViewTest->setNavigationBarItem(ImageViewNavigationBar);
-            ViewContrllerImageViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerImageViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ImageViewTest::create(), true);
             break;
         }
         case 5:
         {
-            Scale9ImageViewTest* ViewContrllerScale9ImageViewTest = new Scale9ImageViewTest();
-            ViewContrllerScale9ImageViewTest->init();
-            ViewContrllerScale9ImageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerScale9ImageViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerScale9ImageViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(Scale9ImageViewTest::create(), true);
             break;
         }
-            
         case 6:
         {
-            showActivityIndicatorNavigationBar = 0;
-            ActivityIndicatorNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* ActivityIndicatorRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            ActivityIndicatorRightBtn->setCallbackFunction(std::bind(&FirstViewController::ActivityIndicatorRightBtnRightcallback, this, nullptr));
-            ActivityIndicatorNavigationBar->addRightButtonItem(ActivityIndicatorRightBtn);
-            
-            ActivityIndicatorViewTest* ViewContrllerIndicatorViewTest = new ActivityIndicatorViewTest();
-            ViewContrllerIndicatorViewTest->init();
-            ViewContrllerIndicatorViewTest->setNavigationBarItem(ActivityIndicatorNavigationBar);
-            ViewContrllerIndicatorViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerIndicatorViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ActivityIndicatorViewTest::create(), true);
             break;
         }
         case 7:
         {
-            ProgressTest* ViewContrllerProgressTest = new ProgressTest();
-            ViewContrllerProgressTest->init();
-            ViewContrllerProgressTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerProgressTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerProgressTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ProgressTest::create(), true);
             break;
         }
         case 8:
         {
-            showSliderNavigationBar = 0;
-            SliderNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* SliderRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            SliderRightBtn->setCallbackFunction(std::bind(&FirstViewController::SliderRightBtnRightcallback, this, nullptr));
-            SliderNavigationBar->addRightButtonItem(SliderRightBtn);
-            
-            SliderTest* ViewContrllerSliderTest = new SliderTest();
-            ViewContrllerSliderTest->init();
-            ViewContrllerSliderTest->setNavigationBarItem(SliderNavigationBar);
-            ViewContrllerSliderTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerSliderTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(SliderTest::create(), true);
             break;
         }
-            
         case 9:
         {
-            SwitchTest* ViewContrllerSwitchTest = new SwitchTest();
-            ViewContrllerSwitchTest->init();
-            ViewContrllerSwitchTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerSwitchTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerSwitchTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(SwitchTest::create(), true);
             break;
         }
         case 10:
         {
-            showStepperNavigationBar = 0;
-            StepperNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* StepperRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            StepperRightBtn->setCallbackFunction(std::bind(&FirstViewController::StepperRightBtnRightcallback, this, nullptr));
-            StepperNavigationBar->addRightButtonItem(StepperRightBtn);
-            
-            StepperTest* ViewContrllerStepperTest = new StepperTest();
-            ViewContrllerStepperTest->init();
-            ViewContrllerStepperTest->setNavigationBarItem(StepperNavigationBar);
-            ViewContrllerStepperTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerStepperTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(StepperTest::create(), true);
             break;
         }
         case 11:
         {
-            showLabelNavigationBar = 0;
-            LabelNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* LabelRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            LabelRightBtn->setCallbackFunction(std::bind(&FirstViewController::LabelRightBtnRightcallback, this, nullptr));
-            LabelNavigationBar->addRightButtonItem(LabelRightBtn);
-            
-            LabelTest* ViewContrllerLabelTest = new LabelTest();
-            ViewContrllerLabelTest->init();
-            ViewContrllerLabelTest->setNavigationBarItem(LabelNavigationBar);
-            ViewContrllerLabelTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerLabelTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(LabelTest::create(), true);
             break;
         }
             
         case 12:
         {
-            TextFieldTest* ViewContrllerTextFieldTest = new TextFieldTest();
-            ViewContrllerTextFieldTest->init();
-            ViewContrllerTextFieldTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerTextFieldTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTextFieldTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(TextFieldTest::create(), true);
             break;
         }
         case 13:
         {
-            TextViewTest* ViewContrllerTextViewTest = new TextViewTest();
-            ViewContrllerTextViewTest->init();
-            ViewContrllerTextViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerTextViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTextViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(TextViewTest::create(), true);
             break;
         }
         case 14:
-        {            
-            TabBarControllerTest* ViewContrllerTabBarControllerTest = new TabBarControllerTest();
-            ViewContrllerTabBarControllerTest->init();
-            ViewContrllerTabBarControllerTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerTabBarControllerTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTabBarControllerTest, true);
+        {
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(TabBarTest::create(), true);
             break;
         }
             
         case 15:
         {
-            PageViewTest* ViewContrllerPageViewTest = new PageViewTest();
-            ViewContrllerPageViewTest->init();
-            ViewContrllerPageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerPageViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerPageViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(PageViewTest::create(), true);
             break;
         }
         case 16:
         {
-            PageControlTest* ViewContrllerPageViewTest = new PageControlTest();
-            ViewContrllerPageViewTest->init();
-            ViewContrllerPageViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerPageViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerPageViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(PageControlTest::create(), true);
             
             break;
         }
         case 17:
         {
-            ScrollViewTest* ViewContrllerScrollViewTest = new ScrollViewTest();
-            ViewContrllerScrollViewTest->init();
-            ViewContrllerScrollViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerScrollViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerScrollViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ScrollViewTest::create(), true);
             break;
         }
-            
         case 18:
         {
-            showAutoCollectionVerticalNavigationBar = 0;
-            AutoCollectionVerticalNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* AutoCollectionVerticalRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            AutoCollectionVerticalRightBtn->setCallbackFunction(std::bind(&FirstViewController::AutoCollectionVerticalRightBtnRightcallback, this, nullptr));
-            AutoCollectionVerticalNavigationBar->addRightButtonItem(AutoCollectionVerticalRightBtn);
-
-            AutoCollectionViewVerticalTest* ViewContrllerAutoCollectionViewVerticalTest = new AutoCollectionViewVerticalTest();
-            ViewContrllerAutoCollectionViewVerticalTest->init();
-            ViewContrllerAutoCollectionViewVerticalTest->setNavigationBarItem(AutoCollectionVerticalNavigationBar);
-            ViewContrllerAutoCollectionViewVerticalTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAutoCollectionViewVerticalTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(AutoCollectionViewVerticalTest::create(), true);
             break;
         }
         case 19:
         {
-            showAutoCollectionHorizontalNavigationBar = 0;
-            AutoCollectionHorizontalNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* AutoCollectionHorizontalRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            AutoCollectionHorizontalRightBtn->setCallbackFunction(std::bind(&FirstViewController::AutoCollectionHorizontalRightBtnRightcallback, this, nullptr));
-            AutoCollectionHorizontalNavigationBar->addRightButtonItem(AutoCollectionHorizontalRightBtn);
-            
-            AutoCollectionViewHorizontalTest* ViewContrllerAutoCollectionViewHorizontalTest = new AutoCollectionViewHorizontalTest();
-            ViewContrllerAutoCollectionViewHorizontalTest->init();
-            ViewContrllerAutoCollectionViewHorizontalTest->setNavigationBarItem(AutoCollectionHorizontalNavigationBar);
-            ViewContrllerAutoCollectionViewHorizontalTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerAutoCollectionViewHorizontalTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(AutoCollectionViewHorizontalTest::create(), true);
             break;
         }
         case 20:
         {
-            CollectionViewTest* ViewContrllerCollectionViewTest = new CollectionViewTest();
-            ViewContrllerCollectionViewTest->init();
-            ViewContrllerCollectionViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerCollectionViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerCollectionViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(CollectionViewTest::create(), true);
             break;
         }
-            
         case 21:
         {
-            WaterfallViewTest* ViewContrllerWaterfallViewTest = new WaterfallViewTest();
-            ViewContrllerWaterfallViewTest->init();
-            ViewContrllerWaterfallViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerWaterfallViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerWaterfallViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(WaterfallViewTest::create(), true);
             break;
         }
         case 22:
         {
-            ListViewTest* ViewContrllerListViewTest = new ListViewTest();
-            ViewContrllerListViewTest->init();
-            ViewContrllerListViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerListViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerListViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ListViewTest::create(), true);
             break;
         }
         case 23:
         {
-            TableViewTest* ViewContrllerTableViewTest = new TableViewTest();
-            ViewContrllerTableViewTest->init();
-            ViewContrllerTableViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerTableViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerTableViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(TableViewTest::create(), true);
             break;
         }
             
         case 24:
         {
-            showPickerViewNavigationBar = 0;
-            PickerViewNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* PickerViewRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            PickerViewRightBtn->setCallbackFunction(std::bind(&FirstViewController::PickerViewRightBtnRightcallback, this, nullptr));
-            PickerViewNavigationBar->addRightButtonItem(PickerViewRightBtn);
-            
-            PickerViewTest* ViewContrllerPickerViewTest = new PickerViewTest();
-            ViewContrllerPickerViewTest->init();
-            ViewContrllerPickerViewTest->setNavigationBarItem(PickerViewNavigationBar);
-            ViewContrllerPickerViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerPickerViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(PickerViewTest::create(), true);
             break;
         }
         case 25:
         {
-            WebViewTest* ViewContrllerWebViewTest = new WebViewTest();
-            ViewContrllerWebViewTest->init();
-            ViewContrllerWebViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerWebViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerWebViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(WebViewTest::create(), true);
             break;
         }
         case 26:
         {
-            GifViewTest* ViewContrllerGifViewTest = new GifViewTest();
-            ViewContrllerGifViewTest->init();
-            ViewContrllerGifViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerGifViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerGifViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(GifViewTest::create(), true);
             break;
         }
-            
         case 27:
         {
-            AVPlayerViewTest* avplayerViewTest = new AVPlayerViewTest();
-            avplayerViewTest->init();
-            avplayerViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            avplayerViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(avplayerViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(AVPlayerViewTest::create(), true);
             break;
         }
         case 28:
         {
-            RenderImageTest* ViewContrllerRenderImageTest = new RenderImageTest();
-            ViewContrllerRenderImageTest->init();
-            ViewContrllerRenderImageTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerRenderImageTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerRenderImageTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(RenderImageTest::create(), true);
             break;
         }
         case 29:
         {
-            showViewAnimationNavigationBar = 0;
-            ViewAnimationNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            CABarButtonItem* ViewAnimationRightBtn = CABarButtonItem::create("", CAImage::create("source_material/btn_right_white.png"), NULL);
-            ViewAnimationRightBtn->setCallbackFunction(std::bind(&FirstViewController::ViewAnimationRightBtnRightcallback, this, nullptr));
-            ViewAnimationNavigationBar->addRightButtonItem(ViewAnimationRightBtn);
-            
-            ViewAnimationTest* ViewContrllerViewAnimationTest = new ViewAnimationTest();
-            ViewContrllerViewAnimationTest->init();
-            ViewContrllerViewAnimationTest->setNavigationBarItem(ViewAnimationNavigationBar);
-            ViewContrllerViewAnimationTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerViewAnimationTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewAnimationTest::create(), true);
             break;
         }
         case 30:
         {
-            showViewAnimationNavigationBar = 0;
-            ViewAnimationNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            ClippingViewTest* clippingViewTest = new ClippingViewTest();
-            clippingViewTest->init();
-            clippingViewTest->setNavigationBarItem(ViewAnimationNavigationBar);
-            clippingViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(clippingViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ClippingViewTest::create(), true);
             break;
         }
         case 31:
         {
-            showViewAnimationNavigationBar = 0;
-            ViewAnimationNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));
-            
-            DrawViewTest* drawViewTest = new DrawViewTest();
-            drawViewTest->init();
-            drawViewTest->setNavigationBarItem(ViewAnimationNavigationBar);
-            drawViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(drawViewTest, true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(DrawViewTest::create(), true);
             break;
         }
         default:
@@ -560,14 +351,9 @@ void FirstViewController::collectionViewDidSelectCellAtIndexPath(CAAutoCollectio
     }
 }
 
-void FirstViewController::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+CACollectionViewCell* FirstViewController::collectionCellAtIndex(const DSize& cellSize, unsigned int section, unsigned int item)
 {
-    CCLog("取消选中");
-}
-
-CACollectionViewCell* FirstViewController::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
-{
-    CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
+    CACollectionViewCell* p_Cell = m_pAutoCollection->dequeueReusableCellWithIdentifier("CrossApp");
     if (p_Cell == NULL)
     {
         p_Cell = CACollectionViewCell::create("CrossApp");
@@ -595,7 +381,7 @@ CACollectionViewCell* FirstViewController::collectionCellAtIndex(CAAutoCollectio
     itemImageView->setColor(ccc4(244, 243, 243, 255));
     
     CALabel* itemText = (CALabel*)p_Cell->getSubviewByTag(100);
-    itemText->setText(m_vTitle.at(item));
+    itemText->setText(m_vTitles.at(item));
     itemText->setColor(ccc4(34, 151, 254, 255));
     
     CAImageView* icon = (CAImageView*)p_Cell->getSubviewByTag(101);
@@ -604,19 +390,15 @@ CACollectionViewCell* FirstViewController::collectionCellAtIndex(CAAutoCollectio
     return p_Cell;
 }
 
-DSize FirstViewController::collectionViewCellSizeAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+DSize FirstViewController::collectionViewCellSizeAtIndexPath(unsigned int section, unsigned int item)
 {
     return DSize(230, 230);
 }
 
-unsigned int FirstViewController::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
+unsigned int FirstViewController::numberOfItemsInSection(unsigned int section)
 {
-    return (unsigned int)m_vTitle.size();
+    return (unsigned int)m_vTitles.size();
 }
 
-unsigned int FirstViewController::numberOfSections(CAAutoCollectionView *collectionView)
-{
-    return 1;
-}
 
 

@@ -16,6 +16,8 @@ public:
     
 	virtual ~StepperTest();
     
+    CREATE_FUNC(StepperTest);
+    
 protected:
     
     void viewDidLoad();

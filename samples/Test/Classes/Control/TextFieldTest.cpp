@@ -3,6 +3,7 @@
 
 TextFieldTest::TextFieldTest()
 {
+    this->setTitle("CATextField");
 }
 
 TextFieldTest::~TextFieldTest()

@@ -2,261 +2,46 @@
 #include "AutoCollectionViewVerticalTest.h"
 #include "FirstViewController.h"
 
-std::vector<CAColor4B> VerticalcolorArr;
-
-ECollectionViewVerticalCell::ECollectionViewVerticalCell()
-{
-    this->setAllowsSelected(false);
-}
-
-ECollectionViewVerticalCell::~ECollectionViewVerticalCell()
-{
-    
-}
-
-ECollectionViewVerticalCell* ECollectionViewVerticalCell::create(const std::string& reuseIdentifier)
-{
-    ECollectionViewVerticalCell* cell = new ECollectionViewVerticalCell();
-    if (cell && cell->initWithReuseIdentifier(reuseIdentifier))
-    {
-        cell->autorelease();
-        return cell;
-    }
-    CC_SAFE_DELETE(cell);
-    return NULL;
-}
-
-void ECollectionViewVerticalCell::initWithCell()
-{
-    CALabel* test = CALabel::createWithLayout(DLayoutFill);
-    test->setColor(ccc4(34, 151, 254, 255));
-    test->setTextAlignment(CATextAlignment::Center);
-    test->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-    test->setFontSize(28);
-    test->setTag(100);
-    this->addSubview(test);
-}
-
-void ECollectionViewVerticalCell::highlightedCollectionViewCell()
-{
-    this->setBackgroundView(CAView::createWithColor(CAColor4B::CLEAR));
-}
-
-void ECollectionViewVerticalCell::selectedCollectionViewCell()
-{
-    this->setBackgroundView(CAView::createWithColor(CAColor4B::CLEAR));
-}
-
-EAutoCollectionViewVertical::EAutoCollectionViewVertical()
-{
-    
-}
-
-EAutoCollectionViewVertical::~EAutoCollectionViewVertical()
-{
-    
-}
-
-bool EAutoCollectionViewVertical::init()
-{
-    p_AutoCollection = CAAutoCollectionView::createWithLayout(DLayoutFill);
-    p_AutoCollection->setAllowsSelection(true);
-    p_AutoCollection->setAllowsMultipleSelection(true);
-    p_AutoCollection->setCollectionViewDelegate(this);
-    p_AutoCollection->setCollectionViewDataSource(this);
-    p_AutoCollection->setOrientation(CAAutoCollectionView::Orientation::Vertical);
-    p_AutoCollection->setCellVertAlign(CAAutoCollectionView::CellVertAlign::Center);
-    p_AutoCollection->setHoriCellInterval(20);
-    p_AutoCollection->setVertCellInterval(20);
-    this->addSubview(p_AutoCollection);
-    return true;
-}
-
-EAutoCollectionViewVertical* EAutoCollectionViewVertical::createWithLayout(const DLayout& layout)
-{
-    EAutoCollectionViewVertical* collectionView = new EAutoCollectionViewVertical();
-    if (collectionView && collectionView->initWithLayout(layout))
-    {
-        collectionView->autorelease();
-        return collectionView;
-    }
-    CC_SAFE_DELETE(collectionView);
-    return NULL;
-}
-
-void EAutoCollectionViewVertical::scrollViewHeaderBeginRefreshing(CAScrollView* view)
-{
-    //    CAScheduler::schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-    CAView* viewColor = createWithColor(CAColor4B::BLUE);
-    viewColor->setLayout(DLayoutFill);
-    
-    this->addSubview(viewColor);
-}
-
-void EAutoCollectionViewVertical::scrollViewFooterBeginRefreshing(CAScrollView* view)
-{
-    //    CAScheduler::schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-    
-}
-
-void EAutoCollectionViewVertical::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
-{
-    CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, item);
-    cell->getContentView()->setRotation(-360);
-    cell->getContentView()->setScale(0.5f);
-    CAViewAnimation::beginAnimations("");
-    cell->getContentView()->setRotation(0);
-    cell->getContentView()->setScale(1.0f);
-    CAViewAnimation::commitAnimations();
-}
-
-void EAutoCollectionViewVertical::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
-{
-}
-
-CACollectionViewCell* EAutoCollectionViewVertical::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
-{
-    ECollectionViewVerticalCell* Cell = dynamic_cast<ECollectionViewVerticalCell*>(collectionView->dequeueReusableCellWithIdentifier("CrossApp"));
-    
-    if (Cell == NULL)
-    {
-        Cell = ECollectionViewVerticalCell::create("CrossApp");
-        
-        CAView* itemImage = CAView::createWithLayout(DLayoutFill);
-        itemImage->setTag(99);
-        Cell->getContentView()->addSubview(itemImage);
-        
-        CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
-        itemText->setTag(100);
-        itemText->setFontSize(29);
-        itemText->setTextAlignment(CATextAlignment::Center);
-        itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-        Cell->getContentView()->addSubview(itemText);
-    }
-    
-    CAView* itemImageView = Cell->getContentView()->getSubviewByTag(99);
-    itemImageView->setColor(VerticalcolorArr.at(item));
-    CCLog("row = %d", item);
-    
-    char pos[20] = "";
-    sprintf(pos, "(%d,%d)", section, item);
-    CALabel* itemText = (CALabel*)Cell->getContentView()->getSubviewByTag(100);
-    itemText->setText(pos);
-    
-    return Cell;
-}
-
-DSize EAutoCollectionViewVertical::collectionViewCellSizeAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
-{
-    return DSize(CCRANDOM_0_1() * 200 + 130, CCRANDOM_0_1() * 200 + 130);
-}
-
-unsigned int EAutoCollectionViewVertical::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
-{
-    return (unsigned int)VerticalcolorArr.size();
-}
-
-unsigned int EAutoCollectionViewVertical::numberOfSections(CAAutoCollectionView *collectionView)
-{
-    return 3;
-}
-
-CAView* EAutoCollectionViewVertical::collectionViewSectionViewForHeaderInSection(CAAutoCollectionView *collectionView, const DSize& viewSize, unsigned int section)
-{
-    CAView* view = CAView::createWithColor(CAColor4B::GRAY);
-    return view;
-}
-
-unsigned int EAutoCollectionViewVertical::collectionViewHeightForHeaderInSection(CAAutoCollectionView *collectionView, unsigned int section)
-{
-    return 30;
-}
-
-CAView* EAutoCollectionViewVertical::collectionViewSectionViewForFooterInSection(CAAutoCollectionView *collectionView, const DSize& viewSize, unsigned int section)
-{
-    return NULL;
-}
-
-unsigned int EAutoCollectionViewVertical::collectionViewHeightForFooterInSection(CAAutoCollectionView *collectionView, unsigned int section)
-{
-    return 0;
-}
-
-
-
-int AutoCollectionViewVerticalNum = 0;
-
 AutoCollectionViewVerticalTest::AutoCollectionViewVerticalTest()
 {
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(false);
+    this->setTitle("CAAutoCollectionView");
     
-    VerticalcolorArr.clear();
-}
-
-AutoCollectionViewVerticalTest::~AutoCollectionViewVerticalTest()
-{
-    CADrawerController* drawer = (CADrawerController*)CAApplication::getApplication()->getRootWindow()->getRootViewController();
-    drawer->setTouchMoved(true);
-    AutoCollectionViewVerticalNum = 0;
-}
-
-void FirstViewController::AutoCollectionVerticalRightBtnRightcallback(CAButton* btn)
-{
-    if (showAutoCollectionVerticalNavigationBar >= 1)
-    {
-        showAutoCollectionVerticalNavigationBar = 0;
-        AutoCollectionViewVerticalNum = showAutoCollectionVerticalNavigationBar;
-    }
-    else
-    {
-        AutoCollectionViewVerticalNum = ++showAutoCollectionVerticalNavigationBar;
-    }
-    
-    AutoCollectionViewVerticalTest* ViewContrllerAutoCollectionViewVerticalTest = new AutoCollectionViewVerticalTest();
-    ViewContrllerAutoCollectionViewVerticalTest->init();
-    ViewContrllerAutoCollectionViewVerticalTest->setNavigationBarItem(AutoCollectionVerticalNavigationBar);
-    ViewContrllerAutoCollectionViewVerticalTest->autorelease();
-    RootWindow::getInstance()->getRootNavigationController()->replaceViewController(ViewContrllerAutoCollectionViewVerticalTest, false);
-}
-
-void AutoCollectionViewVerticalTest::viewDidLoad()
-{
     for (int i = 0; i < 40; i++)
     {
         char r = CCRANDOM_0_1() * 255;
         char g = CCRANDOM_0_1() * 255;
         char b = CCRANDOM_0_1() * 255;
         
-        VerticalcolorArr.push_back(ccc4(r, g, b, 255));
+        m_vColors.push_back(CAColor4B(r, g, b, 255));
     }
+}
+
+AutoCollectionViewVerticalTest::~AutoCollectionViewVerticalTest()
+{
+
+}
+
+void AutoCollectionViewVerticalTest::viewDidLoad()
+{
+    m_pAutoCollection = CAAutoCollectionView::createWithLayout(DLayoutFill);
+    m_pAutoCollection->setAllowsSelection(true);
+    m_pAutoCollection->setAllowsMultipleSelection(true);
+    m_pAutoCollection->setOrientation(CAAutoCollectionView::Orientation::Vertical);
+    m_pAutoCollection->setHeaderRefreshView(CAPullToRefreshView::create(CAPullToRefreshView::Type::Header));
+    m_pAutoCollection->setFooterRefreshView(CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer));
+    m_pAutoCollection->setHoriCellInterval(20);
+    m_pAutoCollection->setVertCellInterval(20);
+    this->getView()->addSubview(m_pAutoCollection);
     
-    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Header);
-    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer);
+    m_pAutoCollection->onCellAtIndexPath(CALLBACK_BIND_3(AutoCollectionViewVerticalTest::collectionCellAtIndex, this));
+    m_pAutoCollection->onCellSizeAtIndexPath(CALLBACK_BIND_2(AutoCollectionViewVerticalTest::collectionViewCellSizeAtIndexPath, this));
+    m_pAutoCollection->onNumberOfItemsAtIndexPath(CALLBACK_BIND_1(AutoCollectionViewVerticalTest::numberOfItemsInSection, this));
     
-    if (AutoCollectionViewVerticalNum == 0)
-    {
-        p_AutoCollection = CAAutoCollectionView::createWithLayout(DLayoutFill);
-        p_AutoCollection->setAllowsSelection(true);
-        p_AutoCollection->setAllowsMultipleSelection(true);
-        p_AutoCollection->setCollectionViewDelegate(this);
-        p_AutoCollection->setCollectionViewDataSource(this);
-        p_AutoCollection->setOrientation(CAAutoCollectionView::Orientation::Vertical);
-        p_AutoCollection->setHeaderRefreshView(headerRefreshView);
-        p_AutoCollection->setFooterRefreshView(footerRefreshView);
-        p_AutoCollection->setScrollViewDelegate(this);
-        p_AutoCollection->setHoriCellInterval(20);
-        p_AutoCollection->setVertCellInterval(20);
+    m_pAutoCollection->onDidSelectCellAtIndexPath(CALLBACK_BIND_2(AutoCollectionViewVerticalTest::collectionViewDidSelectCellAtIndexPath, this));
     
-        this->getView()->addSubview(p_AutoCollection);
-    }
-    else
-    {
-        EAutoCollectionViewVertical* p_AutoCollection1 = EAutoCollectionViewVertical::createWithLayout(DLayoutFill);
-        p_AutoCollection1->init();
-        p_AutoCollection1->setEAutoCollectionViewVerticalDelegate(this);
-        this->getView()->addSubview(p_AutoCollection1);
-    }
+    m_pAutoCollection->onHeaderBeginRefreshing(CALLBACK_BIND_0(AutoCollectionViewVerticalTest::scrollViewHeaderBeginRefreshing, this));
+    m_pAutoCollection->onFooterBeginRefreshing(CALLBACK_BIND_0(AutoCollectionViewVerticalTest::scrollViewFooterBeginRefreshing, this));
+    
 }
 
 void AutoCollectionViewVerticalTest::viewDidUnload()
@@ -265,44 +50,40 @@ void AutoCollectionViewVerticalTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void AutoCollectionViewVerticalTest::refreshData1(float interval)
+void AutoCollectionViewVerticalTest::scrollViewHeaderBeginRefreshing()
 {
-    VerticalcolorArr.clear();
-    for (int i = 0; i < 40; i++)
+    CAScheduler::getScheduler()->schedule([&](float dt)
     {
-        char r = CCRANDOM_0_1() * 255;
-        char g = CCRANDOM_0_1() * 255;
-        char b = CCRANDOM_0_1() * 255;
-        VerticalcolorArr.push_back(ccc4(r, g, b, 255));
-    }
-    p_AutoCollection->reloadData();
+        m_vColors.clear();
+        for (int i = 0; i < 40; i++)
+        {
+            char r = CCRANDOM_0_1() * 255;
+            char g = CCRANDOM_0_1() * 255;
+            char b = CCRANDOM_0_1() * 255;
+            m_vColors.push_back(CAColor4B(r, g, b, 255));
+        }
+        m_pAutoCollection->reloadData();
+    }, "scrollViewHeaderBeginRefreshing", this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
-void AutoCollectionViewVerticalTest::refreshData2(float interval)
+void AutoCollectionViewVerticalTest::scrollViewFooterBeginRefreshing()
 {
-    for (int i = 0; i < 40; i++)
+    CAScheduler::getScheduler()->schedule([&](float dt)
     {
-        char r = CCRANDOM_0_1() * 255;
-        char g = CCRANDOM_0_1() * 255;
-        char b = CCRANDOM_0_1() * 255;
-        VerticalcolorArr.push_back(ccc4(r, g, b, 255));
-    }
-    p_AutoCollection->reloadData();
+        for (int i = 0; i < 40; i++)
+        {
+            char r = CCRANDOM_0_1() * 255;
+            char g = CCRANDOM_0_1() * 255;
+            char b = CCRANDOM_0_1() * 255;
+            m_vColors.push_back(CAColor4B(r, g, b, 255));
+        }
+        m_pAutoCollection->reloadData();
+    }, "scrollViewFooterBeginRefreshing", this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
-void AutoCollectionViewVerticalTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
+void AutoCollectionViewVerticalTest::collectionViewDidSelectCellAtIndexPath(unsigned int section, unsigned int item)
 {
-    CAScheduler::getScheduler()->schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-}
-
-void AutoCollectionViewVerticalTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
-{
-    CAScheduler::getScheduler()->schedule(schedule_selector(AutoCollectionViewVerticalTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
-}
-
-void AutoCollectionViewVerticalTest::collectionViewDidSelectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
-{
-    CACollectionViewCell* cell = collectionView->cellForRowAtIndexPath(section, item);
+    CACollectionViewCell* cell = m_pAutoCollection->cellForRowAtIndexPath(section, item);
     cell->getContentView()->setRotation(-360);
     cell->getContentView()->setScale(0.5f);
     CAViewAnimation::beginAnimations("");
@@ -311,53 +92,50 @@ void AutoCollectionViewVerticalTest::collectionViewDidSelectCellAtIndexPath(CAAu
     CAViewAnimation::commitAnimations();
 }
 
-void AutoCollectionViewVerticalTest::collectionViewDidDeselectCellAtIndexPath(CAAutoCollectionView *collectionView, unsigned int section, unsigned int item)
+void AutoCollectionViewVerticalTest::collectionViewDidDeselectCellAtIndexPath(unsigned int section, unsigned int item)
 {
 }
 
-CACollectionViewCell* AutoCollectionViewVerticalTest::collectionCellAtIndex(CAAutoCollectionView *collectionView, const DSize& cellSize, unsigned int section, unsigned int item)
+CACollectionViewCell* AutoCollectionViewVerticalTest::collectionCellAtIndex(const DSize& cellSize, unsigned int section, unsigned int item)
 {
-    CACollectionViewCell* p_Cell = collectionView->dequeueReusableCellWithIdentifier("CrossApp");
+    CACollectionViewCell* cell = m_pAutoCollection->dequeueReusableCellWithIdentifier("CrossApp");
     
-    if (p_Cell == NULL)
+    if (cell == nullptr)
     {
-        p_Cell = CACollectionViewCell::create("CrossApp");
+        cell = CACollectionViewCell::create("CrossApp");
         
         CAView* itemImage = CAView::createWithLayout(DLayoutFill);
         itemImage->setTag(99);
-        p_Cell->getContentView()->addSubview(itemImage);
+        cell->getContentView()->addSubview(itemImage);
         
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(29);
         itemText->setTextAlignment(CATextAlignment::Center);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-        p_Cell->getContentView()->addSubview(itemText);
+        cell->getContentView()->addSubview(itemText);
     }
     
-    CAView* itemImageView = p_Cell->getContentView()->getSubviewByTag(99);
-    itemImageView->setColor(VerticalcolorArr.at(item));
+    CAView* itemImageView = cell->getContentView()->getSubviewByTag(99);
+    itemImageView->setColor(m_vColors.at(item));
     CCLog("row = %d", item);
     
     char pos[20] = "";
     sprintf(pos, "(%d,%d)", section, item);
-    CALabel* itemText = (CALabel*)p_Cell->getContentView()->getSubviewByTag(100);
+    CALabel* itemText = (CALabel*)cell->getContentView()->getSubviewByTag(100);
     itemText->setText(pos);
-    return  p_Cell;
+    return  cell;
     
 }
 
-DSize AutoCollectionViewVerticalTest::collectionViewCellSizeAtIndexPath(CAAutoCollectionView* collectionView, unsigned int section, unsigned int item)
+DSize AutoCollectionViewVerticalTest::collectionViewCellSizeAtIndexPath(unsigned int section, unsigned int item)
 {
     return DSize(230, 230);
 }
 
-unsigned int AutoCollectionViewVerticalTest::numberOfItemsInSection(CAAutoCollectionView *collectionView, unsigned int section)
+unsigned int AutoCollectionViewVerticalTest::numberOfItemsInSection(unsigned int section)
 {
-    return (unsigned int)VerticalcolorArr.size();
+    return (unsigned int)m_vColors.size();
 }
 
-unsigned int AutoCollectionViewVerticalTest::numberOfSections(CAAutoCollectionView *collectionView)
-{
-    return 1;
-}
+

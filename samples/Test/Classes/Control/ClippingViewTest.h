@@ -15,6 +15,8 @@ public:
     
 	virtual ~ClippingViewTest();
     
+    CREATE_FUNC(ClippingViewTest);
+    
 protected:
     
     void viewDidLoad();

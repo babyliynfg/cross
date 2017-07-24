@@ -15,6 +15,8 @@ public:
     
 	virtual ~DrawViewTest();
     
+    CREATE_FUNC(DrawViewTest);
+    
 protected:
     
     void viewDidLoad();

@@ -67,7 +67,7 @@
 		D6B1E8E61F234C4000723750 /* SliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8BC1F234C4000723750 /* SliderTest.cpp */; };
 		D6B1E8E71F234C4000723750 /* StepperTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8BE1F234C4000723750 /* StepperTest.cpp */; };
 		D6B1E8E81F234C4000723750 /* SwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8C01F234C4000723750 /* SwitchTest.cpp */; };
-		D6B1E8E91F234C4000723750 /* TabBarControllerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8C21F234C4000723750 /* TabBarControllerTest.cpp */; };
+		D6B1E8E91F234C4000723750 /* TabBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8C21F234C4000723750 /* TabBarTest.cpp */; };
 		D6B1E8EA1F234C4000723750 /* TableViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8C41F234C4000723750 /* TableViewTest.cpp */; };
 		D6B1E8EB1F234C4000723750 /* TextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8C61F234C4000723750 /* TextFieldTest.cpp */; };
 		D6B1E8EC1F234C4000723750 /* TextViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8C81F234C4000723750 /* TextViewTest.cpp */; };
@@ -214,8 +214,8 @@
 		D6B1E8BF1F234C4000723750 /* StepperTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperTest.h; sourceTree = "<group>"; };
 		D6B1E8C01F234C4000723750 /* SwitchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchTest.cpp; sourceTree = "<group>"; };
 		D6B1E8C11F234C4000723750 /* SwitchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTest.h; sourceTree = "<group>"; };
-		D6B1E8C21F234C4000723750 /* TabBarControllerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabBarControllerTest.cpp; sourceTree = "<group>"; };
-		D6B1E8C31F234C4000723750 /* TabBarControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarControllerTest.h; sourceTree = "<group>"; };
+		D6B1E8C21F234C4000723750 /* TabBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabBarTest.cpp; sourceTree = "<group>"; };
+		D6B1E8C31F234C4000723750 /* TabBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarTest.h; sourceTree = "<group>"; };
 		D6B1E8C41F234C4000723750 /* TableViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTest.cpp; sourceTree = "<group>"; };
 		D6B1E8C51F234C4000723750 /* TableViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTest.h; sourceTree = "<group>"; };
 		D6B1E8C61F234C4000723750 /* TextFieldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextFieldTest.cpp; sourceTree = "<group>"; };
@@ -496,8 +496,8 @@
 				D6B1E8BF1F234C4000723750 /* StepperTest.h */,
 				D6B1E8C01F234C4000723750 /* SwitchTest.cpp */,
 				D6B1E8C11F234C4000723750 /* SwitchTest.h */,
-				D6B1E8C21F234C4000723750 /* TabBarControllerTest.cpp */,
-				D6B1E8C31F234C4000723750 /* TabBarControllerTest.h */,
+				D6B1E8C21F234C4000723750 /* TabBarTest.cpp */,
+				D6B1E8C31F234C4000723750 /* TabBarTest.h */,
 				D6B1E8C41F234C4000723750 /* TableViewTest.cpp */,
 				D6B1E8C51F234C4000723750 /* TableViewTest.h */,
 				D6B1E8C61F234C4000723750 /* TextFieldTest.cpp */,
@@ -640,7 +640,7 @@
 				D6B1E8D31F234C4000723750 /* AutoCollectionViewVerticalTest.cpp in Sources */,
 				D6B1E8D61F234C4000723750 /* CheckboxTest.cpp in Sources */,
 				D6B1E8D71F234C4000723750 /* ClippingViewTest.cpp in Sources */,
-				D6B1E8E91F234C4000723750 /* TabBarControllerTest.cpp in Sources */,
+				D6B1E8E91F234C4000723750 /* TabBarTest.cpp in Sources */,
 				D6B1E8D51F234C4000723750 /* ButtonTest.cpp in Sources */,
 				D6F39B0F1F2596FD0097E44E /* CommonHttpManager.cpp in Sources */,
 				D6B1E8E31F234C4000723750 /* Scale9ImageViewTest.cpp in Sources */,

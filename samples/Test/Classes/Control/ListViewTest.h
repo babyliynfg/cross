@@ -16,6 +16,8 @@ public:
     
 	virtual ~ListViewTest();
     
+    CREATE_FUNC(ListViewTest);
+    
 protected:
     
     void viewDidLoad();
