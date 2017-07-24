@@ -28,11 +28,8 @@
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
-		4EC5C5931AEE36B80003331B /* CDWebViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EC5C5911AEE36B80003331B /* CDWebViewController.cpp */; };
-		4EC91E981AE4A173003B5305 /* CommonHttpManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EC91E961AE4A173003B5305 /* CommonHttpManager.cpp */; };
 		4EE8374B1AFCB99600BCFA6D /* image in Resources */ = {isa = PBXBuildFile; fileRef = 4EE8374A1AFCB99600BCFA6D /* image */; };
 		4EEA323D1ADDFDBB00FAE693 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = 4EEA323C1ADDFDBB00FAE693 /* animation */; };
-		4EF2E6481ACE7B9B00A4DFE1 /* MenuViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EF2E6461ACE7B9B00A4DFE1 /* MenuViewController.cpp */; };
 		B039AF701BC7B3AD002C1FDB /* libbz2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF271BC7A599002C1FDB /* libbz2.1.0.dylib */; };
 		B039AF711BC7B3C7002C1FDB /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF3C1BC7A6BF002C1FDB /* CoreVideo.framework */; };
 		B039AF721BC7B3CC002C1FDB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF381BC7A6AA002C1FDB /* CoreFoundation.framework */; };
@@ -41,11 +38,8 @@
 		B049CD2D1BCBB25E001A2B30 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF761BC7B52B002C1FDB /* VideoToolbox.framework */; };
 		B049CD321BCBB372001A2B30 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049CD301BCBB34E001A2B30 /* Security.framework */; };
 		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
-		B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */; };
-		B0621C311AC3DCB2005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C2D1AC3DCB2005EBCA7 /* RootWindow.cpp */; };
 		B0621C351AC3DCCA005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621C321AC3DCCA005EBCA7 /* fonts */; };
 		B0621C371AC3DCCA005EBCA7 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B0621C341AC3DCCA005EBCA7 /* source_material */; };
-		B063D46D1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B063D46B1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp */; };
 		D6B1E7801F204D8000723750 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF781BC7B5A8002C1FDB /* AVFoundation.framework */; };
 		D6B1E7821F204D8700723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7811F204D8700723750 /* CoreMedia.framework */; };
 		D6B1E8D01F234C4000723750 /* ActivityIndicatorViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8901F234C4000723750 /* ActivityIndicatorViewTest.cpp */; };
@@ -81,6 +75,12 @@
 		D6B1E8EE1F234C4000723750 /* WaterfallViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8CC1F234C4000723750 /* WaterfallViewTest.cpp */; };
 		D6B1E8EF1F234C4000723750 /* WebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E8CE1F234C4000723750 /* WebViewTest.cpp */; };
 		D6CBC1971EE96DBD0083E8C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CBC1961EE96DBD0083E8C3 /* WebKit.framework */; };
+		D6F39B0E1F2596FD0097E44E /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6F39B021F2596FD0097E44E /* AppDelegate.cpp */; };
+		D6F39B0F1F2596FD0097E44E /* CommonHttpManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6F39B041F2596FD0097E44E /* CommonHttpManager.cpp */; };
+		D6F39B101F2596FD0097E44E /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6F39B061F2596FD0097E44E /* FirstViewController.cpp */; };
+		D6F39B111F2596FD0097E44E /* MenuViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6F39B081F2596FD0097E44E /* MenuViewController.cpp */; };
+		D6F39B121F2596FD0097E44E /* MyWebViewController.h.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6F39B0B1F2596FD0097E44E /* MyWebViewController.h.cpp */; };
+		D6F39B131F2596FD0097E44E /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6F39B0C1F2596FD0097E44E /* RootWindow.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,15 +135,8 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
-		4E89C58C1AE7A40900A6198A /* CDData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CDData.h; path = ../Classes/CDData.h; sourceTree = "<group>"; };
-		4EC5C5911AEE36B80003331B /* CDWebViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDWebViewController.cpp; path = ../Classes/CDWebViewController.cpp; sourceTree = "<group>"; };
-		4EC5C5921AEE36B80003331B /* CDWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDWebViewController.h; path = ../Classes/CDWebViewController.h; sourceTree = "<group>"; };
-		4EC91E961AE4A173003B5305 /* CommonHttpManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommonHttpManager.cpp; path = ../Classes/CommonHttpManager.cpp; sourceTree = "<group>"; };
-		4EC91E971AE4A173003B5305 /* CommonHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonHttpManager.h; path = ../Classes/CommonHttpManager.h; sourceTree = "<group>"; };
 		4EE8374A1AFCB99600BCFA6D /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
 		4EEA323C1ADDFDBB00FAE693 /* animation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animation; sourceTree = "<group>"; };
-		4EF2E6461ACE7B9B00A4DFE1 /* MenuViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuViewController.cpp; path = ../Classes/MenuViewController.cpp; sourceTree = "<group>"; };
-		4EF2E6471ACE7B9B00A4DFE1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuViewController.h; path = ../Classes/MenuViewController.h; sourceTree = "<group>"; };
 		B039AF271BC7A599002C1FDB /* libbz2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.1.0.dylib; path = ../../../CrossApp/the_third_party/FFmpeg/prebuilt/mac/libbz2.1.0.dylib; sourceTree = "<group>"; };
 		B039AF381BC7A6AA002C1FDB /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B039AF3A1BC7A6B0002C1FDB /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -167,15 +160,8 @@
 		B049CD2E1BCBB342001A2B30 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		B049CD301BCBB34E001A2B30 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
-		B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		B0621C291AC3DCB2005EBCA7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
-		B0621C2A1AC3DCB2005EBCA7 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
-		B0621C2D1AC3DCB2005EBCA7 /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
-		B0621C2E1AC3DCB2005EBCA7 /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
 		B0621C321AC3DCCA005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621C341AC3DCCA005EBCA7 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
-		B063D46B1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CDUIShowAutoCollectionView.cpp; path = ../Classes/CDUIShowAutoCollectionView.cpp; sourceTree = "<group>"; };
-		B063D46C1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDUIShowAutoCollectionView.h; path = ../Classes/CDUIShowAutoCollectionView.h; sourceTree = "<group>"; };
 		B09B73BB1BD1FA82001D82BC /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../../../CrossApp/the_third_party/SDL/prebuilt/mac/libSDL.a; sourceTree = "<group>"; };
 		D6B1E7811F204D8700723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D6B1E8901F234C4000723750 /* ActivityIndicatorViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActivityIndicatorViewTest.cpp; sourceTree = "<group>"; };
@@ -243,6 +229,18 @@
 		D6B1E8CE1F234C4000723750 /* WebViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebViewTest.cpp; sourceTree = "<group>"; };
 		D6B1E8CF1F234C4000723750 /* WebViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewTest.h; sourceTree = "<group>"; };
 		D6CBC1961EE96DBD0083E8C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D6F39B021F2596FD0097E44E /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
+		D6F39B031F2596FD0097E44E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
+		D6F39B041F2596FD0097E44E /* CommonHttpManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommonHttpManager.cpp; path = ../Classes/CommonHttpManager.cpp; sourceTree = "<group>"; };
+		D6F39B051F2596FD0097E44E /* CommonHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonHttpManager.h; path = ../Classes/CommonHttpManager.h; sourceTree = "<group>"; };
+		D6F39B061F2596FD0097E44E /* FirstViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FirstViewController.cpp; path = ../Classes/FirstViewController.cpp; sourceTree = "<group>"; };
+		D6F39B071F2596FD0097E44E /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = ../Classes/FirstViewController.h; sourceTree = "<group>"; };
+		D6F39B081F2596FD0097E44E /* MenuViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuViewController.cpp; path = ../Classes/MenuViewController.cpp; sourceTree = "<group>"; };
+		D6F39B091F2596FD0097E44E /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuViewController.h; path = ../Classes/MenuViewController.h; sourceTree = "<group>"; };
+		D6F39B0A1F2596FD0097E44E /* MyWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyWebViewController.h; path = ../Classes/MyWebViewController.h; sourceTree = "<group>"; };
+		D6F39B0B1F2596FD0097E44E /* MyWebViewController.h.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MyWebViewController.h.cpp; path = ../Classes/MyWebViewController.h.cpp; sourceTree = "<group>"; };
+		D6F39B0C1F2596FD0097E44E /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
+		D6F39B0D1F2596FD0097E44E /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,20 +287,18 @@
 			isa = PBXGroup;
 			children = (
 				D6B1E88F1F234C4000723750 /* Control */,
-				B063D46B1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp */,
-				B063D46C1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.h */,
-				4EC91E961AE4A173003B5305 /* CommonHttpManager.cpp */,
-				4EC91E971AE4A173003B5305 /* CommonHttpManager.h */,
-				B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */,
-				B0621C291AC3DCB2005EBCA7 /* AppDelegate.h */,
-				B0621C2A1AC3DCB2005EBCA7 /* AppMacros.h */,
-				B0621C2D1AC3DCB2005EBCA7 /* RootWindow.cpp */,
-				B0621C2E1AC3DCB2005EBCA7 /* RootWindow.h */,
-				4EF2E6461ACE7B9B00A4DFE1 /* MenuViewController.cpp */,
-				4EF2E6471ACE7B9B00A4DFE1 /* MenuViewController.h */,
-				4E89C58C1AE7A40900A6198A /* CDData.h */,
-				4EC5C5911AEE36B80003331B /* CDWebViewController.cpp */,
-				4EC5C5921AEE36B80003331B /* CDWebViewController.h */,
+				D6F39B021F2596FD0097E44E /* AppDelegate.cpp */,
+				D6F39B031F2596FD0097E44E /* AppDelegate.h */,
+				D6F39B041F2596FD0097E44E /* CommonHttpManager.cpp */,
+				D6F39B051F2596FD0097E44E /* CommonHttpManager.h */,
+				D6F39B061F2596FD0097E44E /* FirstViewController.cpp */,
+				D6F39B071F2596FD0097E44E /* FirstViewController.h */,
+				D6F39B081F2596FD0097E44E /* MenuViewController.cpp */,
+				D6F39B091F2596FD0097E44E /* MenuViewController.h */,
+				D6F39B0A1F2596FD0097E44E /* MyWebViewController.h */,
+				D6F39B0B1F2596FD0097E44E /* MyWebViewController.h.cpp */,
+				D6F39B0C1F2596FD0097E44E /* RootWindow.cpp */,
+				D6F39B0D1F2596FD0097E44E /* RootWindow.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -610,26 +606,25 @@
 				D6B1E8E61F234C4000723750 /* SliderTest.cpp in Sources */,
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
 				D6B1E8DA1F234C4000723750 /* GifViewTest.cpp in Sources */,
+				D6F39B0E1F2596FD0097E44E /* AppDelegate.cpp in Sources */,
 				D6B1E8E41F234C4000723750 /* ScrollViewTest.cpp in Sources */,
-				B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */,
 				D6B1E8EE1F234C4000723750 /* WaterfallViewTest.cpp in Sources */,
 				41BC70E815BF81A5006A0A6C /* main.m in Sources */,
-				B0621C311AC3DCB2005EBCA7 /* RootWindow.cpp in Sources */,
 				D6B1E8DE1F234C4000723750 /* PageControlTest.cpp in Sources */,
 				D6B1E8ED1F234C4000723750 /* ViewAnimationTest.cpp in Sources */,
-				4EC91E981AE4A173003B5305 /* CommonHttpManager.cpp in Sources */,
 				D6B1E8D21F234C4000723750 /* AutoCollectionViewHorizontalTest.cpp in Sources */,
+				D6F39B111F2596FD0097E44E /* MenuViewController.cpp in Sources */,
 				D6B1E8E51F234C4000723750 /* SegmentedControlTest.cpp in Sources */,
+				D6F39B101F2596FD0097E44E /* FirstViewController.cpp in Sources */,
 				D6B1E8DF1F234C4000723750 /* PageViewTest.cpp in Sources */,
 				D6B1E8EB1F234C4000723750 /* TextFieldTest.cpp in Sources */,
 				D6B1E8DD1F234C4000723750 /* ListViewTest.cpp in Sources */,
 				D6B1E8D11F234C4000723750 /* AlertViewTest.cpp in Sources */,
 				D6B1E8E01F234C4000723750 /* PickerViewTest.cpp in Sources */,
 				D6B1E8EA1F234C4000723750 /* TableViewTest.cpp in Sources */,
-				4EC5C5931AEE36B80003331B /* CDWebViewController.cpp in Sources */,
 				D6B1E8EF1F234C4000723750 /* WebViewTest.cpp in Sources */,
 				D6B1E8E71F234C4000723750 /* StepperTest.cpp in Sources */,
-				4EF2E6481ACE7B9B00A4DFE1 /* MenuViewController.cpp in Sources */,
+				D6F39B121F2596FD0097E44E /* MyWebViewController.h.cpp in Sources */,
 				D6B1E8D81F234C4000723750 /* CollectionViewTest.cpp in Sources */,
 				D6B1E8D01F234C4000723750 /* ActivityIndicatorViewTest.cpp in Sources */,
 				D6B1E8D41F234C4000723750 /* AVPlayerViewTest.cpp in Sources */,
@@ -638,6 +633,7 @@
 				D6B1E8DC1F234C4000723750 /* LabelTest.cpp in Sources */,
 				D6B1E8E81F234C4000723750 /* SwitchTest.cpp in Sources */,
 				15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */,
+				D6F39B131F2596FD0097E44E /* RootWindow.cpp in Sources */,
 				D6B1E8D91F234C4000723750 /* DrawViewTest.cpp in Sources */,
 				D6B1E8E11F234C4000723750 /* ProgressTest.cpp in Sources */,
 				15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */,
@@ -646,12 +642,12 @@
 				D6B1E8D71F234C4000723750 /* ClippingViewTest.cpp in Sources */,
 				D6B1E8E91F234C4000723750 /* TabBarControllerTest.cpp in Sources */,
 				D6B1E8D51F234C4000723750 /* ButtonTest.cpp in Sources */,
+				D6F39B0F1F2596FD0097E44E /* CommonHttpManager.cpp in Sources */,
 				D6B1E8E31F234C4000723750 /* Scale9ImageViewTest.cpp in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
 				D6B1E8EC1F234C4000723750 /* TextViewTest.cpp in Sources */,
 				15D8B242168318C3006C7997 /* SimpleAudioEngine.mm in Sources */,
 				15D8B243168318C3006C7997 /* SimpleAudioEngine_objc.m in Sources */,
-				B063D46D1CAD24E700B1FF13 /* CDUIShowAutoCollectionView.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1051,9 +1051,14 @@ void CANavigationController::update(float dt)
 
 bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (pTouch->getLocation().x > 80)
+    if (m_pViewControllers.size() == 1)
     {
         return false;
+    }
+    
+    if (pTouch->getLocation().x > 80)
+    {
+        return true;
     }
     
     m_bPopViewController = false;
@@ -1062,7 +1067,6 @@ bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 
 void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_pViewControllers.size() <= 1);
     CC_RETURN_IF(m_bTouchMoved == false);
     float offDis = pTouch->getLocation().x - pTouch->getPreviousLocation().x;
     CAView* showContainer = m_pContainers.at(m_pContainers.size() - 2);
@@ -1092,7 +1096,6 @@ void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     CC_RETURN_IF(CAViewAnimation::areBeginAnimationsWithID("navigation_animation"));
-    CC_RETURN_IF(m_pViewControllers.size() <= 1);
     
     float x = this->getView()->getBounds().size.width;
     size_t index = m_pViewControllers.size() - 2;
