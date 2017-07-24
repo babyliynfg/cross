@@ -668,6 +668,12 @@ public class CrossAppVideoPlayer extends TextureView implements TextureView.Surf
                     	userPerformStarCall.onCall();
 					}
                     userPerformStarCall = null ; 
+                    CrossAppActivity.getContext().runOnGLThread(new Runnable() {
+						@Override
+						public void run() {
+							onPlayBufferLoadingState(getKey(), PlaybackLikelyToKeepUp);
+						}
+					});
                 }
             });
             mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
