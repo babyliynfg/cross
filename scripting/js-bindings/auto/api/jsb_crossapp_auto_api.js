@@ -439,6 +439,24 @@ str
     return false;
 },
 
+/**
+ * @method schedule
+* @param {function|function|function} func
+* @param {String|String|String} str
+* @param {float|float|float} float
+* @param {float|float} float
+* @param {float} float
+*/
+schedule : function(
+func,
+str,
+float,
+float,
+float 
+)
+{
+},
+
 };
 
 /**

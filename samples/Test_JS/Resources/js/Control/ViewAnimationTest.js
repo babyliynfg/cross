@@ -13,6 +13,9 @@ var ViewAnimationTest = ca.CAViewController.extend({
     },
     viewDidLoad: function() {
 
+        var bg = ca.CAImageView.createWithImage(ca.CAImage.create("image/1.jpg"));
+        bg.setLayout(ca.DLayoutFill);
+        this.getView().addSubview(bg);
 
         if (viewAnimationTest_Index == 0)
         {
@@ -74,11 +77,9 @@ var ViewAnimationTest = ca.CAViewController.extend({
             btn.setTitleForState(ca.CAControl.State.Normal, "Start Animation 3");
             this.getView().addSubview(btn);
 
-            var fillRect = ca.DRectZero;
-            fillRect.size = imageView.getImage().getContentSize();
+            var fillRect = ca.DRect.set(0, 0, imageView.getImage().getContentSize().width, imageView.getImage().getContentSize().height);
 
-            var zeroRect = ca.DRectZero;
-            zeroRect.size.height = imageView.getImage().getContentSize().height;
+            var zeroRect = ca.DRect.set(0, 0, 0, imageView.getImage().getContentSize().height);
 
             btn.addTarget(function () {
 
@@ -108,7 +109,7 @@ var ViewAnimationTest = ca.CAViewController.extend({
 
             btn.addTarget(function () {
 
-                imageView.setColor(ca.CAColor4B.set(0, 0, 0, 255));
+                imageView.setColor(ca.CAColor4B.set(0, 0, 0, 0));
 
                 ca.CACustomAnimation.schedule(function(model){
 

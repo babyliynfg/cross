@@ -186,15 +186,20 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     
     tmpObj.set(jsb_CrossApp_CAObject_prototype);
-    JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
     JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     tmpObj.set(jsb_CrossApp_CAMotionManager_prototype);
-    JS_DefineFunction(cx, tmpObj, "startGyroscope", js_crossapp_CAMotionManager_startGyroscope, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    tmpObj.set(jsb_CrossApp_CACustomAnimation_prototype);
-    JS_DefineFunction(cx, tmpObj, "schedule", js_crossapp_CACustomAnimation_schedule, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "startGyroscope", js_crossapp_CAMotionManager_startGyroscope, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    //tmpObj.set(jsb_CrossApp_CACustomAnimation_prototype);
+    //JS_DefineFunction(cx, tmpObj, "schedule", js_crossapp_CACustomAnimation_schedule, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     tmpObj.set(jsb_CrossApp_CADatePickerView_prototype);
-    JS_DefineFunction(cx, tmpObj, "onSelectRow", js_crossapp_CADatePickerView_onSelectRow, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "onSelectRow", js_crossapp_CADatePickerView_onSelectRow, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
 }
 
@@ -325,155 +330,147 @@ bool js_crossapp_CADatePickerView_onSelectRow(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_crossapp_CADatePickerView_onSelectRow : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACustomAnimation_schedule(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACustomAnimation_schedule : Invalid Native Object");
-    
-    do {
-        if (argc == 3) {
-            std::function<void (const CrossApp::CACustomAnimation::Model &)> arg0;
-            do {
-                if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-                {
-                    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-                    auto lambda = [=, &ok](const CrossApp::CACustomAnimation::Model & var) -> void {
-                        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-                        jsval largv[1];
-                        CAValueMap larg0;
-                        larg0["dt"]     = CAValue(var.dt);
-                        larg0["now"]    = CAValue(var.now);
-                        larg0["total"]  = CAValue(var.total);
-                        larg0["end"]    = CAValue(var.end);
-                        largv[0] = cavaluemap_to_jsval(cx, larg0);
-                        JS::RootedValue rval(cx);
-                        bool succeed = func->invoke(1, &largv[0], &rval);
-                        if (!succeed && JS_IsExceptionPending(cx)) {
-                            JS_ReportPendingException(cx);
-                        }
-                    };
-                    arg0 = lambda;
-                }
-                else
-                {
-                    arg0 = nullptr;
-                }
-            } while(0)
-                ;
-            if (!ok) { ok = true; break; }
-            std::string arg1;
-            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            double arg2 = 0;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-            if (!ok) { ok = true; break; }
-            JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACustomAnimation_schedule : Error processing arguments");
-            CrossApp::CACustomAnimation::schedule(arg0, arg1, arg2);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while (0);
-    
-    do {
-        if (argc == 4) {
-            std::function<void (const CrossApp::CACustomAnimation::Model &)> arg0;
-            do {
-                if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-                {
-                    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-                    auto lambda = [=, &ok](const CrossApp::CACustomAnimation::Model & var) -> void {
-                            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-                            jsval largv[1];
-                            CAValueMap larg0;
-                            larg0["dt"]     = CAValue(var.dt);
-                            larg0["now"]    = CAValue(var.now);
-                            larg0["total"]  = CAValue(var.total);
-                            larg0["end"]    = CAValue(var.end);
-                            largv[0] = cavaluemap_to_jsval(cx, larg0);
-                            JS::RootedValue rval(cx);
-                            bool succeed = func->invoke(1, &largv[0], &rval);
-                            if (!succeed && JS_IsExceptionPending(cx)) {
-                                JS_ReportPendingException(cx);
-                            }
-                        };
-                    arg0 = lambda;
-                }
-                else
-                {
-                    arg0 = nullptr;
-                }
-            } while(0)
-                ;
-            if (!ok) { ok = true; break; }
-            std::string arg1;
-            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            double arg2 = 0;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-            if (!ok) { ok = true; break; }
-            double arg3 = 0;
-            ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
-            if (!ok) { ok = true; break; }
-            JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACustomAnimation_schedule : Error processing arguments");
-            CrossApp::CACustomAnimation::schedule(arg0, arg1, arg2, arg3);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while (0);
-    
-    do {
-        if (argc == 5) {
-            std::function<void (const CrossApp::CACustomAnimation::Model &)> arg0;
-            do {
-                if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-                {
-                    std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-                    auto lambda = [=, &ok](const CrossApp::CACustomAnimation::Model & var) -> void {
-                        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-                        jsval largv[1];
-                        CAValueMap larg0;
-                        larg0["dt"]     = CAValue(var.dt);
-                        larg0["now"]    = CAValue(var.now);
-                        larg0["total"]  = CAValue(var.total);
-                        larg0["end"]    = CAValue(var.end);
-                        largv[0] = cavaluemap_to_jsval(cx, larg0);
-                        JS::RootedValue rval(cx);
-                        bool succeed = func->invoke(1, &largv[0], &rval);
-                        if (!succeed && JS_IsExceptionPending(cx)) {
-                            JS_ReportPendingException(cx);
-                        }
-                    };
-                    arg0 = lambda;
-                }
-                else
-                {
-                    arg0 = nullptr;
-                }
-            } while(0)
-                ;
-            if (!ok) { ok = true; break; }
-            std::string arg1;
-            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            double arg2 = 0;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-            if (!ok) { ok = true; break; }
-            double arg3 = 0;
-            ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
-            if (!ok) { ok = true; break; }
-            double arg4 = 0;
-            ok &= JS::ToNumber( cx, args.get(4), &arg4) && !isnan(arg4);
-            if (!ok) { ok = true; break; }
-            JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACustomAnimation_schedule : Error processing arguments");
-            CrossApp::CACustomAnimation::schedule(arg0, arg1, arg2, arg3, arg4);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while (0);
-    JS_ReportError(cx, "js_crossapp_CACustomAnimation_schedule : wrong number of arguments");
-    return false;
-}
+/*
+ bool js_crossapp_CACustomAnimation_schedule(JSContext *cx, uint32_t argc, jsval *vp)
+ {
+ JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+ bool ok = true;
+ 
+ do {
+ if (argc == 3) {
+ std::function<void (const CrossApp::CACustomAnimation::Model &)> arg0;
+ do {
+ if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+ {
+ std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+ auto lambda = [=, &ok](const CrossApp::CACustomAnimation::Model & var) -> void {
+ JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+ jsval largv[1];
+ CAValueMap larg0;
+ larg0["dt"]     = CAValue(var.dt);
+ larg0["now"]    = CAValue(var.now);
+ larg0["total"]  = CAValue(var.total);
+ larg0["end"]    = CAValue(var.end);
+ largv[0] = cavaluemap_to_jsval(cx, larg0);
+ JS::RootedValue rval(cx);
+ bool succeed = func->invoke(1, &largv[0], &rval);
+ if (!succeed && JS_IsExceptionPending(cx)) {
+ JS_ReportPendingException(cx);
+ }
+ };
+ arg0 = lambda;
+ }
+ else
+ {
+ arg0 = nullptr;
+ }
+ } while(0)
+ ;
+ if (!ok) { ok = true; break; }
+ std::string arg1;
+ ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+ if (!ok) { ok = true; break; }
+ double arg2 = 0;
+ ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+ if (!ok) { ok = true; break; }
+ CrossApp::CACustomAnimation::schedule(arg0, arg1, arg2);
+ return true;
+ }
+ } while (0);
+ 
+ do {
+ if (argc == 4) {
+ std::function<void (const CrossApp::CACustomAnimation::Model &)> arg0;
+ do {
+ if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+ {
+ std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+ auto lambda = [=, &ok](const CrossApp::CACustomAnimation::Model & var) -> void {
+ JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+ jsval largv[1];
+ CAValueMap larg0;
+ larg0["dt"]     = CAValue(var.dt);
+ larg0["now"]    = CAValue(var.now);
+ larg0["total"]  = CAValue(var.total);
+ larg0["end"]    = CAValue(var.end);
+ largv[0] = cavaluemap_to_jsval(cx, larg0);
+ JS::RootedValue rval(cx);
+ bool succeed = func->invoke(1, &largv[0], &rval);
+ if (!succeed && JS_IsExceptionPending(cx)) {
+ JS_ReportPendingException(cx);
+ }
+ };
+ arg0 = lambda;
+ }
+ else
+ {
+ arg0 = nullptr;
+ }
+ } while(0)
+ ;
+ if (!ok) { ok = true; break; }
+ std::string arg1;
+ ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+ if (!ok) { ok = true; break; }
+ double arg2 = 0;
+ ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+ if (!ok) { ok = true; break; }
+ double arg3 = 0;
+ ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+ if (!ok) { ok = true; break; }
+ CrossApp::CACustomAnimation::schedule(arg0, arg1, arg2, arg3);
+ return true;
+ }
+ } while (0);
+ 
+ do {
+ if (argc == 5) {
+ std::function<void (const CrossApp::CACustomAnimation::Model &)> arg0;
+ do {
+ if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+ {
+ std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+ auto lambda = [=, &ok](const CrossApp::CACustomAnimation::Model & var) -> void {
+ JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+ jsval largv[1];
+ CAValueMap larg0;
+ larg0["dt"]     = CAValue(var.dt);
+ larg0["now"]    = CAValue(var.now);
+ larg0["total"]  = CAValue(var.total);
+ larg0["end"]    = CAValue(var.end);
+ largv[0] = cavaluemap_to_jsval(cx, larg0);
+ JS::RootedValue rval(cx);
+ bool succeed = func->invoke(1, &largv[0], &rval);
+ if (!succeed && JS_IsExceptionPending(cx)) {
+ JS_ReportPendingException(cx);
+ }
+ };
+ arg0 = lambda;
+ }
+ else
+ {
+ arg0 = nullptr;
+ }
+ } while(0)
+ ;
+ if (!ok) { ok = true; break; }
+ std::string arg1;
+ ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+ if (!ok) { ok = true; break; }
+ double arg2 = 0;
+ ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+ if (!ok) { ok = true; break; }
+ double arg3 = 0;
+ ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+ if (!ok) { ok = true; break; }
+ double arg4 = 0;
+ ok &= JS::ToNumber( cx, args.get(4), &arg4) && !isnan(arg4);
+ if (!ok) { ok = true; break; }
+ CrossApp::CACustomAnimation::schedule(arg0, arg1, arg2, arg3, arg4);
+ return true;
+ }
+ } while (0);
+ JS_ReportError(cx, "js_crossapp_CACustomAnimation_schedule : wrong number of arguments");
+ return false;
+ }
+*/

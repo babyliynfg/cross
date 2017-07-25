@@ -761,7 +761,7 @@ ca.fileUtils.setPopupNotify(false);
 
 ca.imageCache = ca.application.getImageCache();
 ca.scheduler = ca.application.getScheduler();
-ca.actionManagea = ca.application.getActionManager();
+ca.actionManager = ca.application.getActionManager();
 ca.notificationCenter = ca.application.getNotificationCenter();
 /**
  * @type {Object}

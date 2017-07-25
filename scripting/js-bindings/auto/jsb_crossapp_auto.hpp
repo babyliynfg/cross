@@ -67,6 +67,7 @@ void js_register_crossapp_CACustomAnimation(JSContext *cx, JS::HandleObject glob
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CACustomAnimation_unschedule(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACustomAnimation_isSchedule(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACustomAnimation_schedule(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAData_class;
 extern JSObject *jsb_CrossApp_CAData_prototype;

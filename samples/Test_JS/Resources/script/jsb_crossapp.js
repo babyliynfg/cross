@@ -523,8 +523,8 @@ ca.DVerticalLayout_NH_C = function(height,center)
     return ca.DVerticalLayout.set(height,center, ca.DVerticalLayout.Type.NH_C);
 };
 
-ca.DHorizontalLayouttZero  = ca.DHorizontalLayout.set(0,0,0);
-ca.DVerticalLayoutZero     = ca.DVerticalLayout.set(0,0,0);
+ca.DHorizontalLayouttZero  = ca.DHorizontalLayout.set(ca.FLT_MAX, ca.FLT_MAX, ca.FLT_MAX);
+ca.DVerticalLayoutZero     = ca.DVerticalLayout.set(ca.FLT_MAX,ca.FLT_MAX, ca.FLT_MAX);
 ca.DLayoutZero             = ca.DLayout.set(ca.DHorizontalLayouttZero, ca.DVerticalLayoutZero);
 ca.DHorizontalLayoutFill   = ca.DHorizontalLayout_L_R(0, 0);
 ca.DVerticalLayoutFill     = ca.DVerticalLayout_T_B(0, 0);
