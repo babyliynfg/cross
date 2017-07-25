@@ -11,14 +11,14 @@
 NS_CC_BEGIN
 
 #define UTF8(x) unicode_to_utf8( L##x ).c_str()
-inline int _unicode_to_utf8( const wchar_t *in, std::string& out , int *poutsize )
+inline int _unicode_to_utf8( const wchar_t *in, std::string& out)
 {
     int outsize = 0;
     int charscount = 0;
     char *result = NULL;
     char *tmp = NULL;
     
-    charscount = wcslen( in );
+    charscount = (int)wcslen( in );
     result = (char *)new char[charscount * 3 + 1];
     memset(result, 0, charscount * 3 + 1);
     tmp = result;
@@ -55,7 +55,11 @@ inline int _unicode_to_utf8( const wchar_t *in, std::string& out , int *poutsize
 
     *tmp = '\0';
     out = result;
-    *poutsize = outsize;
+    out.resize(outsize);
+    for (int i=0; i<outsize; i++)
+    {
+        out[i] = result[i];
+    }
     delete [] result;
     return 1;
 }
@@ -200,8 +204,7 @@ std::wstring inline utf8_to_unicode( const char *in )
 std::string inline unicode_to_utf8( const wchar_t *in )
 {
     std::string s;
-	int outsize;
-	_unicode_to_utf8( in , s , &outsize );
+	_unicode_to_utf8( in , s);
 	return s;
 }
 

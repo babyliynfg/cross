@@ -25,19 +25,19 @@ class CC_DLL CAPickerViewDataSource {
     
 public:
     virtual ~CAPickerViewDataSource() {};
-    
+
     virtual unsigned int numberOfComponentsInPickerView(CAPickerView* pickerView) = 0; 
 
     virtual unsigned int numberOfRowsInComponent(CAPickerView* pickerView, unsigned int component) = 0;
-
-    virtual float widthForComponent(CAPickerView* pickerView, unsigned int component) {return 0;}
     
+    virtual float widthForComponent(CAPickerView* pickerView, unsigned int component) {return 0;}
+
     virtual float rowHeightForComponent(CAPickerView* pickerView, unsigned int component) {return 0;}
 
     virtual const char* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
 
     virtual CAView* viewForRow(CAPickerView* pickerView, unsigned int row, unsigned int component) {return NULL;}
-    
+
     virtual CAView* viewForSelect(CAPickerView* pickerView, unsigned int component, const DSize& size) {return NULL;}
 };
 
@@ -92,7 +92,7 @@ public:
     // returns selected row. -1 if nothing selected
     virtual int selectedRowInComponent(unsigned int component);
 
-	virtual void setBackgroundColor(const CAColor4B& color);
+	void setBackgroundImage(CAImage* image, bool isScale9 = false);
 
 	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAPickerViewDelegate*, m_delegate, PickerViewDelegate);
 	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAPickerViewDataSource*, m_dataSource, PickerViewDataSource);
@@ -120,6 +120,7 @@ private:
     std::vector< std::vector<int> > m_componentsIndex;
     std::vector<float> m_componentOffsetX;
     std::vector<int> m_displayRow;
+    CAView* m_pBackgroundView;
 };
 
 NS_CC_END

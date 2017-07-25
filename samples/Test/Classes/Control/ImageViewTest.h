@@ -2,10 +2,7 @@
 #ifndef __Test__ImageViewTest__
 #define __Test__ImageViewTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class ImageViewTest: public CAViewController
 {
@@ -18,18 +15,14 @@ public:
     
     CREATE_FUNC(ImageViewTest);
     
+    CC_SYNTHESIZE(ssize_t, m_iIndex, Index);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
-    
-    void showIndex(ssize_t index);
-    
-public:
-    
-    CAImageView* AnimationImages();
-    
+
 };
 
 

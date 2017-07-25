@@ -2,6 +2,7 @@
 #include "LabelTest.h"
 
 LabelTest::LabelTest()
+:m_iIndex(0)
 {
     this->setTitle("CALabel");
 }
@@ -13,17 +14,6 @@ LabelTest::~LabelTest()
 
 void LabelTest::viewDidLoad()
 {
-	this->showIndex(0);
-}
-
-void LabelTest::viewDidUnload()
-{
-}
-
-void LabelTest::showIndex(ssize_t index)
-{
-    this->getView()->removeAllSubviews();
-    
     std::string s = "Hello World";
     
     std::u32string c;
@@ -33,12 +23,8 @@ void LabelTest::showIndex(ssize_t index)
     std::string cc;
     StringUtils::UTF32ToUTF8(c, cc);
     
-    if (index == 0)
+    if (m_iIndex == 0)
     {
-        CAView* view = CAView::createWithLayout(DLayoutFill);
-        view->setColor(CAColor4B::GRAY);
-        this->getView()->addSubview(view);
-        
         CAFont Font;
         Font.fontSize = 50;
         Font.color = CAColor4B::BLUE;
@@ -48,7 +34,7 @@ void LabelTest::showIndex(ssize_t index)
         label->setFont(Font);
         label->setTextAlignment(CATextAlignment::Center);
         label->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 1/8.f)));
-        view->addSubview(label);
+        this->getView()->addSubview(label);
         
         
         CAFont Font1;
@@ -61,7 +47,7 @@ void LabelTest::showIndex(ssize_t index)
         label1->setFont(Font1);
         label1->setTextAlignment(CATextAlignment::Center);
         label1->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 2/8.f)));
-        view->addSubview(label1);
+        this->getView()->addSubview(label1);
         
         
         CALabel* label2 = CALabel::create();
@@ -74,7 +60,7 @@ void LabelTest::showIndex(ssize_t index)
         label2->setFont(Font2);
         label2->setTextAlignment(CATextAlignment::Center);
         label2->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 3/8.f)));
-        view->addSubview(label2);
+        this->getView()->addSubview(label2);
         
         
         CALabel* label3 = CALabel::create();
@@ -87,7 +73,7 @@ void LabelTest::showIndex(ssize_t index)
         label3->setFont(Font3);
         label3->setTextAlignment(CATextAlignment::Center);
         label3->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 4/8.f)));
-        view->addSubview(label3);
+        this->getView()->addSubview(label3);
         
         
         CALabel* label4 = CALabel::create();
@@ -100,7 +86,7 @@ void LabelTest::showIndex(ssize_t index)
         label4->setFont(Font4);
         label4->setTextAlignment(CATextAlignment::Center);
         label4->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 5/8.f)));
-        view->addSubview(label4);
+        this->getView()->addSubview(label4);
         
         CALabel* label5 = CALabel::create();
         CAFont Font5;
@@ -116,7 +102,7 @@ void LabelTest::showIndex(ssize_t index)
         label5->setTextAlignment(CATextAlignment::Center);
         label5->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 6/8.f)));
         label5->setNumberOfLine(3) ;
-        view->addSubview(label5);
+        this->getView()->addSubview(label5);
         
         CALabel* label6 = CALabel::create();
         CAFont Font6;
@@ -130,9 +116,10 @@ void LabelTest::showIndex(ssize_t index)
         label6->setFont(Font6);
         label6->setTextAlignment(CATextAlignment::Center);
         label6->setLayout(DLayout(DHorizontalLayout_L_R(100, 100), DVerticalLayout_H_C(60, 7/8.f)));
-        view->addSubview(label6);
+        this->getView()->addSubview(label6);
+
     }
-    else if (index == 1)
+    else if (m_iIndex == 1)
     {
         std::string text = "        When a lion was asleep, a little mouse began running up and down beside him. This soon wakened the lion. He was very angry, and caught the mouse in his paws.\
         \n\
@@ -160,17 +147,10 @@ void LabelTest::showIndex(ssize_t index)
         label5->setText(text);
         label5->setFont(Font5);
         label5->setNumberOfLine(14);
-        
-        
-        CAView* view1 = CAView::createWithLayout(DLayoutFill);
-        view1->addSubview(label5);
-        view1->setColor(CAColor4B::GRAY);
-        
-        this->getView()->addSubview(view1);
+        this->getView()->addSubview(label5);
     }
-    else
+    else if (m_iIndex == 2)
     {
-        
         CARichLabel* RichLabel = CARichLabel::createWithLayout(DLayout(DHorizontalLayout_L_R(50, 50), DVerticalLayout_T_B(200, 200)));
         CAFont RichLabelFont;
         RichLabelFont.bold = true;
@@ -198,26 +178,30 @@ void LabelTest::showIndex(ssize_t index)
         RichLabelFont3.color = CAColor4B::RED;
         RichLabel->appendText("        When a lion was asleep, a little mouse began running up and down beside him. This soon wakened the lion. He was very angry, and caught the mouse in his paws.", RichLabelFont3);
         
-        CAView* view2 = CAView::createWithLayout(DLayoutFill);
-        view2->addSubview(RichLabel);
-        view2->setColor(CAColor4B::GRAY);
-        
-        this->getView()->addSubview(view2);
+        this->getView()->addSubview(RichLabel);
+
+
     }
     
     
-    static ssize_t s_index = 0;
     auto btn = CAButton::createWithLayout(DLayout(DHorizontalLayout_NW_C(0.3,0.5), DVerticalLayout_B_H(20 ,50)), CAButton::Type::RoundedRect);
     btn->setTitleForState(CAControl::State::Normal, "Switch Next");
-    btn->addTarget([&]
-    {
-        if (++s_index > 3)
+    btn->addTarget([&] {
+        
+        ssize_t index = m_iIndex + 1;
+        if (index > 2)
         {
-            s_index = 0;
+            index = 0;
         }
-        this->showIndex(s_index);
+        LabelTest* viewController = LabelTest::create();
+        viewController->setIndex(index);
+        RootWindow::getInstance()->getRootNavigationController()->replaceViewController(viewController, false);
         
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn);
+}
+
+void LabelTest::viewDidUnload()
+{
 }
 

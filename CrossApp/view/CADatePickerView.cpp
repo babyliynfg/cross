@@ -9,6 +9,7 @@
 #include "CADatePickerView.h"
 #include "cocoa/CACalendar.h"
 #include "basics/CAApplication.h"
+#include "view/CAScale9ImageView.h"
 #include <sstream>
 
 NS_CC_BEGIN
@@ -19,6 +20,7 @@ CADatePickerView::CADatePickerView(CADatePickerView::Mode m_mode)
 : m_pPickerView(nullptr)
 , m_eMode(m_mode)
 , isSetDate(false)
+, m_obBackgroundImageForSelected(nullptr)
 {
 
 }
@@ -26,6 +28,7 @@ CADatePickerView::CADatePickerView(CADatePickerView::Mode m_mode)
 CADatePickerView::~CADatePickerView()
 {
     CC_SAFE_RELEASE(m_pPickerView);
+    CC_SAFE_RELEASE(m_obBackgroundImageForSelected);
 }
 
 CADatePickerView* CADatePickerView::create(CADatePickerView::Mode m_mode)
@@ -103,6 +106,37 @@ void CADatePickerView::onExit()
 {
     CAControl::onExit();
 }
+
+void CADatePickerView::setBackgroundImage(CAImage* image, bool isScale9)
+{
+    m_pPickerView->setBackgroundImage(image, isScale9);
+}
+
+void CADatePickerView::setBackgroundImageForSelected(CAImage* image, bool isScale9)
+{
+    CC_SAFE_RETAIN(image);
+    CC_SAFE_RELEASE(m_obBackgroundImageForSelected);
+    m_obBackgroundImageForSelected = image;
+    m_pPickerView->onViewForSelected([&](unsigned int component, DSize size){
+        
+        CAView* backgroundView = nullptr;
+        
+        if (isScale9)
+        {
+            backgroundView = CAScale9ImageView::createWithImage(m_obBackgroundImageForSelected);
+            backgroundView->setLayout(DLayoutFill);
+            return backgroundView;
+        }
+        else
+        {
+            backgroundView = CAImageView::createWithImage(m_obBackgroundImageForSelected);
+            backgroundView->setLayout(DLayoutFill);
+            
+        }
+        return backgroundView;
+    });
+}
+
 
 void CADatePickerView::setDate(int year, int month, int day, bool animated)
 {

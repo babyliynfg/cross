@@ -9,6 +9,7 @@
 #include "CAPickerView.h"
 #include "CALabel.h"
 #include "platform/CADensityDpi.h"
+#include "view/CAScale9ImageView.h"
 NS_CC_BEGIN
 
 CAPickerView::CAPickerView()
@@ -20,6 +21,7 @@ CAPickerView::CAPickerView()
 , m_fontColorSelected(CAColor4B(0, 0, 0, 255))
 , m_separateColor(CAColor4B(127, 127, 127, 127))
 , m_displayRow(7)
+, m_pBackgroundView(nullptr)
 {
     this->setDisplayRange(false);
 }
@@ -79,11 +81,7 @@ CAPickerView* CAPickerView::createWithLayout(const CrossApp::DLayout &layout)
 
 bool CAPickerView::init()
 {
-    if (!CAView::init())
-    {
-        return false;
-    }
-    
+    this->setBackgroundImage(CAImage::WHITE_IMAGE());
     return true;
 }
 
@@ -182,7 +180,13 @@ void CAPickerView::reloadAllComponents()
     m_displayRow.clear();
     
     // clear all tableviews
+    CC_SAFE_RETAIN(m_pBackgroundView);
+    
     this->removeAllSubviews();
+    
+    if (m_pBackgroundView)
+        this->insertSubview(m_pBackgroundView, -1);
+    CC_SAFE_RELEASE(m_pBackgroundView);
     
     // reload data
     unsigned int component = 1;
@@ -199,7 +203,7 @@ void CAPickerView::reloadAllComponents()
     m_componentsIndex.resize(component);
     m_componentOffsetX.resize(component);
     m_displayRow.resize(component);
-    float start_x = getFrame().size.width/2 - total_width/2;
+    float start_x = m_obContentSize.width/2 - total_width/2;
     for (int i=0; i<component; i++)
     {
         m_selected.push_back(0);
@@ -228,8 +232,6 @@ void CAPickerView::reloadAllComponents()
             tableWidth = m_dataSource->widthForComponent(this, i);
         }
         
-        
-        
         if (m_displayRow[i] % 2 == 0)
         {
             m_displayRow[i] += 1;
@@ -245,7 +247,8 @@ void CAPickerView::reloadAllComponents()
         tableView->setSeparatorColor(CAColor4B::CLEAR);
         tableView->setShowsScrollIndicators(false);
         tableView->setDisplayRange(true);
-        this->addSubview(tableView);
+        tableView->setBackgroundImage(nullptr);
+        this->insertSubview(tableView, 1);
         m_tableViews.pushBack(tableView);
         
         // create highlight
@@ -264,17 +267,17 @@ void CAPickerView::reloadAllComponents()
         if (selectedView == nullptr)
         {
             DRect sepRect = DRect(start_x, m_obContentSize.height/2 - rowHeight/2, tableWidth, s_px_to_dip(1));
-            this->addSubview(CAView::createWithFrame(sepRect, m_separateColor));
+            this->insertSubview(CAView::createWithFrame(sepRect, m_separateColor), 0);
             sepRect.origin.y += rowHeight;
-            this->addSubview(CAView::createWithFrame(sepRect, m_separateColor));
+            this->insertSubview(CAView::createWithFrame(sepRect, m_separateColor), 0);
         }
         else
         {
-            selectedView->setCenter(DRect(start_x, m_obContentSize.height/2, selectSize.width, selectSize.height));
-            this->addSubview(selectedView);
+            selectedView->setFrame(DRect(start_x, m_obContentSize.height/2 - rowHeight/2, selectSize.width, selectSize.height));
+            this->insertSubview(selectedView, 0);
         }
         
-        this->reloadComponent(1,i, true);
+        this->reloadComponent(0, i, true);
         
         start_x += tableWidth;
     }
@@ -352,7 +355,7 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, DSize size)
     int index = m_componentsIndex[component][row];
     if (index == -1)
     {
-        return NULL;
+        return nullptr;
     }
     
     CAView* view = nullptr;
@@ -365,46 +368,51 @@ CAView* CAPickerView::viewForRowInComponent(int component, int row, DSize size)
         view = m_dataSource->viewForRow(this, index, component);
     }
     
-    if (view == nullptr)
+    if (view)
     {
-        std::string title;
-        if (m_obTitleForRow)
+        view->setLayout(DLayoutFill);
+    }
+    else
+    {
+        do
         {
-            title = m_obTitleForRow(row, component);
-        }
-        else if (m_dataSource)
-        {
-            title = m_dataSource->titleForRow(this, index, component);
-        }
-        
-        if (!title.empty())
-        {
-            DRect rect = DRect(0, 0, size.width, size.height);
-            CALabel* label = CALabel::createWithFrame(rect);
+            std::string title;
+            if (m_obTitleForRow)
+            {
+                title = m_obTitleForRow(index, component);
+            }
+            else if (m_dataSource)
+            {
+                title = m_dataSource->titleForRow(this, index, component);
+            }
+            CC_BREAK_IF(title.empty());
+            
+            CALabel* label = CALabel::createWithLayout(DLayoutFill);
             label->setText(title);
-			label->setColor(m_fontColorNormal);
+            label->setColor(m_fontColorNormal);
             label->setFontSize(m_fontSizeNormal);
             label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
             label->setTextAlignment(CATextAlignment::Center);
             
-            return label;
-        }
-    
+            view = label;
+            
+        } while (0);
     }
+    
     return view;
 }
 
 CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const DSize& cellSize, unsigned int section, unsigned int row)
 {
     CATableViewCell* cell = table->dequeueReusableCellWithIdentifier("CrossApp");
-    if (cell == NULL)
+    if (cell == nullptr)
     {
         cell = CATableViewCell::create("CrossApp");
         cell->setBackgroundView(nullptr);
     }
     else
     {
-        cell->removeSubviewByTag(100);
+        cell->getContentView()->removeSubviewByTag(100);
     }
     
     size_t component = m_tableViews.getIndex(table);
@@ -413,7 +421,7 @@ CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const DSize&
     if (view)
     {
         view->setTag(100);
-        cell->addSubview(view);
+        cell->getContentView()->addSubview(view);
     }
     
     return cell;
@@ -490,9 +498,27 @@ int CAPickerView::selectedRowInComponent(unsigned int component)
     return m_selected[component];
 }
 
-void CAPickerView::setBackgroundColor(const CAColor4B& color)
+void CAPickerView::setBackgroundImage(CAImage* image, bool isScale9)
 {
-	this->setColor(color);
+    if (m_pBackgroundView)
+    {
+        m_pBackgroundView->removeFromSuperview();
+    }
+    
+    if (isScale9)
+    {
+        CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
+        backgroundView->setLayout(DLayoutFill);
+        this->insertSubview(backgroundView, -1);
+        m_pBackgroundView = backgroundView;
+    }
+    else
+    {
+        CAImageView* backgroundView = CAImageView::createWithImage(image);
+        backgroundView->setLayout(DLayoutFill);
+        this->insertSubview(backgroundView, -1);
+        m_pBackgroundView = backgroundView;
+    }
 }
 
 void CAPickerView::visitEve()

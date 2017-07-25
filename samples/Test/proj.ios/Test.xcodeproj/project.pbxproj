@@ -75,7 +75,7 @@
 		D6B1E9481F23527900723750 /* SliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E91E1F23527900723750 /* SliderTest.cpp */; };
 		D6B1E9491F23527900723750 /* StepperTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E9201F23527900723750 /* StepperTest.cpp */; };
 		D6B1E94A1F23527900723750 /* SwitchTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E9221F23527900723750 /* SwitchTest.cpp */; };
-		D6B1E94B1F23527900723750 /* TabBarControllerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E9241F23527900723750 /* TabBarControllerTest.cpp */; };
+		D6B1E94B1F23527900723750 /* TabBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E9241F23527900723750 /* TabBarTest.cpp */; };
 		D6B1E94C1F23527900723750 /* TableViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E9261F23527900723750 /* TableViewTest.cpp */; };
 		D6B1E94D1F23527900723750 /* TextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E9281F23527900723750 /* TextFieldTest.cpp */; };
 		D6B1E94E1F23527900723750 /* TextViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B1E92A1F23527900723750 /* TextViewTest.cpp */; };
@@ -228,8 +228,8 @@
 		D6B1E9211F23527900723750 /* StepperTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepperTest.h; sourceTree = "<group>"; };
 		D6B1E9221F23527900723750 /* SwitchTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchTest.cpp; sourceTree = "<group>"; };
 		D6B1E9231F23527900723750 /* SwitchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTest.h; sourceTree = "<group>"; };
-		D6B1E9241F23527900723750 /* TabBarControllerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabBarControllerTest.cpp; sourceTree = "<group>"; };
-		D6B1E9251F23527900723750 /* TabBarControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarControllerTest.h; sourceTree = "<group>"; };
+		D6B1E9241F23527900723750 /* TabBarTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabBarTest.cpp; sourceTree = "<group>"; };
+		D6B1E9251F23527900723750 /* TabBarTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarTest.h; sourceTree = "<group>"; };
 		D6B1E9261F23527900723750 /* TableViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableViewTest.cpp; sourceTree = "<group>"; };
 		D6B1E9271F23527900723750 /* TableViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewTest.h; sourceTree = "<group>"; };
 		D6B1E9281F23527900723750 /* TextFieldTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextFieldTest.cpp; sourceTree = "<group>"; };
@@ -497,8 +497,8 @@
 				D6B1E9211F23527900723750 /* StepperTest.h */,
 				D6B1E9221F23527900723750 /* SwitchTest.cpp */,
 				D6B1E9231F23527900723750 /* SwitchTest.h */,
-				D6B1E9241F23527900723750 /* TabBarControllerTest.cpp */,
-				D6B1E9251F23527900723750 /* TabBarControllerTest.h */,
+				D6B1E9241F23527900723750 /* TabBarTest.cpp */,
+				D6B1E9251F23527900723750 /* TabBarTest.h */,
 				D6B1E9261F23527900723750 /* TableViewTest.cpp */,
 				D6B1E9271F23527900723750 /* TableViewTest.h */,
 				D6B1E9281F23527900723750 /* TextFieldTest.cpp */,
@@ -647,7 +647,7 @@
 				D6B1E9351F23527900723750 /* AutoCollectionViewVerticalTest.cpp in Sources */,
 				D6B1E9381F23527900723750 /* CheckboxTest.cpp in Sources */,
 				D6B1E93B1F23527900723750 /* DrawViewTest.cpp in Sources */,
-				D6B1E94B1F23527900723750 /* TabBarControllerTest.cpp in Sources */,
+				D6B1E94B1F23527900723750 /* TabBarTest.cpp in Sources */,
 				D6B1E9371F23527900723750 /* ButtonTest.cpp in Sources */,
 				D6B1E9451F23527900723750 /* Scale9ImageViewTest.cpp in Sources */,
 				B0FFB61D1CA53ABF00A5CDBE /* FirstViewController.cpp in Sources */,

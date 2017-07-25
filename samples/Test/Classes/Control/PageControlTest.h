@@ -9,9 +9,7 @@
 #ifndef PageControlTest_h
 #define PageControlTest_h
 
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class PageControlTest: public CAViewController
 {

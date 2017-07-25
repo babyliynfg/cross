@@ -2,10 +2,7 @@
 #ifndef __Test__WebViewTest__
 #define __Test__WebViewTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class WebViewTest: public CAViewController
 {

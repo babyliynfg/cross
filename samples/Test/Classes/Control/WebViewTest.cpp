@@ -15,7 +15,7 @@ void WebViewTest::viewDidLoad()
     this->getView()->setColor(CAColor4B::GRAY);
     
     CAWebView* web = CAWebView::createWithLayout(DLayoutFill);
-    web->loadURL("http://crossapp.9miao.com");
+    web->loadURL("http://www.baidu.com");
     this->getView()->addSubview(web);
 }
 

@@ -43,6 +43,10 @@ public:
     virtual void onEnter();
     virtual void onExit();
     
+        
+    void setBackgroundImage(CAImage* image, bool isScale9 = false);
+    void setBackgroundImageForSelected(CAImage* image, bool isScale9 = false);
+        
 public:
     void setDate(int year, int month, int day, bool animated);
 
@@ -57,6 +61,9 @@ protected:
     void setMode(CADatePickerView::Mode mode);
     
 private:
+    
+    CAImage* m_obBackgroundImageForSelected;
+        
     CAPickerView* m_pPickerView;
     struct tm m_tTM;
     CADatePickerView::Mode m_eMode;

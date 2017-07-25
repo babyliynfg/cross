@@ -58,6 +58,16 @@ bool js_crossapp_CAScheduler_pauseAll(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAScheduler_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAScheduler_getScheduler(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CACustomAnimation_class;
+extern JSObject *jsb_CrossApp_CACustomAnimation_prototype;
+
+bool js_crossapp_CACustomAnimation_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CACustomAnimation_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CACustomAnimation(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CACustomAnimation_unschedule(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACustomAnimation_isSchedule(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CAData_class;
 extern JSObject *jsb_CrossApp_CAData_prototype;
 
@@ -1296,11 +1306,9 @@ bool js_crossapp_CAStepper_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_crossapp_CAStepper_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAStepper(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAStepper_setContinuous(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAStepper_setWraps(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAStepper_setValue(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAStepper_setTailorImageAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAStepper_getContinuous(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAStepper_getTailorImageAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAStepper_getAutoRepeat(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAStepper_setMinValue(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1997,10 +2005,11 @@ bool js_crossapp_CAPickerView_onWidthForComponent(JSContext *cx, uint32_t argc, 
 bool js_crossapp_CAPickerView_onNumberOfComponents(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_getFontSizeSelected(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAPickerView_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_onNumberOfRowsInComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_getFontColorSelected(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_visitEve(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAPickerView_setBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAPickerView_getFontColorNormal(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_setFontColorNormal(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_getSeparateColor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2010,7 +2019,6 @@ bool js_crossapp_CAPickerView_setFontColorSelected(JSContext *cx, uint32_t argc,
 bool js_crossapp_CAPickerView_selectedRowInComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_setSeparateColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_onTitleForRow(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAPickerView_getFontColorNormal(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_onDidSelectRow(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_setFontSizeSelected(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2030,6 +2038,8 @@ void js_register_crossapp_CADatePickerView(JSContext *cx, JS::HandleObject globa
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CADatePickerView_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADatePickerView_onExit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_setBackgroundImageForSelected(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADatePickerView_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADatePickerView_setDate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADatePickerView_create(JSContext *cx, uint32_t argc, jsval *vp);

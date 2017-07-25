@@ -7,23 +7,23 @@ var WaterfallViewTest = ca.CAViewController.extend({
         this._super();
 
         this.colorArr = new Array();
+        this.heightArr = new Array();
         this._randomColor() ;
 
     },
     viewDidLoad: function() {
 
-        this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
-        this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
+        var headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
+        var footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
         this.Waterfall = ca.CAWaterfallView.createWithLayout(ca.DLayoutFill);
-
         this.Waterfall.setHeaderRefreshView(this.headerRefreshView) ;
         this.Waterfall.setFooterRefreshView(this.footerRefreshView) ;
-
         this.Waterfall.setItemMargin(10);
         this.Waterfall.setColumnMargin(10);
         this.Waterfall.setColumnCount(2);
         this.Waterfall.setAllowsSelection(true);
+        this.getView().addSubview(this.Waterfall);
 
         this.Waterfall.onCellAtIndexPath(this.waterfallCellAtIndex.bind(this)) ;
         this.Waterfall.onCellHeightAtIndexPath(this.waterfallViewHeightForItemAtIndex.bind(this));
@@ -35,41 +35,37 @@ var WaterfallViewTest = ca.CAViewController.extend({
         this.Waterfall.onFooterBeginRefreshing(this.scrollViewFooterBeginRefreshing.bind(this)) ;
 
 
-
-        this.getView().addSubview(this.Waterfall);
-
     },
-    refreshData1: function ( interval)
-    {
-        this._randomColor() ;
-        this.Waterfall.reloadData();
-    },
-    refreshData2: function ( interval)
-    {
 
-        this._randomColor() ;
-        this.Waterfall.reloadData();
-    }
-
-    ,
     _randomColor:function(){
-        for (var i = 0; i < 60; i++)
+        for (var i = 0; i < 12; i++)
         {
             var r = Math.floor(Math.random()*255);
             var g = Math.floor(Math.random()*255);
             var b = Math.floor(Math.random()*255);
 
             this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
+            this.heightArr.push(Math.random() * 300 + 300);
         }
     }
 
     ,scrollViewHeaderBeginRefreshing: function ()
     {
-        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData1.bind(this), "A",this, 0.5);
+        ca.CAScheduler.getScheduler().scheduleOnce(function (dt) {
+
+            this.colorArr.clear();
+            this.heightArr.clear();
+            this._randomColor() ;
+            this.Waterfall.reloadData();
+        }, "scrollViewHeaderBeginRefreshing",this, 0.5);
     }
     ,scrollViewFooterBeginRefreshing: function ()
     {
-        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData2.bind(this), "A",this, 0.5);
+        ca.CAScheduler.getScheduler().scheduleOnce(function (dt) {
+
+            this._randomColor() ;
+            this.Waterfall.reloadData();
+        }, "scrollViewFooterBeginRefreshing",this, 0.5);
     }
     ,waterfallViewDidSelectCellAtIndexPath: function (itemIndex)
     {
@@ -90,36 +86,36 @@ var WaterfallViewTest = ca.CAViewController.extend({
 
     waterfallCellAtIndex: function (cellSize, itemIndex)
     {
-        p_Cell = this.Waterfall.dequeueReusableCellWithIdentifier("CrossApp");
-        if (p_Cell == null)
+        cell = this.Waterfall.dequeueReusableCellWithIdentifier("CrossApp");
+        if (cell == null)
         {
-            p_Cell = ca.CAWaterfallViewCell.create("CrossApp");
+            cell = ca.CAWaterfallViewCell.create("CrossApp");
 
             var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
             itemImage.setTag(99);
-            p_Cell.getContentView().addSubview(itemImage);
+            cell.getContentView().addSubview(itemImage);
 
             var itemText = ca.CALabel.createWithLayout(ca.DLayoutFill);
             itemText.setTag(100);
             itemText.setFontSize(24);
             itemText.setTextAlignment(ca.CATextAlignment.Center);
             itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            p_Cell.getContentView().addSubview(itemText);
+            cell.getContentView().addSubview(itemText);
         }
 
         //设置Item背景颜色
-        var itemImageView = p_Cell.getContentView().getSubviewByTag(99);
+        var itemImageView = cell.getContentView().getSubviewByTag(99);
         itemImageView.setColor(this.colorArr[itemIndex]);
 
-        var itemText = p_Cell.getContentView().getSubviewByTag(100);
+        var itemText = cell.getContentView().getSubviewByTag(100);
         itemText.setText("("+itemIndex+")");
 
-        return  p_Cell;
+        return  cell;
     }
     //Necessary
     ,waterfallViewHeightForItemAtIndex: function( itemIndex)
     {
-        return Math.random() * 300 + 300;
+        return this.heightArr[itemIndex];
     }
     //Necessary
     ,numberOfItems: function (waterfallView)

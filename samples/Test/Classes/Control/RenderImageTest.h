@@ -2,9 +2,7 @@
 #ifndef __Test__RenderImageTest__
 #define __Test__RenderImageTest__
 
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class RenderImageTest: public CAViewController
 {

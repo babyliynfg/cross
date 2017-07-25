@@ -13,8 +13,10 @@
 
 NS_CC_BEGIN
 
-namespace CACustomAnimation
+class CC_DLL CACustomAnimation
 {
+public:
+    
     struct CC_DLL Model
     {
         float dt{0.0f};
@@ -26,15 +28,16 @@ namespace CACustomAnimation
     typedef std::function<void(const CACustomAnimation::Model&)> Callback;
     
     // defaule: interval = 1/60.f, delay = 0.0f;
-    CC_DLL void schedule(const CACustomAnimation::Callback& callback, const std::string& animationID, float totalTime);
+    static void schedule(const CACustomAnimation::Callback& callback, const std::string& animationID, float totalTime);
     
-    CC_DLL void schedule(const CACustomAnimation::Callback& callback, const std::string& animationID, float totalTime, float interval);
+    static void schedule(const CACustomAnimation::Callback& callback, const std::string& animationID, float totalTime, float interval);
     
-    CC_DLL void schedule(const CACustomAnimation::Callback& callback, const std::string& animationID, float totalTime, float interval, float delay);
+    static void schedule(const CACustomAnimation::Callback& callback, const std::string& animationID, float totalTime, float interval, float delay);
     
-    CC_DLL void unschedule(const std::string& animationID);
+    static void unschedule(const std::string& animationID);
     
-    CC_DLL bool isSchedule(const std::string& animationID);
+    static bool isSchedule(const std::string& animationID);
+    
 };
 
 

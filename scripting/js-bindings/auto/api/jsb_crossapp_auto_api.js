@@ -413,6 +413,35 @@ getScheduler : function (
 };
 
 /**
+ * @class CACustomAnimation
+ */
+ca.CACustomAnimation = {
+
+/**
+ * @method unschedule
+ * @param {String} arg0
+ */
+unschedule : function (
+str 
+)
+{
+},
+
+/**
+ * @method isSchedule
+ * @param {String} arg0
+ * @return {bool}
+ */
+isSchedule : function (
+str 
+)
+{
+    return false;
+},
+
+};
+
+/**
  * @class CAData
  */
 ca.CAData = {
@@ -10520,16 +10549,6 @@ CAPageControl : function (
 ca.CAStepper = {
 
 /**
- * @method setContinuous
- * @param {bool} arg0
- */
-setContinuous : function (
-bool 
-)
-{
-},
-
-/**
  * @method setWraps
  * @param {bool} arg0
  */
@@ -10557,16 +10576,6 @@ setTailorImageAtIndex : function (
 int 
 )
 {
-},
-
-/**
- * @method getContinuous
- * @return {bool}
- */
-getContinuous : function (
-)
-{
-    return false;
 },
 
 /**
@@ -16005,6 +16014,18 @@ init : function (
 },
 
 /**
+ * @method setBackgroundImage
+ * @param {ca.CAImage} arg0
+ * @param {bool} arg1
+ */
+setBackgroundImage : function (
+caimage, 
+bool 
+)
+{
+},
+
+/**
  * @method onNumberOfRowsInComponent
  * @param {function} arg0
  */
@@ -16033,13 +16054,13 @@ visitEve : function (
 },
 
 /**
- * @method setBackgroundColor
- * @param {color4b_object} arg0
+ * @method getFontColorNormal
+ * @return {color4b_object}
  */
-setBackgroundColor : function (
-cacolor4b 
+getFontColorNormal : function (
 )
 {
+    return ca.CAColor4B;
 },
 
 /**
@@ -16138,16 +16159,6 @@ onTitleForRow : function (
 func 
 )
 {
-},
-
-/**
- * @method getFontColorNormal
- * @return {color4b_object}
- */
-getFontColorNormal : function (
-)
-{
-    return ca.CAColor4B;
 },
 
 /**
@@ -16262,6 +16273,30 @@ onEnter : function (
  * @method onExit
  */
 onExit : function (
+)
+{
+},
+
+/**
+ * @method setBackgroundImage
+ * @param {ca.CAImage} arg0
+ * @param {bool} arg1
+ */
+setBackgroundImage : function (
+caimage, 
+bool 
+)
+{
+},
+
+/**
+ * @method setBackgroundImageForSelected
+ * @param {ca.CAImage} arg0
+ * @param {bool} arg1
+ */
+setBackgroundImageForSelected : function (
+caimage, 
+bool 
 )
 {
 },

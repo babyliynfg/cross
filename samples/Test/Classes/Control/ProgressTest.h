@@ -2,10 +2,7 @@
 #ifndef __Test__ProgressTest__
 #define __Test__ProgressTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class ProgressTest: public CAViewController
 {

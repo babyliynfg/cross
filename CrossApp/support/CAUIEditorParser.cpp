@@ -1216,12 +1216,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
         {
             stepper->setDividerColor(ccc4Int(atoi(value)));
         }
-        
-        if (const char* value = viewXml->Attribute("continuous"))
-        {
-            stepper->setContinuous(bool(atoi(value)));
-        }
-        
+
         if (const char* value = viewXml->Attribute("autoRepeat"))
         {
             stepper->setAutoRepeat(bool(atoi(value)));

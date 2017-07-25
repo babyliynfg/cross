@@ -9,9 +9,7 @@
 #ifndef CheckboxTest_h
 #define CheckboxTest_h
 
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class CheckboxTest: public CAViewController
 {

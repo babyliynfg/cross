@@ -2,10 +2,7 @@
 #ifndef __Test__LabelTest__
 #define __Test__LabelTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class LabelTest: public CAViewController
 {
@@ -18,13 +15,13 @@ public:
     
     CREATE_FUNC(LabelTest);
     
+    CC_SYNTHESIZE(ssize_t, m_iIndex, Index);
+    
 protected:
     
     void viewDidLoad();
     
     void viewDidUnload();
-    
-    void showIndex(ssize_t index);
 };
 
 

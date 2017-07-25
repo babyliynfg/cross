@@ -3,9 +3,7 @@
 #define __Test__AlertViewTest__
 
 #include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class AlertViewTest: public CAViewController
 {

@@ -2,10 +2,7 @@
 #ifndef __Test__ListViewTest__
 #define __Test__ListViewTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class ListViewTest: public CAViewController
 {

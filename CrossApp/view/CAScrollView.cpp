@@ -119,11 +119,8 @@ CAScrollView* CAScrollView::createWithLayout(const CrossApp::DLayout &layout)
 
 bool CAScrollView::init()
 {
-    if (!CAView::init())
-    {
-        return false;
-    }
     this->setDisplayRange(false);
+    this->setBackgroundImage(CAImage::WHITE_IMAGE());
     
     m_pContainer = new CAView();
     m_pContainer->setAnchorPoint(DPointZero);
@@ -430,23 +427,20 @@ DPoint CAScrollView::getContentOffset()
 
 void CAScrollView::setBackgroundImage(CAImage* image, bool isScale9)
 {
-    if (m_pBackgroundView)
-    {
-        m_pBackgroundView->removeFromSuperview();
-    }
+    this->CAView::removeSubview(m_pBackgroundView);
     
     if (isScale9)
     {
         CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
         backgroundView->setLayout(DLayoutFill);
-        this->insertSubview(backgroundView, -1);
+        this->CAView::insertSubview(backgroundView, -1);
         m_pBackgroundView = backgroundView;
     }
     else
     {
         CAImageView* backgroundView = CAImageView::createWithImage(image);
         backgroundView->setLayout(DLayoutFill);
-        this->insertSubview(backgroundView, -1);
+        this->CAView::insertSubview(backgroundView, -1);
         m_pBackgroundView = backgroundView;
     }
 }

@@ -1387,6 +1387,100 @@ void js_register_crossapp_CAScheduler(JSContext *cx, JS::HandleObject global) {
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CACustomAnimation_class;
+JSObject *jsb_CrossApp_CACustomAnimation_prototype;
+
+bool js_crossapp_CACustomAnimation_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACustomAnimation_unschedule : Error processing arguments");
+        CrossApp::CACustomAnimation::unschedule(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CACustomAnimation_unschedule : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CACustomAnimation_isSchedule(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACustomAnimation_isSchedule : Error processing arguments");
+        bool ret = CrossApp::CACustomAnimation::isSchedule(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CACustomAnimation_isSchedule : wrong number of arguments");
+    return false;
+}
+
+void js_CrossApp_CACustomAnimation_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CACustomAnimation)", obj);
+}
+void js_register_crossapp_CACustomAnimation(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CACustomAnimation_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CACustomAnimation_class->name = "CACustomAnimation";
+    jsb_CrossApp_CACustomAnimation_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CACustomAnimation_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CACustomAnimation_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CACustomAnimation_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CACustomAnimation_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CACustomAnimation_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CACustomAnimation_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CACustomAnimation_class->finalize = js_CrossApp_CACustomAnimation_finalize;
+    jsb_CrossApp_CACustomAnimation_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("unschedule", js_crossapp_CACustomAnimation_unschedule, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isSchedule", js_crossapp_CACustomAnimation_isSchedule, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CACustomAnimation_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_CrossApp_CACustomAnimation_class,
+        dummy_constructor<CrossApp::CACustomAnimation>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CACustomAnimation", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CACustomAnimation> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CACustomAnimation_class;
+        p->proto = jsb_CrossApp_CACustomAnimation_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CAData_class;
 JSObject *jsb_CrossApp_CAData_prototype;
 
@@ -27752,27 +27846,6 @@ void js_register_crossapp_CAPageControl(JSContext *cx, JS::HandleObject global) 
 JSClass  *jsb_CrossApp_CAStepper_class;
 JSObject *jsb_CrossApp_CAStepper_prototype;
 
-bool js_crossapp_CAStepper_setContinuous(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAStepper* cobj = (CrossApp::CAStepper *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAStepper_setContinuous : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAStepper_setContinuous : Error processing arguments");
-        cobj->setContinuous(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAStepper_setContinuous : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAStepper_setWraps(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -27834,25 +27907,6 @@ bool js_crossapp_CAStepper_setTailorImageAtIndex(JSContext *cx, uint32_t argc, j
     }
 
     JS_ReportError(cx, "js_crossapp_CAStepper_setTailorImageAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAStepper_getContinuous(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAStepper* cobj = (CrossApp::CAStepper *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAStepper_getContinuous : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->getContinuous();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAStepper_getContinuous : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAStepper_getTailorImageAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -28580,11 +28634,9 @@ void js_register_crossapp_CAStepper(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("setContinuous", js_crossapp_CAStepper_setContinuous, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWraps", js_crossapp_CAStepper_setWraps, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setValue", js_crossapp_CAStepper_setValue, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTailorImageAtIndex", js_crossapp_CAStepper_setTailorImageAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getContinuous", js_crossapp_CAStepper_getContinuous, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTailorImageAtIndex", js_crossapp_CAStepper_getTailorImageAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAutoRepeat", js_crossapp_CAStepper_getAutoRepeat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMinValue", js_crossapp_CAStepper_setMinValue, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -43103,6 +43155,53 @@ bool js_crossapp_CAPickerView_init(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAPickerView_init : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAPickerView_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setBackgroundImage : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAImage* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setBackgroundImage : Error processing arguments");
+        cobj->setBackgroundImage(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 2) {
+        CrossApp::CAImage* arg0 = nullptr;
+        bool arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        arg1 = JS::ToBoolean(args.get(1));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setBackgroundImage : Error processing arguments");
+        cobj->setBackgroundImage(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAPickerView_setBackgroundImage : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAPickerView_onNumberOfRowsInComponent(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -43184,25 +43283,23 @@ bool js_crossapp_CAPickerView_visitEve(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAPickerView_visitEve : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAPickerView_setBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAPickerView_getFontColorNormal(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_setBackgroundColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAPickerView_setBackgroundColor : Error processing arguments");
-        cobj->setBackgroundColor(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_getFontColorNormal : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::CAColor4B& ret = cobj->getFontColorNormal();
+        jsval jsret = JSVAL_NULL;
+        jsret = cacolor4b_to_jsval(cx, ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAPickerView_setBackgroundColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CAPickerView_getFontColorNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAPickerView_setFontColorNormal(JSContext *cx, uint32_t argc, jsval *vp)
@@ -43441,25 +43538,6 @@ bool js_crossapp_CAPickerView_onTitleForRow(JSContext *cx, uint32_t argc, jsval 
     }
 
     JS_ReportError(cx, "js_crossapp_CAPickerView_onTitleForRow : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAPickerView_getFontColorNormal(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAPickerView* cobj = (CrossApp::CAPickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAPickerView_getFontColorNormal : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getFontColorNormal();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAPickerView_getFontColorNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAPickerView_onDidSelectRow(JSContext *cx, uint32_t argc, jsval *vp)
@@ -43760,10 +43838,11 @@ void js_register_crossapp_CAPickerView(JSContext *cx, JS::HandleObject global) {
         JS_FN("onNumberOfComponents", js_crossapp_CAPickerView_onNumberOfComponents, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFontSizeSelected", js_crossapp_CAPickerView_getFontSizeSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAPickerView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBackgroundImage", js_crossapp_CAPickerView_setBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onNumberOfRowsInComponent", js_crossapp_CAPickerView_onNumberOfRowsInComponent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFontColorSelected", js_crossapp_CAPickerView_getFontColorSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("visitEve", js_crossapp_CAPickerView_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBackgroundColor", js_crossapp_CAPickerView_setBackgroundColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getFontColorNormal", js_crossapp_CAPickerView_getFontColorNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontColorNormal", js_crossapp_CAPickerView_setFontColorNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAPickerView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSeparateColor", js_crossapp_CAPickerView_getSeparateColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -43773,7 +43852,6 @@ void js_register_crossapp_CAPickerView(JSContext *cx, JS::HandleObject global) {
         JS_FN("selectedRowInComponent", js_crossapp_CAPickerView_selectedRowInComponent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparateColor", js_crossapp_CAPickerView_setSeparateColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onTitleForRow", js_crossapp_CAPickerView_onTitleForRow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getFontColorNormal", js_crossapp_CAPickerView_getFontColorNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDidSelectRow", js_crossapp_CAPickerView_onDidSelectRow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CAPickerView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontSizeSelected", js_crossapp_CAPickerView_setFontSizeSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -43851,6 +43929,100 @@ bool js_crossapp_CADatePickerView_onExit(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_crossapp_CADatePickerView_onExit : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CADatePickerView_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_setBackgroundImage : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAImage* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_setBackgroundImage : Error processing arguments");
+        cobj->setBackgroundImage(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 2) {
+        CrossApp::CAImage* arg0 = nullptr;
+        bool arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        arg1 = JS::ToBoolean(args.get(1));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_setBackgroundImage : Error processing arguments");
+        cobj->setBackgroundImage(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_setBackgroundImage : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CADatePickerView_setBackgroundImageForSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_setBackgroundImageForSelected : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAImage* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_setBackgroundImageForSelected : Error processing arguments");
+        cobj->setBackgroundImageForSelected(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 2) {
+        CrossApp::CAImage* arg0 = nullptr;
+        bool arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        arg1 = JS::ToBoolean(args.get(1));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_setBackgroundImageForSelected : Error processing arguments");
+        cobj->setBackgroundImageForSelected(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_setBackgroundImageForSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CADatePickerView_init(JSContext *cx, uint32_t argc, jsval *vp)
@@ -44068,6 +44240,8 @@ void js_register_crossapp_CADatePickerView(JSContext *cx, JS::HandleObject globa
     static JSFunctionSpec funcs[] = {
         JS_FN("onEnter", js_crossapp_CADatePickerView_onEnter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExit", js_crossapp_CADatePickerView_onExit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBackgroundImage", js_crossapp_CADatePickerView_setBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBackgroundImageForSelected", js_crossapp_CADatePickerView_setBackgroundImageForSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CADatePickerView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDate", js_crossapp_CADatePickerView_setDate, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -47101,7 +47275,7 @@ bool js_crossapp_CADownloadManager_getDownloadIdsFromTextTag(JSContext *cx, uint
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADownloadManager_getDownloadIdsFromTextTag : Error processing arguments");
         std::vector<int> ret;
         for (auto& var : cobj->getDownloadIdsFromTextTag(arg0))
-            ret.push_back(var);
+             ret.push_back(var);
         jsval jsret = JSVAL_NULL;
         jsret = std_vector_int_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -67606,6 +67780,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAResponder(cx, ns);
     js_register_crossapp_CAView(cx, ns);
     js_register_crossapp_CAControl(cx, ns);
+    js_register_crossapp_CACustomAnimation(cx, ns);
     js_register_crossapp_Action(cx, ns);
     js_register_crossapp_FiniteTimeAction(cx, ns);
     js_register_crossapp_ActionInterval(cx, ns);

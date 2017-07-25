@@ -2,10 +2,7 @@
 #ifndef __Test__TableViewTest__
 #define __Test__TableViewTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class TableViewTest: public CAViewController
 {

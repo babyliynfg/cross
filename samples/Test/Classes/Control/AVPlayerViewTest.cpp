@@ -48,12 +48,12 @@ void AVPlayerViewTest::viewDidLoad()
     });
     
     CAProgress* progress = CAProgress::createWithLayout(DLayout(DHorizontalLayout_L_R(3, 3), DVerticalLayoutFill));
-    progress->setProgress(0);
     progress->setZOrder(-1);
     slider->addSubview(progress);
     progress->setProgressTintImage(progress->getProgressTrackImage());
     progress->setProgressTintColor(CAColor4B::RED);
     progress->setProgressTrackColor(CAColor4B::YELLOW);
+    progress->setProgress(0);
     avplayer->onLoadedTime([=](float current, float duration)
     {
         progress->setProgress(current / duration);
@@ -79,19 +79,6 @@ void AVPlayerViewTest::viewDidLoad()
         
     }, CAButton::Event::TouchUpInSide);
     
-
-    avplayer->onPlayState([=](const CAAVPlayer::PlayState& var)
-    {
-        if (var == CAAVPlayer::PlayStatePlaying)
-        {
-            btn0->setTitleForState(CAControl::State::Normal, "暂停");
-        }
-        else if (var == CAAVPlayer::PlayStatePause)
-        {
-            btn0->setTitleForState(CAControl::State::Normal, "播放");
-        }
-    });
-    
     CAButton* btn2 = CAButton::create(CAButton::Type::RoundedRect);
     btn2->setLayout(DLayout(DHorizontalLayout_L_W(250, 120), DVerticalLayout_B_H(100, 60)));
     btn2->setTitleForState(CAControl::State::Normal, "停止");
@@ -102,9 +89,23 @@ void AVPlayerViewTest::viewDidLoad()
         avplayer->stop();
     }, CAButton::Event::TouchUpInSide);
     
-    
     CAActivityIndicatorView* activity = CAActivityIndicatorView::createWithLayout(DLayoutFill);
     playerView->addSubview(activity);
+    activity->stopAnimating();
+
+    avplayer->onPlayState([=](const CAAVPlayer::PlayState& var)
+    {
+        if (var == CAAVPlayer::PlayStatePlaying)
+        {
+            btn0->setTitleForState(CAControl::State::Normal, "暂停");
+            activity->startAnimating();
+        }
+        else if (var == CAAVPlayer::PlayStatePause)
+        {
+            btn0->setTitleForState(CAControl::State::Normal, "播放");
+            activity->stopAnimating();
+        }
+    });
     
     avplayer->onPlayBufferLoadingState([=](const CAAVPlayer::PlayBufferLoadingState& var)
     {

@@ -2,9 +2,7 @@
 #ifndef __Test__DrawViewTest__
 #define __Test__DrawViewTest__
 
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class DrawViewTest: public CAViewController
 {

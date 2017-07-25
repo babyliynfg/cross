@@ -3,6 +3,15 @@
 WaterfallViewTest::WaterfallViewTest()
 {
     this->setTitle("CAWaterfallView");
+    
+    for (int i = 0; i < 12; i++)
+    {
+        char r = CCRANDOM_0_1() * 255;
+        char g = CCRANDOM_0_1() * 255;
+        char b = CCRANDOM_0_1() * 255;
+        m_vColors.push_back(ccc4(r, g, b, 255));
+        m_vHeights.push_back(CCRANDOM_0_1() * 300 + 300);
+    }
 }
 
 WaterfallViewTest::~WaterfallViewTest()
@@ -11,28 +20,24 @@ WaterfallViewTest::~WaterfallViewTest()
 
 void WaterfallViewTest::viewDidLoad()
 {
-    for (int i = 0; i < 12; i++)
-    {
-        char r = CCRANDOM_0_1() * 255;
-        char g = CCRANDOM_0_1() * 255;
-        char b = CCRANDOM_0_1() * 255;
-        colorArr.push_back(ccc4(r, g, b, 255));
-    }
+    m_pWaterfallView = CAWaterfallView::createWithLayout(DLayoutFill);
+    m_pWaterfallView->setItemMargin(10);
+    m_pWaterfallView->setColumnMargin(10);
+    m_pWaterfallView->setColumnCount(2);
+    m_pWaterfallView->setAllowsSelection(true);
+    m_pWaterfallView->setHeaderRefreshView(CAPullToRefreshView::create(CAPullToRefreshView::Type::Header));
+    m_pWaterfallView->setFooterRefreshView(CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer));
+    this->getView()->addSubview(m_pWaterfallView);
     
-    headerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Header);
-    footerRefreshView = CAPullToRefreshView::create(CAPullToRefreshView::Type::Footer);
+    m_pWaterfallView->onCellAtIndexPath(CALLBACK_BIND_2(WaterfallViewTest::waterfallCellAtIndex, this));
+    m_pWaterfallView->onCellHeightAtIndexPath(CALLBACK_BIND_1(WaterfallViewTest::waterfallViewHeightForItemAtIndex, this));
+    m_pWaterfallView->onNumberOfItemsAtIndexPath(CALLBACK_BIND_0(WaterfallViewTest::numberOfItems, this));
     
-    Waterfall = CAWaterfallView::createWithLayout(DLayoutFill);
-    Waterfall->setItemMargin(10);
-    Waterfall->setColumnMargin(10);
-    Waterfall->setColumnCount(2);
-    Waterfall->setAllowsSelection(true);
-    Waterfall->setScrollViewDelegate(this);
-    Waterfall->setWaterfallViewDelegate(this);
-    Waterfall->setWaterfallViewDataSource(this);
-    Waterfall->setHeaderRefreshView(headerRefreshView);
-    Waterfall->setFooterRefreshView(footerRefreshView);
-    this->getView()->addSubview(Waterfall);
+    m_pWaterfallView->onDidSelectCellAtIndexPath(CALLBACK_BIND_1(WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath, this));
+    m_pWaterfallView->onDidDeselectCellAtIndexPath(CALLBACK_BIND_1(WaterfallViewTest::waterfallViewDidDeselectCellAtIndexPath, this));
+    
+    m_pWaterfallView->onHeaderBeginRefreshing(CALLBACK_BIND_0(WaterfallViewTest::scrollViewHeaderBeginRefreshing, this));
+    m_pWaterfallView->onFooterBeginRefreshing(CALLBACK_BIND_0(WaterfallViewTest::scrollViewFooterBeginRefreshing, this));
 }
 
 void WaterfallViewTest::viewDidUnload()
@@ -41,45 +46,44 @@ void WaterfallViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void WaterfallViewTest::refreshData1(float interval)
+void WaterfallViewTest::scrollViewHeaderBeginRefreshing()
 {
-    colorArr.clear();
-    for (int i = 0; i < 12; i++)
-    {
-        char r = CCRANDOM_0_1() * 255;
-        char g = CCRANDOM_0_1() * 255;
-        char b = CCRANDOM_0_1() * 255;
-        colorArr.push_back(ccc4(r, g, b, 255));
-    }
-    Waterfall->reloadData();
+    CAScheduler::getScheduler()->schedule([&](float dt){
+        
+        m_vColors.clear();
+        m_vHeights.clear();
+        for (int i = 0; i < 12; i++)
+        {
+            char r = CCRANDOM_0_1() * 255;
+            char g = CCRANDOM_0_1() * 255;
+            char b = CCRANDOM_0_1() * 255;
+            m_vColors.push_back(CAColor4B(r, g, b, 255));
+            m_vHeights.push_back(CCRANDOM_0_1() * 300 + 300);
+        }
+        m_pWaterfallView->reloadData();
+    }, "scrollViewHeaderBeginRefreshing", this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
-void WaterfallViewTest::refreshData2(float interval)
+void WaterfallViewTest::scrollViewFooterBeginRefreshing()
 {
-    for (int i = 0; i < 12; i++)
-    {
-        char r = CCRANDOM_0_1() * 255;
-        char g = CCRANDOM_0_1() * 255;
-        char b = CCRANDOM_0_1() * 255;
-        colorArr.push_back(ccc4(r, g, b, 255));
-    }
-    Waterfall->reloadData();
+    CAScheduler::getScheduler()->schedule([&](float dt){
+        
+        for (int i = 0; i < 12; i++)
+        {
+            char r = CCRANDOM_0_1() * 255;
+            char g = CCRANDOM_0_1() * 255;
+            char b = CCRANDOM_0_1() * 255;
+            m_vColors.push_back(CAColor4B(r, g, b, 255));
+            m_vHeights.push_back(CCRANDOM_0_1() * 300 + 300);
+        }
+        m_pWaterfallView->reloadData();
+    }, "scrollViewFooterBeginRefreshing", this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2);
 }
 
-void WaterfallViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
-{
-    CAScheduler::getScheduler()->schedule(schedule_selector(WaterfallViewTest::refreshData1), this, 0.1, 0, 0.5f + CCRANDOM_0_1(), false);
-}
-
-void WaterfallViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
-{
-    CAScheduler::getScheduler()->schedule(schedule_selector(WaterfallViewTest::refreshData2), this, 0.1, 0, 0.5f + CCRANDOM_0_1(), false);
-}
-
-void WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex)
+void WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath(unsigned int itemIndex)
 {
     //选中
-    CAWaterfallViewCell* cell = waterfallView->cellForRowAtIndexPath(itemIndex);
+    CAWaterfallViewCell* cell = m_pWaterfallView->cellForRowAtIndexPath(itemIndex);
     cell->getContentView()->setRotation(-360);
     cell->getContentView()->setScale(0.5f);
     CAViewAnimation::beginAnimations("");
@@ -89,76 +93,52 @@ void WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *w
     CCLog("选中");
 }
 
-void WaterfallViewTest::waterfallViewDidDeselectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex)
+void WaterfallViewTest::waterfallViewDidDeselectCellAtIndexPath(unsigned int itemIndex)
 {
     CCLog("取消选中");
 }
 
 //Necessary
-CAWaterfallViewCell* WaterfallViewTest::waterfallCellAtIndex(CAWaterfallView *waterfallView, const DSize& cellSize, unsigned int itemIndex)
+CAWaterfallViewCell* WaterfallViewTest::waterfallCellAtIndex(const DSize& cellSize, unsigned int itemIndex)
 {
-    CAWaterfallViewCell* p_Cell = Waterfall->dequeueReusableCellWithIdentifier("CrossApp");
-    if (p_Cell == NULL)
+    CAWaterfallViewCell* cell = m_pWaterfallView->dequeueReusableCellWithIdentifier("CrossApp");
+    if (cell == nullptr)
     {
-        p_Cell = CAWaterfallViewCell::create("CrossApp");
+        cell = CAWaterfallViewCell::create("CrossApp");
         
         CAView* itemImage = CAView::createWithLayout(DLayoutFill);
         itemImage->setTag(99);
-        p_Cell->getContentView()->addSubview(itemImage);
+        cell->getContentView()->addSubview(itemImage);
         
         CALabel* itemText = CALabel::createWithLayout(DLayoutFill);
         itemText->setTag(100);
         itemText->setFontSize(24);
         itemText->setTextAlignment(CATextAlignment::Center);
         itemText->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
-        p_Cell->getContentView()->addSubview(itemText);
+        cell->getContentView()->addSubview(itemText);
     }
     
     //设置Item背景颜色
-    CAView* itemImageView = p_Cell->getContentView()->getSubviewByTag(99);
-    itemImageView->setColor(colorArr.at(itemIndex));
+    CAView* itemImageView = cell->getContentView()->getSubviewByTag(99);
+    itemImageView->setColor(m_vColors.at(itemIndex));
     
     char pos[20] = "";
     sprintf(pos, "(%d)", itemIndex);
     
-    CALabel* itemText = (CALabel*)p_Cell->getContentView()->getSubviewByTag(100);
+    CALabel* itemText = (CALabel*)cell->getContentView()->getSubviewByTag(100);
     itemText->setText(pos);
     
-    return  p_Cell;
+    return  cell;
     
 }
 //Necessary
-unsigned int WaterfallViewTest::waterfallViewHeightForItemAtIndex(CAWaterfallView *waterfallView, unsigned int itemIndex)
+unsigned int WaterfallViewTest::waterfallViewHeightForItemAtIndex(unsigned int itemIndex)
 {
-    return CCRANDOM_0_1() * 300 + 300;
+    return m_vHeights.at(itemIndex);
 }
 //Necessary
-unsigned int WaterfallViewTest::numberOfItems(CAWaterfallView *waterfallView)
+unsigned int WaterfallViewTest::numberOfItems()
 {
-    return (unsigned int)colorArr.size();
+    return (unsigned int)m_vColors.size();
 }
 
-CAView* WaterfallViewTest::waterfallViewSectionViewForHeader(CAWaterfallView *waterfallView, const DSize& viewSize)
-{
-    return NULL;
-}
-
-unsigned int WaterfallViewTest::waterfallViewHeightForHeader(CAWaterfallView *waterfallView)
-{
-    return 0;
-}
-
-CAView* WaterfallViewTest::waterfallViewSectionViewForFooter(CAWaterfallView *waterfallView, const DSize& viewSize)
-{
-    return NULL;
-}
-
-unsigned int WaterfallViewTest::waterfallViewHeightForFooter(CAWaterfallView *waterfallView)
-{
-    return 0;
-}
-
-void WaterfallViewTest::waterfallViewWillDisplayCellAtIndex(CAWaterfallView* waterfallView, CAWaterfallViewCell* cell, unsigned int itemIndex)
-{
-    
-}

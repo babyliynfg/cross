@@ -2,9 +2,7 @@
 #ifndef __Test__ButtonTest__
 #define __Test__ButtonTest__
 
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class ButtonTest: public CAViewController
 {

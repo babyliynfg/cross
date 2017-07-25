@@ -41,12 +41,12 @@ var AVPlayerViewTest = ca.CAViewController.extend({
          });
 
         var progress = ca.CAProgress.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(3, 3), ca.DVerticalLayoutFill));
-        progress.setProgress(0);
         progress.setZOrder(-1);
         slider.addSubview(progress);
         progress.setProgressTintImage(progress.getProgressTrackImage());
         progress.setProgressTintColor(ca.CAColor4B.RED);
         progress.setProgressTrackColor(ca.CAColor4B.YELLOW);
+        progress.setProgress(0);
          avplayer.onLoadedTime(function( current, duration)
          {
              progress.setProgress(current / duration);
@@ -97,6 +97,7 @@ var AVPlayerViewTest = ca.CAViewController.extend({
 
         var activity = ca.CAActivityIndicatorView.createWithLayout(ca.DLayoutFill);
         playerView.addSubview(activity);
+        activity.stopAnimating();
          avplayer.onPlayBufferLoadingState(function(state)
          {
              if (state == ca.CAAVPlayer.PlaybackBufferEmpty)

@@ -21,7 +21,6 @@ NS_CC_BEGIN
 
 CAStepper::CAStepper(CAStepper::Orientation type)
 : m_bAutoRepeat(true)
-, m_bContinuous(true)
 , m_bWraps(false)
 , m_value(0)
 , m_minimumValue(0)
@@ -183,9 +182,10 @@ CAView* CAStepper::getTailorImageAtIndex(int i)
     
     CAScale9ImageView* clipNode = CAScale9ImageView::createWithFrame(m_pBackgroundImageView->getBounds());
     clipNode->setImage(m_mBackgroundImages.at(CAStepper::State::Highlighted));
+    clipNode->setScale(s_px_to_dip(1));
     
     DSize size = clipNode->getFrame().size;
-    CARenderImage* render = CARenderImage::create(size.width, size.height);
+    CARenderImage* render = CARenderImage::create(s_px_to_dip(size.width), s_px_to_dip(size.height));
     render->printscreenWithView(clipNode);
     
     DRect rect;
@@ -445,7 +445,7 @@ void CAStepper::action()
     }
     
     // send value change event
-    if (bValueChange && m_bContinuous && m_function)
+    if (bValueChange && m_function)
     {
         m_function(m_value);
     }
@@ -494,6 +494,13 @@ void CAStepper::setContentSize(const DSize & var)
         
         size.width = (w == 0) ? size.width : w;
         size.height = (h == 0) ? size.height : h;
+        
+        if (m_pOrientation == Orientation::Vertical)
+        {
+            size.width = size.width + size.height;
+            size.height = size.width - size.height;
+            size.width = size.width - size.height;
+        }
     }
     CAControl::setContentSize(size);
     if (m_pBackgroundImageView)

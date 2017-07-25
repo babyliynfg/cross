@@ -2,10 +2,7 @@
 #ifndef __Test__Scale9ImageViewTest__
 #define __Test__Scale9ImageViewTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class Scale9ImageViewTest: public CAViewController
 {

@@ -2,9 +2,7 @@
 #ifndef __Test__ClippingViewTest__
 #define __Test__ClippingViewTest__
 
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class ClippingViewTest: public CAViewController
 {

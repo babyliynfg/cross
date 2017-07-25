@@ -3,9 +3,7 @@
 #define __Test__AutoCollectionViewHorizontalTest__
 
 #include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class AutoCollectionViewHorizontalTest: public CAViewController
 {

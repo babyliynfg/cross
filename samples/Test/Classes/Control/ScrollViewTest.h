@@ -2,10 +2,7 @@
 #ifndef __Test__ScrollViewTest__
 #define __Test__ScrollViewTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class ScrollViewTest: public CAViewController
 {

@@ -321,7 +321,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         [_timer invalidate];
         _timer = nil;
     }
-    [_player seekToTime:kCMTimeZero completionHandler:^(BOOL finished) {
+    [_player.currentItem seekToTime:kCMTimeZero completionHandler:^(BOOL finished) {
         [self timerCurrentTime];
     }];
     playerLayer_pause(_player);
@@ -365,7 +365,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     CMTimeScale timescale = _player.currentItem.currentTime.timescale;
     CMTime pointTime = CMTimeMake(current * timescale, timescale);
     
-    [_player seekToTime:pointTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero completionHandler:^(BOOL finished) {
+    [_player.currentItem seekToTime:pointTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero completionHandler:^(BOOL finished) {
         _pasueTimer = NO;
     }];
 }

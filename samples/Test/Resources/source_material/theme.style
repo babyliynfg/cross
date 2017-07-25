@@ -64,7 +64,7 @@
         <Image name="incImage_normal" path="1" value="stepper_inc_n.png"/>
         <Image name="incImage_highlighted" path="1" value="stepper_inc_h.png"/>
         <Color name="tintColor" path="0" value="0xff009082"/>
-        <Size name="width" path="0" value="320"/>
+        <Size name="width" path="0" value="200"/>
         <Size name="height" path="0" value="68"/>
     </CAStepper>
     <CATextField name="CATextField">

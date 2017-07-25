@@ -2,10 +2,7 @@
 #ifndef __Test__StepperTest__
 #define __Test__StepperTest__
 
-#include <iostream>
-#include "CrossApp.h"
-
-USING_NS_CC;
+#include "RootWindow.h"
 
 class StepperTest: public CAViewController
 {
