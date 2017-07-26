@@ -426,7 +426,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString*,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"status"])
     {
