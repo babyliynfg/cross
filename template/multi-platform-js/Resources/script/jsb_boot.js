@@ -1350,10 +1350,13 @@ ca.log = function (str){log(str);};
 
 ca.logArray = function (array)
 {
+    ca.log("******** <logArray> ********");
+    ca.log("[key]: [value]");
     for (var key in array)
     {
         ca.log( key + ": " + array[key]);
     }
+    ca.log("****************\n");
 }
 
 

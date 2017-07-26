@@ -23,13 +23,13 @@
  */
 
 /**
- A set of proxy classes to allow iOS audio code to run on MacOS X. AVAudioPlayer is implemented using NSSound.
+ A set of proxy classes to allow iOS audio code to run on MacOS X. d_AVAudioPlayer is implemented using NSSound.
  AVAudioSession is a "do nothing" class as it isn't really relevant on MacOS X.
  
  Limitations:
- AVAudioPlayer numberOfLoops not correctly supported.  Looping is either on or off, can not specify a specific number of loops.
- AVAudioPlayer panning not supported.
- AVAudioPlayer metering not supported.
+ d_AVAudioPlayer numberOfLoops not correctly supported.  Looping is either on or off, can not specify a specific number of loops.
+ d_AVAudioPlayer panning not supported.
+ d_AVAudioPlayer metering not supported.
  AVAudioSession nothing is supported, not applicable to MacOS X.
  */
 
@@ -54,16 +54,16 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 }
 #endif
 /**
- Based on AVAudioPlayer.h header in AVFoundation headers
+ Based on d_AVAudioPlayer.h header in AVFoundation headers
  */
 @class NSData, NSURL, NSError, NSDictionary;
-@protocol AVAudioPlayerDelegate;
+@protocol d_AVAudioPlayerDelegate;
 
 /* This class is available with iPhone 2.2 or later */
-@interface AVAudioPlayer : NSObject <NSSoundDelegate> {
+@interface d_AVAudioPlayer : NSObject <NSSoundDelegate> {
 	
 	// properties
-	id<AVAudioPlayerDelegate> delegate;
+	id<d_AVAudioPlayerDelegate> delegate;
 	NSUInteger numberOfChannels;
 	BOOL playing;
 	NSTimeInterval duration; 
@@ -104,7 +104,7 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 @property(readonly) NSUInteger numberOfChannels;
 @property(readonly) NSTimeInterval duration; /* the duration of the sound. */
 
-@property(assign) id<AVAudioPlayerDelegate> delegate; /* the delegate will be sent playerDidFinishPlaying */ 
+@property(assign) id<d_AVAudioPlayerDelegate> delegate; /* the delegate will be sent playerDidFinishPlaying */ 
 
 /* one of these three properties will be non-nil based on the init... method used */
 @property(readonly) NSURL *url; /* returns nil if object was not created with a URL */
@@ -136,24 +136,24 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 
 @end
 
-/* A protocol for delegates of AVAudioPlayer */
-@protocol AVAudioPlayerDelegate <NSObject>
+/* A protocol for delegates of d_AVAudioPlayer */
+@protocol d_AVAudioPlayerDelegate <NSObject>
 @optional 
 /* audioPlayerDidFinishPlaying:successfully: is called when a sound has finished playing. This method is NOT called if the player is stopped due to an interruption. */
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;
+- (void)audioPlayerDidFinishPlaying:(d_AVAudioPlayer *)player successfully:(BOOL)flag;
 
 /* if an error occurs while decoding it will be reported to the delegate. */
-- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error;
+- (void)audioPlayerDecodeErrorDidOccur:(d_AVAudioPlayer *)player error:(NSError *)error;
 
 /* audioPlayerBeginInterruption: is called when the audio session has been interrupted while the player was playing. The player will have been paused. */
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player;
+- (void)audioPlayerBeginInterruption:(d_AVAudioPlayer *)player;
 
 /* audioPlayerEndInterruption:withFlags: is called when the audio session interruption has ended and this player had been interrupted while playing. */
 /* Currently the only flag is AVAudioSessionInterruptionFlags_ShouldResume. */
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withFlags:(NSUInteger)flags;
+- (void)audioPlayerEndInterruption:(d_AVAudioPlayer *)player withFlags:(NSUInteger)flags;
 
 /* audioPlayerEndInterruption: is called when the preferred method, audioPlayerEndInterruption:withFlags:, is not implemented. */
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player;
+- (void)audioPlayerEndInterruption:(d_AVAudioPlayer *)player;
 @end
 
 

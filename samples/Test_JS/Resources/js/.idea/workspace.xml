@@ -41,31 +41,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableViewTest.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Control/TableViewTest.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="72" column="49" selection-start-line="72" selection-start-column="49" selection-end-line="72" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImageViewTest.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Control/ImageViewTest.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="80" column="71" selection-start-line="80" selection-start-column="71" selection-end-line="80" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ViewAnimationTest.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ViewAnimationTest.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Control/ViewAnimationTest.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44398683">
-              <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="129" column="48" selection-start-line="129" selection-start-column="48" selection-end-line="129" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jsb_crossapp_auto_api.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_auto_api.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.62963">
+              <caret line="415" column="16" selection-start-line="415" selection-start-column="10" selection-end-line="415" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jsb_crossapp_specifics_api.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_specifics_api.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5930807">
+              <caret line="48" column="2" selection-start-line="48" selection-start-column="2" selection-end-line="48" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jsb_boot.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_boot.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1351" column="1" selection-start-line="1351" selection-start-column="1" selection-end-line="1351" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -96,7 +106,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="73" column="68" selection-start-line="73" selection-start-column="68" selection-end-line="73" selection-end-column="68" />
-              <folding />
+              <folding>
+                <marker date="1500968928000" expanded="true" signature="167:850" placeholder="[...]" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -105,7 +117,7 @@
         <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="678" column="1" selection-start-line="678" selection-start-column="1" selection-end-line="678" selection-end-column="1" />
+              <caret line="533" column="1" selection-start-line="533" selection-start-column="1" selection-end-line="533" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -117,7 +129,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Control/AlertViewTest.js" />
-        <option value="$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_boot.js" />
         <option value="$PROJECT_DIR$/Control/AutoCollectionViewHorizontalTest.js" />
         <option value="$PROJECT_DIR$/Control/AutoCollectionViewVerticalTest.js" />
         <option value="$PROJECT_DIR$/Control/CollectionViewTest.js" />
@@ -132,8 +143,10 @@
         <option value="$PROJECT_DIR$/Control/WaterfallViewTest.js" />
         <option value="$PROJECT_DIR$/Control/StepperTest.js" />
         <option value="$PROJECT_DIR$/Control/PickerViewTest.js" />
-        <option value="$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js" />
         <option value="$PROJECT_DIR$/Control/AVPlayerViewTest.js" />
+        <option value="$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_boot.js" />
+        <option value="$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_specifics_api.js" />
+        <option value="$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js" />
         <option value="$PROJECT_DIR$/Control/ViewAnimationTest.js" />
       </list>
     </option>
@@ -222,6 +235,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_specifics_api.js" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -315,13 +332,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Control/SliderTest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Control/StepperTest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -466,13 +476,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="943" column="0" selection-start-line="943" selection-start-column="0" selection-end-line="943" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_boot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1341" column="52" selection-start-line="1341" selection-start-column="52" selection-end-line="1341" selection-end-column="52" />
         </state>
       </provider>
     </entry>
@@ -651,7 +654,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="73" column="68" selection-start-line="73" selection-start-column="68" selection-end-line="73" selection-end-column="68" />
-          <folding />
+          <folding>
+            <marker date="1500968928000" expanded="true" signature="167:850" placeholder="[...]" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -671,10 +676,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_auto_api.js">
+    <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_boot.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34514004">
-          <caret line="235" column="5" selection-start-line="235" selection-start-column="5" selection-end-line="235" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1351" column="1" selection-start-line="1351" selection-start-column="1" selection-end-line="1351" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Control/ViewAnimationTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="129" column="48" selection-start-line="129" selection-start-column="48" selection-end-line="129" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -682,15 +695,23 @@
     <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/script/jsb_crossapp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="678" column="1" selection-start-line="678" selection-start-column="1" selection-end-line="678" selection-end-column="1" />
+          <caret line="533" column="1" selection-start-line="533" selection-start-column="1" selection-end-line="533" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Control/ViewAnimationTest.js">
+    <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_auto_api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44398683">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+        <state vertical-scroll-proportion="-14.62963">
+          <caret line="415" column="16" selection-start-line="415" selection-start-column="10" selection-end-line="415" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../scripting/js-bindings/auto/api/jsb_crossapp_specifics_api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5930807">
+          <caret line="48" column="2" selection-start-line="48" selection-start-column="2" selection-end-line="48" selection-end-column="2" />
           <folding />
         </state>
       </provider>

@@ -422,7 +422,7 @@ ca.DHorizontalLayout.set = function(var1, var2, _type)
     return {left:_left, right:_right, width:_width, center:_center, normalizedWidth:_normalizedWidth, type:_type};
 };
 
-ca.DVerticalLayout.set =function (var1, var2, _type){
+ca.DVerticalLayout.set = function (var1, var2, _type){
     
     var _top = ca.FLT_MAX;
     var _bottom = ca.FLT_MAX;
@@ -637,7 +637,7 @@ ca.DPoint.set = function( _x, _y )
 
 ca.DPointZero = function ()
 {
-    return ca.DPoint(0, 0);
+    return ca.DPoint.set(0, 0);
 };
 
 ca.DPointEquals = function (p1, p2)
@@ -665,7 +665,7 @@ ca.DSizeEquals = function (s1, s2)
 
 ca.DSizeZero = function ()
 {
-    return ca.DSize(0, 0);
+    return ca.DSize.set(0, 0);
 };
 
 ca.DRect = {}

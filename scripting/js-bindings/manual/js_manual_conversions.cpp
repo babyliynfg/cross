@@ -1698,11 +1698,12 @@ jsval dhorizontallayout_to_jsval( JSContext *cx, const CrossApp::DHorizontalLayo
     bool ok = JS_DefineProperty(cx, tmp, "left", v.left, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "right", v.right, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "width", v.width, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "center", v.center, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineProperty(cx, tmp, "center", v.center, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "normalizedWidth", v.normalizedWidth, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }
-
     return JSVAL_NULL;
 }
 
@@ -1715,7 +1716,8 @@ jsval dverticallayout_to_jsval(JSContext *cx, const CrossApp::DVerticalLayout& v
     bool ok = JS_DefineProperty(cx, tmp, "top", v.top, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "bottom", v.bottom, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
     JS_DefineProperty(cx, tmp, "height", v.height, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-    JS_DefineProperty(cx, tmp, "center", v.center, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineProperty(cx, tmp, "center", v.center, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "normalizedHeight", v.normalizedHeight, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     if (ok) {
         return OBJECT_TO_JSVAL(tmp);
     }

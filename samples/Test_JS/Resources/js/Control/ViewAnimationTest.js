@@ -113,6 +113,8 @@ var ViewAnimationTest = ca.CAViewController.extend({
 
                 ca.CACustomAnimation.schedule(function(model){
 
+                    ca.logArray(model);
+
                     var pro = model.now / model.total;
 
                     var a = pro * 1.0;
@@ -126,6 +128,8 @@ var ViewAnimationTest = ca.CAViewController.extend({
                 }, "animation custom", 1.0);
 
             }, ca.CAButton.Event.TouchUpInSide);
+
+
         }
 
         var btn = ca.CAButton.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_NW_C(0.3,0.5), ca.DVerticalLayout_B_H(20 ,50)), ca.CAButton.Type.RoundedRect);
