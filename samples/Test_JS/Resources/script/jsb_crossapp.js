@@ -1,4 +1,4 @@
-ca.ENGINE_VERSION = "CrossApp-JS v2.0.0";
+ca.ENGINE_VERSION = "CrossApp-JS v2.1.0Beta";
 
 ca.LANGUAGE_ENGLISH    = 0;
 ca.LANGUAGE_CHINESE    = 1;

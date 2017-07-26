@@ -118,14 +118,14 @@ var ViewAnimationTest = ca.CAViewController.extend({
                     var pro = model.now / model.total;
 
                     var a = pro * 1.0;
-                    var b = Math.min(1.0, Math.max(pro * 3.0, 0));
+                    var r = Math.min(1.0, Math.max(pro * 3.0, 0));
                     var g = Math.min(1.0, Math.max(pro * 3.0 - 1.0, 0));
-                    var r = Math.min(1.0, Math.max(pro * 3.0 - 2.0, 0));
+                    var b = Math.min(1.0, Math.max(pro * 3.0 - 2.0, 0));
 
 
                     imageView.setColor(ca.CAColor4B.set(r * 255, g * 255, b * 255, a * 255));
 
-                }, "animation custom", 1.0);
+                }, "animation custom", 1.0, 0, 0.5);
 
             }, ca.CAButton.Event.TouchUpInSide);
 
