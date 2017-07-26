@@ -16,27 +16,26 @@ var TextFieldTest = ca.CAViewController.extend({
         textField1.setKeyboardType(ca.CATextField.KeyboardType.Default);
         //TextField的对齐方式
         textField1.setAlign(ca.CATextField.Align.Left);
-        textField1.setDelegate(this);
         this.getView().addSubview(textField1);
 
 
     },
 
-    textFieldShouldBeginEditing: function(sender){
+    textFieldShouldBeginEditing: function(){
         log("textFieldShouldBeginEditing-->");
         return true;
     },
-    textFieldShouldEndEditing: function(sender){
+    textFieldShouldEndEditing: function(){
         log("textFieldShouldEndEditing-->");
         return true;
     },
-    textFieldShouldReturn: function(sender){
+    textFieldShouldReturn: function(){
         log("textFieldShouldReturn-->");
     },
-    keyBoardHeight: function(sender, height){
+    keyBoardHeight: function(height){
         log("keyBoardHeight-->");
     },
-    textFieldShouldChangeCharacters: function(sender,location,lenght,changedText){
+    textFieldShouldChangeCharacters: function(location, lenght, changedText){
         log("textFieldShouldChangeCharacters-->");
         return true;
     }

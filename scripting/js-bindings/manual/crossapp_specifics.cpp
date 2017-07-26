@@ -187,15 +187,19 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     
     tmpObj.set(jsb_CrossApp_CAObject_prototype);
     JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
     JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
     tmpObj.set(jsb_CrossApp_CAMotionManager_prototype);
     JS_DefineFunction(cx, tmpObj, "startGyroscope", js_crossapp_CAMotionManager_startGyroscope, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
     tmpObj.set(jsb_CrossApp_CADatePickerView_prototype);
     JS_DefineFunction(cx, tmpObj, "onSelectRow", js_crossapp_CADatePickerView_onSelectRow, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    //tmpObj.set(jsb_CrossApp_CACustomAnimation_prototype);
-    //JS_DefineFunction(cx, tmpObj, "schedule", js_crossapp_CACustomAnimation_schedule, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_GetProperty(cx, ccObj, "CACustomAnimation", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
+    JS_DefineFunction(cx, tmpObj, "schedule", js_crossapp_CACustomAnimation_schedule, 3, JSPROP_READONLY | JSPROP_PERMANENT);
 
 }
 
@@ -326,7 +330,7 @@ bool js_crossapp_CADatePickerView_onSelectRow(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_crossapp_CADatePickerView_onSelectRow : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-/*
+
 bool js_crossapp_CACustomAnimation_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -469,4 +473,4 @@ bool js_crossapp_CACustomAnimation_schedule(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_crossapp_CACustomAnimation_schedule : wrong number of arguments");
     return false;
 }
-*/
+

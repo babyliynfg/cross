@@ -17,8 +17,8 @@ var WaterfallViewTest = ca.CAViewController.extend({
         var footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
         this.Waterfall = ca.CAWaterfallView.createWithLayout(ca.DLayoutFill);
-        this.Waterfall.setHeaderRefreshView(this.headerRefreshView) ;
-        this.Waterfall.setFooterRefreshView(this.footerRefreshView) ;
+        this.Waterfall.setHeaderRefreshView(headerRefreshView) ;
+        this.Waterfall.setFooterRefreshView(footerRefreshView) ;
         this.Waterfall.setItemMargin(10);
         this.Waterfall.setColumnMargin(10);
         this.Waterfall.setColumnCount(2);
