@@ -40,7 +40,6 @@
 		4851EDB31D81717E00863BD1 /* crossapp_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4851EDB11D81717E00863BD1 /* crossapp_specifics.cpp */; };
 		48D960971D58A15300158611 /* js_crossapp_delegates_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48D960951D58A15300158611 /* js_crossapp_delegates_manual.cpp */; };
 		48D9609C1D58A17000158611 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = 48D960981D58A17000158611 /* source_material */; };
-		48D9609E1D58A17000158611 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 48D9609A1D58A17000158611 /* fonts */; };
 		48E141061CED674B0029BABC /* js in Resources */ = {isa = PBXBuildFile; fileRef = 48E141051CED674B0029BABC /* js */; };
 		48E144341CED67980029BABC /* jsb_crossapp_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E1410B1CED67970029BABC /* jsb_crossapp_auto.cpp */; };
 		48E144371CED67980029BABC /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141141CED67970029BABC /* js_bindings_core.cpp */; };
@@ -123,7 +122,6 @@
 		48D960951D58A15300158611 /* js_crossapp_delegates_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_crossapp_delegates_manual.cpp; sourceTree = "<group>"; };
 		48D960961D58A15300158611 /* js_crossapp_delegates_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_crossapp_delegates_manual.hpp; sourceTree = "<group>"; };
 		48D960981D58A17000158611 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
-		48D9609A1D58A17000158611 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		48E141051CED674B0029BABC /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		48E1410B1CED67970029BABC /* jsb_crossapp_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_crossapp_auto.cpp; sourceTree = "<group>"; };
 		48E1410C1CED67970029BABC /* jsb_crossapp_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_crossapp_auto.hpp; sourceTree = "<group>"; };
@@ -365,7 +363,6 @@
 				4851EDAD1D81714500863BD1 /* image */,
 				4851EDAE1D81714500863BD1 /* animation */,
 				48D960981D58A17000158611 /* source_material */,
-				48D9609A1D58A17000158611 /* fonts */,
 				48E141051CED674B0029BABC /* js */,
 				B09FC0BB1AD3A25F0009C2D7 /* r */,
 			);
@@ -444,7 +441,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */,
-				48D9609E1D58A17000158611 /* fonts in Resources */,
 				48E1445B1CED67B60029BABC /* script in Resources */,
 				48D9609C1D58A17000158611 /* source_material in Resources */,
 				48E141061CED674B0029BABC /* js in Resources */,

@@ -37,7 +37,6 @@
 		4875146E1CC0E4B800FF2062 /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4875146C1CC0E4B800FF2062 /* js_manual_conversions.cpp */; };
 		48EAB9B21CE968A6009FAA3D /* script in Resources */ = {isa = PBXBuildFile; fileRef = 48EAB9B11CE968A6009FAA3D /* script */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
-		B0621BE51AC3B871005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621BDB1AC3B871005EBCA7 /* fonts */; };
 		B0621E261AC3ECEC005EBCA7 /* r in Resources */ = {isa = PBXBuildFile; fileRef = B0621E251AC3ECEC005EBCA7 /* r */; };
 		B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */; };
 		B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */; };
@@ -138,7 +137,6 @@
 		48F16C931D1A5EBF00CB6895 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../../../CrossApp/the_third_party/websockets/ios/lib/libwebsockets.a; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B056375B195276CF00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
-		B0621BDB1AC3B871005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621E251AC3ECEC005EBCA7 /* r */ = {isa = PBXFileReference; lastKnownFileType = folder; path = r; sourceTree = "<group>"; };
 		B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B0A030091A8E08500005CB8F /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../CrossApp/platform/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
@@ -404,7 +402,6 @@
 				484049491CC8C66400BECCC7 /* js */,
 				026964B01BEB433600C8BCD7 /* Images.xcassets */,
 				B0621E251AC3ECEC005EBCA7 /* r */,
-				B0621BDB1AC3B871005EBCA7 /* fonts */,
 				B01F71661951682600BA07A6 /* source_material */,
 			);
 			name = Resources;
@@ -499,7 +496,6 @@
 				4840494A1CC8C66400BECCC7 /* js in Resources */,
 				026964B11BEB433600C8BCD7 /* Images.xcassets in Resources */,
 				B01F71671951682600BA07A6 /* source_material in Resources */,
-				B0621BE51AC3B871005EBCA7 /* fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
