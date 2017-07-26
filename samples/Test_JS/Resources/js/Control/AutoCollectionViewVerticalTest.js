@@ -12,26 +12,26 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
         },
 
         viewDidLoad: function() {
-            this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
-            this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
+            var headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
+            var footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
-            this.p_AutoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
-            this.p_AutoCollection.setAllowsSelection(true);
-            this.p_AutoCollection.setAllowsMultipleSelection(true);
-            this.p_AutoCollection.setHeaderRefreshView(this.headerRefreshView) ;
-            this.p_AutoCollection.setFooterRefreshView(this.footerRefreshView) ;
+            this.autoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
+            this.autoCollection.setAllowsSelection(true);
+            this.autoCollection.setAllowsMultipleSelection(true);
+            this.autoCollection.setHeaderRefreshView(headerRefreshView) ;
+            this.autoCollection.setFooterRefreshView(footerRefreshView) ;
 
-            this.p_AutoCollection.onDidSelectCellAtIndexPath(this.collectionViewDidSelectCellAtIndexPath.bind(this));
-            this.p_AutoCollection.onCellAtIndexPath(this.collectionCellAtIndex.bind(this));
-            this.p_AutoCollection.onCellSizeAtIndexPath(this.collectionViewSizeForItemAtIndexPath.bind(this));
-            this.p_AutoCollection.onNumberOfItemsAtIndexPath(this.numberOfItemsInSection.bind(this));
-            this.p_AutoCollection.onNumberOfSections(this.numberOfSections.bind(this));
-            this.p_AutoCollection.onHeaderBeginRefreshing(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
-            this.p_AutoCollection.onFooterBeginRefreshing(this.scrollViewFooterBeginRefreshing.bind(this)) ;
+            this.autoCollection.onDidSelectCellAtIndexPath(this.collectionViewDidSelectCellAtIndexPath.bind(this));
+            this.autoCollection.onCellAtIndexPath(this.collectionCellAtIndex.bind(this));
+            this.autoCollection.onCellSizeAtIndexPath(this.collectionViewSizeForItemAtIndexPath.bind(this));
+            this.autoCollection.onNumberOfItemsAtIndexPath(this.numberOfItemsInSection.bind(this));
+            this.autoCollection.onNumberOfSections(this.numberOfSections.bind(this));
+            this.autoCollection.onHeaderBeginRefreshing(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
+            this.autoCollection.onFooterBeginRefreshing(this.scrollViewFooterBeginRefreshing.bind(this)) ;
 
-            this.p_AutoCollection.setHoriCellInterval(20);
-            this.p_AutoCollection.setVertCellInterval(20);
-            this.getView().addSubview(this.p_AutoCollection);
+            this.autoCollection.setHoriCellInterval(20);
+            this.autoCollection.setVertCellInterval(20);
+            this.getView().addSubview(this.autoCollection);
 
         },
 
@@ -48,20 +48,17 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
         },
 
         refreshDataHeader: function( interval){
+            this.HorizontalcolorArr = [];
             this._randomColor() ;
-            this.p_AutoCollection.reloadData();
-
-            ca.log("refreshDataHeader --> ");
-
+            this.autoCollection.reloadData();
         },
         refreshDataFooter: function(interval){
             this._randomColor() ;
-            this.p_AutoCollection.reloadData();
+            this.autoCollection.reloadData();
         },
 
         scrollViewHeaderBeginRefreshing: function()
         {
-            ca.log("scrollViewHeaderBeginRefreshing");
             ca.CAScheduler.getScheduler().scheduleOnce(this.refreshDataHeader.bind(this), "A",this, 0.5);
         },
         scrollViewFooterBeginRefreshing: function()
@@ -70,7 +67,7 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
         },
         collectionViewDidSelectCellAtIndexPath: function( section, item)
         {
-            var cell = this.p_AutoCollection.cellForRowAtIndexPath(section, item);
+            var cell = this.autoCollection.cellForRowAtIndexPath(section, item);
             cell.getContentView().setRotation(-360);
             cell.getContentView().setScale(0.5);
             ca.CAViewAnimation.beginAnimations("");
@@ -85,32 +82,32 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
 
         collectionCellAtIndex: function(cellSize, section, item)
         {
-            var p_Cell = this.p_AutoCollection.dequeueReusableCellWithIdentifier("CrossApp");
+            var cell = this.autoCollection.dequeueReusableCellWithIdentifier("CrossApp");
 
-            if (p_Cell == null)
+            if (cell == null)
             {
-                p_Cell = ca.CACollectionViewCell.create("CrossApp");
+                cell = ca.CACollectionViewCell.create("CrossApp");
 
                 var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
                 itemImage.setTag(99);
-                p_Cell.getContentView().addSubview(itemImage);
+                cell.getContentView().addSubview(itemImage);
 
                 var itemText = ca.CALabel.createWithLayout(ca.DLayoutFill);
                 itemText.setTag(100);
                 itemText.setFontSize(29);
                 itemText.setTextAlignment(ca.CATextAlignment.Center);
                 itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-                p_Cell.getContentView().addSubview(itemText);
+                cell.getContentView().addSubview(itemText);
             }
 
-            var itemImageView = p_Cell.getContentView().getSubviewByTag(99);
+            var itemImageView = cell.getContentView().getSubviewByTag(99);
             itemImageView.setColor(this.HorizontalcolorArr[item]);
             log("row = "+ item);
 
 
-            var itemText = p_Cell.getContentView().getSubviewByTag(100);
+            var itemText = cell.getContentView().getSubviewByTag(100);
             itemText.setText("("+section+","+item+")");
-            return  p_Cell;
+            return  cell;
 
         },
 

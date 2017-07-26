@@ -47,27 +47,31 @@ var WaterfallViewTest = ca.CAViewController.extend({
             this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
             this.heightArr.push(Math.random() * 300 + 300);
         }
-    }
-
-    ,scrollViewHeaderBeginRefreshing: function ()
+    },
+                                                   
+    refreshData1: function(interval){
+        this.colorArr = [];
+        this.heightArr = [];
+        this._randomColor() ;
+        this.Waterfall.reloadData();
+    },
+                                                   
+    refreshData2: function(interval){
+        this._randomColor() ;
+        this.Waterfall.reloadData();
+    },
+                                                   
+    scrollViewHeaderBeginRefreshing: function ()
     {
-        ca.CAScheduler.getScheduler().scheduleOnce(function (dt) {
-
-            this.colorArr.clear();
-            this.heightArr.clear();
-            this._randomColor() ;
-            this.Waterfall.reloadData();
-        }, "scrollViewHeaderBeginRefreshing",this, 0.5);
-    }
-    ,scrollViewFooterBeginRefreshing: function ()
+        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData1.bind(this), "scrollViewHeaderBeginRefreshing",this, 0.5);
+    },
+                                                   
+    scrollViewFooterBeginRefreshing: function ()
     {
-        ca.CAScheduler.getScheduler().scheduleOnce(function (dt) {
-
-            this._randomColor() ;
-            this.Waterfall.reloadData();
-        }, "scrollViewFooterBeginRefreshing",this, 0.5);
-    }
-    ,waterfallViewDidSelectCellAtIndexPath: function (itemIndex)
+        ca.CAScheduler.getScheduler().scheduleOnce(this.refreshData2.bind(this), "scrollViewFooterBeginRefreshing",this, 0.5);
+    },
+                                                   
+    waterfallViewDidSelectCellAtIndexPath: function (itemIndex)
     {
         //选中
         cell = this.Waterfall.cellForRowAtIndexPath(itemIndex);
@@ -78,8 +82,9 @@ var WaterfallViewTest = ca.CAViewController.extend({
         cell.getContentView().setScale(1.0);
         ca.CAViewAnimation.commitAnimations();
         ca.log("选中");
-    }
-    ,waterfallViewDidDeselectCellAtIndexPath: function (itemIndex)
+    },
+                                                   
+    waterfallViewDidDeselectCellAtIndexPath: function (itemIndex)
     {
         ca.log("取消选中");
     },
@@ -111,19 +116,19 @@ var WaterfallViewTest = ca.CAViewController.extend({
         itemText.setText("("+itemIndex+")");
 
         return  cell;
-    }
+    },
     //Necessary
-    ,waterfallViewHeightForItemAtIndex: function( itemIndex)
+    waterfallViewHeightForItemAtIndex: function( itemIndex)
     {
         return this.heightArr[itemIndex];
-    }
+    },
     //Necessary
-    ,numberOfItems: function (waterfallView)
+    numberOfItems: function (waterfallView)
     {
         return this.colorArr.length;
-    }
+    },
 
-    ,waterfallViewWillDisplayCellAtIndex: function ( cell, itemIndex)
+    waterfallViewWillDisplayCellAtIndex: function ( cell, itemIndex)
     {
 
     }

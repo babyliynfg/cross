@@ -11,70 +11,59 @@ var ScrollViewTest = ca.CAViewController.extend({
 
         this.colorArr = new Array();
 
-        this.p_ScrollView = ca.CAScrollView.createWithLayout(ca.DLayoutFill);
-        this.p_ScrollView.setMinimumZoomScale(0.2);
-        this.p_ScrollView.setMaximumZoomScale(5.0);
-        this.p_ScrollView.setMultitouchGesture(ca.CAScrollView.MultitouchGesture.ZoomAndRotate);
-        this.getView().addSubview(this.p_ScrollView);
-        this.p_ScrollView.setViewSize(ca.DSize.set(2160,3840));
+        this.scrollView = ca.CAScrollView.createWithLayout(ca.DLayoutFill);
+        this.scrollView.setMinimumZoomScale(0.2);
+        this.scrollView.setMaximumZoomScale(5.0);
+        this.scrollView.setMultitouchGesture(ca.CAScrollView.MultitouchGesture.ZoomAndRotate);
+        this.scrollView.setViewSize(ca.DSize.set(2160,3840));
+        this.scrollView.setReachBoundaryHandOverToSuperview(false);
+        this.getView().addSubview(this.scrollView);
 
         this.p_imageView = ca.CAImageView.createWithImage(ca.CAImage.create("image/h1.png"));
         this.p_imageView.setLayout(ca.DLayoutFill);
-        this.p_ScrollView.addSubview(this.p_imageView);
-    },
-    btncallback: function () {
-        log("btncallback-->");
+        this.scrollView.addSubview(this.p_imageView);
+
+        this.scrollView.onDidMoved(this.scrollViewDidMoved.bind(this));
+        this.scrollView.onStopMoved(this.scrollViewStopMoved.bind(this));
+        this.scrollView.onWillBeginDragging(this.scrollViewWillBeginDragging.bind(this));
+        this.scrollView.onDragging(this.scrollViewDragging.bind(this));
+        this.scrollView.onDidEndDragging(this.scrollViewDidEndDragging.bind(this));
+        this.scrollView.onDidZoom(this.scrollViewDidZoom.bind(this));
+        this.scrollView.onTouchUpWithoutMoved(this.scrollViewTouchUpWithoutMoved.bind(this));
     },
 
-    refreshData: function (interval)
-    {
-        for (var i = 0; i < 40; i++)
-        {
-            var r = Math.floor(Math.random()*255);
-            var g = Math.floor(Math.random()*255);
-            var b = Math.floor(Math.random()*255);
-            this.colorArr.push(ca.CAColor4B.set(r, g, b, 255));
-        }
-        this.p_Conllection.reloadData();
-    },
     scrollViewDidMoved: function (view)
     {
         log("DidMoved-->");
     },
+
     scrollViewStopMoved: function ( view)
     {
         log("StopMoved-->");
     },
-    scrollViewDidScroll: function ( view)
-    {
-        log("DidMScroll-->");
-    },
+
     scrollViewWillBeginDragging: function ( view)
     {
         log("BeginDragging-->");
-    }
+    },
 
-    ,scrollViewDidEndDragging: function ( view)
+    scrollViewDragging: function ( view)
+    {
+        log("BeginDragging-->");
+    },
+
+    scrollViewDidEndDragging: function ( view)
+    {
+        log("DidEndDragging-->");
+    },
+
+    scrollViewDidZoom: function ( view)
+    {
+        log("DidZoom-->");
+    },
+
+    scrollViewTouchUpWithoutMoved: function ( view)
     {
         log("DidEndDragging-->");
     }
-
-    ,scrollViewDidZoom: function ( view)
-    {
-        log("DidZoom-->");
-    }
-
-    ,scrollViewHeaderBeginRefreshing: function (view)
-    {
-        this.colorArr.clear();
-        ca.CAScheduler.getScheduler().schedule(this,this.refreshData,0.01);
-    }
-
-    ,scrollViewFooterBeginRefreshing: function ( view)
-    {
-        ca.CAScheduler.getScheduler().schedule(this,this.refreshData,0.02);
-    }
-
-
-
 });

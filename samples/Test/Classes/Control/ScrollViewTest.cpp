@@ -16,9 +16,9 @@ void ScrollViewTest::viewDidLoad()
     scrollView->setMinimumZoomScale(0.2f);
     scrollView->setMaximumZoomScale(5.0f);
     scrollView->setMultitouchGesture(CAScrollView::MultitouchGesture::ZoomAndRotate);
-    this->getView()->addSubview(scrollView);
     scrollView->setViewSize(DSize(2160, 3840));
-    
+    scrollView->setReachBoundaryHandOverToSuperview(false);
+    this->getView()->addSubview(scrollView);
 
     auto imageView = CAImageView::createWithImage(CAImage::create("image/h1.png"));
     imageView->setLayout(DLayoutFill);

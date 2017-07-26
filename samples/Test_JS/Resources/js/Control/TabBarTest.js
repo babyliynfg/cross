@@ -39,7 +39,7 @@ var TabBarControllerTest = ca.CAViewController.extend({
         var tabBar1 = ca.CATabBar.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(500,100)));
         tabBar1.setItems(it1);
         tabBar1.setBackgroundImage(ca.CAImage.create("image/tab_news_bg.png"));
-        tabBar1.setSelectedBackgroundColor(ca.CAColor4B.set(255,255,255,0));
+        tabBar1.setSelectedBackgroundImage(ca.CAImage.createWithColor4B(ca.CAColor4B.CLEAR));
         tabBar1.setSelectedAtIndex(0);
 
         var view1 = ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill));

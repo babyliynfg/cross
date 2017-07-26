@@ -24,7 +24,7 @@ require('js/Control/SegmentedControlTest.js');
 require('js/Control/SliderTest.js');
 require('js/Control/StepperTest.js');
 require('js/Control/SwitchTest.js');
-require('js/Control/TabBarControllerTest.js');
+require('js/Control/TabBarTest.js');
 require('js/Control/TableViewTest.js');
 require('js/Control/TextFieldTest.js');
 require('js/Control/TextViewTest.js');

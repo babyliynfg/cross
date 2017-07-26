@@ -12,42 +12,40 @@ var CollectionViewTest = ca.CAViewController.extend({
     },
     viewDidLoad: function() {
 
-        this.headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
-        this.footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
+        var headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
+        var footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
-        this.p_Conllection = ca.CACollectionView.createWithLayout(ca.DLayoutFill);
-        this.p_Conllection.setAllowsSelection(true);
+        this.conllection = ca.CACollectionView.createWithLayout(ca.DLayoutFill);
+        this.conllection.setAllowsSelection(true);
+        this.conllection.setHeaderRefreshView(headerRefreshView);
+        this.conllection.setFooterRefreshView(footerRefreshView);
+        this.conllection.setHoriInterval(20);
+        this.conllection.setVertInterval(20);
+        this.getView().addSubview(this.conllection);
+                                                    
+        this.conllection.onCellAtIndexPath(this.collectionCellAtIndex.bind(this)) ;
+        this.conllection.onCellHeightAtIndexPath(this.collectionViewHeightForRowAtIndexPath.bind(this));
+        this.conllection.onNumberOfItemsAtIndexPath(this.numberOfItemsInRowsInSection.bind(this)) ;
+        this.conllection.onNumberOfRowsAtIndexPath(this.numberOfRowsInSection.bind(this));
+        this.conllection.onNumberOfSections(this.numberOfSections.bind(this)) ;
+        this.conllection.onDidSelectCellAtIndexPath(this.collectionViewDidSelectCellAtIndexPath.bind(this)) ;
+        this.conllection.onDidDeselectCellAtIndexPath(this.collectionViewDidDeselectCellAtIndexPath.bind(this)) ;
+        this.conllection.onHeaderBeginRefreshing(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
+        this.conllection.onFooterBeginRefreshing(this.scrollViewFooterBeginRefreshing.bind(this)) ;
 
-        this.p_Conllection.onCellAtIndexPath(this.collectionCellAtIndex.bind(this)) ;
-        this.p_Conllection.onCellHeightAtIndexPath(this.collectionViewHeightForRowAtIndexPath.bind(this));
-        this.p_Conllection.onNumberOfItemsAtIndexPath(this.numberOfItemsInRowsInSection.bind(this)) ;
-        this.p_Conllection.onNumberOfRowsAtIndexPath(this.numberOfRowsInSection.bind(this));
-        this.p_Conllection.onNumberOfSections(this.numberOfSections.bind(this)) ;
-        this.p_Conllection.onDidSelectCellAtIndexPath(this.collectionViewDidSelectCellAtIndexPath.bind(this)) ;
-        this.p_Conllection.onDidDeselectCellAtIndexPath(this.collectionViewDidDeselectCellAtIndexPath.bind(this)) ;
-        this.p_Conllection.onHeaderBeginRefreshing(this.scrollViewHeaderBeginRefreshing.bind(this)) ;
-        this.p_Conllection.onFooterBeginRefreshing(this.scrollViewFooterBeginRefreshing.bind(this)) ;
-
-
-
-        this.p_Conllection.setHeaderRefreshView(this.headerRefreshView);
-        this.p_Conllection.setFooterRefreshView(this.footerRefreshView);
-        this.p_Conllection.setHoriInterval(20);
-        this.p_Conllection.setVertInterval(20);
-        this.getView().addSubview(this.p_Conllection);
-
-        this.p_Conllection.reloadData();
-        this.p_Conllection.startPullToHeaderRefreshView();
+        this.conllection.reloadData();
+        this.conllection.startPullToHeaderRefreshView();
     },
 
     refreshData1: function(interval){
+        this.colorArr = [];
         this._randomColor() ;
-        this.p_Conllection.reloadData();
+        this.conllection.reloadData();
     },
 
     refreshData2: function(interval){
         this._randomColor() ;
-        this.p_Conllection.reloadData();
+        this.conllection.reloadData();
     },
 
     _randomColor:function(){
@@ -71,7 +69,7 @@ var CollectionViewTest = ca.CAViewController.extend({
     },
     collectionViewDidSelectCellAtIndexPath: function(section, row, item)
     {
-        var cell = this.p_Conllection.cellForRowAtIndexPath(section, row, item);
+        var cell = this.conllection.cellForRowAtIndexPath(section, row, item);
         cell.getContentView().setRotation(-360);
         cell.getContentView().setScale(0.5);
         ca.CAViewAnimation.beginAnimations("");
@@ -91,31 +89,31 @@ var CollectionViewTest = ca.CAViewController.extend({
         }
 
         var _size = ca.DSizeZero;
-        var p_Cell = this.p_Conllection.dequeueReusableCellWithIdentifier("cell");
-        if (p_Cell == null)
+        var cell = this.conllection.dequeueReusableCellWithIdentifier("cell");
+        if (cell == null)
         {
-            p_Cell = ca.CACollectionViewCell.create("cell");
+            cell = ca.CACollectionViewCell.create("cell");
 
             var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
             itemImage.setTag(99);
-            p_Cell.getContentView().addSubview(itemImage);
+            cell.getContentView().addSubview(itemImage);
 
             var itemText = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(50, 50)));
             itemText.setTag(100);
             itemText.setFontSize(29);
             itemText.setTextAlignment(ca.CATextAlignment.Center);
             itemText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-            p_Cell.getContentView().addSubview(itemText);
+            cell.getContentView().addSubview(itemText);
         }
 
-        var itemImageView = p_Cell.getContentView().getSubviewByTag(99);
+        var itemImageView = cell.getContentView().getSubviewByTag(99);
         itemImageView.setColor(this.colorArr[row * 3 + item]);
 
         var pos= section+""+row+""+item;
-        var itemText = p_Cell.getContentView().getSubviewByTag(100);
+        var itemText = cell.getContentView().getSubviewByTag(100);
         itemText.setText(pos);
 
-        return p_Cell;
+        return cell;
     },
     numberOfSections: function()
     {

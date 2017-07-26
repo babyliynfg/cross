@@ -12,25 +12,25 @@ var TableViewTest = ca.CAViewController.extend({
     viewDidLoad: function() {
         this.sectionTitle = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 
-        this.p_TableView = ca.CATableView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0, 0), ca.DVerticalLayoutFill));
+        this.tableView = ca.CATableView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0, 0), ca.DVerticalLayoutFill));
+        this.tableView.setAllowsSelection(true);
+        this.tableView.setAllowsMultipleSelection(false);
+        this.tableView.setShowsScrollIndicators(false);
+        this.tableView.setSelectRowAtIndexPath(2, 1);
+        this.getView().addSubview(this.tableView);
+                                               
+        this.tableView.onDidSelectCellAtIndexPath(this.tableViewDidSelectRowAtIndexPath.bind(this)) ;
+        this.tableView.onDidDeselectCellAtIndexPath(this.tableViewDidDeselectRowAtIndexPath.bind(this)) ;
+        this.tableView.onCellAtIndexPath(this.tableCellAtIndex.bind(this)) ;
+        this.tableView.onSectionViewForHeaderInSection(this.tableViewSectionViewForHeaderInSection.bind(this)) ;
+        this.tableView.onSectionViewForFooterInSection(this.tableViewSectionViewForFooterInSection.bind(this)) ;
+        this.tableView.onNumberOfRowsAtIndexPath(this.numberOfRowsInSection.bind(this));
+        this.tableView.onNumberOfSections(this.numberOfSections.bind(this)) ;
+        this.tableView.onCellHeightAtIndexPath(this.tableViewHeightForRowAtIndexPath.bind(this));
+        this.tableView.onHeightForHeaderInSection(this.tableViewHeightForHeaderInSection.bind(this));
+        this.tableView.onHeightForFooterInSection(this.tableViewHeightForFooterInSection.bind(this)) ;
 
-        this.p_TableView.onDidSelectCellAtIndexPath(this.tableViewDidSelectRowAtIndexPath.bind(this)) ;
-        this.p_TableView.onDidDeselectCellAtIndexPath(this.tableViewDidDeselectRowAtIndexPath.bind(this)) ;
-        this.p_TableView.onCellAtIndexPath(this.tableCellAtIndex.bind(this)) ;
-        this.p_TableView.onSectionViewForHeaderInSection(this.tableViewSectionViewForHeaderInSection.bind(this)) ;
-        this.p_TableView.onSectionViewForFooterInSection(this.tableViewSectionViewForFooterInSection.bind(this)) ;
-        this.p_TableView.onNumberOfRowsAtIndexPath(this.numberOfRowsInSection.bind(this));
-        this.p_TableView.onNumberOfSections(this.numberOfSections.bind(this)) ;
-        this.p_TableView.onCellHeightAtIndexPath(this.tableViewHeightForRowAtIndexPath.bind(this));
-        this.p_TableView.onHeightForHeaderInSection(this.tableViewHeightForHeaderInSection.bind(this));
-        this.p_TableView.onHeightForFooterInSection(this.tableViewHeightForFooterInSection.bind(this)) ;
-
-        this.p_TableView.setAllowsSelection(true);
-        this.p_TableView.setAllowsMultipleSelection(false);
-        this.p_TableView.setShowsScrollIndicators(false);
-        this.p_TableView.setSelectRowAtIndexPath(2, 1);
-
-        this.getView().addSubview(this.p_TableView);
+        
 
     },
     tableViewDidSelectRowAtIndexPath: function(section ,row)
@@ -43,7 +43,7 @@ var TableViewTest = ca.CAViewController.extend({
     },
     tableCellAtIndex: function( cellSize, section ,row)
     {
-        var cell = this.p_TableView.dequeueReusableCellWithIdentifier("CrossApp");
+        var cell = this.tableView.dequeueReusableCellWithIdentifier("CrossApp");
         if (cell == null)
         {
             cell = ca.CATableViewCell.create("CrossApp");

@@ -15,6 +15,7 @@ void ListViewTest::viewDidLoad()
     m_pListViewHor = CAListView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(0, 88)));
     m_pListViewHor->setOrientation(CAListView::Orientation::Horizontal);
     m_pListViewHor->setAllowsSelection(true);
+    m_pListViewHor->setReachBoundaryHandOverToSuperview(false);
     this->getView()->addSubview(m_pListViewHor);
     
     std::vector<std::string> vec1 =

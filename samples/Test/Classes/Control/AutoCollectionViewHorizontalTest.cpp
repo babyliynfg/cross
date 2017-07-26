@@ -30,6 +30,7 @@ void AutoCollectionViewHorizontalTest::viewDidLoad()
     m_pAutoCollection->setOrientation(CAAutoCollectionView::Orientation::Horizontal);
     m_pAutoCollection->setHoriCellInterval(20);
     m_pAutoCollection->setVertCellInterval(20);
+    m_pAutoCollection->setReachBoundaryHandOverToSuperview(false);
     this->getView()->addSubview(m_pAutoCollection);
     
     m_pAutoCollection->onCellAtIndexPath(CALLBACK_BIND_3(AutoCollectionViewHorizontalTest::collectionCellAtIndex, this));

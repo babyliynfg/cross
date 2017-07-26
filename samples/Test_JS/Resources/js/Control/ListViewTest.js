@@ -35,7 +35,7 @@ var list1DataSourceDelegate = {
         this.listview.setOrientation(ca.CAListView.Orientation.Horizontal); //(ca.CAListView.orientation.horizontal);
         this.listview.setShowsHorizontalScrollIndicator(false);
         this.listview.setSeparatorColor(ca.CAColor4F.CLEAR);
-
+        this.listview.setReachBoundaryHandOverToSuperview(false);
 
         this.listview.onDidSelectCellAtIndexPath(this.listViewDidSelectCellAtIndex.bind(this));
         this.listview.onDidDeselectCellAtIndexPath(this.listViewDidDeselectCellAtIndex.bind(this));
