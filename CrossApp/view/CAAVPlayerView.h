@@ -44,9 +44,9 @@ public:
     
 public:
     
-    CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime);   // 监听播放进度
+    CC_LISTENING_FUNCTION(void(float current, float duration), PeriodicTime);   // 监听播放进度
     
-    CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime);     // 监听缓冲进度
+    CC_LISTENING_FUNCTION(void(float current, float duration), LoadedTime);     // 监听缓冲进度
     
     CC_LISTENING_FUNCTION(void(), DidPlayToEndTime);                            // 监听播放完毕
     
