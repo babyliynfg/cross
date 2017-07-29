@@ -694,9 +694,9 @@ void CATextField::onExitTransitionDidStart()
 
 bool CATextField::resignFirstResponder()
 {
-    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this] && !s_ShouldEndEditing_map[this]())
     {
-        return s_ShouldEndEditing_map[this]();
+        return false;
     }
     else if (m_pDelegate && (!m_pDelegate->textFieldShouldEndEditing(this)))
     {
@@ -714,9 +714,9 @@ bool CATextField::resignFirstResponder()
 
 bool CATextField::becomeFirstResponder()
 {
-    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this] && !s_ShouldBeginEditing_map[this]())
     {
-        return s_ShouldBeginEditing_map[this]();
+        return false;
     }
     else if (m_pDelegate &&( !m_pDelegate->textFieldShouldBeginEditing(this)))
     {
