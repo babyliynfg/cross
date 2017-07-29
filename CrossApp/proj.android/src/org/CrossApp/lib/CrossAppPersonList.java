@@ -36,7 +36,7 @@ public class CrossAppPersonList
 	
 	public static void getPersonList()
 	{
-		// �����ゆ�烽����ゆ�烽����ゆ�锋�伴����ゆ�烽��杈�纰���烽��? 
+		
         Cursor cur = s_pContext.getContentResolver().query(  
                 ContactsContract.Contacts.CONTENT_URI,  
                 null,  
@@ -47,7 +47,7 @@ public class CrossAppPersonList
         
         ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
         
-        // 寰������ゆ�烽����ゆ�烽����ゆ��  
+        
         if (cur.moveToFirst())
         {
             int idColumn = cur.getColumnIndex(ContactsContract.Contacts._ID);  
@@ -60,10 +60,8 @@ public class CrossAppPersonList
 				{
 	            	FriendData data = new FriendData();
 	            	
-	                // �����ゆ�烽����ゆ�烽��杈�纰���疯�撮��锟�ID�����ゆ��  
 	                String contactId = cur.getString(idColumn);  
-	                
-	                // �����ゆ�烽����ゆ�烽��杈�纰���烽����ゆ�烽����ゆ�烽��? 
+	                 
 	                String disPlayName = cur.getString(displayNameColumn);  
 	                
 	                data.name = disPlayName;
@@ -92,7 +90,6 @@ public class CrossAppPersonList
 	                    phones.close();
 	                }  
 	  
-	                // �����ゆ�峰�������ゆ�烽����ゆ�风郴�����ゆ�烽����ゆ�烽����ゆ��  
 	                Cursor emails = s_pContext.getContentResolver().query(  
 	                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,  
 	                        null,  
@@ -103,7 +100,7 @@ public class CrossAppPersonList
 	                {  
 	                    do
 	                    {  
-	                        // �����ゆ�烽����ゆ�烽����ゆ�烽����������佃�������ゆ�烽����ゆ��    
+	                        
 	                        String emailValue = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));  
 
 	                        data.emailValue = emailValue;
@@ -113,7 +110,6 @@ public class CrossAppPersonList
 	                
 	                emails.close();
 	                
-	                //�����ゆ�峰�������ゆ�烽����ゆ�风郴�����跨����峰��  
 	                Cursor address = s_pContext.getContentResolver().query(  
 	                                ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,  
 	                                null,  
@@ -122,7 +118,7 @@ public class CrossAppPersonList
 	                if (address.moveToFirst()) 
 	                {  
 	                    do {  
-	                        // �����ゆ�烽����ゆ�烽����ゆ�烽��������纰���峰��  
+	                        
 	                        String street = address.getString(address  
 	                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));  
 	                        
@@ -149,7 +145,7 @@ public class CrossAppPersonList
 	                
 	                address.close();
 	                
-	                //�����ゆ�峰��nickname�����ゆ�锋��  
+	                
 	                Cursor nicknames = s_pContext.getContentResolver().query(  
 	                        Data.CONTENT_URI,  
 	                        new String[] { Data._ID, Nickname.NAME },  
@@ -182,7 +178,7 @@ public class CrossAppPersonList
         
         try
         {  
-            // �����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽��锟�{}�����ゆ�烽��瑙�杈炬�烽����ゆ�蜂�������ゆ�烽����ゆ�烽����ゆ��  
+            
             JSONObject personList = new JSONObject();
             
             JSONArray personArray = new JSONArray();
@@ -199,7 +195,6 @@ public class CrossAppPersonList
 	            person.put("address_formatAddress" , data.address_formatAddress != null ? data.address_formatAddress : "null" );
 	    		person.put("nickname" , data.nickname != null ? data.nickname : "null" );
 	    		
-	            // �����ゆ�蜂�������ゆ�烽����ゆ��phone�����ゆ�峰�奸����ゆ�烽����ゆ�烽��浠�锛������ゆ�烽����ゆ�烽����ゆ�疯�������ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽��? 
 	            JSONArray phone = new JSONArray();
 	            for ( int j = 0 ; j < data.phoneNumber.size(); j ++ )
 	            {
@@ -219,7 +214,7 @@ public class CrossAppPersonList
         } 
         catch (JSONException ex) 
         {  
-            // �����ゆ�蜂负null�����ゆ�蜂娇�����ゆ��json�����ゆ�锋�����琛�纰���烽����ゆ�烽��琛���╂�峰��(NaN, infinities)  
+            
             throw new RuntimeException(ex);  
         }
 	}

@@ -177,13 +177,13 @@ public class CrossAppNativeTool
 		String filename = timeStampFormat.format(new Date(0));
 		ContentValues values = new ContentValues();
 		values.put(Media.TITLE, filename);
-		Log.i("qiaoxin","filename:" + filename);
+		
 		photoUri = s_pContext.getContentResolver().insert(
 		MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-		Log.i("qiaoxin","photoUri:" + photoUri);
+		
 
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-		Log.i("qiaoxin","intent:" + intent);
+		
 
 		 s_pContext.startActivityForResult(intent, 1);
 	}
@@ -195,7 +195,7 @@ public class CrossAppNativeTool
             switch (requestCode) 
             {  
             case 4:  // Photo
-            	Log.d("666666", "6666444444");
+            	
             	final String uriStr = getPath(s_pContext, intent.getData());
             	
             	String fileStr = getRealFilePath(s_pContext, intent.getData());
@@ -208,7 +208,7 @@ public class CrossAppNativeTool
 				});
                 break;  
             case 1:
-            	Log.d("666666", "66661111111");
+            	
             	Uri originalUri1;
             	if (intent != null && intent.getData() != null) 
             	{
@@ -240,7 +240,7 @@ public class CrossAppNativeTool
             	break;
             case 2:
             case 3:
-            	Log.d("666666", "66662222222");
+            	
             	Uri originalUri2;
             	if (intent != null && intent.getData() != null) 
             	{
@@ -272,7 +272,7 @@ public class CrossAppNativeTool
                 
                 break;
             case 0: 
-            	Log.d("666666", "6666000000");
+            	
             	 Uri takePhoto;
             	 
             	if (intent != null && intent.getData() != null) 

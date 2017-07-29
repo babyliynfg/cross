@@ -219,12 +219,8 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 				});
 				break;
 		}
-
-        /*
-		if (BuildConfig.DEBUG) {
-			CrossAppGLSurfaceView.dumpMotionEvent(pMotionEvent);
-		}
-		*/
+		
+        
 		return true;
 	}
 	/*

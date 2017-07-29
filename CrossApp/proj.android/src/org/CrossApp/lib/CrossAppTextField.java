@@ -135,18 +135,16 @@ import android.widget.TextView.OnEditorActionListener;
             }
         });
     }
-  
     
     //keyboard height
     
-
     private static native void keyBoardHeightReturn(int key,int height);
     private static native void resignFirstResponder(int key);
     public int getKeyBoardHeight()
     {
     	onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() 
     	{
-
+    		
             @Override
             public void onGlobalLayout() 
             {
@@ -154,14 +152,13 @@ import android.widget.TextView.OnEditorActionListener;
                 // TODO Auto-generated method stub
                 Rect r = new Rect();
                 layout.getWindowVisibleDisplayFrame(r);
-
+                
                 int screenHeight = layout.getRootView().getHeight();
                 
                 keyboardheightTemp = screenHeight- r.bottom;
                 if (keyboardheightTemp!=keyboardheight) {
                 	context.runOnUiThread(new Runnable() 
                 	{
-            			
             			@Override
             			public void run() 
             			{
@@ -178,15 +175,8 @@ import android.widget.TextView.OnEditorActionListener;
                                     	resignFirstResponder(mykey);
                                     }
                                 });
-            					
     						}
-//            				if (keyboardheight<1) {
-//    							//show
-//            					Log.d("android", "show board");
-//    						}
-//            				Log.d("android", "call c++");
             				
-            				//keyBoardReturn
             				if (isFocusAction)
             				{
             					context.runOnGLThread(new Runnable() 
