@@ -18,6 +18,8 @@ import android.util.Log;
 @SuppressLint("DefaultLocale")
 public class CrossAppNetWorkManager {
 	
+	public static final String TAG = "CrossAppNetWorkManager" ; 
+	
 	private static Activity s_pActivity;
 	
     private static WifiManager mWifiManager;  
@@ -194,7 +196,7 @@ public class CrossAppNetWorkManager {
      
     public int getNetWordId()
     {  
-    	Log.i("net word id ","networid :"+mWifiInfo.getNetworkId());
+    	Log.i(TAG,"networid :"+mWifiInfo.getNetworkId());
     	
         return (mWifiInfo==null)?0:mWifiInfo.getNetworkId();  
     }  

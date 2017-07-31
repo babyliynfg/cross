@@ -12,6 +12,9 @@ import android.content.IntentFilter;
 import android.util.Log;
 
 public class CrossAppBlueTooth {
+	
+	public static final String TAG = "CrossAppBlueTooth"  ; 
+	
 	private String maddress;
 	
 	private String mname;
@@ -73,9 +76,7 @@ public class CrossAppBlueTooth {
         {
             BluetoothDevice bd = iterator.next() ;
         }
-
-        BluetoothDevice findDevice =  mAdapter.getRemoteDevice("00:11:22:33:AA:BB");
-
+        
 	}
 	
     public static BroadcastReceiver BTDiscoveryReceiver = new BroadcastReceiver()
@@ -117,31 +118,31 @@ public class CrossAppBlueTooth {
 		case 0:
 			if(mAdapter!=null)
 			{
-				Log.i("1", "madapter: not null");
+				Log.i(TAG, "madapter: not null");
 			}
 			
 			boolean result = mAdapter.enable();
-			Log.i("1", "madapter: not null");
+			Log.i(TAG, "madapter: not null");
 			if(result)
 			{
-				returnBlueToothState(0);	//闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归柨鐔告灮閹风兘鏁撻弬銈嗗闁跨喐鏋婚幏閿嬫闁跨噦鎷�			
+				returnBlueToothState(0);
 			}
 			else if(wasBtOpened)
 			{
-				returnBlueToothState(1);	//闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归柨鐔虹崵閹惧懏瀚归柨鐔告灮閹风兘鏁撻弬銈嗗
+				returnBlueToothState(1);	
 			}
 			else
 			{
-				returnBlueToothState(2);	//闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归柨鐔告灮閹峰嘲銇戦柨鐔告灮閹凤拷			
+				returnBlueToothState(2);		
 			}
 			break;
 
 		case 1:
 			boolean result1 = mAdapter.disable();
 			if(result1)
-				returnBlueToothState(3);//闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归柨鐔稿焻闂傤叀顕滈幏鐑芥晸閺傘倖瀚归柨鐔哄嵆閻у憡瀚�			else if(!wasBtOpened)
-				returnBlueToothState(4);//闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归柨鐔虹崵閹惧懏瀚归柨鐔稿焻閹插瀚�			else
-				returnBlueToothState(5);//闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归柨鐔稿焻閹插瀚规径閬嶆晸閺傘倖瀚�
+				returnBlueToothState(3);
+				returnBlueToothState(4);
+				returnBlueToothState(5);
 			break;
 		case 2:
 			if (!wasBtOpened)
@@ -150,7 +151,7 @@ public class CrossAppBlueTooth {
 				CrossAppActivity.getContext().startActivityForResult(intent, REQUEST_OPEN_BT_CODE);
 			}
 			else
-				returnBlueToothState(1);//闁跨喐鏋婚幏鐑芥晸閺傘倖瀚归柨鐔虹崵閹惧懏瀚归柨鐔告灮閹凤拷			break;
+				returnBlueToothState(1);
 		case 3:
 			if (!mAdapter.isDiscovering()){
                 mAdapter.startDiscovery();
