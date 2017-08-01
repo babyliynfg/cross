@@ -38,7 +38,6 @@
 		B049CD2D1BCBB25E001A2B30 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF761BC7B52B002C1FDB /* VideoToolbox.framework */; };
 		B049CD321BCBB372001A2B30 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B049CD301BCBB34E001A2B30 /* Security.framework */; };
 		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
-		B0621C351AC3DCCA005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621C321AC3DCCA005EBCA7 /* fonts */; };
 		B0621C371AC3DCCA005EBCA7 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B0621C341AC3DCCA005EBCA7 /* source_material */; };
 		D6B1E7801F204D8000723750 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF781BC7B5A8002C1FDB /* AVFoundation.framework */; };
 		D6B1E7821F204D8700723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7811F204D8700723750 /* CoreMedia.framework */; };
@@ -160,7 +159,6 @@
 		B049CD2E1BCBB342001A2B30 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		B049CD301BCBB34E001A2B30 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
-		B0621C321AC3DCCA005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621C341AC3DCCA005EBCA7 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B09B73BB1BD1FA82001D82BC /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../../../CrossApp/the_third_party/SDL/prebuilt/mac/libSDL.a; sourceTree = "<group>"; };
 		D6B1E7811F204D8700723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -436,7 +434,6 @@
 				026964BA1BEB468300C8BCD7 /* Images.xcassets */,
 				4EE8374A1AFCB99600BCFA6D /* image */,
 				4EEA323C1ADDFDBB00FAE693 /* animation */,
-				B0621C321AC3DCCA005EBCA7 /* fonts */,
 				B0621C341AC3DCCA005EBCA7 /* source_material */,
 			);
 			name = Resources;
@@ -589,7 +586,6 @@
 				026964BB1BEB468300C8BCD7 /* Images.xcassets in Resources */,
 				4EEA323D1ADDFDBB00FAE693 /* animation in Resources */,
 				41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */,
-				B0621C351AC3DCCA005EBCA7 /* fonts in Resources */,
 				41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */,
 				B0621C371AC3DCCA005EBCA7 /* source_material in Resources */,
 			);

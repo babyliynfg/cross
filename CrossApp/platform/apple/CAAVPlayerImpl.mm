@@ -426,7 +426,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString*,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"status"])
     {
@@ -600,19 +600,19 @@ CAAVPlayerImpl::CAAVPlayerImpl(CAAVPlayer* player)
     
     //s_map[m_pPlayer] = NATIVE_IMPL;
     
-    [NATIVE_IMPL onPeriodicTime:[&](float currTime, float duratuon)
+    [NATIVE_IMPL onPeriodicTime:[&](float currTime, float duration)
     {
         if (m_pPlayer->m_obPeriodicTime)
         {
-            m_pPlayer->m_obPeriodicTime(currTime, duratuon);
+            m_pPlayer->m_obPeriodicTime(currTime, duration);
         }
     }];
     
-    [NATIVE_IMPL onLoadedTime:[&](float currTime, float duratuon)
+    [NATIVE_IMPL onLoadedTime:[&](float currTime, float duration)
      {
          if (m_pPlayer->m_obLoadedTime)
          {
-             m_pPlayer->m_obLoadedTime(currTime, duratuon);
+             m_pPlayer->m_obLoadedTime(currTime, duration);
          }
      }];
     

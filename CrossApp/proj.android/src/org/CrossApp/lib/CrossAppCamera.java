@@ -38,7 +38,6 @@ public class CrossAppCamera
             public void run()
             {
             	SurfaceView surfaceView = new SurfaceView(CrossAppActivity.getContext());
-            	//surfaceView.setBackgroundColor(Color.RED);
             	mSurfaceHolder = surfaceView.getHolder();
         		mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
@@ -49,9 +48,6 @@ public class CrossAppCamera
             	params.rightMargin = 100;
             	params.bottomMargin = 300;
             	layout.addView(surfaceView, params) ;
-        		
-        		
-        		
         		
         		mSurfaceHolder.addCallback(new Callback() {
         			
@@ -82,11 +78,6 @@ public class CrossAppCamera
         				// TODO Auto-generated method stub
         				android.hardware.Camera.Parameters mParameters = mCamera.getParameters();
         				
-        				
-//        				List<Size> vSizes = mParameters.getSupportedPictureSizes();
-//        				for (int i = 0; i < vSizes.size(); i++) {
-//        					Size vSize = vSizes.get(i);
-//        				}
 
         				if(CrossAppActivity.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) 
         				{ 
@@ -102,7 +93,6 @@ public class CrossAppCamera
         				
         				mCamera.setParameters(mParameters);
         				
-        				//��剧ず
         				try 
         				{
         					mCamera.setPreviewDisplay(mSurfaceHolder);
@@ -121,19 +111,7 @@ public class CrossAppCamera
         					public void onPreviewFrame(byte[] arg0, android.hardware.Camera arg1)
         					{
         						// TODO Auto-generated method stub
-//        						final byte[] data = arg0;
-//        						CrossAppActivity.getContext().runOnGLThread(new Runnable() 
-//        	                	{
-//        	                        @Override
-//        	                        public void run()
-//        	                        {
-//        	                        	onByte2( data, data.length);
-//        	                        }
-//        	                    });
         						
-//        						BitmapFactory.Options options = new BitmapFactory.Options();  
-//        				        options.inSampleSize = 8;  
-//        						final Bitmap image = BitmapFactory.decodeByteArray(arg0, 0, arg0.length, options);
         						Parameters parameters=arg1.getParameters(); 
 //        		                int imageFormat = parameters.getPreviewFormat();  
         		                width = parameters.getPreviewSize().width;  
@@ -165,16 +143,6 @@ public class CrossAppCamera
         				  
         				        bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);  
         				        bmp.setPixels(rgba, 0 , width, 0, 0, width, height);  
-        						
-//        				        ImageView v= new ImageView(CrossAppActivity.getContext());
-//        				        v.setImageBitmap(bmp);
-//        				        FrameLayout layout = CrossAppActivity.getFrameLayout();
-//        		        		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT) ; 
-//        		            	params.leftMargin = 100;  
-//        		            	params.topMargin = 100;
-//        		            	params.rightMargin = 100;
-//        		            	params.bottomMargin = 300;
-//        		            	layout.addView(v, params) ;
         				        
         				        boolean avaliable = bmp == null || (bmp !=null && bmp.isRecycled()) ? false : true ; 
         						Log.e("xxxxxxxxxxx    ", "" + avaliable);

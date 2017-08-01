@@ -56,12 +56,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
 	private static FrameLayout frame;
 	
-	private int screenWidth = 0;
-	
-	private int screenHeight = 0;
-	
-	private int orientation = 0;
-    
     public static CrossAppTextField _sTextField = null;
     
     public static CrossAppTextView _sTextView = null;
@@ -92,16 +86,10 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	{
 		return CrossAppActivity.frame;
 	}
-
-
-	// ===========================================================
-	// Constructors
-	// ===========================================================
-
+	
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		
 		s_pActivity = this;
 
@@ -118,9 +106,9 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		new CrossAppDevice(this) {};
 		
 		nativeTool = new CrossAppNativeTool(this);
-
+		
     	this.init();
-
+    	
 		this.exeHandler();
 		
 		 if(savedInstanceState == null)
@@ -178,7 +166,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	protected void onPause()
 	{
 		super.onPause();
-
+		
 		CrossAppHelper.onPause();
 		this.mGLSurfaceView.onPause();
 	}
@@ -189,7 +177,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		outState.putStringArray("WEBVIEW", mWebViewHelper.getAllWebviews());
 		super.onSaveInstanceState(outState);
 	}
-
+	
     public void setPasteBoardStr(String sender)
     {
         Message msg=new Message();
@@ -219,7 +207,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		return "";
     }
     
-    
     private void toast(String str)
     {
     	System.out.println(str);
@@ -231,14 +218,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	 {
 		 nativeTool.onActivityResult(requestCode, resultCode, intent);
 	 }
-
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
-
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
 
 	 @TargetApi(11)
 	private void exeHandler(){
@@ -316,8 +295,7 @@ public void init()
         this.mGLSurfaceView.setCrossAppRenderer(mCrossAppRenderer);
         
         this.setContentView(framelayout);
-   
-//        framelayout.setBackgroundColor(Color.WHITE);
+
     }
 	
 	public static int dip2px(Context context, float dpValue) {
@@ -350,47 +328,10 @@ public void init()
     	  }
     	  return result;
     }
-	/**
-	public void onConfigurationChanged(Configuration newConfiguration)
-	{
-		super.onConfigurationChanged(newConfiguration);
-		
-		final DisplayMetrics displayMetrics = new DisplayMetrics();
-		this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-		this.screenWidth = displayMetrics.widthPixels;
-		this.screenHeight = displayMetrics.heightPixels - this.getStatusBarHeight();
-		
-		mCrossAppRenderer.setScreenWidthAndHeight(screenWidth, screenHeight);
 
-		if(newConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT)
-        {
-        	orientation = 1;
-        }
-        else if(newConfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE) 
-        {
-        	orientation = 2;
-        }
-        
-        this.runOnGLThread(new Runnable() 
-    	{
-            @Override
-            public void run()
-            {
-            	
-            	CrossAppRenderer.nativeChanged(screenWidth, screenHeight);
-            	CrossAppRenderer.nativeChangedOrientation(orientation);
-         		
-            }
-        });  
-        
-        CrossAppAlertView.checkAliveAlertView();
-        
-	}**/
 	
    private final static boolean isAndroidEmulator() {
 	   
-      String model = Build.MODEL;
-	  
       String product = Build.PRODUCT;
 	  
       boolean isEmulator = false;
@@ -404,7 +345,5 @@ public void init()
       return isEmulator;
    }
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
+
 }

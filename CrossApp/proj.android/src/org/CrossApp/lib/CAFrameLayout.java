@@ -12,8 +12,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 public class CAFrameLayout extends FrameLayout {
-
-
+	
     private float topLeftRadius;
     private float topRightRadius;
     private float bottomLeftRadius;

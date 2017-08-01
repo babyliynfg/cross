@@ -325,12 +325,12 @@ public abstract class CrossAppDevice  extends Activity  {
         .setOngoing(false)
         .build();   
         
-        notification.flags = Notification.FLAG_AUTO_CANCEL;//��绘�������ゎ��宕ユ�淬��娈伴�告�诲��缁����寰����锟�
-        notification.defaults = Notification.DEFAULT_SOUND;//濠㈤����抽����殿��濡�娆惧��  
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notification.defaults = Notification.DEFAULT_SOUND;
         
         ++mIndex;
 		
-        manager.notify(mIndex, notification);//��告����垫慨������濮�杈╁��        	
+        manager.notify(mIndex, notification); 	
 	}
 	
 	public static void sendLocalNotification(final String title,final String content,int time)
@@ -359,7 +359,7 @@ public abstract class CrossAppDevice  extends Activity  {
         return CrossAppNativeTool.getSaveImagePath();
     }
     
-    //��哄�х�ㄩ��濠�宕堕����姘�
+   
     public static void UpdateCamera(final String url)
     { 
     	CrossAppNativeTool.UpdateCamera(url);

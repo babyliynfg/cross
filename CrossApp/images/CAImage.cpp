@@ -1932,10 +1932,21 @@ bool CAImage::initWithRawData(CAData* data,
 bool CAImage::initWithColor4B(const CAColor4B& color)
 {
     unsigned char pixels[4] = {color.r, color.g, color.b, color.a};
-    CAData* data = CAData::create();
-    data->copy((const unsigned char *)&pixels, 4);
+    m_pData = new CAData();
+    m_pData->copy((const unsigned char *)&pixels, 4);
     
-    return this->initWithRawData(data, CAImage::PixelFormat::RGBA8888, 1, 1);
+    m_tContentSize = DSize(1, 1);
+    m_uPixelsWide = 1;
+    m_uPixelsHigh = 1;
+    m_ePixelFormat = CAImage::PixelFormat::RGBA8888;
+    m_fMaxS = 1;
+    m_fMaxT = 1;
+    
+    m_bHasMipmaps = false;
+    m_bHasPremultipliedAlpha = false;
+    this->repremultipliedImageData();
+    
+    return true;
 }
 
 void CAImage::convertToRawData()

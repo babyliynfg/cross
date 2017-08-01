@@ -27,7 +27,6 @@
 		B039AF8F1BC7BFB7002C1FDB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF8E1BC7BFB7002C1FDB /* VideoToolbox.framework */; };
 		B039AF911BC7BFC0002C1FDB /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF901BC7BFC0002C1FDB /* CoreVideo.framework */; };
 		B039AF981BC7C52D002C1FDB /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B039AF971BC7C52D002C1FDB /* CoreAudio.framework */; };
-		B0621BE51AC3B871005EBCA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0621BDB1AC3B871005EBCA7 /* fonts */; };
 		B0621E221AC3ECB0005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */; };
 		B08BE2261CCDB61B001A0F36 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B08BE2251CCDB61B001A0F36 /* CoreMotion.framework */; };
 		B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */; };
@@ -140,7 +139,6 @@
 		B039AF991BC7C539002C1FDB /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		B039AF9B1BC7C58E002C1FDB /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../CrossApp/the_third_party/SDL/prebuilt/ios/libSDL2.a; sourceTree = "<group>"; };
 		B056375B195276CF00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
-		B0621BDB1AC3B871005EBCA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootWindow.cpp; path = ../Classes/RootWindow.cpp; sourceTree = "<group>"; };
 		B0621E201AC3ECB0005EBCA7 /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootWindow.h; path = ../Classes/RootWindow.h; sourceTree = "<group>"; };
 		B08BE2251CCDB61B001A0F36 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -429,7 +427,6 @@
 				B0DB99261B14531900710982 /* test.html */,
 				B0DB99201B14530F00710982 /* animation */,
 				B0DB99211B14530F00710982 /* image */,
-				B0621BDB1AC3B871005EBCA7 /* fonts */,
 				B01F71661951682600BA07A6 /* source_material */,
 			);
 			name = Resources;
@@ -595,7 +592,6 @@
 				026964B61BEB450400C8BCD7 /* Images.xcassets in Resources */,
 				B0DB99221B14530F00710982 /* animation in Resources */,
 				B01F71671951682600BA07A6 /* source_material in Resources */,
-				B0621BE51AC3B871005EBCA7 /* fonts in Resources */,
 				B0DB99291B14531900710982 /* test.html in Resources */,
 				026964AD1BEB419E00C8BCD7 /* CrossApp.xib in Resources */,
 				B0DB99231B14530F00710982 /* image in Resources */,

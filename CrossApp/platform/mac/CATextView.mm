@@ -353,9 +353,9 @@ void CATextView::onExitTransitionDidStart()
 
 bool CATextView::resignFirstResponder()
 {
-    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this])
+    if (s_ShouldEndEditing_map.count(this) > 0 && s_ShouldEndEditing_map[this] && !s_ShouldEndEditing_map[this]())
     {
-        return s_ShouldEndEditing_map[this]();
+        return false;
     }
     else if (m_pDelegate && (!m_pDelegate->textViewShouldEndEditing(this)))
     {
@@ -378,9 +378,9 @@ bool CATextView::resignFirstResponder()
 
 bool CATextView::becomeFirstResponder()
 {
-    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this])
+    if (s_ShouldBeginEditing_map.count(this) > 0 && s_ShouldBeginEditing_map[this] && !s_ShouldBeginEditing_map[this]())
     {
-        return s_ShouldBeginEditing_map[this]();
+        return false;
     }
     else if (m_pDelegate && (!m_pDelegate->textViewShouldBeginEditing(this)))
     {
