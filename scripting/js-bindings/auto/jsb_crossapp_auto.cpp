@@ -26528,11 +26528,9 @@ bool js_crossapp_CASlider_setValue(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASlider* cobj = (CrossApp::CASlider *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASlider_setValue : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASlider_setValue : Error processing arguments");
         cobj->setValue(arg0);
         args.rval().setUndefined();
         return true;

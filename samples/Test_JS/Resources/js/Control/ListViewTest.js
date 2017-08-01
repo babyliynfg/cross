@@ -70,7 +70,6 @@ var list1DataSourceDelegate = {
         return cell;
     },
     listViewWillDisplayCellAtIndex: function ( cell, index) {
-        log("listViewWillDisplayCellAtIndex");
         return 0;
     },
 
@@ -132,8 +131,6 @@ var list2DataSourceDelegate = {
         return cell;
     },
     listViewWillDisplayCellAtIndex: function ( cell, index) {
-        log("listViewWillDisplayCellAtIndex");
-        return 0;
     },
 
     listViewDidSelectCellAtIndex: function ( index) {

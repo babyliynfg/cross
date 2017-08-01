@@ -187,7 +187,7 @@ CAImagePickerController::CAImagePickerController(SourceType type)
         {
             convert(m_pOriginal).sourceType = UIImagePickerControllerSourceTypeCamera;
             convert(m_pOriginal).cameraDevice = UIImagePickerControllerCameraDeviceRear;
-            convert(m_pOriginal).cameraCaptureMode = UIImagePickerControllerCameraCaptureModeVideo;
+            convert(m_pOriginal).cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
         }
             break;
         case SourceType::CameraDeviceFront:
@@ -310,30 +310,32 @@ void CAImagePickerController::writeImageToPhoto(CAImage* image, const std::funct
     this->retain();
     
     CAImage::PixelFormat pixelFormat = image->getPixelFormat();
+    size_t width = image->getPixelsWide();
+    size_t height = image->getPixelsHigh();
+    void* data = image->getData()->getBytes();
+    size_t length = image->getData()->getLength();
+    
     
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
     
     UIImage *newImage = NULL;
     CGImageRef imageRef = NULL;
-    CGDataProviderRef provider = NULL;
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, data, length, NULL);
     
-    if (pixelFormat == CAImage::PixelFormat::RGBA8888 || pixelFormat == CAImage::PixelFormat::RGBA4444)
+    if (pixelFormat == CAImage::PixelFormat::RGBA8888)
     {
-        provider = CGDataProviderCreateWithData(NULL, image->getData(), 4*(image->getPixelsWide())*image->getPixelsHigh(), NULL);
-        
-        imageRef = CGImageCreate(image->getPixelsWide(), image->getPixelsHigh(), 8, 32, 4*(image->getPixelsWide()), colorSpaceRef, kCGBitmapByteOrderDefault, provider, NULL, NO, kCGRenderingIntentDefault);
-        
-        newImage = [UIImage imageWithCGImage:imageRef];
+        imageRef = CGImageCreate(width, height, 8, 32, 4*width, colorSpaceRef, kCGBitmapByteOrderDefault, provider, NULL, NO, kCGRenderingIntentDefault);
+    }
+    else if (pixelFormat == CAImage::PixelFormat::RGB888)
+    {
+        imageRef = CGImageCreate(width, height, 8, 24, 3*width, colorSpaceRef, kCGBitmapByteOrderDefault, provider, NULL, NO, kCGRenderingIntentDefault);
     }
     else
     {
-        provider = CGDataProviderCreateWithData(NULL, image->getData(), 3*(image->getPixelsWide())*image->getPixelsHigh(), NULL);
-        
-        imageRef = CGImageCreate(image->getPixelsWide(), image->getPixelsHigh(), 8, 24, 3*(image->getPixelsWide()), colorSpaceRef, kCGBitmapByteOrderDefault, provider, NULL, NO, kCGRenderingIntentDefault);
-        
-        newImage = [UIImage imageWithCGImage:imageRef];
+        CGDataProviderRelease(provider);
+        return;
     }
-    
+    newImage = [UIImage imageWithCGImage:imageRef];
     CFRelease(imageRef);
     CGColorSpaceRelease(colorSpaceRef);
     CGDataProviderRelease(provider);
