@@ -8,6 +8,7 @@
 #include <string>   // for ssize_t on linux
 #include "CCStdC.h" // for ssize_t on window
 #include "basics/CAObject.h"
+#include "ccTypes.h"
 NS_CC_BEGIN
 
 class CC_DLL CAData : public CAObject

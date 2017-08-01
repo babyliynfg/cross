@@ -1,9 +1,8 @@
 #include "CAFTFontCache.h"
 #include "basics/CAApplication.h"
 #include "platform/CAFileUtils.h"
-#include "platform/CAFTRichFont.h"
+#include "CAFTRichFont.h"
 #include "support/ccUTF8.h"
-#include "CAEmojiFont.h"
 
 
 NS_CC_BEGIN
@@ -13,7 +12,6 @@ CAFTFontCache::CAFTFontCache()
 : m_pCurFontData(NULL)
 {
 	initDefaultFont();
-//    CAEmojiFont::getInstance();
 }
 
 CAFTFontCache::~CAFTFontCache()

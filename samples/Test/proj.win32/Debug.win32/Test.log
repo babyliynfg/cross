@@ -1,0 +1,48 @@
+﻿生成启动时间为 2017/2/27 17:25:52。
+     1>项目“D:\cross\samples\Test\proj.win32\Test.vcxproj”在节点 2 上(Build 个目标)。
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\cross\samples\Test\proj.win32\Debug.win32\Test.exe" /INCREMENTAL /NOLOGO /LIBPATH:D:\cross\samples\Test\proj.win32\Debug.win32\ libExtensions.lib libCrossApp.lib libCocosDenshion.lib pthreadVCE2.lib opengl32.lib glew32.lib libcurl_imp.lib websockets.lib sqlite3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\cross\samples\Test\proj.win32\Debug.win32\Test.pdb" /SUBSYSTEM:WINDOWS,"5.01" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\cross\samples\Test\proj.win32\Debug.win32\Test.lib" /MACHINE:X86 /SAFESEH:NO Debug.win32\AppDelegate.obj
+         Debug.win32\CDUIShowAutoCollectionView.obj
+         Debug.win32\CDWebViewController.obj
+         Debug.win32\CommonHttpManager.obj
+         Debug.win32\ActivityIndicatorViewTest.obj
+         Debug.win32\AlertViewTest.obj
+         Debug.win32\AutoCollectionViewHorizontalTest.obj
+         Debug.win32\AutoCollectionViewVerticalTest.obj
+         Debug.win32\ButtonTest.obj
+         Debug.win32\CollectionViewTest.obj
+         Debug.win32\GifViewTest.obj
+         Debug.win32\ImageViewTest.obj
+         Debug.win32\LabelTest.obj
+         Debug.win32\ListViewTest.obj
+         Debug.win32\PageViewTest.obj
+         Debug.win32\PickerViewTest.obj
+         Debug.win32\ProgressTest.obj
+         Debug.win32\RenderImageTest.obj
+         Debug.win32\Scale9ImageViewTest.obj
+         Debug.win32\ScrollViewTest.obj
+         Debug.win32\SegmentedControlTest.obj
+         Debug.win32\SliderTest.obj
+         Debug.win32\StepperTest.obj
+         Debug.win32\SwitchTest.obj
+         Debug.win32\TabBarControllerTest.obj
+         Debug.win32\TableViewTest.obj
+         Debug.win32\TextFieldTest.obj
+         Debug.win32\TextViewTest.obj
+         Debug.win32\VideoPlayerControlViewTest.obj
+         Debug.win32\ViewAnimationTest.obj
+         Debug.win32\WaterfallViewTest.obj
+         Debug.win32\WebViewTest.obj
+         Debug.win32\MenuViewController.obj
+         Debug.win32\RootWindow.obj
+         Debug.win32\main.obj
+         D:\cross\samples\Test\proj.win32\Debug.win32\libCocosDenshion.lib
+         D:\cross\samples\Test\proj.win32\Debug.win32\libCrossApp.lib
+         D:\cross\samples\Test\proj.win32\Debug.win32\libExtensions.lib
+            正在创建库 D:\cross\samples\Test\proj.win32\Debug.win32\Test.lib 和对象 D:\cross\samples\Test\proj.win32\Debug.win32\Test.exp
+         Test.vcxproj -> D:\cross\samples\Test\proj.win32\Debug.win32\Test.exe
+     1>已完成生成项目“D:\cross\samples\Test\proj.win32\Test.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:01.88

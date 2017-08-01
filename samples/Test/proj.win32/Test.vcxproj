@@ -67,19 +67,19 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\curl\include\win32;$(ProjectDir)..\..\..\external;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes;..;..\Classes\Control;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\freetype;$(ProjectDir)..\..\..\CocosDenshion\include;..\Classes\Control;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libExtensions.lib;libCrossApp.lib;libCocosDenshion.lib;pthreadVCE2.lib;opengl32.lib;glew32.lib;libcurl_imp.lib;websockets.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libCrossApp.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libcurl_imp.lib;pthreadVCE2.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -100,18 +100,18 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\kazmath\include;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\SDL\include;$(ProjectDir)..\..\..\CrossApp\the_third_party\freetype\include;$(ProjectDir)..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\extensions;..\Classes\Control;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\CrossApp;$(ProjectDir)..\..\..\CrossApp\platform\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\OGLES;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\pthread;$(ProjectDir)..\..\..\CrossApp\the_third_party\win32\freetype;$(ProjectDir)..\..\..\CocosDenshion\include;..\Classes\Control;..\Classes;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libExtensions.lib;libCrossApp.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libcurl_imp.lib;pthreadVCE2.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libCrossApp.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libcurl_imp.lib;pthreadVCE2.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -131,16 +131,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\CDUIShowAutoCollectionView.cpp" />
-    <ClCompile Include="..\Classes\CDWebViewController.cpp" />
     <ClCompile Include="..\Classes\CommonHttpManager.cpp" />
     <ClCompile Include="..\Classes\Control\ActivityIndicatorViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\AlertViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\AutoCollectionViewHorizontalTest.cpp" />
     <ClCompile Include="..\Classes\Control\AutoCollectionViewVerticalTest.cpp" />
+    <ClCompile Include="..\Classes\Control\AVPlayerViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\ButtonTest.cpp" />
     <ClCompile Include="..\Classes\Control\CheckboxTest.cpp" />
+    <ClCompile Include="..\Classes\Control\ClippingViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\CollectionViewTest.cpp" />
+    <ClCompile Include="..\Classes\Control\DrawViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\GifViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\ImageViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\LabelTest.cpp" />
@@ -156,32 +157,32 @@
     <ClCompile Include="..\Classes\Control\SliderTest.cpp" />
     <ClCompile Include="..\Classes\Control\StepperTest.cpp" />
     <ClCompile Include="..\Classes\Control\SwitchTest.cpp" />
-    <ClCompile Include="..\Classes\Control\TabBarControllerTest.cpp" />
+    <ClCompile Include="..\Classes\Control\TabBarTest.cpp" />
     <ClCompile Include="..\Classes\Control\TableViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\TextFieldTest.cpp" />
     <ClCompile Include="..\Classes\Control\TextViewTest.cpp" />
-    <ClCompile Include="..\Classes\Control\VideoPlayerControlViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\ViewAnimationTest.cpp" />
     <ClCompile Include="..\Classes\Control\WaterfallViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\WebViewTest.cpp" />
+    <ClCompile Include="..\Classes\FirstViewController.cpp" />
     <ClCompile Include="..\Classes\MenuViewController.cpp" />
+    <ClCompile Include="..\Classes\MyWebViewController.h.cpp" />
     <ClCompile Include="..\Classes\RootWindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\AppMacros.h" />
-    <ClInclude Include="..\Classes\CDData.h" />
-    <ClInclude Include="..\Classes\CDUIShowAutoCollectionView.h" />
-    <ClInclude Include="..\Classes\CDWebViewController.h" />
     <ClInclude Include="..\Classes\CommonHttpManager.h" />
     <ClInclude Include="..\Classes\Control\ActivityIndicatorViewTest.h" />
     <ClInclude Include="..\Classes\Control\AlertViewTest.h" />
     <ClInclude Include="..\Classes\Control\AutoCollectionViewHorizontalTest.h" />
     <ClInclude Include="..\Classes\Control\AutoCollectionViewVerticalTest.h" />
+    <ClInclude Include="..\Classes\Control\AVPlayerViewTest.h" />
     <ClInclude Include="..\Classes\Control\ButtonTest.h" />
     <ClInclude Include="..\Classes\Control\CheckboxTest.h" />
+    <ClInclude Include="..\Classes\Control\ClippingViewTest.h" />
     <ClInclude Include="..\Classes\Control\CollectionViewTest.h" />
+    <ClInclude Include="..\Classes\Control\DrawViewTest.h" />
     <ClInclude Include="..\Classes\Control\GifViewTest.h" />
     <ClInclude Include="..\Classes\Control\ImageViewTest.h" />
     <ClInclude Include="..\Classes\Control\LabelTest.h" />
@@ -197,15 +198,16 @@
     <ClInclude Include="..\Classes\Control\SliderTest.h" />
     <ClInclude Include="..\Classes\Control\StepperTest.h" />
     <ClInclude Include="..\Classes\Control\SwitchTest.h" />
-    <ClInclude Include="..\Classes\Control\TabBarControllerTest.h" />
+    <ClInclude Include="..\Classes\Control\TabBarTest.h" />
     <ClInclude Include="..\Classes\Control\TableViewTest.h" />
     <ClInclude Include="..\Classes\Control\TextFieldTest.h" />
     <ClInclude Include="..\Classes\Control\TextViewTest.h" />
-    <ClInclude Include="..\Classes\Control\VideoPlayerControlViewTest.h" />
     <ClInclude Include="..\Classes\Control\ViewAnimationTest.h" />
     <ClInclude Include="..\Classes\Control\WaterfallViewTest.h" />
     <ClInclude Include="..\Classes\Control\WebViewTest.h" />
+    <ClInclude Include="..\Classes\FirstViewController.h" />
     <ClInclude Include="..\Classes\MenuViewController.h" />
+    <ClInclude Include="..\Classes\MyWebViewController.h" />
     <ClInclude Include="..\Classes\RootWindow.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
@@ -213,13 +215,18 @@
     <ProjectReference Include="..\..\..\CocosDenshion\proj.win32\CocosDenshion.vcxproj">
       <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\CrossApp\proj.win32\CrossApp.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\extensions\proj.win32\libExtensions.vcxproj">
-      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

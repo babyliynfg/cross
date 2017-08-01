@@ -53,11 +53,7 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
         JS::RootedObject parent(cx, const_cast<JSObject*>(typeProxy->parentProto.get()));
         JS::RootedObject js_obj(cx, JS_NewObject(cx, typeProxy->jsclass, proto, parent));
         proxy = jsb_new_proxy(native_obj, js_obj);
-#ifdef DEBUG
-        AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
-#else
         AddObjectRoot(cx, &proxy->obj);
-#endif
         return proxy;
     } else {
         return proxy;

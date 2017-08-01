@@ -43,7 +43,10 @@ public:
     
     CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
     
-    CC_PROPERTY(CAView*, m_pBackgroundView, BackgroundView);
+	CC_DEPRECATED_ATTRIBUTE void setBackgroundView(CAView *var);
+	CC_DEPRECATED_ATTRIBUTE CAView* getBackgroundView();
+
+	void setBackgroundImage(CAImage* image, bool isScale9);
 
     CC_SYNTHESIZE_PASS_BY_REF(std::string, m_sReuseIdentifier, ReuseIdentifier);
 
@@ -87,7 +90,7 @@ protected:
     
     void parser();
     
-private:
+protected:
 
     using CAView::init;
     
@@ -97,6 +100,8 @@ private:
     
     using CAView::initWithLayout;
     
+	CAView* m_pBackgroundView;
+
     CAUIEditorParser* m_pParser;
     
     CAControl::State m_eState;

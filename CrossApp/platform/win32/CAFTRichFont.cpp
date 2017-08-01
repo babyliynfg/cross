@@ -4,7 +4,6 @@
 #include "platform/CAFileUtils.h"
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
-#include "CAEmojiFont.h"
 
 
 NS_CC_BEGIN
@@ -27,7 +26,7 @@ CAFTRichFont::~CAFTRichFont()
 }
 
 
-CAImage* CAFTRichFont::initWithString(std::vector<LabelElement>& labels, const DSize& sz, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol)
+CAImage* CAFTRichFont::initWithString(const std::vector<CARichLabel::Element>& labels, const DSize& sz, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol)
 {
 	destroyAllLines();
 
@@ -46,22 +45,13 @@ CAImage* CAFTRichFont::initWithString(std::vector<LabelElement>& labels, const D
 		return NULL;
 	}
 
-	for (int i = 0, j = 0; i < labels.size(); i++)
-	{
-		if (labels[i].nHyperlink == 0)
-			continue;
-		labels[i].vHyperlinkRects = m_vHyperlinkRects[j++];
-	}
-
+	CAData* data = CAData::create();
+	data->fastSet(pData, width * height * 4);
 	CAImage* image = new CAImage();
-	if (!image->initWithRawData(pData, CAImage::PixelFormat_RGBA8888, width, height))
+	if (!image->initWithRawData(data, CAImage::PixelFormat::RGBA8888, width, height))
 	{
 		CC_SAFE_RELEASE_NULL(image);
 	}
-	delete[]pData;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
-	image->releaseData();
-#endif
 	image->autorelease();
 	return image;
 }
@@ -105,32 +95,32 @@ void CAFTRichFont::destroyAllLines()
 	m_pCurrentLine = NULL;
 }
 
-void CAFTRichFont::initGlyphs(const std::vector<LabelElement>& labels)
+void CAFTRichFont::initGlyphs(const std::vector<CARichLabel::Element>& labels)
 {
-	std::vector<LabelElement> labeltexts;
+	std::vector<CARichLabel::Element> labeltexts;
 	for (int i = 0; i < labels.size(); i++)
 	{
-		const LabelElement& label = labels[i];
+		const CARichLabel::Element& label = labels[i];
 
-		const std::string& line = label.cszText;
+		const std::string& line = label.text;
 
 		size_t pos = 0;
 		size_t first = line.find('\n');
 		while (first != std::string::npos)
 		{
-			labeltexts.push_back(LabelElement(line.substr(pos, first - pos), label.font, label.nHyperlink));
+			labeltexts.push_back(CARichLabel::Element(line.substr(pos, first - pos), label.font));
 			initGlyphsLine(labeltexts);
 			labeltexts.clear();
 
 			pos = first + 1;
 			first = line.find('\n', pos);
 		}
-		labeltexts.push_back(LabelElement(line.substr(pos, line.size()), label.font, label.nHyperlink));
+		labeltexts.push_back(CARichLabel::Element(line.substr(pos, line.size()), label.font));
 	}
 	initGlyphsLine(labeltexts);
 }
 
-void CAFTRichFont::initGlyphsLine(const std::vector<LabelElement>& labels)
+void CAFTRichFont::initGlyphsLine(const std::vector<CARichLabel::Element>& labels)
 {
 	if (!labels.empty())
 	{
@@ -143,7 +133,7 @@ void CAFTRichFont::initGlyphsLine(const std::vector<LabelElement>& labels)
 }
 
 
-void CAFTRichFont::initGlyphsLineEx(const std::vector<LabelElement>& labels)
+void CAFTRichFont::initGlyphsLineEx(const std::vector<CARichLabel::Element>& labels)
 {
 	FT_BBox bbox;   // bounding box containing all of the glyphs in the word
 	std::vector<TGlyphEx> glyphs; // glyphs for the word
@@ -186,12 +176,12 @@ void CAFTRichFont::initGlyphsLineEx(const std::vector<LabelElement>& labels)
 	}
 }
 
-FT_Error CAFTRichFont::initWordGlyphs(const std::vector<LabelElement>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
+FT_Error CAFTRichFont::initWordGlyphs(const std::vector<CARichLabel::Element>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
 {
 	glyphs.clear();
 	for (int i = 0; i < labels.size(); i++)
 	{
-		const LabelElement& label = labels[i];
+		const CARichLabel::Element& label = labels[i];
 
 		if (-1 == initWordGlyph(label, glyphs, pen))
 			return -1;
@@ -199,17 +189,17 @@ FT_Error CAFTRichFont::initWordGlyphs(const std::vector<LabelElement>& labels, s
 	return 0;
 }
 
-FT_Error CAFTRichFont::initWordGlyph(const LabelElement& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
+FT_Error CAFTRichFont::initWordGlyph(const CARichLabel::Element& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen)
 {
 	const CAFont& ft = label.font;
-	const std::string& szText = label.cszText;
+	const std::string& szText = label.text;
 	FT_Face face = convertToSPFont(ft);
 	CAColor4B col = ft.color;
 	bool bBold = ft.bold;
 	bool bItalics = ft.italics;
 	bool bDeleteLine = ft.deleteLine;
 	bool bUnderLine = ft.underLine;
-	int iHyperlink = label.nHyperlink;
+	int iHyperlink = 0;
 	int iFontSize = ft.fontSize;
 	int iLineHeight = (int)(((face->size->metrics.ascender) >> 6) - ((face->size->metrics.descender) >> 6));
 	int	italicsDt = iLineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
@@ -261,16 +251,7 @@ FT_Error CAFTRichFont::initWordGlyph(const LabelElement& label, std::vector<TGly
 		glyph->index = glyph_index;
 		if (glyph_index == 0)
 		{
-			if (CAEmojiFont::getInstance()->isEmojiCodePoint(c))
-			{
-				isOpenType = false;
-				glyph->isEmoji = true;
-			}
-			else
-			{
-				glyphs.resize(glyphs.size() - 1);
-				continue;
-			}
+			continue;
 		}
 
 		FT_Face curFace = isOpenType ? CATempTypeFont::getInstance().m_CurFontFace : face;
@@ -552,20 +533,6 @@ void CAFTRichFont::drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vect
 		FT_Glyph image = glyph->image;
 		if (image == NULL)
 		{
-			int iEmojiSize = (glyph->fontSize % 2) ? (glyph->fontSize - 1) : glyph->fontSize;
-
-			CAImage* pEmoji = CAEmojiFont::getInstance()->getEmojiImage((unsigned int)glyph->c, iEmojiSize);
-			if (pEmoji)
-			{
-				pEmoji = CAImage::scaleToNewImageWithImage(pEmoji, DSize(iEmojiSize, iEmojiSize));
-			}
-
-			if (pEmoji)
-			{
-				glyph->x = (FT_Int)(pen->x + glyph->pos.x);
-				glyph->y = (FT_Int)(pen->y - iEmojiSize);
-				draw_emoji(pBuffer, pEmoji, glyph->x, glyph->y, iEmojiSize);
-			}
 			continue;
 		}
 
@@ -586,31 +553,6 @@ void CAFTRichFont::drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vect
 			if (glyph->deleteLine)
 			{
 				draw_line(pBuffer, glyph->col, glyph->x, pen->y - glyph->fontSize / 3, glyph->x + glyph->width, pen->y - glyph->fontSize / 3);
-			}
-		}
-	}
-}
-
-void CAFTRichFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y, int iEmojiSize)
-{
-	FT_Int  x_max = x + iEmojiSize;
-	FT_Int  y_max = y + iEmojiSize;
-
-	int width, height;
-	getTextSize(width, height);
-
-	uint8_t* src = pEmoji->m_pData;
-	for (FT_Int i = y; i < y_max; i++)
-	{
-		for (FT_Int j = x; j < x_max; j++)
-		{
-			if (i < 0 || j < 0 || j >= width || i >= height)
-				continue;
-		
-			FT_Int index = (i * width * 4) + (j * 4);
-			for (int k = 0; k < 4; k++)
-			{
-				pBuffer[index + k] = *src++;
 			}
 		}
 	}

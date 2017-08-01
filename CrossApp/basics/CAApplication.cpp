@@ -672,6 +672,7 @@ void CAApplication::restart()
 
 void CAApplication::reset()
 {
+	this->stopAnimation();
     if (m_pRootWindow)
     {
 #if CC_ENABLE_SCRIPT_BINDING
@@ -680,23 +681,14 @@ void CAApplication::reset()
             CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->releaseScriptObject(this, m_pRootWindow);
         }
 #endif
-        
         m_pRootWindow->onExitTransitionDidStart();
         m_pRootWindow->onExit();
         m_pRootWindow->release();
+		m_pRootWindow = nullptr;
     }
-    
-    m_pRootWindow = nullptr;
-    
     // cleanup scheduler
     getScheduler()->unscheduleAll();
     
-    this->stopAnimation();
-    
-    CC_SAFE_RELEASE_NULL(m_pNotificationView);
-    CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-    // purge all managed caches
-
     AnimationCache::destroyInstance();
     CAHttpClient::destroyAllInstance();
     CADownloadManager::destroyInstance();
@@ -728,12 +720,15 @@ void CAApplication::purgeApplication()
         m_pobOpenGLView->end();
         m_pobOpenGLView = nullptr;
     }
-    
-    // delete CAApplication
-    release();
-    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	release();
     exit(0);
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	std::thread t([=]() {
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		this->release();
+	});
+	t.detach();
 #endif
 }
 

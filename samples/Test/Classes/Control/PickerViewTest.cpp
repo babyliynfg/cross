@@ -104,7 +104,6 @@ void PickerViewTest::viewDidLoad()
        
     }
     
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     else if(m_iIndex == 1)
     {
         CADatePickerView* dpv = CADatePickerView::createWithLayout(DLayout(DHorizontalLayout_NW_C(0.8, 0.5), DVerticalLayout_T_H(200, 400)),CADatePickerView::Mode::Date);
@@ -145,7 +144,6 @@ void PickerViewTest::viewDidLoad()
         dpv5->onSelectRow(CALLBACK_BIND_1(PickerViewTest::dataPickerViewdidSelectRow, this));
     
     }
-#endif
     
     auto btn = CAButton::createWithLayout(DLayout(DHorizontalLayout_NW_C(0.3,0.5), DVerticalLayout_B_H(20 ,50)), CAButton::Type::RoundedRect);
     btn->setTitleForState(CAControl::State::Normal, "Switch Next");
@@ -170,10 +168,8 @@ void PickerViewTest::viewDidUnload()
     // e.g. self.myOutlet = nil;
 }
 
-void PickerViewTest::dataPickerViewdidSelectRow(const struct tm& tm)
+void PickerViewTest::dataPickerViewdidSelectRow(const tm& tm)
 {
-    char temp_time[20];
-    strftime(temp_time, 100, "%F", &tm);
     CCLog("didSelectRow tm: %d-%d-%d",tm.tm_year+1900,tm.tm_mon+1,tm.tm_mday);
 }
 

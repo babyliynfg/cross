@@ -177,12 +177,6 @@
     <ClCompile Include="..\basics\CAScheduler.cpp">
       <Filter>basics</Filter>
     </ClCompile>
-    <ClCompile Include="..\dispatcher\CAIMEDispatcher.cpp">
-      <Filter>dispatcher</Filter>
-    </ClCompile>
-    <ClCompile Include="..\dispatcher\CAKeypadDelegate.cpp">
-      <Filter>dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\dispatcher\CAKeypadDispatcher.cpp">
       <Filter>dispatcher</Filter>
     </ClCompile>
@@ -256,9 +250,6 @@
     <ClCompile Include="..\platform\win32\CADensityDpi.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CAFreeTypeFont.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\ConvertUTF.cpp">
       <Filter>support</Filter>
     </ClCompile>
@@ -283,9 +274,6 @@
     <ClCompile Include="..\view\CAActivityIndicatorView.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CAFTFontCache.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\control\CAPageControl.cpp">
       <Filter>control</Filter>
     </ClCompile>
@@ -304,12 +292,6 @@
     <ClCompile Include="..\view\CAPullToRefreshView.cpp">
       <Filter>view</Filter>
     </ClCompile>
-    <ClCompile Include="..\script_support\CCScriptSupport.cpp">
-      <Filter>script_support</Filter>
-    </ClCompile>
-    <ClCompile Include="..\script_support\JSViewController.cpp">
-      <Filter>script_support</Filter>
-    </ClCompile>
     <ClCompile Include="..\view\CAWebView.cpp">
       <Filter>view</Filter>
     </ClCompile>
@@ -319,9 +301,6 @@
     <ClCompile Include="..\animation\CAViewAnimation.cpp">
       <Filter>animation</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CATempTypeFont.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\view\CADrawingPrimitives.cpp">
       <Filter>view</Filter>
     </ClCompile>
@@ -330,9 +309,6 @@
     </ClCompile>
     <ClCompile Include="..\platform\win32\CAClipboard.cpp">
       <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\animation\CAAnimation.cpp">
-      <Filter>animation</Filter>
     </ClCompile>
     <ClCompile Include="..\view\CATextEditHelper.cpp">
       <Filter>view</Filter>
@@ -379,9 +355,6 @@
     <ClCompile Include="..\support\LocalStorage\LocalStorage.cpp">
       <Filter>support\LocalStorage</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CAEmojiFont.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\support\CAProfiling.cpp">
       <Filter>support</Filter>
     </ClCompile>
@@ -403,9 +376,6 @@
     <ClCompile Include="..\basics\CAThread.cpp">
       <Filter>basics</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CAFTRichFont.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\controller\CAFont.cpp">
       <Filter>controller</Filter>
     </ClCompile>
@@ -414,9 +384,6 @@
     </ClCompile>
     <ClCompile Include="..\view\CACell.cpp">
       <Filter>view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\win32\CAAccelerometer.cpp">
-      <Filter>platform\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\math\CAAffineTransform.cpp">
       <Filter>math</Filter>
@@ -664,6 +631,39 @@
     <ClCompile Include="..\basics\CAColor.cpp">
       <Filter>basics</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\win32\CAFontProcesstor.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAFreeTypeFont.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAFTFontCache.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAFTRichFont.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CATempTypeFont.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAAVPlayerImpl.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CAIMEDispatcher.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\animation\CACustomAnimation.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\view\CAAVPlayerView.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\script_support\CAScriptSupport.cpp">
+      <Filter>script_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\basics\CAData.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -673,9 +673,6 @@
       <Filter>cocoa</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCApplicationProtocol.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCCommon.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCEGLViewProtocol.h">
@@ -765,15 +762,6 @@
     <ClInclude Include="..\basics\CAScheduler.h">
       <Filter>basics</Filter>
     </ClInclude>
-    <ClInclude Include="..\dispatcher\CAIMEDelegate.h">
-      <Filter>dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dispatcher\CAIMEDispatcher.h">
-      <Filter>dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dispatcher\CAKeypadDelegate.h">
-      <Filter>dispatcher</Filter>
-    </ClInclude>
     <ClInclude Include="..\dispatcher\CAKeypadDispatcher.h">
       <Filter>dispatcher</Filter>
     </ClInclude>
@@ -857,9 +845,6 @@
     <ClInclude Include="..\basics\CASTLContainer.h">
       <Filter>basics</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CAFreeTypeFont.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\support\ConvertUTF.h">
       <Filter>support</Filter>
     </ClInclude>
@@ -881,9 +866,6 @@
     <ClInclude Include="..\view\CAActivityIndicatorView.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CAFTFontCache.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\control\CAPageControl.h">
       <Filter>control</Filter>
     </ClInclude>
@@ -902,12 +884,6 @@
     <ClInclude Include="..\view\CAPullToRefreshView.h">
       <Filter>view</Filter>
     </ClInclude>
-    <ClInclude Include="..\script_support\CCScriptSupport.h">
-      <Filter>script_support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\script_support\JSViewController.h">
-      <Filter>script_support</Filter>
-    </ClInclude>
     <ClInclude Include="..\view\CAWebView.h">
       <Filter>view</Filter>
     </ClInclude>
@@ -917,9 +893,6 @@
     <ClInclude Include="..\animation\CAViewAnimation.h">
       <Filter>animation</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CATempTypeFont.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\view\CADrawingPrimitives.h">
       <Filter>view</Filter>
     </ClInclude>
@@ -928,9 +901,6 @@
     </ClInclude>
     <ClInclude Include="..\platform\CAClipboard.h">
       <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\animation\CAAnimation.h">
-      <Filter>animation</Filter>
     </ClInclude>
     <ClInclude Include="..\view\CATextEditHelper.h">
       <Filter>view</Filter>
@@ -981,9 +951,6 @@
       <Filter>support\LocalStorage</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="..\platform\CAEmojiFont.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\support\CAProfiling.h">
       <Filter>support</Filter>
     </ClInclude>
@@ -1014,9 +981,6 @@
     <ClInclude Include="..\basics\CASyncQueue.h">
       <Filter>basics</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CAFTRichFont.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\support\deelx.h">
       <Filter>support</Filter>
     </ClInclude>
@@ -1028,9 +992,6 @@
     </ClInclude>
     <ClInclude Include="..\view\CACell.h">
       <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\win32\CAAccelerometer.h">
-      <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\math\CAAffineTransform.h">
       <Filter>math</Filter>
@@ -1065,16 +1026,10 @@
     <ClInclude Include="..\basics\CAValue.h">
       <Filter>basics</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CAAccelerometerDelegate.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CACommon.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CAFileUtils.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CAGyroDelegate.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CASAXParser.h">
@@ -1306,6 +1261,54 @@
     <ClInclude Include="..\basics\CAColor.h">
       <Filter>basics</Filter>
     </ClInclude>
+    <ClInclude Include="..\platform\CAAVPlayerImpl.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAFontProcesstor.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAFreeTypeFont.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAFTFontCache.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAFTRichFont.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CATempTypeFont.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAIMEDelegate.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\CAIMEDispatcher.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\animation\CACustomAnimation.h">
+      <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\view\CAAVPlayerView.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CAAddressBook.h">
+      <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CADevice.h">
+      <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CAImagePickerController.h">
+      <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\device\CAMotionManager.h">
+      <Filter>device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\script_support\CAScriptSupport.h">
+      <Filter>script_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAData.h">
+      <Filter>basics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\support\Json\lib_json\json_internalarray.inl">
@@ -1455,6 +1458,7 @@
     <None Include="..\renderer\ccShader_UI_Gray.frag">
       <Filter>render</Filter>
     </None>
+    <None Include="..\..\samples\Test_JS\proj.win32\Test-js.vcxproj" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\renderer\CMakeLists.txt">

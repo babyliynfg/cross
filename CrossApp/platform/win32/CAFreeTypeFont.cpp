@@ -3,9 +3,8 @@
 #include "platform/CAFileUtils.h"
 #include "support/ccUTF8.h"
 #include "CATempTypeFont.h"
-#include "CAEmojiFont.h"
 #include <string.h>
-#include "support/device/CADevice.h"
+#include "device/CADevice.h"
 
 
 NS_CC_BEGIN
@@ -116,7 +115,7 @@ _AgaginInitGlyphs:
 		}
 		if (cszTemp.empty())
 		{
-			vAlignment = CAVerticalTextAlignmentTop;
+			vAlignment = CAVerticalTextAlignment::Top;
 		}
 		else
 		{
@@ -134,20 +133,20 @@ _AgaginInitGlyphs:
 	}
 
 	ETextAlign eAlign;
-	if (CAVerticalTextAlignmentTop == vAlignment)
+	if (CAVerticalTextAlignment::Top == vAlignment)
 	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignTop
-        : (CATextAlignmentLeft == hAlignment) ? kAlignTopLeft : kAlignTopRight;
+		eAlign = (CATextAlignment::Center == hAlignment) ? kAlignTop
+        : (CATextAlignment::Left == hAlignment) ? kAlignTopLeft : kAlignTopRight;
 	}
-	else if (CAVerticalTextAlignmentCenter == vAlignment)
+	else if (CAVerticalTextAlignment::Center == vAlignment)
 	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignCenter
-        : (CATextAlignmentLeft == hAlignment) ? kAlignLeft : kAlignRight;
+		eAlign = (CATextAlignment::Center == hAlignment) ? kAlignCenter
+        : (CATextAlignment::Left == hAlignment) ? kAlignLeft : kAlignRight;
 	}
-	else if (CAVerticalTextAlignmentBottom == vAlignment)
+	else if (CAVerticalTextAlignment::Bottom == vAlignment)
 	{
-		eAlign = (CATextAlignmentCenter == hAlignment) ? kAlignBottom
-        : (CATextAlignmentLeft == hAlignment) ? kAlignBottomLeft : kAlignBottomRight;
+		eAlign = (CATextAlignment::Center == hAlignment) ? kAlignBottom
+        : (CATextAlignment::Left == hAlignment) ? kAlignBottomLeft : kAlignBottomRight;
 	}
 	else
 	{
@@ -166,15 +165,14 @@ _AgaginInitGlyphs:
 	m_bItalics = false;
 	m_bUnderLine = false;
 
+	CAData* data = CAData::create();
+	data->fastSet(pData, width * height * 4);
 	CAImage* image = new CAImage();
-	if (!image->initWithRawData(pData, CAImage::PixelFormat_RGBA8888, width, height))
+	if (!image->initWithRawData(data, CAImage::PixelFormat::RGBA8888, width, height))
 	{
         CC_SAFE_RELEASE_NULL(image);
+		return nullptr;
 	}
-	delete[]pData;
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
-    image->releaseData();
-#endif
 	image->autorelease();
 	return image;
 }
@@ -534,21 +532,6 @@ void CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vect
         FT_Glyph image = glyph->image;
 		if (image == NULL)
 		{
-			int iEmojiSize = (m_inFontSize % 2) ? (m_inFontSize - 1) : m_inFontSize;
-
-			CAImage* pEmoji = CAEmojiFont::getInstance()->getEmojiImage((unsigned int)glyph->c, iEmojiSize);
-            if (pEmoji)
-            {
-				pEmoji = CAImage::scaleToNewImageWithImage(pEmoji, DSize(iEmojiSize, iEmojiSize));
-            }
-
-            if (pEmoji)
-            {
-				int dtValue = getEmojiOffset(m_lineHeight);
-				FT_Int x = (FT_Int)(pen->x + glyph->pos.x);
-				FT_Int y = (FT_Int)(pen->y - iEmojiSize) + dtValue;
-				draw_emoji(pBuffer, pEmoji, x, y, iEmojiSize);
-            }
 			continue;
 		}
 		
@@ -564,28 +547,6 @@ void CAFreeTypeFont::drawText(FTLineInfo* pInfo, unsigned char* pBuffer, FT_Vect
             FT_Done_Glyph(image);
         }
     }
-}
-
-void CAFreeTypeFont::draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y, int iEmojiSize)
-{
-	FT_Int  x_max = x + iEmojiSize;
-	FT_Int  y_max = y + iEmojiSize;
-
-	uint8_t* src = pEmoji->m_pData;
-	for (FT_Int i = y; i < y_max; i++)
-	{
-		for (FT_Int j = x; j < x_max; j++)
-		{
-			if (i < 0 || j < 0 || j >= m_width || i >= m_height)
-				continue;
-
-			FT_Int index = (i * m_width * 4) + (j * 4);
-			for (int k = 0; k < 4; k++)
-			{
-				pBuffer[index + k] = *src++;
-			}
-		}
-	}
 }
 
 void CAFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_Int x, FT_Int y)
@@ -887,16 +848,8 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
         glyph->index = glyph_index;
 		if (glyph_index == 0)
 		{
-			if (CAEmojiFont::getInstance()->isEmojiCodePoint(c))
-			{
-				isOpenType = false;
-				glyph->isEmoji = true;
-			}
-			else
-			{
-				glyphs.resize(glyphs.size() - 1);
-				continue;
-			}
+			glyphs.resize(glyphs.size() - 1);
+			continue;
 		}
 
 		FT_Face curFace = isOpenType ? CATempTypeFont::getInstance().m_CurFontFace : m_face;

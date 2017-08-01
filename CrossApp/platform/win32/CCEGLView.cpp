@@ -6,7 +6,7 @@
 #include "basics/CAApplication.h"
 #include "dispatcher/CATouch.h"
 #include "dispatcher/CATouchDispatcher.h"
-#include "dispatcher/CAIMEDispatcher.h"
+#include "CAIMEDispatcher.h"
 #include "dispatcher/CAKeypadDispatcher.h"
 #include "basics/CAPointExtension.h"
 #include "support/ccUTF8.h"
@@ -788,6 +788,7 @@ bool CCEGLView::isOpenGLReady()
 
 void CCEGLView::end()
 {
+	m_pDelegate = nullptr;
     if (m_hWnd)
     {
 #if(_MSC_VER >= 1600)

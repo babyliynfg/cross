@@ -4,8 +4,8 @@
 #include <cstdlib>
 
 #include "MciPlayer.h"
-#include "CrossApp.h"
-USING_NS_CC;
+//#include "CrossApp.h"
+//USING_NS_CC;
 
 using namespace std;
 
@@ -258,7 +258,8 @@ void SimpleAudioEngine::setEffectsVolume(float volume)
 
 static std::string _FullPath(const char * szPath)
 {
-	return FileUtils::getInstance()->fullPathForFilename(szPath);
+	return "";
+	//return FileUtils::getInstance()->fullPathForFilename(szPath);
 }
 
 unsigned int _Hash(const char *key)

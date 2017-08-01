@@ -304,8 +304,6 @@ bool js_crossapp_CADatePickerView_onSelectRow(JSContext *cx, uint32_t argc, jsva
                     larg0["tm_wday"] = var.tm_wday;
                     larg0["tm_yday"] = var.tm_yday;
                     larg0["tm_isdst"] = var.tm_isdst;
-                    larg0["tm_gmtoff"] = (int)var.tm_gmtoff;
-                    larg0["tm_zone"] = (const char*)var.tm_zone;
                     largv[0] = cavaluemap_to_jsval(cx, larg0);
                     JS::RootedValue rval(cx);
                     bool succeed = func->invoke(1, &largv[0], &rval);

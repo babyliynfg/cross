@@ -17,7 +17,7 @@ NS_CC_BEGIN
 class CC_DLL CADatePickerView : public CAControl, public CAPickerViewDataSource, public CAPickerViewDelegate {
     
 public:
-    
+
     enum class Mode : int
     {
         Time = 0,           // Displays hour, minute, and optionally AM/PM designation depending on the locale setting (e.g. 6 | 53 | PM)
@@ -28,7 +28,7 @@ public:
     
 public:
 
-    CC_LISTENING_FUNCTION(void(const struct tm&), SelectRow)
+    CC_LISTENING_FUNCTION(void(const tm&), SelectRow)
         
 public:
     static CADatePickerView* create(CADatePickerView::Mode m_mode);
@@ -40,8 +40,8 @@ public:
     virtual ~CADatePickerView();
     
     virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
+	virtual void onEnterTransitionDidFinish();
+	virtual void onExitTransitionDidStart();
     
         
     void setBackgroundImage(CAImage* image, bool isScale9 = false);
@@ -55,7 +55,7 @@ protected:
     virtual unsigned int numberOfRowsInComponent(CAPickerView* pickerView, unsigned int component);
     virtual float widthForComponent(CAPickerView* pickerView, unsigned int component);
     virtual float rowHeightForComponent(CAPickerView* pickerView, unsigned int component);
-    virtual const char* titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
+    std::string titleForRow( unsigned int row, unsigned int component);
     
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component);
     void setMode(CADatePickerView::Mode mode);
@@ -65,7 +65,7 @@ private:
     CAImage* m_obBackgroundImageForSelected;
         
     CAPickerView* m_pPickerView;
-    struct tm m_tTM;
+    tm m_tTM;
     CADatePickerView::Mode m_eMode;
     bool isSetDate;
 };

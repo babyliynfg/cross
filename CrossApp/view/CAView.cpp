@@ -1337,11 +1337,12 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
             float maxY = ceilf(max.m[13] + 0.5f);
             
             auto glview = m_pApplication->getOpenGLView();
-            m_bScissorRestored = glview->isScissorEnabled();
+
+			m_bScissorRestored = glview->isScissorEnabled();
             if (m_bScissorRestored)
             {
                 m_obSupviewScissorRect = glview->getScissorRect();
-                
+
                 float x1 = MAX(minX, m_obSupviewScissorRect.getMinX());
                 float y1 = MAX(minY, m_obSupviewScissorRect.getMinY());
                 float x2 = MIN(maxX, m_obSupviewScissorRect.getMaxX());

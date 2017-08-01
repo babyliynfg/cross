@@ -10,14 +10,13 @@
 #include "MyWebViewController.h"
 #include "FirstViewController.h"
 
-static const wchar_t* menuList[4] =
-{
-    L"CrossApp官网", L"9秒官网"
-};
+#pragma execution_character_set("utf-8")
+
+static const wchar_t* menuList[4] = { L"CrossApp", L"9" };
 
 MenuViewController::MenuViewController()
 {
-    CANotificationCenter::getInstance()->addObserver(CALLBACK_BIND_1(MenuViewController::changeStatusBarOrientation, this), this, CAApplicationDidChangeStatusBarOrientationNotification);
+	CANotificationCenter::getInstance()->addObserver(CALLBACK_BIND_1(MenuViewController::changeStatusBarOrientation, this), this, CAApplicationDidChangeStatusBarOrientationNotification);
 }
 
 MenuViewController::~MenuViewController()
@@ -42,7 +41,6 @@ void MenuViewController::viewDidLoad()
         tableViewLayout = DLayout(DHorizontalLayoutFill, DVerticalLayout_T_B(450, 0));
         logoLayout = DLayout(DHorizontalLayout_W_C(261, 0.5), DVerticalLayout_T_H(120, 258));
     }
-    
     
     m_pTableView = CATableView::createWithLayout(tableViewLayout);
     m_pTableView->setAllowsSelection(true);

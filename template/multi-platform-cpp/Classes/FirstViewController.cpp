@@ -29,7 +29,7 @@ void FirstViewController::viewDidLoad()
     
     CALabel* label = CALabel::createWithLayout(labelLayout);
     label->setFont(font);
-    label->setText("Hello World!");
+    label->setText("CrossApp");
     label->setTextAlignment(CATextAlignment::Center);
     label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     this->getView()->addSubview(label);

@@ -10,7 +10,11 @@
 #include "cocoa/CACalendar.h"
 #include "basics/CAApplication.h"
 #include "view/CAScale9ImageView.h"
+#include "support/ccUTF8.h"
 #include <sstream>
+#include <iomanip>
+#include <ctime>
+#include <chrono>
 
 NS_CC_BEGIN
 
@@ -85,26 +89,35 @@ bool CADatePickerView::init()
     m_pPickerView->setFontSizeNormal(40);
     m_pPickerView->setFontSizeSelected(40);
     this->addSubview(m_pPickerView);
+
+	m_pPickerView->onTitleForRow(CALLBACK_BIND_2(CADatePickerView::titleForRow, this));
     
-    struct timeval tp = {0};
-    gettimeofday(&tp,  NULL);
-    time_t time = tp.tv_sec;
-    m_tTM = *localtime(&time);
+	std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    auto tm = std::localtime(&t);
+	m_tTM.tm_sec = tm->tm_sec;
+	m_tTM.tm_min = tm->tm_min;
+	m_tTM.tm_hour = tm->tm_hour;
+	m_tTM.tm_mday = tm->tm_mday;
+	m_tTM.tm_mon = tm->tm_mon;
+	m_tTM.tm_year = tm->tm_year;
+	m_tTM.tm_wday = tm->tm_wday;
+	m_tTM.tm_yday = tm->tm_yday;
+	m_tTM.tm_isdst = tm->tm_isdst;
     return true;
 }
 
-void CADatePickerView::onEnter()
+void CADatePickerView::onEnterTransitionDidFinish()
 {
-    CAControl::onEnter();
+	CAControl::onEnterTransitionDidFinish();
     if (!isSetDate)
     {
         setMode(m_eMode);
     }
 }
 
-void CADatePickerView::onExit()
+void CADatePickerView::onExitTransitionDidStart()
 {
-    CAControl::onExit();
+	CAControl::onExitTransitionDidStart();
 }
 
 void CADatePickerView::setBackgroundImage(CAImage* image, bool isScale9)
@@ -141,7 +154,7 @@ void CADatePickerView::setBackgroundImageForSelected(CAImage* image, bool isScal
 void CADatePickerView::setDate(int year, int month, int day, bool animated)
 {
     isSetDate = true;
-    if (year>=1900 && year<=2030) {
+    if (year>=1900 && year<=2100) {
         m_tTM.tm_year = year-1900;
     }else{
         isSetDate = false;
@@ -234,7 +247,7 @@ unsigned int CADatePickerView::numberOfRowsInComponent(CAPickerView* pickerView,
             
         case CADatePickerView::Mode::Date:
             if (component == 0) { // year
-                row = 2030 - 1900+1; // 1900~2030
+                row = 2100 - 1900+1; // 1900~2100
             } else if (component == 1) { // month
                 row = 12;
             } else { // day
@@ -307,11 +320,10 @@ float CADatePickerView::widthForComponent(CAPickerView* pickerView, unsigned int
 
 float CADatePickerView::rowHeightForComponent(CAPickerView* pickerView, unsigned int component)
 {
-    static float rowHeight = 80;
-    return rowHeight;
+    return 80;
 }
 
-const char* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
+std::string CADatePickerView::titleForRow(unsigned int row, unsigned int component)
 {
     char buff[256] = {0};
     switch (m_eMode)
@@ -319,20 +331,20 @@ const char* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int
         case CADatePickerView::Mode::CountDownTimer:
             if (component == 0)
             { // hour
-                sprintf(buff, "%d\u5c0f\u65f6", row);
+                sprintf(buff, "%d%s", row, UTF8("\u5c0f\u65f6"));
             } else { // min
-                sprintf(buff, "%d\u5206\u949f", row);
+				sprintf(buff, "%d%s", row, UTF8("\u5206\u949f"));
             }
             break;
             
         case CADatePickerView::Mode::Date:
             if (component == 0)
             { // years
-                sprintf(buff, "%d\u5e74", row + 1900);
+				sprintf(buff, "%d%s", row + 1900, UTF8("\u5e74"));
             } else if (component == 1) { // month
-                sprintf(buff, "%d\u6708", row + 1);
+				sprintf(buff, "%d%s", row + 1, UTF8("\u6708"));
             } else { // day
-                sprintf(buff, "%d\u65e5", row + 1);
+				sprintf(buff, "%d%s", row + 1, UTF8("\u65e5"));
             }
             break;
             
@@ -347,8 +359,18 @@ const char* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int
                 int month = cal->monthOfYear();
                 int date = cal->dayOfMonth();
                 // const char* week_s[] = {"日","一","二","三","四","五","六"};
-				const char* week_s[] = {"\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"};
-                sprintf(buff, "%d\u6708%d\u65e5  \u5468%s", month, date, week_s[week]);
+				const std::string week_s[7] = {
+
+					UTF8("\u5468\u65e5"), 
+					UTF8("\u5468\u4e00"), 
+					UTF8("\u5468\u4e8c"), 
+					UTF8("\u5468\u4e09"),
+					UTF8("\u5468\u56db"), 
+					UTF8("\u5468\u4e94"), 
+					UTF8("\u5468\u516d") 
+				};
+
+				sprintf(buff, "%d%s%d%s  %s", month, UTF8("\u6708"), date, UTF8("\u65e5"), week_s[week].c_str());
             }
             else if (component == 1)
             { // hour
@@ -374,9 +396,7 @@ const char* CADatePickerView::titleForRow(CAPickerView* pickerView, unsigned int
         default:
             break;
     }
-    static std::string ret;
-    ret = std::string(buff);
-    return ret.c_str();
+	return buff;
 }
 
 void CADatePickerView::didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)

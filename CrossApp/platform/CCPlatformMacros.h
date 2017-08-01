@@ -8,7 +8,7 @@
 #include "ccConfig.h"
 #include "CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
-
+#include <functional>
 
 #define CREATE_FUNC(__TYPE__)           \
 static __TYPE__* create()               \

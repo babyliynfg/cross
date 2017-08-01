@@ -9,16 +9,11 @@
 #include "basics/CAScheduler.h"
 NS_CC_BEGIN
 
-//缓冲为空，正在缓冲
 const std::string CAAVPlayer::PlaybackBufferEmpty("PlaybackBufferEmpty");
-//缓冲达到可播放
 const std::string CAAVPlayer::PlaybackLikelyToKeepUp("PlaybackLikelyToKeepUp");
 
-//暂停
 const std::string CAAVPlayer::PlayStatePause("PlayStatePause");
-//播放中
 const std::string CAAVPlayer::PlayStatePlaying("PlayStatePlaying");
-//回放中
 const std::string CAAVPlayer::PlayStatePlayback("PlayStatePlayback");
 
 CAAVPlayer::CAAVPlayer()

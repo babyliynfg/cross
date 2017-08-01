@@ -9,12 +9,14 @@
 #include "CACalendar.h"
 #include <cstdlib>  
 #include <iostream>  
-#include <time.h>  
 #include <stdio.h> 
 
+#include <iomanip>
+#include <ctime>
+#include <chrono>
 
 NS_CC_BEGIN
-
+ 
 CACalendar::CACalendar()
 {
     
@@ -59,13 +61,13 @@ void CACalendar::setCalendar(int year, int month, int day)
     tm.tm_mon = month-1;
     tm.tm_mday = day;
     
-    time_t time = mktime(&tm);
-    m_tDateTime = *localtime(&time);
+	std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	m_tDateTime = *std::localtime(&t);
 }
 
 void CACalendar::setCalendar(time_t time)
 {
-    m_tDateTime = *localtime(&time);
+	m_tDateTime = *std::localtime(&time);
 }
 
 int CACalendar::_compareDate(tm date1, tm date2)
@@ -115,23 +117,23 @@ int CACalendar::_calcDayCount(tm target)
 void CACalendar::addYear(int count)
 {
     m_tDateTime.tm_year += count;
-    time_t time = mktime(&m_tDateTime);
-    m_tDateTime = *localtime(&time);
+    time_t t = std::mktime(&m_tDateTime);
+	m_tDateTime = *std::localtime(&t);
 }
 
 void CACalendar::addMonth(int count)
 {
     m_tDateTime.tm_mon += count;
-    time_t time = mktime(&m_tDateTime);
-    m_tDateTime = *localtime(&time);
+	time_t t = std::mktime(&m_tDateTime);
+	m_tDateTime = *std::localtime(&t);
 
 }
 
 void CACalendar::addDay(int count)
 {
     m_tDateTime.tm_mday += count;
-    time_t time = mktime(&m_tDateTime);
-    m_tDateTime = *localtime(&time);
+	time_t t = std::mktime(&m_tDateTime);
+	m_tDateTime = *std::localtime(&t);
 }
 
 bool CACalendar::_isLeapYear(int y)

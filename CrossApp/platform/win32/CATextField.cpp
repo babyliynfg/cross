@@ -13,7 +13,7 @@
 #include "basics/CAScheduler.h"
 #include "control/CAButton.h"
 #include "CCEGLView.h"
-#include "dispatcher/CAIMEDelegate.h"
+#include "CAIMEDelegate.h"
 #include "CAFreeTypeFont.h"
 #include "CAFTFontCache.h"
 #include "support/ccUTF8.h"
@@ -96,7 +96,7 @@ public:
 			return;
 		}
 
-		if (m_sText.size() + len > m_pTextFieldX->getMaxLength())
+		if (m_sText.size() + len > m_pTextFieldX->getMaxLength() && m_pTextFieldX->getMaxLength() > 0)
 			return;
 		
 		std::string cszAddText;
@@ -529,15 +529,17 @@ public:
 		m_iFontHeight = CAImage::getFontHeight(m_szFontName.c_str(), fontSize);
 
 		DSize size = DSize(0, m_iFontHeight);
-		CAImage* image = CAImage::createWithString(text.c_str(),
+		CAImage* image = CAFTFontCache::getAFTFontCache().initWithString(text.c_str(),
 			cFontColor,
 			m_szFontName.c_str(),
 			fontSize,
-			size,
+			size.width,
+			size.height,
 			CATextAlignment::Left,
 			CAVerticalTextAlignment::Center,
-			true);
+			true, 0, false, false, false, false, nullptr);
 		DRect rect = DRectZero;
+		rect.size = image->getContentSize();
 		if (sPlaceHolder.length() == 0)
 		{
 			this->setImage(image);
@@ -704,11 +706,6 @@ bool CATextField::resignFirstResponder()
     }
 
     bool result = CAControl::resignFirstResponder();
-
-	if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
-	{
-		setMarginImageRight(DSize(10,0), "");
-	}
     return result;
 }
 
@@ -724,11 +721,6 @@ bool CATextField::becomeFirstResponder()
     }
 
 	bool result = CAControl::becomeFirstResponder();
-	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
-	if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
-	{
-		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), map.at("clearImage"));
-	}
     return result;
 }
 
@@ -838,6 +830,14 @@ void CATextField::setContentSize(const DSize& contentSize)
 {
     CAControl::setContentSize(contentSize);
 
+	if (m_eClearBtn == ClearButtonMode::WhileEditing)
+	{
+		const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+		this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), map.at("clearImage"));
+		CAButton* button = (CAButton*)this->getSubviewByTag(1011);
+		button->setImageSize(DSize(m_obContentSize.height, m_obContentSize.height));
+	}
+
 	if (m_pTextField)
 	{
 		DRect r = this->getBounds();
@@ -880,6 +880,28 @@ void CATextField::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CATextField::setClearButtonMode(ClearButtonMode var)
 {
+	if (var == ClearButtonMode::WhileEditing)
+	{
+		const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+		this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), map.at("clearImage"));
+		CAButton* button = (CAButton*)this->getSubviewByTag(1011);
+		button->setImageColorForState(CAControl::State::Highlighted, ccc4Int(0xff666666));
+		button->setImageSize(DSize(m_obContentSize.height, m_obContentSize.height));
+		button->addTarget([&]{
+		
+			if (getText().length() > 0)
+			{
+				this->setText("");
+				this->delayShowImage();
+			}
+		}, CAButton::Event::TouchUpInSide);
+	}
+	else
+	{
+		CAButton* button = (CAButton*)this->getSubviewByTag(1011);
+		this->removeSubview(button);
+		this->setMarginRight(10);
+	}
 	m_eClearBtn = var;
 }
 
@@ -906,16 +928,13 @@ int CATextField::getMarginLeft()
 
 void CATextField::setMarginRight(int var)
 {
-	if (m_eClearBtn == CATextField::ClearButtonMode::None)
-    {
-        m_iMarginRight = var;
-        
-        DRect r = this->getBounds();
-        r.InflateRect(-m_iMarginLeft, 0, -m_iMarginRight, 0);
-        ((CATextFieldWin32*)m_pTextField)->setFrame(r);
-        
-        delayShowImage();
-    }
+	m_iMarginRight = var;
+
+	DRect r = this->getBounds();
+	r.InflateRect(-m_iMarginLeft, 0, -m_iMarginRight, 0);
+	((CATextFieldWin32*)m_pTextField)->setFrame(r);
+
+	delayShowImage();
 }
 
 int CATextField::getMarginRight()
@@ -947,10 +966,10 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
 {
 	setMarginRight(imgSize.width);
 
-	CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
+	CAButton* ima = (CAButton*)this->getSubviewByTag(1011);
 	if (!ima)
 	{
-		ima = CAImageView::create();
+		ima = CAButton::create(CAButton::Type::Custom);
 		ima->setTag(1011);
 		this->addSubview(ima);
 	}
@@ -960,7 +979,7 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
 	layout.vertical.height = imgSize.height;
 	layout.vertical.center = 0.5f;
 	ima->setLayout(layout);
-	ima->setImage(CAImage::create(filePath));
+	ima->setImageForState(CAControl::State::Normal, CAImage::create(filePath));
 }
 
 

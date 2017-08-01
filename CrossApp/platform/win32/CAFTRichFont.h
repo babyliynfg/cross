@@ -63,24 +63,23 @@ public:
 	CAFTRichFont();
 	virtual ~CAFTRichFont();
 
-	CAImage* initWithString(std::vector<LabelElement>& labels, const DSize& sz, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol);
+	CAImage* initWithString(const std::vector<CARichLabel::Element>& labels, const DSize& sz, const CAColor4B& linkCol, const CAColor4B& linkVisitedCol);
 
 protected:
 	void newLine();
 	void endLine();
 	void destroyAllLines();
-	void initGlyphs(const std::vector<LabelElement>& labels);
-	void initGlyphsLine(const std::vector<LabelElement>& labels);
-	void initGlyphsLineEx(const std::vector<LabelElement>& labels);
-	FT_Error initWordGlyphs(const std::vector<LabelElement>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
-	FT_Error initWordGlyph(const LabelElement& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
+	void initGlyphs(const std::vector<CARichLabel::Element>& labels);
+	void initGlyphsLine(const std::vector<CARichLabel::Element>& labels);
+	void initGlyphsLineEx(const std::vector<CARichLabel::Element>& labels);
+	FT_Error initWordGlyphs(const std::vector<CARichLabel::Element>& labels, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
+	FT_Error initWordGlyph(const CARichLabel::Element& label, std::vector<TGlyphEx>& glyphs, FT_Vector& pen);
 	FT_Face convertToSPFont(const CAFont& ft);
 	void compute_bbox(std::vector<TGlyphEx>& glyphs, FT_BBox *abbox);
 	void calcuMultiLines(std::vector<TGlyphEx>& glyphs);
 	void getLineYBBox(std::vector<TGlyphEx>& glyphs, FT_Pos& yPosMin, FT_Pos& yPosMax);
 	unsigned char* getBitmap(int* outWidth, int* outHeight);
 	void drawText(FTLineInfoEx* pInfo, unsigned char* pBuffer, FT_Vector *pen);
-	void draw_emoji(unsigned char* pBuffer, CAImage* pEmoji, FT_Int x, FT_Int y, int iEmojiSize);
 	void draw_bitmap(unsigned char* pBuffer, FT_Bitmap* bitmap, const CAColor4B& col, FT_Int x, FT_Int y);
 	void draw_line(unsigned char* pBuffer, const CAColor4B& col, FT_Int x1, FT_Int y1, FT_Int x2, FT_Int y2);
 	void getTextSize(int& width, int& height);

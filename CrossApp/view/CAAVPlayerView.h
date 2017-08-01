@@ -20,48 +20,48 @@ public:
     
     virtual ~CAAVPlayer();
     
-    static CAAVPlayer *createWithUrl(const std::string& uri);       // 网络url地址
+    static CAAVPlayer *createWithUrl(const std::string& uri);
     
-    static CAAVPlayer *createWithFilePath(const std::string& uri);  // 本地路径
+    static CAAVPlayer *createWithFilePath(const std::string& uri);
     
-    bool initWithUrl(const std::string& uri);                       // 网络url地址
+    bool initWithUrl(const std::string& uri);
     
-    bool initWithFilePath(const std::string& uri);                  // 本地路径
+    bool initWithFilePath(const std::string& uri);
     
-    void play();                                                    // 播放
+    void play();
 
-    void pause();                                                   // 暂停
+    void pause();
     
-    void stop();                                                    // 停止
+    void stop();
   
-    float getDuration();                                            // 获取媒体总时间
+    float getDuration();
     
-    float getCurrentTime();                                         // 获取媒体当前时间
+    float getCurrentTime();
     
-    void setCurrentTime(float current);                             // 跳转到指定的时间
+    void setCurrentTime(float current);
     
-    const DSize& getPresentationSize();                             // 获取媒体分辨率
+    const DSize& getPresentationSize();
     
 public:
     
-    CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime);   // 监听播放进度
+    CC_LISTENING_FUNCTION(void(float current, float duratuon), PeriodicTime);
     
-    CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime);     // 监听缓冲进度
+    CC_LISTENING_FUNCTION(void(float current, float duratuon), LoadedTime);
     
-    CC_LISTENING_FUNCTION(void(), DidPlayToEndTime);                            // 监听播放完毕
+    CC_LISTENING_FUNCTION(void(), DidPlayToEndTime);
     
-    CC_LISTENING_FUNCTION(void(), TimeJumped);                                  // 监听快进或者慢进或者跳过某段播放
+    CC_LISTENING_FUNCTION(void(), TimeJumped);
     
     typedef std::string PlayBufferLoadingState;
-    static const std::string PlaybackBufferEmpty;                               //缓冲为空，正在缓冲
-    static const std::string PlaybackLikelyToKeepUp;                            //缓冲达到可播放
-    CC_LISTENING_FUNCTION(void(const PlayBufferLoadingState&), PlayBufferLoadingState);    // 监听缓冲状态
+	static const PlayBufferLoadingState PlaybackBufferEmpty;
+	static const PlayBufferLoadingState PlaybackLikelyToKeepUp;
+    CC_LISTENING_FUNCTION(void(const PlayBufferLoadingState&), PlayBufferLoadingState);
     
     typedef std::string PlayState;
-    static const std::string PlayStatePause;                                    //暂停
-    static const std::string PlayStatePlaying;                                  //播放中
-    static const std::string PlayStatePlayback;                                 //回放中
-    CC_LISTENING_FUNCTION(void(const PlayState&), PlayState);                 // 监听播放状态
+	static const PlayState PlayStatePause;
+	static const PlayState PlayStatePlaying;
+	static const PlayState PlayStatePlayback;
+    CC_LISTENING_FUNCTION(void(const PlayState&), PlayState);
 
 protected:
     

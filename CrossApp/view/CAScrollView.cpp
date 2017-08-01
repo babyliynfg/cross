@@ -61,6 +61,7 @@ CAScrollView::CAScrollView()
 
 CAScrollView::~CAScrollView()
 {
+	CACustomAnimation::unschedule("contentOffset:" + m_s__StrID);
     CC_SAFE_RELEASE(m_pHeaderRefreshView);
     CC_SAFE_RELEASE(m_pFooterRefreshView);
     m_vChildInThis.clear();

@@ -1555,7 +1555,7 @@ jsval std_u16String_to_jsval(JSContext* cx, const std::u16string& v)
     jsval ret = JSVAL_NULL;
     
     size_t utf16_size = v.length();
-    const jschar* strUTF16 = v.c_str();
+	const jschar* strUTF16 = (const jschar*)v.c_str();
     
     if (strUTF16 && utf16_size > 0) {
         JSString* str = JS_NewUCStringCopyN(cx, strUTF16, (size_t)utf16_size);
@@ -1593,19 +1593,6 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length)
     
     jsval ret = JSVAL_NULL;
 
-#if defined(_MSC_VER) && (_MSC_VER <= 1800)
-
-    int utf16_size = 0;
-    const jschar* strUTF16 = (jschar*)cc_utf8_to_utf16(v, (int)length, &utf16_size);
-    
-    if (strUTF16 && utf16_size > 0) {
-        JSString* str = JS_NewUCStringCopyN(cx, strUTF16, (size_t)utf16_size);
-        if (str) {
-            ret = STRING_TO_JSVAL(str);
-        }
-        delete[] strUTF16;
-    }
-#else
     std::u16string strUTF16;
     bool ok = StringUtils::UTF8ToUTF16(std::string(v, length), strUTF16);
     
@@ -1615,7 +1602,6 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length)
             ret = STRING_TO_JSVAL(str);
         }
     }
-#endif
 
     return ret;
 }

@@ -13,7 +13,7 @@
 #include "platform/CAClipboard.h"
 #include "animation/CAViewAnimation.h"
 #include "basics/CAScheduler.h"
-#include "dispatcher/CAIMEDelegate.h"
+#include "CAIMEDelegate.h"
 #include "view/CAScrollView.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
@@ -61,7 +61,9 @@ public:
 		m_pContainerView->setHorizontalScrollEnabled(false);
 		m_pContainerView->setBounceHorizontal(false);
 		m_pContainerView->setHaveNextResponder(true);
-		m_pContainerView->setBackgroundColor(CAColor4B::CLEAR);
+		m_pContainerView->setBackgroundImage(CAImage::createWithColor4B(CAColor4B::CLEAR));
+		m_pContainerView->setShowsScrollIndicators(false);
+		m_pContainerView->switchPCMode(true);
 		this->addSubview(m_pContainerView);
 
 		m_pImageView = new CAImageView();
@@ -223,7 +225,7 @@ public:
 
 		int iCurLine = 0; int iCurPosX = 0;
 		calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*iCurLine + m_iLineHeight / 2 + 5));
 		showCursorMark();
 
 		m_curSelCharRange = std::pair<int, int>(m_iCurPos, m_iCurPos);
@@ -241,7 +243,7 @@ public:
 
 		int iCurLine = 0; int iCurPosX = 0;
 		calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*iCurLine + m_iLineHeight / 2 + 5));
 		showCursorMark();
 
 		m_curSelCharRange = std::pair<int, int>(m_iCurPos, m_iCurPos);
@@ -300,7 +302,7 @@ public:
 	}
 	void updateFontSize()
 	{
-		m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_pCATextView->getFontSize());
+		m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_pCATextView->getFontSize()) * 0.8;
 	}
 	
 	bool execCurSelCharRange()
@@ -409,7 +411,7 @@ public:
 				s.erase(0, 1);
 			}
 			cCurPosition.x = getStringLength(s);
-			cCurPosition.y = (m_iLineHeight + fLineSpaceValue)*iCurLine + fHalfLineHeight;
+			cCurPosition.y = (m_iLineHeight + fLineSpaceValue)*iCurLine + fHalfLineHeight + 5;
 		}
 
 		if (m_pCursorMark)
@@ -427,7 +429,7 @@ public:
 	}
 	int getCurrentByPointY(int y)
 	{
-		int iCurLine = y / (m_iLineHeight*1.25f);
+		int iCurLine = y / (m_iLineHeight);
 		if (m_vLinesTextView.empty())
 		{
 			iCurLine = 0;
@@ -503,21 +505,23 @@ public:
 		if (!s2.empty() && s2[0] == '\n') s2.erase(0, 1);
 		int l2 = getStringLength(s2);
 
+		float height = m_iLineHeight * 1.25f;
+
 		std::vector<DRect> vr;
 		if (t1.first == t2.first)
 		{
-			vr.push_back(DRect(l1, m_iLineHeight*1.25f*t1.first, l2 - l1, m_iLineHeight));
+			vr.push_back(DRect(l1, height*t1.first - 1, l2 - l1, height + 2));
 		}
 		else
 		{
-			vr.push_back(DRect(l1, m_iLineHeight*1.25f*t1.first, size.width - l1, m_iLineHeight*1.25f));
+			vr.push_back(DRect(l1, height*t1.first - 1, size.width - l1, height + 2));
 
 			int i = t1.first + 1;
 			for (; i < t2.first; i++)
 			{
-				vr.push_back(DRect(0, m_iLineHeight*1.25f*i, size.width, m_iLineHeight*1.25f));
+				vr.push_back(DRect(0, height*i - 1, size.width, height + 2));
 			}
-			vr.push_back(DRect(0, m_iLineHeight*1.25f*i, l2, m_iLineHeight));
+			vr.push_back(DRect(0, height*i - 1, l2, height + 2));
 		}
 		return vr;
 	}
@@ -556,7 +560,7 @@ public:
 
 		int iCurLine = 0; int iCurPosX = 0;
 		calculateSelChars(point, iCurLine, iCurPosX, m_iCurPos);
-		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*iCurLine + m_iLineHeight / 2 + 5));
 		showCursorMark();
 		m_pCurPosition = m_pCursorMark->getCenterOrigin();
 
@@ -570,7 +574,7 @@ public:
 	{
 		int iCurLine = 0; int iCurPosX = 0;
 		calculateSelChars(pt, iCurLine, iCurPosX, m_iCurPos);
-		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*1.25f*iCurLine + m_iLineHeight / 2));
+		m_pCursorMark->setCenterOrigin(DPoint(iCurPosX, m_iLineHeight*iCurLine + m_iLineHeight / 2 + 5));
 		showCursorMark();
 		m_pCurPosition = m_pCursorMark->getCenterOrigin();
 
@@ -596,7 +600,7 @@ private:
 	std::vector<TextViewLineInfo> m_vLinesTextView;
 	std::pair<int, int> m_curSelCharRange;
 	int m_iCurPos;
-	int m_iLineHeight;
+	float m_iLineHeight;
 	DPoint m_pCurPosition;
 	bool m_bCallbackTextChanged;
 	std::string m_szFontName;

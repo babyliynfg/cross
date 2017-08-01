@@ -52,7 +52,6 @@ RootWindow::RootWindow()
 
 RootWindow::~RootWindow()
 {
-    CAApplication::getApplication()->getKeypadDispatcher()->onBackClicked(nullptr);
 }
 
 bool RootWindow::init()

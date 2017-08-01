@@ -1,10 +1,3 @@
-//
-//  CAGyroscope.cpp
-//  CrossApp
-//
-//  Created by 秦乐 on 2017/2/20.
-//  Copyright © 2017年 . All rights reserved.
-//
 
 #include "../CAMotionManager.h"
 #include "basics/CAApplication.h"
@@ -19,9 +12,12 @@ CAMotionManager::~CAMotionManager()
 {
 }
 
+CAMotionManager* CAMotionManager::getInstance()
+{
+	return CAApplication::getApplication()->getMotionManager();
+}
 
-
-void CAMotionManager::startGyroscope(const std::function<void(const CAMotionManager::Date&)>& callback)
+void CAMotionManager::startGyroscope(const std::function<void(const CAMotionManager::Data&)>& callback)
 {
 
 }

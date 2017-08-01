@@ -53,11 +53,11 @@ public:
     
     bool init() { return true; }
     
-    void release(void);
+    virtual void release(void);
     
-    CAObject* retain(void);
+	virtual CAObject* retain(void);
     
-    CAObject* autorelease(void);
+	virtual CAObject* autorelease(void);
     
     bool isSingleReference(void) const;
     

@@ -23,7 +23,7 @@ protected:
     
     void viewDidUnload();
     
-    virtual void dataPickerViewdidSelectRow(const struct tm& tm);
+    virtual void dataPickerViewdidSelectRow(const tm& tm);
     
 public:
     

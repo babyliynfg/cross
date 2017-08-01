@@ -27,7 +27,10 @@ CAObject::CAObject(void)
 
 CAObject::~CAObject(void)
 {
-	CANotificationCenter::getInstance()->removeAllObservers(this);
+	if (CANotificationCenter* notificationCenter = CANotificationCenter::getInstance())
+	{
+		notificationCenter->removeAllObservers(this);
+	}
 	if (CAScheduler* scheduler = CAScheduler::getScheduler())
 	{
 		scheduler->unscheduleAllForTarget(this);;
