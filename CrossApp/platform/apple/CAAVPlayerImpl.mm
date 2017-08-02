@@ -1,6 +1,6 @@
 
 
-#include "../CAAVPlayerImpl.h"
+#include "platform/CAAVPlayerImpl.h"
 #include "view/CAAVPlayerView.h"
 #include "images/CAImage.h"
 #include "basics/CAApplication.h"

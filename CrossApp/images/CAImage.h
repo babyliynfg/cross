@@ -26,7 +26,6 @@
 
 NS_CC_BEGIN
 
-class CAFreeTypeFont;
 class GLProgram;
 class CAColor4B;
 class CC_DLL CAImage : public CAObject

@@ -8,7 +8,10 @@
 #include "ccConfig.h"
 #include "CCPlatformConfig.h"
 #include "CCPlatformDefine.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <functional>
+#endif
 
 #define CREATE_FUNC(__TYPE__)           \
 static __TYPE__* create()               \

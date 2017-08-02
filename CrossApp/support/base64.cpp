@@ -123,7 +123,7 @@ namespace CrossApp
         int outLength = 0;
         //should be enough to store 6-bit buffers in 8-bit buffers
         char* out = (char*)malloc(string.length() / 4 * 3 + 1);
-        if( *out )
+        if( out )
         {
             int ret = _base64Decode(string.c_str(), (int)string.length(), out, &outLength);
             
@@ -141,11 +141,10 @@ namespace CrossApp
                     result[i] = out[i];
                 }
             }
+            free(out);
+            outLength = 0;
         }
-        
-        free(out);
-        outLength = 0;
-        
+
         return result;
     }
     
