@@ -64,7 +64,7 @@ namespace CADevice
     
     float getBatteryLevel();
         
-    void sendLocalNotification(const char* title, const char* content,int time);
+    void sendLocalNotification(const char* title, const char* content, int time);
         
     void openUrl(const std::string &url);
         
