@@ -68,7 +68,7 @@
         <Size name="height" path="0" value="68"/>
     </CAStepper>
     <CATextField name="CATextField">
-        <BackgroundView name="backgroundView_normal" path="1" value="textField_bg.png"/>
+        <BackgroundView name="backgroundView_normal" path="1" value="checkbox1.png"/>
         <Image name="clearImage" path="1" value="clear_button.png"/>
         <Size name="height" path="0" value="0"/>
     </CATextField>

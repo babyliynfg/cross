@@ -52,6 +52,30 @@ RootWindow::RootWindow()
 
 RootWindow::~RootWindow()
 {
+    CATabBarController* tabBarController = new CATabBarController();
+    tabBarController->autorelease();
+    
+    std::vector<CAViewController*> viewControllers;
+    
+    for (size_t i = 0; i < 4; i++)
+    {
+        CAViewController* viewController = new CAViewController();
+        viewController->autorelease();
+        
+        CANavigationController* nav = new CANavigationController();
+        nav->autorelease();
+        
+        CABarButtonItem* item = CABarButtonItem::create("item_"+i, NULL, NULL);
+        nav->setNavigationBarGoBackBarButtonItem(item);
+        
+        nav->initWithRootViewController(viewController);
+        
+        viewControllers.push_back(nav);
+    }
+    
+    tabBarController->initWithViewControllers(viewControllers);
+    
+    rootWindow->setRootViewController(tabBarController);
 }
 
 bool RootWindow::init()

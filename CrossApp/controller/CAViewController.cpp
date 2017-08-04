@@ -289,6 +289,7 @@ CANavigationController::~CANavigationController()
     m_pNavigationBars.clear();
     m_pContainers.clear();
     m_pSecondContainers.clear();
+    CC_SAFE_RELEASE(m_pNavigationBarGoBackBarButtonItem);
     CC_SAFE_RELEASE_NULL(m_pNavigationBarBackgroundImage);
 }
 
@@ -390,6 +391,8 @@ const CAColor4B& CANavigationController::getNavigationBarButtonColor()
 
 void CANavigationController::setNavigationBarGoBackBarButtonItem(CrossApp::CABarButtonItem *var)
 {
+    CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pNavigationBarGoBackBarButtonItem);
     m_pNavigationBarGoBackBarButtonItem = var;
 
     if (m_pNavigationBarGoBackBarButtonItem && !m_pNavigationBars.empty())
