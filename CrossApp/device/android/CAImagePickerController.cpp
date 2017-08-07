@@ -62,6 +62,8 @@ extern "C"
 
 std::function<void(CrossApp::CAImage*)> _imagePickerControllerCallBack;
 
+static CAImagePickerController* s_pImagePickerController = nullptr;
+
 CAImagePickerController::CAImagePickerController(SourceType type)
 : m_eSourceType(type)
 {
@@ -75,14 +77,12 @@ CAImagePickerController::~CAImagePickerController()
 
 CAImagePickerController* CAImagePickerController::create(SourceType type)
 {
-    CAImagePickerController* var = new CAImagePickerController(type);
-    if (var && var->init())
+    if (!s_pImagePickerController)
     {
-        var->autorelease();
-        return var;
+        s_pImagePickerController = new CAImagePickerController(type);
+        s_pImagePickerController->init();
     }
-    CC_SAFE_DELETE(var);
-    return nullptr;
+    return s_pImagePickerController;
 }
 
 bool CAImagePickerController::init()
@@ -146,6 +146,8 @@ extern "C"
                    image->release();
                }
            }
+           
+           CC_SAFE_RELEASE_NULL(s_pImagePickerController);
        });
     }
 }

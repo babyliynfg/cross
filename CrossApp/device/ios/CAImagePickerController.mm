@@ -167,6 +167,7 @@ UIImagePickerController* convert(void* var)
     return (UIImagePickerController*)var;
 }
 
+static CAImagePickerController* s_pImagePickerController = nullptr;
 
 CAImagePickerController::CAImagePickerController(SourceType type)
 : m_eSourceType(type)
@@ -216,14 +217,12 @@ CAImagePickerController::~CAImagePickerController()
 
 CAImagePickerController* CAImagePickerController::create(SourceType type)
 {
-    CAImagePickerController* var = new CAImagePickerController(type);
-    if (var && var->init())
+    if (!s_pImagePickerController)
     {
-        var->autorelease();
-        return var;
+        s_pImagePickerController = new CAImagePickerController(type);
+        s_pImagePickerController->init();
     }
-    CC_SAFE_DELETE(var);
-    return nullptr;
+    return s_pImagePickerController;
 }
 
 bool CAImagePickerController::init()
@@ -257,8 +256,6 @@ void CAImagePickerController::open(const std::function<void(CrossApp::CAImage*)>
             break;
     }
 
-    this->retain();
-
     __picker_callback* c = ((__picker_callback*)convert(m_pOriginal).delegate);
 
     c.callback = [=](CAImage* image)
@@ -278,7 +275,8 @@ void CAImagePickerController::open(const std::function<void(CrossApp::CAImage*)>
         {
             CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(true);
             [convert(m_pOriginal).view removeFromSuperview];
-            this->release();
+            
+            CC_SAFE_RELEASE_NULL(s_pImagePickerController);
         }];
         
         

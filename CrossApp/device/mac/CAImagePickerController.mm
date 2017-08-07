@@ -40,7 +40,7 @@ bool CAImagePickerController::init()
 
 void CAImagePickerController::open(const std::function<void(CrossApp::CAImage*)>& callback)
 {
-
+    
 }
 
 void CAImagePickerController::writeImageToPhoto(CAImage* image, const std::function<void(bool)>& finishCallback, const std::string &imageName)
