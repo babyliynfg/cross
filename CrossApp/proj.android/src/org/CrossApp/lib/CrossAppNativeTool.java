@@ -190,22 +190,24 @@ public class CrossAppNativeTool
 	
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
+    	
+    	Log.d("liuguoyan", "requestCode=" + requestCode) ; 
+    	
         if (resultCode == -1)
         {  
             switch (requestCode) 
             {  
             case 4:  // Photo
             	
-            	final String uriStr = getPath(s_pContext, intent.getData());
+            	final String fileStr = getRealFilePath(s_pContext, intent.getData());
             	
-            	String fileStr = getRealFilePath(s_pContext, intent.getData());
-
-                CrossAppGLSurfaceView.getInstance().queueEvent(new Runnable() {
+                CrossAppActivity.getContext().runOnGLThread(new Runnable() {
 					@Override
 					public void run() {
-		                NativeReturn( uriStr , null );
+						NativeReturn( fileStr , null );
 					}
 				});
+                
                 break;  
             case 1:
             	
