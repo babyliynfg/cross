@@ -118,7 +118,7 @@ CAImage* generateMipmapsWithImageRGB(CAImage* image)
     //    }
     //    else
     {
-        CAImage* newImage = new CAImage();
+        
         unsigned char* data = new unsigned char[new_pitch * new_h];
         // Resample.  Simple average 2x2 --> 1, in-place.
         int	pitch = image->getPixelsWide() * 3;
@@ -126,7 +126,7 @@ CAImage* generateMipmapsWithImageRGB(CAImage* image)
         for (int j = 0; j < new_h; j++)
         {
             unsigned char*	out = ((unsigned char*)data) + j * new_pitch;
-            unsigned char*	in = ((unsigned char*)image->getData()) + (j << 1) * pitch;
+            unsigned char*	in = ((unsigned char*)image->getData()->getBytes()) + (j << 1) * pitch;
             for (int i = 0; i < new_w; i++)
             {
                 int	r, g, b;
@@ -142,10 +142,8 @@ CAImage* generateMipmapsWithImageRGB(CAImage* image)
         }
         CAData* newData = CAData::create();
         newData->fastSet(data, new_pitch * new_h);
-        newImage->initWithRawData(newData, CAImage::PixelFormat::RGB888, new_w, new_h);
-        newImage->autorelease();
-        
-        return newImage;
+
+        return CAImage::createWithRawDataNoCache(newData, CAImage::PixelFormat::RGB888, new_w, new_h);
     }
     return 0;
 }
@@ -164,7 +162,6 @@ CAImage* generateMipmapsWithImageRGBA(CAImage* image)
     //    }
     //    else
     {
-        CAImage* newImage = new CAImage();
         unsigned char* data = new unsigned char[new_pitch * new_h];
         
         // Resample.  Simple average 2x2 --> 1, in-place.
@@ -172,7 +169,7 @@ CAImage* generateMipmapsWithImageRGBA(CAImage* image)
         for (int j = 0; j < new_h; j++)
         {
             unsigned char*	out = ((unsigned char*)data) + j * new_pitch;
-            unsigned char*	in = ((unsigned char*)image->getData()) + (j << 1) * pitch;
+            unsigned char*	in = ((unsigned char*)image->getData()->getBytes()) + (j << 1) * pitch;
             for (int i = 0; i < new_w; i++)
             {
                 int	r, g, b, a;
@@ -190,10 +187,8 @@ CAImage* generateMipmapsWithImageRGBA(CAImage* image)
         }
         CAData* newData = CAData::create();
         newData->fastSet(data, new_pitch * new_h);
-        newImage->initWithRawData(newData, CAImage::PixelFormat::RGBA8888, new_w, new_h);
-        newImage->autorelease();
         
-        return newImage;
+        return CAImage::createWithRawDataNoCache(newData, CAImage::PixelFormat::RGB888, new_w, new_h);
     }
 
     return 0;
@@ -204,10 +199,7 @@ CAImage* CAImage::generateMipmapsWithImage(CAImage* image)
 {
     if (DPoint(image->getContentSize()).getLength() < 2895)
     {
-        CAImage* newImage = new CAImage();
-        newImage->initWithRawData(image->getData(), image->getPixelFormat(), image->getPixelsWide(), image->getPixelsHigh());
-        newImage->autorelease();
-        return newImage;
+        return image;
     }
     
     if (image->getPixelFormat() == CAImage::PixelFormat::RGB888)

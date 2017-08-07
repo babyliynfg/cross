@@ -142,7 +142,7 @@ extern "C"
                CAImage *image = new CAImage();
                if (image->initWithImageFile(str))
                {
-                   _imagePickerControllerCallBack(image);
+                   _imagePickerControllerCallBack(CAImage::generateMipmapsWithImage(image));
                    image->release();
                }
            }
