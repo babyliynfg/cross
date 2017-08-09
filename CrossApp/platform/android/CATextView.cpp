@@ -236,7 +236,6 @@ extern "C"
         
         CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
         imageView->setImage(image);
-        free(data);
     }
     
     //textView delegate
@@ -533,7 +532,7 @@ void CATextView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 void CATextView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     DPoint point = this->convertTouchToNodeSpace(pTouch);
-    
+
     if (this->getBounds().containsPoint(point))
     {
         becomeFirstResponder();

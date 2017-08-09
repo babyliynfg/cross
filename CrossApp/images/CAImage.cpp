@@ -1698,20 +1698,17 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
     m_uPixelsWide = m_pGIF->SWidth;
     m_uPixelsHigh = m_pGIF->SHeight;
     ssize_t length = m_uPixelsWide * m_uPixelsHigh * 4;
-    unsigned char* pData = (unsigned char*)malloc(sizeof(unsigned char) * length);
-    
+    unsigned char* pData = (unsigned char*)malloc(sizeof(unsigned char) * (length + 1));
+    pData[length] = '\0';
     m_bHasPremultipliedAlpha = false;
-    
-    this->setGifImageWithIndex(0);
     
     m_pData = new CAData();
     m_pData->fastSet(pData, length);
     
+    this->setGifImageWithIndex(0);
+    
     return true;
 }
-
-
-
 
 bool CAImage::initWithTiffData(const unsigned char * data, unsigned long dataLen)
 {
