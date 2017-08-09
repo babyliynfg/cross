@@ -596,7 +596,7 @@ import android.widget.TextView.OnEditorActionListener;
 				{
 					isSetText = true;
 					textView.setText(string);
-					textView.setSelection(selection - arg2 + arg3);
+					textView.setSelection(string.length() >0 ? selection - arg2 + arg3 : 0);
 
 					ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
 					text(mykey, textBuffer.array(), textBuffer.array().length);
