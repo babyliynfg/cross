@@ -385,8 +385,8 @@ CACollectionViewCell* FirstViewController::collectionCellAtIndex(const DSize& ce
     itemText->setColor(CAColor4B(34, 151, 254, 255));
     
     CAImageView* icon = (CAImageView*)cell->getContentView()->getSubviewByTag(101);
-    icon->setImage(CAImage::create(iconTag[item]));
-    
+    //icon->setImage(CAImage::create(iconTag[item]));
+    icon->setImageAsyncWithFile(iconTag[item]);
     return cell;
 }
 

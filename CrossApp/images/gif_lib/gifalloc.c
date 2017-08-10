@@ -73,8 +73,7 @@ GifMakeMapObject(int ColorCount, const GifColorType *ColorMap)
 /*******************************************************************************
 Free a color map object
 *******************************************************************************/
-void
-GifFreeMapObject(ColorMapObject *Object)
+void GifFreeMapObject(ColorMapObject *Object)
 {
     if (Object != NULL) {
         (void)free(Object->Colors);
@@ -83,8 +82,7 @@ GifFreeMapObject(ColorMapObject *Object)
 }
 
 #ifdef DEBUG
-void
-DumpColorMap(ColorMapObject *Object,
+void DumpColorMap(ColorMapObject *Object,
              FILE * fp)
 {
     if (Object != NULL) {
@@ -385,8 +383,7 @@ GifMakeSavedImage(GifFileType *GifFile, const SavedImage *CopyFrom)
     }
 }
 
-void
-GifFreeSavedImages(GifFileType *GifFile)
+void GifFreeSavedImages(GifFileType *GifFile)
 {
     SavedImage *sp;
 
@@ -405,8 +402,11 @@ GifFreeSavedImages(GifFileType *GifFile)
 	
 	GifFreeExtensions(&sp->ExtensionBlockCount, &sp->ExtensionBlocks);
     }
-    free((char *)GifFile->SavedImages);
-    GifFile->SavedImages = NULL;
+    if (GifFile->SavedImages)
+    {
+        free((char *)GifFile->SavedImages);
+        GifFile->SavedImages = NULL;
+    }
 }
 
 /* end */

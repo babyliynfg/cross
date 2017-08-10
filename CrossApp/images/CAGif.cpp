@@ -258,6 +258,7 @@ CAImage* CAGif::getImage(unsigned int index)
                 src += curr->ImageDesc.Width;
                 dst += m_uPixelsWide*4;
             }
+            //m_pGIF->SColorMap = nullptr;
         }
     }
 

@@ -15,7 +15,6 @@ NS_CC_BEGIN
  */
 
 class GLProgram;
-class Texture2D;
 namespace GL {
 
 /** Vertex attrib flags. */

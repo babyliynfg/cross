@@ -177,9 +177,19 @@ void CAScrollView::removeSubviewByTag(int tag)
     m_pContainer->removeSubviewByTag(tag);
 }
 
+void CAScrollView::removeSubviewByTextTag(const std::string& textTag)
+{
+    m_pContainer->removeSubviewByTextTag(textTag);
+}
+
 CAView* CAScrollView::getSubviewByTag(int aTag)
 {
     return m_pContainer->getSubviewByTag(aTag);
+}
+
+CAView* CAScrollView::getSubviewByTextTag(const std::string& textTag)
+{
+    return m_pContainer->getSubviewByTextTag(textTag);
 }
 
 const CAVector<CAView*>& CAScrollView::getSubviews()

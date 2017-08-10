@@ -8,6 +8,9 @@
 #include "CAImage.h"
 #include <string>
 #include <functional>
+#include <mutex>
+#include <thread>
+#include <condition_variable>
 
 NS_CC_BEGIN
 
@@ -54,9 +57,27 @@ private:
     
     void addImageAsyncCallBack(float dt);
     
+    void loadImage();
+    
 protected:
     
     CAMap<std::string, CAImage*> m_mImages;
+    
+    struct AsyncStruct;
+    
+    ssize_t m_iAsyncRefCount = 0;
+    
+    std::thread* m_pLoadingThread;
+    
+    std::deque<AsyncStruct*> m_pRequestQueue;
+    std::deque<AsyncStruct*> m_pResponseQueue;
+    
+    std::mutex m_obRequestMutex;
+    std::mutex m_obResponseMutex;
+    
+    std::condition_variable m_obSleepCondition;
+    
+    bool m_bNeedQuit;
 };
 
 

@@ -14,7 +14,7 @@ void Scale9ImageViewTest::viewDidLoad()
 {
     this->getView()->setColor(CAColor4B::GRAY);
     
-    CAImageView* image = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(200, 30), DVerticalLayout_T_H(100, 30)));
+    CAImageView* image = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_W(200, 30), DVerticalLayout_T_H(100, 30)));
     image->setImage(CAImage::create("source_material/btn_rounded_normal.png"));
     this->getView()->addSubview(image);
     

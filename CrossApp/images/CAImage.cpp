@@ -1112,7 +1112,6 @@ unsigned int CAImage::getGifImageCounts()
 void CAImage::updateGifImageWithIndex(unsigned int index)
 {
     this->setGifImageWithIndex(index);
-    this->convertToRawData();
     this->repremultipliedImageData();
 }
 
@@ -1238,6 +1237,7 @@ void CAImage::setGifImageWithIndex(unsigned int index)
                 src += curr->ImageDesc.Width;
                 dst += m_uPixelsWide*4;
             }
+            m_pGIF->SColorMap = nullptr;
         }
     }
 }
@@ -1410,8 +1410,6 @@ bool CAImage::initWithImageData(CAData* data, bool isOpenGLThread)
         }
         if (ret)
         {
-            this->convertToRawData();
-            
             if (isOpenGLThread)
             {
                 this->premultipliedImageData();
@@ -1945,12 +1943,12 @@ void CAImage::convertToRawData()
     m_fMaxT = 1;
     
     m_bHasMipmaps = false;
-    
-    setShaderProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
 }
 
 void CAImage::premultipliedImageData()
 {
+    this->convertToRawData();
+    
     CC_RETURN_IF(m_bPremultiplied);
     m_bPremultiplied = true;
     

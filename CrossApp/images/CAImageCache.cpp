@@ -27,136 +27,13 @@
 NS_CC_BEGIN
 
 #pragma CAImageCache
-
-enum class _AsyncType
-{
-    AsyncImageType=0,
-    AsyncStringType
-}AsyncType;
-
-typedef struct _AsyncStruct
+struct CAImageCache::AsyncStruct
 {
     std::string                   filename;
-    std::function<void(CAImage*)> function;
-} AsyncStruct;
+    std::function<void(CAImage*)> function {nullptr};
+    CAImage* image { nullptr };
+};
 
-typedef struct _ImageInfo
-{
-    AsyncStruct *asyncStruct;
-    CAImage        *image;
-} ImageInfo;
-
-static pthread_t s_loadingThread;
-
-static pthread_mutex_t		s_SleepMutex;
-static pthread_cond_t		s_SleepCondition;
-
-static pthread_mutex_t      s_asyncStructQueueMutex;
-static pthread_mutex_t      s_ImageInfoMutex;
-
-static unsigned long s_nAsyncRefCount = 0;
-
-static bool need_quit = false;
-
-static std::queue<AsyncStruct*>* s_pAsyncStructQueue = NULL;
-
-static std::queue<ImageInfo*>*   s_pImageQueue = NULL;
-
-static CAImage::Format computeImageFormatType(string& filename)
-{
-    CAImage::Format ret = CAImage::Format::UNKOWN;
-
-    if ((std::string::npos != filename.find(".jpg")) || (std::string::npos != filename.find(".jpeg")))
-    {
-        ret = CAImage::Format::JPG;
-    }
-    else if ((std::string::npos != filename.find(".png")) || (std::string::npos != filename.find(".PNG")))
-    {
-        ret = CAImage::Format::PNG;
-    }
-    else if ((std::string::npos != filename.find(".tiff")) || (std::string::npos != filename.find(".TIFF")))
-    {
-        ret = CAImage::Format::TIFF;
-    }
-    else if ((std::string::npos != filename.find(".webp")) || (std::string::npos != filename.find(".WEBP")))
-    {
-        ret = CAImage::Format::WEBP;
-    }
-   
-    return ret;
-}
-
-static void loadImageData(AsyncStruct *pAsyncStruct)
-{
-    const char *filename = pAsyncStruct->filename.c_str();
-
-    // compute image type
-    CAImage::Format imageType = computeImageFormatType(pAsyncStruct->filename);
-    if (imageType == CAImage::Format::UNKOWN)
-    {
-        //CCLOG("unsupported format %s",filename);
-        //delete pAsyncStruct;
-    }
-    CAImage* image = new CAImage();
-    if (image && !image->initWithImageFile(filename, false))
-    {
-        CC_SAFE_RELEASE(image);
-        return;
-    }
-    // generate image info
-    ImageInfo *pImageInfo = new ImageInfo();
-    pImageInfo->asyncStruct = pAsyncStruct;
-    pImageInfo->image = image;
-
-    // put the image info into the queue
-    pthread_mutex_lock(&s_ImageInfoMutex);
-    s_pImageQueue->push(pImageInfo);
-    pthread_mutex_unlock(&s_ImageInfoMutex);   
-}
-
-static void* loadImage(void* data)
-{
-    AsyncStruct *pAsyncStruct = NULL;
-
-    while (true)
-    {
-        std::queue<AsyncStruct*> *pQueue = s_pAsyncStructQueue;
-        pthread_mutex_lock(&s_asyncStructQueueMutex);// get async struct from queue
-        if (pQueue->empty())
-        {
-            pthread_mutex_unlock(&s_asyncStructQueueMutex);
-            if (need_quit) {
-                break;
-            }
-            else {
-                pthread_cond_wait(&s_SleepCondition, &s_SleepMutex);
-                continue;
-            }
-        }
-        else
-        {
-            pAsyncStruct = pQueue->front();
-            pQueue->pop();
-            pthread_mutex_unlock(&s_asyncStructQueueMutex);
-            loadImageData(pAsyncStruct);
-        }        
-    }
-    
-    if( s_pAsyncStructQueue != NULL )
-    {
-        delete s_pAsyncStructQueue;
-        s_pAsyncStructQueue = NULL;
-        delete s_pImageQueue;
-        s_pImageQueue = NULL;
-
-        pthread_mutex_destroy(&s_asyncStructQueueMutex);
-        pthread_mutex_destroy(&s_ImageInfoMutex);
-        pthread_mutex_destroy(&s_SleepMutex);
-        pthread_cond_destroy(&s_SleepCondition);
-    }
-    
-    return 0;
-}
 
 CAImageCache* CAImageCache::getInstance()
 {
@@ -164,6 +41,9 @@ CAImageCache* CAImageCache::getInstance()
 }
 
 CAImageCache::CAImageCache()
+: m_pLoadingThread(nullptr)
+, m_bNeedQuit(false)
+, m_iAsyncRefCount(0)
 {
 
 }
@@ -171,9 +51,8 @@ CAImageCache::CAImageCache()
 CAImageCache::~CAImageCache()
 {
     CCLOG("CrossApp: deallocing CAImageCache.");
-    need_quit = true;
-    pthread_cond_signal(&s_SleepCondition);
     m_mImages.clear();
+    CC_SAFE_DELETE(m_pLoadingThread);
 }
 
 const char* CAImageCache::description()
@@ -190,84 +69,127 @@ void CAImageCache::addImageAsync(const std::string& path, const std::function<vo
 
 void CAImageCache::addImageFullPathAsync(const std::string& path, const std::function<void(CAImage*)>& function)
 {
-    CAImage* image = m_mImages.at(path);
-
-    if (image)
+    if (function == nullptr)
+        return;
+    
+    if (CAImage* image = m_mImages.at(path))
     {
         function(image);
         return;
     }
     
-    // lazy init
-    if (s_pAsyncStructQueue == NULL)
+    if (path.empty() || !FileUtils::getInstance()->isFileExist(path))
     {
-        s_pAsyncStructQueue = new std::queue<AsyncStruct*>();
-        s_pImageQueue = new std::queue<ImageInfo*>();
-        
-        pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
-        pthread_mutex_init(&s_ImageInfoMutex, NULL);
-        pthread_mutex_init(&s_SleepMutex, NULL);
-        pthread_cond_init(&s_SleepCondition, NULL);
-        pthread_create(&s_loadingThread, NULL, loadImage, NULL);
-        need_quit = false;
+        function(nullptr);
+        return;
     }
     
-    if (0 == s_nAsyncRefCount)
+    if (m_pLoadingThread == nullptr)
+    {
+        m_pLoadingThread = new (std::nothrow) std::thread(&CAImageCache::loadImage, this);
+        m_bNeedQuit = false;
+    }
+    
+    if (m_iAsyncRefCount == 0)
     {
         CAScheduler::getScheduler()->schedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this, 0);
     }
     
-    ++s_nAsyncRefCount;
+    ++m_iAsyncRefCount;
 
     // generate async struct
     AsyncStruct *data = new AsyncStruct();
     data->filename = path;
     data->function = function;
     
-    // add async struct into queue
-    pthread_mutex_lock(&s_asyncStructQueueMutex);
-    s_pAsyncStructQueue->push(data);
-    pthread_mutex_unlock(&s_asyncStructQueueMutex);
-    pthread_cond_signal(&s_SleepCondition);
+    m_obRequestMutex.lock();
+    m_pRequestQueue.push_back(data);
+    m_obRequestMutex.unlock();
+    
+    m_obSleepCondition.notify_one();
+    
 }
-
 
 void CAImageCache::addImageAsyncCallBack(float dt)
 {
-    // the image is generated in loading thread
-    std::queue<ImageInfo*> *imagesQueue = s_pImageQueue;
-
-    if (!imagesQueue->empty())
+    CAImage *image = nullptr;
+    AsyncStruct *asyncStruct = nullptr;
+    while (true)
     {
-        pthread_mutex_lock(&s_ImageInfoMutex);
-        ImageInfo *pImageInfo = imagesQueue->front();
-        imagesQueue->pop();
-        pthread_mutex_unlock(&s_ImageInfoMutex);
-
-        AsyncStruct *pAsyncStruct = pImageInfo->asyncStruct;
-        CAImage *image = pImageInfo->image;
-        image->premultipliedImageData();
-        
-        const char* filename = pAsyncStruct->filename.c_str();
-
-        // cache the image
-        m_mImages.erase(filename);
-        m_mImages.insert(filename, image);
-        image->release();
-
-        if (pAsyncStruct->function)
+        // pop an AsyncStruct from response queue
+        m_obResponseMutex.lock();
+        if(m_pResponseQueue.empty())
         {
-            pAsyncStruct->function(image);
+            asyncStruct = nullptr;
+        }else
+        {
+            asyncStruct = m_pResponseQueue.front();
+            m_pResponseQueue.pop_front();
+        }
+        m_obResponseMutex.unlock();
+        
+        CC_BREAK_IF(nullptr == asyncStruct);
+        
+        if (CAImage* i = m_mImages.at(asyncStruct->filename))
+        {
+            image = i;
+        }
+        else
+        {
+            if (asyncStruct->image)
+            {
+                asyncStruct->image->repremultipliedImageData();
+                image = asyncStruct->image;
+            }
         }
         
-        delete pAsyncStruct;
-        delete pImageInfo;
-
-        --s_nAsyncRefCount;
-        if (0 == s_nAsyncRefCount)
+        if (asyncStruct->function)
         {
-            CAScheduler::getScheduler()->unschedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this);
+            (asyncStruct->function)(image);
         }
+        
+        delete asyncStruct;
+        --m_iAsyncRefCount;
+    }
+    
+    if (0 == m_iAsyncRefCount)
+    {
+        CAScheduler::getScheduler()->unschedule(schedule_selector(CAImageCache::addImageAsyncCallBack), this);
+    }
+}
+
+void CAImageCache::loadImage()
+{
+    AsyncStruct *asyncStruct = nullptr;
+    std::mutex signalMutex;
+    std::unique_lock<std::mutex> signal(signalMutex);
+    while (!m_bNeedQuit)
+    {
+        m_obRequestMutex.lock();
+        if(m_pRequestQueue.empty())
+        {
+            asyncStruct = nullptr;
+        }
+        else
+        {
+            asyncStruct = m_pRequestQueue.front();
+            m_pRequestQueue.pop_front();
+        }
+        m_obRequestMutex.unlock();
+        
+        if (nullptr == asyncStruct)
+        {
+            m_obSleepCondition.wait(signal);
+            continue;
+        }
+        
+        CAImage* image = new CAImage();
+        image->initWithImageFile(asyncStruct->filename, false);
+        asyncStruct->image = image;
+        
+        m_obResponseMutex.lock();
+        m_pResponseQueue.push_back(asyncStruct);
+        m_obResponseMutex.unlock();
     }
 }
 

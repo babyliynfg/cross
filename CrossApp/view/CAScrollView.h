@@ -83,9 +83,9 @@ public:
     
     virtual ~CAScrollView();
  
-    virtual void onEnterTransitionDidFinish();
+    virtual void onEnterTransitionDidFinish() override;
     
-    virtual void onExitTransitionDidStart();
+    virtual void onExitTransitionDidStart() override;
     
     static CAScrollView* createWithFrame(const DRect& rect);
     
@@ -93,21 +93,25 @@ public:
     
     static CAScrollView* createWithLayout(const DLayout& layout);
     
-    virtual bool init();
+    virtual bool init() override;
 
-    virtual void addSubview(CAView* subview);
+    virtual void addSubview(CAView* subview) override;
     
-    virtual void insertSubview(CAView* subview, int z);
+    virtual void insertSubview(CAView* subview, int z) override;
     
-    void removeAllSubviews();
+    void removeAllSubviews() override;
     
-    void removeSubview(CAView* subview);
+    void removeSubview(CAView* subview) override;
 
-    void removeSubviewByTag(int tag);
+    void removeSubviewByTag(int tag) override;
     
-    CAView* getSubviewByTag(int aTag);
+    void removeSubviewByTextTag(const std::string& textTag) override;
     
-    const CAVector<CAView*>& getSubviews();
+    CAView* getSubviewByTag(int aTag) override;
+    
+    CAView* getSubviewByTextTag(const std::string& textTag) override;
+    
+    const CAVector<CAView*>& getSubviews() override;
     
     void setContentOffset(const DPoint& offset, bool animated);
     
@@ -117,13 +121,13 @@ public:
 
     void setZoomScale(float zoom);
 
-    virtual bool isReachBoundaryLeft();
+    virtual bool isReachBoundaryLeft() override;
     
-    virtual bool isReachBoundaryRight();
+    virtual bool isReachBoundaryRight() override;
     
-    virtual bool isReachBoundaryUp();
+    virtual bool isReachBoundaryUp() override;
     
-    virtual bool isReachBoundaryDown();
+    virtual bool isReachBoundaryDown() override;
     
     CC_PROPERTY_IS(bool, m_bTouchEnabledAtSubviews, TouchEnabledAtSubviews);
     
@@ -207,7 +211,7 @@ protected:
     
     bool isScrollWindowNotMaxOutSide(const DPoint& point);
     
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     void deaccelerateScrolling(float dt);
     
@@ -235,7 +239,7 @@ protected:
     
     void setContainerPoint(const DPoint& point, const DSize& size = DSize(-1, -1));
     
-    virtual void setContentSize(const DSize& var);
+    virtual void setContentSize(const DSize& var) override;
     
     void updatePointOffset(float dt = 0);
     
@@ -243,15 +247,15 @@ protected:
     
 public:
     
-    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent) override;
     
-    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent) override;
     
-    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent) override;
     
-    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent) override;
     
-    virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent);
+    virtual void mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, CAEvent* pEvent) override;
     
 private:
     
