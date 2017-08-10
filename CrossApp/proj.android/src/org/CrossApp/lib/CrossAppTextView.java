@@ -20,6 +20,7 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.ViewTreeObserver;
@@ -499,7 +500,7 @@ import android.widget.TextView.OnEditorActionListener;
     	layout.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
     	layout.removeView(textView);
     }
-
+    
 	static public CrossAppTextView getTextView(final int key)
 	{
 		CrossAppTextView var = dict.get(key);
@@ -596,7 +597,7 @@ import android.widget.TextView.OnEditorActionListener;
 				{
 					isSetText = true;
 					textView.setText(string);
-					textView.setSelection(string.length() >0 ? selection - arg2 + arg3 : 0);
+					textView.setSelection(string!=null && string.length() > 0 ? selection - arg2 + arg3 : 0);
 
 					ByteBuffer textBuffer = ByteBuffer.wrap(textView.getText().toString().getBytes());
 					text(mykey, textBuffer.array(), textBuffer.array().length);
