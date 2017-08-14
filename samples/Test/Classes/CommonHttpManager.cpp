@@ -167,7 +167,7 @@ void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
             std::string data(response->getResponseData()->toString());
             if (!data.empty())
             {
-                localStorageSetItem(MD5(url).md5().c_str(), data.c_str());
+                localStorageSetItem(MD5(url + "AAA").md5().c_str(), data.c_str());
                 
                 CCLog("\n \n \n---------HttpResponse--json---------\n<<<\n%s\n>>>\n--------------END--------------\n \n \n",data.c_str());
                 
@@ -196,7 +196,7 @@ void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
         }
         else
         {
-            const char* data = localStorageGetItem(MD5(url).md5().c_str());
+            const char* data = localStorageGetItem(MD5(url + "AAA").md5().c_str());
             
             do
             {
@@ -398,7 +398,7 @@ void CommonHttpManager::get_image(const std::string& url,
                                   const ImageCallback& callback,
                                   ImageCacheType type)
 {
-    std::string key = MD5(url).md5();
+    std::string key = MD5(url + "AAA").md5();
     
     CAImage* image = CAApplication::getApplication()->getImageCache()->imageForKey(key);
 
@@ -414,7 +414,7 @@ void CommonHttpManager::get_image(const std::string& url,
         std::string animationID = crossapp_format_string("wait:%s", url.c_str());
         CACustomAnimation::schedule([=](const CACustomAnimation::Model& model)
         {
-            std::string key = MD5(url).md5();
+            std::string key = MD5(url + "AAA").md5();
             
             CAImage* image = CAApplication::getApplication()->getImageCache()->imageForKey(key);
             
@@ -476,7 +476,7 @@ void CommonHttpManager::get_image(const std::string& url,
                     unsigned char* pData = ((unsigned char*)(const_cast<char*>(data.c_str())));
                     size_t pSize = data.length();
                     
-                    std::string key = MD5(url).md5();
+                    std::string key = MD5(url + "AAA").md5();
                     CAImage* image = nullptr;
                     
                     if (type != ImageCacheType::NoAllCache)
@@ -649,7 +649,7 @@ void CommonUrlImageView::setImageAndUrl(CAImage* image, const std::string& url)
 
 void CommonUrlImageView::setUrlOnlyReadCache(const std::string& url)
 {
-    std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/" + MD5(url).md5();
+    std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/" + MD5(url + ).md5();
     
     unsigned long pSize = 0;
     

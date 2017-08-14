@@ -1361,7 +1361,7 @@ bool CAImage::initWithImageFile(const std::string& file, bool isOpenGLThread)
     unsigned char* pData = FileUtils::getInstance()->getFileData(file, "rb", &pSize);
     
     if (pSize > 0)
-    {
+    { 
         data->fastSet(pData, pSize);
     }
     bool bRet = initWithImageData(data, isOpenGLThread);

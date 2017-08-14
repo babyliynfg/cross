@@ -140,6 +140,7 @@ void CAImageCache::addImageAsyncCallBack(float dt)
             {
                 asyncStruct->image->premultipliedImageData();
                 image = asyncStruct->image;
+                m_mImages.insert(asyncStruct->filename, image);
             }
         }
         
