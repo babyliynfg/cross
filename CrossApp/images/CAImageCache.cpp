@@ -138,7 +138,7 @@ void CAImageCache::addImageAsyncCallBack(float dt)
         {
             if (asyncStruct->image)
             {
-                asyncStruct->image->repremultipliedImageData();
+                asyncStruct->image->premultipliedImageData();
                 image = asyncStruct->image;
             }
         }

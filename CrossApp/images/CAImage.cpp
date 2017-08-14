@@ -1356,8 +1356,16 @@ CAImage* CAImage::createWithColor4B(const CrossApp::CAColor4B &color)
 
 bool CAImage::initWithImageFile(const std::string& file, bool isOpenGLThread)
 {
-    CAData* data= FileUtils::getInstance()->getDataFromFile(file);
+    CAData* data = new CAData();
+    unsigned long pSize = 0;
+    unsigned char* pData = FileUtils::getInstance()->getFileData(file, "rb", &pSize);
+    
+    if (pSize > 0)
+    {
+        data->fastSet(pData, pSize);
+    }
     bool bRet = initWithImageData(data, isOpenGLThread);
+    data->release();
 	return bRet;
 }
 

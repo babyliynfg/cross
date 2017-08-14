@@ -589,7 +589,6 @@ void FileUtils::purgeCachedEntries()
 
 CAData* FileUtils::getDataFromFile(const std::string& filename)
 {
-    
     CAData* data = CAData::create();
     unsigned long pSize = 0;
     unsigned char* pData = this->getFileData(filename, "rb", &pSize);
