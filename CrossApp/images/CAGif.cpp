@@ -232,7 +232,9 @@ CAImage* CAGif::getImage(unsigned int index)
         
         if (curr->ImageDesc.ColorMap != NULL)
         {
-            m_pGIF->SColorMap = curr->ImageDesc.ColorMap;
+            GifFreeMapObject(m_pGIF->SColorMap);
+            m_pGIF->SColorMap = GifMakeMapObject(curr->ImageDesc.ColorMap->ColorCount,
+                                                 curr->ImageDesc.ColorMap->Colors);
         }
         
         if (m_pGIF->SColorMap && m_pGIF->SColorMap->ColorCount == (1 << m_pGIF->SColorMap->BitsPerPixel))
@@ -258,7 +260,6 @@ CAImage* CAGif::getImage(unsigned int index)
                 src += curr->ImageDesc.Width;
                 dst += m_uPixelsWide*4;
             }
-            //m_pGIF->SColorMap = nullptr;
         }
     }
 
