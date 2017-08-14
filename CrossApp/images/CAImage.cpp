@@ -18,6 +18,7 @@
 #include "platform/CCPlatformConfig.h"
 #include "platform/CAFileUtils.h"
 #include "platform/CAFontProcesstor.h"
+#include "platform/CADensityDpi.h"
 #include "basics/CAApplication.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
@@ -57,17 +58,17 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
         
         GLfloat    coordinates[] =
         {
-            0.0f,                   0.0f,
-            image->getMaxS(),       0.0f,
-            0.0f,                   image->getMaxT(),
-            image->getMaxS(),       image->getMaxT()
+            0.0f,                                   0.0f,
+            s_px_to_dip(image->getMaxS()) ,         0.0f,
+            0.0f,                                   s_px_to_dip(image->getMaxT()),
+            s_px_to_dip(image->getMaxS()),          s_px_to_dip(image->getMaxT())
         };
         
         GLfloat    vertices[] =
         {
-            0,            0,               /*0.0f,*/
+            0,            0,                    /*0.0f,*/
             size.width,   0,                    /*0.0f,*/
-            0,            size.height,     /*0.0f,*/
+            0,            size.height,          /*0.0f,*/
             size.width,   size.height           /*0.0f*/
         };
         

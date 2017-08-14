@@ -632,7 +632,7 @@ void CommonUrlImageView::setUrl(const std::string& url)
 {
     CC_RETURN_IF(url.empty());
     
-    m_sUrl = CrossApp::base64Decode(url);
+    m_sUrl = CrossApp::base64Decode(url + "AAA");
     
     CommonHttpManager::getInstance()->get_image(url, [=](CAImage* image, const std::string& url)
     {
@@ -642,14 +642,14 @@ void CommonUrlImageView::setUrl(const std::string& url)
 
 void CommonUrlImageView::setImageAndUrl(CAImage* image, const std::string& url)
 {
-    m_sUrl = CrossApp::base64Decode(url);
+    m_sUrl = CrossApp::base64Decode(url + "AAA");
     
     this->onRequestFinished(image, m_sUrl.c_str());
 }
 
 void CommonUrlImageView::setUrlOnlyReadCache(const std::string& url)
 {
-    std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/" + MD5(url + ).md5();
+    std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/" + MD5(url + "AAA").md5();
     
     unsigned long pSize = 0;
     

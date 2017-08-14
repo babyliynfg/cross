@@ -36,14 +36,7 @@ CAGif::CAGif()
 
 CAGif::~CAGif()
 {
-    int ErrorCode;
-    DGifCloseFile(m_pGIF, &ErrorCode);
-    
     m_vImages.clear();
-    
-    CC_SAFE_RELEASE_NULL(m_pGifData);
-    CC_SAFE_DELETE(m_pData);
-    
     s_pGIFs.erase(m_sFilePath);
 }
 
@@ -103,7 +96,6 @@ bool CAGif::initWithData(CAData* data)
     
     int error = 0;
     
-    CC_SAFE_RETAIN(data);
     m_pGifData = data;
     
     m_pGIF = DGifOpen(m_pGifData->getBytes(), &memReadFuncGif, &error);
@@ -112,6 +104,7 @@ bool CAGif::initWithData(CAData* data)
     {
         int ErrorCode;
         DGifCloseFile(m_pGIF, &ErrorCode);
+        m_pGifData = nullptr;
         m_pGIF = nullptr;
         return false;
     }
@@ -126,7 +119,14 @@ bool CAGif::initWithData(CAData* data)
     {
         m_vImages.pushBack(this->getImage(i));
     }
-        
+    
+    int ErrorCode;
+    DGifCloseFile(m_pGIF, &ErrorCode);
+    
+    m_pGifData = nullptr;
+    m_pGIF = nullptr;
+    CC_SAFE_DELETE(m_pData);
+    
     return true;
 }
 
