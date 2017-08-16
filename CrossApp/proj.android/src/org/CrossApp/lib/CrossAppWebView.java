@@ -97,25 +97,48 @@ public class CrossAppWebView extends WebView {
 
     class CrossAppWebViewClient extends WebViewClient {
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String urlString) {
+        public boolean shouldOverrideUrlLoading(WebView view, final String urlString) {
             URI uri = URI.create(urlString);
             if (uri != null && uri.getScheme().equals(jsScheme)) {
-                CrossAppWebViewHelper._onJsCallback(viewTag, urlString);
+            	CrossAppActivity.getContext().runOnGLThread(new Runnable() 
+            	{
+                    @Override
+                    public void run()
+                    {
+                    	CrossAppWebViewHelper._onJsCallback(viewTag, urlString);
+                    }
+                });
+                
                 return true;
             }
             return CrossAppWebViewHelper._shouldStartLoading(viewTag, urlString);
         }
 
         @Override
-        public void onPageFinished(WebView view, String url) {
+        public void onPageFinished(WebView view, final String url) {
             super.onPageFinished(view, url);
-            CrossAppWebViewHelper._didFinishLoading(viewTag, url);
+            CrossAppActivity.getContext().runOnGLThread(new Runnable() 
+        	{
+                @Override
+                public void run()
+                {
+                	CrossAppWebViewHelper._didFinishLoading(viewTag, url);
+                }
+            });
         }
 
         @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        public void onReceivedError(WebView view, int errorCode, String description, final String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            CrossAppWebViewHelper._didFailLoading(viewTag, failingUrl);
+            CrossAppActivity.getContext().runOnGLThread(new Runnable() 
+        	{
+                @Override
+                public void run()
+                {
+                	CrossAppWebViewHelper._didFailLoading(viewTag, failingUrl);
+                }
+            });
+            
         }
 //        @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
