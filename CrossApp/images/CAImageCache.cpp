@@ -194,6 +194,14 @@ void CAImageCache::loadImage()
     }
 }
 
+void CAImageCache::waitForQuit()
+{
+    // notify sub thread to quick
+    m_bNeedQuit = true;
+    m_obSleepCondition.notify_one();
+    if (m_pLoadingThread) m_pLoadingThread->join();
+}
+
 CAImage* CAImageCache::addImage(const std::string& path)
 {
     if (path.empty())

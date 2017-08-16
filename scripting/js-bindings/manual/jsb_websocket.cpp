@@ -1,10 +1,4 @@
-//
-//  jsb_websocket.cpp
-//  HelloJavacript
-//
-//  Created by zhanglei on 17/4/10.
-//
-//
+
 
 #include "jsb_websocket.hpp"
 

@@ -459,7 +459,7 @@ void CARenderImage::clearDepth(float depthValue)
     
     this->begin();
     
-    m_tClearDepthCommand.init(0);
+    m_tClearDepthCommand.init(m_nZOrder);
     m_tClearDepthCommand.func = std::bind(&CARenderImage::onClearDepth, this);
     
     CAApplication::getApplication()->getRenderer()->addCommand(&m_tClearDepthCommand);
@@ -503,22 +503,15 @@ void CARenderImage::onBegin()
         m_pApplication->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
     
-    //calculate viewport
     {
         glViewport(0, 0, (GLsizei)m_uPixelsWide, (GLsizei)m_uPixelsHigh);
     }
     
-    // Adjust the orthographic projection and viewport
-    
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
-    
-    // TODO: move this to configuration, so we don't check it every time
-    /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
-     */
+
     if (CAConfiguration::getInstance()->checkForGLExtension("GL_QCOM"))
     {
-        // -- bind a temporary texture so we can clear the render buffer without losing our texture
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uNameCopy, 0);
         CHECK_GL_ERROR_DEBUG();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -547,17 +540,13 @@ void CARenderImage::onEnd()
     
     do
     {
-        CC_BREAK_IF(! (buffer = new (std::nothrow) GLubyte[m_uPixelsWide * m_uPixelsHigh * 4]));
-        
+        CC_BREAK_IF(! (buffer = new (std::nothrow) GLubyte[m_uPixelsWide * m_uPixelsHigh * 4 + 1]));
+        buffer[m_uPixelsWide * m_uPixelsHigh * 4] = '\0';
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
         
-        // TODO: move this to configuration, so we don't check it every time
-        /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
-         */
         if (CAConfiguration::getInstance()->checkForGLExtension("GL_QCOM"))
         {
-            // -- bind a temporary texture so we can clear the render buffer without losing our texture
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uNameCopy, 0);
             CHECK_GL_ERROR_DEBUG();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

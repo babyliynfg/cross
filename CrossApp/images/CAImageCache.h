@@ -51,6 +51,8 @@ public:
     
     void removeUnusedImages();
     
+    void waitForQuit();
+    
     static void reloadAllImages();
     
 private:

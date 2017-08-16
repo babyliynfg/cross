@@ -913,7 +913,7 @@ void CAApplication::destroyImageCache()
 {
     if (m_pImageCache)
     {
-        //m_pImageCache->waitForQuit();
+        m_pImageCache->waitForQuit();
         CC_SAFE_RELEASE_NULL(m_pImageCache);
     }
 }

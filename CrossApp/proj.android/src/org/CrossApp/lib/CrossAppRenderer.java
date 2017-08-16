@@ -121,7 +121,14 @@ public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void handleKeyDown(final int pKeyCode) {
-		CrossAppRenderer.nativeKeyDown(pKeyCode);
+		CrossAppActivity.getContext().runOnGLThread(new Runnable() 
+    	{
+            @Override
+            public void run()
+            {
+            	CrossAppRenderer.nativeKeyDown(pKeyCode);
+            }
+        });
 	}
 
 	public void handleOnPause() {

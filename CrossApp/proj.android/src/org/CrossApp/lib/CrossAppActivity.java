@@ -178,6 +178,12 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		super.onSaveInstanceState(outState);
 	}
 	
+    @Override
+    public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent)
+    {
+        return CrossAppGLSurfaceView.getInstance().onKeyDown(pKeyCode, pKeyEvent);
+    }
+    
     public void setPasteBoardStr(String sender)
     {
         Message msg=new Message();
