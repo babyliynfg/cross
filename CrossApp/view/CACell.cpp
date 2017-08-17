@@ -196,28 +196,60 @@ void CACell::setControlStateSelected()
 
 void CACell::normalCell()
 {
-    CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(CAColor4B(255, 255, 255, 255));
+    if (m_obNormalState)
+    {
+        m_obNormalState();
+    }
+    else if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setColor(CAColor4B(255, 255, 255, 255));
+    }
 }
 
 void CACell::highlightedCell()
 {
-    CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(CAColor4B(240, 240, 240, 255));
+    if (m_obHighlightedState)
+    {
+        m_obHighlightedState();
+    }
+    else if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setColor(CAColor4B(240, 240, 240, 255));
+    }
 }
 
 
 void CACell::selectedCell()
 {
-    CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(CAColor4B(50, 193, 255, 255));
+    if (m_obSelectedState)
+    {
+        m_obSelectedState();
+    }
+    else if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setColor(CAColor4B(50, 193, 255, 255));
+    }
 }
 
 
 void CACell::disabledCell()
 {
-    CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(CAColor4B(127, 127, 127, 255));
+    if (m_obDsabledState)
+    {
+        m_obDsabledState();
+    }
+    else if (m_pBackgroundView)
+    {
+        m_pBackgroundView->setColor(CAColor4B(127, 127, 127, 255));
+    }
+}
+
+void CACell::recoveryCell()
+{
+    if (m_obRecovery)
+    {
+        m_obRecovery();
+    }
 }
 
 void CACell::resetCell()

@@ -185,10 +185,16 @@ public final class CrossAppAlertView
 						public void onClick(View v) {
 							dialog.dismiss();  
 							dict.remove(key) ; 
-							CrossAppAlertView.onClick(position, key);
+							context.runOnGLThread(new Runnable() 
+					    	{
+					            @Override
+					            public void run()
+					            {
+					            	CrossAppAlertView.onClick(position, key);
+					            }
+					        });
 						}
 					});
-					
 				}
 				scrollView.addView(buttons_container); 
 				

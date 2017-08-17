@@ -623,6 +623,7 @@ std::string FileUtils::getFileString(const std::string& filename)
         data.resize(pSize);
         memcpy(&data[0], pData, pSize);
     }
+    free(pData);
     return data;
     
 }

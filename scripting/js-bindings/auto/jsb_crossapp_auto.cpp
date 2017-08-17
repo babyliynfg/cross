@@ -40066,6 +40066,7 @@ bool js_crossapp_FileUtils_getFileData(JSContext *cx, uint32_t argc, jsval *vp)
         jsval jsret = JSVAL_NULL;
         jsret = u_char_to_jsval(cx, ret);
         args.rval().set(jsret);
+        free(ret);
         return true;
     }
 

@@ -84,7 +84,7 @@ protected:
     
     virtual void disabledCell();
 
-    virtual void recoveryCell(){};
+    virtual void recoveryCell();
     
     void resetCell();
     

@@ -36,15 +36,9 @@ CAThemeManager::CAThemeManager(const std::string& filePath)
 	
 	if (size > 0)
     {
-        std::string str;
-        str.resize(size);
-        for (size_t i = 0; i < size; i++)
-        {
-            str[i] = data[i];
-        }
-        
         m_pMyDocument = new tinyxml2::XMLDocument();
         m_pMyDocument->Parse(data, size);
+        free((void*)data);
         tinyxml2::XMLElement* rootElement = m_pMyDocument->RootElement();
         
         tinyxml2::XMLElement* controlXml = ((tinyxml2::XMLElement*)rootElement->FirstChildElement());
@@ -73,6 +67,7 @@ CAThemeManager::CAThemeManager(const std::string& filePath)
     }
     else
     {
+        free((void*)data);
         CAAlertView::create("警告", "主题配置文件缺失")->show();
         return;
     }
