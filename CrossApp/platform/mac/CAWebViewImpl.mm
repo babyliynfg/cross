@@ -420,7 +420,7 @@ void CAWebViewImpl::setVisible(bool visible)
     [WebViewWrapper setVisible:visible];
 }
 
-CAImageView* CAWebViewImpl::getWebViewImage()
+ void CAWebViewImpl::getWebViewImage(const std::function<void(CAImage*)>& callback)
 {
     NSImage* image_MAC = [[[NSImage alloc]initWithData:[WebViewWrapper.webView dataWithPDFInsideRect:[WebViewWrapper.webView bounds]]]autorelease];
     
@@ -433,7 +433,10 @@ CAImageView* CAWebViewImpl::getWebViewImage()
     data->fastSet(pData, [data_MAC length]);
     CAImage *image = CAImage::createWithImageDataNoCache(data);
 
-    return CAImageView::createWithImage(image);
+    if (callback)
+    {
+        callback(image);
+    }
 }
 
 NS_CC_END

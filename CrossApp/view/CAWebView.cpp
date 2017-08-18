@@ -170,12 +170,17 @@ void CAWebView::setScalesPageToFit(bool const scalesPageToFit)
 void CAWebView::hideNativeWebAndShowImage()
 {
     this->removeSubview(m_pImageView);
-	m_pImageView = _impl->getWebViewImage();
-	if (m_pImageView)
-	{
-        m_pImageView->setLayout(DLayoutFill);
-		this->insertSubview(m_pImageView, 1);
-	}
+    _impl->getWebViewImage([=](CAImage* image){
+    
+        if (m_pImageView == nullptr)
+        {
+            m_pImageView= CAImageView::create();
+            m_pImageView->setLayout(DLayoutFill);
+            this->insertSubview(m_pImageView, 1);
+        }
+        m_pImageView->setImage(image);
+    });
+	
 	m_bHideNativeWeCmd = true;
 }
 

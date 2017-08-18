@@ -12,8 +12,7 @@
 
 
 NS_CC_BEGIN
-
-static std::string s_cszWebViewImageData;
+static std::map<std::string, std::function<void(CAImage*)> > s_gImageCallback;
 static std::string s_cszWebViewHtmSource;
 
 extern "C" {
@@ -52,9 +51,32 @@ extern "C" {
 		CAWebViewImpl::onJsCallback(index, message);
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_onSetByteArrayBuffer(JNIEnv *env, jclass, jbyteArray buf, jint len) {
-			s_cszWebViewImageData.resize(len);
-			env->GetByteArrayRegion(buf, 0, len, (jbyte *)&s_cszWebViewImageData[0]);
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_onSetByteArrayBuffer(JNIEnv *env, jclass, jint index, jbyteArray buf, jint len) {
+			
+        ssize_t length = (ssize_t)len;
+        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * (length + 1));
+        data[len] = '\0';
+        env->GetByteArrayRegion(buf, 0, length, (jbyte *)data);
+        
+        CrossApp::CAData* ca_data = CrossApp::CAData::create();
+        ca_data->fastSet(data, length);
+        
+        DSize size = _webView->getBounds().size;
+        
+        CAImage* pImage = new CAImage();
+        if (!pImage->initWithRawData(ca_data, CAImage::PixelFormat::RGBA8888, size.width, size.height))
+        {
+            delete pImage;
+            return NULL;
+        }
+        pImage->autorelease();
+        
+        if (s_gImageCallback.count((int)index) > 0)
+        {
+            s_gImageCallback[(int)index)](image);
+            s_gImageCallback.erase((int)index));
+        }
+        
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_pause() {
@@ -393,27 +415,10 @@ void CAWebViewImpl::setVisible(bool visible) {
 }
 
 
-CAImageView* CAWebViewImpl::getWebViewImage()
+void CAWebViewImpl::getWebViewImage(const std::function<void(CAImage*)>& callback)
 {
+    s_gImageCallback[_viewTag] = callback;
 	getWebViewImageJNI(_viewTag);
-	
-	if (!s_cszWebViewImageData.empty())
-	{
-		DSize size = _webView->getBounds().size;
-
-        CrossApp::CAData* ca_data = CrossApp::CAData::create();
-        ca_data->fastSet((unsigned char*)&s_cszWebViewImageData[0], s_cszWebViewImageData.size());
-        
-		CAImage* pImage = new CAImage();
-		if (!pImage->initWithRawData(ca_data, CAImage::PixelFormat::RGBA8888, size.width, size.height))
-		{
-			delete pImage;
-			return NULL;
-		}
-		pImage->autorelease();
-		return CAImageView::createWithImage(pImage);
-	}
-  	return NULL;
 }
 
 NS_CC_END

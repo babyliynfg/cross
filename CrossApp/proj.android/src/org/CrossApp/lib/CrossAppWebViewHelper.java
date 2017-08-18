@@ -217,22 +217,33 @@ public class CrossAppWebViewHelper {
     
     @SuppressWarnings("unused")
     public static void getWebViewImage(final int index) {
-    	Callable<byte[]> callable = new Callable<byte[]>() {
+    	CrossAppActivity.runOnUiThread(new Runnable() {
             @Override
-            public byte[] call() throws Exception {
-                CrossAppWebView webView = webViews.get(index);
-                if (webView!=null)
-                {
-                	return webView.getWebViewImage();
+            public void run() {
+            	Callable<byte[]> callable = new Callable<byte[]>() {
+                    @Override
+                    public byte[] call() throws Exception {
+                        CrossAppWebView webView = webViews.get(index);
+                        if (webView!=null)
+                        {
+                        	return webView.getWebViewImage();
+                        }
+        				return null;
+                    }
+                };
+                try {
+                	final byte[] imageData = callInMainThread(callable);
+                	CrossAppActivity.runOnGLThread(new Runnable() {
+                        @Override
+                        public void run() {
+                        	onSetByteArrayBuffer(imageData, imageData.length);
+                        }
+                    });
+                	
+                } catch (Exception e) {
                 }
-				return null;
             }
-        };
-        try {
-        	byte[] imageData = callInMainThread(callable);
-        	onSetByteArrayBuffer(imageData, imageData.length);
-        } catch (Exception e) {
-        }
+        });
 	}
 
     public static void stopLoading(final int index) {
