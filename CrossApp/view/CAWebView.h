@@ -139,8 +139,6 @@ private:
     
     CAWebViewImpl *_impl;
     
-	bool m_bHideNativeWeCmd;
-    
     CAImageView* m_pImageView;
     
     CAActivityIndicatorView* m_pLoadingView;

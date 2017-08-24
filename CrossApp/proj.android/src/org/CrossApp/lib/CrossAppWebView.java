@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 //import android.webkit.WebView;
 //import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
@@ -82,17 +83,27 @@ public class CrossAppWebView extends WebView {
     public void setScalesPageToFit(boolean scalesPageToFit) {
         this.getSettings().setSupportZoom(scalesPageToFit);
     }
+    private Bitmap bmp = null;
+    private ByteBuffer imageData = null;
+    private static native void onSetByteArrayBuffer(int index, byte[] buf, int wdith, int height);
     
-    public byte[] getWebViewImage() {
-
-    	Bitmap bmp = getDrawingCache();
-    	if (bmp != null)
+    public void getWebViewImage() {
+    	bmp = this.getDrawingCache();
+    	if (bmp != null && imageData == null)
     	{
-    		ByteBuffer buf = ByteBuffer.allocate(bmp.getRowBytes() * bmp.getHeight());
-    		bmp.copyPixelsToBuffer(buf);
-    		return buf.array();
+    		imageData = ByteBuffer.allocate(bmp.getRowBytes() * bmp.getHeight());
+    		bmp.copyPixelsToBuffer(imageData);
+    		
+    		CrossAppActivity.getContext().runOnGLThread(new Runnable() 
+        	{
+                @Override
+                public void run()
+                {
+                	onSetByteArrayBuffer(viewTag, imageData.array(), bmp.getWidth(), bmp.getHeight());
+                	imageData = null;
+                }
+            });
     	}
-   		return null;
     }
 
     class CrossAppWebViewClient extends WebViewClient {

@@ -12,9 +12,9 @@
 
 
 NS_CC_BEGIN
-
-static std::string s_cszWebViewImageData;
+static std::map<int, std::function<void(CAImage*)> > s_gImageCallback;
 static std::string s_cszWebViewHtmSource;
+static std::map<int, CAWebViewImpl*> s_WebViewImpls;
 
 extern "C" {
 
@@ -52,9 +52,25 @@ extern "C" {
 		CAWebViewImpl::onJsCallback(index, message);
     }
     
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_onSetByteArrayBuffer(JNIEnv *env, jclass, jbyteArray buf, jint len) {
-			s_cszWebViewImageData.resize(len);
-			env->GetByteArrayRegion(buf, 0, len, (jbyte *)&s_cszWebViewImageData[0]);
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebView_onSetByteArrayBuffer(JNIEnv *env, jclass, jint index, jbyteArray buf, jint width, jint height) {
+			
+        ssize_t length = (ssize_t)(width * height * 4);
+        unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * (length + 1));
+        data[length] = '\0';
+        env->GetByteArrayRegion(buf, 0, length, (jbyte *)data);
+        
+        CrossApp::CAData* ca_data = CrossApp::CAData::create();
+        ca_data->fastSet(data, length);
+
+        if (CAImage* image = CAImage::createWithRawDataNoCache(ca_data, CAImage::PixelFormat::RGBA8888, width, height))
+        {
+            if (s_gImageCallback.count((int)index) > 0)
+            {
+                s_gImageCallback[(int)index](image);
+                s_gImageCallback.erase((int)index);
+            }
+        }
+        
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppWebViewHelper_pause() {
@@ -88,7 +104,6 @@ void removeWebViewJNI(const int index) {
 void getWebViewImageJNI(const int index) {
 	JniMethodInfo t;
 
-	s_cszWebViewImageData.clear();
 	if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getWebViewImage", "(I)V")) {
 		t.env->CallStaticVoidMethod(t.classID, t.methodID, index);
 		t.env->DeleteLocalRef(t.classID);
@@ -263,7 +278,7 @@ std::string getUrlStringByFileName(const std::string &fileName) {
     return urlString;
 }
 
-static std::map<int, CAWebViewImpl*> s_WebViewImpls;
+
 
 CAWebViewImpl::CAWebViewImpl(CAWebView *webView) : _viewTag(-1), _webView(webView) 
 {
@@ -393,27 +408,10 @@ void CAWebViewImpl::setVisible(bool visible) {
 }
 
 
-CAImageView* CAWebViewImpl::getWebViewImage()
+void CAWebViewImpl::getWebViewImage(const std::function<void(CAImage*)>& callback)
 {
+    s_gImageCallback[_viewTag] = callback;
 	getWebViewImageJNI(_viewTag);
-	
-	if (!s_cszWebViewImageData.empty())
-	{
-		DSize size = _webView->getBounds().size;
-
-        CrossApp::CAData* ca_data = CrossApp::CAData::create();
-        ca_data->fastSet((unsigned char*)&s_cszWebViewImageData[0], s_cszWebViewImageData.size());
-        
-		CAImage* pImage = new CAImage();
-		if (!pImage->initWithRawData(ca_data, CAImage::PixelFormat::RGBA8888, size.width, size.height))
-		{
-			delete pImage;
-			return NULL;
-		}
-		pImage->autorelease();
-		return CAImageView::createWithImage(pImage);
-	}
-  	return NULL;
 }
 
 NS_CC_END

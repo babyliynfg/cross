@@ -98,7 +98,7 @@ void CAWebViewImpl::setVisible(bool visible)
 	_bkHelpView->setVisible(visible);
 }
 
-CAImageView* CAWebViewImpl::getWebViewImage()
+void CAWebViewImpl::getWebViewImage(const std::function<void(CAImage*)>& callback)
 {
 	return NULL;
 }

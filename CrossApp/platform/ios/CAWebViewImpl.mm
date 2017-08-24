@@ -396,7 +396,7 @@ void CAWebViewImpl::setVisible(bool visible)
     [WebViewWrapper setVisible:visible];
 }
 
-CAImageView* CAWebViewImpl::getWebViewImage()
+void CAWebViewImpl::getWebViewImage(const std::function<void(CAImage*)>& callback)
 {
 	UIImage* image = [WebViewWrapper getWebViewImage];
     if (image != NULL)
@@ -407,10 +407,13 @@ CAImageView* CAWebViewImpl::getWebViewImage()
         
         CAData* ca_data = CAData::create();
         ca_data->fastSet(data, [iOSData length]);
+        CAImage *image = CAImage::createWithImageDataNoCache(ca_data);
 
-        return CAImageView::createWithImage(CAImage::createWithImageDataNoCache(ca_data));
+        if (callback)
+        {
+            callback(image);
+        }
     }
-    return NULL;
 }
 
 NS_CC_END

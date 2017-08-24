@@ -1,11 +1,14 @@
 package org.CrossApp.lib;
 
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import java.nio.ByteBuffer;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -52,7 +55,6 @@ public class CrossAppWebViewHelper {
         onJsCallback(index, message);
     }
     
-    private static native void onSetByteArrayBuffer(byte[] buf, int len);
     public static native void didLoadHtmlSource(String htmlSrc);
     public static Boolean s_bWaitGetHemlSource = false;
     public static native void pause();
@@ -125,7 +127,7 @@ public class CrossAppWebViewHelper {
             public void run() {
                 CrossAppWebView webView = webViews.get(index);
                 if (webView != null) {
-                    webView.setVisibility(visible ? View.VISIBLE : View.GONE);
+                    webView.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
                 }
             }
         });
@@ -217,22 +219,13 @@ public class CrossAppWebViewHelper {
     
     @SuppressWarnings("unused")
     public static void getWebViewImage(final int index) {
-    	Callable<byte[]> callable = new Callable<byte[]>() {
+    	CrossAppActivity.runOnUiThread(new Runnable() {
             @Override
-            public byte[] call() throws Exception {
-                CrossAppWebView webView = webViews.get(index);
-                if (webView!=null)
-                {
-                	return webView.getWebViewImage();
-                }
-				return null;
+            public void run() {
+            	CrossAppWebView webView = webViews.get(index);
+            	webView.getWebViewImage();
             }
-        };
-        try {
-        	byte[] imageData = callInMainThread(callable);
-        	onSetByteArrayBuffer(imageData, imageData.length);
-        } catch (Exception e) {
-        }
+    	});
 	}
 
     public static void stopLoading(final int index) {

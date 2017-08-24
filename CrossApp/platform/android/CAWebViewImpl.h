@@ -48,7 +48,7 @@ public:
 
     virtual void setVisible(bool visible);
 
-	CAImageView* getWebViewImage();
+	void getWebViewImage(const std::function<void(CAImage*)>& callback);
 
     static bool shouldStartLoading(const int viewTag, const std::string &url);
     static void didFinishLoading(const int viewTag, const std::string &url);

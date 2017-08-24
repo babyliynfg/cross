@@ -47,7 +47,7 @@ public:
 
     virtual void setVisible(bool visible);
 
-	CAImageView* getWebViewImage();
+	void getWebViewImage(const std::function<void(CAImage*)>& callback);
 
     static bool shouldStartLoading(void* pWebViewWrapper, const std::string &url);
     static void didFinishLoading(void* pWebViewWrapper, const std::string &url);

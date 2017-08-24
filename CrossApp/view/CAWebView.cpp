@@ -21,7 +21,6 @@ NS_CC_BEGIN
 
 CAWebView::CAWebView()
 : _impl(new CAWebViewImpl(this))
-, m_bHideNativeWeCmd(false)
 , m_pImageView(nullptr)
 , m_pLoadingView(nullptr)
 , m_obLastPoint(DPointZero)
@@ -169,14 +168,20 @@ void CAWebView::setScalesPageToFit(bool const scalesPageToFit)
 
 void CAWebView::hideNativeWebAndShowImage()
 {
-    this->removeSubview(m_pImageView);
-	m_pImageView = _impl->getWebViewImage();
-	if (m_pImageView)
-	{
-        m_pImageView->setLayout(DLayoutFill);
-		this->insertSubview(m_pImageView, 1);
-	}
-	m_bHideNativeWeCmd = true;
+    _impl->getWebViewImage([=](CAImage* image){
+    
+        this->removeSubview(m_pImageView);
+        m_pImageView = nullptr;
+        if (m_pImageView == nullptr)
+        {
+            m_pImageView= CAImageView::createWithLayout(DLayoutFill);
+            this->insertSubview(m_pImageView, 1);
+        }
+        m_pImageView->setImage(image);
+        _impl->setVisible(false);
+        
+    });
+	
 }
 
 void CAWebView::showNativeWeb()
@@ -187,12 +192,6 @@ void CAWebView::showNativeWeb()
 void CAWebView::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
 	CAView::draw(renderer, transform, flags);
-
-	if (m_bHideNativeWeCmd)
-	{
-		_impl->setVisible(false);
-		m_bHideNativeWeCmd = false;
-	}
 }
 
 void CAWebView::setVisible(bool visible)
