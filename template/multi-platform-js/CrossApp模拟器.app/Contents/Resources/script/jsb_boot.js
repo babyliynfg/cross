@@ -1183,10 +1183,7 @@ var _initSys = function () {
      */
     sys.isMobile = (platform === sys.ANDROID ||
                     platform === sys.IPAD ||
-                    platform === sys.IPHONE ||
-                    platform === sys.WP8 ||
-                    platform === sys.TIZEN ||
-                    platform === sys.BLACKBERRY) ? true : false;
+                    platform === sys.IPHONE) ? true : false;
     
     /**
      * Indicate the current language of the running system

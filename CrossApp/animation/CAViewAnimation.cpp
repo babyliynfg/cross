@@ -242,6 +242,12 @@ CAViewAnimation* CAViewAnimation::getInstance()
     return _viewAnimation;
 }
 
+void CAViewAnimation::destroyInstance()
+{    
+    CC_SAFE_DELETE(_viewAnimation);
+    _viewAnimation = nullptr;
+}
+
 CAViewAnimation::CAViewAnimation()
 :m_bAnimationsEnabled(true)
 ,m_bBeginAnimations(false)
@@ -334,8 +340,7 @@ void CAViewAnimation::removeAnimations(const std::string& animationID)
     CCAssert(animationID.length() > 0, "");
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     
-    for (CADeque<CAViewAnimation::Module*>::iterator itr=animation->m_vWillModules.begin();
-         itr!=animation->m_vWillModules.end();)
+    for (auto itr=animation->m_vWillModules.begin(); itr!=animation->m_vWillModules.end();)
     {
         if ((*itr)->animationID.compare(animationID) == 0)
         {
@@ -347,8 +352,7 @@ void CAViewAnimation::removeAnimations(const std::string& animationID)
         }
     }
     
-    for (CAVector<CAViewAnimation::Module*>::iterator itr=animation->m_vModules.begin();
-         itr!=animation->m_vModules.end();)
+    for (auto itr=animation->m_vModules.begin(); itr!=animation->m_vModules.end();)
     {
         if ((*itr)->animationID.compare(animationID) == 0)
         {
@@ -366,19 +370,24 @@ void CAViewAnimation::removeAnimationsWithView(CAView* view)
     CC_RETURN_IF(view == NULL);
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     
-    for (CADeque<CAViewAnimation::Module*>::iterator itr=animation->m_vWillModules.begin();
-         itr!=animation->m_vWillModules.end(); itr++)
+    for (auto& module : animation->m_vWillModules)
     {
-        CAViewAnimation::Module* module = *itr;
         module->animations.erase(view);
     }
     
-    for (CAVector<CAViewAnimation::Module*>::iterator itr=animation->m_vModules.begin();
-         itr!=animation->m_vModules.end(); itr++)
+    for (auto& module : animation->m_vModules)
     {
-        CAViewAnimation::Module* module = *itr;
         module->animations.erase(view);
     }
+}
+
+void CAViewAnimation::removeAllAnimations()
+{
+    CAViewAnimation* animation = CAViewAnimation::getInstance();
+    
+    CAScheduler::getScheduler()->unscheduleAllForTarget(animation);
+    animation->m_vWillModules.clear();
+    animation->m_vModules.clear();
 }
 
 void CAViewAnimation::setAnimationsEnabled(bool enabled)
@@ -400,11 +409,10 @@ bool CAViewAnimation::areBeginAnimationsWithID(const std::string& animationID)
 {
     bool bRet = false;
     
-    CADeque<CAViewAnimation::Module*>* willModule = &CAViewAnimation::getInstance()->m_vWillModules;
-    CADeque<CAViewAnimation::Module*>::const_iterator itr = willModule->begin();
-    for (; itr!=willModule->end(); itr++)
+    const CAVector<CAViewAnimation::Module*>& willModule = CAViewAnimation::getInstance()->m_vWillModules;
+    for (auto& var : willModule)
     {
-        if ((*itr)->animationID.compare(animationID) == 0)
+        if (var->animationID.compare(animationID) == 0)
         {
             bRet = true;
             break;
@@ -414,11 +422,10 @@ bool CAViewAnimation::areBeginAnimationsWithID(const std::string& animationID)
     
     if (bRet == false)
     {
-        CAVector<CAViewAnimation::Module*>* module = &CAViewAnimation::getInstance()->m_vModules;
-        CAVector<CAViewAnimation::Module*>::const_iterator itr2 = module->begin();
-        for (; itr2!=module->end(); itr2++)
+        const CAVector<CAViewAnimation::Module*>& module = CAViewAnimation::getInstance()->m_vModules;
+        for (auto& var : module)
         {
-            if ((*itr2)->animationID.compare(animationID) == 0)
+            if (var->animationID.compare(animationID) == 0)
             {
                 bRet = true;
                 break;
@@ -431,7 +438,7 @@ bool CAViewAnimation::areBeginAnimationsWithID(const std::string& animationID)
 
 void CAViewAnimation::update(float dt)
 {
-    CAVector<CAViewAnimation::Module*> modules = CAVector<CAViewAnimation::Module*>(m_vModules);
+    auto modules = CAVector<CAViewAnimation::Module*>(m_vModules);
     m_vModules.clear();
 	for (auto& module : modules)
     {

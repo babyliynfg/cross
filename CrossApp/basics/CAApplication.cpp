@@ -10,8 +10,8 @@
 #include "images/CAImageCache.h"
 #include "view/CADrawingPrimitives.h"
 #include "view/CAWindow.h"
-#include "netWork/HttpClient.h"
-#include "netWork/DownloadManager.h"
+#include "network/HttpClient.h"
+#include "network/DownloadManager.h"
 #include "CAScheduler.h"
 #include "ccMacros.h"
 #include "platform/CADensityDpi.h"
@@ -25,6 +25,7 @@
 #include "support/user_default/CAUserDefault.h"
 #include "support/CAProfiling.h"
 #include "support/CAThemeManager.h"
+#include "animation/CAViewAnimation.h"
 #include "game/CGSpriteFrameCache.h"
 #include "game/actions/CGActionManager.h"
 #include "game/actions/CGAnimationCache.h"
@@ -673,6 +674,8 @@ void CAApplication::restart()
 void CAApplication::reset()
 {
 	this->stopAnimation();
+    CAViewAnimation::destroyInstance();
+    
     if (m_pRootWindow)
     {
 #if CC_ENABLE_SCRIPT_BINDING
@@ -690,6 +693,7 @@ void CAApplication::reset()
     getScheduler()->unscheduleAll();
     
     AnimationCache::destroyInstance();
+    
     CAHttpClient::destroyAllInstance();
     CADownloadManager::destroyInstance();
     GLProgramCache::destroyInstance();

@@ -42,7 +42,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	sc->runScript("js/main.js");
 
-
 	return true;
 }
 

@@ -66,6 +66,8 @@ public:
     
     static void removeAnimationsWithView(CAView* view);
 
+    static void removeAllAnimations();
+        
     static void setAnimationsEnabled(bool enabled);
     
     static bool areAnimationsEnabled();
@@ -73,11 +75,13 @@ public:
     static bool areBeginAnimations();
     
     static bool areBeginAnimationsWithID(const std::string& animationID);
-    
+        
 protected:
 
     static CAViewAnimation* getInstance();
     
+    static void destroyInstance();
+        
     CAViewAnimation();
     
     virtual ~CAViewAnimation();
@@ -131,6 +135,8 @@ protected:
     friend class CAImageView;
     
     friend class CAScale9ImageView;
+        
+    friend class CAApplication;
 };
 
 NS_CC_END

@@ -92,6 +92,8 @@ CAView::CAView(void)
 , m_obOnExitCallback(nullptr)
 , m_obOnExitTransitionDidStartCallback(nullptr)
 {
+    CAViewAnimation::removeAnimationsWithView(this);
+    
     m_sBlendFunc = BlendFunc_alpha_non_premultiplied;
     memset(&m_sQuad, 0, sizeof(m_sQuad));
     
@@ -142,7 +144,7 @@ CAView::~CAView(void)
         m_pCGNode->release();
     }
     
-    
+    CAViewAnimation::removeAnimationsWithView(this);
     //s_gViews.erase(m_u__ID);
     
     //CCLog("~CAView = %lu\n", s_gViews.size());

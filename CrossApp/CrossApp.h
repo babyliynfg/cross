@@ -166,7 +166,7 @@
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
 #include "network/DownloadManager.h"
-
+#include "network/WebSocket.h"
 // platform
 #include "platform/CACommon.h"
 #include "platform/CAFileUtils.h"

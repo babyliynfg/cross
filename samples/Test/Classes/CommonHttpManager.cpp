@@ -194,7 +194,7 @@ void CommonHttpManager::send_get(const std::string& url,std::map<std::string,
             }
             
         }
-        else
+        else 
         {
             const char* data = localStorageGetItem(MD5(url + "AAA").md5().c_str());
             
@@ -576,7 +576,7 @@ CommonUrlImageView::~CommonUrlImageView()
     CC_SAFE_RETAIN(m_pobImage);
     CAScheduler::getScheduler()->scheduleOnce([=](float dt)
     {
-        m_pobImage->release();
+        CC_SAFE_RELEASE(m_pobImage);
     }, "release", m_pobImage, 1.0f);
 }
 
