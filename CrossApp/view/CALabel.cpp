@@ -161,13 +161,13 @@ void CALabel::updateImage()
             size = m_obContentSize;
         }
     }
+
     CAImage* image = CAFontProcesstor::imageForText(m_sText, m_obFont, size, m_eTextAlignment);
-    this->setImage(image);
     
+    this->setImage(image);
+
     if (image)
     {
-        this->setImage(image);
-        
         m_obLabelSize = size;
         
         switch (m_eTextAlignment)

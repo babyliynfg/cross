@@ -76,6 +76,16 @@ CGRect _calculateStringRect(NSAttributedString *str, id font, CGSize constrainSi
 
 NS_CC_BEGIN
 
+void dipFontToPxFont(CAFont& font)
+{
+    font.fontSize = s_dip_to_px(font.fontSize);
+    font.lineSpacing = s_dip_to_px(font.lineSpacing);
+    font.shadow.shadowOffset.width = s_dip_to_px(font.shadow.shadowOffset.width);
+    font.shadow.shadowOffset.height = s_dip_to_px(font.shadow.shadowOffset.height);
+    font.shadow.shadowBlur = s_dip_to_px(font.shadow.shadowBlur);
+    font.stroke.strokeSize = s_dip_to_px(font.stroke.strokeSize);
+}
+
 NSAttributedString* NSAttributedStringForText(const std::string& text, const CAFont& font, const DSize& dim, CATextAlignment textAlignment)
 {
     NSString * str = [NSString stringWithUTF8String:text.c_str()];
@@ -219,18 +229,25 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
     {
         CC_BREAK_IF(elements.empty());
         
+        dim = DSize(s_dip_to_px(dim.width), s_dip_to_px(dim.height));
+        
         NSMutableAttributedString *stringWithAttributes = [[NSMutableAttributedString alloc] init];
         
         for (auto& var : elements)
         {
-            NSAttributedString* attributedString = NSAttributedStringForText(var.text, var.font, dim, textAlignment);
+            CAFont font = var.font;
+            dipFontToPxFont(font);
+            NSAttributedString* attributedString = NSAttributedStringForText(var.text, font, dim, textAlignment);
             [stringWithAttributes appendAttributedString:attributedString];
         }
         
-        float shrinkFontSize = (elements.front().font.fontSize);
-        id iosfont = _createSystemFont(elements.front().font);
+        CAFont firstFont = elements.front().font;
+        dipFontToPxFont(firstFont);
         
-        CGRect textRect = _calculateStringRect(stringWithAttributes, iosfont, CGSizeMake(dim.width, dim.height), elements.front().font.wordWrap, shrinkFontSize);
+        float shrinkFontSize = (firstFont.fontSize);
+        id iosfont = _createSystemFont(firstFont);
+        
+        CGRect textRect = _calculateStringRect(stringWithAttributes, iosfont, CGSizeMake(dim.width, dim.height), firstFont.wordWrap, shrinkFontSize);
         
         CC_BREAK_IF(textRect.size.width <= 0 || textRect.size.height <= 0);
 
@@ -259,10 +276,10 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         
         // text color
         CGContextSetRGBFillColor(context,
-                                 elements.front().font.color.r / 255.f,
-                                 elements.front().font.color.g / 255.f,
-                                 elements.front().font.color.b / 255.f,
-                                 elements.front().font.color.r / 255.f);
+                                 firstFont.color.r / 255.f,
+                                 firstFont.color.g / 255.f,
+                                 firstFont.color.b / 255.f,
+                                 firstFont.color.r / 255.f);
         
         // move Y rendering to the top of the image
         CGContextTranslateCTM(context, 0.0f, POTHigh);
@@ -311,7 +328,7 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
         unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
         
-        dim = DSize(pixelsWide, pixelsHigh);
+        dim = DSize(s_px_to_dip(pixelsWide), s_px_to_dip(pixelsHigh));
         
         CAData* data = new CAData();
         data->fastSet(bytes, length);
@@ -324,12 +341,15 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
     return ret;
 }
 
-CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dim, CATextAlignment textAlignment)
+CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DSize& dim, CATextAlignment textAlignment)
 {
     CAImage* ret = nullptr;
     do
     {
         CC_BREAK_IF(text.empty());
+        
+        dim = DSize(s_dip_to_px(dim.width), s_dip_to_px(dim.height));
+        dipFontToPxFont(font);
         
         NSAttributedString *stringWithAttributes = NSAttributedStringForText(text, font, dim, textAlignment);
         
@@ -432,7 +452,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
         unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
         
-        dim = DSize(pixelsWide, pixelsHigh);
+        dim = DSize(s_px_to_dip(pixelsWide), s_px_to_dip(pixelsHigh));
         
         CAData* data = new CAData();
         data->fastSet(bytes, length);

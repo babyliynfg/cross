@@ -77,13 +77,23 @@ static NSFont* _createSystemFont(const std::string& fontName, float size)
 
 NS_CC_BEGIN
 
+void dipFontToPxFont(CAFont& font)
+{
+    font.fontSize = s_dip_to_px(font.fontSize);
+    font.lineSpacing = s_dip_to_px(font.lineSpacing);
+    font.shadow.shadowOffset.width = s_dip_to_px(font.shadow.shadowOffset.width);
+    font.shadow.shadowOffset.height = s_dip_to_px(font.shadow.shadowOffset.height);
+    font.shadow.shadowBlur = s_dip_to_px(font.shadow.shadowBlur);
+    font.stroke.strokeSize = s_dip_to_px(font.stroke.strokeSize);
+}
+
 NSAttributedString* NSAttributedStringForText(const std::string& text, const CAFont& font, const DSize& dim, CATextAlignment textAlignment)
 {
     NSString * str  = [NSString stringWithUTF8String:text.c_str()];
 
     if (font.italics)
     {
-        int increase = ceilf(font.italicsValue / 0.5f);
+        int increase = ceilf(font.fontSize * font.italicsValue / 0.5f);
         
         if (increase > 0)
         {
@@ -220,18 +230,25 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
     {
         CC_BREAK_IF(elements.empty());
         
+        dim = DSize(s_dip_to_px(dim.width), s_dip_to_px(dim.height));
+        
         NSMutableAttributedString *stringWithAttributes = [[NSMutableAttributedString alloc] init];
         
         for (auto& var : elements)
         {
-            NSAttributedString* attributedString = NSAttributedStringForText(var.text, var.font, dim, textAlignment);
+            CAFont font = var.font;
+            dipFontToPxFont(font);
+            NSAttributedString* attributedString = NSAttributedStringForText(var.text, font, dim, textAlignment);
             [stringWithAttributes appendAttributedString:attributedString];
         }
         
-        float shrinkFontSize = (elements.front().font.fontSize);
-        id nsfont = _createSystemFont(elements.front().font.fontName, shrinkFontSize);
+        CAFont firstFont = elements.front().font;
+        dipFontToPxFont(firstFont);
         
-        NSRect textRect = _calculateStringSize(stringWithAttributes, nsfont, CGSizeMake(dim.width, dim.height), elements.front().font.wordWrap);
+        float shrinkFontSize = (firstFont.fontSize);
+        id nsfont = _createSystemFont(firstFont.fontName, shrinkFontSize);
+        
+        NSRect textRect = _calculateStringSize(stringWithAttributes, nsfont, CGSizeMake(dim.width, dim.height), firstFont.wordWrap);
         
         // Mac crashes if the width or height is 0
         CC_BREAK_IF(textRect.size.width <= 0 || textRect.size.height <= 0);
@@ -255,7 +272,7 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
         unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
         
-        dim = DSize((pixelsWide), (pixelsHigh));
+        dim = DSize(s_px_to_dip(pixelsWide), s_px_to_dip(pixelsHigh));
         
         ssize_t length = pixelsWide * pixelsHigh * 4;
         unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);
@@ -273,11 +290,14 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
     return ret;
 }
 
-CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dim, CATextAlignment textAlignment)
+CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DSize& dim, CATextAlignment textAlignment)
 {
     CAImage* ret = nullptr;
     do {
         CC_BREAK_IF(text.empty());
+        
+        dim = DSize(s_dip_to_px(dim.width), s_dip_to_px(dim.height));
+        dipFontToPxFont(font);
         
         NSAttributedString *stringWithAttributes = NSAttributedStringForText(text, font, dim, textAlignment);
         
@@ -321,7 +341,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& f
         unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
         unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
         
-        dim = DSize((pixelsWide), (pixelsHigh));
+        dim = DSize(s_px_to_dip(pixelsWide), s_px_to_dip(pixelsHigh));
         
         ssize_t length = pixelsWide * pixelsHigh * 4;
         unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);

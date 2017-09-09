@@ -87,96 +87,15 @@ int getTextAlign(const CAFont& font, CATextAlignment textAlignment)
     return  a ;
 }
 
-CAImage* CAFontProcesstor::imageForText(const std::string& text, const CAFont& font, DSize& dimensions, CATextAlignment textAlignment)
+void dipFontToPxFont(CAFont& font)
 {
-    CAImage* ret = nullptr;
-    
-    do
-    {
-        CC_BREAK_IF(text.empty());
-        
-        
-        
-        JniMethodInfo methodInfo;
-        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "([BLjava/lang/String;IIIIIIIIIFFFIIIIIIIIIFIIIIFIF)Z"))
-        {
-            break ;
-        }
-        // Do a full lookup for the font path using FileUtils in case the given font name is a relative path to a font file asset,
-        // or the path has been mapped to a different location in the app package:
-        std::string fullPathOrFontName = font.fontName;
-        if(FileUtils::getInstance()->isFileExist(fullPathOrFontName)) {
-            fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(font.fontName);
-            // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
-            // requires this portion of the path to be omitted for assets inside the app package.
-            if (fullPathOrFontName.find("assets/") == 0)
-            {
-                fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));   // Chop out the 'assets/' portion of the path.
-            }
-        }
-        
-        
-        jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
-        
-        int count = text.length();
-        jbyteArray bytes = methodInfo.env->NewByteArray(count);
-        methodInfo.env->SetByteArrayRegion(bytes, 0, count, reinterpret_cast<const jbyte*>(text.c_str()));
-        
-        if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID,
-                                                    bytes,
-                                                    jstrFont,
-                                                    (int)font.fontSize,
-                                                    font.color.r,
-                                                    font.color.g,
-                                                    font.color.b,
-                                                    font.color.a,
-                                                    getTextAlign(font, textAlignment),
-                                                    (int)dimensions.width,
-                                                    (int)dimensions.height,
-                                                    (int)font.shadow.shadowEnabled,
-                                                    font.shadow.shadowOffset.width,
-                                                    font.shadow.shadowOffset.height,
-                                                    font.shadow.shadowBlur,
-                                                    font.shadow.shadowColor.r,
-                                                    font.shadow.shadowColor.g,
-                                                    font.shadow.shadowColor.b,
-                                                    font.shadow.shadowColor.a,
-                                                    (int)font.stroke.strokeEnabled,
-                                                    font.stroke.strokeColor.r,
-                                                    font.stroke.strokeColor.g,
-                                                    font.stroke.strokeColor.b,
-                                                    font.stroke.strokeColor.a,
-                                                    font.stroke.strokeSize,
-                                                    (int)font.bold,
-                                                    (int)font.underLine,
-                                                    (int)font.deleteLine ,
-                                                    (int)font.italics,
-                                                    font.italicsValue ,
-                                                    (int)font.wordWrap,
-                                                    font.lineSpacing
-                                                    ))
-        {
-            break ;
-        }
-        
-        methodInfo.env->DeleteLocalRef(jstrFont);
-        methodInfo.env->DeleteLocalRef(methodInfo.classID);
-        methodInfo.env->DeleteLocalRef(bytes);
-        
-        dimensions = s_gDimensions;
-        
-        
-        
-        CAData* data = s_gDataVec.front();
-        s_gDataVec.clear();
-        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, dimensions.width, dimensions.height);
-        data->release();
-    } while (0);
-    
-    
-    return ret;
+    font.fontSize = s_dip_to_px(font.fontSize);
+    font.lineSpacing = s_dip_to_px(font.lineSpacing);
+    font.shadow.shadowOffset.width = s_dip_to_px(font.shadow.shadowOffset.width);
+    font.shadow.shadowOffset.height = s_dip_to_px(font.shadow.shadowOffset.height);
+    font.shadow.shadowBlur = s_dip_to_px(font.shadow.shadowBlur);
+    font.stroke.strokeSize = s_dip_to_px(font.stroke.strokeSize);
 }
-
 
 CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment)
 {
@@ -199,7 +118,8 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         for (auto& var : elements)
         {
             std::string text = var.text;
-            const CAFont& font =  var.font ;
+            CAFont font =  var.font ;
+            dipFontToPxFont(font);
             
             std::string frontSpace;
             int frontSpaceCount = 0;
@@ -278,6 +198,95 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
     return ret;
 }
 
+CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DSize& dimensions, CATextAlignment textAlignment)
+{
+    CAImage* ret = nullptr;
+    
+    do
+    {
+        CC_BREAK_IF(text.empty());
+        
+        dimensions = DSize(s_dip_to_px(dimensions.width), s_dip_to_px(dimensions.height));
+        dipFontToPxFont(font);
+        
+        
+        JniMethodInfo methodInfo;
+        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/CrossApp/lib/CrossAppBitmap", "createTextBitmapShadowStroke", "([BLjava/lang/String;IIIIIIIIIFFFIIIIIIIIIFIIIIFIF)Z"))
+        {
+            break ;
+        }
+        // Do a full lookup for the font path using FileUtils in case the given font name is a relative path to a font file asset,
+        // or the path has been mapped to a different location in the app package:
+        std::string fullPathOrFontName = font.fontName;
+        if(FileUtils::getInstance()->isFileExist(fullPathOrFontName)) {
+            fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(font.fontName);
+            // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
+            // requires this portion of the path to be omitted for assets inside the app package.
+            if (fullPathOrFontName.find("assets/") == 0)
+            {
+                fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));   // Chop out the 'assets/' portion of the path.
+            }
+        }
+        
+        
+        jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
+        
+        int count = text.length();
+        jbyteArray bytes = methodInfo.env->NewByteArray(count);
+        methodInfo.env->SetByteArrayRegion(bytes, 0, count, reinterpret_cast<const jbyte*>(text.c_str()));
+        
+        if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID,
+                                                    bytes,
+                                                    jstrFont,
+                                                    (int)font.fontSize,
+                                                    font.color.r,
+                                                    font.color.g,
+                                                    font.color.b,
+                                                    font.color.a,
+                                                    getTextAlign(font, textAlignment),
+                                                    (int)dimensions.width,
+                                                    (int)dimensions.height,
+                                                    (int)font.shadow.shadowEnabled,
+                                                    font.shadow.shadowOffset.width,
+                                                    font.shadow.shadowOffset.height,
+                                                    font.shadow.shadowBlur,
+                                                    font.shadow.shadowColor.r,
+                                                    font.shadow.shadowColor.g,
+                                                    font.shadow.shadowColor.b,
+                                                    font.shadow.shadowColor.a,
+                                                    (int)font.stroke.strokeEnabled,
+                                                    font.stroke.strokeColor.r,
+                                                    font.stroke.strokeColor.g,
+                                                    font.stroke.strokeColor.b,
+                                                    font.stroke.strokeColor.a,
+                                                    font.stroke.strokeSize,
+                                                    (int)font.bold,
+                                                    (int)font.underLine,
+                                                    (int)font.deleteLine ,
+                                                    (int)font.italics,
+                                                    font.italicsValue ,
+                                                    (int)font.wordWrap,
+                                                    font.lineSpacing
+                                                    ))
+        {
+            break ;
+        }
+        
+        methodInfo.env->DeleteLocalRef(jstrFont);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+        methodInfo.env->DeleteLocalRef(bytes);
+        
+        dimensions = DSize(s_px_to_dip(s_gDimensions.width), s_px_to_dip(s_gDimensions.height));
+        
+        CAData* data = s_gDataVec.front();
+        s_gDataVec.clear();
+        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, s_gDimensions.width, s_gDimensions.height);
+        data->release();
+    } while (0);
+    
+    
+    return ret;
+}
 
 float CAFontProcesstor::heightForFont(const CAFont& font)
 {

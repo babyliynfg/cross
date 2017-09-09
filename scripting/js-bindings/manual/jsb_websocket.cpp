@@ -139,8 +139,8 @@ public:
             vp = c_string_to_jsval(cx, "close");
             JS_SetProperty(cx, jsobj, "type", vp);
             
-            JS::RootedValue args(cx, OBJECT_TO_JSVAL(jsobj));
-            ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onclose", 1, args.address());
+            jsval args = OBJECT_TO_JSVAL(jsobj);
+            ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate.ref()), "onclose", 1, &args);
             
             auto copy = &p->obj;
             JS::RemoveObjectRoot(cx, copy);

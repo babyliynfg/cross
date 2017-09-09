@@ -14,7 +14,7 @@ public:
     
     static CAImage* imageForRichText(const std::vector<CARichLabel::Element>& elements, DSize& dimensions, CATextAlignment textAlignment);
     
-    static CAImage* imageForText(const std::string& text, const CAFont& font, DSize& dimensions, CATextAlignment textAlignment);
+    static CAImage* imageForText(const std::string& text, CAFont font, DSize& dimensions, CATextAlignment textAlignment);
     
     static float heightForFont(const CAFont& font);
     

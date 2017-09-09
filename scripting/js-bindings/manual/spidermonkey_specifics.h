@@ -33,10 +33,6 @@ typedef struct js_proxy {
     void *ptr;
     JS::Heap<JSObject*> obj;
     UT_hash_handle hh;
-    /** This is the raw pointer. The same as the "obj", but 'raw'. This is needed
-     because under certain circumstances JS::RemoveRootObject will be called on "obj"
-     and "obj" will became NULL. Which is not Ok if we need to use "obj" later for other stuff
-     */
     JSObject* _jsobj;
 } js_proxy_t;
 
@@ -64,47 +60,5 @@ public:
     }
 };
 
-
-#define JS_NEW_PROXY(p, native_obj, js_obj) \
-do { \
-    p = (js_proxy_t *)malloc(sizeof(js_proxy_t)); \
-    CCAssert(p, ""); \
-    js_proxy_t* native_obj##js_obj##tmp = NULL; \
-    HASH_FIND_PTR(_native_js_global_ht, &native_obj, native_obj##js_obj##tmp); \
-    CCAssert(!native_obj##js_obj##tmp, ""); \
-    p->ptr = native_obj; \
-    p->obj = js_obj; \
-    HASH_ADD_PTR(_native_js_global_ht, ptr, p); \
-    p = (js_proxy_t *)malloc(sizeof(js_proxy_t)); \
-    CCAssert(p, ""); \
-    native_obj##js_obj##tmp = NULL; \
-    HASH_FIND_PTR(_js_native_global_ht, &js_obj, native_obj##js_obj##tmp); \
-    CCAssert(!native_obj##js_obj##tmp, ""); \
-    p->ptr = native_obj; \
-    p->obj = js_obj; \
-    HASH_ADD_PTR(_js_native_global_ht, obj, p); \
-} while(0) \
-
-#define JS_GET_PROXY(p, native_obj) \
-do { \
-    HASH_FIND_PTR(_native_js_global_ht, &native_obj, p); \
-} while (0)
-
-#define JS_GET_NATIVE_PROXY(p, js_obj) \
-do { \
-    HASH_FIND_PTR(_js_native_global_ht, &js_obj, p); \
-} while (0)
-
-#define JS_REMOVE_PROXY(nproxy, jsproxy) \
-do { \
-    if (nproxy) { HASH_DEL(_native_js_global_ht, nproxy); free(nproxy); } \
-    if (jsproxy) { HASH_DEL(_js_native_global_ht, jsproxy); free(jsproxy); } \
-} while (0)
-
-#define TEST_NATIVE_OBJECT(cx, native_obj) \
-if (!native_obj) { \
-    JS_ReportError(cx, "Invalid Native Object"); \
-    return false; \
-}
 #endif
  

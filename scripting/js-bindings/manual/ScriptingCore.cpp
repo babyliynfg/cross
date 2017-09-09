@@ -1069,18 +1069,18 @@ void ScriptingCore::enableDebugger(unsigned int port)
 }
 
 void ScriptingCore::removeAllRoots(JSContext *cx) {
-    js_proxy_t *current, *tmp;
-    HASH_ITER(hh, _js_native_global_ht, current, tmp) {
-        RemoveObjectRoot(cx, &current->obj);
-        HASH_DEL(_js_native_global_ht, current);
-        free(current);
+    // Native -> JS. No need to free "second"
+    _native_js_global_map.clear();
+    
+    // JS -> Native: free "second" and "unroot" it.
+    auto it_js = _js_native_global_map.begin();
+    while (it_js != _js_native_global_map.end())
+    {
+        JS::RemoveObjectRoot(cx, &it_js->second->obj);
+        free(it_js->second);
+        it_js = _js_native_global_map.erase(it_js);
     }
-    HASH_ITER(hh, _native_js_global_ht, current, tmp) {
-        HASH_DEL(_native_js_global_ht, current);
-        free(current);
-    }
-    HASH_CLEAR(hh, _js_native_global_ht);
-    HASH_CLEAR(hh, _native_js_global_ht);
+    _js_native_global_map.clear();
 }
 
 JSObject* NewGlobalObject(JSContext* cx, bool debug)
@@ -1411,28 +1411,54 @@ void ScriptingCore::releaseAllSubviewsRecursive(CrossApp::CAView* view)
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)
 {
-    js_proxy_t* p = nullptr;
-    JS_NEW_PROXY(p, nativeObj, jsObj);
-    return p;
+    js_proxy_t* proxy = nullptr;
+    
+    if (nativeObj && jsObj)
+    {
+        // native to JS index
+        proxy = (js_proxy_t *)malloc(sizeof(js_proxy_t));
+        CC_ASSERT(proxy && "not enough memory");
+
+        auto existJSProxy = _js_native_global_map.find(jsObj);
+        if (existJSProxy != _js_native_global_map.end()) {
+            
+            jsb_remove_proxy(existJSProxy->second);
+        }
+        
+        proxy->ptr = nativeObj;
+        proxy->obj = jsObj;
+        proxy->_jsobj = jsObj;
+        
+        
+        // One Proxy in two entries
+        _native_js_global_map[nativeObj] = proxy;
+        _js_native_global_map[jsObj] = proxy;
+    }
+    else CCLOG("jsb_new_proxy: Invalid keys");
+    
+    return proxy;
 }
 
 js_proxy_t* jsb_get_native_proxy(void* nativeObj)
 {
-    js_proxy_t* p = nullptr;
-    JS_GET_PROXY(p, nativeObj);
-    return p;
+    auto search = _native_js_global_map.find(nativeObj);
+    if(search != _native_js_global_map.end())
+    return search->second;
+    return nullptr;
 }
 
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
 {
-    js_proxy_t* p = nullptr;
-    JS_GET_NATIVE_PROXY(p, jsObj);
-    return p;
+    auto search = _js_native_global_map.find(jsObj);
+    if(search != _js_native_global_map.end())
+    return search->second;
+    return nullptr;
 }
 
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
 {
-    JS_REMOVE_PROXY(nativeProxy, jsProxy);
+    js_proxy_t* proxy = nativeProxy ? nativeProxy : jsProxy;
+    jsb_remove_proxy(proxy);
 }
 
 void jsb_remove_proxy(js_proxy_t* proxy)
