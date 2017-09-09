@@ -70,5 +70,5 @@ bool js_crossapp_release(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CADatePickerView_onSelectRow(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACustomAnimation_schedule(JSContext *cx, uint32_t argc, jsval *vp);
-
+bool js_crossapp_CANotificationCenter_addObserver(JSContext *cx, uint32_t argc, jsval *vp);
 #endif

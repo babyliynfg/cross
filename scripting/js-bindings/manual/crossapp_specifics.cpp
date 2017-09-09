@@ -200,6 +200,9 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     JS_GetProperty(cx, ccObj, "CACustomAnimation", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "schedule", js_crossapp_CACustomAnimation_schedule, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    tmpObj.set(jsb_CrossApp_CANotificationCenter_prototype);
+    JS_DefineFunction(cx, tmpObj, "addObserver", js_crossapp_CANotificationCenter_addObserver, 3, JSPROP_READONLY | JSPROP_PERMANENT);
 
 }
 
@@ -471,4 +474,70 @@ bool js_crossapp_CACustomAnimation_schedule(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_crossapp_CACustomAnimation_schedule : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CANotificationCenter_addObserver(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANotificationCenter* cobj = (CrossApp::CANotificationCenter *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANotificationCenter_addObserver : Invalid Native Object");
+    if (argc == 3) {
+        std::function<void (CrossApp::CAObject *)> arg0;
+        CrossApp::CAObject* arg1 = nullptr;
+        std::string arg2;
+        do {
+            if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+            {
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+                auto lambda = [=, &ok](CrossApp::CAObject* larg0) -> void {
+                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                    jsval largv[1];
+                    do {
+                        if (larg0) {
+                            if (CAValue* value = dynamic_cast<CAValue*>(larg0)) {
+                                largv[0] = cavalue_to_jsval(cx, *value);
+                            } else {
+                                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAObject>(cx, (CrossApp::CAObject*)larg0);
+                                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
+                            }
+                        } else {
+                            largv[0] = JSVAL_NULL;
+                        }
+                    } while (0);
+                    JS::RootedValue rval(cx);
+                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    if (!succeed && JS_IsExceptionPending(cx)) {
+                        JS_ReportPendingException(cx);
+                    }
+                };
+                arg0 = lambda;
+            }
+            else
+            {
+                arg0 = nullptr;
+            }
+        } while(0)
+        ;
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANotificationCenter_addObserver : Error processing arguments");
+        cobj->addObserver(arg0, arg1, arg2);
+        args.rval().setUndefined();
+        return true;
+    }
 
+    
+    JS_ReportError(cx, "js_crossapp_CANotificationCenter_addObserver : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+
+}

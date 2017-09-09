@@ -1141,7 +1141,6 @@ bool js_crossapp_CANotificationCenter_postNotificationWithDoubleValue(JSContext 
 bool js_crossapp_CANotificationCenter_unregisterScriptObserver(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_postNotificationWithFloatValue(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_getScriptHandler(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CANotificationCenter_addObserver(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_registerScriptObserver(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_CANotificationCenter(JSContext *cx, uint32_t argc, jsval *vp);

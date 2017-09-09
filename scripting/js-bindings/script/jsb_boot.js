@@ -1347,13 +1347,36 @@ ca.log = function (str){log(str);};
 
 ca.logArray = function (array)
 {
-    ca.log("******** <logArray> ********");
-    ca.log("[key]: [value]");
+    /********************************/
+    _logArray_ = function (array, _key_)
+    {
+        for (var key in array)
+        {
+            var k = _key_ + "." + key;
+            if (array[key] instanceof Object)
+            {
+                _logArray_(array[key], k);
+            }
+            else {
+                ca.log(k + " :        " + array[key]);
+            }
+        }
+    }
+    /********************************/
+
+    ca.log("<--------logArray-------->");
+    ca.log("[key] :     [value]");
     for (var key in array)
     {
-        ca.log( key + ": " + array[key]);
+        if (array[key] instanceof Object)
+        {
+            _logArray_(array[key], key);
+        }
+        else {
+            ca.log(key + " :     " + array[key]);
+        }
     }
-    ca.log("****************\n");
+    ca.log("<________logArray-End________>\n");
 }
 
 

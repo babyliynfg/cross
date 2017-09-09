@@ -24357,67 +24357,6 @@ bool js_crossapp_CANotificationCenter_getScriptHandler(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_crossapp_CANotificationCenter_getScriptHandler : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CANotificationCenter_addObserver(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CANotificationCenter* cobj = (CrossApp::CANotificationCenter *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANotificationCenter_addObserver : Invalid Native Object");
-    if (argc == 3) {
-        std::function<void (CrossApp::CAObject *)> arg0;
-        CrossApp::CAObject* arg1 = nullptr;
-        std::string arg2;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](CrossApp::CAObject* larg0) -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            jsval largv[1];
-		            do {
-		            if (larg0) {
-		                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAObject>(cx, (CrossApp::CAObject*)larg0);
-		                largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
-		            } else {
-		                largv[0] = JSVAL_NULL;
-		            }
-		        } while (0);
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(1, &largv[0], &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        do {
-            if (args.get(1).isNull()) { arg1 = nullptr; break; }
-            if (!args.get(1).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(1).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (CrossApp::CAObject*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANotificationCenter_addObserver : Error processing arguments");
-        cobj->addObserver(arg0, arg1, arg2);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CANotificationCenter_addObserver : wrong number of arguments: %d, was expecting %d", argc, 3);
-    return false;
-}
 bool js_crossapp_CANotificationCenter_registerScriptObserver(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -24543,7 +24482,6 @@ void js_register_crossapp_CANotificationCenter(JSContext *cx, JS::HandleObject g
         JS_FN("unregisterScriptObserver", js_crossapp_CANotificationCenter_unregisterScriptObserver, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("postNotificationWithFloatValue", js_crossapp_CANotificationCenter_postNotificationWithFloatValue, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScriptHandler", js_crossapp_CANotificationCenter_getScriptHandler, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("addObserver", js_crossapp_CANotificationCenter_addObserver, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("registerScriptObserver", js_crossapp_CANotificationCenter_registerScriptObserver, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
