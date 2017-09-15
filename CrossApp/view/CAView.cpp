@@ -322,15 +322,18 @@ float CAView::getSkewX()
 
 void CAView::setSkewX(float newSkewX)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if (m_fSkewX != newSkewX)
     {
-        CAViewAnimation::getInstance()->setSkewX(newSkewX, this);
-    }
-    else if (m_fSkewX != newSkewX)
-    {
-        m_fSkewX = newSkewX;
-        this->updateDraw();
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setSkewX(newSkewX, this);
+        }
+        else
+        {
+            m_fSkewX = newSkewX;
+            this->updateDraw();
+        }
     }
 }
 
@@ -369,7 +372,8 @@ void CAView::_setZOrder(int z)
 void CAView::setZOrder(int z)
 {
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && m_nZOrder != z)
     {
         CAViewAnimation::getInstance()->setZOrder(z, this);
     }
@@ -396,15 +400,18 @@ float CAView::getPointZ()
 /// PointZ setter
 void CAView::setPointZ(float var)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if(m_fPointZ != var)
     {
-        CAViewAnimation::getInstance()->setPointZ(var, this);
-    }
-    else if(m_fPointZ != var)
-    {
-        m_fPointZ = var;
-        this->updateDraw();
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setPointZ(var, this);
+        }
+        else
+        {
+            m_fPointZ = var;
+            this->updateDraw();
+        }
     }
 }
 
@@ -418,16 +425,19 @@ int CAView::getRotation()
 /// rotation setter
 void CAView::setRotation(int newRotation)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if (m_fRotationZ != newRotation)
     {
-        CAViewAnimation::getInstance()->setRotation(newRotation, this);
-    }
-    else if (m_fRotationZ != newRotation)
-    {
-        m_fRotationZ = newRotation;
-        this->updateRotationQuat();
-        this->updateDraw();
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setRotation(newRotation, this);
+        }
+        else
+        {
+            m_fRotationZ = newRotation;
+            this->updateRotationQuat();
+            this->updateDraw();
+        }
     }
 }
 
@@ -438,16 +448,19 @@ int CAView::getRotationX()
 
 void CAView::setRotationX(int fRotationX)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if (m_fRotationX != fRotationX)
     {
-        CAViewAnimation::getInstance()->setRotationX(fRotationX, this);
-    }
-    else if (m_fRotationX != fRotationX)
-    {
-        m_fRotationX = fRotationX;
-        this->updateRotationQuat();
-        this->updateDraw();
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setRotationX(fRotationX, this);
+        }
+        else
+        {
+            m_fRotationX = fRotationX;
+            this->updateRotationQuat();
+            this->updateDraw();
+        }
     }
 }
 
@@ -458,16 +471,19 @@ int CAView::getRotationY()
 
 void CAView::setRotationY(int fRotationY)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if (m_fRotationY != fRotationY)
     {
-        CAViewAnimation::getInstance()->setRotationY(fRotationY, this);
-    }
-    else if (m_fRotationY != fRotationY)
-    {
-        m_fRotationY = fRotationY;
-        this->updateRotationQuat();
-        this->updateDraw();
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setRotationY(fRotationY, this);
+        }
+        else
+        {
+            m_fRotationY = fRotationY;
+            this->updateRotationQuat();
+            this->updateDraw();
+        }
     }
 }
 
@@ -517,15 +533,18 @@ float CAView::getScaleX()
 /// scaleX setter
 void CAView::setScaleX(float newScaleX)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if (m_fScaleX != newScaleX)
     {
-        CAViewAnimation::getInstance()->setScaleX(newScaleX, this);
-    }
-    else if (m_fScaleX != newScaleX)
-    {
-        m_fScaleX = newScaleX;
-        this->updateDraw();
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setScaleX(newScaleX, this);
+        }
+        else
+        {
+            m_fScaleX = newScaleX;
+            this->updateDraw();
+        }
     }
 }
 
@@ -538,15 +557,18 @@ float CAView::getScaleY()
 /// scaleY setter
 void CAView::setScaleY(float newScaleY)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if (m_fScaleY != newScaleY)
     {
-        CAViewAnimation::getInstance()->setScaleY(newScaleY, this);
-    }
-    else if (m_fScaleY != newScaleY)
-    {
-        m_fScaleY = newScaleY;
-        this->updateDraw();
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setScaleY(newScaleY, this);
+        }
+        else
+        {
+            m_fScaleY = newScaleY;
+            this->updateDraw();
+        }
     }
 }
 
@@ -654,30 +676,33 @@ void CAView::setAnchorPoint(const DPoint& anchorPoint)
 
 void CAView::setContentSize(const DSize & contentSize)
 {
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if (!contentSize.equals(m_obContentSize))
     {
-        CAViewAnimation::getInstance()->setContentSize(contentSize, this);
-    }
-    else if (!contentSize.equals(m_obContentSize))
-    {
-        m_obContentSize = contentSize;
-        m_obAnchorPointInPoints.x = m_obContentSize.width * m_obAnchorPoint.x;
-        m_obAnchorPointInPoints.y = m_obContentSize.height * m_obAnchorPoint.y;
-        
-        this->updateImageRect();
-        if (m_pContentContainer)
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
         {
-            m_pContentContainer->viewOnSizeTransitionDidChanged();
+            CAViewAnimation::getInstance()->setContentSize(contentSize, this);
         }
-        
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        else
         {
-            (*itr)->reViewlayout(m_obContentSize);
+            m_obContentSize = contentSize;
+            m_obAnchorPointInPoints.x = m_obContentSize.width * m_obAnchorPoint.x;
+            m_obAnchorPointInPoints.y = m_obContentSize.height * m_obAnchorPoint.y;
+            
+            this->updateImageRect();
+            if (m_pContentContainer)
+            {
+                m_pContentContainer->viewOnSizeTransitionDidChanged();
+            }
+            
+            CAVector<CAView*>::iterator itr;
+            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            {
+                (*itr)->reViewlayout(m_obContentSize);
+            }
+            
+            this->updateDraw();
         }
-        
-        this->updateDraw();
     }
 }
 
@@ -694,7 +719,8 @@ void CAView::setFrame(const DRect &rect)
     m_obLayout = DLayoutZero;
     DSize originalSize = m_obContentSize;
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && !m_obContentSize.equals(rect.size))
     {
         CAViewAnimation::getInstance()->setContentSize(rect.size, this);
         
@@ -711,7 +737,8 @@ void CAView::setFrame(const DRect &rect)
     this->setFrameOrigin(rect.origin);
     
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && !m_obContentSize.equals(rect.size))
     {
         m_obContentSize = originalSize;
         m_obAnchorPointInPoints = m_obContentSize;
@@ -732,7 +759,8 @@ void CAView::setFrameOrigin(const DPoint& point)
     DPoint p = ccpAdd(point, m_obAnchorPointInPoints);
     
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && !m_obPoint.equals(p))
     {
         CAViewAnimation::getInstance()->setPoint(p, this);
     }
@@ -757,7 +785,8 @@ void CAView::setCenter(const DRect& rect)
     m_obLayout = DLayoutZero;
     DSize originalSize = m_obContentSize;
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && !m_obContentSize.equals(rect.size))
     {
         CAViewAnimation::getInstance()->setContentSize(rect.size, this);
         
@@ -774,7 +803,8 @@ void CAView::setCenter(const DRect& rect)
     this->setCenterOrigin(rect.origin);
     
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && !m_obContentSize.equals(rect.size))
     {
         m_obContentSize = originalSize;
         m_obAnchorPointInPoints = m_obContentSize;
@@ -797,7 +827,8 @@ void CAView::setCenterOrigin(const DPoint& point)
     p = ccpAdd(p, m_obAnchorPointInPoints);
 
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && !m_obPoint.equals(p))
     {
         CAViewAnimation::getInstance()->setPoint(p, this);
     }
@@ -1930,7 +1961,8 @@ CAImage* CAView::getImage(void)
 void CAView::setImageRect(const DRect& rect)
 {
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && !m_obRect.equals(rect))
     {
         CAViewAnimation::getInstance()->setImageRect(rect, this);
     }
@@ -2062,19 +2094,21 @@ void CAView::setAlpha(float alpha)
 {
     alpha = MIN(alpha, 1.0f);
     alpha = MAX(alpha, 0.0f);
-    
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+    if (_displayedAlpha != alpha)
     {
-        CAViewAnimation::getInstance()->setAlpha(alpha, this);
-    }
-    else if (_displayedAlpha != alpha)
-    {
-        _realAlpha = alpha;
-        
-        float superviewAlpha = m_pSuperview ? m_pSuperview->getDisplayedAlpha() : 1.0f;
-        
-        this->updateDisplayedAlpha(superviewAlpha);
+        if (CAViewAnimation::areAnimationsEnabled()
+            && CAViewAnimation::areBeginAnimations())
+        {
+            CAViewAnimation::getInstance()->setAlpha(alpha, this);
+        }
+        else
+        {
+            _realAlpha = alpha;
+            
+            float superviewAlpha = m_pSuperview ? m_pSuperview->getDisplayedAlpha() : 1.0f;
+            
+            this->updateDisplayedAlpha(superviewAlpha);
+        }
     }
 }
 
@@ -2105,7 +2139,8 @@ const CAColor4B& CAView::getDisplayedColor()
 void CAView::setColor(const CAColor4B& color)
 {
     if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations())
+        && CAViewAnimation::areBeginAnimations()
+        && _realColor != color)
     {
         CAViewAnimation::getInstance()->setColor(color, this);
     }
@@ -2259,10 +2294,10 @@ void CAView::setCGNode(CrossApp::CGNode *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pCGNode);
     m_pCGNode = var;
+    m_pCGNode->m_pSuperviewCAView = this;
     
     if (m_bRunning && m_pCGNode && !m_pCGNode->isRunning())
     {
-        m_pCGNode->m_pSuperviewCAView = this;
         m_pCGNode->onEnter();
         m_pCGNode->onEnterTransitionDidFinish();
     }

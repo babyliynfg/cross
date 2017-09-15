@@ -41,7 +41,12 @@ void CAAlertView::addButtonTitle(const std::string& buttonTitle)
 void CAAlertView::show()
 {
     s_gMessageBoxs.insert(m_u__ID, this);
-    __show_alertView(m_sTitle, m_sMessage, m_vButtonTitles, [&](int index)
+    std::vector<std::string> buttonTitles = m_vButtonTitles;
+    if (buttonTitles.empty())
+    {
+        buttonTitles.push_back("OK");
+    }
+    __show_alertView(m_sTitle, m_sMessage, buttonTitles, [&](int index)
     {
         s_gMessageBoxs.erase(m_u__ID);
     });

@@ -2134,31 +2134,10 @@ bool CAUIEditorParser::initWithPath(const std::string& filePath, CAView* supervi
     this->init();
     
     unsigned long size = 0;
-    unsigned char* data = nullptr;
-    do
-    {
-        // read the file from hardware
-        const std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath.c_str());
-        FILE *fp = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), "rb");
-        CC_BREAK_IF(!fp);
-        
-        fseek(fp,0,SEEK_END);
-        size = ftell(fp);
-        fseek(fp,0,SEEK_SET);
-        data = (unsigned char*)malloc(size);
-        size = fread(data,sizeof(unsigned char), size,fp);
-        fclose(fp);
-    } while (0);
+    unsigned char* data = FileUtils::getInstance()->getFileData(filePath, "rb+", &size);
     
     if (size > 0)
     {
-        std::string str;
-        str.resize(size);
-        for (size_t i = 0; i < size; i++)
-        {
-            str[i] = data[i];
-        }
-        
         m_pMyDocument = new tinyxml2::XMLDocument();
 		m_pMyDocument->Parse((const char*)data, size);
 		tinyxml2::XMLElement* rootElement = m_pMyDocument->RootElement();

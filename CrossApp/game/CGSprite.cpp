@@ -635,11 +635,9 @@ void CGSprite::setSpriteFrame(CGSpriteFrame *pNewFrame)
 {
     m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
     
-    m_bRectRotated = pNewFrame->isRotated();
-    
     this->setImage(pNewFrame->getImage());
     
-    this->setImageRect(pNewFrame->getRect(), m_bRectRotated, pNewFrame->getOriginalSize());
+    this->setImageRect(pNewFrame->getRect(), pNewFrame->isRotated(), pNewFrame->getOriginalSize());
 }
 
 void CGSprite::setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex)
