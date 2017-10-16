@@ -7,7 +7,7 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CGProgressTimer : public CGNode
+class CC_DLL CGProgressTimer : public CAView
 {
 public:
 

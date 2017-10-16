@@ -1,7 +1,7 @@
 
 
 #include "game/actions/CGActionManager.h"
-#include "game/CGNode.h"
+#include "game/CGSprite.h"
 #include "game/actions/CGAction.h"
 #include "basics/CAScheduler.h"
 #include "ccMacros.h"
@@ -15,7 +15,7 @@ NS_CC_BEGIN
 typedef struct _hashElement
 {
     struct _ccArray     *actions;
-    CGNode                *target;
+    CGSprite                *target;
     int                 actionIndex;
     Action              *currentAction;
     bool                currentActionSalvaged;
@@ -94,7 +94,7 @@ void ActionManager::removeActionAtIndex(ssize_t index, tHashElement *element)
 
 // pause / resume
 
-void ActionManager::pauseTarget(CGNode *target)
+void ActionManager::pauseTarget(CGSprite *target)
 {
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -104,7 +104,7 @@ void ActionManager::pauseTarget(CGNode *target)
     }
 }
 
-void ActionManager::resumeTarget(CGNode *target)
+void ActionManager::resumeTarget(CGSprite *target)
 {
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -114,9 +114,9 @@ void ActionManager::resumeTarget(CGNode *target)
     }
 }
 
-CAVector<CGNode*> ActionManager::pauseAllRunningActions()
+CAVector<CGSprite*> ActionManager::pauseAllRunningActions()
 {
-    CAVector<CGNode*> idsWithActions;
+    CAVector<CGSprite*> idsWithActions;
     
     for (tHashElement *element=_targets; element != nullptr; element = (tHashElement *)element->hh.next) 
     {
@@ -130,7 +130,7 @@ CAVector<CGNode*> ActionManager::pauseAllRunningActions()
     return idsWithActions;
 }
 
-void ActionManager::resumeTargets(const CAVector<CGNode*>& targetsToResume)
+void ActionManager::resumeTargets(const CAVector<CGSprite*>& targetsToResume)
 {
     for(const auto &node : targetsToResume) {
         this->resumeTarget(node);
@@ -139,7 +139,7 @@ void ActionManager::resumeTargets(const CAVector<CGNode*>& targetsToResume)
 
 // run
 
-void ActionManager::addAction(Action *action, CGNode *target, bool paused)
+void ActionManager::addAction(Action *action, CGSprite *target, bool paused)
 {
     CCASSERT(action != nullptr, "action can't be nullptr!");
     CCASSERT(target != nullptr, "target can't be nullptr!");
@@ -176,7 +176,7 @@ void ActionManager::removeAllActions()
     }
 }
 
-void ActionManager::removeAllActionsFromTarget(CGNode *target)
+void ActionManager::removeAllActionsFromTarget(CGSprite *target)
 {
     // explicit null handling
     if (target == nullptr)
@@ -235,7 +235,7 @@ void ActionManager::removeAction(Action *action)
     }
 }
 
-void ActionManager::removeActionByTag(int tag, CGNode *target)
+void ActionManager::removeActionByTag(int tag, CGSprite *target)
 {
     CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
     CCASSERT(target != nullptr, "target can't be nullptr!");
@@ -259,7 +259,7 @@ void ActionManager::removeActionByTag(int tag, CGNode *target)
     }
 }
 
-void ActionManager::removeAllActionsByTag(int tag, CGNode *target)
+void ActionManager::removeAllActionsByTag(int tag, CGSprite *target)
 {
     CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
     CCASSERT(target != nullptr, "target can't be nullptr!");
@@ -287,7 +287,7 @@ void ActionManager::removeAllActionsByTag(int tag, CGNode *target)
     }
 }
 
-void ActionManager::removeActionsByFlags(unsigned int flags, CGNode *target)
+void ActionManager::removeActionsByFlags(unsigned int flags, CGSprite *target)
 {
     if (flags == 0)
     {
@@ -322,7 +322,7 @@ void ActionManager::removeActionsByFlags(unsigned int flags, CGNode *target)
 
 // FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
 // and, it is not possible to get the address of a reference
-Action* ActionManager::getActionByTag(int tag, const CGNode *target) const
+Action* ActionManager::getActionByTag(int tag, const CGSprite *target) const
 {
     CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
 
@@ -356,7 +356,7 @@ Action* ActionManager::getActionByTag(int tag, const CGNode *target) const
 
 // FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
 // and, it is not possible to get the address of a reference
-ssize_t ActionManager::getNumberOfRunningActionsInTarget(const CGNode *target) const
+ssize_t ActionManager::getNumberOfRunningActionsInTarget(const CGSprite *target) const
 {
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);

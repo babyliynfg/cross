@@ -6,7 +6,7 @@
 #include "script_support/CAScriptSupport.h"
 NS_CC_BEGIN
 
-class CGNode;
+class CGSprite;
 
 enum {
     kActionUpdate
@@ -62,7 +62,7 @@ public:
      *
      * @param target A certain target.
      */
-    virtual void startWithTarget(CGNode *target);
+    virtual void startWithTarget(CGSprite *target);
 
     /** 
      * Called after the action has finished. It will set the 'target' to nil.
@@ -91,17 +91,17 @@ public:
      *
      * @return A certain target.
      */
-    inline CGNode* getTarget() const { return _target; }
+    inline CGSprite* getTarget() const { return _target; }
     /** The action will modify the target properties. 
      *
      * @param target A certain target.
      */
-    inline void setTarget(CGNode *target) { _target = target; }
+    inline void setTarget(CGSprite *target) { _target = target; }
     /** Return a original Target. 
      *
      * @return A original Target.
      */
-    inline CGNode* getOriginalTarget() const { return _originalTarget; }
+    inline CGSprite* getOriginalTarget() const { return _originalTarget; }
     /** 
      * Set the original target, since target can be nil.
      * Is the target that were used to run the action. Unless you are doing something complex, like ActionManager, you should NOT call this method.
@@ -110,7 +110,7 @@ public:
      *
      * @param originalTarget Is 'assigned', it is not 'retained'.
      */
-    inline void setOriginalTarget(CGNode *originalTarget) { _originalTarget = originalTarget; }
+    inline void setOriginalTarget(CGSprite *originalTarget) { _originalTarget = originalTarget; }
     /** Returns a tag that is used to identify the action easily. 
      *
      * @return A tag.
@@ -137,14 +137,14 @@ public:
     virtual ~Action();
 
 protected:
-    CGNode    *_originalTarget;
+    CGSprite    *_originalTarget;
     /** 
      * The "target".
      * The target will be set with the 'startWithTarget' method.
      * When the 'stop' method is called, target will be set to nil.
      * The target is 'assigned', it is not 'retained'.
      */
-    CGNode    *_target;
+    CGSprite    *_target;
     /** The action tag. An identifier of the action. */
     int     _tag;
     /** The action flag field. To categorize action into certain groups.*/
@@ -251,7 +251,7 @@ public:
     //
     virtual Speed* clone() const override;
     virtual Speed* reverse() const override;
-    virtual void startWithTarget(CGNode* target) override;
+    virtual void startWithTarget(CGSprite* target) override;
     virtual void stop() override;
     /**
      * @param dt in seconds.
@@ -278,7 +278,7 @@ private:
 };
 
 /** @class Follow
- * @brief Follow is an action that "follows" a CGNode.
+ * @brief Follow is an action that "follows" a CGSprite.
  * Eg:
  * @code
  * layer->runAction(Follow::create(hero));
@@ -292,11 +292,11 @@ public:
     /**
      * Creates the action with a set boundary or with no boundary.
      *
-     * @param followedNode  The CGNode to be followed.
+     * @param followedNode  The CGSprite to be followed.
      * @param rect  The boundary. If \p rect is equal to DRectZero, it'll work
      *              with no boundary.
      */
-    static Follow* create(CGNode *followedNode, const DRect& rect = DRectZero);
+    static Follow* create(CGSprite *followedNode, const DRect& rect = DRectZero);
     /** Return boundarySet.
      *
      * @return Return boundarySet.
@@ -350,15 +350,15 @@ public:
     /**
      * Initializes the action with a set boundary or with no boundary.
      *
-     * @param followedNode  The CGNode to be followed.
+     * @param followedNode  The CGSprite to be followed.
      * @param rect  The boundary. If \p rect is equal to DRectZero, it'll work
      *              with no boundary.
      */
-    bool initWithTarget(CGNode *followedNode, const DRect& rect = DRectZero);
+    bool initWithTarget(CGSprite *followedNode, const DRect& rect = DRectZero);
 
 protected:
-    /** CGNode to follow. */
-    CGNode *_followedNode;
+    /** CGSprite to follow. */
+    CGSprite *_followedNode;
 
     /** Whether camera should be limited to certain area. */
     bool _boundarySet;

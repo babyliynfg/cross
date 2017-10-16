@@ -26,7 +26,6 @@
 #include "CADrawingPrimitives.h"
 #include "platform/CADensityDpi.h"
 #include "ccMacros.h"
-#include "game/CGNode.h"
 #include "script_support/CAScriptSupport.h"
 
 NS_CC_BEGIN;
@@ -81,8 +80,6 @@ CAView::CAView(void)
 , m_pRightShadow(nullptr)
 , m_pTopShadow(nullptr)
 , m_pBottomShadow(nullptr)
-, m_pParentCGNode(nullptr)
-, m_pCGNode(nullptr)
 , m_obLayout(DLayoutZero)
 , m_eLayoutType(0)
 , m_iCameraMask(1)
@@ -138,12 +135,7 @@ CAView::~CAView(void)
     }
     
     CC_SAFE_RELEASE(m_pobImage);
-    if (m_pCGNode)
-    {
-        m_pCGNode->m_pSuperviewCAView = nullptr;
-        m_pCGNode->release();
-    }
-    
+
     CAViewAnimation::removeAnimationsWithView(this);
     //s_gViews.erase(m_u__ID);
     
@@ -575,8 +567,17 @@ void CAView::setScaleY(float newScaleY)
 /// position setter
 void CAView::setPoint(const DPoint& newPoint)
 {
-    m_obPoint = newPoint;
-    this->updateDraw();
+    if (CAViewAnimation::areAnimationsEnabled()
+        && CAViewAnimation::areBeginAnimations()
+        && !m_obPoint.equals(newPoint))
+    {
+        CAViewAnimation::getInstance()->setPoint(newPoint, this);
+    }
+    else
+    {
+        m_obPoint = newPoint;
+        this->updateDraw();
+    }
 }
 
 /// children getter
@@ -757,17 +758,7 @@ void CAView::setFrameOrigin(const DPoint& point)
 {
     m_obLayout = DLayoutZero;
     DPoint p = ccpAdd(point, m_obAnchorPointInPoints);
-    
-    if (CAViewAnimation::areAnimationsEnabled()
-        && CAViewAnimation::areBeginAnimations()
-        && !m_obPoint.equals(p))
-    {
-        CAViewAnimation::getInstance()->setPoint(p, this);
-    }
-    else
-    {
-        this->setPoint(p);
-    }
+    this->setPoint(p);
     m_eLayoutType = 0;
 }
 
@@ -865,10 +856,6 @@ void CAView::setLayout(const CrossApp::DLayout &layout)
         if (m_pSuperview)
         {
             this->reViewlayout(m_pSuperview->m_obContentSize, true);
-        }
-        else if (m_pParentCGNode)
-        {
-            this->reViewlayout(m_pParentCGNode->m_obContentSize);
         }
     }
 }
@@ -1237,11 +1224,6 @@ void CAView::visitEve(void)
     {
         subview->visitEve();
     }
-    
-    if (m_pCGNode)
-    {
-        m_pCGNode->visitEve();
-    }
 }
 
 void CAView::draw()
@@ -1419,12 +1401,7 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     {
         this->draw(renderer, m_tModelViewTransform, flags);
     }
-    
-    if (m_pCGNode)
-    {
-        m_pCGNode->visit(renderer, m_tModelViewTransform, flags);
-    }
-    
+
     if (m_bDisplayRange == false)
     {
         m_obAfterDrawCommand.init(0);
@@ -1482,10 +1459,6 @@ void CAView::onEnter()
     {
         this->reViewlayout(m_pSuperview->m_obContentSize);
     }
-    else if (m_pParentCGNode)
-    {
-        this->reViewlayout(m_pParentCGNode->m_obContentSize);
-    }
     
     m_bRunning = true;
     this->updateDraw();
@@ -1498,11 +1471,6 @@ void CAView::onEnter()
     for (auto& subview : m_obSubviews)
     {
         subview->onEnter();
-    }
-    
-    if (m_pCGNode)
-    {
-        m_pCGNode->onEnter();
     }
 }
 
@@ -1519,12 +1487,7 @@ void CAView::onEnterTransitionDidFinish()
         for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
             (*itr)->onEnterTransitionDidFinish();
     }
-    
-    if (m_pCGNode)
-    {
-        m_pCGNode->onEnterTransitionDidFinish();
-    }
-    
+
     if (m_pContentContainer)
     {
         m_pContentContainer->viewOnEnterTransitionDidFinish();
@@ -1542,12 +1505,7 @@ void CAView::onExitTransitionDidStart()
     {
         subview->onExitTransitionDidStart();
     }
-    
-    if (m_pCGNode)
-    {
-        m_pCGNode->onExitTransitionDidStart();
-    }
-    
+
     if (m_pContentContainer)
     {
         m_pContentContainer->viewOnExitTransitionDidStart();
@@ -1566,11 +1524,6 @@ void CAView::onExit()
     for (auto& subview : m_obSubviews)
     {
         subview->onExit();
-    }
-    
-    if (m_pCGNode)
-    {
-        m_pCGNode->onExit();
     }
 }
 
@@ -1595,30 +1548,12 @@ Mat4 CAView::getViewToSuperviewTransform(CAView* ancestor) const
     Mat4 t(this->getViewToSuperviewTransform());
 
     CAView *s = m_pSuperview;
-    if (s)
+    while (s)
     {
-        while (s)
-        {
-            t = s->getViewToSuperviewTransform() * t;
-            CC_BREAK_IF(!s->getSuperview());
-            s = s->getSuperview();
-            CC_BREAK_IF(s == ancestor);
-        }
-        
-        if (s && s != ancestor)
-        {
-            if (CGNode *p = s->m_pParentCGNode)
-            {
-                t = p->getNodeToParentTransform(nullptr) * t;
-            }
-        }
-    }
-    else
-    {
-        if (CGNode *p = m_pParentCGNode)
-        {
-            t = p->getNodeToParentTransform(nullptr) * t;
-        }
+        t = s->getViewToSuperviewTransform() * t;
+        CC_BREAK_IF(!s->getSuperview());
+        s = s->getSuperview();
+        CC_BREAK_IF(s == ancestor);
     }
 
     return t;
@@ -1629,30 +1564,12 @@ AffineTransform CAView::getViewToSuperviewAffineTransform(CAView* ancestor) cons
     AffineTransform t(this->getViewToSuperviewAffineTransform());
     
     CAView *s = m_pSuperview;
-    if (s)
+    while (s)
     {
-        while (s)
-        {
-            t = AffineTransformConcat(t, s->getViewToSuperviewAffineTransform());
-            CC_BREAK_IF(!s->getSuperview());
-            s = s->getSuperview();
-            CC_BREAK_IF(s == ancestor);
-        }
-        
-        if (s && s != ancestor)
-        {
-            if (CGNode *p = s->m_pParentCGNode)
-            {
-                t = AffineTransformConcat(t, p->getNodeToParentAffineTransform(nullptr));
-            }
-        }
-    }
-    else
-    {
-        if (CGNode *p = s->m_pParentCGNode)
-        {
-            t = AffineTransformConcat(t, p->getNodeToParentAffineTransform(nullptr));
-        }
+        t = AffineTransformConcat(t, s->getViewToSuperviewAffineTransform());
+        CC_BREAK_IF(!s->getSuperview());
+        s = s->getSuperview();
+        CC_BREAK_IF(s == ancestor);
     }
     
     return t;
@@ -1668,10 +1585,6 @@ const Mat4& CAView::getViewToSuperviewTransform() const
         if (this->m_pSuperview)
         {
             height = this->m_pSuperview->m_obContentSize.height;
-        }
-        else if (this->m_pParentCGNode)
-        {
-            height = this->m_pParentCGNode->m_obContentSize.height;
         }
         else
         {
@@ -2275,34 +2188,6 @@ void CAView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 
 void CAView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
-}
-
-CGNode* CAView::getCGNode()
-{
-    return m_pCGNode;
-}
-
-void CAView::setCGNode(CrossApp::CGNode *var)
-{
-    if (m_bRunning && m_pCGNode && m_pCGNode->isRunning())
-    {
-        m_pCGNode->m_pSuperviewCAView = NULL;
-        m_pCGNode->onExitTransitionDidStart();
-        m_pCGNode->onExit();
-    }
-    
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pCGNode);
-    m_pCGNode = var;
-    m_pCGNode->m_pSuperviewCAView = this;
-    
-    if (m_bRunning && m_pCGNode && !m_pCGNode->isRunning())
-    {
-        m_pCGNode->onEnter();
-        m_pCGNode->onEnterTransitionDidFinish();
-    }
-    
-    CAApplication::getApplication()->updateDraw();
 }
 
 void CAView::setCameraMask(unsigned short mask, bool applyChildren)

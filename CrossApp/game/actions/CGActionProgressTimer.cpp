@@ -44,7 +44,7 @@ ProgressTo* ProgressTo::reverse() const
     return nullptr;
 }
 
-void ProgressTo::startWithTarget(CGNode *target)
+void ProgressTo::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _from = ((kProgressTimerCast)(target))->getPercentage();
@@ -94,7 +94,7 @@ ProgressFromTo* ProgressFromTo::reverse() const
     return ProgressFromTo::create(_duration, _to, _from);
 }
 
-void ProgressFromTo::startWithTarget(CGNode *target)
+void ProgressFromTo::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
 }

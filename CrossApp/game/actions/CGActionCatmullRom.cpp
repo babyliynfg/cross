@@ -1,7 +1,7 @@
 
 #include "ccMacros.h"
 #include "game/actions/CGActionCatmullRom.h"
-#include "game/CGNode.h"
+#include "game/CGSprite.h"
 #include "view/CADrawingPrimitives.h"
 
 
@@ -212,7 +212,7 @@ CardinalSplineTo::CardinalSplineTo()
 {
 }
 
-void CardinalSplineTo::startWithTarget(CrossApp::CGNode *target)
+void CardinalSplineTo::startWithTarget(CrossApp::CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
 	
@@ -264,7 +264,7 @@ void CardinalSplineTo::update(float time)
 	
 #if CC_ENABLE_STACKABLE_ACTIONS
     // Support for stacked actions
-    CGNode *node = _target;
+    CGSprite *node = _target;
     DPoint diff = node->getPosition() - _previousPosition;
     if( diff.x !=0 || diff.y != 0 ) {
         _accumulatedDiff = _accumulatedDiff + diff;
@@ -362,7 +362,7 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
     return CardinalSplineBy::create(_duration, pReverse, _tension);
 }
 
-void CardinalSplineBy::startWithTarget(CrossApp::CGNode *target)
+void CardinalSplineBy::startWithTarget(CrossApp::CGSprite *target)
 {    
     CardinalSplineTo::startWithTarget(target);
     _startPosition = target->getPosition();

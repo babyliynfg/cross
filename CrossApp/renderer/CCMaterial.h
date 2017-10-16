@@ -26,7 +26,6 @@ class Properties;
 /// Material
 class CC_DLL Material : public RenderState
 {
-    friend class CGNode;
     friend class CAView;
     friend class Technique;
     friend class Pass;

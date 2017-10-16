@@ -1422,6 +1422,7 @@ bool js_crossapp_CACustomAnimation_isSchedule(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_crossapp_CACustomAnimation_isSchedule : wrong number of arguments");
     return false;
 }
+
 void js_CrossApp_CACustomAnimation_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (CACustomAnimation)", obj);
 }
@@ -5568,6 +5569,23 @@ bool js_crossapp_CAImageCache_imageForKey(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CAImageCache_imageForKey : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAImageCache_waitForQuit(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAImageCache* cobj = (CrossApp::CAImageCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImageCache_waitForQuit : Invalid Native Object");
+    if (argc == 0) {
+        cobj->waitForQuit();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAImageCache_waitForQuit : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CAImageCache_dumpCachedImageInfo(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -5690,6 +5708,7 @@ void js_register_crossapp_CAImageCache(JSContext *cx, JS::HandleObject global) {
         JS_FN("removeImageForKey", js_crossapp_CAImageCache_removeImageForKey, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("reloadImage", js_crossapp_CAImageCache_reloadImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("imageForKey", js_crossapp_CAImageCache_imageForKey, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("waitForQuit", js_crossapp_CAImageCache_waitForQuit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("dumpCachedImageInfo", js_crossapp_CAImageCache_dumpCachedImageInfo, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -5968,32 +5987,6 @@ bool js_crossapp_CAView_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CAView_isOpacityModifyRGB : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAView_getCGNode(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_getCGNode : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CGNode* ret = cobj->getCGNode();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAView_getCGNode : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAView_updateDisplayedAlpha(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -6013,35 +6006,6 @@ bool js_crossapp_CAView_updateDisplayedAlpha(JSContext *cx, uint32_t argc, jsval
     }
 
     JS_ReportError(cx, "js_crossapp_CAView_updateDisplayedAlpha : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAView_setCGNode(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_setCGNode : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_setCGNode : Error processing arguments");
-        cobj->setCGNode(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAView_setCGNode : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAView_isFlipX(JSContext *cx, uint32_t argc, jsval *vp)
@@ -6322,6 +6286,29 @@ bool js_crossapp_CAView_setonEnterTransitionDidFinishCallback(JSContext *cx, uin
     JS_ReportError(cx, "js_crossapp_CAView_setonEnterTransitionDidFinishCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAView_convertRectToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_convertRectToWorldSpace : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DRect arg0;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_convertRectToWorldSpace : Error processing arguments");
+        CrossApp::DRect ret = cobj->convertRectToWorldSpace(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = drect_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_convertRectToWorldSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAView_getTag(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -6444,6 +6431,29 @@ bool js_crossapp_CAView_setRotationX(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAView_setRotationX : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAView_convertToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_convertToWorldSpace : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint arg0;
+        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_convertToWorldSpace : Error processing arguments");
+        CrossApp::DPoint ret = cobj->convertToWorldSpace(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_convertToWorldSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAView_getAlpha(JSContext *cx, uint32_t argc, jsval *vp)
@@ -6722,6 +6732,29 @@ bool js_crossapp_CAView_removeSubviewByTextTag(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CAView_removeSubviewByTextTag : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAView_convertRectToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_convertRectToNodeSpace : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DRect arg0;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_convertRectToNodeSpace : Error processing arguments");
+        CrossApp::DRect ret = cobj->convertRectToNodeSpace(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = drect_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_convertRectToNodeSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAView_getonExitTransitionDidStartCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -6779,6 +6812,29 @@ bool js_crossapp_CAView_getFrame(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAView_getFrame : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAView_convertToNodeSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_convertToNodeSize : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_convertToNodeSize : Error processing arguments");
+        CrossApp::DSize ret = cobj->convertToNodeSize(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = dsize_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_convertToNodeSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAView_getImageRect(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7182,6 +7238,27 @@ bool js_crossapp_CAView_getWorldToViewTransform(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAView_getWorldToViewTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAView_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_setAnchorPoint : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint arg0;
+        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_setAnchorPoint : Error processing arguments");
+        cobj->setAnchorPoint(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_setAnchorPoint : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAView_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -7303,6 +7380,27 @@ bool js_crossapp_CAView_getViewToSuperviewTransform(JSContext *cx, uint32_t argc
     } while(0);
 
     JS_ReportError(cx, "js_crossapp_CAView_getViewToSuperviewTransform : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAView_setCenterOrigin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_setCenterOrigin : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint arg0;
+        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_setCenterOrigin : Error processing arguments");
+        cobj->setCenterOrigin(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_setCenterOrigin : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAView_getZOrder(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8136,6 +8234,27 @@ bool js_crossapp_CAView_addSubview(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAView_addSubview : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAView_setAnchorPointInPoints(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_setAnchorPointInPoints : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint arg0;
+        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_setAnchorPointInPoints : Error processing arguments");
+        cobj->setAnchorPointInPoints(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_setAnchorPointInPoints : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAView_initWithFrame(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -8387,6 +8506,52 @@ bool js_crossapp_CAView_getSuperviewToViewTransform(JSContext *cx, uint32_t argc
     JS_ReportError(cx, "js_crossapp_CAView_getSuperviewToViewTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAView_convertToWorldSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_convertToWorldSize : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_convertToWorldSize : Error processing arguments");
+        CrossApp::DSize ret = cobj->convertToWorldSize(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = dsize_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_convertToWorldSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAView_convertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_convertToNodeSpace : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint arg0;
+        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_convertToNodeSpace : Error processing arguments");
+        CrossApp::DPoint ret = cobj->convertToNodeSpace(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_convertToNodeSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAView_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -8505,6 +8670,27 @@ bool js_crossapp_CAView_setFrame(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAView_setFrame : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAView_setPointZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAView_setPointZ : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAView_setPointZ : Error processing arguments");
+        cobj->setPointZ(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAView_setPointZ : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAView_setTag(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8808,9 +8994,7 @@ void js_register_crossapp_CAView(JSContext *cx, JS::HandleObject global) {
         JS_FN("sortAllSubviews", js_crossapp_CAView_sortAllSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("copy", js_crossapp_CAView_copy, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isOpacityModifyRGB", js_crossapp_CAView_isOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCGNode", js_crossapp_CAView_getCGNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("updateDisplayedAlpha", js_crossapp_CAView_updateDisplayedAlpha, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCGNode", js_crossapp_CAView_setCGNode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isFlipX", js_crossapp_CAView_isFlipX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isFlipY", js_crossapp_CAView_isFlipY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CAView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8824,12 +9008,14 @@ void js_register_crossapp_CAView(JSContext *cx, JS::HandleObject global) {
         JS_FN("setCenter", js_crossapp_CAView_setCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSuperviewToViewAffineTransform", js_crossapp_CAView_getSuperviewToViewAffineTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setonEnterTransitionDidFinishCallback", js_crossapp_CAView_setonEnterTransitionDidFinishCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertRectToWorldSpace", js_crossapp_CAView_convertRectToWorldSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTag", js_crossapp_CAView_getTag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getonEnterTransitionDidFinishCallback", js_crossapp_CAView_getonEnterTransitionDidFinishCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewToWorldTransform", js_crossapp_CAView_getViewToWorldTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExit", js_crossapp_CAView_onExit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSuperview", js_crossapp_CAView_setSuperview, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setRotationX", js_crossapp_CAView_setRotationX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertToWorldSpace", js_crossapp_CAView_convertToWorldSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAlpha", js_crossapp_CAView_getAlpha, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSkewX", js_crossapp_CAView_setSkewX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSkewY", js_crossapp_CAView_setSkewY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8841,9 +9027,11 @@ void js_register_crossapp_CAView(JSContext *cx, JS::HandleObject global) {
         JS_FN("reViewlayout", js_crossapp_CAView_reViewlayout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSubviewByTextTag", js_crossapp_CAView_getSubviewByTextTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeSubviewByTextTag", js_crossapp_CAView_removeSubviewByTextTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertRectToNodeSpace", js_crossapp_CAView_convertRectToNodeSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getonExitTransitionDidStartCallback", js_crossapp_CAView_getonExitTransitionDidStartCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("enabledLeftShadow", js_crossapp_CAView_enabledLeftShadow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFrame", js_crossapp_CAView_getFrame, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertToNodeSize", js_crossapp_CAView_convertToNodeSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getImageRect", js_crossapp_CAView_getImageRect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithLayout", js_crossapp_CAView_initWithLayout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOnEnterCallback", js_crossapp_CAView_getOnEnterCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8863,11 +9051,13 @@ void js_register_crossapp_CAView(JSContext *cx, JS::HandleObject global) {
         JS_FN("updateTransform", js_crossapp_CAView_updateTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAnchorPointInPoints", js_crossapp_CAView_getAnchorPointInPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getWorldToViewTransform", js_crossapp_CAView_getWorldToViewTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorPoint", js_crossapp_CAView_setAnchorPoint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnter", js_crossapp_CAView_onEnter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCenterOrigin", js_crossapp_CAView_getCenterOrigin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithCenter", js_crossapp_CAView_initWithCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRotation", js_crossapp_CAView_getRotation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewToSuperviewTransform", js_crossapp_CAView_getViewToSuperviewTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCenterOrigin", js_crossapp_CAView_setCenterOrigin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getZOrder", js_crossapp_CAView_getZOrder, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSubviewsCount", js_crossapp_CAView_getSubviewsCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("visit", js_crossapp_CAView_visit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8903,6 +9093,7 @@ void js_register_crossapp_CAView(JSContext *cx, JS::HandleObject global) {
         JS_FN("getScaleX", js_crossapp_CAView_getScaleX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isVisitableByVisitingCamera", js_crossapp_CAView_isVisitableByVisitingCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addSubview", js_crossapp_CAView_addSubview, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setAnchorPointInPoints", js_crossapp_CAView_setAnchorPointInPoints, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithFrame", js_crossapp_CAView_initWithFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDisplayRange", js_crossapp_CAView_setDisplayRange, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlpha", js_crossapp_CAView_setAlpha, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8914,12 +9105,15 @@ void js_register_crossapp_CAView(JSContext *cx, JS::HandleObject global) {
         JS_FN("description", js_crossapp_CAView_description, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isVisible", js_crossapp_CAView_isVisible, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSuperviewToViewTransform", js_crossapp_CAView_getSuperviewToViewTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertToWorldSize", js_crossapp_CAView_convertToWorldSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertToNodeSpace", js_crossapp_CAView_convertToNodeSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBounds", js_crossapp_CAView_getBounds, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScale", js_crossapp_CAView_getScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("enabledRightShadow", js_crossapp_CAView_enabledRightShadow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithColor", js_crossapp_CAView_initWithColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFrame", js_crossapp_CAView_setFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPointZ", js_crossapp_CAView_setPointZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTag", js_crossapp_CAView_setTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_crossapp_CAView_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -10292,21 +10486,15 @@ bool js_crossapp_CAViewAnimation_beginAnimations(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAViewAnimation_beginAnimations : wrong number of arguments");
     return false;
 }
-bool js_crossapp_CAViewAnimation_areBeginAnimationsWithID(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAViewAnimation_removeAllAnimations(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAViewAnimation_areBeginAnimationsWithID : Error processing arguments");
-        bool ret = CrossApp::CAViewAnimation::areBeginAnimationsWithID(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    if (argc == 0) {
+        CrossApp::CAViewAnimation::removeAllAnimations();
+        args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_crossapp_CAViewAnimation_areBeginAnimationsWithID : wrong number of arguments");
+    JS_ReportError(cx, "js_crossapp_CAViewAnimation_removeAllAnimations : wrong number of arguments");
     return false;
 }
 bool js_crossapp_CAViewAnimation_setAnimationDidStopSelector(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10443,6 +10631,23 @@ bool js_crossapp_CAViewAnimation_setAnimationDuration(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_crossapp_CAViewAnimation_setAnimationDuration : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CAViewAnimation_areBeginAnimationsWithID(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAViewAnimation_areBeginAnimationsWithID : Error processing arguments");
+        bool ret = CrossApp::CAViewAnimation::areBeginAnimationsWithID(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAViewAnimation_areBeginAnimationsWithID : wrong number of arguments");
+    return false;
+}
 bool js_crossapp_CAViewAnimation_removeAnimations(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -10558,13 +10763,14 @@ void js_register_crossapp_CAViewAnimation(JSContext *cx, JS::HandleObject global
     static JSFunctionSpec st_funcs[] = {
         JS_FN("setAnimationsEnabled", js_crossapp_CAViewAnimation_setAnimationsEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("beginAnimations", js_crossapp_CAViewAnimation_beginAnimations, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("areBeginAnimationsWithID", js_crossapp_CAViewAnimation_areBeginAnimationsWithID, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllAnimations", js_crossapp_CAViewAnimation_removeAllAnimations, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimationDidStopSelector", js_crossapp_CAViewAnimation_setAnimationDidStopSelector, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimationDelay", js_crossapp_CAViewAnimation_setAnimationDelay, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimationWillStartSelector", js_crossapp_CAViewAnimation_setAnimationWillStartSelector, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("areAnimationsEnabled", js_crossapp_CAViewAnimation_areAnimationsEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAnimationsWithView", js_crossapp_CAViewAnimation_removeAnimationsWithView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimationDuration", js_crossapp_CAViewAnimation_setAnimationDuration, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("areBeginAnimationsWithID", js_crossapp_CAViewAnimation_areBeginAnimationsWithID, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAnimations", js_crossapp_CAViewAnimation_removeAnimations, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("commitAnimations", js_crossapp_CAViewAnimation_commitAnimations, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimationRepeatAutoreverses", js_crossapp_CAViewAnimation_setAnimationRepeatAutoreverses, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -19148,23 +19354,6 @@ bool js_crossapp_CAScrollView_setBounceVertical(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAScrollView_setBounceVertical : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_removeAllSubviews(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_removeAllSubviews : Invalid Native Object");
-    if (argc == 0) {
-        cobj->removeAllSubviews();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_removeAllSubviews : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAScrollView_isTracking(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -19281,36 +19470,6 @@ bool js_crossapp_CAScrollView_setTouchEnabledAtSubviews(JSContext *cx, uint32_t 
     JS_ReportError(cx, "js_crossapp_CAScrollView_setTouchEnabledAtSubviews : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_getSubviewByTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_getSubviewByTag : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_getSubviewByTag : Error processing arguments");
-        CrossApp::CAView* ret = cobj->getSubviewByTag(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_getSubviewByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAScrollView_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -19328,25 +19487,6 @@ bool js_crossapp_CAScrollView_getZoomScale(JSContext *cx, uint32_t argc, jsval *
     }
 
     JS_ReportError(cx, "js_crossapp_CAScrollView_getZoomScale : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScrollView_isDecelerating(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isDecelerating : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isDecelerating();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isDecelerating : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_endFooterRefresh(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19463,35 +19603,6 @@ bool js_crossapp_CAScrollView_getHeaderRefreshView(JSContext *cx, uint32_t argc,
     JS_ReportError(cx, "js_crossapp_CAScrollView_getHeaderRefreshView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_addSubview(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_addSubview : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAView* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_addSubview : Error processing arguments");
-        cobj->addSubview(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_addSubview : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAScrollView_setShowsVerticalScrollIndicator(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -19536,23 +19647,23 @@ bool js_crossapp_CAScrollView_setContentOffset(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CAScrollView_setContentOffset : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAScrollView_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_isBounceHorizontal(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_init : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isBounceHorizontal : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->init();
+        bool ret = cobj->isBounceHorizontal();
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isBounceHorizontal : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_isShowsVerticalScrollIndicator(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19591,23 +19702,23 @@ bool js_crossapp_CAScrollView_startPullToHeaderRefreshView(JSContext *cx, uint32
     JS_ReportError(cx, "js_crossapp_CAScrollView_startPullToHeaderRefreshView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_getSubviews(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_isTouchEnabledAtSubviews(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_getSubviews : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isTouchEnabledAtSubviews : Invalid Native Object");
     if (argc == 0) {
-        const CrossApp::CAVector<CrossApp::CAView *>& ret = cobj->getSubviews();
+        bool ret = cobj->isTouchEnabledAtSubviews();
         jsval jsret = JSVAL_NULL;
-        jsret = cavector_to_jsval(cx, ret);
+        jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_getSubviews : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isTouchEnabledAtSubviews : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_getMultitouchGesture(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19778,56 +19889,23 @@ bool js_crossapp_CAScrollView_getContentOffset(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CAScrollView_getContentOffset : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_setViewSize(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_isDecelerating(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setViewSize : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DSize arg0;
-        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setViewSize : Error processing arguments");
-        cobj->setViewSize(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isDecelerating : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isDecelerating();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_setViewSize : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScrollView_insertSubview(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_insertSubview : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CAView* arg0 = nullptr;
-        int arg1 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_insertSubview : Error processing arguments");
-        cobj->insertSubview(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_insertSubview : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_isDecelerating : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_onWillBeginDragging(JSContext *cx, uint32_t argc, jsval *vp)
@@ -19891,27 +19969,6 @@ bool js_crossapp_CAScrollView_setShowsScrollIndicators(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_crossapp_CAScrollView_setShowsScrollIndicators : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_removeSubviewByTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_removeSubviewByTag : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_removeSubviewByTag : Error processing arguments");
-        cobj->removeSubviewByTag(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_removeSubviewByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAScrollView_onFooterBeginRefreshing(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -19971,23 +20028,25 @@ bool js_crossapp_CAScrollView_isBounces(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAScrollView_isBounces : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAScrollView_isTouchEnabledAtSubviews(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAScrollView_setViewSize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isTouchEnabledAtSubviews : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isTouchEnabledAtSubviews();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_setViewSize : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_setViewSize : Error processing arguments");
+        cobj->setViewSize(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isTouchEnabledAtSubviews : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAScrollView_setViewSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAScrollView_getMaximumZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20047,42 +20106,6 @@ bool js_crossapp_CAScrollView_setMaximumZoomScale(JSContext *cx, uint32_t argc, 
     }
 
     JS_ReportError(cx, "js_crossapp_CAScrollView_setMaximumZoomScale : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScrollView_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onExitTransitionDidStart : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExitTransitionDidStart();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScrollView_isReachBoundaryDown(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isReachBoundaryDown : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isReachBoundaryDown();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isReachBoundaryDown : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_isZooming(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20231,25 +20254,6 @@ bool js_crossapp_CAScrollView_switchPCMode(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CAScrollView_switchPCMode : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_isReachBoundaryUp(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isReachBoundaryUp : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isReachBoundaryUp();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isReachBoundaryUp : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAScrollView_onDragging(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -20288,25 +20292,6 @@ bool js_crossapp_CAScrollView_onDragging(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_crossapp_CAScrollView_onDragging : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScrollView_isReachBoundaryLeft(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isReachBoundaryLeft : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isReachBoundaryLeft();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isReachBoundaryLeft : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_getFooterRefreshView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20432,44 +20417,6 @@ bool js_crossapp_CAScrollView_onDidZoom(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAScrollView_onDidZoom : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_isReachBoundaryRight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isReachBoundaryRight : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isReachBoundaryRight();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isReachBoundaryRight : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAScrollView_isBounceHorizontal(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_isBounceHorizontal : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isBounceHorizontal();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_isBounceHorizontal : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAScrollView_setMinimumZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -20548,35 +20495,6 @@ bool js_crossapp_CAScrollView_setBounceHorizontal(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CAScrollView_setBounceHorizontal : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAScrollView_removeSubview(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_removeSubview : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAView* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScrollView_removeSubview : Error processing arguments");
-        cobj->removeSubview(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_removeSubview : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAScrollView_setZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -20596,23 +20514,6 @@ bool js_crossapp_CAScrollView_setZoomScale(JSContext *cx, uint32_t argc, jsval *
     }
 
     JS_ReportError(cx, "js_crossapp_CAScrollView_setZoomScale : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CAScrollView_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAScrollView* cobj = (CrossApp::CAScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAScrollView_onEnterTransitionDidFinish : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onEnterTransitionDidFinish();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAScrollView_onEnterTransitionDidFinish : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAScrollView_setMultitouchGesture(JSContext *cx, uint32_t argc, jsval *vp)
@@ -20771,67 +20672,53 @@ void js_register_crossapp_CAScrollView(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setBounceVertical", js_crossapp_CAScrollView_setBounceVertical, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeAllSubviews", js_crossapp_CAScrollView_removeAllSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isTracking", js_crossapp_CAScrollView_isTracking, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("startDeaccelerateScroll", js_crossapp_CAScrollView_startDeaccelerateScroll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isBounceVertical", js_crossapp_CAScrollView_isBounceVertical, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isShowsScrollIndicators", js_crossapp_CAScrollView_isShowsScrollIndicators, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsHorizontalScrollIndicator", js_crossapp_CAScrollView_setShowsHorizontalScrollIndicator, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchEnabledAtSubviews", js_crossapp_CAScrollView_setTouchEnabledAtSubviews, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getSubviewByTag", js_crossapp_CAScrollView_getSubviewByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getZoomScale", js_crossapp_CAScrollView_getZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isDecelerating", js_crossapp_CAScrollView_isDecelerating, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("endFooterRefresh", js_crossapp_CAScrollView_endFooterRefresh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onTouchUpWithoutMoved", js_crossapp_CAScrollView_onTouchUpWithoutMoved, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFooterRefreshView", js_crossapp_CAScrollView_setFooterRefreshView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHeaderRefreshView", js_crossapp_CAScrollView_getHeaderRefreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("addSubview", js_crossapp_CAScrollView_addSubview, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsVerticalScrollIndicator", js_crossapp_CAScrollView_setShowsVerticalScrollIndicator, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setContentOffset", js_crossapp_CAScrollView_setContentOffset, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_crossapp_CAScrollView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isBounceHorizontal", js_crossapp_CAScrollView_isBounceHorizontal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isShowsVerticalScrollIndicator", js_crossapp_CAScrollView_isShowsVerticalScrollIndicator, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("startPullToHeaderRefreshView", js_crossapp_CAScrollView_startPullToHeaderRefreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getSubviews", js_crossapp_CAScrollView_getSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isTouchEnabledAtSubviews", js_crossapp_CAScrollView_isTouchEnabledAtSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMultitouchGesture", js_crossapp_CAScrollView_getMultitouchGesture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setHeaderRefreshView", js_crossapp_CAScrollView_setHeaderRefreshView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDidEndDragging", js_crossapp_CAScrollView_onDidEndDragging, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onHeaderBeginRefreshing", js_crossapp_CAScrollView_onHeaderBeginRefreshing, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBounces", js_crossapp_CAScrollView_setBounces, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentOffset", js_crossapp_CAScrollView_getContentOffset, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setViewSize", js_crossapp_CAScrollView_setViewSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("insertSubview", js_crossapp_CAScrollView_insertSubview, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isDecelerating", js_crossapp_CAScrollView_isDecelerating, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onWillBeginDragging", js_crossapp_CAScrollView_onWillBeginDragging, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CAScrollView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeSubviewByTag", js_crossapp_CAScrollView_removeSubviewByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onFooterBeginRefreshing", js_crossapp_CAScrollView_onFooterBeginRefreshing, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isBounces", js_crossapp_CAScrollView_isBounces, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isTouchEnabledAtSubviews", js_crossapp_CAScrollView_isTouchEnabledAtSubviews, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setViewSize", js_crossapp_CAScrollView_setViewSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMaximumZoomScale", js_crossapp_CAScrollView_getMaximumZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewSize", js_crossapp_CAScrollView_getViewSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaximumZoomScale", js_crossapp_CAScrollView_setMaximumZoomScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExitTransitionDidStart", js_crossapp_CAScrollView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isReachBoundaryDown", js_crossapp_CAScrollView_isReachBoundaryDown, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isZooming", js_crossapp_CAScrollView_isZooming, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundImage", js_crossapp_CAScrollView_setBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onStopMoved", js_crossapp_CAScrollView_onStopMoved, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isShowsHorizontalScrollIndicator", js_crossapp_CAScrollView_isShowsHorizontalScrollIndicator, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("switchPCMode", js_crossapp_CAScrollView_switchPCMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isReachBoundaryUp", js_crossapp_CAScrollView_isReachBoundaryUp, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDragging", js_crossapp_CAScrollView_onDragging, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isReachBoundaryLeft", js_crossapp_CAScrollView_isReachBoundaryLeft, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFooterRefreshView", js_crossapp_CAScrollView_getFooterRefreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stopDeaccelerateScroll", js_crossapp_CAScrollView_stopDeaccelerateScroll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDidMoved", js_crossapp_CAScrollView_onDidMoved, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDidZoom", js_crossapp_CAScrollView_onDidZoom, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isReachBoundaryRight", js_crossapp_CAScrollView_isReachBoundaryRight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isBounceHorizontal", js_crossapp_CAScrollView_isBounceHorizontal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMinimumZoomScale", js_crossapp_CAScrollView_setMinimumZoomScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("endHeaderRefresh", js_crossapp_CAScrollView_endHeaderRefresh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMinimumZoomScale", js_crossapp_CAScrollView_getMinimumZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBounceHorizontal", js_crossapp_CAScrollView_setBounceHorizontal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeSubview", js_crossapp_CAScrollView_removeSubview, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setZoomScale", js_crossapp_CAScrollView_setZoomScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onEnterTransitionDidFinish", js_crossapp_CAScrollView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMultitouchGesture", js_crossapp_CAScrollView_setMultitouchGesture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -26466,9 +26353,11 @@ bool js_crossapp_CASlider_setValue(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASlider* cobj = (CrossApp::CASlider *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASlider_setValue : Invalid Native Object");
     if (argc == 1) {
         double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASlider_setValue : Error processing arguments");
         cobj->setValue(arg0);
         args.rval().setUndefined();
         return true;
@@ -31450,24 +31339,7 @@ bool js_crossapp_CACell_isControlStateEffect(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_crossapp_CACell_isControlStateEffect : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CACell_setControlStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateNormal : Invalid Native Object");
-    if (argc == 0) {
-        cobj->setControlStateNormal();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CACell_setControlStateNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CACell_setBackgroundView(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACell_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -31475,25 +31347,27 @@ bool js_crossapp_CACell_setBackgroundView(JSContext *cx, uint32_t argc, jsval *v
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setBackgroundView : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAView* arg0 = nullptr;
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setBackgroundImage : Invalid Native Object");
+    if (argc == 2) {
+        CrossApp::CAImage* arg0 = nullptr;
+        bool arg1;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_setBackgroundView : Error processing arguments");
-        cobj->setBackgroundView(arg0);
+        arg1 = JS::ToBoolean(args.get(1));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACell_setBackgroundImage : Error processing arguments");
+        cobj->setBackgroundImage(arg0, arg1);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACell_setBackgroundView : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CACell_setBackgroundImage : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_crossapp_CACell_onHighlightedState(JSContext *cx, uint32_t argc, jsval *vp)
@@ -31633,30 +31507,21 @@ bool js_crossapp_CACell_onDsabledState(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CACell_onDsabledState : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACell_getBackgroundView(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACell_setControlStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_getBackgroundView : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateNormal : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CAView* ret = cobj->getBackgroundView();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
+        cobj->setControlStateNormal();
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACell_getBackgroundView : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CACell_setControlStateNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CACell_getReuseIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
@@ -31886,13 +31751,12 @@ void js_register_crossapp_CACell(JSContext *cx, JS::HandleObject global) {
         JS_FN("setReuseIdentifier", js_crossapp_CACell_setReuseIdentifier, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAllowsSelected", js_crossapp_CACell_isAllowsSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isControlStateEffect", js_crossapp_CACell_isControlStateEffect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setControlStateNormal", js_crossapp_CACell_setControlStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBackgroundView", js_crossapp_CACell_setBackgroundView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBackgroundImage", js_crossapp_CACell_setBackgroundImage, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onHighlightedState", js_crossapp_CACell_onHighlightedState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setControlStateHighlighted", js_crossapp_CACell_setControlStateHighlighted, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onRecovery", js_crossapp_CACell_onRecovery, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDsabledState", js_crossapp_CACell_onDsabledState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBackgroundView", js_crossapp_CACell_getBackgroundView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setControlStateNormal", js_crossapp_CACell_setControlStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getReuseIdentifier", js_crossapp_CACell_getReuseIdentifier, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getControlState", js_crossapp_CACell_getControlState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setControlStateEffect", js_crossapp_CACell_setControlStateEffect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -39982,35 +39846,6 @@ bool js_crossapp_FileUtils_getFileSize(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_FileUtils_getFileSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_FileUtils_getFileData(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::FileUtils* cobj = (CrossApp::FileUtils *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_FileUtils_getFileData : Invalid Native Object");
-    if (argc == 3) {
-        std::string arg0;
-        const char* arg1 = nullptr;
-        unsigned long* arg2 = 0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
-        #pragma warning NO CONVERSION TO NATIVE FOR unsigned long*
-		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FileUtils_getFileData : Error processing arguments");
-        unsigned char* ret = cobj->getFileData(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
-        jsret = u_char_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        free(ret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_FileUtils_getFileData : wrong number of arguments: %d, was expecting %d", argc, 3);
-    return false;
-}
 bool js_crossapp_FileUtils_writeStringToFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -40034,34 +39869,6 @@ bool js_crossapp_FileUtils_writeStringToFile(JSContext *cx, uint32_t argc, jsval
     }
 
     JS_ReportError(cx, "js_crossapp_FileUtils_writeStringToFile : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_FileUtils_getFileDataFromZip(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::FileUtils* cobj = (CrossApp::FileUtils *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_FileUtils_getFileDataFromZip : Invalid Native Object");
-    if (argc == 3) {
-        std::string arg0;
-        std::string arg1;
-        unsigned long* arg2 = 0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        #pragma warning NO CONVERSION TO NATIVE FOR unsigned long*
-		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_FileUtils_getFileDataFromZip : Error processing arguments");
-        unsigned char* ret = cobj->getFileDataFromZip(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
-        jsret = u_char_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_FileUtils_getFileDataFromZip : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
 bool js_crossapp_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp)
@@ -40407,9 +40214,7 @@ void js_register_crossapp_FileUtils(JSContext *cx, JS::HandleObject global) {
         JS_FN("getValueMapFromFile", js_crossapp_FileUtils_getValueMapFromFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFileString", js_crossapp_FileUtils_getFileString, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFileSize", js_crossapp_FileUtils_getFileSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getFileData", js_crossapp_FileUtils_getFileData, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("writeStringToFile", js_crossapp_FileUtils_writeStringToFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getFileDataFromZip", js_crossapp_FileUtils_getFileDataFromZip, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addSearchPath", js_crossapp_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isFileExist", js_crossapp_FileUtils_isFileExist, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("fullPathForFilename", js_crossapp_FileUtils_fullPathForFilename, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -43445,7 +43250,7 @@ bool js_crossapp_CAPickerView_onTitleForRow(JSContext *cx, uint32_t argc, jsval 
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
+                auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = uint32_to_jsval(cx, larg0);
@@ -43833,40 +43638,6 @@ void js_register_crossapp_CAPickerView(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_CrossApp_CADatePickerView_class;
 JSObject *jsb_CrossApp_CADatePickerView_prototype;
 
-bool js_crossapp_CADatePickerView_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_onEnter : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onEnter();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CADatePickerView_onEnter : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CADatePickerView_onExit(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_onExit : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExit();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CADatePickerView_onExit : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CADatePickerView_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -43980,6 +43751,23 @@ bool js_crossapp_CADatePickerView_init(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CADatePickerView_init : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CADatePickerView_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_onExitTransitionDidStart : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onExitTransitionDidStart();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CADatePickerView_setDate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -44005,6 +43793,23 @@ bool js_crossapp_CADatePickerView_setDate(JSContext *cx, uint32_t argc, jsval *v
     }
 
     JS_ReportError(cx, "js_crossapp_CADatePickerView_setDate : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_CADatePickerView_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_onEnterTransitionDidFinish : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onEnterTransitionDidFinish();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_onEnterTransitionDidFinish : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CADatePickerView_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -44174,12 +43979,12 @@ void js_register_crossapp_CADatePickerView(JSContext *cx, JS::HandleObject globa
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("onEnter", js_crossapp_CADatePickerView_onEnter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExit", js_crossapp_CADatePickerView_onExit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundImage", js_crossapp_CADatePickerView_setBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundImageForSelected", js_crossapp_CADatePickerView_setBackgroundImageForSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CADatePickerView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onExitTransitionDidStart", js_crossapp_CADatePickerView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDate", js_crossapp_CADatePickerView_setDate, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onEnterTransitionDidFinish", js_crossapp_CADatePickerView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -47196,31 +47001,6 @@ bool js_crossapp_CADownloadManager_resumeDownload(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CADownloadManager_resumeDownload : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CADownloadManager_getDownloadIdsFromTextTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CADownloadManager* cobj = (CrossApp::CADownloadManager *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADownloadManager_getDownloadIdsFromTextTag : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADownloadManager_getDownloadIdsFromTextTag : Error processing arguments");
-        std::vector<int> ret;
-        for (auto& var: cobj->getDownloadIdsFromTextTag(arg0))
-            ret.push_back(var);
-        jsval jsret = JSVAL_NULL;
-        jsret = std_vector_int_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CADownloadManager_getDownloadIdsFromTextTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CADownloadManager_getDownloadManagerDelegate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -47467,7 +47247,6 @@ void js_register_crossapp_CADownloadManager(JSContext *cx, JS::HandleObject glob
         JS_FN("clearOnSuccessDownloadRecord", js_crossapp_CADownloadManager_clearOnSuccessDownloadRecord, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDownloadUrl", js_crossapp_CADownloadManager_getDownloadUrl, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resumeDownload", js_crossapp_CADownloadManager_resumeDownload, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getDownloadIdsFromTextTag", js_crossapp_CADownloadManager_getDownloadIdsFromTextTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDownloadManagerDelegate", js_crossapp_CADownloadManager_getDownloadManagerDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTotalFileSize", js_crossapp_CADownloadManager_getTotalFileSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFilePath", js_crossapp_CADownloadManager_getFilePath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -47969,16 +47748,16 @@ bool js_crossapp_CATextField_onShouldChangeCharacters(JSContext *cx, uint32_t ar
     CrossApp::CATextField* cobj = (CrossApp::CATextField *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATextField_onShouldChangeCharacters : Invalid Native Object");
     if (argc == 1) {
-        std::function<bool (int, int, const std::basic_string<char> &)> arg0;
+        std::function<bool (long, long, const std::basic_string<char> &)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](int larg0, int larg1, const std::basic_string<char> & larg2) -> bool {
+		        auto lambda = [=, &ok](long larg0, long larg1, const std::basic_string<char> & larg2) -> bool {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[3];
-		            largv[0] = int32_to_jsval(cx, larg0);
-		            largv[1] = int32_to_jsval(cx, larg1);
+		            largv[0] = long_to_jsval(cx, larg0);
+		            largv[1] = long_to_jsval(cx, larg1);
 		            largv[2] = std_string_to_jsval(cx, larg2);
 		            JS::RootedValue rval(cx);
 		            bool succeed = func->invoke(3, &largv[0], &rval);
@@ -48924,16 +48703,16 @@ bool js_crossapp_CATextView_onShouldChangeCharacters(JSContext *cx, uint32_t arg
     CrossApp::CATextView* cobj = (CrossApp::CATextView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATextView_onShouldChangeCharacters : Invalid Native Object");
     if (argc == 1) {
-        std::function<bool (int, int, const std::basic_string<char> &)> arg0;
+        std::function<bool (long, long, const std::basic_string<char> &)> arg0;
         do {
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](int larg0, int larg1, const std::basic_string<char> & larg2) -> bool {
+		        auto lambda = [=, &ok](long larg0, long larg1, const std::basic_string<char> & larg2) -> bool {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[3];
-		            largv[0] = int32_to_jsval(cx, larg0);
-		            largv[1] = int32_to_jsval(cx, larg1);
+		            largv[0] = long_to_jsval(cx, larg0);
+		            largv[1] = long_to_jsval(cx, larg1);
 		            largv[2] = std_string_to_jsval(cx, larg2);
 		            JS::RootedValue rval(cx);
 		            bool succeed = func->invoke(3, &largv[0], &rval);
@@ -50062,1839 +49841,64 @@ void js_register_crossapp_CAImagePickerController(JSContext *cx, JS::HandleObjec
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
-JSClass  *jsb_CrossApp_CGNode_class;
-JSObject *jsb_CrossApp_CGNode_prototype;
+JSClass  *jsb_CrossApp_CGSprite_class;
+JSObject *jsb_CrossApp_CGSprite_prototype;
 
-bool js_crossapp_CGNode_addChild(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_stopActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_addChild : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_addChild : Error processing arguments");
-        cobj->addChild(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_addChild : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getShaderProgram(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getShaderProgram : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::GLProgram* ret = cobj->getShaderProgram();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::GLProgram>(cx, (CrossApp::GLProgram*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getShaderProgram : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getChildren(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getChildren : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAVector<CrossApp::CGNode *>& ret = cobj->getChildren();
-        jsval jsret = JSVAL_NULL;
-        jsret = cavector_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getChildren : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setViewToParentTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setViewToParentTransform : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::Mat4 arg0;
-        ok &= jsval_to_matrix(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setViewToParentTransform : Error processing arguments");
-        cobj->setViewToParentTransform(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setViewToParentTransform : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setOnExitCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setOnExitCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setOnExitCallback : Error processing arguments");
-        cobj->setOnExitCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setOnExitCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_isOpacityModifyRGB : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isOpacityModifyRGB();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_isOpacityModifyRGB : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_updateDisplayedAlpha(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_updateDisplayedAlpha : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_updateDisplayedAlpha : Error processing arguments");
-        cobj->updateDisplayedAlpha(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_updateDisplayedAlpha : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_init(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_init : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->init();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_init : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getCameraMask(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getCameraMask : Invalid Native Object");
-    if (argc == 0) {
-        unsigned short ret = cobj->getCameraMask();
-        jsval jsret = JSVAL_NULL;
-        jsret = ushort_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getCameraMask : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setAlpha(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setAlpha : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setAlpha : Error processing arguments");
-        cobj->setAlpha(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setAlpha : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getWorldToViewAffineTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getWorldToViewAffineTransform : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::AffineTransform ret = cobj->getWorldToViewAffineTransform();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR AffineTransform;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getWorldToViewAffineTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setZOrder(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setZOrder : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setZOrder : Error processing arguments");
-        cobj->setZOrder(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setZOrder : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setScaleZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setScaleZ : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setScaleZ : Error processing arguments");
-        cobj->setScaleZ(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setScaleZ : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setScaleY(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setScaleY : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setScaleY : Error processing arguments");
-        cobj->setScaleY(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setScaleY : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setScaleX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setScaleX : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setScaleX : Error processing arguments");
-        cobj->setScaleX(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setScaleX : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_processParentFlags(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_processParentFlags : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::Mat4 arg0;
-        uint32_t arg1 = 0;
-        ok &= jsval_to_matrix(cx, args.get(0), &arg0);
-        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_processParentFlags : Error processing arguments");
-        uint32_t ret = cobj->processParentFlags(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_processParentFlags : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CGNode_visitEve(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_visitEve : Invalid Native Object");
-    if (argc == 0) {
-        cobj->visitEve();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_visitEve : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setonEnterTransitionDidFinishCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setonEnterTransitionDidFinishCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setonEnterTransitionDidFinishCallback : Error processing arguments");
-        cobj->setonEnterTransitionDidFinishCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setonEnterTransitionDidFinishCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_convertRectToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_convertRectToWorldSpace : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DRect arg0;
-        ok &= jsval_to_drect(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_convertRectToWorldSpace : Error processing arguments");
-        CrossApp::DRect ret = cobj->convertRectToWorldSpace(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = drect_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_convertRectToWorldSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getonEnterTransitionDidFinishCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getonEnterTransitionDidFinishCallback : Invalid Native Object");
-    if (argc == 0) {
-        const std::function<void ()>& ret = cobj->getonEnterTransitionDidFinishCallback();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getonEnterTransitionDidFinishCallback : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getNodeToWorldAffineTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getNodeToWorldAffineTransform : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::AffineTransform ret = cobj->getNodeToWorldAffineTransform();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR AffineTransform;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getNodeToWorldAffineTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getNodeToWorldTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getNodeToWorldTransform : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::Mat4 ret = cobj->getNodeToWorldTransform();
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getNodeToWorldTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_onExit(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_onExit : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExit();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_onExit : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getPosition3D(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getPosition3D : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::DPoint3D ret = cobj->getPosition3D();
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint3d_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getPosition3D : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_removeChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_removeChild : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_removeChild : Error processing arguments");
-        cobj->removeChild(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_removeChild : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_convertToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_convertToWorldSpace : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DPoint arg0;
-        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_convertToWorldSpace : Error processing arguments");
-        CrossApp::DPoint ret = cobj->convertToWorldSpace(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_convertToWorldSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getAlpha(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getAlpha : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getAlpha();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getAlpha : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setSkewX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setSkewX : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setSkewX : Error processing arguments");
-        cobj->setSkewX(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setSkewX : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setSkewY(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setSkewY : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setSkewY : Error processing arguments");
-        cobj->setSkewY(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setSkewY : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setOnEnterCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setOnEnterCallback : Error processing arguments");
-        cobj->setOnEnterCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setOnEnterCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_onEnterTransitionDidFinish : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onEnterTransitionDidFinish();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_onEnterTransitionDidFinish : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getWorldToViewTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getWorldToViewTransform : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::Mat4 ret = cobj->getWorldToViewTransform();
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getWorldToViewTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_stopActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_stopActionsByFlags : Invalid Native Object");
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_stopActionsByFlags : Invalid Native Object");
     if (argc == 1) {
         uint32_t arg0 = 0;
         ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_stopActionsByFlags : Error processing arguments");
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_stopActionsByFlags : Error processing arguments");
         cobj->stopActionsByFlags(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGNode_stopActionsByFlags : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_stopActionsByFlags : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CGNode_setNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_setNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setNormalizedPosition : Invalid Native Object");
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setNormalizedPosition : Invalid Native Object");
     if (argc == 1) {
         CrossApp::DPoint arg0;
         ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setNormalizedPosition : Error processing arguments");
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setNormalizedPosition : Error processing arguments");
         cobj->setNormalizedPosition(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGNode_setNormalizedPosition : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_setNormalizedPosition : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CGNode_removeChildByTextTag(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_removeChildByTextTag : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_removeChildByTextTag : Error processing arguments");
-        cobj->removeChildByTextTag(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_removeChildByTextTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setonExitTransitionDidStartCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setonExitTransitionDidStartCallback : Invalid Native Object");
-    if (argc == 1) {
-        std::function<void ()> arg0;
-        do {
-		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
-		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok]() -> void {
-		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-		            JS::RootedValue rval(cx);
-		            bool succeed = func->invoke(0, nullptr, &rval);
-		            if (!succeed && JS_IsExceptionPending(cx)) {
-		                JS_ReportPendingException(cx);
-		            }
-		        };
-		        arg0 = lambda;
-		    }
-		    else
-		    {
-		        arg0 = nullptr;
-		    }
-		} while(0)
-		;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setonExitTransitionDidStartCallback : Error processing arguments");
-        cobj->setonExitTransitionDidStartCallback(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setonExitTransitionDidStartCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_convertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_convertTouchToNodeSpace : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CATouch* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CATouch*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_convertTouchToNodeSpace : Error processing arguments");
-        CrossApp::DPoint ret = cobj->convertTouchToNodeSpace(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_convertTouchToNodeSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getRotationZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getRotationZ : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getRotationZ();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getRotationZ : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_removeAllChildren(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_removeAllChildren : Invalid Native Object");
-    if (argc == 0) {
-        cobj->removeAllChildren();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_removeAllChildren : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getRotationX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getRotationX : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getRotationX();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getRotationX : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getRotationY(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getRotationY : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getRotationY();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getRotationY : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_convertRectToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_convertRectToNodeSpace : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DRect arg0;
-        ok &= jsval_to_drect(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_convertRectToNodeSpace : Error processing arguments");
-        CrossApp::DRect ret = cobj->convertRectToNodeSpace(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = drect_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_convertRectToNodeSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getCAView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getCAView : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAView* ret = cobj->getCAView();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getCAView : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_description(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_description : Invalid Native Object");
-    if (argc == 0) {
-        const char* ret = cobj->description();
-        jsval jsret = JSVAL_NULL;
-        jsret = c_string_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_description : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getNodeToParentAffineTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    bool ok = true;
-    CrossApp::CGNode* cobj = nullptr;
-
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : nullptr);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getNodeToParentAffineTransform : Invalid Native Object");
-    do {
-        if (argc == 1) {
-            CrossApp::CGNode* arg0 = nullptr;
-            do {
-                if (args.get(0).isNull()) { arg0 = nullptr; break; }
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            CrossApp::AffineTransform ret = cobj->getNodeToParentAffineTransform(arg0);
-            jsval jsret = JSVAL_NULL;
-            #pragma warning NO CONVERSION FROM NATIVE FOR AffineTransform;
-            args.rval().set(jsret);
-            return true;
-        }
-    } while(0);
-
-    do {
-        if (argc == 0) {
-            CrossApp::AffineTransform ret = cobj->getNodeToParentAffineTransform();
-            jsval jsret = JSVAL_NULL;
-            #pragma warning NO CONVERSION FROM NATIVE FOR AffineTransform;
-            args.rval().set(jsret);
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getNodeToParentAffineTransform : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CGNode_getonExitTransitionDidStartCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getonExitTransitionDidStartCallback : Invalid Native Object");
-    if (argc == 0) {
-        const std::function<void ()>& ret = cobj->getonExitTransitionDidStartCallback();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getonExitTransitionDidStartCallback : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setParent(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setParent : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setParent : Error processing arguments");
-        cobj->setParent(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setParent : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_convertToNodeSize(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_convertToNodeSize : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DSize arg0;
-        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_convertToNodeSize : Error processing arguments");
-        CrossApp::DSize ret = cobj->convertToNodeSize(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = dsize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_convertToNodeSize : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getRotation3D(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getRotation3D : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::DPoint3D ret = cobj->getRotation3D();
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint3d_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getRotation3D : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getNodeToParentTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    bool ok = true;
-    CrossApp::CGNode* cobj = nullptr;
-
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : nullptr);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getNodeToParentTransform : Invalid Native Object");
-    do {
-        if (argc == 1) {
-            CrossApp::CGNode* arg0 = nullptr;
-            do {
-                if (args.get(0).isNull()) { arg0 = nullptr; break; }
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            CrossApp::Mat4 ret = cobj->getNodeToParentTransform(arg0);
-            jsval jsret = JSVAL_NULL;
-            jsret = matrix_to_jsval(cx, ret);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while(0);
-
-    do {
-        if (argc == 0) {
-            const CrossApp::Mat4& ret = cobj->getNodeToParentTransform();
-            jsval jsret = JSVAL_NULL;
-            jsret = matrix_to_jsval(cx, ret);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getNodeToParentTransform : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CGNode_getOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getOnEnterCallback : Invalid Native Object");
-    if (argc == 0) {
-        const std::function<void ()>& ret = cobj->getOnEnterCallback();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getOnEnterCallback : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setCameraMask(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setCameraMask : Invalid Native Object");
-    if (argc == 1) {
-        unsigned short arg0 = 0;
-        ok &= jsval_to_ushort(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setCameraMask : Error processing arguments");
-        cobj->setCameraMask(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-    if (argc == 2) {
-        unsigned short arg0 = 0;
-        bool arg1;
-        ok &= jsval_to_ushort(cx, args.get(0), &arg0);
-        arg1 = JS::ToBoolean(args.get(1));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setCameraMask : Error processing arguments");
-        cobj->setCameraMask(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setCameraMask : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setPosition : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DPoint arg0;
-        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setPosition : Error processing arguments");
-        cobj->setPosition(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setPosition : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_convertToWorldSize(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_convertToWorldSize : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DSize arg0;
-        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_convertToWorldSize : Error processing arguments");
-        CrossApp::DSize ret = cobj->convertToWorldSize(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = dsize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_convertToWorldSize : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_stopActionByTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_stopActionByTag : Invalid Native Object");
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getActionByTag : Invalid Native Object");
     if (argc == 1) {
         int arg0 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_stopActionByTag : Error processing arguments");
-        cobj->stopActionByTag(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_stopActionByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_reorderChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_reorderChild : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CGNode* arg0 = nullptr;
-        int arg1 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_reorderChild : Error processing arguments");
-        cobj->reorderChild(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_reorderChild : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CGNode_setGLProgramState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setGLProgramState : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::GLProgramState* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::GLProgramState*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setGLProgramState : Error processing arguments");
-        cobj->setGLProgramState(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setGLProgramState : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setPositionZ : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setPositionZ : Error processing arguments");
-        cobj->setPositionZ(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setPositionZ : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setPositionY(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setPositionY : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setPositionY : Error processing arguments");
-        cobj->setPositionY(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setPositionY : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setPositionX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setPositionX : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setPositionX : Error processing arguments");
-        cobj->setPositionX(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setPositionX : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getAnchorPoint : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::DPoint& ret = cobj->getAnchorPoint();
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getAnchorPoint : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getNumberOfRunningActions(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getNumberOfRunningActions : Invalid Native Object");
-    if (argc == 0) {
-        unsigned long ret = cobj->getNumberOfRunningActions();
-        jsval jsret = JSVAL_NULL;
-        jsret = ulong_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getNumberOfRunningActions : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_updateTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_updateTransform : Invalid Native Object");
-    if (argc == 0) {
-        cobj->updateTransform();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_updateTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_isVisible(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_isVisible : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isVisible();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_isVisible : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getChildrenCount(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getChildrenCount : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getChildrenCount();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getChildrenCount : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setAnchorPoint : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DPoint arg0;
-        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setAnchorPoint : Error processing arguments");
-        cobj->setAnchorPoint(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setAnchorPoint : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_onEnter : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onEnter();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_onEnter : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getRotationQuat(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getRotationQuat : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::Quaternion ret = cobj->getRotationQuat();
-        jsval jsret = JSVAL_NULL;
-        jsret = quaternion_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getRotationQuat : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setShaderProgram(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setShaderProgram : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::GLProgram* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::GLProgram*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setShaderProgram : Error processing arguments");
-        cobj->setShaderProgram(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setShaderProgram : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getZOrder(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getZOrder : Invalid Native Object");
-    if (argc == 0) {
-        int ret = cobj->getZOrder();
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getZOrder : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getAnchorPointInPoints(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getAnchorPointInPoints : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::DPoint& ret = cobj->getAnchorPointInPoints();
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getAnchorPointInPoints : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_runAction(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_runAction : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::Action* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::Action*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_runAction : Error processing arguments");
-        CrossApp::Action* ret = cobj->runAction(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Action>(cx, (CrossApp::Action*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_runAction : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_transform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_transform : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::Mat4 arg0;
-        ok &= jsval_to_matrix(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_transform : Error processing arguments");
-        CrossApp::Mat4 ret = cobj->transform(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_transform : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getGLProgramState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getGLProgramState : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::GLProgramState* ret = cobj->getGLProgramState();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::GLProgramState>(cx, (CrossApp::GLProgramState*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getGLProgramState : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_stopAllActions : Invalid Native Object");
-    if (argc == 0) {
-        cobj->stopAllActions();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_stopAllActions : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getSkewX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getSkewX : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getSkewX();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getSkewX : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getSkewY(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getSkewY : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getSkewY();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getSkewY : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getDisplayedColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getDisplayedColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getDisplayedColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getDisplayedColor : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setRotationZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setRotationZ : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setRotationZ : Error processing arguments");
-        cobj->setRotationZ(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setRotationZ : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getActionByTag : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_getActionByTag : Error processing arguments");
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_getActionByTag : Error processing arguments");
         CrossApp::Action* ret = cobj->getActionByTag(arg0);
         jsval jsret = JSVAL_NULL;
         do {
@@ -51909,1193 +49913,18 @@ bool js_crossapp_CGNode_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp)
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGNode_getActionByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_getActionByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CGNode_setRotationX(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_runAction(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setRotationX : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setRotationX : Error processing arguments");
-        cobj->setRotationX(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setRotationX : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setRotationY(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setRotationY : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setRotationY : Error processing arguments");
-        cobj->setRotationY(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setRotationY : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setDisplayRange(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setDisplayRange : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setDisplayRange : Error processing arguments");
-        cobj->setDisplayRange(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setDisplayRange : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setAdditionalTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    bool ok = true;
-    CrossApp::CGNode* cobj = nullptr;
-
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : nullptr);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setAdditionalTransform : Invalid Native Object");
-    do {
-        if (argc == 1) {
-            CrossApp::AffineTransform arg0;
-            #pragma warning NO CONVERSION TO NATIVE FOR AffineTransform
-			ok = false;
-            if (!ok) { ok = true; break; }
-            cobj->setAdditionalTransform(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    do {
-        if (argc == 1) {
-            CrossApp::Mat4* arg0 = nullptr;
-            do {
-                if (args.get(0).isNull()) { arg0 = nullptr; break; }
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (CrossApp::Mat4*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            cobj->setAdditionalTransform(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setAdditionalTransform : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CGNode_getParentToNodeAffineTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getParentToNodeAffineTransform : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::AffineTransform ret = cobj->getParentToNodeAffineTransform();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR AffineTransform;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getParentToNodeAffineTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getOrderOfArrival(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getOrderOfArrival : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getOrderOfArrival();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getOrderOfArrival : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_boundingBox(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_boundingBox : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::DRect ret = cobj->boundingBox();
-        jsval jsret = JSVAL_NULL;
-        jsret = drect_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_boundingBox : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setContentSize(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setContentSize : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DSize arg0;
-        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setContentSize : Error processing arguments");
-        cobj->setContentSize(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setContentSize : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_copy(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_copy : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CGNode* ret = cobj->copy();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_copy : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getPosition(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getPosition : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::DPoint& ret = cobj->getPosition();
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getPosition : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setColor : Error processing arguments");
-        cobj->setColor(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setColor : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_isRunning(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_isRunning : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isRunning();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_isRunning : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getParent(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getParent : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CGNode* ret = cobj->getParent();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getParent : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getPositionZ : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getPositionZ();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getPositionZ : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getPositionY(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getPositionY : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getPositionY();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getPositionY : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getPositionX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getPositionX : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getPositionX();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getPositionX : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_removeChildByTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_removeChildByTag : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_removeChildByTag : Error processing arguments");
-        cobj->removeChildByTag(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_removeChildByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getQuad(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getQuad : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::_ccV3F_C4B_T2F_Quad ret = cobj->getQuad();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR _ccV3F_C4B_T2F_Quad;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getQuad : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_visit(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_visit : Invalid Native Object");
-    if (argc == 3) {
-        CrossApp::Renderer* arg0 = nullptr;
-        CrossApp::Mat4 arg1;
-        uint32_t arg2 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::Renderer*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_matrix(cx, args.get(1), &arg1);
-        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_visit : Error processing arguments");
-        cobj->visit(arg0, arg1, arg2);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_visit : wrong number of arguments: %d, was expecting %d", argc, 3);
-    return false;
-}
-bool js_crossapp_CGNode_updateDisplayedColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_updateDisplayedColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_updateDisplayedColor : Error processing arguments");
-        cobj->updateDisplayedColor(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_updateDisplayedColor : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setVisible(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setVisible : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setVisible : Error processing arguments");
-        cobj->setVisible(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setVisible : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getParentToNodeTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getParentToNodeTransform : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::Mat4& ret = cobj->getParentToNodeTransform();
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getParentToNodeTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getDisplayedAlpha(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getDisplayedAlpha : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getDisplayedAlpha();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getDisplayedAlpha : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode__setZOrder(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode__setZOrder : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode__setZOrder : Error processing arguments");
-        cobj->_setZOrder(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode__setZOrder : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setScale(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    bool ok = true;
-    CrossApp::CGNode* cobj = nullptr;
-
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : nullptr);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setScale : Invalid Native Object");
-    do {
-        if (argc == 3) {
-            double arg0 = 0;
-            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-            if (!ok) { ok = true; break; }
-            double arg1 = 0;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-            if (!ok) { ok = true; break; }
-            double arg2 = 0;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-            if (!ok) { ok = true; break; }
-            cobj->setScale(arg0, arg1, arg2);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    do {
-        if (argc == 1) {
-            double arg0 = 0;
-            ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-            if (!ok) { ok = true; break; }
-            cobj->setScale(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setScale : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CGNode_isDisplayRange(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_isDisplayRange : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isDisplayRange();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_isDisplayRange : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setRotation3D(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setRotation3D : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DPoint3D arg0;
-        ok &= jsval_to_dpoint3d(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setRotation3D : Error processing arguments");
-        cobj->setRotation3D(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setRotation3D : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getOnExitCallback(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getOnExitCallback : Invalid Native Object");
-    if (argc == 0) {
-        const std::function<void ()>& ret = cobj->getOnExitCallback();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getOnExitCallback : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getChildByTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getChildByTag : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_getChildByTag : Error processing arguments");
-        CrossApp::CGNode* ret = cobj->getChildByTag(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getChildByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setOrderOfArrival(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setOrderOfArrival : Invalid Native Object");
-    if (argc == 1) {
-        uint32_t arg0 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setOrderOfArrival : Error processing arguments");
-        cobj->setOrderOfArrival(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setOrderOfArrival : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getScaleZ(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getScaleZ : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getScaleZ();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getScaleZ : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getScaleY(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getScaleY : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getScaleY();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getScaleY : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getScaleX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getScaleX : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getScaleX();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getScaleX : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_isVisitableByVisitingCamera(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_isVisitableByVisitingCamera : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isVisitableByVisitingCamera();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_isVisitableByVisitingCamera : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setOpacityModifyRGB : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setOpacityModifyRGB : Error processing arguments");
-        cobj->setOpacityModifyRGB(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setOpacityModifyRGB : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_insertChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_insertChild : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CGNode* arg0 = nullptr;
-        int arg1 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_insertChild : Error processing arguments");
-        cobj->insertChild(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_insertChild : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CGNode_getContentSize(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getContentSize : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::DSize& ret = cobj->getContentSize();
-        jsval jsret = JSVAL_NULL;
-        jsret = dsize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getContentSize : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_stopAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_stopAllActionsByTag : Invalid Native Object");
-    if (argc == 1) {
-        int arg0 = 0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_stopAllActionsByTag : Error processing arguments");
-        cobj->stopAllActionsByTag(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_stopAllActionsByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_setCAView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setCAView : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAView* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setCAView : Error processing arguments");
-        cobj->setCAView(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setCAView : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_draw(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_draw : Invalid Native Object");
-    if (argc == 3) {
-        CrossApp::Renderer* arg0 = nullptr;
-        CrossApp::Mat4 arg1;
-        uint32_t arg2 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::Renderer*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_matrix(cx, args.get(1), &arg1);
-        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_draw : Error processing arguments");
-        cobj->draw(arg0, arg1, arg2);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_draw : wrong number of arguments: %d, was expecting %d", argc, 3);
-    return false;
-}
-bool js_crossapp_CGNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getBlendFunc : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::BlendFunc ret = cobj->getBlendFunc();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getChildByTextTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getChildByTextTag : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_getChildByTextTag : Error processing arguments");
-        CrossApp::CGNode* ret = cobj->getChildByTextTag(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getChildByTextTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_removeFromParent(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_removeFromParent : Invalid Native Object");
-    if (argc == 0) {
-        cobj->removeFromParent();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_removeFromParent : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setPosition3D(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setPosition3D : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DPoint3D arg0;
-        ok &= jsval_to_dpoint3d(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setPosition3D : Error processing arguments");
-        cobj->setPosition3D(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setPosition3D : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_update(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_update : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_update : Error processing arguments");
-        cobj->update(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_update : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_sortAllChildren(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_sortAllChildren : Invalid Native Object");
-    if (argc == 0) {
-        cobj->sortAllChildren();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_sortAllChildren : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_convertToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_convertToNodeSpace : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::DPoint arg0;
-        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_convertToNodeSpace : Error processing arguments");
-        CrossApp::DPoint ret = cobj->convertToNodeSpace(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_convertToNodeSpace : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_onExitTransitionDidStart : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExitTransitionDidStart();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getScale(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getScale : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getScale();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getScale : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_getNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getNormalizedPosition : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::DPoint& ret = cobj->getNormalizedPosition();
-        jsval jsret = JSVAL_NULL;
-        jsret = dpoint_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getNormalizedPosition : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setBlendFunc : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::BlendFunc arg0;
-        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc
-		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setBlendFunc : Error processing arguments");
-        cobj->setBlendFunc(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_getColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_getColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_getColor : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGNode_setRotationQuat(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_setRotationQuat : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::Quaternion arg0;
-        ok &= jsval_to_quaternion(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_setRotationQuat : Error processing arguments");
-        cobj->setRotationQuat(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_setRotationQuat : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_stopAction(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGNode* cobj = (CrossApp::CGNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGNode_stopAction : Invalid Native Object");
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_runAction : Invalid Native Object");
     if (argc == 1) {
         CrossApp::Action* arg0 = nullptr;
         do {
@@ -53107,312 +49936,22 @@ bool js_crossapp_CGNode_stopAction(JSContext *cx, uint32_t argc, jsval *vp)
             arg0 = (CrossApp::Action*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGNode_stopAction : Error processing arguments");
-        cobj->stopAction(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGNode_stopAction : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGNode_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CGNode* ret = CrossApp::CGNode::create();
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_runAction : Error processing arguments");
+        CrossApp::Action* ret = cobj->runAction(arg0);
         jsval jsret = JSVAL_NULL;
         do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::Action>(cx, (CrossApp::Action*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_crossapp_CGNode_create : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CGNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    CrossApp::CGNode* cobj = new (std::nothrow) CrossApp::CGNode();
-    TypeTest<CrossApp::CGNode> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCAssert(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "CrossApp::CGNode");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
-    return true;
-}
-static bool js_crossapp_CGNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    CrossApp::CGNode *nobj = new (std::nothrow) CrossApp::CGNode();
-    js_proxy_t* p = jsb_new_proxy(nobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "CrossApp::CGNode");
-    bool isFound = false;
-    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
-    args.rval().setUndefined();
-    return true;
-}
 
-
-extern JSObject *jsb_CrossApp_CAObject_prototype;
-
-void js_CrossApp_CGNode_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOG("jsbindings: finalizing JS object %p (CGNode)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-    jsproxy = jsb_get_js_proxy(obj);
-    if (jsproxy) {
-        CrossApp::CGNode *nobj = static_cast<CrossApp::CGNode *>(jsproxy->ptr);
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-
-        if (nobj) {
-            jsb_remove_proxy(nproxy, jsproxy);
-            delete nobj;
-        }
-        else jsb_remove_proxy(nullptr, jsproxy);
-    }
-}
-    
-void js_register_crossapp_CGNode(JSContext *cx, JS::HandleObject global) {
-    jsb_CrossApp_CGNode_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_CrossApp_CGNode_class->name = "CGNode";
-    jsb_CrossApp_CGNode_class->addProperty = JS_PropertyStub;
-    jsb_CrossApp_CGNode_class->delProperty = JS_DeletePropertyStub;
-    jsb_CrossApp_CGNode_class->getProperty = JS_PropertyStub;
-    jsb_CrossApp_CGNode_class->setProperty = JS_StrictPropertyStub;
-    jsb_CrossApp_CGNode_class->enumerate = JS_EnumerateStub;
-    jsb_CrossApp_CGNode_class->resolve = JS_ResolveStub;
-    jsb_CrossApp_CGNode_class->convert = JS_ConvertStub;
-    jsb_CrossApp_CGNode_class->finalize = js_CrossApp_CGNode_finalize;
-    jsb_CrossApp_CGNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-    static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_PS_END
-    };
-
-    static JSFunctionSpec funcs[] = {
-        JS_FN("addChild", js_crossapp_CGNode_addChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getShaderProgram", js_crossapp_CGNode_getShaderProgram, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getChildren", js_crossapp_CGNode_getChildren, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setViewToParentTransform", js_crossapp_CGNode_setViewToParentTransform, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setOnExitCallback", js_crossapp_CGNode_setOnExitCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isOpacityModifyRGB", js_crossapp_CGNode_isOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("updateDisplayedAlpha", js_crossapp_CGNode_updateDisplayedAlpha, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_crossapp_CGNode_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCameraMask", js_crossapp_CGNode_getCameraMask, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAlpha", js_crossapp_CGNode_setAlpha, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getWorldToViewAffineTransform", js_crossapp_CGNode_getWorldToViewAffineTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setZOrder", js_crossapp_CGNode_setZOrder, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setScaleZ", js_crossapp_CGNode_setScaleZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setScaleY", js_crossapp_CGNode_setScaleY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setScaleX", js_crossapp_CGNode_setScaleX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("processParentFlags", js_crossapp_CGNode_processParentFlags, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("visitEve", js_crossapp_CGNode_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setonEnterTransitionDidFinishCallback", js_crossapp_CGNode_setonEnterTransitionDidFinishCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("convertRectToWorldSpace", js_crossapp_CGNode_convertRectToWorldSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getonEnterTransitionDidFinishCallback", js_crossapp_CGNode_getonEnterTransitionDidFinishCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNodeToWorldAffineTransform", js_crossapp_CGNode_getNodeToWorldAffineTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNodeToWorldTransform", js_crossapp_CGNode_getNodeToWorldTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExit", js_crossapp_CGNode_onExit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getPosition3D", js_crossapp_CGNode_getPosition3D, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeChild", js_crossapp_CGNode_removeChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("convertToWorldSpace", js_crossapp_CGNode_convertToWorldSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getAlpha", js_crossapp_CGNode_getAlpha, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSkewX", js_crossapp_CGNode_setSkewX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSkewY", js_crossapp_CGNode_setSkewY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setOnEnterCallback", js_crossapp_CGNode_setOnEnterCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onEnterTransitionDidFinish", js_crossapp_CGNode_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getWorldToViewTransform", js_crossapp_CGNode_getWorldToViewTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("stopActionsByFlags", js_crossapp_CGNode_stopActionsByFlags, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNormalizedPosition", js_crossapp_CGNode_setNormalizedPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeChildByTextTag", js_crossapp_CGNode_removeChildByTextTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setonExitTransitionDidStartCallback", js_crossapp_CGNode_setonExitTransitionDidStartCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("convertTouchToNodeSpace", js_crossapp_CGNode_convertTouchToNodeSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getRotationZ", js_crossapp_CGNode_getRotationZ, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeAllChildren", js_crossapp_CGNode_removeAllChildren, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getRotationX", js_crossapp_CGNode_getRotationX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getRotationY", js_crossapp_CGNode_getRotationY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("convertRectToNodeSpace", js_crossapp_CGNode_convertRectToNodeSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCAView", js_crossapp_CGNode_getCAView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("description", js_crossapp_CGNode_description, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNodeToParentAffineTransform", js_crossapp_CGNode_getNodeToParentAffineTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getonExitTransitionDidStartCallback", js_crossapp_CGNode_getonExitTransitionDidStartCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setParent", js_crossapp_CGNode_setParent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("convertToNodeSize", js_crossapp_CGNode_convertToNodeSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getRotation3D", js_crossapp_CGNode_getRotation3D, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNodeToParentTransform", js_crossapp_CGNode_getNodeToParentTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getOnEnterCallback", js_crossapp_CGNode_getOnEnterCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCameraMask", js_crossapp_CGNode_setCameraMask, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setPosition", js_crossapp_CGNode_setPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("convertToWorldSize", js_crossapp_CGNode_convertToWorldSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("stopActionByTag", js_crossapp_CGNode_stopActionByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("reorderChild", js_crossapp_CGNode_reorderChild, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setGLProgramState", js_crossapp_CGNode_setGLProgramState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setPositionZ", js_crossapp_CGNode_setPositionZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setPositionY", js_crossapp_CGNode_setPositionY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setPositionX", js_crossapp_CGNode_setPositionX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getAnchorPoint", js_crossapp_CGNode_getAnchorPoint, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNumberOfRunningActions", js_crossapp_CGNode_getNumberOfRunningActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("updateTransform", js_crossapp_CGNode_updateTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isVisible", js_crossapp_CGNode_isVisible, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getChildrenCount", js_crossapp_CGNode_getChildrenCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAnchorPoint", js_crossapp_CGNode_setAnchorPoint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onEnter", js_crossapp_CGNode_onEnter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getRotationQuat", js_crossapp_CGNode_getRotationQuat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setShaderProgram", js_crossapp_CGNode_setShaderProgram, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getZOrder", js_crossapp_CGNode_getZOrder, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getAnchorPointInPoints", js_crossapp_CGNode_getAnchorPointInPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("runAction", js_crossapp_CGNode_runAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("transform", js_crossapp_CGNode_transform, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getGLProgramState", js_crossapp_CGNode_getGLProgramState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("stopAllActions", js_crossapp_CGNode_stopAllActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getSkewX", js_crossapp_CGNode_getSkewX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getSkewY", js_crossapp_CGNode_getSkewY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getDisplayedColor", js_crossapp_CGNode_getDisplayedColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setRotationZ", js_crossapp_CGNode_setRotationZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getActionByTag", js_crossapp_CGNode_getActionByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setRotationX", js_crossapp_CGNode_setRotationX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setRotationY", js_crossapp_CGNode_setRotationY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDisplayRange", js_crossapp_CGNode_setDisplayRange, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAdditionalTransform", js_crossapp_CGNode_setAdditionalTransform, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getParentToNodeAffineTransform", js_crossapp_CGNode_getParentToNodeAffineTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getOrderOfArrival", js_crossapp_CGNode_getOrderOfArrival, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("boundingBox", js_crossapp_CGNode_boundingBox, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setContentSize", js_crossapp_CGNode_setContentSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("copy", js_crossapp_CGNode_copy, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getPosition", js_crossapp_CGNode_getPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setColor", js_crossapp_CGNode_setColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isRunning", js_crossapp_CGNode_isRunning, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getParent", js_crossapp_CGNode_getParent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getPositionZ", js_crossapp_CGNode_getPositionZ, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getPositionY", js_crossapp_CGNode_getPositionY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getPositionX", js_crossapp_CGNode_getPositionX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeChildByTag", js_crossapp_CGNode_removeChildByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getQuad", js_crossapp_CGNode_getQuad, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("visit", js_crossapp_CGNode_visit, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("updateDisplayedColor", js_crossapp_CGNode_updateDisplayedColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setVisible", js_crossapp_CGNode_setVisible, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getParentToNodeTransform", js_crossapp_CGNode_getParentToNodeTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getDisplayedAlpha", js_crossapp_CGNode_getDisplayedAlpha, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("_setZOrder", js_crossapp_CGNode__setZOrder, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setScale", js_crossapp_CGNode_setScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isDisplayRange", js_crossapp_CGNode_isDisplayRange, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setRotation3D", js_crossapp_CGNode_setRotation3D, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getOnExitCallback", js_crossapp_CGNode_getOnExitCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getChildByTag", js_crossapp_CGNode_getChildByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setOrderOfArrival", js_crossapp_CGNode_setOrderOfArrival, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getScaleZ", js_crossapp_CGNode_getScaleZ, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getScaleY", js_crossapp_CGNode_getScaleY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getScaleX", js_crossapp_CGNode_getScaleX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isVisitableByVisitingCamera", js_crossapp_CGNode_isVisitableByVisitingCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setOpacityModifyRGB", js_crossapp_CGNode_setOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("insertChild", js_crossapp_CGNode_insertChild, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getContentSize", js_crossapp_CGNode_getContentSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("stopAllActionsByTag", js_crossapp_CGNode_stopAllActionsByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCAView", js_crossapp_CGNode_setCAView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("draw", js_crossapp_CGNode_draw, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBlendFunc", js_crossapp_CGNode_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getChildByTextTag", js_crossapp_CGNode_getChildByTextTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeFromParent", js_crossapp_CGNode_removeFromParent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setPosition3D", js_crossapp_CGNode_setPosition3D, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("update", js_crossapp_CGNode_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("sortAllChildren", js_crossapp_CGNode_sortAllChildren, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("convertToNodeSpace", js_crossapp_CGNode_convertToNodeSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExitTransitionDidStart", js_crossapp_CGNode_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getScale", js_crossapp_CGNode_getScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNormalizedPosition", js_crossapp_CGNode_getNormalizedPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBlendFunc", js_crossapp_CGNode_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getColor", js_crossapp_CGNode_getColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setRotationQuat", js_crossapp_CGNode_setRotationQuat, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("stopAction", js_crossapp_CGNode_stopAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("ctor", js_crossapp_CGNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_crossapp_CGNode_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    jsb_CrossApp_CGNode_prototype = JS_InitClass(
-        cx, global,
-        JS::RootedObject(cx, jsb_CrossApp_CAObject_prototype),
-        jsb_CrossApp_CGNode_class,
-        js_crossapp_CGNode_constructor, 0, // constructor
-        properties,
-        funcs,
-        NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27
-//  JS_SetPropertyAttributes(cx, global, "CGNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-    // add the proto and JSClass to the type->js info hash table
-    TypeTest<CrossApp::CGNode> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_CrossApp_CGNode_class;
-        p->proto = jsb_CrossApp_CGNode_prototype;
-        p->parentProto = jsb_CrossApp_CAObject_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
-    anonEvaluate(cx, global, "(function () { ca.CGNode.extend = ca.Class.extend; })()");
-}
-JSClass  *jsb_CrossApp_CGSprite_class;
-JSObject *jsb_CrossApp_CGSprite_prototype;
-
-bool js_crossapp_CGSprite_setSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setSpriteFrame : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGSpriteFrame* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGSpriteFrame*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setSpriteFrame : Error processing arguments");
-        cobj->setSpriteFrame(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_setSpriteFrame : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_runAction : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CGSprite_initWithImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -53500,30 +50039,23 @@ bool js_crossapp_CGSprite_initWithImage(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CGSprite_initWithImage : wrong number of arguments");
     return false;
 }
-bool js_crossapp_CGSprite_getBatchNode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_getNumberOfRunningActions(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getBatchNode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getNumberOfRunningActions : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CGSpriteBatchNode* ret = cobj->getBatchNode();
+        unsigned long ret = cobj->getNumberOfRunningActions();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSpriteBatchNode>(cx, (CrossApp::CGSpriteBatchNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        jsret = ulong_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_getBatchNode : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CGSprite_getNumberOfRunningActions : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CGSprite_getOffsetPosition(JSContext *cx, uint32_t argc, jsval *vp)
@@ -53545,42 +50077,42 @@ bool js_crossapp_CGSprite_getOffsetPosition(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_crossapp_CGSprite_getOffsetPosition : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CGSprite_isFlipX(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_getScaleZ(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_isFlipX : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getScaleZ : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->isFlipX();
+        double ret = cobj->getScaleZ();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = DOUBLE_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_isFlipX : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CGSprite_getScaleZ : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CGSprite_isFlipY(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_getRotationQuat(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_isFlipY : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getRotationQuat : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->isFlipY();
+        CrossApp::Quaternion ret = cobj->getRotationQuat();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = quaternion_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_isFlipY : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CGSprite_getRotationQuat : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CGSprite_initWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp)
@@ -53604,6 +50136,25 @@ bool js_crossapp_CGSprite_initWithSpriteFrameName(JSContext *cx, uint32_t argc, 
     }
 
     JS_ReportError(cx, "js_crossapp_CGSprite_initWithSpriteFrameName : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_getRotation3D(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getRotation3D : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::DPoint3D ret = cobj->getRotation3D();
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint3d_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_getRotation3D : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CGSprite_isFrameDisplayed(JSContext *cx, uint32_t argc, jsval *vp)
@@ -53637,45 +50188,26 @@ bool js_crossapp_CGSprite_isFrameDisplayed(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CGSprite_isFrameDisplayed : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CGSprite_getImageRect(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_getContentSize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getImageRect : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getContentSize : Invalid Native Object");
     if (argc == 0) {
-        const CrossApp::DRect& ret = cobj->getImageRect();
+        const CrossApp::DSize& ret = cobj->getContentSize();
         jsval jsret = JSVAL_NULL;
-        jsret = drect_to_jsval(cx, ret);
+        jsret = dsize_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_getImageRect : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CGSprite_getContentSize : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CGSprite_getAtlasIndex(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getAtlasIndex : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getAtlasIndex();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_getAtlasIndex : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSprite_setBatchNode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_stopAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -53683,25 +50215,105 @@ bool js_crossapp_CGSprite_setBatchNode(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setBatchNode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_stopAllActionsByTag : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CGSpriteBatchNode* arg0 = nullptr;
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_stopAllActionsByTag : Error processing arguments");
+        cobj->stopAllActionsByTag(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_stopAllActionsByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_stopAllActions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_stopAllActions : Invalid Native Object");
+    if (argc == 0) {
+        cobj->stopAllActions();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_stopAllActions : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CGSprite_setContentSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setContentSize : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DSize arg0;
+        ok &= jsval_to_dsize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setContentSize : Error processing arguments");
+        cobj->setContentSize(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_setContentSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_setSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setSpriteFrame : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CGSpriteFrame* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGSpriteBatchNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSpriteFrame*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setBatchNode : Error processing arguments");
-        cobj->setBatchNode(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setSpriteFrame : Error processing arguments");
+        cobj->setSpriteFrame(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_setBatchNode : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_setSpriteFrame : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_setScaleZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setScaleZ : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setScaleZ : Error processing arguments");
+        cobj->setScaleZ(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_setScaleZ : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CGSprite_setDisplayFrameWithAnimationName(JSContext *cx, uint32_t argc, jsval *vp)
@@ -53727,33 +50339,7 @@ bool js_crossapp_CGSprite_setDisplayFrameWithAnimationName(JSContext *cx, uint32
     JS_ReportError(cx, "js_crossapp_CGSprite_setDisplayFrameWithAnimationName : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CGSprite_getImageAtlas(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getImageAtlas : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAImageAtlas* ret = cobj->getImageAtlas();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImageAtlas>(cx, (CrossApp::CAImageAtlas*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_getImageAtlas : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSprite_setFlipY(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_setPosition3D(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -53761,38 +50347,17 @@ bool js_crossapp_CGSprite_setFlipY(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setFlipY : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setPosition3D : Invalid Native Object");
     if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setFlipY : Error processing arguments");
-        cobj->setFlipY(arg0);
+        CrossApp::DPoint3D arg0;
+        ok &= jsval_to_dpoint3d(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setPosition3D : Error processing arguments");
+        cobj->setPosition3D(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_setFlipY : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSprite_setFlipX(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setFlipX : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setFlipX : Error processing arguments");
-        cobj->setFlipX(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_setFlipX : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_setPosition3D : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CGSprite_getSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp)
@@ -53821,154 +50386,149 @@ bool js_crossapp_CGSprite_getSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CGSprite_getSpriteFrame : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CGSprite_isDirty(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_setPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setPositionZ : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setPositionZ : Error processing arguments");
+        cobj->setPositionZ(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_setPositionZ : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_boundingBox(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_isDirty : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_boundingBox : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->isDirty();
+        CrossApp::DRect ret = cobj->boundingBox();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = drect_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_isDirty : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSprite_setAtlasIndex(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setAtlasIndex : Invalid Native Object");
-    if (argc == 1) {
-        ssize_t arg0 = 0;
-        ok &= jsval_to_ssize(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setAtlasIndex : Error processing arguments");
-        cobj->setAtlasIndex(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_setAtlasIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSprite_setDirty(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setDirty : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setDirty : Error processing arguments");
-        cobj->setDirty(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_setDirty : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_boundingBox : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CGSprite_setImageRect(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    bool ok = true;
-    CrossApp::CGSprite* cobj = nullptr;
-
+    
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx);
-    obj = args.thisv().toObjectOrNull();
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : nullptr);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setImageRect : Invalid Native Object");
-    do {
-        if (argc == 3) {
-            CrossApp::DRect arg0;
-            ok &= jsval_to_drect(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            bool arg1;
-            arg1 = JS::ToBoolean(args.get(1));
-            CrossApp::DSize arg2;
-            ok &= jsval_to_dsize(cx, args.get(2), &arg2);
-            if (!ok) { ok = true; break; }
-            cobj->setImageRect(arg0, arg1, arg2);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    do {
-        if (argc == 1) {
-            CrossApp::DRect arg0;
-            ok &= jsval_to_drect(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            cobj->setImageRect(arg0);
-            args.rval().setUndefined();
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_setImageRect : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CGSprite_isTextureRectRotated(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_isTextureRectRotated : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isTextureRectRotated();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_isTextureRectRotated : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSprite_setImageAtlas(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setImageAtlas : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAImageAtlas* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAImageAtlas*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setImageAtlas : Error processing arguments");
-        cobj->setImageAtlas(arg0);
+    if (argc == 3) {
+        CrossApp::DRect arg0;
+        bool arg1;
+        CrossApp::DSize arg2;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        arg1 = JS::ToBoolean(args.get(1));
+        ok &= jsval_to_dsize(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setImageRect : Error processing arguments");
+        cobj->setImageRect(arg0, arg1, arg2);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_setImageAtlas : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_setImageRect : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
+bool js_crossapp_CGSprite_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setPosition : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint arg0;
+        ok &= jsval_to_dpoint(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setPosition : Error processing arguments");
+        cobj->setPosition(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_setPosition : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_stopActionByTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_stopActionByTag : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_stopActionByTag : Error processing arguments");
+        cobj->stopActionByTag(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_stopActionByTag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_getPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getPosition : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::DPoint& ret = cobj->getPosition();
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_getPosition : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CGSprite_getNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getNormalizedPosition : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::DPoint& ret = cobj->getNormalizedPosition();
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_getNormalizedPosition : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CGSprite_initWithFile(JSContext *cx, uint32_t argc, jsval *vp)
@@ -54014,6 +50574,48 @@ bool js_crossapp_CGSprite_initWithFile(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CGSprite_initWithFile : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CGSprite_setRotation3D(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setRotation3D : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::DPoint3D arg0;
+        ok &= jsval_to_dpoint3d(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setRotation3D : Error processing arguments");
+        cobj->setRotation3D(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_setRotation3D : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_setPositionY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setPositionY : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setPositionY : Error processing arguments");
+        cobj->setPositionY(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_setPositionY : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CGSprite_setImage(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -54041,6 +50643,103 @@ bool js_crossapp_CGSprite_setImage(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CGSprite_setImage : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_getPositionZ(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getPositionZ : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getPositionZ();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_getPositionZ : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CGSprite_getPositionY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getPositionY : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getPositionY();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_getPositionY : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CGSprite_setPositionX(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setPositionX : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setPositionX : Error processing arguments");
+        cobj->setPositionX(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_setPositionX : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CGSprite_getPosition3D(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getPosition3D : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::DPoint3D ret = cobj->getPosition3D();
+        jsval jsret = JSVAL_NULL;
+        jsret = dpoint3d_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_getPosition3D : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CGSprite_getPositionX(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getPositionX : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getPositionX();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_getPositionX : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CGSprite_initWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp)
@@ -54074,26 +50773,7 @@ bool js_crossapp_CGSprite_initWithSpriteFrame(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_crossapp_CGSprite_initWithSpriteFrame : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CGSprite_getQuad(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getQuad : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::_ccV3F_C4B_T2F_Quad ret = cobj->getQuad();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR _ccV3F_C4B_T2F_Quad;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_getQuad : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSprite_setVertexRect(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CGSprite_setRotationQuat(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -54101,17 +50781,17 @@ bool js_crossapp_CGSprite_setVertexRect(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setVertexRect : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_setRotationQuat : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::DRect arg0;
-        ok &= jsval_to_drect(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setVertexRect : Error processing arguments");
-        cobj->setVertexRect(arg0);
+        CrossApp::Quaternion arg0;
+        ok &= jsval_to_quaternion(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_setRotationQuat : Error processing arguments");
+        cobj->setRotationQuat(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CGSprite_setVertexRect : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CGSprite_setRotationQuat : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CGSprite_getImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -54138,6 +50818,35 @@ bool js_crossapp_CGSprite_getImage(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CGSprite_getImage : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CGSprite_stopAction(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_stopAction : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::Action* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::Action*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSprite_stopAction : Error processing arguments");
+        cobj->stopAction(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSprite_stopAction : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CGSprite_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -54352,9 +51061,22 @@ bool js_crossapp_CGSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
+static bool js_crossapp_CGSprite_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    CrossApp::CGSprite *nobj = new (std::nothrow) CrossApp::CGSprite();
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::CGSprite");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
 
 
-extern JSObject *jsb_CrossApp_CGNode_prototype;
+extern JSObject *jsb_CrossApp_CAView_prototype;
 
 void js_CrossApp_CGSprite_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (CGSprite)", obj);
@@ -54372,6 +51094,7 @@ void js_CrossApp_CGSprite_finalize(JSFreeOp *fop, JSObject *obj) {
         else jsb_remove_proxy(nullptr, jsproxy);
     }
 }
+    
 void js_register_crossapp_CGSprite(JSContext *cx, JS::HandleObject global) {
     jsb_CrossApp_CGSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_CrossApp_CGSprite_class->name = "CGSprite";
@@ -54391,34 +51114,48 @@ void js_register_crossapp_CGSprite(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("setSpriteFrame", js_crossapp_CGSprite_setSpriteFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopActionsByFlags", js_crossapp_CGSprite_stopActionsByFlags, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setNormalizedPosition", js_crossapp_CGSprite_setNormalizedPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getActionByTag", js_crossapp_CGSprite_getActionByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("runAction", js_crossapp_CGSprite_runAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithImage", js_crossapp_CGSprite_initWithImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBatchNode", js_crossapp_CGSprite_getBatchNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getNumberOfRunningActions", js_crossapp_CGSprite_getNumberOfRunningActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOffsetPosition", js_crossapp_CGSprite_getOffsetPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isFlipX", js_crossapp_CGSprite_isFlipX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isFlipY", js_crossapp_CGSprite_isFlipY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getScaleZ", js_crossapp_CGSprite_getScaleZ, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRotationQuat", js_crossapp_CGSprite_getRotationQuat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithSpriteFrameName", js_crossapp_CGSprite_initWithSpriteFrameName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRotation3D", js_crossapp_CGSprite_getRotation3D, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isFrameDisplayed", js_crossapp_CGSprite_isFrameDisplayed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getImageRect", js_crossapp_CGSprite_getImageRect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getAtlasIndex", js_crossapp_CGSprite_getAtlasIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBatchNode", js_crossapp_CGSprite_setBatchNode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getContentSize", js_crossapp_CGSprite_getContentSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopAllActionsByTag", js_crossapp_CGSprite_stopAllActionsByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopAllActions", js_crossapp_CGSprite_stopAllActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setContentSize", js_crossapp_CGSprite_setContentSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSpriteFrame", js_crossapp_CGSprite_setSpriteFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setScaleZ", js_crossapp_CGSprite_setScaleZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDisplayFrameWithAnimationName", js_crossapp_CGSprite_setDisplayFrameWithAnimationName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getImageAtlas", js_crossapp_CGSprite_getImageAtlas, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setFlipY", js_crossapp_CGSprite_setFlipY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setFlipX", js_crossapp_CGSprite_setFlipX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPosition3D", js_crossapp_CGSprite_setPosition3D, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSpriteFrame", js_crossapp_CGSprite_getSpriteFrame, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isDirty", js_crossapp_CGSprite_isDirty, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setAtlasIndex", js_crossapp_CGSprite_setAtlasIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setDirty", js_crossapp_CGSprite_setDirty, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setImageRect", js_crossapp_CGSprite_setImageRect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isTextureRectRotated", js_crossapp_CGSprite_isTextureRectRotated, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setImageAtlas", js_crossapp_CGSprite_setImageAtlas, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPositionZ", js_crossapp_CGSprite_setPositionZ, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("boundingBox", js_crossapp_CGSprite_boundingBox, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageRect", js_crossapp_CGSprite_setImageRect, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPosition", js_crossapp_CGSprite_setPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopActionByTag", js_crossapp_CGSprite_stopActionByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPosition", js_crossapp_CGSprite_getPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getNormalizedPosition", js_crossapp_CGSprite_getNormalizedPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithFile", js_crossapp_CGSprite_initWithFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setRotation3D", js_crossapp_CGSprite_setRotation3D, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPositionY", js_crossapp_CGSprite_setPositionY, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImage", js_crossapp_CGSprite_setImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPositionZ", js_crossapp_CGSprite_getPositionZ, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPositionY", js_crossapp_CGSprite_getPositionY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPositionX", js_crossapp_CGSprite_setPositionX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPosition3D", js_crossapp_CGSprite_getPosition3D, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPositionX", js_crossapp_CGSprite_getPositionX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithSpriteFrame", js_crossapp_CGSprite_initWithSpriteFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getQuad", js_crossapp_CGSprite_getQuad, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setVertexRect", js_crossapp_CGSprite_setVertexRect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setRotationQuat", js_crossapp_CGSprite_setRotationQuat, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getImage", js_crossapp_CGSprite_getImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopAction", js_crossapp_CGSprite_stopAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_crossapp_CGSprite_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -54432,7 +51169,7 @@ void js_register_crossapp_CGSprite(JSContext *cx, JS::HandleObject global) {
 
     jsb_CrossApp_CGSprite_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_CrossApp_CGNode_prototype),
+        JS::RootedObject(cx, jsb_CrossApp_CAView_prototype),
         jsb_CrossApp_CGSprite_class,
         js_crossapp_CGSprite_constructor, 0, // constructor
         properties,
@@ -54453,9 +51190,10 @@ void js_register_crossapp_CGSprite(JSContext *cx, JS::HandleObject global) {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_CrossApp_CGSprite_class;
         p->proto = jsb_CrossApp_CGSprite_prototype;
-        p->parentProto = jsb_CrossApp_CGNode_prototype;
+        p->parentProto = jsb_CrossApp_CAView_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { ca.CGSprite.extend = ca.Class.extend; })()");
 }
 JSClass  *jsb_CrossApp_CGSpriteFrame_class;
 JSObject *jsb_CrossApp_CGSpriteFrame_prototype;
@@ -55525,714 +52263,6 @@ void js_register_crossapp_CGSpriteFrameCache(JSContext *cx, JS::HandleObject glo
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
-JSClass  *jsb_CrossApp_CGSpriteBatchNode_class;
-JSObject *jsb_CrossApp_CGSpriteBatchNode_prototype;
-
-bool js_crossapp_CGSpriteBatchNode_setImageAtlas(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_setImageAtlas : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAImageAtlas* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAImageAtlas*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_setImageAtlas : Error processing arguments");
-        cobj->setImageAtlas(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_setImageAtlas : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_reorderBatch(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_reorderBatch : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_reorderBatch : Error processing arguments");
-        cobj->reorderBatch(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_reorderBatch : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_initWithFile(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_initWithFile : Invalid Native Object");
-    if (argc == 2) {
-        std::string arg0;
-        uint32_t arg1 = 0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_initWithFile : Error processing arguments");
-        bool ret = cobj->initWithFile(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_initWithFile : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_getImageAtlas(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_getImageAtlas : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAImageAtlas* ret = cobj->getImageAtlas();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImageAtlas>(cx, (CrossApp::CAImageAtlas*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_getImageAtlas : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_lowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_lowestAtlasIndexInChild : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGSprite* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_lowestAtlasIndexInChild : Error processing arguments");
-        ssize_t ret = cobj->lowestAtlasIndexInChild(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = ssize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_lowestAtlasIndexInChild : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_appendChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_appendChild : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGSprite* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_appendChild : Error processing arguments");
-        cobj->appendChild(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_appendChild : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_atlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_atlasIndexForChild : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CGSprite* arg0 = nullptr;
-        int arg1 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_atlasIndexForChild : Error processing arguments");
-        ssize_t ret = cobj->atlasIndexForChild(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = ssize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_atlasIndexForChild : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_increaseAtlasCapacity : Invalid Native Object");
-    if (argc == 0) {
-        cobj->increaseAtlasCapacity();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_increaseAtlasCapacity : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_rebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_rebuildIndexInOrder : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CGSprite* arg0 = nullptr;
-        ssize_t arg1 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_rebuildIndexInOrder : Error processing arguments");
-        ssize_t ret = cobj->rebuildIndexInOrder(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = ssize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_rebuildIndexInOrder : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_initWithImage(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_initWithImage : Invalid Native Object");
-    if (argc == 2) {
-        CrossApp::CAImage* arg0 = nullptr;
-        uint32_t arg1 = 0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_initWithImage : Error processing arguments");
-        bool ret = cobj->initWithImage(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_initWithImage : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_getDescendants : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAVector<CrossApp::CGSprite *>& ret = cobj->getDescendants();
-        jsval jsret = JSVAL_NULL;
-        jsret = cavector_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_getDescendants : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_setImage(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_setImage : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAImage* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_setImage : Error processing arguments");
-        cobj->setImage(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_setImage : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_getBlendFunc : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::BlendFunc ret = cobj->getBlendFunc();
-        jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR BlendFunc;
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_highestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_highestAtlasIndexInChild : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGSprite* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_highestAtlasIndexInChild : Error processing arguments");
-        ssize_t ret = cobj->highestAtlasIndexInChild(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = ssize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_highestAtlasIndexInChild : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_removeChildAtIndex : Invalid Native Object");
-    if (argc == 1) {
-        uint32_t arg0 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_removeChildAtIndex : Error processing arguments");
-        cobj->removeChildAtIndex(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_removeChildAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_getImage(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_getImage : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAImage* ret = cobj->getImage();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_getImage : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_removeSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_removeSpriteFromAtlas : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CGSprite* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_removeSpriteFromAtlas : Error processing arguments");
-        cobj->removeSpriteFromAtlas(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_removeSpriteFromAtlas : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSpriteBatchNode* cobj = (CrossApp::CGSpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteBatchNode_setBlendFunc : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::BlendFunc arg0;
-        #pragma warning NO CONVERSION TO NATIVE FOR BlendFunc
-		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CGSpriteBatchNode_setBlendFunc : Error processing arguments");
-        cobj->setBlendFunc(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    
-    do {
-        if (argc == 1) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            CrossApp::CGSpriteBatchNode* ret = CrossApp::CGSpriteBatchNode::create(arg0);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSpriteBatchNode>(cx, (CrossApp::CGSpriteBatchNode*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
-    
-    do {
-        if (argc == 2) {
-            std::string arg0;
-            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-            if (!ok) { ok = true; break; }
-            uint32_t arg1 = 0;
-            ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            CrossApp::CGSpriteBatchNode* ret = CrossApp::CGSpriteBatchNode::create(arg0, arg1);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSpriteBatchNode>(cx, (CrossApp::CGSpriteBatchNode*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_create : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_createWithImage(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    
-    do {
-        if (argc == 1) {
-            CrossApp::CAImage* arg0 = nullptr;
-            do {
-                if (args.get(0).isNull()) { arg0 = nullptr; break; }
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            CrossApp::CGSpriteBatchNode* ret = CrossApp::CGSpriteBatchNode::createWithImage(arg0);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSpriteBatchNode>(cx, (CrossApp::CGSpriteBatchNode*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
-    
-    do {
-        if (argc == 2) {
-            CrossApp::CAImage* arg0 = nullptr;
-            do {
-                if (args.get(0).isNull()) { arg0 = nullptr; break; }
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            uint32_t arg1 = 0;
-            ok &= jsval_to_uint32(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            CrossApp::CGSpriteBatchNode* ret = CrossApp::CGSpriteBatchNode::createWithImage(arg0, arg1);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSpriteBatchNode>(cx, (CrossApp::CGSpriteBatchNode*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
-    JS_ReportError(cx, "js_crossapp_CGSpriteBatchNode_createWithImage : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CGSpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    CrossApp::CGSpriteBatchNode* cobj = new (std::nothrow) CrossApp::CGSpriteBatchNode();
-    TypeTest<CrossApp::CGSpriteBatchNode> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCAssert(typeClass, "The value is null.");
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "CrossApp::CGSpriteBatchNode");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
-    return true;
-}
-
-
-extern JSObject *jsb_CrossApp_CGNode_prototype;
-
-void js_CrossApp_CGSpriteBatchNode_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOG("jsbindings: finalizing JS object %p (CGSpriteBatchNode)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-    jsproxy = jsb_get_js_proxy(obj);
-    if (jsproxy) {
-        CrossApp::CGSpriteBatchNode *nobj = static_cast<CrossApp::CGSpriteBatchNode *>(jsproxy->ptr);
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-
-        if (nobj) {
-            jsb_remove_proxy(nproxy, jsproxy);
-            delete nobj;
-        }
-        else jsb_remove_proxy(nullptr, jsproxy);
-    }
-}
-void js_register_crossapp_CGSpriteBatchNode(JSContext *cx, JS::HandleObject global) {
-    jsb_CrossApp_CGSpriteBatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_CrossApp_CGSpriteBatchNode_class->name = "CGSpriteBatchNode";
-    jsb_CrossApp_CGSpriteBatchNode_class->addProperty = JS_PropertyStub;
-    jsb_CrossApp_CGSpriteBatchNode_class->delProperty = JS_DeletePropertyStub;
-    jsb_CrossApp_CGSpriteBatchNode_class->getProperty = JS_PropertyStub;
-    jsb_CrossApp_CGSpriteBatchNode_class->setProperty = JS_StrictPropertyStub;
-    jsb_CrossApp_CGSpriteBatchNode_class->enumerate = JS_EnumerateStub;
-    jsb_CrossApp_CGSpriteBatchNode_class->resolve = JS_ResolveStub;
-    jsb_CrossApp_CGSpriteBatchNode_class->convert = JS_ConvertStub;
-    jsb_CrossApp_CGSpriteBatchNode_class->finalize = js_CrossApp_CGSpriteBatchNode_finalize;
-    jsb_CrossApp_CGSpriteBatchNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-    static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_PS_END
-    };
-
-    static JSFunctionSpec funcs[] = {
-        JS_FN("setImageAtlas", js_crossapp_CGSpriteBatchNode_setImageAtlas, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("reorderBatch", js_crossapp_CGSpriteBatchNode_reorderBatch, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initWithFile", js_crossapp_CGSpriteBatchNode_initWithFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getImageAtlas", js_crossapp_CGSpriteBatchNode_getImageAtlas, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("lowestAtlasIndexInChild", js_crossapp_CGSpriteBatchNode_lowestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("appendChild", js_crossapp_CGSpriteBatchNode_appendChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("atlasIndexForChild", js_crossapp_CGSpriteBatchNode_atlasIndexForChild, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("increaseAtlasCapacity", js_crossapp_CGSpriteBatchNode_increaseAtlasCapacity, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("rebuildIndexInOrder", js_crossapp_CGSpriteBatchNode_rebuildIndexInOrder, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initWithImage", js_crossapp_CGSpriteBatchNode_initWithImage, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getDescendants", js_crossapp_CGSpriteBatchNode_getDescendants, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setImage", js_crossapp_CGSpriteBatchNode_setImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBlendFunc", js_crossapp_CGSpriteBatchNode_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("highestAtlasIndexInChild", js_crossapp_CGSpriteBatchNode_highestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeChildAtIndex", js_crossapp_CGSpriteBatchNode_removeChildAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getImage", js_crossapp_CGSpriteBatchNode_getImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeSpriteFromAtlas", js_crossapp_CGSpriteBatchNode_removeSpriteFromAtlas, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBlendFunc", js_crossapp_CGSpriteBatchNode_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_crossapp_CGSpriteBatchNode_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithImage", js_crossapp_CGSpriteBatchNode_createWithImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    jsb_CrossApp_CGSpriteBatchNode_prototype = JS_InitClass(
-        cx, global,
-        JS::RootedObject(cx, jsb_CrossApp_CGNode_prototype),
-        jsb_CrossApp_CGSpriteBatchNode_class,
-        js_crossapp_CGSpriteBatchNode_constructor, 0, // constructor
-        properties,
-        funcs,
-        NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27
-//  JS_SetPropertyAttributes(cx, global, "CGSpriteBatchNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-    // add the proto and JSClass to the type->js info hash table
-    TypeTest<CrossApp::CGSpriteBatchNode> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_CrossApp_CGSpriteBatchNode_class;
-        p->proto = jsb_CrossApp_CGSpriteBatchNode_prototype;
-        p->parentProto = jsb_CrossApp_CGNode_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
-}
 JSClass  *jsb_CrossApp_CGProgressTimer_class;
 JSObject *jsb_CrossApp_CGProgressTimer_prototype;
 
@@ -56659,7 +52689,7 @@ bool js_crossapp_CGProgressTimer_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 
-extern JSObject *jsb_CrossApp_CGNode_prototype;
+extern JSObject *jsb_CrossApp_CAView_prototype;
 
 void js_CrossApp_CGProgressTimer_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (CGProgressTimer)", obj);
@@ -56723,7 +52753,7 @@ void js_register_crossapp_CGProgressTimer(JSContext *cx, JS::HandleObject global
 
     jsb_CrossApp_CGProgressTimer_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_CrossApp_CGNode_prototype),
+        JS::RootedObject(cx, jsb_CrossApp_CAView_prototype),
         jsb_CrossApp_CGProgressTimer_class,
         js_crossapp_CGProgressTimer_constructor, 0, // constructor
         properties,
@@ -56744,7 +52774,7 @@ void js_register_crossapp_CGProgressTimer(JSContext *cx, JS::HandleObject global
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_CrossApp_CGProgressTimer_class;
         p->proto = jsb_CrossApp_CGProgressTimer_prototype;
-        p->parentProto = jsb_CrossApp_CGNode_prototype;
+        p->parentProto = jsb_CrossApp_CAView_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
@@ -57036,14 +53066,14 @@ bool js_crossapp_Action_startWithTarget(JSContext *cx, uint32_t argc, jsval *vp)
     CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_startWithTarget : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_startWithTarget : Error processing arguments");
@@ -57084,14 +53114,14 @@ bool js_crossapp_Action_setOriginalTarget(JSContext *cx, uint32_t argc, jsval *v
     CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_setOriginalTarget : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_setOriginalTarget : Error processing arguments");
@@ -57138,11 +53168,11 @@ bool js_crossapp_Action_getOriginalTarget(JSContext *cx, uint32_t argc, jsval *v
     CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_getOriginalTarget : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CGNode* ret = cobj->getOriginalTarget();
+        CrossApp::CGSprite* ret = cobj->getOriginalTarget();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSprite>(cx, (CrossApp::CGSprite*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -57202,11 +53232,11 @@ bool js_crossapp_Action_getTarget(JSContext *cx, uint32_t argc, jsval *vp)
     CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_getTarget : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CGNode* ret = cobj->getTarget();
+        CrossApp::CGSprite* ret = cobj->getTarget();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSprite>(cx, (CrossApp::CGSprite*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -57330,14 +53360,14 @@ bool js_crossapp_Action_setTarget(JSContext *cx, uint32_t argc, jsval *vp)
     CrossApp::Action* cobj = (CrossApp::Action *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Action_setTarget : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Action_setTarget : Error processing arguments");
@@ -62831,11 +58861,11 @@ bool js_crossapp_TargetedAction_getForcedTarget(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_TargetedAction_getForcedTarget : Invalid Native Object");
     do {
         if (argc == 0) {
-            const CrossApp::CGNode* ret = cobj->getForcedTarget();
+            const CrossApp::CGSprite* ret = cobj->getForcedTarget();
             jsval jsret = JSVAL_NULL;
             do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSprite>(cx, (CrossApp::CGSprite*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -62848,11 +58878,11 @@ bool js_crossapp_TargetedAction_getForcedTarget(JSContext *cx, uint32_t argc, js
 
     do {
         if (argc == 0) {
-            CrossApp::CGNode* ret = cobj->getForcedTarget();
+            CrossApp::CGSprite* ret = cobj->getForcedTarget();
             jsval jsret = JSVAL_NULL;
             do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGNode>(cx, (CrossApp::CGNode*)ret);
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CGSprite>(cx, (CrossApp::CGSprite*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -62876,7 +58906,7 @@ bool js_crossapp_TargetedAction_initWithTarget(JSContext *cx, uint32_t argc, jsv
     CrossApp::TargetedAction* cobj = (CrossApp::TargetedAction *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_TargetedAction_initWithTarget : Invalid Native Object");
     if (argc == 2) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         CrossApp::FiniteTimeAction* arg1 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
@@ -62884,7 +58914,7 @@ bool js_crossapp_TargetedAction_initWithTarget(JSContext *cx, uint32_t argc, jsv
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         do {
@@ -62917,14 +58947,14 @@ bool js_crossapp_TargetedAction_setForcedTarget(JSContext *cx, uint32_t argc, js
     CrossApp::TargetedAction* cobj = (CrossApp::TargetedAction *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_TargetedAction_setForcedTarget : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_TargetedAction_setForcedTarget : Error processing arguments");
@@ -62941,7 +58971,7 @@ bool js_crossapp_TargetedAction_create(JSContext *cx, uint32_t argc, jsval *vp)
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 2) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         CrossApp::FiniteTimeAction* arg1 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
@@ -62949,7 +58979,7 @@ bool js_crossapp_TargetedAction_create(JSContext *cx, uint32_t argc, jsval *vp)
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         do {
@@ -66564,7 +62594,7 @@ bool js_crossapp_ActionManager_getActionByTag(JSContext *cx, uint32_t argc, jsva
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_getActionByTag : Invalid Native Object");
     if (argc == 2) {
         int arg0 = 0;
-        const CrossApp::CGNode* arg1 = nullptr;
+        const CrossApp::CGSprite* arg1 = nullptr;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         do {
             if (args.get(1).isNull()) { arg1 = nullptr; break; }
@@ -66572,7 +62602,7 @@ bool js_crossapp_ActionManager_getActionByTag(JSContext *cx, uint32_t argc, jsva
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (const CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg1 = (const CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_getActionByTag : Error processing arguments");
@@ -66604,7 +62634,7 @@ bool js_crossapp_ActionManager_removeActionByTag(JSContext *cx, uint32_t argc, j
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeActionByTag : Invalid Native Object");
     if (argc == 2) {
         int arg0 = 0;
-        CrossApp::CGNode* arg1 = nullptr;
+        CrossApp::CGSprite* arg1 = nullptr;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         do {
             if (args.get(1).isNull()) { arg1 = nullptr; break; }
@@ -66612,7 +62642,7 @@ bool js_crossapp_ActionManager_removeActionByTag(JSContext *cx, uint32_t argc, j
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg1 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeActionByTag : Error processing arguments");
@@ -66635,7 +62665,7 @@ bool js_crossapp_ActionManager_removeActionsByFlags(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeActionsByFlags : Invalid Native Object");
     if (argc == 2) {
         uint32_t arg0 = 0;
-        CrossApp::CGNode* arg1 = nullptr;
+        CrossApp::CGSprite* arg1 = nullptr;
         ok &= jsval_to_uint32(cx, args.get(0), &arg0);
         do {
             if (args.get(1).isNull()) { arg1 = nullptr; break; }
@@ -66643,7 +62673,7 @@ bool js_crossapp_ActionManager_removeActionsByFlags(JSContext *cx, uint32_t argc
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg1 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeActionsByFlags : Error processing arguments");
@@ -66683,7 +62713,7 @@ bool js_crossapp_ActionManager_addAction(JSContext *cx, uint32_t argc, jsval *vp
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_addAction : Invalid Native Object");
     if (argc == 3) {
         CrossApp::Action* arg0 = nullptr;
-        CrossApp::CGNode* arg1 = nullptr;
+        CrossApp::CGSprite* arg1 = nullptr;
         bool arg2;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
@@ -66700,7 +62730,7 @@ bool js_crossapp_ActionManager_addAction(JSContext *cx, uint32_t argc, jsval *vp
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg1 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
         } while (0);
         arg2 = JS::ToBoolean(args.get(2));
@@ -66723,14 +62753,14 @@ bool js_crossapp_ActionManager_resumeTarget(JSContext *cx, uint32_t argc, jsval 
     CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_resumeTarget : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_resumeTarget : Error processing arguments");
@@ -66773,14 +62803,14 @@ bool js_crossapp_ActionManager_pauseTarget(JSContext *cx, uint32_t argc, jsval *
     CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_pauseTarget : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_pauseTarget : Error processing arguments");
@@ -66802,14 +62832,14 @@ bool js_crossapp_ActionManager_getNumberOfRunningActionsInTarget(JSContext *cx, 
     CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_getNumberOfRunningActionsInTarget : Invalid Native Object");
     if (argc == 1) {
-        const CrossApp::CGNode* arg0 = nullptr;
+        const CrossApp::CGSprite* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (const CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (const CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_getNumberOfRunningActionsInTarget : Error processing arguments");
@@ -66833,14 +62863,14 @@ bool js_crossapp_ActionManager_removeAllActionsFromTarget(JSContext *cx, uint32_
     CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeAllActionsFromTarget : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CGNode* arg0 = nullptr;
+        CrossApp::CGSprite* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeAllActionsFromTarget : Error processing arguments");
@@ -66862,7 +62892,7 @@ bool js_crossapp_ActionManager_resumeTargets(JSContext *cx, uint32_t argc, jsval
     CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_resumeTargets : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::CAVector<CrossApp::CGNode *> arg0;
+        CrossApp::CAVector<CrossApp::CGSprite *> arg0;
         ok &= jsval_to_cavector(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_resumeTargets : Error processing arguments");
         cobj->resumeTargets(arg0);
@@ -66913,7 +62943,7 @@ bool js_crossapp_ActionManager_removeAllActionsByTag(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_removeAllActionsByTag : Invalid Native Object");
     if (argc == 2) {
         int arg0 = 0;
-        CrossApp::CGNode* arg1 = nullptr;
+        CrossApp::CGSprite* arg1 = nullptr;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         do {
             if (args.get(1).isNull()) { arg1 = nullptr; break; }
@@ -66921,7 +62951,7 @@ bool js_crossapp_ActionManager_removeAllActionsByTag(JSContext *cx, uint32_t arg
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (CrossApp::CGNode*)(jsProxy ? jsProxy->ptr : NULL);
+            arg1 = (CrossApp::CGSprite*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg1, cx, 0, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ActionManager_removeAllActionsByTag : Error processing arguments");
@@ -66942,7 +62972,7 @@ bool js_crossapp_ActionManager_pauseAllRunningActions(JSContext *cx, uint32_t ar
     CrossApp::ActionManager* cobj = (CrossApp::ActionManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionManager_pauseAllRunningActions : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CAVector<CrossApp::CGNode *> ret = cobj->pauseAllRunningActions();
+        CrossApp::CAVector<CrossApp::CGSprite *> ret = cobj->pauseAllRunningActions();
         jsval jsret = JSVAL_NULL;
         jsret = cavector_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -67726,7 +63756,6 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_MoveTo(cx, ns);
     js_register_crossapp_JumpBy(cx, ns);
     js_register_crossapp_CAPullToRefreshView(cx, ns);
-    js_register_crossapp_CGNode(cx, ns);
     js_register_crossapp_CGSprite(cx, ns);
     js_register_crossapp_CABarItem(cx, ns);
     js_register_crossapp_CABarButtonItem(cx, ns);
@@ -67767,7 +63796,6 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CACollectionView(cx, ns);
     js_register_crossapp_RepeatForever(cx, ns);
     js_register_crossapp_CASwitch(cx, ns);
-    js_register_crossapp_CGSpriteBatchNode(cx, ns);
     js_register_crossapp_CAUserDefault(cx, ns);
     js_register_crossapp_CAAutoCollectionView(cx, ns);
     js_register_crossapp_CAPageControl(cx, ns);

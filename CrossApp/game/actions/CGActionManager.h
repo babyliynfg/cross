@@ -54,7 +54,7 @@ public:
      * @param target    The target which need to be added an action.
      * @param paused    Is the target paused or not.
      */
-    void addAction(Action *action, CGNode *target, bool paused);
+    void addAction(Action *action, CGSprite *target, bool paused);
 
     /** Removes all actions from all the targets.
      */
@@ -65,7 +65,7 @@ public:
      *
      * @param target    A certain target.
      */
-    void removeAllActionsFromTarget(CGNode *target);
+    void removeAllActionsFromTarget(CGSprite *target);
 
     /** Removes an action given an action reference.
      *
@@ -78,7 +78,7 @@ public:
      * @param tag       The action's tag.
      * @param target    A certain target.
      */
-    void removeActionByTag(int tag, CGNode *target);
+    void removeActionByTag(int tag, CGSprite *target);
     
     /** Removes all actions given its tag and the target.
      *
@@ -86,7 +86,7 @@ public:
      * @param target    A certain target.
      * @js NA
      */
-    void removeAllActionsByTag(int tag, CGNode *target);
+    void removeAllActionsByTag(int tag, CGSprite *target);
 
     /** Removes all actions matching at least one bit in flags and the target.
      *
@@ -94,7 +94,7 @@ public:
      * @param target    A certain target.
      * @js NA
      */
-    void removeActionsByFlags(unsigned int flags, CGNode *target);
+    void removeActionsByFlags(unsigned int flags, CGSprite *target);
 
     /** Gets an action given its tag an a target.
      *
@@ -102,7 +102,7 @@ public:
      * @param target    A certain target.
      * @return  The Action the with the given tag.
      */
-    Action* getActionByTag(int tag, const CGNode *target) const;
+    Action* getActionByTag(int tag, const CGSprite *target) const;
 
     /** Returns the numbers of actions that are running in a certain target. 
      * Composable actions are counted as 1 action. Example:
@@ -113,35 +113,35 @@ public:
      * @return  The numbers of actions that are running in a certain target.
      * @js NA
      */
-    ssize_t getNumberOfRunningActionsInTarget(const CGNode *target) const;
+    ssize_t getNumberOfRunningActionsInTarget(const CGSprite *target) const;
 
     /** @deprecated Use getNumberOfRunningActionsInTarget() instead.
      */
-    CC_DEPRECATED_ATTRIBUTE inline ssize_t numberOfRunningActionsInTarget(CGNode *target) const { return getNumberOfRunningActionsInTarget(target); }
+    CC_DEPRECATED_ATTRIBUTE inline ssize_t numberOfRunningActionsInTarget(CGSprite *target) const { return getNumberOfRunningActionsInTarget(target); }
 
     /** Pauses the target: all running actions and newly added actions will be paused.
      *
      * @param target    A certain target.
      */
-    void pauseTarget(CGNode *target);
+    void pauseTarget(CGSprite *target);
 
     /** Resumes the target. All queued actions will be resumed.
      *
      * @param target    A certain target.
      */
-    void resumeTarget(CGNode *target);
+    void resumeTarget(CGSprite *target);
     
     /** Pauses all running actions, returning a list of targets whose actions were paused.
      *
      * @return  A list of targets whose actions were paused.
      */
-    CAVector<CGNode*> pauseAllRunningActions();
+    CAVector<CGSprite*> pauseAllRunningActions();
     
     /** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call).
      *
      * @param targetsToResume   A set of targets need to be resumed.
      */
-    void resumeTargets(const CAVector<CGNode*>& targetsToResume);
+    void resumeTargets(const CAVector<CGSprite*>& targetsToResume);
     
     /** Main loop of ActionManager.
      * @param dt    In seconds.

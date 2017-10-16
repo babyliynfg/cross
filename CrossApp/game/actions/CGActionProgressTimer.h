@@ -33,7 +33,7 @@ public:
     //
 	virtual ProgressTo* clone() const override;
 	virtual ProgressTo* reverse() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void update(float time) override;
     
 public:
@@ -77,7 +77,7 @@ public:
     //
 	virtual ProgressFromTo* clone() const override;
 	virtual ProgressFromTo* reverse() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void update(float time) override;
     
 public:

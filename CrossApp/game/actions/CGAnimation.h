@@ -37,7 +37,7 @@ public:
      */
     struct DisplayedEventInfo
     {
-        CGNode* target;
+        CGSprite* target;
         const CAValueMap* userInfo;
     };
     

@@ -235,11 +235,9 @@
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 
-#include "game/CGNode.h"
 #include "game/CGSprite.h"
 #include "game/CGSpriteFrame.h"
 #include "game/CGSpriteFrameCache.h"
-#include "game/CGSpriteBatchNode.h"
 #include "game/CGProgressTimer.h"
 #include "game/actions/CGAnimation.h"
 #include "game/actions/CGAnimationCache.h"

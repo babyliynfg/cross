@@ -18,7 +18,6 @@ NS_CC_BEGIN
 class CAObject;
 class CAEvent;
 class CAView;
-class CGNode;
 class CAObject;
 
 typedef void (CAObject::*SEL_CallFunc)();

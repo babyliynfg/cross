@@ -34,7 +34,7 @@ public:
     virtual ~ActionCamera(){};
 
     // Overrides
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual ActionCamera * reverse() const override;
 	virtual ActionCamera *clone() const override;
 
@@ -118,7 +118,7 @@ public:
 
     // Overrides
 	OrbitCamera *clone() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void update(float time) override;
     
 public:

@@ -5,7 +5,6 @@
 #include <stdarg.h>
 
 #include "game/CGSprite.h"
-#include "game/CGNode.h"
 #include "game/CGSpriteFrame.h"
 #include "game/actions/CGActionInstant.h"
 #include "CCStdC.h"
@@ -133,7 +132,7 @@ float ActionInterval::getAmplitudeRate()
     return 0;
 }
 
-void ActionInterval::startWithTarget(CGNode *target)
+void ActionInterval::startWithTarget(CGSprite *target)
 {
     FiniteTimeAction::startWithTarget(target);
     _elapsed = 0.0f;
@@ -267,7 +266,7 @@ Sequence::~Sequence(void)
     CC_SAFE_RELEASE(_actions[1]);
 }
 
-void Sequence::startWithTarget(CGNode *target)
+void Sequence::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _split = _actions[0]->getDuration() / _duration;
@@ -407,7 +406,7 @@ Repeat::~Repeat(void)
     CC_SAFE_RELEASE(_innerAction);
 }
 
-void Repeat::startWithTarget(CGNode *target)
+void Repeat::startWithTarget(CGSprite *target)
 {
     _total = 0;
     _nextDt = _innerAction->getDuration()/_duration;
@@ -519,7 +518,7 @@ RepeatForever *RepeatForever::clone() const
     return a;
 }
 
-void RepeatForever::startWithTarget(CGNode* target)
+void RepeatForever::startWithTarget(CGSprite* target)
 {
     ActionInterval::startWithTarget(target);
     _innerAction->startWithTarget(target);
@@ -695,7 +694,7 @@ Spawn::~Spawn(void)
     CC_SAFE_RELEASE(_two);
 }
 
-void Spawn::startWithTarget(CGNode *target)
+void Spawn::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _one->startWithTarget(target);
@@ -851,7 +850,7 @@ void RotateTo::calculateAngles(float &startAngle, float &diffAngle, float dstAng
     }
 }
 
-void RotateTo::startWithTarget(CGNode *target)
+void RotateTo::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     
@@ -977,7 +976,7 @@ RotateBy* RotateBy::clone() const
     return a;
 }
 
-void RotateBy::startWithTarget(CGNode *target)
+void RotateBy::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _startAngle = target->getRotation3D();
@@ -1062,7 +1061,7 @@ MoveBy* MoveBy::clone() const
     return a;
 }
 
-void MoveBy::startWithTarget(CGNode *target)
+void MoveBy::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _previousPosition = _startPosition = target->getPosition3D();
@@ -1147,7 +1146,7 @@ MoveTo* MoveTo::clone() const
     return a;
 }
 
-void MoveTo::startWithTarget(CGNode *target)
+void MoveTo::startWithTarget(CGSprite *target)
 {
     MoveBy::startWithTarget(target);
     _positionDelta = _endPosition - target->getPosition3D();
@@ -1211,7 +1210,7 @@ SkewTo* SkewTo::reverse() const
     return nullptr;
 }
 
-void SkewTo::startWithTarget(CGNode *target)
+void SkewTo::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
 
@@ -1323,7 +1322,7 @@ bool SkewBy::initWithDuration(float t, float deltaSkewX, float deltaSkewY)
     return ret;
 }
 
-void SkewBy::startWithTarget(CGNode *target)
+void SkewBy::startWithTarget(CGSprite *target)
 {
     SkewTo::startWithTarget(target);
     _deltaX = _skewX;
@@ -1375,7 +1374,7 @@ JumpBy* JumpBy::clone() const
     return a;
 }
 
-void JumpBy::startWithTarget(CGNode *target)
+void JumpBy::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _previousPos = _startPosition = target->getPosition();
@@ -1457,7 +1456,7 @@ JumpTo* JumpTo::reverse() const
     return nullptr;
 }
 
-void JumpTo::startWithTarget(CGNode *target)
+void JumpTo::startWithTarget(CGSprite *target)
 {
     JumpBy::startWithTarget(target);
     _delta.setPoint(_endPosition.x - _startPosition.x, _endPosition.y - _startPosition.y);
@@ -1499,7 +1498,7 @@ bool BezierBy::initWithDuration(float t, const ccBezierConfig& c)
     return false;
 }
 
-void BezierBy::startWithTarget(CGNode *target)
+void BezierBy::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _previousPosition = _startPosition = target->getPosition();
@@ -1591,7 +1590,7 @@ BezierTo* BezierTo::clone() const
     return a;
 }
 
-void BezierTo::startWithTarget(CGNode *target)
+void BezierTo::startWithTarget(CGSprite *target)
 {
     BezierBy::startWithTarget(target);
     _config.controlPoint_1 = _toConfig.controlPoint_1 - _startPosition;
@@ -1694,7 +1693,7 @@ ScaleTo* ScaleTo::reverse() const
 }
 
 
-void ScaleTo::startWithTarget(CGNode *target)
+void ScaleTo::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _startScaleX = target->getScaleX();
@@ -1755,7 +1754,7 @@ ScaleBy* ScaleBy::clone() const
     return a;
 }
 
-void ScaleBy::startWithTarget(CGNode *target)
+void ScaleBy::startWithTarget(CGSprite *target)
 {
     ScaleTo::startWithTarget(target);
     _deltaX = _startScaleX * _endScaleX - _startScaleX;
@@ -1801,7 +1800,7 @@ void Blink::stop()
     ActionInterval::stop();
 }
 
-void Blink::startWithTarget(CGNode *target)
+void Blink::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _originalState = target->isVisible();
@@ -1868,7 +1867,7 @@ FadeTo* FadeIn::reverse() const
     
 }
 
-void FadeIn::startWithTarget(CGNode *target)
+void FadeIn::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     
@@ -1912,7 +1911,7 @@ FadeOut* FadeOut::clone() const
     return a;
 }
 
-void FadeOut::startWithTarget(CGNode *target)
+void FadeOut::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     
@@ -1982,7 +1981,7 @@ FadeTo* FadeTo::reverse() const
     return nullptr;
 }
 
-void FadeTo::startWithTarget(CGNode *target)
+void FadeTo::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
 
@@ -2043,7 +2042,7 @@ TintTo* TintTo::reverse() const
     return nullptr;
 }
 
-void TintTo::startWithTarget(CGNode *target)
+void TintTo::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     if (_target)
@@ -2100,7 +2099,7 @@ TintBy* TintBy::clone() const
     return a;
 }
 
-void TintBy::startWithTarget(CGNode *target)
+void TintBy::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
 
@@ -2214,7 +2213,7 @@ ReverseTime::~ReverseTime()
     CC_SAFE_RELEASE(_other);
 }
 
-void ReverseTime::startWithTarget(CGNode *target)
+void ReverseTime::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _other->startWithTarget(target);
@@ -2321,7 +2320,7 @@ Animate* Animate::clone() const
     return a;
 }
 
-void Animate::startWithTarget(CGNode *target)
+void Animate::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     CGSprite *sprite = static_cast<CGSprite*>(target);
@@ -2431,7 +2430,7 @@ TargetedAction::~TargetedAction()
     CC_SAFE_RELEASE(_action);
 }
 
-TargetedAction* TargetedAction::create(CGNode* target, FiniteTimeAction* action)
+TargetedAction* TargetedAction::create(CGSprite* target, FiniteTimeAction* action)
 {
     TargetedAction* p = new (std::nothrow) TargetedAction();
     p->initWithTarget(target, action);
@@ -2440,7 +2439,7 @@ TargetedAction* TargetedAction::create(CGNode* target, FiniteTimeAction* action)
 }
 
 
-bool TargetedAction::initWithTarget(CGNode* target, FiniteTimeAction* action)
+bool TargetedAction::initWithTarget(CGSprite* target, FiniteTimeAction* action)
 {
     if(ActionInterval::initWithDuration(action->getDuration()))
     {
@@ -2472,7 +2471,7 @@ TargetedAction* TargetedAction::reverse() const
     return a;
 }
 
-void TargetedAction::startWithTarget(CGNode *target)
+void TargetedAction::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _action->startWithTarget(_forcedTarget);
@@ -2489,7 +2488,7 @@ void TargetedAction::update(float time)
         _action->update(time);
 }
 
-void TargetedAction::setForcedTarget(CGNode* forcedTarget)
+void TargetedAction::setForcedTarget(CGSprite* forcedTarget)
 {
     if( _forcedTarget != forcedTarget ) {
         CC_SAFE_RETAIN(forcedTarget);
@@ -2532,7 +2531,7 @@ ActionFloat* ActionFloat::clone() const
     return a;
 }
 
-void ActionFloat::startWithTarget(CGNode *target)
+void ActionFloat::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _delta = _to - _from;

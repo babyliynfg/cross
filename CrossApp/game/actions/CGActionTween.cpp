@@ -40,7 +40,7 @@ ActionTween *ActionTween::clone() const
     return a;
 }
 
-void ActionTween::startWithTarget(CGNode *target)
+void ActionTween::startWithTarget(CGSprite *target)
 {
     CCASSERT(dynamic_cast<ActionTweenDelegate*>(target), "target must implement ActionTweenDelegate");
     ActionInterval::startWithTarget(target);

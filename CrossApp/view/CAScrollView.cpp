@@ -439,20 +439,23 @@ DPoint CAScrollView::getContentOffset()
 void CAScrollView::setBackgroundImage(CAImage* image, bool isScale9)
 {
     CAView::removeSubview(m_pBackgroundView);
-    
-    if (isScale9)
+    m_pBackgroundView = nullptr;
+    if (image)
     {
-        CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
-        backgroundView->setLayout(DLayoutFill);
-        CAView::insertSubview(backgroundView, -1);
-        m_pBackgroundView = backgroundView;
-    }
-    else
-    {
-        CAImageView* backgroundView = CAImageView::createWithImage(image);
-        backgroundView->setLayout(DLayoutFill);
-        CAView::insertSubview(backgroundView, -1);
-        m_pBackgroundView = backgroundView;
+        if (isScale9)
+        {
+            CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
+            backgroundView->setLayout(DLayoutFill);
+            CAView::insertSubview(backgroundView, -1);
+            m_pBackgroundView = backgroundView;
+        }
+        else
+        {
+            CAImageView* backgroundView = CAImageView::createWithImage(image);
+            backgroundView->setLayout(DLayoutFill);
+            CAView::insertSubview(backgroundView, -1);
+            m_pBackgroundView = backgroundView;
+        }
     }
 }
 

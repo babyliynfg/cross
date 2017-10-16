@@ -6,7 +6,6 @@
 //  Copyright (c) 2014Âπ?http://9miao.com All rights reserved.
 //
 
-#include "CGSpriteBatchNode.h"
 #include "game/actions/CGAnimation.h"
 #include "game/actions/CGAnimationCache.h"
 #include "ccConfig.h"
@@ -24,52 +23,27 @@
 #include "basics/CACamera.h"
 #include "ccMacros.h"
 #include <string.h>
-#include "view/CAView.h"
+#include "animation/CAViewAnimation.h"
+#include "game/actions/CGActionManager.h"
 NS_CC_BEGIN
 
 //static int spriteCount = 0;
 
 CGSprite::CGSprite(void)
-: m_bShouldBeHidden(false)
-, m_pobImage(nullptr)
+: m_obAutoContentSize(true)
+, m_obNormalizedPosition(DPointZero)
+, m_bUsingNormalizedPosition(false)
+, m_obOffsetPosition(DPointZero)
+, m_obUnflippedOffsetPositionFromCenter(DPointZero)
 {
-    // clean the Quad
-    memset(&m_sQuad, 0, sizeof(m_sQuad));
-    
-    // Atlas: Color
-    CAColor4B tmpColor = CAColor4B::WHITE;
-    m_sQuad.bl.colors = tmpColor;
-    m_sQuad.br.colors = tmpColor;
-    m_sQuad.tl.colors = tmpColor;
-    m_sQuad.tr.colors = tmpColor;
-    
-    m_pobBatchNode = NULL;
-    
-    m_bRecursiveDirty = false;
-    setDirty(false);
-    
-    m_bOpacityModifyRGB = true;
-    
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
-    
-    m_bFlipX = m_bFlipY = false;
-    
-    // default transform anchor: center
-    setAnchorPoint(DPoint(0.5f, 0.5f));
-    
-    // zwoptex default values
-    m_obOffsetPosition = DPointZero;
-    
-    m_bHasChildren = false;
-    
-    
+
     //CCLog("CGSprite = %d\n", ++spriteCount);
 }
 
 CGSprite::~CGSprite(void)
 {
-    CC_SAFE_RELEASE(m_pobImage);
     //CCLog("~CGSprite = %d\n", --spriteCount);
 }
 
@@ -166,11 +140,10 @@ bool CGSprite::init(void)
 // designated initializer
 bool CGSprite::initWithImage(CAImage *image, const DRect& rect, bool rotated)
 {
-    if (CGNode::init())
+    if (CAView::init())
     {
         this->setImage(image);
         this->setImageRect(rect, rotated, rect.size);
-        this->setBatchNode(nullptr);
         
         return true;
     }
@@ -236,42 +209,35 @@ bool CGSprite::initWithSpriteFrameName(const std::string& pszSpriteFrameName)
     return initWithSpriteFrame(pFrame);
 }
 
-void CGSprite::setImageRect(const DRect& rect)
-{
-    this->setImageRect(rect, false, rect.size);
-}
-
-
 void CGSprite::setImageRect(const DRect& rect, bool rotated, const DSize& untrimmedSize)
 {
     m_bRectRotated = rotated;
     
-    this->setContentSize(untrimmedSize);
+    if (m_obAutoContentSize == true)
+    {
+        this->setContentSize(untrimmedSize);
+        m_obAutoContentSize = true;
+    }
     this->setVertexRect(rect);
     this->setImageCoords(rect);
     
-    DPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
-    
-    // issue #732
-    if (m_bFlipX)
+    if (m_obAutoContentSize == true)
     {
-        relativeOffset.x = -relativeOffset.x;
-    }
-    if (m_bFlipY)
-    {
-        relativeOffset.y = -relativeOffset.y;
-    }
-    
-    m_obOffsetPosition.x = relativeOffset.x + (m_obContentSize.width - m_obRect.size.width) / 2;
-    m_obOffsetPosition.y = relativeOffset.y + (m_obContentSize.height - m_obRect.size.height) / 2;
-    
-    // rendering using batch node
-    if (m_pobBatchNode)
-    {
-        setDirty(true);
-    }
-    else
-    {
+        DPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
+        
+        // issue #732
+        if (m_bFlipX)
+        {
+            relativeOffset.x = -relativeOffset.x;
+        }
+        if (m_bFlipY)
+        {
+            relativeOffset.y = -relativeOffset.y;
+        }
+        
+        m_obOffsetPosition.x = relativeOffset.x + (m_obContentSize.width - m_obRect.size.width) / 2;
+        m_obOffsetPosition.y = relativeOffset.y + (m_obContentSize.height - m_obRect.size.height) / 2;
+        
         float x1 = 0 + m_obOffsetPosition.x;
         float y1 = 0 + m_obOffsetPosition.y;
         float x2 = x1 + m_obRect.size.width;
@@ -283,352 +249,11 @@ void CGSprite::setImageRect(const DRect& rect, bool rotated, const DSize& untrim
         m_sQuad.tl.vertices = DPoint3D(x1, y2, 0);
         m_sQuad.tr.vertices = DPoint3D(x2, y2, 0);
     }
-    
-    this->updateDraw();
-}
-
-void CGSprite::setVertexRect(const DRect& rect)
-{
-    m_obRect = rect;
-}
-
-void CGSprite::setImageCoords(const DRect& _rect)
-{
-    DRect rect = _rect;
-    
-    CAImage *tex = m_pobBatchNode ? m_pobImageAtlas->getImage() : m_pobImage;
-    if (! tex)
-    {
-        return;
-    }
-    
-    float atlasWidth = (float)tex->getPixelsWide();
-    float atlasHeight = (float)tex->getPixelsHigh();
-    
-    float left, right, top, bottom;
-    
-    if (m_bRectRotated)
-    {
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left+(rect.size.height*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top+(rect.size.width*2-2)/(2*atlasHeight);
-#else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x+rect.size.height) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y+rect.size.width) / atlasHeight;
-#endif // CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        
-        if (m_bFlipX)
-        {
-            CC_SWAP(top, bottom, float);
-        }
-        
-        if (m_bFlipY)
-        {
-            CC_SWAP(left, right, float);
-        }
-        
-        m_sQuad.bl.texCoords.u = left;
-        m_sQuad.bl.texCoords.v = top;
-        m_sQuad.br.texCoords.u = left;
-        m_sQuad.br.texCoords.v = bottom;
-        m_sQuad.tl.texCoords.u = right;
-        m_sQuad.tl.texCoords.v = top;
-        m_sQuad.tr.texCoords.u = right;
-        m_sQuad.tr.texCoords.v = bottom;
-    }
     else
     {
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        left    = (2*rect.origin.x+1)/(2*atlasWidth);
-        right    = left + (rect.size.width*2-2)/(2*atlasWidth);
-        top        = (2*rect.origin.y+1)/(2*atlasHeight);
-        bottom    = top + (rect.size.height*2-2)/(2*atlasHeight);
-#else
-        left    = rect.origin.x/atlasWidth;
-        right    = (rect.origin.x + rect.size.width) / atlasWidth;
-        top        = rect.origin.y/atlasHeight;
-        bottom    = (rect.origin.y + rect.size.height) / atlasHeight;
-#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-        
-        if(m_bFlipX)
-        {
-            CC_SWAP(left,right,float);
-        }
-        
-        if(m_bFlipY)
-        {
-            CC_SWAP(top,bottom,float);
-        }
-        
-        m_sQuad.bl.texCoords.u = left;
-        m_sQuad.bl.texCoords.v = bottom;
-        m_sQuad.br.texCoords.u = right;
-        m_sQuad.br.texCoords.v = bottom;
-        m_sQuad.tl.texCoords.u = left;
-        m_sQuad.tl.texCoords.v = top;
-        m_sQuad.tr.texCoords.u = right;
-        m_sQuad.tr.texCoords.v = top;
+        this->updateImageRect();
     }
-}
-
-void CGSprite::updateTransform(void)
-{
-    if(isDirty())
-    {
-        if(!m_bVisible || (m_pParent && m_pParent != m_pobBatchNode && ((CGSprite*)m_pParent)->m_bShouldBeHidden))
-        {
-            m_sQuad.br.vertices = m_sQuad.tl.vertices = m_sQuad.tr.vertices = m_sQuad.bl.vertices = DPoint3DZero;
-            m_bShouldBeHidden = true;
-        }
-        else
-        {
-            m_bShouldBeHidden = false;
-            
-            if( !m_pParent || m_pParent == m_pobBatchNode)
-            {
-                m_tTransformToBatch = getNodeToParentTransform();
-            }
-            else
-            {
-                const Mat4 &nodeToParent = getNodeToParentTransform();
-                Mat4 &parentTransform = static_cast<CGSprite*>(m_pParent)->m_tTransformToBatch;
-                m_tTransformToBatch = parentTransform * nodeToParent;
-            }
-            
-            DSize size = m_obRect.size;
-
-            float x1 = m_obOffsetPosition.x;
-            float y1 = m_obOffsetPosition.y;
-            
-            float x2 = x1 + size.width;
-            float y2 = y1 + size.height;
-            
-            float x = m_tTransformToBatch.m[12];
-            float y = m_tTransformToBatch.m[13];
-            
-            float cr = m_tTransformToBatch.m[0];
-            float sr = m_tTransformToBatch.m[1];
-            float cr2 = m_tTransformToBatch.m[5];
-            float sr2 = -m_tTransformToBatch.m[4];
-            float ax = x1 * cr - y1 * sr2 + x;
-            float ay = x1 * sr + y1 * cr2 + y;
-            
-            float bx = x2 * cr - y1 * sr2 + x;
-            float by = x2 * sr + y1 * cr2 + y;
-            
-            float cx = x2 * cr - y2 * sr2 + x;
-            float cy = x2 * sr + y2 * cr2 + y;
-            
-            float dx = x1 * cr - y2 * sr2 + x;
-            float dy = x1 * sr + y2 * cr2 + y;
-            
-            m_sQuad.bl.vertices = DPoint3D(RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fPositionZ);
-            m_sQuad.br.vertices = DPoint3D(RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fPositionZ);
-            m_sQuad.tl.vertices = DPoint3D(RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fPositionZ);
-            m_sQuad.tr.vertices = DPoint3D(RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fPositionZ);
-            this->setImageCoords(m_obRect);
-        }
-        
-        if (m_pobImageAtlas)
-        {
-            m_pobImageAtlas->updateQuad(&m_sQuad, (unsigned int)m_uAtlasIndex);
-        }
-        
-        m_bRecursiveDirty = false;
-        setDirty(false);
-    }
-    CGNode::updateTransform();
-}
-
-
-void CGSprite::insertChild(CGNode *pChild, int zOrder)
-{
-    
-    if (m_pobBatchNode)
-    {
-        CGSprite* pChildSprite = dynamic_cast<CGSprite*>(pChild);
-        m_pobBatchNode->appendChild(pChildSprite);
-        if (!m_bReorderChildDirty)
-        {
-            setReorderChildDirtyRecursively();
-        }
-    }
-    
-    CGNode::insertChild(pChild, zOrder);
-    m_bHasChildren = true;
-}
-
-void CGSprite::reorderChild(CGNode *pChild, int zOrder)
-{
-    if (zOrder != pChild->getZOrder())
-    {
-        if( m_pobBatchNode && ! m_bReorderChildDirty)
-        {
-            setReorderChildDirtyRecursively();
-            m_pobBatchNode->reorderBatch(true);
-        }
-        
-        CGNode::reorderChild(pChild, zOrder);
-    }
-}
-
-void CGSprite::removeChild(CGNode *pChild)
-{
-    if (m_pobBatchNode)
-    {
-        m_pobBatchNode->removeSpriteFromAtlas((CGSprite*)(pChild));
-    }
-    
-    CGNode::removeChild(pChild);
-    
-}
-
-void CGSprite::sortAllChildren()
-{
-    if (m_bReorderChildDirty && !m_obChildren.empty())
-    {
-        std::sort(m_obChildren.begin(), m_obChildren.end(), compareChildrenZOrder);
-        
-        if (m_pobBatchNode)
-        {
-            for (auto& var : m_obChildren)
-            {
-                if(m_bRunning)
-                {
-                    var->sortAllChildren();
-                }
-            }
-        }
-        m_bReorderChildDirty = false;
-    }
-}
-
-//
-// CGNode property overloads
-// used only when parent is CGSpriteBatchNode
-//
-
-void CGSprite::setReorderChildDirtyRecursively(void)
-{
-    //only set parents flag the first time
-    if ( ! m_bReorderChildDirty )
-    {
-        m_bReorderChildDirty = true;
-        CGNode* pNode = (CGNode*)m_pParent;
-        while (pNode && pNode != m_pobBatchNode)
-        {
-            ((CGSprite*)pNode)->setReorderChildDirtyRecursively();
-            pNode=pNode->getParent();
-        }
-    }
-}
-
-
-void CGSprite::setDirtyRecursively(bool bValue)
-{
-    m_bRecursiveDirty = bValue;
-    setDirty(bValue);
-    // recursively set dirty
-    if (m_bHasChildren)
-    {
-        if (!m_obChildren.empty())
-        {
-            for (auto& var : m_obChildren)
-            {
-                CGSprite* pChild = (CGSprite*)var;
-                pChild->setDirtyRecursively(bValue);
-            }
-            
-        }
-    }
-}
-
-void CGSprite::setFlipX(bool bFlipX)
-{
-    if (m_bFlipX != bFlipX)
-    {
-        m_bFlipX = bFlipX;
-        setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
-    }
-}
-
-bool CGSprite::isFlipX(void)
-{
-    return m_bFlipX;
-}
-
-void CGSprite::setFlipY(bool bFlipY)
-{
-    if (m_bFlipY != bFlipY)
-    {
-        m_bFlipY = bFlipY;
-        setImageRect(m_obRect, m_bRectRotated, m_obContentSize);
-    }
-}
-
-bool CGSprite::isFlipY(void)
-{
-    return m_bFlipY;
-}
-
-//
-// RGBA protocol
-//
-
-void CGSprite::updateColor(void)
-{
-    CAColor4B color4 = _displayedColor;
-    color4.a = color4.a * _displayedAlpha;
-    
-    if (m_bOpacityModifyRGB)
-    {
-        color4.r = color4.r * color4.a / 255.0f;
-        color4.g = color4.g * color4.a / 255.0f;
-        color4.b = color4.b * color4.a / 255.0f;
-    }
-    
-    m_sQuad.bl.colors = color4;
-    m_sQuad.br.colors = color4;
-    m_sQuad.tl.colors = color4;
-    m_sQuad.tr.colors = color4;
-    
-    if (m_pobBatchNode && m_pobImage)
-    {
-        if (m_uAtlasIndex != UINT_NONE)
-        {
-            m_pobImageAtlas->updateQuad(&m_sQuad, (unsigned int)m_uAtlasIndex);
-        }
-        else
-        {
-            setDirty(true);
-        }
-    }
-    
     this->updateDraw();
-}
-
-void CGSprite::setOpacityModifyRGB(bool modify)
-{
-    if (m_bOpacityModifyRGB != modify)
-    {
-        m_bOpacityModifyRGB = modify;
-        updateColor();
-    }
-}
-
-bool CGSprite::isOpacityModifyRGB(void) const
-{
-    return m_bOpacityModifyRGB;
-}
-
-void CGSprite::updateDraw()
-{
-    CGNode::updateDraw();
-    SET_DIRTY_RECURSIVELY(m_pobBatchNode);
 }
 
 void CGSprite::setSpriteFrame(CGSpriteFrame *pNewFrame)
@@ -673,75 +298,20 @@ CGSpriteFrame* CGSprite::getSpriteFrame(void)
                                             m_obContentSize);
 }
 
-CGSpriteBatchNode* CGSprite::getBatchNode(void)
-{
-    return m_pobBatchNode;
-}
-
-void CGSprite::setBatchNode(CGSpriteBatchNode *pobSpriteBatchNode)
-{
-    m_pobBatchNode = pobSpriteBatchNode; // weak reference
-    
-    if( ! m_pobBatchNode )
-    {
-        m_uAtlasIndex = UINT_NONE;
-        setImageAtlas(nullptr);
-        m_bRecursiveDirty = false;
-        setDirty(false);
-        
-        float x1 = m_obOffsetPosition.x;
-        float y1 = m_obOffsetPosition.y;
-        float x2 = x1 + m_obRect.size.width;
-        float y2 = y1 + m_obRect.size.height;
-        m_sQuad.bl.vertices = DPoint3D( x1, y1, 0 );
-        m_sQuad.br.vertices = DPoint3D( x2, y1, 0 );
-        m_sQuad.tl.vertices = DPoint3D( x1, y2, 0 );
-        m_sQuad.tr.vertices = DPoint3D( x2, y2, 0 );
-        
-    }
-    else
-    {
-        m_tTransformToBatch = Mat4::IDENTITY;
-        setImageAtlas(m_pobBatchNode->getImageAtlas()); // weak ref
-    }
-}
-
-// Texture protocol
-
-void CGSprite::updateBlendFunc(void)
-{
-    CCAssert (! m_pobBatchNode, "CGSprite: updateBlendFunc doesn't work when the sprite is rendered using a CGSpriteBatchNode");
-    
-    if (!m_pobImage || !m_pobImage->hasPremultipliedAlpha())
-    {
-        m_sBlendFunc.src = GL_SRC_ALPHA;
-        m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-        setOpacityModifyRGB(false);
-    }
-    else
-    {
-        m_sBlendFunc.src = CC_BLEND_SRC;
-        m_sBlendFunc.dst = CC_BLEND_DST;
-        setOpacityModifyRGB(true);
-    }
-}
-
 void CGSprite::setImage(CAImage *image)
 {
-    if (!m_pobBatchNode && image != m_pobImage)
+    CAView::setImage(image);
+    if (image)
     {
-        CC_SAFE_RETAIN(image);
-        CC_SAFE_RELEASE(m_pobImage);
-        m_pobImage = image;
         DRect rect = DRectZero;
-        if (image)
+        rect.size = image->getContentSize();
+        CAView::setImageRect(rect);
+        
+        if (m_obAutoContentSize == true)
         {
-            rect.size = image->getContentSize();
+            this->setContentSize(rect.size);
+            m_obAutoContentSize = true;
         }
-        this->setImageRect(rect);
-        this->setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-        this->updateBlendFunc();
-        this->updateDraw();
     }
 }
 
@@ -750,42 +320,216 @@ CAImage* CGSprite::getImage()
     return m_pobImage;
 }
 
-void CGSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+DPoint3D CGSprite::getRotation3D() const
 {
-    CC_RETURN_IF(!m_pobImage);
-    
-    auto visitingCamera = CACamera::getVisitingCamera();
-    auto defaultCamera = CACamera::getDefaultCamera();
-    if (visitingCamera == defaultCamera)
+    CCAssert(m_fRotationX == m_fRotationY, "CGSprite#rotation. m_fRotationX != m_fRotationY. Don't know which one to return");
+    return DPoint3D(m_fRotationX, m_fRotationY, m_fRotationZ);
+}
+
+void CGSprite::setRotation3D(const DPoint3D& rotation)
+{
+    if (rotation.x != m_fRotationX || rotation.y != m_fRotationY || rotation.z != m_fRotationZ)
     {
-        m_bInsideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, m_obContentSize) : m_bInsideBounds;
-    }
-    else
-    {
-        // XXX: this always return true since
-        m_bInsideBounds = renderer->checkVisibility(transform, m_obContentSize);
-    }
-    
-    if(m_bInsideBounds)
-    {
-        static unsigned short quadIndices[] = {0,1,2, 3,2,1};
-        
-        m_obTriangles.indices = quadIndices;
-        m_obTriangles.vertCount = 4;
-        m_obTriangles.indexCount = 6;
-        m_obTriangles.verts = (ccV3F_C4B_T2F*)&m_sQuad;
-        
-        m_obTrianglesCommand.init(0,
-                                  m_pobImage->getName(),
-                                  getGLProgramState(),
-                                  m_sBlendFunc,
-                                  m_obTriangles,
-                                  transform,
-                                  flags);
-        
-        renderer->addCommand(&m_obTrianglesCommand);
+        m_fRotationX = rotation.x;
+        m_fRotationY = rotation.y;
+        m_fRotationZ = rotation.z;
+        this->updateRotationQuat();
+        this->updateDraw();
     }
 }
 
+void CGSprite::updateRotation3D()
+{
+    //convert quaternion to Euler angle
+    float x = m_obRotationQuat.x, y = m_obRotationQuat.y, z = m_obRotationQuat.z, w = m_obRotationQuat.w;
+    m_fRotationX = atan2f(2.f * (w * x + y * z), 1.f - 2.f * (x * x + y * y));
+    float sy = 2.f * (w * y - z * x);
+    sy = clampf(sy, -1, 1);
+    m_fRotationY = asinf(sy);
+    m_fRotationZ = atan2f(2.f * (w * z + x * y), 1.f - 2.f * (y * y + z * z));
+    
+    m_fRotationX = CC_RADIANS_TO_DEGREES(m_fRotationX);
+    m_fRotationY = CC_RADIANS_TO_DEGREES(m_fRotationY);
+    m_fRotationZ = -CC_RADIANS_TO_DEGREES(m_fRotationZ);
+}
+
+Quaternion CGSprite::getRotationQuat() const
+{
+    return m_obRotationQuat;
+}
+
+void CGSprite::setRotationQuat(const Quaternion& quat)
+{
+    m_obRotationQuat = quat;
+    updateRotation3D();
+    this->updateDraw();
+}
+
+const DPoint& CGSprite::getNormalizedPosition() const
+{
+    return m_obNormalizedPosition;
+}
+
+void CGSprite::setNormalizedPosition(const DPoint &position)
+{
+    if ( ! position.equals(m_obNormalizedPosition))
+    {
+        m_obNormalizedPosition = position;
+        m_bUsingNormalizedPosition = true;
+        this->updateDraw();
+    }
+}
+
+const DPoint& CGSprite::getPosition()
+{
+    return m_obPoint;
+}
+
+void CGSprite::setPosition(const DPoint& position)
+{
+    m_obLayout = DLayoutZero;
+    if( ! position.equals(m_obPoint))
+    {
+        this->setPoint(position);
+        this->updateDraw();
+        CCLog("-- %f", position.y);
+        //m_bUsingNormalizedPosition = false;
+    }
+    m_eLayoutType = -1;
+    
+}
+
+float CGSprite::getPositionX() const
+{
+    return m_obPoint.x;
+}
+
+void CGSprite::setPositionX(float x)
+{
+    setPosition(DPoint(x, m_obPoint.y));
+}
+
+float CGSprite::getPositionY() const
+{
+    return  m_obPoint.y;
+}
+
+void CGSprite::setPositionY(float y)
+{
+    setPosition(DPoint(m_obPoint.x, y));
+}
+
+float CGSprite::getPositionZ() const
+{
+    return m_fPointZ;
+}
+
+void CGSprite::setPositionZ(float positionZ)
+{
+    if (positionZ != m_fPointZ)
+    {
+        m_fPointZ = positionZ;
+        this->updateDraw();
+    }
+}
+
+void CGSprite::setPosition3D(const DPoint3D& position)
+{
+    setPositionZ(position.z);
+    setPosition(DPoint(position.x, position.y));
+}
+
+DPoint3D CGSprite::getPosition3D() const
+{
+    return DPoint3D(m_obPoint.x, m_obPoint.y, m_fPointZ);
+}
+
+const DSize& CGSprite::getContentSize()
+{
+    return m_obContentSize;
+}
+
+void CGSprite::setContentSize(const DSize& contentSize)
+{
+    if (!contentSize.equals(m_obContentSize))
+    {
+        CAView::setContentSize(contentSize);
+    }
+    m_obAutoContentSize = false;
+}
+
+void CGSprite::setScaleZ(float scaleZ)
+{
+    m_fScaleZ = scaleZ;
+}
+
+float CGSprite::getScaleZ() const
+{
+    return m_fScaleZ;
+}
+
+Action * CGSprite::runAction(Action* action)
+{
+    CCAssert( action != nullptr, "Argument must be non-nil");
+    CAApplication::getApplication()->getActionManager()->addAction(action, this, !m_bRunning);
+    return action;
+}
+
+void CGSprite::stopAllActions()
+{
+    CAApplication::getApplication()->getActionManager()->removeAllActionsFromTarget(this);
+}
+
+void CGSprite::stopAction(Action* action)
+{
+    CAApplication::getApplication()->getActionManager()->removeAction(action);
+}
+
+void CGSprite::stopActionByTag(int tag)
+{
+    CCAssert( tag != Action::INVALID_TAG, "Invalid tag");
+    CAApplication::getApplication()->getActionManager()->removeActionByTag(tag, this);
+}
+
+void CGSprite::stopAllActionsByTag(int tag)
+{
+    CCAssert( tag != Action::INVALID_TAG, "Invalid tag");
+    CAApplication::getApplication()->getActionManager()->removeAllActionsByTag(tag, this);
+}
+
+void CGSprite::stopActionsByFlags(unsigned int flags)
+{
+    if (flags > 0)
+    {
+        CAApplication::getApplication()->getActionManager()->removeActionsByFlags(flags, this);
+    }
+}
+
+Action * CGSprite::getActionByTag(int tag)
+{
+    CCAssert( tag != Action::INVALID_TAG, "Invalid tag");
+    return CAApplication::getApplication()->getActionManager()->getActionByTag(tag, this);
+}
+
+size_t CGSprite::getNumberOfRunningActions() const
+{
+    return CAApplication::getApplication()->getActionManager()->getNumberOfRunningActionsInTarget(this);
+}
+
+DRect CGSprite::boundingBox()
+{
+    DRect rect = DRect(0, 0, m_obContentSize.width, m_obContentSize.height);
+    rect = RectApplyAffineTransform(rect, getViewToSuperviewAffineTransform());
+    rect.origin.y += rect.size.height;
+    if (this->getSuperview())
+    {
+        rect.origin.y = this->getSuperview()->m_obContentSize.height - rect.origin.y;
+    }
+    else
+    {
+        rect.origin.y = CAApplication::getApplication()->getWinSize().height - rect.origin.y;
+    }
+    return rect;
+}
 
 NS_CC_END

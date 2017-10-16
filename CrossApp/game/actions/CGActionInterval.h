@@ -43,7 +43,7 @@ public:
      * @param dt in seconds
      */
     virtual void step(float dt) override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual ActionInterval* reverse() const override
     {
         CC_ASSERT(0);
@@ -130,7 +130,7 @@ public:
     //
     virtual Sequence* clone() const override;
     virtual Sequence* reverse() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void stop(void) override;
     /**
      * @param t In seconds.
@@ -197,7 +197,7 @@ public:
     //
     virtual Repeat* clone() const override;
     virtual Repeat* reverse() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void stop(void) override;
     /**
      * @param dt In seconds.
@@ -267,7 +267,7 @@ public:
     //
     virtual RepeatForever* clone() const override;
     virtual RepeatForever* reverse(void) const override;
-    virtual void startWithTarget(CGNode* target) override;
+    virtual void startWithTarget(CGSprite* target) override;
     /**
      * @param dt In seconds.
      */
@@ -356,7 +356,7 @@ public:
     //
     virtual Spawn* clone() const override;
     virtual Spawn* reverse(void) const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void stop(void) override;
     /**
      * @param time In seconds.
@@ -426,7 +426,7 @@ public:
     //
     virtual RotateTo* clone() const override;
     virtual RotateTo* reverse() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -526,7 +526,7 @@ public:
     //
     virtual RotateBy* clone() const override;
     virtual RotateBy* reverse(void) const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -604,7 +604,7 @@ public:
     //
     virtual MoveBy* clone() const override;
     virtual MoveBy* reverse(void) const  override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time in seconds
      */
@@ -657,7 +657,7 @@ public:
     //
     virtual MoveTo* clone() const override;
     virtual MoveTo* reverse() const  override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     
 public:
     MoveTo() {}
@@ -702,7 +702,7 @@ public:
     //
     virtual SkewTo* clone() const override;
     virtual SkewTo* reverse(void) const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -749,7 +749,7 @@ public:
     //
     // Overrides
     //
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual SkewBy* clone() const  override;
     virtual SkewBy* reverse(void) const override;
     
@@ -786,7 +786,7 @@ public:
     //
     virtual JumpBy* clone() const override;
     virtual JumpBy* reverse(void) const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -832,7 +832,7 @@ public:
     //
     // Override
     //
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual JumpTo* clone() const override;
     virtual JumpTo* reverse(void) const override;
 
@@ -887,7 +887,7 @@ public:
     //
     virtual BezierBy* clone() const override;
     virtual BezierBy* reverse(void) const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -934,7 +934,7 @@ public:
     //
     // Overrides
     //
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual BezierTo* clone() const override;
     virtual BezierTo* reverse(void) const override;
     
@@ -993,7 +993,7 @@ public:
     //
     virtual ScaleTo* clone() const override;
     virtual ScaleTo* reverse(void) const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -1074,7 +1074,7 @@ public:
     //
     // Overrides
     //
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual ScaleBy* clone() const override;
     virtual ScaleBy* reverse(void) const override;
 
@@ -1109,7 +1109,7 @@ public:
      * @param time In seconds.
      */
     virtual void update(float time) override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void stop() override;
     
 public:
@@ -1151,7 +1151,7 @@ public:
     //
     virtual FadeTo* clone() const override;
     virtual FadeTo* reverse(void) const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -1193,7 +1193,7 @@ public:
     //
     // Overrides
     //
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual FadeIn* clone() const override;
     virtual FadeTo* reverse(void) const override;
 
@@ -1227,7 +1227,7 @@ public:
     //
     // Overrides
     //
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual FadeOut* clone() const  override;
     virtual FadeTo* reverse(void) const override;
 
@@ -1274,7 +1274,7 @@ public:
     //
     virtual TintTo* clone() const override;
     virtual TintTo* reverse(void) const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -1317,7 +1317,7 @@ public:
     //
     virtual TintBy* clone() const override;
     virtual TintBy* reverse() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     /**
      * @param time In seconds.
      */
@@ -1397,7 +1397,7 @@ public:
     //
     virtual ReverseTime* reverse() const override;
     virtual ReverseTime* clone() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void stop(void) override;
     /**
      * @param time In seconds.
@@ -1454,7 +1454,7 @@ public:
     //
     virtual Animate* clone() const override;
     virtual Animate* reverse() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void stop(void) override;
     /**
      * @param t In seconds.
@@ -1494,26 +1494,26 @@ public:
      * @param action The action needs to override.
      * @return An autoreleased TargetedAction object.
      */
-    static TargetedAction* create(CGNode* target, FiniteTimeAction* action);
+    static TargetedAction* create(CGSprite* target, FiniteTimeAction* action);
 
     /** Sets the target that the action will be forced to run with.
      *
      * @param forcedTarget The target that the action will be forced to run with.
      */
-    void setForcedTarget(CGNode* forcedTarget);
+    void setForcedTarget(CGSprite* forcedTarget);
     /** returns the target that the action is forced to run with. 
      *
      * @return The target that the action is forced to run with.
      */
-    CGNode* getForcedTarget() { return _forcedTarget; }
-    const CGNode* getForcedTarget() const { return _forcedTarget; }
+    CGSprite* getForcedTarget() { return _forcedTarget; }
+    const CGSprite* getForcedTarget() const { return _forcedTarget; }
 
     //
     // Overrides
     //
     virtual TargetedAction* clone() const override;
     virtual TargetedAction* reverse() const  override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void stop(void) override;
     /**
      * @param time In seconds.
@@ -1525,11 +1525,11 @@ public:
     virtual ~TargetedAction();
 
     /** Init an action with the specified action and forced target */
-    bool initWithTarget(CGNode* target, FiniteTimeAction* action);
+    bool initWithTarget(CGSprite* target, FiniteTimeAction* action);
 
 protected:
     FiniteTimeAction* _action;
-    CGNode* _forcedTarget;
+    CGSprite* _forcedTarget;
 
 private:
     M_DISALLOW_COPY_AND_ASSIGN(TargetedAction);
@@ -1562,7 +1562,7 @@ public:
     /**
      * Overridden ActionInterval methods
      */
-    void startWithTarget(CGNode* target) override;
+    void startWithTarget(CGSprite* target) override;
     void update(float delta) override;
     ActionFloat* reverse() const override;
     ActionFloat* clone() const override;

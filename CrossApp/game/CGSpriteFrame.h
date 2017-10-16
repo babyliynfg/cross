@@ -3,7 +3,7 @@
 #ifndef __SPRITE_CCSPRITE_FRAME_H__
 #define __SPRITE_CCSPRITE_FRAME_H__
 
-#include "game/CGNode.h"
+#include "game/CGSprite.h"
 #include "basics/CAObject.h"
 #include "ccTypes.h"
 

@@ -8,7 +8,6 @@
 #include "renderer/CCMaterial.h"
 #include "images/CAImage.h"
 #include "ccTypes.h"
-#include "game/CGNode.h"
 #include "view/CAView.h"
 #include "support/xxhash/xxhash.h"
 
@@ -126,11 +125,6 @@ void Pass::bind(const Mat4& modelView, bool bindAttributes)
     if (CAView* v = dynamic_cast<CAView*>((CAObject*)this->getTarget()))
     {
         glprogramstate = v->getGLProgramState();
-    }
-    
-    if (CGNode* n = dynamic_cast<CGNode*>((CAObject*)this->getTarget()))
-    {
-        glprogramstate = n->getGLProgramState();
     }
 
     glprogramstate->applyGLProgram(modelView);

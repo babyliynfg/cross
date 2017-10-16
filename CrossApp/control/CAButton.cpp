@@ -192,19 +192,22 @@ void CAButton::setBackgroundImageForState(CAControl::State state, CAImage* image
         m_mBackgroundViews.erase(state);
     }
     
-    if (isScale9)
+    if (image)
     {
-        CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
-        backgroundView->setLayout(DLayoutFill);
-        this->insertSubview(backgroundView, -1);
-        m_mBackgroundViews.insert(state, backgroundView);
-    }
-    else
-    {
-        CAImageView* backgroundView = CAImageView::createWithImage(image);
-        backgroundView->setLayout(DLayoutFill);
-        this->insertSubview(backgroundView, -1);
-        m_mBackgroundViews.insert(state, backgroundView);
+        if (isScale9)
+        {
+            CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
+            backgroundView->setLayout(DLayoutFill);
+            this->insertSubview(backgroundView, -1);
+            m_mBackgroundViews.insert(state, backgroundView);
+        }
+        else
+        {
+            CAImageView* backgroundView = CAImageView::createWithImage(image);
+            backgroundView->setLayout(DLayoutFill);
+            this->insertSubview(backgroundView, -1);
+            m_mBackgroundViews.insert(state, backgroundView);
+        }
     }
     
     if (m_bRunning)

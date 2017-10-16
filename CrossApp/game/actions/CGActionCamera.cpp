@@ -1,7 +1,7 @@
 
 
 #include "game/actions/CGActionCamera.h"
-#include "game/CGNode.h"
+#include "game/CGSprite.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN
@@ -14,7 +14,7 @@ ActionCamera::ActionCamera()
 , _up(0, 1, 0)
 {
 }
-void ActionCamera::startWithTarget(CGNode *target)
+void ActionCamera::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
 }
@@ -159,7 +159,7 @@ bool OrbitCamera::initWithDuration(float t, float radius, float deltaRadius, flo
     return false;
 }
 
-void OrbitCamera::startWithTarget(CGNode *target)
+void OrbitCamera::startWithTarget(CGSprite *target)
 {
     ActionCamera::startWithTarget(target);
 

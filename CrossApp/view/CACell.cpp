@@ -75,22 +75,25 @@ void CACell::parser()
 
 void CACell::setBackgroundImage(CAImage* image, bool isScale9)
 {
-	this->removeSubview(m_pBackgroundView);
-
-	if (isScale9)
-	{
-		CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
-		backgroundView->setLayout(DLayoutFill);
-		this->insertSubview(backgroundView, -1);
-		m_pBackgroundView = backgroundView;
-	}
-	else
-	{
-		CAImageView* backgroundView = CAImageView::createWithImage(image);
-		backgroundView->setLayout(DLayoutFill);
-		this->insertSubview(backgroundView, -1);
-		m_pBackgroundView = backgroundView;
-	}
+	m_pContentView->removeSubview(m_pBackgroundView);
+    m_pBackgroundView = nullptr;
+    if (image)
+    {
+        if (isScale9)
+        {
+            CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
+            backgroundView->setLayout(DLayoutFill);
+            this->insertSubview(backgroundView, -1);
+            m_pBackgroundView = backgroundView;
+        }
+        else
+        {
+            CAImageView* backgroundView = CAImageView::createWithImage(image);
+            backgroundView->setLayout(DLayoutFill);
+            this->insertSubview(backgroundView, -1);
+            m_pBackgroundView = backgroundView;
+        }
+    }
 }
 
 void CACell::setBackgroundView(CrossApp::CAView *var)

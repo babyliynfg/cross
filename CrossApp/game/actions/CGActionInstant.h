@@ -331,7 +331,7 @@ public:
      * @param func  A callback function need to be executed.
      * @return  An autoreleased CallFuncN object.
      */
-    static CallFuncN * create(const std::function<void(CGNode*)>& func);
+    static CallFuncN * create(const std::function<void(CGSprite*)>& func);
     //
     // Overrides
     //
@@ -342,12 +342,12 @@ public:
     CallFuncN():_functionN(nullptr){}
     virtual ~CallFuncN(){}
 
-    /** initializes the action with the std::function<void(CGNode*)> */
-    bool initWithFunction(const std::function<void(CGNode*)>& func);
+    /** initializes the action with the std::function<void(CGSprite*)> */
+    bool initWithFunction(const std::function<void(CGSprite*)>& func);
 
 protected:
     /** function that will be called with the "sender" as the 1st argument */
-    std::function<void(CGNode*)> _functionN;
+    std::function<void(CGSprite*)> _functionN;
 
 private:
     M_DISALLOW_COPY_AND_ASSIGN(CallFuncN);

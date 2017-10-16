@@ -42,7 +42,7 @@ public:
         return nullptr;
     }
 
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void stop() override;
     virtual void update(float time) override;
 

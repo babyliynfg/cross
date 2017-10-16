@@ -1,7 +1,7 @@
 
 #include "CGAction.h"
 #include "game/actions/CGActionInterval.h"
-#include "game/CGNode.h"
+#include "game/CGSprite.h"
 #include "basics/CAApplication.h"
 #include "ccTypeInfo.h"
 #include "basics/CAPointExtension.h"
@@ -30,7 +30,7 @@ std::string Action::description() const
     return crossapp_format_string("<Action | Tag = %d", _tag);
 }
 
-void Action::startWithTarget(CGNode *aTarget)
+void Action::startWithTarget(CGSprite *aTarget)
 {
     _originalTarget = _target = aTarget;
 }
@@ -101,7 +101,7 @@ Speed *Speed::clone() const
     return a;
 }
 
-void Speed::startWithTarget(CGNode* target)
+void Speed::startWithTarget(CGSprite* target)
 {
     Action::startWithTarget(target);
     _innerAction->startWithTarget(target);
@@ -146,7 +146,7 @@ Follow::~Follow()
     CC_SAFE_RELEASE(_followedNode);
 }
 
-Follow* Follow::create(CGNode *followedNode, const DRect& rect/* = DRectZero*/)
+Follow* Follow::create(CGSprite *followedNode, const DRect& rect/* = DRectZero*/)
 {
     Follow *follow = new (std::nothrow) Follow();
     if (follow && follow->initWithTarget(followedNode, rect))
@@ -175,9 +175,9 @@ Follow* Follow::reverse() const
     return a;
 }
 
-bool Follow::initWithTarget(CGNode *followedNode, const DRect& rect/* = DRectZero*/)
+bool Follow::initWithTarget(CGSprite *followedNode, const DRect& rect/* = DRectZero*/)
 {
-    CCASSERT(followedNode != nullptr, "FollowedCGNode can't be NULL");
+    CCASSERT(followedNode != nullptr, "FollowedCGSprite can't be NULL");
  
     followedNode->retain();
     _followedNode = followedNode;

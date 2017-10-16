@@ -439,24 +439,6 @@ str
     return false;
 },
 
-/**
- * @method schedule
-* @param {function|function|function} func
-* @param {String|String|String} str
-* @param {float|float|float} float
-* @param {float|float} float
-* @param {float} float
-*/
-schedule : function(
-func,
-str,
-float,
-float,
-float 
-)
-{
-},
-
 };
 
 /**
@@ -466,7 +448,7 @@ ca.CAData = {
 
 /**
  * @method getLength
- * @return {int}
+ * @return {long}
  */
 getLength : function (
 )
@@ -505,11 +487,11 @@ toString : function (
 /**
  * @method fastSet
  * @param {unsigned char} arg0
- * @param {int} arg1
+ * @param {long} arg1
  */
 fastSet : function (
 char, 
-int 
+long 
 )
 {
 },
@@ -527,11 +509,11 @@ str
 /**
  * @method copy
  * @param {unsigned char} arg0
- * @param {int} arg1
+ * @param {long} arg1
  */
 copy : function (
 char, 
-int 
+long 
 )
 {
 },
@@ -2067,6 +2049,14 @@ str
 },
 
 /**
+ * @method waitForQuit
+ */
+waitForQuit : function (
+)
+{
+},
+
+/**
  * @method dumpCachedImageInfo
  */
 dumpCachedImageInfo : function (
@@ -2207,31 +2197,11 @@ isOpacityModifyRGB : function (
 },
 
 /**
- * @method getCGNode
- * @return {ca.CGNode}
- */
-getCGNode : function (
-)
-{
-    return ca.CGNode;
-},
-
-/**
  * @method updateDisplayedAlpha
  * @param {float} arg0
  */
 updateDisplayedAlpha : function (
 float 
-)
-{
-},
-
-/**
- * @method setCGNode
- * @param {ca.CGNode} arg0
- */
-setCGNode : function (
-cgnode 
 )
 {
 },
@@ -2365,6 +2335,18 @@ func
 },
 
 /**
+ * @method convertRectToWorldSpace
+ * @param {rect_object} arg0
+ * @return {rect_object}
+ */
+convertRectToWorldSpace : function (
+drect 
+)
+{
+    return ca.DRect;
+},
+
+/**
  * @method getTag
  * @return {int}
  */
@@ -2420,6 +2402,18 @@ setRotationX : function (
 int 
 )
 {
+},
+
+/**
+ * @method convertToWorldSpace
+ * @param {point_object} arg0
+ * @return {point_object}
+ */
+convertToWorldSpace : function (
+dpoint 
+)
+{
+    return ca.DPoint;
 },
 
 /**
@@ -2533,6 +2527,18 @@ str
 },
 
 /**
+ * @method convertRectToNodeSpace
+ * @param {rect_object} arg0
+ * @return {rect_object}
+ */
+convertRectToNodeSpace : function (
+drect 
+)
+{
+    return ca.DRect;
+},
+
+/**
  * @method getonExitTransitionDidStartCallback
  * @return {function}
  */
@@ -2560,6 +2566,18 @@ getFrame : function (
 )
 {
     return ca.DRect;
+},
+
+/**
+ * @method convertToNodeSize
+ * @param {size_object} arg0
+ * @return {size_object}
+ */
+convertToNodeSize : function (
+dsize 
+)
+{
+    return ca.DSize;
 },
 
 /**
@@ -2755,6 +2773,16 @@ getWorldToViewTransform : function (
 },
 
 /**
+ * @method setAnchorPoint
+ * @param {point_object} arg0
+ */
+setAnchorPoint : function (
+dpoint 
+)
+{
+},
+
+/**
  * @method onEnter
  */
 onEnter : function (
@@ -2804,6 +2832,16 @@ caview
 )
 {
     return ca.Mat4;
+},
+
+/**
+ * @method setCenterOrigin
+ * @param {point_object} arg0
+ */
+setCenterOrigin : function (
+dpoint 
+)
+{
 },
 
 /**
@@ -3171,6 +3209,16 @@ caview
 },
 
 /**
+ * @method setAnchorPointInPoints
+ * @param {point_object} arg0
+ */
+setAnchorPointInPoints : function (
+dpoint 
+)
+{
+},
+
+/**
  * @method initWithFrame
  * @param {rect_object} arg0
  * @return {bool}
@@ -3291,6 +3339,30 @@ getSuperviewToViewTransform : function (
 },
 
 /**
+ * @method convertToWorldSize
+ * @param {size_object} arg0
+ * @return {size_object}
+ */
+convertToWorldSize : function (
+dsize 
+)
+{
+    return ca.DSize;
+},
+
+/**
+ * @method convertToNodeSpace
+ * @param {point_object} arg0
+ * @return {point_object}
+ */
+convertToNodeSpace : function (
+dpoint 
+)
+{
+    return ca.DPoint;
+},
+
+/**
  * @method onExitTransitionDidStart
  */
 onExitTransitionDidStart : function (
@@ -3346,6 +3418,16 @@ cacolor4b
  */
 setFrame : function (
 drect 
+)
+{
+},
+
+/**
+ * @method setPointZ
+ * @param {float} arg0
+ */
+setPointZ : function (
+float 
 )
 {
 },
@@ -3983,15 +4065,11 @@ str
 },
 
 /**
- * @method areBeginAnimationsWithID
- * @param {String} arg0
- * @return {bool}
+ * @method removeAllAnimations
  */
-areBeginAnimationsWithID : function (
-str 
+removeAllAnimations : function (
 )
 {
-    return false;
 },
 
 /**
@@ -4052,6 +4130,18 @@ setAnimationDuration : function (
 float 
 )
 {
+},
+
+/**
+ * @method areBeginAnimationsWithID
+ * @param {String} arg0
+ * @return {bool}
+ */
+areBeginAnimationsWithID : function (
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -7343,14 +7433,6 @@ bool
 },
 
 /**
- * @method removeAllSubviews
- */
-removeAllSubviews : function (
-)
-{
-},
-
-/**
  * @method isTracking
  * @return {bool}
  */
@@ -7409,18 +7491,6 @@ bool
 },
 
 /**
- * @method getSubviewByTag
- * @param {int} arg0
- * @return {ca.CAView}
- */
-getSubviewByTag : function (
-int 
-)
-{
-    return ca.CAView;
-},
-
-/**
  * @method getZoomScale
  * @return {float}
  */
@@ -7428,16 +7498,6 @@ getZoomScale : function (
 )
 {
     return 0;
-},
-
-/**
- * @method isDecelerating
- * @return {bool}
- */
-isDecelerating : function (
-)
-{
-    return false;
 },
 
 /**
@@ -7479,16 +7539,6 @@ getHeaderRefreshView : function (
 },
 
 /**
- * @method addSubview
- * @param {ca.CAView} arg0
- */
-addSubview : function (
-caview 
-)
-{
-},
-
-/**
  * @method setShowsVerticalScrollIndicator
  * @param {bool} arg0
  */
@@ -7511,10 +7561,10 @@ bool
 },
 
 /**
- * @method init
+ * @method isBounceHorizontal
  * @return {bool}
  */
-init : function (
+isBounceHorizontal : function (
 )
 {
     return false;
@@ -7539,13 +7589,13 @@ startPullToHeaderRefreshView : function (
 },
 
 /**
- * @method getSubviews
- * @return {Array}
+ * @method isTouchEnabledAtSubviews
+ * @return {bool}
  */
-getSubviews : function (
+isTouchEnabledAtSubviews : function (
 )
 {
-    return new Array();
+    return false;
 },
 
 /**
@@ -7609,25 +7659,13 @@ getContentOffset : function (
 },
 
 /**
- * @method setViewSize
- * @param {size_object} arg0
+ * @method isDecelerating
+ * @return {bool}
  */
-setViewSize : function (
-dsize 
+isDecelerating : function (
 )
 {
-},
-
-/**
- * @method insertSubview
- * @param {ca.CAView} arg0
- * @param {int} arg1
- */
-insertSubview : function (
-caview, 
-int 
-)
-{
+    return false;
 },
 
 /**
@@ -7646,16 +7684,6 @@ func
  */
 setShowsScrollIndicators : function (
 bool 
-)
-{
-},
-
-/**
- * @method removeSubviewByTag
- * @param {int} arg0
- */
-removeSubviewByTag : function (
-int 
 )
 {
 },
@@ -7681,13 +7709,13 @@ isBounces : function (
 },
 
 /**
- * @method isTouchEnabledAtSubviews
- * @return {bool}
+ * @method setViewSize
+ * @param {size_object} arg0
  */
-isTouchEnabledAtSubviews : function (
+setViewSize : function (
+dsize 
 )
 {
-    return false;
 },
 
 /**
@@ -7718,24 +7746,6 @@ setMaximumZoomScale : function (
 float 
 )
 {
-},
-
-/**
- * @method onExitTransitionDidStart
- */
-onExitTransitionDidStart : function (
-)
-{
-},
-
-/**
- * @method isReachBoundaryDown
- * @return {bool}
- */
-isReachBoundaryDown : function (
-)
-{
-    return false;
 },
 
 /**
@@ -7791,16 +7801,6 @@ bool
 },
 
 /**
- * @method isReachBoundaryUp
- * @return {bool}
- */
-isReachBoundaryUp : function (
-)
-{
-    return false;
-},
-
-/**
  * @method onDragging
  * @param {function} arg0
  */
@@ -7808,16 +7808,6 @@ onDragging : function (
 func 
 )
 {
-},
-
-/**
- * @method isReachBoundaryLeft
- * @return {bool}
- */
-isReachBoundaryLeft : function (
-)
-{
-    return false;
 },
 
 /**
@@ -7859,26 +7849,6 @@ func
 },
 
 /**
- * @method isReachBoundaryRight
- * @return {bool}
- */
-isReachBoundaryRight : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isBounceHorizontal
- * @return {bool}
- */
-isBounceHorizontal : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setMinimumZoomScale
  * @param {float} arg0
  */
@@ -7917,29 +7887,11 @@ bool
 },
 
 /**
- * @method removeSubview
- * @param {ca.CAView} arg0
- */
-removeSubview : function (
-caview 
-)
-{
-},
-
-/**
  * @method setZoomScale
  * @param {float} arg0
  */
 setZoomScale : function (
 float 
-)
-{
-},
-
-/**
- * @method onEnterTransitionDidFinish
- */
-onEnterTransitionDidFinish : function (
 )
 {
 },
@@ -9298,20 +9250,6 @@ getScriptHandler : function (
 )
 {
     return 0;
-},
-
-/**
- * @method addObserver
- * @param {function} arg0
- * @param {ca.CAObject} arg1
- * @param {String} arg2
- */
-addObserver : function (
-func, 
-caobject, 
-str 
-)
-{
 },
 
 /**
@@ -11939,19 +11877,13 @@ isControlStateEffect : function (
 },
 
 /**
- * @method setControlStateNormal
+ * @method setBackgroundImage
+ * @param {ca.CAImage} arg0
+ * @param {bool} arg1
  */
-setControlStateNormal : function (
-)
-{
-},
-
-/**
- * @method setBackgroundView
- * @param {ca.CAView} arg0
- */
-setBackgroundView : function (
-caview 
+setBackgroundImage : function (
+caimage, 
+bool 
 )
 {
 },
@@ -11995,13 +11927,11 @@ func
 },
 
 /**
- * @method getBackgroundView
- * @return {ca.CAView}
+ * @method setControlStateNormal
  */
-getBackgroundView : function (
+setControlStateNormal : function (
 )
 {
-    return ca.CAView;
 },
 
 /**
@@ -14943,22 +14873,6 @@ str
 },
 
 /**
- * @method getFileData
- * @param {String} arg0
- * @param {char} arg1
- * @param {unsigned long} arg2
- * @return {unsigned char}
- */
-getFileData : function (
-str, 
-char, 
-long 
-)
-{
-    return 0;
-},
-
-/**
  * @method writeStringToFile
  * @param {String} arg0
  * @param {String} arg1
@@ -14970,22 +14884,6 @@ str
 )
 {
     return false;
-},
-
-/**
- * @method getFileDataFromZip
- * @param {String} arg0
- * @param {String} arg1
- * @param {unsigned long} arg2
- * @return {unsigned char}
- */
-getFileDataFromZip : function (
-str, 
-str, 
-long 
-)
-{
-    return 0;
 },
 
 /**
@@ -16280,22 +16178,6 @@ CAPickerView : function (
 ca.CADatePickerView = {
 
 /**
- * @method onEnter
- */
-onEnter : function (
-)
-{
-},
-
-/**
- * @method onExit
- */
-onExit : function (
-)
-{
-},
-
-/**
  * @method setBackgroundImage
  * @param {ca.CAImage} arg0
  * @param {bool} arg1
@@ -16330,6 +16212,14 @@ init : function (
 },
 
 /**
+ * @method onExitTransitionDidStart
+ */
+onExitTransitionDidStart : function (
+)
+{
+},
+
+/**
  * @method setDate
  * @param {int} arg0
  * @param {int} arg1
@@ -16341,6 +16231,14 @@ int,
 int, 
 int, 
 bool 
+)
+{
+},
+
+/**
+ * @method onEnterTransitionDidFinish
+ */
+onEnterTransitionDidFinish : function (
 )
 {
 },
@@ -17026,7 +16924,7 @@ getCallback : function (
 
 /**
  * @method getThreadID
- * @return {int}
+ * @return {long}
  */
 getThreadID : function (
 )
@@ -17086,10 +16984,10 @@ getRequestType : function (
 
 /**
  * @method setThreadID
- * @param {int} arg0
+ * @param {long} arg0
  */
 setThreadID : function (
-int 
+long 
 )
 {
 },
@@ -17108,7 +17006,7 @@ long
 
 /**
  * @method getRequestDataSize
- * @return {int}
+ * @return {long}
  */
 getRequestDataSize : function (
 )
@@ -17432,10 +17330,10 @@ getCookieFilename : function (
 
 /**
  * @method destroyInstance
- * @param {int} arg0
+ * @param {long} arg0
  */
 destroyInstance : function (
-int 
+long 
 )
 {
 },
@@ -17450,11 +17348,11 @@ destroyAllInstance : function (
 
 /**
  * @method getInstance
- * @param {int} arg0
+ * @param {long} arg0
  * @return {ca.CAHttpClient}
  */
 getInstance : function (
-int 
+long 
 )
 {
     return ca.CAHttpClient;
@@ -17489,11 +17387,11 @@ int
 
 /**
  * @method getLocalFileSize
- * @param {int} arg0
- * @return {int}
+ * @param {long} arg0
+ * @return {long}
  */
 getLocalFileSize : function (
-int 
+long 
 )
 {
     return 0;
@@ -17505,7 +17403,7 @@ int
  * @param {String} arg1
  * @param {String} arg2
  * @param {String} arg3
- * @return {int}
+ * @return {long}
  */
 enqueueDownload : function (
 str, 
@@ -17527,10 +17425,10 @@ clearOnSuccessDownloadAllRecord : function (
 
 /**
  * @method eraseDownload
- * @param {int} arg0
+ * @param {long} arg0
  */
 eraseDownload : function (
-int 
+long 
 )
 {
 },
@@ -17541,7 +17439,7 @@ int
  * @param {String} arg1
  * @param {String} arg2
  * @param {String} arg3
- * @return {int}
+ * @return {long}
  */
 enqueueDownloadEx : function (
 str, 
@@ -17555,11 +17453,11 @@ str
 
 /**
  * @method isDownloading
- * @param {int} arg0
+ * @param {long} arg0
  * @return {bool}
  */
 isDownloading : function (
-int 
+long 
 )
 {
     return false;
@@ -17567,21 +17465,21 @@ int
 
 /**
  * @method clearOnSuccessDownloadRecord
- * @param {int} arg0
+ * @param {long} arg0
  */
 clearOnSuccessDownloadRecord : function (
-int 
+long 
 )
 {
 },
 
 /**
  * @method getDownloadUrl
- * @param {int} arg0
+ * @param {long} arg0
  * @return {char}
  */
 getDownloadUrl : function (
-int 
+long 
 )
 {
     return 0;
@@ -17589,24 +17487,12 @@ int
 
 /**
  * @method resumeDownload
- * @param {int} arg0
+ * @param {long} arg0
  */
 resumeDownload : function (
-int 
+long 
 )
 {
-},
-
-/**
- * @method getDownloadIdsFromTextTag
- * @param {String} arg0
- * @return {Array}
- */
-getDownloadIdsFromTextTag : function (
-str 
-)
-{
-    return new Array();
 },
 
 /**
@@ -17621,11 +17507,11 @@ getDownloadManagerDelegate : function (
 
 /**
  * @method getTotalFileSize
- * @param {int} arg0
- * @return {int}
+ * @param {long} arg0
+ * @return {long}
  */
 getTotalFileSize : function (
-int 
+long 
 )
 {
     return 0;
@@ -17633,11 +17519,11 @@ int
 
 /**
  * @method getFilePath
- * @param {int} arg0
+ * @param {long} arg0
  * @return {char}
  */
 getFilePath : function (
-int 
+long 
 )
 {
     return 0;
@@ -17645,11 +17531,11 @@ int
 
 /**
  * @method getDownloadHeader
- * @param {int} arg0
+ * @param {long} arg0
  * @return {char}
  */
 getDownloadHeader : function (
-int 
+long 
 )
 {
     return 0;
@@ -17657,21 +17543,21 @@ int
 
 /**
  * @method pauseDownload
- * @param {int} arg0
+ * @param {long} arg0
  */
 pauseDownload : function (
-int 
+long 
 )
 {
 },
 
 /**
  * @method isFinished
- * @param {int} arg0
+ * @param {long} arg0
  * @return {bool}
  */
 isFinished : function (
-int 
+long 
 )
 {
     return false;
@@ -17689,11 +17575,11 @@ getDownloadAllTextTags : function (
 
 /**
  * @method getStartTime
- * @param {int} arg0
+ * @param {long} arg0
  * @return {char}
  */
 getStartTime : function (
-int 
+long 
 )
 {
     return 0;
@@ -18625,331 +18511,9 @@ sourcetype
 };
 
 /**
- * @class CGNode
+ * @class CGSprite
  */
-ca.CGNode = {
-
-/**
- * @method addChild
- * @param {ca.CGNode} arg0
- */
-addChild : function (
-cgnode 
-)
-{
-},
-
-/**
- * @method getShaderProgram
- * @return {ca.GLProgram}
- */
-getShaderProgram : function (
-)
-{
-    return ca.GLProgram;
-},
-
-/**
- * @method getChildren
- * @return {Array}
- */
-getChildren : function (
-)
-{
-    return new Array();
-},
-
-/**
- * @method setViewToParentTransform
- * @param {ca.Mat4} arg0
- */
-setViewToParentTransform : function (
-mat4 
-)
-{
-},
-
-/**
- * @method setOnExitCallback
- * @param {function} arg0
- */
-setOnExitCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method isOpacityModifyRGB
- * @return {bool}
- */
-isOpacityModifyRGB : function (
-)
-{
-    return false;
-},
-
-/**
- * @method updateDisplayedAlpha
- * @param {float} arg0
- */
-updateDisplayedAlpha : function (
-float 
-)
-{
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getCameraMask
- * @return {unsigned short}
- */
-getCameraMask : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setAlpha
- * @param {float} arg0
- */
-setAlpha : function (
-float 
-)
-{
-},
-
-/**
- * @method getWorldToViewAffineTransform
- * @return {ca.AffineTransform}
- */
-getWorldToViewAffineTransform : function (
-)
-{
-    return ca.AffineTransform;
-},
-
-/**
- * @method setZOrder
- * @param {int} arg0
- */
-setZOrder : function (
-int 
-)
-{
-},
-
-/**
- * @method setScaleZ
- * @param {float} arg0
- */
-setScaleZ : function (
-float 
-)
-{
-},
-
-/**
- * @method setScaleY
- * @param {float} arg0
- */
-setScaleY : function (
-float 
-)
-{
-},
-
-/**
- * @method setScaleX
- * @param {float} arg0
- */
-setScaleX : function (
-float 
-)
-{
-},
-
-/**
- * @method processParentFlags
- * @param {ca.Mat4} arg0
- * @param {unsigned int} arg1
- * @return {unsigned int}
- */
-processParentFlags : function (
-mat4, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method visitEve
- */
-visitEve : function (
-)
-{
-},
-
-/**
- * @method setonEnterTransitionDidFinishCallback
- * @param {function} arg0
- */
-setonEnterTransitionDidFinishCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method convertRectToWorldSpace
- * @param {rect_object} arg0
- * @return {rect_object}
- */
-convertRectToWorldSpace : function (
-drect 
-)
-{
-    return ca.DRect;
-},
-
-/**
- * @method getonEnterTransitionDidFinishCallback
- * @return {function}
- */
-getonEnterTransitionDidFinishCallback : function (
-)
-{
-    return std::function<void ()>;
-},
-
-/**
- * @method getNodeToWorldAffineTransform
- * @return {ca.AffineTransform}
- */
-getNodeToWorldAffineTransform : function (
-)
-{
-    return ca.AffineTransform;
-},
-
-/**
- * @method getNodeToWorldTransform
- * @return {ca.Mat4}
- */
-getNodeToWorldTransform : function (
-)
-{
-    return ca.Mat4;
-},
-
-/**
- * @method onExit
- */
-onExit : function (
-)
-{
-},
-
-/**
- * @method getPosition3D
- * @return {point_object}
- */
-getPosition3D : function (
-)
-{
-    return ca.DPoint3D;
-},
-
-/**
- * @method removeChild
- * @param {ca.CGNode} arg0
- */
-removeChild : function (
-cgnode 
-)
-{
-},
-
-/**
- * @method convertToWorldSpace
- * @param {point_object} arg0
- * @return {point_object}
- */
-convertToWorldSpace : function (
-dpoint 
-)
-{
-    return ca.DPoint;
-},
-
-/**
- * @method getAlpha
- * @return {float}
- */
-getAlpha : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setSkewX
- * @param {float} arg0
- */
-setSkewX : function (
-float 
-)
-{
-},
-
-/**
- * @method setSkewY
- * @param {float} arg0
- */
-setSkewY : function (
-float 
-)
-{
-},
-
-/**
- * @method setOnEnterCallback
- * @param {function} arg0
- */
-setOnEnterCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method onEnterTransitionDidFinish
- */
-onEnterTransitionDidFinish : function (
-)
-{
-},
-
-/**
- * @method getWorldToViewTransform
- * @return {ca.Mat4}
- */
-getWorldToViewTransform : function (
-)
-{
-    return ca.Mat4;
-},
+ca.CGSprite = {
 
 /**
  * @method stopActionsByFlags
@@ -18972,383 +18536,15 @@ dpoint
 },
 
 /**
- * @method removeChildByTextTag
- * @param {String} arg0
- */
-removeChildByTextTag : function (
-str 
-)
-{
-},
-
-/**
- * @method setonExitTransitionDidStartCallback
- * @param {function} arg0
- */
-setonExitTransitionDidStartCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method convertTouchToNodeSpace
- * @param {ca.CATouch} arg0
- * @return {point_object}
- */
-convertTouchToNodeSpace : function (
-catouch 
-)
-{
-    return ca.DPoint;
-},
-
-/**
- * @method getRotationZ
- * @return {float}
- */
-getRotationZ : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method removeAllChildren
- */
-removeAllChildren : function (
-)
-{
-},
-
-/**
- * @method getRotationX
- * @return {float}
- */
-getRotationX : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getRotationY
- * @return {float}
- */
-getRotationY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method convertRectToNodeSpace
- * @param {rect_object} arg0
- * @return {rect_object}
- */
-convertRectToNodeSpace : function (
-drect 
-)
-{
-    return ca.DRect;
-},
-
-/**
- * @method getCAView
- * @return {ca.CAView}
- */
-getCAView : function (
-)
-{
-    return ca.CAView;
-},
-
-/**
- * @method description
- * @return {char}
- */
-description : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getNodeToParentAffineTransform
-* @param {ca.CGNode} cgnode
-* @return {ca.AffineTransform|ca.AffineTransform}
-*/
-getNodeToParentAffineTransform : function(
-cgnode 
-)
-{
-    return ca.AffineTransform;
-},
-
-/**
- * @method getonExitTransitionDidStartCallback
- * @return {function}
- */
-getonExitTransitionDidStartCallback : function (
-)
-{
-    return std::function<void ()>;
-},
-
-/**
- * @method setParent
- * @param {ca.CGNode} arg0
- */
-setParent : function (
-cgnode 
-)
-{
-},
-
-/**
- * @method convertToNodeSize
- * @param {size_object} arg0
- * @return {size_object}
- */
-convertToNodeSize : function (
-dsize 
-)
-{
-    return ca.DSize;
-},
-
-/**
- * @method getRotation3D
- * @return {point_object}
- */
-getRotation3D : function (
-)
-{
-    return ca.DPoint3D;
-},
-
-/**
- * @method getNodeToParentTransform
-* @param {ca.CGNode} cgnode
-* @return {ca.Mat4|ca.Mat4}
-*/
-getNodeToParentTransform : function(
-cgnode 
-)
-{
-    return ca.Mat4;
-},
-
-/**
- * @method getOnEnterCallback
- * @return {function}
- */
-getOnEnterCallback : function (
-)
-{
-    return std::function<void ()>;
-},
-
-/**
- * @method setCameraMask
- * @param {unsigned short} arg0
- * @param {bool} arg1
- */
-setCameraMask : function (
-short, 
-bool 
-)
-{
-},
-
-/**
- * @method setPosition
- * @param {point_object} arg0
- */
-setPosition : function (
-dpoint 
-)
-{
-},
-
-/**
- * @method convertToWorldSize
- * @param {size_object} arg0
- * @return {size_object}
- */
-convertToWorldSize : function (
-dsize 
-)
-{
-    return ca.DSize;
-},
-
-/**
- * @method stopActionByTag
+ * @method getActionByTag
  * @param {int} arg0
+ * @return {ca.Action}
  */
-stopActionByTag : function (
+getActionByTag : function (
 int 
 )
 {
-},
-
-/**
- * @method reorderChild
- * @param {ca.CGNode} arg0
- * @param {int} arg1
- */
-reorderChild : function (
-cgnode, 
-int 
-)
-{
-},
-
-/**
- * @method setGLProgramState
- * @param {ca.GLProgramState} arg0
- */
-setGLProgramState : function (
-glprogramstate 
-)
-{
-},
-
-/**
- * @method setPositionZ
- * @param {float} arg0
- */
-setPositionZ : function (
-float 
-)
-{
-},
-
-/**
- * @method setPositionY
- * @param {float} arg0
- */
-setPositionY : function (
-float 
-)
-{
-},
-
-/**
- * @method setPositionX
- * @param {float} arg0
- */
-setPositionX : function (
-float 
-)
-{
-},
-
-/**
- * @method getAnchorPoint
- * @return {point_object}
- */
-getAnchorPoint : function (
-)
-{
-    return ca.DPoint;
-},
-
-/**
- * @method getNumberOfRunningActions
- * @return {unsigned long}
- */
-getNumberOfRunningActions : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method updateTransform
- */
-updateTransform : function (
-)
-{
-},
-
-/**
- * @method isVisible
- * @return {bool}
- */
-isVisible : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getChildrenCount
- * @return {unsigned int}
- */
-getChildrenCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setAnchorPoint
- * @param {point_object} arg0
- */
-setAnchorPoint : function (
-dpoint 
-)
-{
-},
-
-/**
- * @method onEnter
- */
-onEnter : function (
-)
-{
-},
-
-/**
- * @method getRotationQuat
- * @return {ca.Quaternion}
- */
-getRotationQuat : function (
-)
-{
-    return ca.Quaternion;
-},
-
-/**
- * @method setShaderProgram
- * @param {ca.GLProgram} arg0
- */
-setShaderProgram : function (
-glprogram 
-)
-{
-},
-
-/**
- * @method getZOrder
- * @return {int}
- */
-getZOrder : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getAnchorPointInPoints
- * @return {point_object}
- */
-getAnchorPointInPoints : function (
-)
-{
-    return ca.DPoint;
+    return ca.Action;
 },
 
 /**
@@ -19364,395 +18560,39 @@ action
 },
 
 /**
- * @method transform
- * @param {ca.Mat4} arg0
- * @return {ca.Mat4}
- */
-transform : function (
-mat4 
-)
-{
-    return ca.Mat4;
-},
-
-/**
- * @method getGLProgramState
- * @return {ca.GLProgramState}
- */
-getGLProgramState : function (
-)
-{
-    return ca.GLProgramState;
-},
-
-/**
- * @method stopAllActions
- */
-stopAllActions : function (
-)
-{
-},
-
-/**
- * @method getSkewX
- * @return {float}
- */
-getSkewX : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getSkewY
- * @return {float}
- */
-getSkewY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getDisplayedColor
- * @return {color4b_object}
- */
-getDisplayedColor : function (
-)
-{
-    return ca.CAColor4B;
-},
-
-/**
- * @method setRotationZ
- * @param {float} arg0
- */
-setRotationZ : function (
-float 
-)
-{
-},
-
-/**
- * @method getActionByTag
- * @param {int} arg0
- * @return {ca.Action}
- */
-getActionByTag : function (
-int 
-)
-{
-    return ca.Action;
-},
-
-/**
- * @method setRotationX
- * @param {float} arg0
- */
-setRotationX : function (
-float 
-)
-{
-},
-
-/**
- * @method setRotationY
- * @param {float} arg0
- */
-setRotationY : function (
-float 
-)
-{
-},
-
-/**
- * @method setDisplayRange
- * @param {bool} arg0
- */
-setDisplayRange : function (
+ * @method initWithImage
+* @param {ca.CAImage|ca.CAImage|ca.CAImage} caimage
+* @param {rect_object|rect_object} drect
+* @param {bool} bool
+* @return {bool|bool|bool}
+*/
+initWithImage : function(
+caimage,
+drect,
 bool 
 )
 {
+    return false;
 },
 
 /**
- * @method setAdditionalTransform
-* @param {ca.AffineTransform|ca.Mat4} affinetransform
-*/
-setAdditionalTransform : function(
-mat4 
-)
-{
-},
-
-/**
- * @method getParentToNodeAffineTransform
- * @return {ca.AffineTransform}
+ * @method getNumberOfRunningActions
+ * @return {unsigned long}
  */
-getParentToNodeAffineTransform : function (
-)
-{
-    return ca.AffineTransform;
-},
-
-/**
- * @method getOrderOfArrival
- * @return {unsigned int}
- */
-getOrderOfArrival : function (
+getNumberOfRunningActions : function (
 )
 {
     return 0;
 },
 
 /**
- * @method boundingBox
- * @return {rect_object}
- */
-boundingBox : function (
-)
-{
-    return ca.DRect;
-},
-
-/**
- * @method setContentSize
- * @param {size_object} arg0
- */
-setContentSize : function (
-dsize 
-)
-{
-},
-
-/**
- * @method copy
- * @return {ca.CGNode}
- */
-copy : function (
-)
-{
-    return ca.CGNode;
-},
-
-/**
- * @method getPosition
+ * @method getOffsetPosition
  * @return {point_object}
  */
-getPosition : function (
+getOffsetPosition : function (
 )
 {
     return ca.DPoint;
-},
-
-/**
- * @method setColor
- * @param {color4b_object} arg0
- */
-setColor : function (
-cacolor4b 
-)
-{
-},
-
-/**
- * @method isRunning
- * @return {bool}
- */
-isRunning : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getParent
- * @return {ca.CGNode}
- */
-getParent : function (
-)
-{
-    return ca.CGNode;
-},
-
-/**
- * @method getPositionZ
- * @return {float}
- */
-getPositionZ : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getPositionY
- * @return {float}
- */
-getPositionY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getPositionX
- * @return {float}
- */
-getPositionX : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method removeChildByTag
- * @param {int} arg0
- */
-removeChildByTag : function (
-int 
-)
-{
-},
-
-/**
- * @method getQuad
- * @return {ca._ccV3F_C4B_T2F_Quad}
- */
-getQuad : function (
-)
-{
-    return ca._ccV3F_C4B_T2F_Quad;
-},
-
-/**
- * @method visit
- * @param {ca.Renderer} arg0
- * @param {ca.Mat4} arg1
- * @param {unsigned int} arg2
- */
-visit : function (
-renderer, 
-mat4, 
-int 
-)
-{
-},
-
-/**
- * @method updateDisplayedColor
- * @param {color4b_object} arg0
- */
-updateDisplayedColor : function (
-cacolor4b 
-)
-{
-},
-
-/**
- * @method setVisible
- * @param {bool} arg0
- */
-setVisible : function (
-bool 
-)
-{
-},
-
-/**
- * @method getParentToNodeTransform
- * @return {ca.Mat4}
- */
-getParentToNodeTransform : function (
-)
-{
-    return ca.Mat4;
-},
-
-/**
- * @method getDisplayedAlpha
- * @return {float}
- */
-getDisplayedAlpha : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method _setZOrder
- * @param {int} arg0
- */
-_setZOrder : function (
-int 
-)
-{
-},
-
-/**
- * @method setScale
-* @param {float|float} float
-* @param {float} float
-* @param {float} float
-*/
-setScale : function(
-float,
-float,
-float 
-)
-{
-},
-
-/**
- * @method isDisplayRange
- * @return {bool}
- */
-isDisplayRange : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setRotation3D
- * @param {point_object} arg0
- */
-setRotation3D : function (
-dpoint3d 
-)
-{
-},
-
-/**
- * @method getOnExitCallback
- * @return {function}
- */
-getOnExitCallback : function (
-)
-{
-    return std::function<void ()>;
-},
-
-/**
- * @method getChildByTag
- * @param {int} arg0
- * @return {ca.CGNode}
- */
-getChildByTag : function (
-int 
-)
-{
-    return ca.CGNode;
-},
-
-/**
- * @method setOrderOfArrival
- * @param {unsigned int} arg0
- */
-setOrderOfArrival : function (
-int 
-)
-{
 },
 
 /**
@@ -19766,55 +18606,47 @@ getScaleZ : function (
 },
 
 /**
- * @method getScaleY
- * @return {float}
+ * @method getRotationQuat
+ * @return {ca.Quaternion}
  */
-getScaleY : function (
+getRotationQuat : function (
 )
 {
-    return 0;
+    return ca.Quaternion;
 },
 
 /**
- * @method getScaleX
- * @return {float}
- */
-getScaleX : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method isVisitableByVisitingCamera
+ * @method initWithSpriteFrameName
+ * @param {String} arg0
  * @return {bool}
  */
-isVisitableByVisitingCamera : function (
+initWithSpriteFrameName : function (
+str 
 )
 {
     return false;
 },
 
 /**
- * @method setOpacityModifyRGB
- * @param {bool} arg0
+ * @method getRotation3D
+ * @return {point_object}
  */
-setOpacityModifyRGB : function (
-bool 
+getRotation3D : function (
 )
 {
+    return ca.DPoint3D;
 },
 
 /**
- * @method insertChild
- * @param {ca.CGNode} arg0
- * @param {int} arg1
+ * @method isFrameDisplayed
+ * @param {ca.CGSpriteFrame} arg0
+ * @return {bool}
  */
-insertChild : function (
-cgnode, 
-int 
+isFrameDisplayed : function (
+cgspriteframe 
 )
 {
+    return false;
 },
 
 /**
@@ -19838,192 +18670,22 @@ int
 },
 
 /**
- * @method setCAView
- * @param {ca.CAView} arg0
+ * @method stopAllActions
  */
-setCAView : function (
-caview 
+stopAllActions : function (
 )
 {
 },
 
 /**
- * @method draw
- * @param {ca.Renderer} arg0
- * @param {ca.Mat4} arg1
- * @param {unsigned int} arg2
+ * @method setContentSize
+ * @param {size_object} arg0
  */
-draw : function (
-renderer, 
-mat4, 
-int 
+setContentSize : function (
+dsize 
 )
 {
 },
-
-/**
- * @method getBlendFunc
- * @return {ca.BlendFunc}
- */
-getBlendFunc : function (
-)
-{
-    return ca.BlendFunc;
-},
-
-/**
- * @method getChildByTextTag
- * @param {String} arg0
- * @return {ca.CGNode}
- */
-getChildByTextTag : function (
-str 
-)
-{
-    return ca.CGNode;
-},
-
-/**
- * @method removeFromParent
- */
-removeFromParent : function (
-)
-{
-},
-
-/**
- * @method setPosition3D
- * @param {point_object} arg0
- */
-setPosition3D : function (
-dpoint3d 
-)
-{
-},
-
-/**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
- * @method sortAllChildren
- */
-sortAllChildren : function (
-)
-{
-},
-
-/**
- * @method convertToNodeSpace
- * @param {point_object} arg0
- * @return {point_object}
- */
-convertToNodeSpace : function (
-dpoint 
-)
-{
-    return ca.DPoint;
-},
-
-/**
- * @method onExitTransitionDidStart
- */
-onExitTransitionDidStart : function (
-)
-{
-},
-
-/**
- * @method getScale
- * @return {float}
- */
-getScale : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getNormalizedPosition
- * @return {point_object}
- */
-getNormalizedPosition : function (
-)
-{
-    return ca.DPoint;
-},
-
-/**
- * @method setBlendFunc
- * @param {ca.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
-},
-
-/**
- * @method getColor
- * @return {color4b_object}
- */
-getColor : function (
-)
-{
-    return ca.CAColor4B;
-},
-
-/**
- * @method setRotationQuat
- * @param {ca.Quaternion} arg0
- */
-setRotationQuat : function (
-quaternion 
-)
-{
-},
-
-/**
- * @method stopAction
- * @param {ca.Action} arg0
- */
-stopAction : function (
-action 
-)
-{
-},
-
-/**
- * @method create
- * @return {ca.CGNode}
- */
-create : function (
-)
-{
-    return ca.CGNode;
-},
-
-/**
- * @method CGNode
- * @constructor
- */
-CGNode : function (
-)
-{
-},
-
-};
-
-/**
- * @class CGSprite
- */
-ca.CGSprite = {
 
 /**
  * @method setSpriteFrame
@@ -20036,111 +18698,11 @@ cgspriteframe
 },
 
 /**
- * @method initWithImage
-* @param {ca.CAImage|ca.CAImage|ca.CAImage} caimage
-* @param {rect_object|rect_object} drect
-* @param {bool} bool
-* @return {bool|bool|bool}
-*/
-initWithImage : function(
-caimage,
-drect,
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method getBatchNode
- * @return {ca.CGSpriteBatchNode}
+ * @method setScaleZ
+ * @param {float} arg0
  */
-getBatchNode : function (
-)
-{
-    return ca.CGSpriteBatchNode;
-},
-
-/**
- * @method getOffsetPosition
- * @return {point_object}
- */
-getOffsetPosition : function (
-)
-{
-    return ca.DPoint;
-},
-
-/**
- * @method isFlipX
- * @return {bool}
- */
-isFlipX : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isFlipY
- * @return {bool}
- */
-isFlipY : function (
-)
-{
-    return false;
-},
-
-/**
- * @method initWithSpriteFrameName
- * @param {String} arg0
- * @return {bool}
- */
-initWithSpriteFrameName : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method isFrameDisplayed
- * @param {ca.CGSpriteFrame} arg0
- * @return {bool}
- */
-isFrameDisplayed : function (
-cgspriteframe 
-)
-{
-    return false;
-},
-
-/**
- * @method getImageRect
- * @return {rect_object}
- */
-getImageRect : function (
-)
-{
-    return ca.DRect;
-},
-
-/**
- * @method getAtlasIndex
- * @return {unsigned int}
- */
-getAtlasIndex : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setBatchNode
- * @param {ca.CGSpriteBatchNode} arg0
- */
-setBatchNode : function (
-cgspritebatchnode 
+setScaleZ : function (
+float 
 )
 {
 },
@@ -20158,31 +18720,11 @@ int
 },
 
 /**
- * @method getImageAtlas
- * @return {ca.CAImageAtlas}
+ * @method setPosition3D
+ * @param {point_object} arg0
  */
-getImageAtlas : function (
-)
-{
-    return ca.CAImageAtlas;
-},
-
-/**
- * @method setFlipY
- * @param {bool} arg0
- */
-setFlipY : function (
-bool 
-)
-{
-},
-
-/**
- * @method setFlipX
- * @param {bool} arg0
- */
-setFlipX : function (
-bool 
+setPosition3D : function (
+dpoint3d 
 )
 {
 },
@@ -20198,67 +18740,77 @@ getSpriteFrame : function (
 },
 
 /**
- * @method isDirty
- * @return {bool}
+ * @method setPositionZ
+ * @param {float} arg0
  */
-isDirty : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setAtlasIndex
- * @param {int} arg0
- */
-setAtlasIndex : function (
-int 
+setPositionZ : function (
+float 
 )
 {
 },
 
 /**
- * @method setDirty
- * @param {bool} arg0
+ * @method boundingBox
+ * @return {rect_object}
  */
-setDirty : function (
-bool 
+boundingBox : function (
 )
 {
+    return ca.DRect;
 },
 
 /**
  * @method setImageRect
-* @param {rect_object|rect_object} drect
-* @param {bool} bool
-* @param {size_object} dsize
-*/
-setImageRect : function(
-drect,
-bool,
+ * @param {rect_object} arg0
+ * @param {bool} arg1
+ * @param {size_object} arg2
+ */
+setImageRect : function (
+drect, 
+bool, 
 dsize 
 )
 {
 },
 
 /**
- * @method isTextureRectRotated
- * @return {bool}
+ * @method setPosition
+ * @param {point_object} arg0
  */
-isTextureRectRotated : function (
+setPosition : function (
+dpoint 
 )
 {
-    return false;
 },
 
 /**
- * @method setImageAtlas
- * @param {ca.CAImageAtlas} arg0
+ * @method stopActionByTag
+ * @param {int} arg0
  */
-setImageAtlas : function (
-caimageatlas 
+stopActionByTag : function (
+int 
 )
 {
+},
+
+/**
+ * @method getPosition
+ * @return {point_object}
+ */
+getPosition : function (
+)
+{
+    return ca.DPoint;
+},
+
+/**
+ * @method getNormalizedPosition
+ * @return {point_object}
+ */
+getNormalizedPosition : function (
+)
+{
+    return ca.DPoint;
 },
 
 /**
@@ -20276,6 +18828,26 @@ drect
 },
 
 /**
+ * @method setRotation3D
+ * @param {point_object} arg0
+ */
+setRotation3D : function (
+dpoint3d 
+)
+{
+},
+
+/**
+ * @method setPositionY
+ * @param {float} arg0
+ */
+setPositionY : function (
+float 
+)
+{
+},
+
+/**
  * @method setImage
  * @param {ca.CAImage} arg0
  */
@@ -20283,6 +18855,56 @@ setImage : function (
 caimage 
 )
 {
+},
+
+/**
+ * @method getPositionZ
+ * @return {float}
+ */
+getPositionZ : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPositionY
+ * @return {float}
+ */
+getPositionY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setPositionX
+ * @param {float} arg0
+ */
+setPositionX : function (
+float 
+)
+{
+},
+
+/**
+ * @method getPosition3D
+ * @return {point_object}
+ */
+getPosition3D : function (
+)
+{
+    return ca.DPoint3D;
+},
+
+/**
+ * @method getPositionX
+ * @return {float}
+ */
+getPositionX : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -20298,21 +18920,11 @@ cgspriteframe
 },
 
 /**
- * @method getQuad
- * @return {ca._ccV3F_C4B_T2F_Quad}
+ * @method setRotationQuat
+ * @param {ca.Quaternion} arg0
  */
-getQuad : function (
-)
-{
-    return ca._ccV3F_C4B_T2F_Quad;
-},
-
-/**
- * @method setVertexRect
- * @param {rect_object} arg0
- */
-setVertexRect : function (
-drect 
+setRotationQuat : function (
+quaternion 
 )
 {
 },
@@ -20325,6 +18937,16 @@ getImage : function (
 )
 {
     return ca.CAImage;
+},
+
+/**
+ * @method stopAction
+ * @param {ca.Action} arg0
+ */
+stopAction : function (
+action 
+)
+{
 },
 
 /**
@@ -20753,248 +19375,6 @@ CGSpriteFrameCache : function (
 };
 
 /**
- * @class CGSpriteBatchNode
- */
-ca.CGSpriteBatchNode = {
-
-/**
- * @method setImageAtlas
- * @param {ca.CAImageAtlas} arg0
- */
-setImageAtlas : function (
-caimageatlas 
-)
-{
-},
-
-/**
- * @method reorderBatch
- * @param {bool} arg0
- */
-reorderBatch : function (
-bool 
-)
-{
-},
-
-/**
- * @method initWithFile
- * @param {String} arg0
- * @param {unsigned int} arg1
- * @return {bool}
- */
-initWithFile : function (
-str, 
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method getImageAtlas
- * @return {ca.CAImageAtlas}
- */
-getImageAtlas : function (
-)
-{
-    return ca.CAImageAtlas;
-},
-
-/**
- * @method lowestAtlasIndexInChild
- * @param {ca.CGSprite} arg0
- * @return {int}
- */
-lowestAtlasIndexInChild : function (
-cgsprite 
-)
-{
-    return 0;
-},
-
-/**
- * @method appendChild
- * @param {ca.CGSprite} arg0
- */
-appendChild : function (
-cgsprite 
-)
-{
-},
-
-/**
- * @method atlasIndexForChild
- * @param {ca.CGSprite} arg0
- * @param {int} arg1
- * @return {int}
- */
-atlasIndexForChild : function (
-cgsprite, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method increaseAtlasCapacity
- */
-increaseAtlasCapacity : function (
-)
-{
-},
-
-/**
- * @method rebuildIndexInOrder
- * @param {ca.CGSprite} arg0
- * @param {int} arg1
- * @return {int}
- */
-rebuildIndexInOrder : function (
-cgsprite, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithImage
- * @param {ca.CAImage} arg0
- * @param {unsigned int} arg1
- * @return {bool}
- */
-initWithImage : function (
-caimage, 
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method getDescendants
- * @return {Array}
- */
-getDescendants : function (
-)
-{
-    return new Array();
-},
-
-/**
- * @method setImage
- * @param {ca.CAImage} arg0
- */
-setImage : function (
-caimage 
-)
-{
-},
-
-/**
- * @method getBlendFunc
- * @return {ca.BlendFunc}
- */
-getBlendFunc : function (
-)
-{
-    return ca.BlendFunc;
-},
-
-/**
- * @method highestAtlasIndexInChild
- * @param {ca.CGSprite} arg0
- * @return {int}
- */
-highestAtlasIndexInChild : function (
-cgsprite 
-)
-{
-    return 0;
-},
-
-/**
- * @method removeChildAtIndex
- * @param {unsigned int} arg0
- */
-removeChildAtIndex : function (
-int 
-)
-{
-},
-
-/**
- * @method getImage
- * @return {ca.CAImage}
- */
-getImage : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method removeSpriteFromAtlas
- * @param {ca.CGSprite} arg0
- */
-removeSpriteFromAtlas : function (
-cgsprite 
-)
-{
-},
-
-/**
- * @method setBlendFunc
- * @param {ca.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
-},
-
-/**
- * @method create
-* @param {String|String} str
-* @param {unsigned int} int
-* @return {ca.CGSpriteBatchNode|ca.CGSpriteBatchNode}
-*/
-create : function(
-str,
-int 
-)
-{
-    return ca.CGSpriteBatchNode;
-},
-
-/**
- * @method createWithImage
-* @param {ca.CAImage|ca.CAImage} caimage
-* @param {unsigned int} int
-* @return {ca.CGSpriteBatchNode|ca.CGSpriteBatchNode}
-*/
-createWithImage : function(
-caimage,
-int 
-)
-{
-    return ca.CGSpriteBatchNode;
-},
-
-/**
- * @method CGSpriteBatchNode
- * @constructor
- */
-CGSpriteBatchNode : function (
-)
-{
-},
-
-};
-
-/**
  * @class CGProgressTimer
  */
 ca.CGProgressTimer = {
@@ -21289,10 +19669,10 @@ ca.Action = {
 
 /**
  * @method startWithTarget
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  */
 startWithTarget : function (
-cgnode 
+cgsprite 
 )
 {
 },
@@ -21309,10 +19689,10 @@ description : function (
 
 /**
  * @method setOriginalTarget
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  */
 setOriginalTarget : function (
-cgnode 
+cgsprite 
 )
 {
 },
@@ -21329,12 +19709,12 @@ clone : function (
 
 /**
  * @method getOriginalTarget
- * @return {ca.CGNode}
+ * @return {ca.CGSprite}
  */
 getOriginalTarget : function (
 )
 {
-    return ca.CGNode;
+    return ca.CGSprite;
 },
 
 /**
@@ -21357,12 +19737,12 @@ float
 
 /**
  * @method getTarget
- * @return {ca.CGNode}
+ * @return {ca.CGSprite}
  */
 getTarget : function (
 )
 {
-    return ca.CGNode;
+    return ca.CGSprite;
 },
 
 /**
@@ -21417,10 +19797,10 @@ getTag : function (
 
 /**
  * @method setTarget
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  */
 setTarget : function (
-cgnode 
+cgsprite 
 )
 {
 },
@@ -22914,22 +21294,22 @@ ca.TargetedAction = {
 
 /**
  * @method getForcedTarget
-* @return {ca.CGNode|ca.CGNode}
+* @return {ca.CGSprite|ca.CGSprite}
 */
 getForcedTarget : function(
 )
 {
-    return ca.CGNode;
+    return ca.CGSprite;
 },
 
 /**
  * @method initWithTarget
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  * @param {ca.FiniteTimeAction} arg1
  * @return {bool}
  */
 initWithTarget : function (
-cgnode, 
+cgsprite, 
 finitetimeaction 
 )
 {
@@ -22938,22 +21318,22 @@ finitetimeaction
 
 /**
  * @method setForcedTarget
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  */
 setForcedTarget : function (
-cgnode 
+cgsprite 
 )
 {
 },
 
 /**
  * @method create
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  * @param {ca.FiniteTimeAction} arg1
  * @return {ca.TargetedAction}
  */
 create : function (
-cgnode, 
+cgsprite, 
 finitetimeaction 
 )
 {
@@ -23727,12 +22107,12 @@ ca.ActionManager = {
 /**
  * @method getActionByTag
  * @param {int} arg0
- * @param {ca.CGNode} arg1
+ * @param {ca.CGSprite} arg1
  * @return {ca.Action}
  */
 getActionByTag : function (
 int, 
-cgnode 
+cgsprite 
 )
 {
     return ca.Action;
@@ -23741,11 +22121,11 @@ cgnode
 /**
  * @method removeActionByTag
  * @param {int} arg0
- * @param {ca.CGNode} arg1
+ * @param {ca.CGSprite} arg1
  */
 removeActionByTag : function (
 int, 
-cgnode 
+cgsprite 
 )
 {
 },
@@ -23753,11 +22133,11 @@ cgnode
 /**
  * @method removeActionsByFlags
  * @param {unsigned int} arg0
- * @param {ca.CGNode} arg1
+ * @param {ca.CGSprite} arg1
  */
 removeActionsByFlags : function (
 int, 
-cgnode 
+cgsprite 
 )
 {
 },
@@ -23773,12 +22153,12 @@ removeAllActions : function (
 /**
  * @method addAction
  * @param {ca.Action} arg0
- * @param {ca.CGNode} arg1
+ * @param {ca.CGSprite} arg1
  * @param {bool} arg2
  */
 addAction : function (
 action, 
-cgnode, 
+cgsprite, 
 bool 
 )
 {
@@ -23786,10 +22166,10 @@ bool
 
 /**
  * @method resumeTarget
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  */
 resumeTarget : function (
-cgnode 
+cgsprite 
 )
 {
 },
@@ -23806,21 +22186,21 @@ float
 
 /**
  * @method pauseTarget
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  */
 pauseTarget : function (
-cgnode 
+cgsprite 
 )
 {
 },
 
 /**
  * @method getNumberOfRunningActionsInTarget
- * @param {ca.CGNode} arg0
- * @return {int}
+ * @param {ca.CGSprite} arg0
+ * @return {long}
  */
 getNumberOfRunningActionsInTarget : function (
-cgnode 
+cgsprite 
 )
 {
     return 0;
@@ -23828,10 +22208,10 @@ cgnode
 
 /**
  * @method removeAllActionsFromTarget
- * @param {ca.CGNode} arg0
+ * @param {ca.CGSprite} arg0
  */
 removeAllActionsFromTarget : function (
-cgnode 
+cgsprite 
 )
 {
 },
@@ -23859,11 +22239,11 @@ action
 /**
  * @method removeAllActionsByTag
  * @param {int} arg0
- * @param {ca.CGNode} arg1
+ * @param {ca.CGSprite} arg1
  */
 removeAllActionsByTag : function (
 int, 
-cgnode 
+cgsprite 
 )
 {
 },

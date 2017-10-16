@@ -34,7 +34,7 @@ ActionEase::~ActionEase(void)
     CC_SAFE_RELEASE(_inner);
 }
 
-void ActionEase::startWithTarget(CGNode *target)
+void ActionEase::startWithTarget(CGSprite *target)
 {
     ActionInterval::startWithTarget(target);
     _inner->startWithTarget(_target);

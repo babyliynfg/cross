@@ -188,7 +188,7 @@ public:
     // Overrides
     virtual CardinalSplineTo *clone() const override;
     virtual CardinalSplineTo* reverse() const override;
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     
     /**
      * @param time In seconds.
@@ -228,7 +228,7 @@ public:
     CardinalSplineBy();
 
     // Overrides
-    virtual void startWithTarget(CGNode *target) override;
+    virtual void startWithTarget(CGSprite *target) override;
     virtual void updatePosition(DPoint &newPos) override;
     virtual CardinalSplineBy *clone() const override;
     virtual CardinalSplineBy* reverse() const override;

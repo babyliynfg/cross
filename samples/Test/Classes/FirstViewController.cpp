@@ -147,7 +147,7 @@ void FirstViewController::viewDidLoad()
     
     m_pAutoCollection->onDidSelectCellAtIndexPath(CALLBACK_BIND_2(FirstViewController::collectionViewDidSelectCellAtIndexPath, this));
     
-    /*
+    ///*
     CGSpriteFrameCache::getInstance()->addSpriteFramesWithFile("animation/monster_12000.plist");
     
     CAVector<CGSpriteFrame*> vec;
@@ -158,9 +158,8 @@ void FirstViewController::viewDidLoad()
     }
     
     CGSprite* sprite = CGSprite::create();
-    this->getView()->setCGNode(sprite);
+    this->getView()->insertSubview(sprite, 1000);
     sprite->setPosition(DPoint(100, 600));
-    sprite->setContentSize(DSize(100, 100));
     sprite->setScale(1.5);
 
     Animation* movie = Animation::createWithSpriteFrames(vec, 0.18, 100);
@@ -170,7 +169,7 @@ void FirstViewController::viewDidLoad()
     
     MoveBy* moveBy = MoveBy::create(8, DPoint(500, 0));
     sprite->runAction(moveBy);
-     */
+     //*/
     
 }
 

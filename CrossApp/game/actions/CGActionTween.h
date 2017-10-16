@@ -71,7 +71,7 @@ public:
     static ActionTween* create(float duration, const std::string& key, float from, float to);
 
     // Overrides
-    void startWithTarget(CGNode *target) override;
+    void startWithTarget(CGSprite *target) override;
     void update(float dt) override;
     ActionTween* reverse() const override;
 	ActionTween *clone() const override;

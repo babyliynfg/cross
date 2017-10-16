@@ -40,8 +40,6 @@ class CAContentContainer;
 class CAScrollView;
 class CAViewAnimation;
 class CARenderImage;
-class CGNode;
-class CGSprite;
 class CAApplication;
 class CAThemeManager;
 
@@ -353,10 +351,6 @@ public:
 
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
     
-    virtual CGNode* getCGNode();
-    
-    virtual void setCGNode(CGNode* var);
-    
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
@@ -489,10 +483,7 @@ protected:
     
     CustomCommand               m_obBeforeDrawCommand;
     CustomCommand               m_obAfterDrawCommand;
-    
-    CGNode*                     m_pCGNode;
-    CGNode*                     m_pParentCGNode;
-    
+
     CAApplication*              m_pApplication;
     
 protected:
@@ -533,10 +524,6 @@ protected:
     CAView::Shadow*             m_pBottomShadow;
     
 protected:
-    
-    friend class                CGNode;
-    
-    friend class                CGSprite;
     
     friend class                CARenderImage;
     

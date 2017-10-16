@@ -307,6 +307,9 @@ float CAFontProcesstor::heightForFont(const CAFont& font)
 
 float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFont& font, float width)
 {
+    if (width <= 0)
+        return 0;
+    
     float ret = 0;
     CCLog("xxxxxxxxxxxxxxxx:  width %f, fontSize %f", width, font.fontSize);
     JniMethodInfo jni;

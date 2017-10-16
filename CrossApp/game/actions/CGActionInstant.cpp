@@ -1,7 +1,7 @@
 
 
 #include "game/actions/CGActionInstant.h"
-#include "game/CGNode.h"
+#include "game/CGSprite.h"
 #include "game/CGSprite.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -159,7 +159,7 @@ bool RemoveSelf::init()
 void RemoveSelf::update(float time)
 {
     CC_UNUSED_PARAM(time);
-    _target->removeFromParent();
+    _target->removeFromSuperview();
 }
 
 RemoveSelf *RemoveSelf::reverse() const
@@ -375,7 +375,7 @@ void CallFunc::execute()
 // CallFuncN
 //
 
-CallFuncN * CallFuncN::create(const std::function<void(CGNode*)> &func)
+CallFuncN * CallFuncN::create(const std::function<void(CGSprite*)> &func)
 {
     auto ret = new (std::nothrow) CallFuncN();
 
@@ -396,7 +396,7 @@ void CallFuncN::execute()
     }
 }
 
-bool CallFuncN::initWithFunction(const std::function<void(CGNode *)> &func)
+bool CallFuncN::initWithFunction(const std::function<void(CGSprite *)> &func)
 {
     _functionN = func;
     return true;

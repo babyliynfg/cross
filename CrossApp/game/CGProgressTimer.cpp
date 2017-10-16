@@ -157,7 +157,7 @@ ccTex2F CGProgressTimer::textureCoordFromAlphaPoint(DPoint alpha)
     DPoint min = DPoint(quad.bl.texCoords.u,quad.bl.texCoords.v);
     DPoint max = DPoint(quad.tr.texCoords.u,quad.tr.texCoords.v);
     //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
-    if (m_pSprite->isTextureRectRotated()) {
+    if (m_pSprite->isImageRectRotated()) {
         CC_SWAP(alpha.x, alpha.y, float);
     }
     return tex2(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
@@ -210,7 +210,7 @@ void CGProgressTimer::updateProgress(void)
 
 void CGProgressTimer::setAnchorPoint(DPoint anchorPoint)
 {
-    CGNode::setAnchorPoint(anchorPoint);
+    CAView::setAnchorPoint(anchorPoint);
 }
 
 DPoint CGProgressTimer::getMidpoint(void)

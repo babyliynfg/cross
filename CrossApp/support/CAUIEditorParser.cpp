@@ -2134,7 +2134,7 @@ bool CAUIEditorParser::initWithPath(const std::string& filePath, CAView* supervi
     this->init();
     
     unsigned long size = 0;
-    unsigned char* data = FileUtils::getInstance()->getFileData(filePath, "rb+", &size);
+    unsigned char* data = FileUtils::getInstance()->getFileData(filePath, "rb", &size);
     
     if (size > 0)
     {

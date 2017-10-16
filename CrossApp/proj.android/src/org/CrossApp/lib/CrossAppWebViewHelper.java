@@ -191,9 +191,6 @@ public class CrossAppWebViewHelper {
         CrossAppActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-            	System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxx loadUrlWithRect");
-            	System.out.println(url);
-            	System.out.println(size);
                 CrossAppWebView webView = webViews.get(index);
                 if (webView != null) {
 					String[] s = size.split("-");
