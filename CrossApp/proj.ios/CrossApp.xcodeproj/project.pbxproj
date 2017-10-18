@@ -183,14 +183,10 @@
 		D6ADC65E1E56A72800750771 /* CGAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4B01E56A72700750771 /* CGAnimationCache.h */; };
 		D6ADC65F1E56A72800750771 /* CGTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4B11E56A72700750771 /* CGTweenFunction.cpp */; };
 		D6ADC6601E56A72800750771 /* CGTweenFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4B21E56A72700750771 /* CGTweenFunction.h */; };
-		D6ADC6611E56A72800750771 /* CGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4B31E56A72700750771 /* CGNode.cpp */; };
-		D6ADC6621E56A72800750771 /* CGNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4B41E56A72700750771 /* CGNode.h */; };
 		D6ADC6631E56A72800750771 /* CGProgressTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4B51E56A72700750771 /* CGProgressTimer.cpp */; };
 		D6ADC6641E56A72800750771 /* CGProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4B61E56A72700750771 /* CGProgressTimer.h */; };
 		D6ADC6651E56A72800750771 /* CGSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4B71E56A72700750771 /* CGSprite.cpp */; };
 		D6ADC6661E56A72800750771 /* CGSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4B81E56A72700750771 /* CGSprite.h */; };
-		D6ADC6671E56A72800750771 /* CGSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4B91E56A72700750771 /* CGSpriteBatchNode.cpp */; };
-		D6ADC6681E56A72800750771 /* CGSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4BA1E56A72700750771 /* CGSpriteBatchNode.h */; };
 		D6ADC6691E56A72800750771 /* CGSpriteFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4BB1E56A72700750771 /* CGSpriteFrame.cpp */; };
 		D6ADC66A1E56A72800750771 /* CGSpriteFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4BC1E56A72700750771 /* CGSpriteFrame.h */; };
 		D6ADC66B1E56A72800750771 /* CGSpriteFrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4BD1E56A72700750771 /* CGSpriteFrameCache.cpp */; };
@@ -619,14 +615,10 @@
 		D6ADC4B01E56A72700750771 /* CGAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGAnimationCache.h; sourceTree = "<group>"; };
 		D6ADC4B11E56A72700750771 /* CGTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGTweenFunction.cpp; sourceTree = "<group>"; };
 		D6ADC4B21E56A72700750771 /* CGTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGTweenFunction.h; sourceTree = "<group>"; };
-		D6ADC4B31E56A72700750771 /* CGNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGNode.cpp; sourceTree = "<group>"; };
-		D6ADC4B41E56A72700750771 /* CGNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGNode.h; sourceTree = "<group>"; };
 		D6ADC4B51E56A72700750771 /* CGProgressTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGProgressTimer.cpp; sourceTree = "<group>"; };
 		D6ADC4B61E56A72700750771 /* CGProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGProgressTimer.h; sourceTree = "<group>"; };
 		D6ADC4B71E56A72700750771 /* CGSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGSprite.cpp; sourceTree = "<group>"; };
 		D6ADC4B81E56A72700750771 /* CGSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSprite.h; sourceTree = "<group>"; };
-		D6ADC4B91E56A72700750771 /* CGSpriteBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGSpriteBatchNode.cpp; sourceTree = "<group>"; };
-		D6ADC4BA1E56A72700750771 /* CGSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSpriteBatchNode.h; sourceTree = "<group>"; };
 		D6ADC4BB1E56A72700750771 /* CGSpriteFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGSpriteFrame.cpp; sourceTree = "<group>"; };
 		D6ADC4BC1E56A72700750771 /* CGSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSpriteFrame.h; sourceTree = "<group>"; };
 		D6ADC4BD1E56A72700750771 /* CGSpriteFrameCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CGSpriteFrameCache.cpp; sourceTree = "<group>"; };
@@ -1011,7 +1003,6 @@
 				D6ADC4EA1E56A72800750771 /* network */,
 				D6ADC4F31E56A72800750771 /* renderer */,
 				D6ADC54E1E56A72800750771 /* script_support */,
-				D6ADC5531E56A72800750771 /* shaders */,
 				1551A43F158F2ADE00E66CFE /* platform */,
 				D6ADC5571E56A72800750771 /* support */,
 				D6ADC5B81E56A72800750771 /* view */,
@@ -1238,14 +1229,10 @@
 			isa = PBXGroup;
 			children = (
 				D6ADC49A1E56A72700750771 /* actions */,
-				D6ADC4B31E56A72700750771 /* CGNode.cpp */,
-				D6ADC4B41E56A72700750771 /* CGNode.h */,
 				D6ADC4B51E56A72700750771 /* CGProgressTimer.cpp */,
 				D6ADC4B61E56A72700750771 /* CGProgressTimer.h */,
 				D6ADC4B71E56A72700750771 /* CGSprite.cpp */,
 				D6ADC4B81E56A72700750771 /* CGSprite.h */,
-				D6ADC4B91E56A72700750771 /* CGSpriteBatchNode.cpp */,
-				D6ADC4BA1E56A72700750771 /* CGSpriteBatchNode.h */,
 				D6ADC4BB1E56A72700750771 /* CGSpriteFrame.cpp */,
 				D6ADC4BC1E56A72700750771 /* CGSpriteFrame.h */,
 				D6ADC4BD1E56A72700750771 /* CGSpriteFrameCache.cpp */,
@@ -1466,37 +1453,6 @@
 				D6ADC5501E56A72800750771 /* CAScriptSupport.h */,
 			);
 			path = script_support;
-			sourceTree = "<group>";
-		};
-		D6ADC5531E56A72800750771 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				D6ADC5541E56A72800750771 /* precompiled */,
-			);
-			path = shaders;
-			sourceTree = "<group>";
-		};
-		D6ADC5541E56A72800750771 /* precompiled */ = {
-			isa = PBXGroup;
-			children = (
-				D6ADC5551E56A72800750771 /* winrt */,
-				D6ADC5561E56A72800750771 /* wp8 */,
-			);
-			path = precompiled;
-			sourceTree = "<group>";
-		};
-		D6ADC5551E56A72800750771 /* winrt */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = winrt;
-			sourceTree = "<group>";
-		};
-		D6ADC5561E56A72800750771 /* wp8 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = wp8;
 			sourceTree = "<group>";
 		};
 		D6ADC5571E56A72800750771 /* support */ = {
@@ -1847,7 +1803,6 @@
 				D6ADC6541E56A72800750771 /* CGActionInterval.h in Headers */,
 				B01F650A196585B2005C14FC /* CADensityDpi.h in Headers */,
 				D6ADC61A1E56A72800750771 /* CAValue.h in Headers */,
-				D6ADC6621E56A72800750771 /* CGNode.h in Headers */,
 				D6ADC6141E56A72800750771 /* CASize.h in Headers */,
 				D6C729AC1EEE74740094B191 /* CAPageView.h in Headers */,
 				D6ADC6B11E56A72800750771 /* CCPrimitiveCommand.h in Headers */,
@@ -1891,7 +1846,6 @@
 				D6ADC6A91E56A72800750771 /* CCMaterial.h in Headers */,
 				D6ADC66A1E56A72800750771 /* CGSpriteFrame.h in Headers */,
 				D6C729981EEE74740094B191 /* CACell.h in Headers */,
-				D6ADC6681E56A72800750771 /* CGSpriteBatchNode.h in Headers */,
 				D6ADC6851E56A72800750771 /* CAMathBase.h in Headers */,
 				D6C7299A1EEE74740094B191 /* CAClippingView.h in Headers */,
 				D6ADC67B1E56A72800750771 /* gif_lib.h in Headers */,
@@ -2133,7 +2087,6 @@
 				D6ADC5F51E56A72800750771 /* CACamera.cpp in Sources */,
 				D6ADC60D1E56A72800750771 /* CARect.cpp in Sources */,
 				D6ADC6FB1E56A72800750771 /* advancing_front.cc in Sources */,
-				D6ADC6671E56A72800750771 /* CGSpriteBatchNode.cpp in Sources */,
 				D6C729971EEE74740094B191 /* CACell.cpp in Sources */,
 				D6ADC65D1E56A72800750771 /* CGAnimationCache.cpp in Sources */,
 				D6ADC6591E56A72800750771 /* CGActionTween.cpp in Sources */,
@@ -2178,7 +2131,6 @@
 				D6ADC6821E56A72800750771 /* CAMat4.cpp in Sources */,
 				D6ADC7011E56A72800750771 /* sweep_context.cc in Sources */,
 				D6ADC6B61E56A72800750771 /* CCRenderCommand.cpp in Sources */,
-				D6ADC6611E56A72800750771 /* CGNode.cpp in Sources */,
 				B01F650819658599005C14FC /* CADensityDpi.mm in Sources */,
 				D6ADC64D1E56A72800750771 /* CGActionCatmullRom.cpp in Sources */,
 				D6ADC6FF1E56A72800750771 /* sweep.cc in Sources */,

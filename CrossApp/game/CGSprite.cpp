@@ -392,8 +392,7 @@ void CGSprite::setPosition(const DPoint& position)
     {
         this->setPoint(position);
         this->updateDraw();
-        CCLog("-- %f", position.y);
-        //m_bUsingNormalizedPosition = false;
+        m_bUsingNormalizedPosition = false;
     }
     m_eLayoutType = -1;
     

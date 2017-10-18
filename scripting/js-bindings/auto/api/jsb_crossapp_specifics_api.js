@@ -20,9 +20,9 @@ func
  */
 ca.CADatePickerView = {
 
-    /**
-     * @method stopGyroscope
-     */
+/**
+* @method stopGyroscope
+*/
 onSelectRow : function (
 func
 )
@@ -37,15 +37,34 @@ func
  */
 ca.CADownloadManager = {
 
-    /**
-     * @method stopGyroscope
-     */
+/**
+* @method stopGyroscope
+*/
 setDownloadManagerDelegate : function (
 delegate
 )
 {
 },
 
+};
+
+/**
+ * @class CANotificationCenter
+ */
+ca.CANotificationCenter = {
+/**
+* @method removeObserver
+* @param {func} arg0
+* @param {ca.CAObject} arg1
+* @param {String} arg2
+*/
+addObserver : function (
+func,
+caobject,
+str
+)
+{
+},
 };
 
 

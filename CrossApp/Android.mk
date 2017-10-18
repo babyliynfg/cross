@@ -188,11 +188,9 @@ device/android/CADevice.cpp \
 device/android/CAAddressBook.cpp \
 device/android/CAMotionManager.cpp \
 device/android/CAImagePickerController.cpp \
-game/CGNode.cpp \
 game/CGSprite.cpp \
 game/CGSpriteFrame.cpp \
 game/CGSpriteFrameCache.cpp \
-game/CGSpriteBatchNode.cpp \
 game/CGProgressTimer.cpp \
 game/actions/CGAnimation.cpp \
 game/actions/CGAnimationCache.cpp \

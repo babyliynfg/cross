@@ -72,6 +72,7 @@ CAView::CAView(void)
 , m_bDisplayRange(true)
 , m_bScissorRestored(false)
 , m_pobImage(nullptr)
+, m_bRectRotated(false)
 , m_bFlipX(false)
 , m_bFlipY(false)
 , m_pContentContainer(nullptr)
@@ -1881,8 +1882,6 @@ void CAView::setImageRect(const DRect& rect)
     }
     else
     {
-        m_bRectRotated = false;
-        
         this->setVertexRect(rect);
         this->setImageCoords(rect);
         this->updateImageRect();
