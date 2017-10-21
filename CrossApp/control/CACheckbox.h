@@ -109,9 +109,7 @@ protected:
     DSize m_pImageOffset;
     bool m_bDefineImageOffset;
     
-    std::string m_sTitleFontName;
-    float m_fTitleFontSize;
-    bool m_bTitleBold;
+    CAFont m_obTitleFont;
     DSize m_pTitleLabelSize;
     bool m_bDefineTitleLabelSize;
     DSize m_pTitleOffset;

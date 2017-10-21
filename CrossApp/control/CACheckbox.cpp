@@ -24,9 +24,6 @@ NS_CC_BEGIN
 CACheckbox::CACheckbox(const CACheckbox::Type& type)
 :m_pImageView(nullptr)
 ,m_pLabel(nullptr)
-,m_sTitleFontName("")
-,m_fTitleFontSize(0)
-,m_bTitleBold(false)
 ,m_pTitleLabelSize(DSizeZero)
 ,m_bDefineTitleLabelSize(false)
 ,m_pImageSize(DSizeZero)
@@ -54,6 +51,9 @@ CACheckbox::CACheckbox(const CACheckbox::Type& type)
     m_pLabel->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     m_pLabel->setNumberOfLine(1);
     this->insertSubview(m_pLabel, 1);
+    
+    m_obTitleFont = m_pLabel->getFont();
+    m_obTitleFont.fontSize = 0;
 }
 
 CACheckbox::~CACheckbox(void)
@@ -248,10 +248,10 @@ void CACheckbox::setTitleColorStateSelected(const CAColor4B& var)
 
 void CACheckbox::setTitleFontName(const std::string& var)
 {
-    if (m_sTitleFontName.compare(var))
+    if (m_obTitleFont.fontName.compare(var))
     {
-        m_sTitleFontName = var;
-        m_pLabel->setFontName(m_sTitleFontName.c_str());
+        m_obTitleFont.fontName = var;
+        m_pLabel->setFont(m_obTitleFont);
         
         this->updateCheckboxState();
     }
@@ -299,13 +299,13 @@ void CACheckbox::setTitleLabelSize(const DSize& size)
 
 void CACheckbox::setTitleFontSize(float fontSize)
 {
-    m_fTitleFontSize = fontSize;
+    m_obTitleFont.fontSize = fontSize;
     this->updateCheckboxState();
 }
 
 void CACheckbox::setTitleBold(bool bold)
 {
-    m_bTitleBold = bold;
+    m_obTitleFont.bold = bold;
     m_pLabel->setBold(bold);
 }
 
@@ -316,6 +316,7 @@ void CACheckbox::setTitleTextAlignment(const CATextAlignment& var)
 
 void CACheckbox::setTitleFont(const CAFont& font)
 {
+    m_obTitleFont = font;
     m_pLabel->setFont(font);
 }
 
@@ -345,7 +346,7 @@ bool CACheckbox::isOn()
 
 void CACheckbox::updateWithPreferredSize()
 {
-    if (m_fTitleFontSize < FLT_EPSILON)
+    if (m_obTitleFont.fontSize < FLT_EPSILON)
     {
         m_pLabel->setFontSize(this->getBounds().size.height * 0.667f);
     }
@@ -451,7 +452,7 @@ void CACheckbox::updateCheckboxState()
     else if (!image && title.length() > 0)
     {
         labelSize = m_obContentSize.height * 0.8f;
-        labelCenter.size.height = MAX(m_obContentSize.height, CAImage::getFontHeight(m_sTitleFontName.c_str(), m_fTitleFontSize));
+        labelCenter.size.height = MAX(m_obContentSize.height, CAImage::getFontHeight(m_obTitleFont.fontName.c_str(), m_obTitleFont.fontSize));
         labelCenter.origin.x = m_obContentSize.width * 0.5f;
         labelCenter.origin.y = m_obContentSize.height * 0.425f;
     }
@@ -470,7 +471,7 @@ void CACheckbox::updateCheckboxState()
         
         labelSize = size.height * 0.8f;
         labelCenter.size.width = m_obContentSize.width - iSize.width - 30;
-        labelCenter.size.height = MAX(m_obContentSize.height, CAImage::getFontHeight(m_sTitleFontName.c_str(), m_fTitleFontSize));
+        labelCenter.size.height = MAX(m_obContentSize.height, CAImage::getFontHeight(m_obTitleFont.fontName.c_str(), m_obTitleFont.fontSize));
         labelCenter.origin.x = iSize.width + 20 + labelCenter.size.width /2;
         labelCenter.origin.y = size.height * 0.5f;
     }
@@ -489,11 +490,11 @@ void CACheckbox::updateCheckboxState()
         }
         m_pLabel->setCenter(labelCenter);
         
-        if(m_fTitleFontSize == 0)
+        if(m_obTitleFont.fontSize == 0)
         {
-            m_fTitleFontSize = labelSize;
+            m_obTitleFont.fontSize = labelSize;
         }
-        m_pLabel->setFontSize(m_fTitleFontSize);
+        m_pLabel->setFont(m_obTitleFont);
 
         m_pLabel->setColor(m_bIsOn ? m_cTitleColorSelected : m_cTitleColorNormal);
     }

@@ -25,9 +25,6 @@ CAButton::CAButton(const CAButton::Type& buttonType)
 :m_eButtonType(buttonType)
 ,m_pImageView(nullptr)
 ,m_pLabel(nullptr)
-,m_sTitleFontName("")
-,m_fTitleFontSize(0)
-,m_bTitleBold(false)
 ,m_pTitleLabelSize(DSizeZero)
 ,m_bDefineTitleLabelSize(false)
 ,m_pImageSize(DSizeZero)
@@ -56,6 +53,9 @@ CAButton::CAButton(const CAButton::Type& buttonType)
     m_pLabel->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
     m_pLabel->setNumberOfLine(1);
     this->insertSubview(m_pLabel, 1);
+    
+    m_obTitleFont = m_pLabel->getFont();
+    m_obTitleFont.fontSize = 0;
 }
 
 CAButton::~CAButton(void)
@@ -316,10 +316,10 @@ void CAButton::setTitleColorForState(CAControl::State state, const CAColor4B& va
 
 void CAButton::setTitleFontName(const std::string& var)
 {
-    if (m_sTitleFontName.compare(var))
+    if (m_obTitleFont.fontName.compare(var))
     {
-        m_sTitleFontName = var;
-        m_pLabel->setFontName(m_sTitleFontName.c_str());
+        m_obTitleFont.fontName = var;
+        m_pLabel->setFont(m_obTitleFont);
     }
     
     if (m_bRunning)
@@ -330,7 +330,7 @@ void CAButton::setTitleFontName(const std::string& var)
 
 void CAButton::updateWithPreferredSize()
 {
-    if (m_fTitleFontSize < FLT_EPSILON)
+    if (m_obTitleFont.fontSize < FLT_EPSILON)
     {
         m_pLabel->setFontSize(this->getBounds().size.height * 0.667f);
     }
@@ -524,11 +524,11 @@ void CAButton::setControlState(CAControl::State var)
         }
         m_pLabel->setCenter(labelCenter);
         
-        if(m_fTitleFontSize == 0)
+        if(m_obTitleFont.fontSize == 0)
         {
-            m_fTitleFontSize = labelSize;
+            m_obTitleFont.fontSize = labelSize;
         }
-        m_pLabel->setFontSize(m_fTitleFontSize);
+        m_pLabel->setFont(m_obTitleFont);
 
         m_pLabel->setColor(m_mTitleColors[m_eState]);
     }
@@ -636,13 +636,13 @@ void CAButton::setTitleLabelSize(const DSize& size)
 
 void CAButton::setTitleFontSize(float fontSize)
 {
-    m_fTitleFontSize = fontSize;
+    m_obTitleFont.fontSize = fontSize;
     this->setControlState(m_eState);
 }
 
 void CAButton::setTitleBold(bool bold)
 {
-    m_bTitleBold = bold;
+    m_obTitleFont.bold = bold;
     m_pLabel->setBold(bold);
 }
 
@@ -653,6 +653,7 @@ void CAButton::setTitleTextAlignment(const CATextAlignment& var)
 
 void CAButton::setTitleFont(const CAFont& font)
 {
+    m_obTitleFont = font;
     m_pLabel->setFont(font);
 }
 
