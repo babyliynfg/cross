@@ -352,4 +352,14 @@ CGSpriteFrame* CGSpriteFrameCache::getSpriteFrameByName(const std::string& pszNa
     return frame;
 }
 
+std::vector<std::string> CGSpriteFrameCache::allImageFileNames()
+{
+    std::vector<std::string> vec;
+    for (auto it=m_obSpriteFrames.begin(); it!=m_obSpriteFrames.end(); it++)
+    {
+        vec.push_back(it->first);
+    }
+    return vec;
+}
+
 NS_CC_END

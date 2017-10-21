@@ -64,6 +64,9 @@ public:
     
     void setTitleFontSize(float titleSize);
     
+    void setTitleFont(const CAFont& font);
+    const CAFont& getTitleFont();
+    
     void setTarget(const std::function<void(int)>& function);
     
     void setTitleForSegmentAtIndex(const std::string& title, int index);
@@ -114,6 +117,7 @@ protected:
     int                             m_iTouchIndex;
     
     std::vector<std::string>        m_vTitles;
+    CAFont                          m_obTitleFont;
     
     CAVector<CAImage*>              m_vNormalImages;
     CAVector<CAImage*>              m_vSelectedImages;
@@ -136,10 +140,6 @@ protected:
     CAVector<CAView*>               m_vSeparateViews;
     
     float                           m_fSeparateWidth;
-    
-    float                           m_fTitleFontSize;
-    
-    std::string                     m_sTitleFontName;
     
     CAColor4B                       m_cTextColor;
     CAColor4B                       m_cTextSelectedColor;

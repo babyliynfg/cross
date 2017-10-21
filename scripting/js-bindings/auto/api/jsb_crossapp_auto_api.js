@@ -5339,6 +5339,14 @@ dsize
 },
 
 /**
+ * @method interruptTouchState
+ */
+interruptTouchState : function (
+)
+{
+},
+
+/**
  * @method addTarget
  * @param {function} arg0
  * @param {ca.CAButton::Event} arg1
@@ -5351,11 +5359,13 @@ event
 },
 
 /**
- * @method interruptTouchState
+ * @method getTitleFont
+ * @return {font_object}
  */
-interruptTouchState : function (
+getTitleFont : function (
 )
 {
+    return ca.CAFont;
 },
 
 /**
@@ -5428,6 +5438,16 @@ state
 setImageForState : function (
 state, 
 caimage 
+)
+{
+},
+
+/**
+ * @method setTitleFont
+ * @param {font_object} arg0
+ */
+setTitleFont : function (
+cafont 
 )
 {
 },
@@ -5609,16 +5629,6 @@ float
 },
 
 /**
- * @method setImageColor
- * @param {color4b_object} arg0
- */
-setImageColor : function (
-cacolor4b 
-)
-{
-},
-
-/**
  * @method setSegmentItemBackgroundImage
  * @param {ca.CAImage} arg0
  */
@@ -5651,6 +5661,16 @@ int
 },
 
 /**
+ * @method getTitleFont
+ * @return {font_object}
+ */
+getTitleFont : function (
+)
+{
+    return ca.CAFont;
+},
+
+/**
  * @method setImageForSegmentAtIndex
  * @param {ca.CAImage} arg0
  * @param {int} arg1
@@ -5665,13 +5685,13 @@ state
 },
 
 /**
- * @method init
- * @return {bool}
+ * @method setImageColor
+ * @param {color4b_object} arg0
  */
-init : function (
+setImageColor : function (
+cacolor4b 
 )
 {
-    return false;
 },
 
 /**
@@ -5705,15 +5725,13 @@ getNumberOfSegments : function (
 },
 
 /**
- * @method setTitleForSegmentAtIndex
- * @param {String} arg0
- * @param {int} arg1
+ * @method init
+ * @return {bool}
  */
-setTitleForSegmentAtIndex : function (
-str, 
-int 
+init : function (
 )
 {
+    return false;
 },
 
 /**
@@ -5764,6 +5782,24 @@ func
  */
 setTitleFontName : function (
 str 
+)
+{
+},
+
+/**
+ * @method onExitTransitionDidStart
+ */
+onExitTransitionDidStart : function (
+)
+{
+},
+
+/**
+ * @method setTitleFont
+ * @param {font_object} arg0
+ */
+setTitleFont : function (
+cafont 
 )
 {
 },
@@ -5845,9 +5881,13 @@ getTitleColor : function (
 },
 
 /**
- * @method onExitTransitionDidStart
+ * @method setTitleForSegmentAtIndex
+ * @param {String} arg0
+ * @param {int} arg1
  */
-onExitTransitionDidStart : function (
+setTitleForSegmentAtIndex : function (
+str, 
+int 
 )
 {
 },
@@ -10987,6 +11027,16 @@ str
 },
 
 /**
+ * @method setTitleFont
+ * @param {font_object} arg0
+ */
+setTitleFont : function (
+cafont 
+)
+{
+},
+
+/**
  * @method setTitleOffset
  * @param {size_object} arg0
  */
@@ -11004,6 +11054,16 @@ setTitleColorStateNormal : function (
 cacolor4b 
 )
 {
+},
+
+/**
+ * @method getTitleFont
+ * @return {font_object}
+ */
+getTitleFont : function (
+)
+{
+    return ca.CAFont;
 },
 
 /**
@@ -19295,6 +19355,16 @@ str
 removeUnusedSpriteFrames : function (
 )
 {
+},
+
+/**
+ * @method allImageFileNames
+ * @return {Array}
+ */
+allImageFileNames : function (
+)
+{
+    return new Array();
 },
 
 /**

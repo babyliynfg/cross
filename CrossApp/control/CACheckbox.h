@@ -67,7 +67,9 @@ public:
     void setTitleFontSize(float fontSize);
     void setTitleBold(bool bold);
     void setTitleTextAlignment(const CATextAlignment& var);
- 
+    void setTitleFont(const CAFont& font);
+    const CAFont& getTitleFont();
+        
     void setTarget(const std::function<void(bool on)>& function);
 
     bool isOn();

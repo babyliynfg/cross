@@ -49,6 +49,8 @@ public:
 
     void removeSpriteFramesFromFile(const std::string& plist);
     
+    std::vector<std::string> allImageFileNames();
+    
 private:
 
     void addSpriteFramesWithDictionary(CAValueMap& dictionary, CAImage* image);
@@ -61,7 +63,6 @@ public:
 
     CGSpriteFrame* getSpriteFrameByName(const std::string& pszName);
     
-
 protected:
     
     CAMap<std::string, CGSpriteFrame*> m_obSpriteFrames;

@@ -651,6 +651,16 @@ void CAButton::setTitleTextAlignment(const CATextAlignment& var)
     m_pLabel->setTextAlignment(var);
 }
 
+void CAButton::setTitleFont(const CAFont& font)
+{
+    m_pLabel->setFont(font);
+}
+
+const CAFont& CAButton::getTitleFont()
+{
+    return m_pLabel->getFont();
+}
+
 void CAButton::addTarget(const std::function<void()>& function, CAButton::Event event)
 {
     m_mFunctions[event] = function;

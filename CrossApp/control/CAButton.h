@@ -80,7 +80,9 @@ public:
     void setTitleFontSize(float fontSize);
     void setTitleBold(bool bold);
     void setTitleTextAlignment(const CATextAlignment& var);
- 
+    void setTitleFont(const CAFont& font);
+    const CAFont& getTitleFont();
+        
     void addTarget(const std::function<void()>& function, CAButton::Event event);
 
     virtual void setControlState(CAControl::State state) override;

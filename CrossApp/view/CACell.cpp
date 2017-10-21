@@ -28,7 +28,6 @@ CACell::CACell()
 CACell::~CACell()
 {
     CC_SAFE_RELEASE_NULL(m_pContentView);
-    CC_SAFE_RELEASE_NULL(m_pBackgroundView);
     CC_SAFE_RELEASE_NULL(m_pParser);
 }
 
@@ -52,7 +51,6 @@ bool CACell::initWithReuseIdentifier(const std::string& reuseIdentifier)
     
     this->setBackgroundView(CAView::create());
     this->setReuseIdentifier(reuseIdentifier);
-    this->normalCell();
     this->parser();
     
     return true;
@@ -100,10 +98,8 @@ void CACell::setBackgroundView(CrossApp::CAView *var)
 {
     CC_RETURN_IF(var == m_pBackgroundView);
     m_pContentView->removeSubview(m_pBackgroundView);
-    CC_SAFE_RETAIN(var);
-    CC_SAFE_RELEASE(m_pBackgroundView);
     m_pBackgroundView = var;
-    CC_RETURN_IF(m_pBackgroundView == NULL);
+    CC_RETURN_IF(m_pBackgroundView == nullptr);
     m_pBackgroundView->setLayout(DLayoutFill);
     m_pContentView->insertSubview(m_pBackgroundView, -1);
 }
@@ -199,67 +195,36 @@ void CACell::setControlStateSelected()
 
 void CACell::normalCell()
 {
-    if (m_obNormalState)
-    {
-        m_obNormalState();
-    }
-    else if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setColor(CAColor4B(255, 255, 255, 255));
-    }
 }
 
 void CACell::highlightedCell()
 {
-    if (m_obHighlightedState)
-    {
-        m_obHighlightedState();
-    }
-    else if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setColor(CAColor4B(240, 240, 240, 255));
-    }
 }
-
 
 void CACell::selectedCell()
 {
-    if (m_obSelectedState)
-    {
-        m_obSelectedState();
-    }
-    else if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setColor(CAColor4B(50, 193, 255, 255));
-    }
 }
-
 
 void CACell::disabledCell()
 {
-    if (m_obDsabledState)
-    {
-        m_obDsabledState();
-    }
-    else if (m_pBackgroundView)
-    {
-        m_pBackgroundView->setColor(CAColor4B(127, 127, 127, 255));
-    }
 }
 
 void CACell::recoveryCell()
 {
-    if (m_obRecovery)
-    {
-        m_obRecovery();
-    }
 }
 
 void CACell::resetCell()
 {
     this->setVisible(true);
-    this->normalCell();
-    this->recoveryCell();
+    this->setControlStateNormal();
+    if (m_obRecovery)
+    {
+        m_obRecovery();
+    }
+    else
+    {
+        this->recoveryCell();
+    }
     m_pContentView->setLayout(DLayoutFill);
     m_pContentView->setScale(1.0f);
     m_pContentView->setRotation(0);

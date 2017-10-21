@@ -35,10 +35,10 @@ CASegmentedControl::CASegmentedControl(unsigned int itemsCount)
     , m_cImageSelectedColor(CAColor4B::WHITE)
     , m_cTintColor(CAColor4B(54, 195, 240, 255))
     , m_pTarget(nullptr)
-    , m_sTitleFontName("")
-    , m_fTitleFontSize(24)
+    , m_obTitleFont(CAFont())
 {
     this->setTouchEventScrollHandOverToSuperview(false);
+    m_obTitleFont.fontSize = 24;
 }
 
 CASegmentedControl::~CASegmentedControl()
@@ -429,8 +429,7 @@ void CASegmentedControl::setTitleForSegmentAtIndex(const std::string& title, int
     DRect center = m_vSegmentItems.at(index)->getBounds();
     center.origin = center.size/2 + m_vItemContentOffsets.at(index);
     CALabel* label = CALabel::createWithCenter(center);
-    label->setFontName(m_sTitleFontName);
-    label->setFontSize(m_fTitleFontSize);
+    label->setFont(m_obTitleFont);
     label->setColor(m_iSelectedIndex == index ? m_cTextSelectedColor : m_cTextColor);
     label->setTextAlignment(CATextAlignment::Center);
     label->setVerticalTextAlignmet(CAVerticalTextAlignment::Center);
@@ -559,26 +558,43 @@ void CASegmentedControl::setImageSizeAtIndex(DSize size, int index)
 
 void CASegmentedControl::setTitleFontName(std::string titleName)
 {
-    m_sTitleFontName = titleName;
+    m_obTitleFont.fontName = titleName;
     for (size_t i=0; i<(size_t)m_nItemsCount; i++)
     {
         if (CALabel* label = dynamic_cast<CALabel*>(m_vSegmentItemsTitles.at(i)))
         {
-            label->setFontName(titleName);
+            label->setFont(m_obTitleFont);
         }
     }
 }
 
 void CASegmentedControl::setTitleFontSize(float titleSize)
 {
-    m_fTitleFontSize = titleSize;
+    m_obTitleFont.fontSize = titleSize;
     for (size_t i=0; i<(size_t)m_nItemsCount; i++)
     {
         if (CALabel* label = dynamic_cast<CALabel*>(m_vSegmentItemsTitles.at(i)))
         {
-            label->setFontSize(titleSize);
+            label->setFont(m_obTitleFont);
         }
     }
+}
+
+void CASegmentedControl::setTitleFont(const CAFont& font)
+{
+    m_obTitleFont = font;
+    for (size_t i=0; i<(size_t)m_nItemsCount; i++)
+    {
+        if (CALabel* label = dynamic_cast<CALabel*>(m_vSegmentItemsTitles.at(i)))
+        {
+            label->setFont(m_obTitleFont);
+        }
+    }
+}
+
+const CAFont& CASegmentedControl::getTitleFont()
+{
+    return m_obTitleFont;
 }
 
 void CASegmentedControl::setEnabledForSegmentAtIndex(bool isEnable, int index)

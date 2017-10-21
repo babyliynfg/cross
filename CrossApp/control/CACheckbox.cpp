@@ -314,6 +314,16 @@ void CACheckbox::setTitleTextAlignment(const CATextAlignment& var)
     m_pLabel->setTextAlignment(var);
 }
 
+void CACheckbox::setTitleFont(const CAFont& font)
+{
+    m_pLabel->setFont(font);
+}
+
+const CAFont& CACheckbox::getTitleFont()
+{
+    return m_pLabel->getFont();
+}
+
 void CACheckbox::setTarget(const std::function<void(bool on)>& function)
 {
     m_function = function;

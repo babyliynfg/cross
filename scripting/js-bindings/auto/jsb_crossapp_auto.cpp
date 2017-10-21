@@ -13568,6 +13568,23 @@ bool js_crossapp_CAButton_setImageSize(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAButton_setImageSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAButton_interruptTouchState(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_interruptTouchState : Invalid Native Object");
+    if (argc == 0) {
+        cobj->interruptTouchState();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAButton_interruptTouchState : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CAButton_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -13610,21 +13627,23 @@ bool js_crossapp_CAButton_addTarget(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAButton_addTarget : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAButton_interruptTouchState(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAButton_getTitleFont(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_interruptTouchState : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_getTitleFont : Invalid Native Object");
     if (argc == 0) {
-        cobj->interruptTouchState();
-        args.rval().setUndefined();
+        const CrossApp::CAFont& ret = cobj->getTitleFont();
+        jsval jsret = JSVAL_NULL;
+        jsret = cafont_to_jsval(cx, ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAButton_interruptTouchState : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAButton_getTitleFont : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAButton_setTitleLabelSize(JSContext *cx, uint32_t argc, jsval *vp)
@@ -13791,6 +13810,27 @@ bool js_crossapp_CAButton_setImageForState(JSContext *cx, uint32_t argc, jsval *
     }
 
     JS_ReportError(cx, "js_crossapp_CAButton_setImageForState : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CAButton_setTitleFont(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAButton* cobj = (CrossApp::CAButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAButton_setTitleFont : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAFont arg0;
+        ok &= jsval_to_cafont(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAButton_setTitleFont : Error processing arguments");
+        cobj->setTitleFont(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAButton_setTitleFont : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CAButton_setTitleColorForState(JSContext *cx, uint32_t argc, jsval *vp)
@@ -14158,8 +14198,9 @@ void js_register_crossapp_CAButton(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setImageSize", js_crossapp_CAButton_setImageSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("addTarget", js_crossapp_CAButton_addTarget, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("interruptTouchState", js_crossapp_CAButton_interruptTouchState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addTarget", js_crossapp_CAButton_addTarget, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTitleFont", js_crossapp_CAButton_getTitleFont, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleLabelSize", js_crossapp_CAButton_setTitleLabelSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleBold", js_crossapp_CAButton_setTitleBold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageOffset", js_crossapp_CAButton_setImageOffset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -14167,6 +14208,7 @@ void js_register_crossapp_CAButton(JSContext *cx, JS::HandleObject global) {
         JS_FN("setTitleFontName", js_crossapp_CAButton_setTitleFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBackgroundImageForState", js_crossapp_CAButton_getBackgroundImageForState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageForState", js_crossapp_CAButton_setImageForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleFont", js_crossapp_CAButton_setTitleFont, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleColorForState", js_crossapp_CAButton_setTitleColorForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageColorForState", js_crossapp_CAButton_setImageColorForState, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundImageForState", js_crossapp_CAButton_setBackgroundImageForState, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -14235,27 +14277,6 @@ bool js_crossapp_CASegmentedControl_setTitleFontSize(JSContext *cx, uint32_t arg
     }
 
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CASegmentedControl_setImageColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setImageColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setImageColor : Error processing arguments");
-        cobj->setImageColor(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setImageColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CASegmentedControl_setSegmentItemBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -14331,6 +14352,25 @@ bool js_crossapp_CASegmentedControl_setSelectedAtIndex(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_setSelectedAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CASegmentedControl_getTitleFont(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_getTitleFont : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::CAFont& ret = cobj->getTitleFont();
+        jsval jsret = JSVAL_NULL;
+        jsret = cafont_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_getTitleFont : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CASegmentedControl_setImageForSegmentAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -14364,23 +14404,25 @@ bool js_crossapp_CASegmentedControl_setImageForSegmentAtIndex(JSContext *cx, uin
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_setImageForSegmentAtIndex : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
-bool js_crossapp_CASegmentedControl_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CASegmentedControl_setImageColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_init : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->init();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setImageColor : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAColor4B arg0;
+        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setImageColor : Error processing arguments");
+        cobj->setImageColor(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setImageColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CASegmentedControl_getSelectedAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -14442,27 +14484,23 @@ bool js_crossapp_CASegmentedControl_getNumberOfSegments(JSContext *cx, uint32_t 
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_getNumberOfSegments : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CASegmentedControl_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : Invalid Native Object");
-    if (argc == 2) {
-        std::string arg0;
-        int arg1 = 0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : Error processing arguments");
-        cobj->setTitleForSegmentAtIndex(arg0, arg1);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_init : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->init();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_init : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CASegmentedControl_setTitleColor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -14599,6 +14637,44 @@ bool js_crossapp_CASegmentedControl_setTitleFontName(JSContext *cx, uint32_t arg
     }
 
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleFontName : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CASegmentedControl_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_onExitTransitionDidStart : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onExitTransitionDidStart();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CASegmentedControl_setTitleFont(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setTitleFont : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAFont arg0;
+        ok &= jsval_to_cafont(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setTitleFont : Error processing arguments");
+        cobj->setTitleFont(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleFont : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CASegmentedControl_getTitleSelectedColor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -14755,21 +14831,27 @@ bool js_crossapp_CASegmentedControl_getTitleColor(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CASegmentedControl_getTitleColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CASegmentedControl_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CASegmentedControl* cobj = (CrossApp::CASegmentedControl *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_onExitTransitionDidStart : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExitTransitionDidStart();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        int arg1 = 0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : Error processing arguments");
+        cobj->setTitleForSegmentAtIndex(arg0, arg1);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CASegmentedControl_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_crossapp_CASegmentedControl_setTintColor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -15043,21 +15125,23 @@ void js_register_crossapp_CASegmentedControl(JSContext *cx, JS::HandleObject glo
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setTitleFontSize", js_crossapp_CASegmentedControl_setTitleFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setImageColor", js_crossapp_CASegmentedControl_setImageColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSegmentItemBackgroundImage", js_crossapp_CASegmentedControl_setSegmentItemBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageSizeAtIndex", js_crossapp_CASegmentedControl_setImageSizeAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSelectedAtIndex", js_crossapp_CASegmentedControl_setSelectedAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTitleFont", js_crossapp_CASegmentedControl_getTitleFont, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageForSegmentAtIndex", js_crossapp_CASegmentedControl_setImageForSegmentAtIndex, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_crossapp_CASegmentedControl_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setImageColor", js_crossapp_CASegmentedControl_setImageColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSelectedAtIndex", js_crossapp_CASegmentedControl_getSelectedAtIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleSelectedColor", js_crossapp_CASegmentedControl_setTitleSelectedColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfSegments", js_crossapp_CASegmentedControl_getNumberOfSegments, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTitleForSegmentAtIndex", js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_crossapp_CASegmentedControl_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleColor", js_crossapp_CASegmentedControl_setTitleColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isEnabledForSegmentAtIndex", js_crossapp_CASegmentedControl_isEnabledForSegmentAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundImage", js_crossapp_CASegmentedControl_setBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTarget", js_crossapp_CASegmentedControl_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleFontName", js_crossapp_CASegmentedControl_setTitleFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onExitTransitionDidStart", js_crossapp_CASegmentedControl_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleFont", js_crossapp_CASegmentedControl_setTitleFont, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleSelectedColor", js_crossapp_CASegmentedControl_getTitleSelectedColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageSelectedColor", js_crossapp_CASegmentedControl_setImageSelectedColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentOffsetForSegmentAtIndex", js_crossapp_CASegmentedControl_getContentOffsetForSegmentAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -15065,7 +15149,7 @@ void js_register_crossapp_CASegmentedControl(JSContext *cx, JS::HandleObject glo
         JS_FN("getImageForSegmentAtIndex", js_crossapp_CASegmentedControl_getImageForSegmentAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setContentOffsetForSegmentAtIndex", js_crossapp_CASegmentedControl_setContentOffsetForSegmentAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleColor", js_crossapp_CASegmentedControl_getTitleColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExitTransitionDidStart", js_crossapp_CASegmentedControl_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleForSegmentAtIndex", js_crossapp_CASegmentedControl_setTitleForSegmentAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTintColor", js_crossapp_CASegmentedControl_setTintColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleForSegmentAtIndex", js_crossapp_CASegmentedControl_getTitleForSegmentAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getImageColor", js_crossapp_CASegmentedControl_getImageColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -28890,6 +28974,27 @@ bool js_crossapp_CACheckbox_setTitleStateNormal(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleStateNormal : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CACheckbox_setTitleFont(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_setTitleFont : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAFont arg0;
+        ok &= jsval_to_cafont(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CACheckbox_setTitleFont : Error processing arguments");
+        cobj->setTitleFont(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleFont : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CACheckbox_setTitleOffset(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -28930,6 +29035,25 @@ bool js_crossapp_CACheckbox_setTitleColorStateNormal(JSContext *cx, uint32_t arg
     }
 
     JS_ReportError(cx, "js_crossapp_CACheckbox_setTitleColorStateNormal : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CACheckbox_getTitleFont(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACheckbox* cobj = (CrossApp::CACheckbox *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACheckbox_getTitleFont : Invalid Native Object");
+    if (argc == 0) {
+        const CrossApp::CAFont& ret = cobj->getTitleFont();
+        jsval jsret = JSVAL_NULL;
+        jsret = cafont_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACheckbox_getTitleFont : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CACheckbox_getImageStateSelected(JSContext *cx, uint32_t argc, jsval *vp)
@@ -29231,8 +29355,10 @@ void js_register_crossapp_CACheckbox(JSContext *cx, JS::HandleObject global) {
         JS_FN("getTitleStateNormal", js_crossapp_CACheckbox_getTitleStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleFontName", js_crossapp_CACheckbox_setTitleFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleStateNormal", js_crossapp_CACheckbox_setTitleStateNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleFont", js_crossapp_CACheckbox_setTitleFont, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleOffset", js_crossapp_CACheckbox_setTitleOffset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleColorStateNormal", js_crossapp_CACheckbox_setTitleColorStateNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTitleFont", js_crossapp_CACheckbox_getTitleFont, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getImageStateSelected", js_crossapp_CACheckbox_getImageStateSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleBold", js_crossapp_CACheckbox_setTitleBold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setImageOffset", js_crossapp_CACheckbox_setImageOffset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -52018,6 +52144,25 @@ bool js_crossapp_CGSpriteFrameCache_removeUnusedSpriteFrames(JSContext *cx, uint
     JS_ReportError(cx, "js_crossapp_CGSpriteFrameCache_removeUnusedSpriteFrames : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CGSpriteFrameCache_allImageFileNames(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CGSpriteFrameCache* cobj = (CrossApp::CGSpriteFrameCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSpriteFrameCache_allImageFileNames : Invalid Native Object");
+    if (argc == 0) {
+        std::vector<std::string, std::allocator<std::string> > ret = cobj->allImageFileNames();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_vector_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CGSpriteFrameCache_allImageFileNames : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CGSpriteFrameCache_removeSpriteFramesFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -52222,6 +52367,7 @@ void js_register_crossapp_CGSpriteFrameCache(JSContext *cx, JS::HandleObject glo
         JS_FN("addSpriteFramesWithFile", js_crossapp_CGSpriteFrameCache_addSpriteFramesWithFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addSpriteFrame", js_crossapp_CGSpriteFrameCache_addSpriteFrame, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeUnusedSpriteFrames", js_crossapp_CGSpriteFrameCache_removeUnusedSpriteFrames, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("allImageFileNames", js_crossapp_CGSpriteFrameCache_allImageFileNames, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeSpriteFramesFromFile", js_crossapp_CGSpriteFrameCache_removeSpriteFramesFromFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CGSpriteFrameCache_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeSpriteFrames", js_crossapp_CGSpriteFrameCache_removeSpriteFrames, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
