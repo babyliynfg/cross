@@ -165,28 +165,6 @@ ScriptingCore::~ScriptingCore()
     cleanup();
 }
 
-bool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc!=0)
-    {
-        JS_ReportError(cx, "Invalid number of arguments in __getPlatform");
-        return false;
-    }
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    TargetPlatform platform;
-    
-    // config.deviceType: Device Type
-    // 'mobile' for any kind of mobile devices, 'desktop' for PCs, 'browser' for Web Browsers
-    // #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    //     platform = JS_InternString(_cx, "desktop");
-    // #else
-    platform = CCApplication::sharedApplication()->getTargetPlatform();
-    // #endif
-    
-    args.rval().set(INT_TO_JSVAL((int)platform));
-    
-    return true;
-};
 bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc!=0)
@@ -312,7 +290,6 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS_DefineFunction(cx, global, "executeScript", ScriptingCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptingCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );

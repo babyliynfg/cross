@@ -241,7 +241,6 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 // 	    	params.width = pNewSurfaceWidth;
 // 	    	params.height = pNewSurfaceHeight;
             setLayoutParams(params);
-            mRenderer.handleOnResume();
         	mRenderer.setScreenWidthAndHeight(pNewSurfaceWidth, pNewSurfaceHeight);
         	
             this.queueEvent(new Runnable() 

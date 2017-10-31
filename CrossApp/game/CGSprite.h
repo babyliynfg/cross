@@ -135,6 +135,8 @@ public:
 
     virtual DRect boundingBox();
     
+    virtual const Mat4& getViewToSuperviewTransform() const;
+    
 protected:
 
     void updateRotation3D();

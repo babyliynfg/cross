@@ -531,4 +531,111 @@ DRect CGSprite::boundingBox()
     return rect;
 }
 
+const Mat4& CGSprite::getViewToSuperviewTransform() const
+{
+    if (m_bTransformDirty)
+    {
+        // Translate values
+        float width = 0;
+        float height = 0;
+        
+        if (this->m_pSuperview)
+        {
+            width = this->m_pSuperview->m_obContentSize.width;
+            height = this->m_pSuperview->m_obContentSize.height;
+        }
+        else
+        {
+            width = m_pApplication->getWinSize().width;
+            height = m_pApplication->getWinSize().height;
+        }
+        
+        float x = m_obPoint.x;
+        if (m_bUsingNormalizedPosition) x = m_obNormalizedPosition.x * width;
+        float y = (height - m_obPoint.y);
+        if (m_bUsingNormalizedPosition) y = (1 - m_obNormalizedPosition.y) * height;
+        float z = m_fPointZ;
+        
+        bool needsSkewMatrix = ( m_fSkewX || m_fSkewY );
+        
+        
+        DPoint anchorPoint(m_obAnchorPointInPoints.x * m_fScaleX, (m_obContentSize.height - m_obAnchorPointInPoints.y) * m_fScaleY);
+        
+        // calculate real position
+        if (! needsSkewMatrix && !anchorPoint.equals(DSizeZero))
+        {
+            x += -anchorPoint.x;
+            y += -anchorPoint.y;
+        }
+        
+        // Build Transform Matrix = translation * rotation * scale
+        Mat4 translation;
+        //move to anchor point first, then rotate
+        Mat4::createTranslation(x + anchorPoint.x, y + anchorPoint.y, z, &translation);
+        
+        Mat4::createRotation(m_obRotationQuat, &m_tTransform);
+        
+        m_tTransform = translation * m_tTransform;
+        //move by (-anchorPoint.x, -anchorPoint.y, 0) after rotation
+        m_tTransform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+        
+        
+        if (m_fScaleX != 1.f)
+        {
+            m_tTransform.m[0] *= m_fScaleX, m_tTransform.m[1] *= m_fScaleX, m_tTransform.m[2] *= m_fScaleX;
+        }
+        if (m_fScaleY != 1.f)
+        {
+            m_tTransform.m[4] *= m_fScaleY, m_tTransform.m[5] *= m_fScaleY, m_tTransform.m[6] *= m_fScaleY;
+        }
+        if (m_fScaleZ != 1.f)
+        {
+            m_tTransform.m[8] *= m_fScaleZ, m_tTransform.m[9] *= m_fScaleZ, m_tTransform.m[10] *= m_fScaleZ;
+        }
+        
+        // FIXME:: Try to inline skew
+        // If skew is needed, apply skew and then anchor point
+        if (needsSkewMatrix)
+        {
+            float skewMatArray[16] =
+            {
+                1, (float)tanf(CC_DEGREES_TO_RADIANS(m_fSkewY)), 0, 0,
+                (float)tanf(CC_DEGREES_TO_RADIANS(m_fSkewX)), 1, 0, 0,
+                0,  0,  1, 0,
+                0,  0,  0, 1
+            };
+            Mat4 skewMatrix(skewMatArray);
+            
+            m_tTransform = m_tTransform * skewMatrix;
+            
+            // adjust anchor point
+            if (!m_obAnchorPointInPoints.equals(DSizeZero))
+            {
+                // FIXME:: Argh, Mat4 needs a "translate" method.
+                // FIXME:: Although this is faster than multiplying a vec4 * mat4
+                DPoint anchorPoint(m_obAnchorPointInPoints.x * m_fScaleX, (m_obContentSize.height - m_obAnchorPointInPoints.y) * m_fScaleY);
+                m_tTransform.m[12] += m_tTransform.m[0] * -anchorPoint.x + m_tTransform.m[4] * -anchorPoint.y;
+                m_tTransform.m[13] += m_tTransform.m[1] * -anchorPoint.x + m_tTransform.m[5] * -anchorPoint.y;
+            }
+        }
+    }
+    
+    if (m_pAdditionalTransform)
+    {
+        if (m_bTransformDirty)
+        {
+            m_pAdditionalTransform[1] = m_tTransform;
+        }
+        
+        if (m_bTransformUpdated)
+        {
+            m_tTransform = m_pAdditionalTransform[1] * m_pAdditionalTransform[0];
+        }
+    }
+    m_bTransformDirty = m_bAdditionalTransformDirty = false;
+    
+    return m_tTransform;
+}
+
+
 NS_CC_END
