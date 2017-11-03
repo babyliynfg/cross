@@ -18596,6 +18596,16 @@ dpoint
 },
 
 /**
+ * @method getViewToSuperviewTransform
+ * @return {ca.Mat4}
+ */
+getViewToSuperviewTransform : function (
+)
+{
+    return ca.Mat4;
+},
+
+/**
  * @method getActionByTag
  * @param {int} arg0
  * @return {ca.Action}
@@ -22166,6 +22176,328 @@ float
  * @class ActionInstant
  */
 ca.ActionInstant = {
+
+};
+
+/**
+ * @class Show
+ */
+ca.Show = {
+
+/**
+ * @method create
+ * @return {ca.Show}
+ */
+create : function (
+)
+{
+    return ca.Show;
+},
+
+/**
+ * @method Show
+ * @constructor
+ */
+Show : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Hide
+ */
+ca.Hide = {
+
+/**
+ * @method create
+ * @return {ca.Hide}
+ */
+create : function (
+)
+{
+    return ca.Hide;
+},
+
+/**
+ * @method Hide
+ * @constructor
+ */
+Hide : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ToggleVisibility
+ */
+ca.ToggleVisibility = {
+
+/**
+ * @method create
+ * @return {ca.ToggleVisibility}
+ */
+create : function (
+)
+{
+    return ca.ToggleVisibility;
+},
+
+/**
+ * @method ToggleVisibility
+ * @constructor
+ */
+ToggleVisibility : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RemoveSelf
+ */
+ca.RemoveSelf = {
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @return {ca.RemoveSelf}
+ */
+create : function (
+)
+{
+    return ca.RemoveSelf;
+},
+
+/**
+ * @method RemoveSelf
+ * @constructor
+ */
+RemoveSelf : function (
+)
+{
+},
+
+};
+
+/**
+ * @class FlipX
+ */
+ca.FlipX = {
+
+/**
+ * @method initWithFlipX
+ * @param {bool} arg0
+ * @return {bool}
+ */
+initWithFlipX : function (
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {bool} arg0
+ * @return {ca.FlipX}
+ */
+create : function (
+bool 
+)
+{
+    return ca.FlipX;
+},
+
+/**
+ * @method FlipX
+ * @constructor
+ */
+FlipX : function (
+)
+{
+},
+
+};
+
+/**
+ * @class FlipY
+ */
+ca.FlipY = {
+
+/**
+ * @method initWithFlipY
+ * @param {bool} arg0
+ * @return {bool}
+ */
+initWithFlipY : function (
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {bool} arg0
+ * @return {ca.FlipY}
+ */
+create : function (
+bool 
+)
+{
+    return ca.FlipY;
+},
+
+/**
+ * @method FlipY
+ * @constructor
+ */
+FlipY : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Place
+ */
+ca.Place = {
+
+/**
+ * @method initWithPosition
+ * @param {point_object} arg0
+ * @return {bool}
+ */
+initWithPosition : function (
+dpoint 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {point_object} arg0
+ * @return {ca.Place}
+ */
+create : function (
+dpoint 
+)
+{
+    return ca.Place;
+},
+
+/**
+ * @method Place
+ * @constructor
+ */
+Place : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CallFunc
+ */
+ca.CallFunc = {
+
+/**
+ * @method execute
+ */
+execute : function (
+)
+{
+},
+
+/**
+ * @method initWithFunction
+ * @param {function} arg0
+ * @return {bool}
+ */
+initWithFunction : function (
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {function} arg0
+ * @return {ca.CallFunc}
+ */
+create : function (
+func 
+)
+{
+    return ca.CallFunc;
+},
+
+/**
+ * @method CallFunc
+ * @constructor
+ */
+CallFunc : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CallFuncN
+ */
+ca.CallFuncN = {
+
+/**
+ * @method initWithFunction
+ * @param {function} arg0
+ * @return {bool}
+ */
+initWithFunction : function (
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {function} arg0
+ * @return {ca.CallFuncN}
+ */
+create : function (
+func 
+)
+{
+    return ca.CallFuncN;
+},
+
+/**
+ * @method CallFuncN
+ * @constructor
+ */
+CallFuncN : function (
+)
+{
+},
 
 };
 

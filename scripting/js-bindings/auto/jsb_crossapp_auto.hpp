@@ -2335,6 +2335,7 @@ void js_register_crossapp_CGSprite(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CGSprite_stopActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_setNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CGSprite_getViewToSuperviewTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_runAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGSprite_initWithImage(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3054,6 +3055,103 @@ bool js_crossapp_ActionInstant_constructor(JSContext *cx, uint32_t argc, jsval *
 void js_crossapp_ActionInstant_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_ActionInstant(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+
+extern JSClass  *jsb_CrossApp_Show_class;
+extern JSObject *jsb_CrossApp_Show_prototype;
+
+bool js_crossapp_Show_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Show_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Show(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Show_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Show_Show(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Hide_class;
+extern JSObject *jsb_CrossApp_Hide_prototype;
+
+bool js_crossapp_Hide_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Hide_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Hide(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Hide_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Hide_Hide(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_ToggleVisibility_class;
+extern JSObject *jsb_CrossApp_ToggleVisibility_prototype;
+
+bool js_crossapp_ToggleVisibility_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_ToggleVisibility_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_ToggleVisibility(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_ToggleVisibility_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ToggleVisibility_ToggleVisibility(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_RemoveSelf_class;
+extern JSObject *jsb_CrossApp_RemoveSelf_prototype;
+
+bool js_crossapp_RemoveSelf_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_RemoveSelf_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_RemoveSelf(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_RemoveSelf_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RemoveSelf_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_RemoveSelf_RemoveSelf(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_FlipX_class;
+extern JSObject *jsb_CrossApp_FlipX_prototype;
+
+bool js_crossapp_FlipX_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_FlipX_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_FlipX(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_FlipX_initWithFlipX(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FlipX_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FlipX_FlipX(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_FlipY_class;
+extern JSObject *jsb_CrossApp_FlipY_prototype;
+
+bool js_crossapp_FlipY_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_FlipY_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_FlipY(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_FlipY_initWithFlipY(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FlipY_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_FlipY_FlipY(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Place_class;
+extern JSObject *jsb_CrossApp_Place_prototype;
+
+bool js_crossapp_Place_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Place_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Place(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Place_initWithPosition(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Place_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Place_Place(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CallFunc_class;
+extern JSObject *jsb_CrossApp_CallFunc_prototype;
+
+bool js_crossapp_CallFunc_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CallFunc_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CallFunc(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CallFunc_execute(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CallFunc_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CallFunc_CallFunc(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CallFuncN_class;
+extern JSObject *jsb_CrossApp_CallFuncN_prototype;
+
+bool js_crossapp_CallFuncN_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CallFuncN_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CallFuncN(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CallFuncN_initWithFunction(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CallFuncN_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CallFuncN_CallFuncN(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_ActionManager_class;
 extern JSObject *jsb_CrossApp_ActionManager_prototype;
