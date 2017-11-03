@@ -1010,16 +1010,16 @@ RotateBy* RotateBy::reverse() const
 
 MoveBy* MoveBy::create(float duration, const DPoint& deltaPosition)
 {
-    return MoveBy::create(duration, DPoint3D(deltaPosition.x, deltaPosition.y, 0));
+    return MoveBy::create3(duration, DPoint3D(deltaPosition.x, deltaPosition.y, 0));
 }
 
-MoveBy* MoveBy::create(float duration, const DPoint3D &deltaPosition)
+MoveBy* MoveBy::create3(float duration, const DPoint3D &deltaPosition)
 {
     MoveBy *ret = new (std::nothrow) MoveBy();
     
     if (ret)
     {
-        if (ret->initWithDuration(duration, deltaPosition))
+        if (ret->initWithDuration3(duration, deltaPosition))
         {
             ret->autorelease();
         }
@@ -1035,10 +1035,10 @@ MoveBy* MoveBy::create(float duration, const DPoint3D &deltaPosition)
 
 bool MoveBy::initWithDuration(float duration, const DPoint& deltaPosition)
 {
-    return MoveBy::initWithDuration(duration, DPoint3D(deltaPosition.x, deltaPosition.y, 0));
+    return MoveBy::initWithDuration3(duration, DPoint3D(deltaPosition.x, deltaPosition.y, 0));
 }
 
-bool MoveBy::initWithDuration(float duration, const DPoint3D& deltaPosition)
+bool MoveBy::initWithDuration3(float duration, const DPoint3D& deltaPosition)
 {
     bool ret = false;
     
@@ -1056,7 +1056,7 @@ MoveBy* MoveBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) MoveBy();
-    a->initWithDuration(_duration, _positionDelta);
+    a->initWithDuration3(_duration, _positionDelta);
     a->autorelease();
     return a;
 }
@@ -1069,7 +1069,7 @@ void MoveBy::startWithTarget(CGSprite *target)
 
 MoveBy* MoveBy::reverse() const
 {
-    return MoveBy::create(_duration, -_positionDelta);
+    return MoveBy::create3(_duration, -_positionDelta);
 }
 
 
@@ -1096,16 +1096,16 @@ void MoveBy::update(float t)
 
 MoveTo* MoveTo::create(float duration, const DPoint& position)
 {
-    return MoveTo::create(duration, DPoint3D(position.x, position.y, 0));
+    return MoveTo::create3(duration, DPoint3D(position.x, position.y, 0));
 }
 
-MoveTo* MoveTo::create(float duration, const DPoint3D& position)
+MoveTo* MoveTo::create3(float duration, const DPoint3D& position)
 {
     MoveTo *ret = new (std::nothrow) MoveTo();
     
     if (ret)
     {
-        if (ret->initWithDuration(duration, position))
+        if (ret->initWithDuration3(duration, position))
         {
             ret->autorelease();
         }
@@ -1121,10 +1121,10 @@ MoveTo* MoveTo::create(float duration, const DPoint3D& position)
 
 bool MoveTo::initWithDuration(float duration, const DPoint& position)
 {
-    return initWithDuration(duration, DPoint3D(position.x, position.y, 0));
+    return initWithDuration3(duration, DPoint3D(position.x, position.y, 0));
 }
 
-bool MoveTo::initWithDuration(float duration, const DPoint3D& position)
+bool MoveTo::initWithDuration3(float duration, const DPoint3D& position)
 {
     bool ret = false;
     
@@ -1141,7 +1141,7 @@ MoveTo* MoveTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) MoveTo();
-    a->initWithDuration(_duration, _endPosition);
+    a->initWithDuration3(_duration, _endPosition);
     a->autorelease();
     return a;
 }

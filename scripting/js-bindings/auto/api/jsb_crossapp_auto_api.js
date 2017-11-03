@@ -18596,6 +18596,14 @@ dpoint
 },
 
 /**
+ * @method onEnter
+ */
+onEnter : function (
+)
+{
+},
+
+/**
  * @method getViewToSuperviewTransform
  * @return {ca.Mat4}
  */
@@ -18673,6 +18681,14 @@ getScaleZ : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method onExit
+ */
+onExit : function (
+)
+{
 },
 
 /**
@@ -20505,13 +20521,27 @@ RotateBy : function (
 ca.MoveBy = {
 
 /**
+ * @method initWithDuration3
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {bool}
+ */
+initWithDuration3 : function (
+float, 
+dpoint3d 
+)
+{
+    return false;
+},
+
+/**
  * @method initWithDuration
-* @param {float|float} float
-* @param {point_object|point_object} dpoint3d
-* @return {bool|bool}
-*/
-initWithDuration : function(
-float,
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
 dpoint 
 )
 {
@@ -20519,13 +20549,27 @@ dpoint
 },
 
 /**
+ * @method create3
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {ca.MoveBy}
+ */
+create3 : function (
+float, 
+dpoint3d 
+)
+{
+    return ca.MoveBy;
+},
+
+/**
  * @method create
-* @param {float|float} float
-* @param {point_object|point_object} dpoint3d
-* @return {ca.MoveBy|ca.MoveBy}
-*/
-create : function(
-float,
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {ca.MoveBy}
+ */
+create : function (
+float, 
 dpoint 
 )
 {
@@ -20549,13 +20593,27 @@ MoveBy : function (
 ca.MoveTo = {
 
 /**
+ * @method initWithDuration3
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {bool}
+ */
+initWithDuration3 : function (
+float, 
+dpoint3d 
+)
+{
+    return false;
+},
+
+/**
  * @method initWithDuration
-* @param {float|float} float
-* @param {point_object|point_object} dpoint3d
-* @return {bool|bool}
-*/
-initWithDuration : function(
-float,
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
 dpoint 
 )
 {
@@ -20563,13 +20621,27 @@ dpoint
 },
 
 /**
+ * @method create3
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {ca.MoveTo}
+ */
+create3 : function (
+float, 
+dpoint3d 
+)
+{
+    return ca.MoveTo;
+},
+
+/**
  * @method create
-* @param {float|float} float
-* @param {point_object|point_object} dpoint3d
-* @return {ca.MoveTo|ca.MoveTo}
-*/
-create : function(
-float,
+ * @param {float} arg0
+ * @param {point_object} arg1
+ * @return {ca.MoveTo}
+ */
+create : function (
+float, 
 dpoint 
 )
 {
@@ -21659,6 +21731,588 @@ float
  * @constructor
  */
 EaseRateAction : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseIn
+ */
+ca.EaseIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {ca.EaseIn}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return ca.EaseIn;
+},
+
+/**
+ * @method EaseIn
+ * @constructor
+ */
+EaseIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseOut
+ */
+ca.EaseOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {ca.EaseOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return ca.EaseOut;
+},
+
+/**
+ * @method EaseOut
+ * @constructor
+ */
+EaseOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseInOut
+ */
+ca.EaseInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {ca.EaseInOut}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return ca.EaseInOut;
+},
+
+/**
+ * @method EaseInOut
+ * @constructor
+ */
+EaseInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseExponentialIn
+ */
+ca.EaseExponentialIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseExponentialIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseExponentialIn;
+},
+
+/**
+ * @method EaseExponentialIn
+ * @constructor
+ */
+EaseExponentialIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseExponentialOut
+ */
+ca.EaseExponentialOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseExponentialOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseExponentialOut;
+},
+
+/**
+ * @method EaseExponentialOut
+ * @constructor
+ */
+EaseExponentialOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseExponentialInOut
+ */
+ca.EaseExponentialInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseExponentialInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseExponentialInOut;
+},
+
+/**
+ * @method EaseExponentialInOut
+ * @constructor
+ */
+EaseExponentialInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseSineIn
+ */
+ca.EaseSineIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseSineIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseSineIn;
+},
+
+/**
+ * @method EaseSineIn
+ * @constructor
+ */
+EaseSineIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseSineOut
+ */
+ca.EaseSineOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseSineOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseSineOut;
+},
+
+/**
+ * @method EaseSineOut
+ * @constructor
+ */
+EaseSineOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseSineInOut
+ */
+ca.EaseSineInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseSineInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseSineInOut;
+},
+
+/**
+ * @method EaseSineInOut
+ * @constructor
+ */
+EaseSineInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElastic
+ */
+ca.EaseElastic = {
+
+/**
+ * @method setPeriod
+ * @param {float} arg0
+ */
+setPeriod : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithAction
+ * @param {ca.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithAction : function (
+actioninterval, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method getPeriod
+ * @return {float}
+ */
+getPeriod : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method EaseElastic
+ * @constructor
+ */
+EaseElastic : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElasticIn
+ */
+ca.EaseElasticIn = {
+
+/**
+ * @method create
+* @param {ca.ActionInterval|ca.ActionInterval} actioninterval
+* @param {float} float
+* @return {ca.EaseElasticIn|ca.EaseElasticIn}
+*/
+create : function(
+actioninterval,
+float 
+)
+{
+    return ca.EaseElasticIn;
+},
+
+/**
+ * @method EaseElasticIn
+ * @constructor
+ */
+EaseElasticIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElasticOut
+ */
+ca.EaseElasticOut = {
+
+/**
+ * @method create
+* @param {ca.ActionInterval|ca.ActionInterval} actioninterval
+* @param {float} float
+* @return {ca.EaseElasticOut|ca.EaseElasticOut}
+*/
+create : function(
+actioninterval,
+float 
+)
+{
+    return ca.EaseElasticOut;
+},
+
+/**
+ * @method EaseElasticOut
+ * @constructor
+ */
+EaseElasticOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseElasticInOut
+ */
+ca.EaseElasticInOut = {
+
+/**
+ * @method create
+* @param {ca.ActionInterval|ca.ActionInterval} actioninterval
+* @param {float} float
+* @return {ca.EaseElasticInOut|ca.EaseElasticInOut}
+*/
+create : function(
+actioninterval,
+float 
+)
+{
+    return ca.EaseElasticInOut;
+},
+
+/**
+ * @method EaseElasticInOut
+ * @constructor
+ */
+EaseElasticInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBounce
+ */
+ca.EaseBounce = {
+
+/**
+ * @method EaseBounce
+ * @constructor
+ */
+EaseBounce : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBounceIn
+ */
+ca.EaseBounceIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseBounceIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseBounceIn;
+},
+
+/**
+ * @method EaseBounceIn
+ * @constructor
+ */
+EaseBounceIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBounceOut
+ */
+ca.EaseBounceOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseBounceOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseBounceOut;
+},
+
+/**
+ * @method EaseBounceOut
+ * @constructor
+ */
+EaseBounceOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBounceInOut
+ */
+ca.EaseBounceInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseBounceInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseBounceInOut;
+},
+
+/**
+ * @method EaseBounceInOut
+ * @constructor
+ */
+EaseBounceInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBackIn
+ */
+ca.EaseBackIn = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseBackIn}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseBackIn;
+},
+
+/**
+ * @method EaseBackIn
+ * @constructor
+ */
+EaseBackIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBackOut
+ */
+ca.EaseBackOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseBackOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseBackOut;
+},
+
+/**
+ * @method EaseBackOut
+ * @constructor
+ */
+EaseBackOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EaseBackInOut
+ */
+ca.EaseBackInOut = {
+
+/**
+ * @method create
+ * @param {ca.ActionInterval} arg0
+ * @return {ca.EaseBackInOut}
+ */
+create : function (
+actioninterval 
+)
+{
+    return ca.EaseBackInOut;
+},
+
+/**
+ * @method EaseBackInOut
+ * @constructor
+ */
+EaseBackInOut : function (
 )
 {
 },

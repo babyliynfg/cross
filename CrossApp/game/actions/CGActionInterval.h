@@ -597,7 +597,7 @@ public:
      * @param deltaPosition The delta distance in 3d, it's a DPoint3D type.
      * @return An autoreleased MoveBy object.
      */
-    static MoveBy* create(float duration, const DPoint3D& deltaPosition);
+    static MoveBy* create3(float duration, const DPoint3D& deltaPosition);
 
     //
     // Overrides
@@ -616,7 +616,7 @@ public:
 
     /** initializes the action */
     bool initWithDuration(float duration, const DPoint& deltaPosition);
-    bool initWithDuration(float duration, const DPoint3D& deltaPosition);
+    bool initWithDuration3(float duration, const DPoint3D& deltaPosition);
 
 protected:
     bool _is3D;
@@ -650,7 +650,7 @@ public:
      * @param position The destination position in 3d.
      * @return An autoreleased MoveTo object.
      */
-    static MoveTo* create(float duration, const DPoint3D& position);
+    static MoveTo* create3(float duration, const DPoint3D& position);
 
     //
     // Overrides
@@ -672,7 +672,7 @@ public:
      * initializes the action
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, const DPoint3D& position);
+    bool initWithDuration3(float duration, const DPoint3D& position);
 
 protected:
     DPoint3D _endPosition;

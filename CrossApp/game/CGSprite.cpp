@@ -44,7 +44,20 @@ CGSprite::CGSprite(void)
 
 CGSprite::~CGSprite(void)
 {
+    this->stopAllActions();
     //CCLog("~CGSprite = %d\n", --spriteCount);
+}
+
+void CGSprite::onEnter()
+{
+    CAView::onEnter();
+    CAApplication::getApplication()->getActionManager()->resumeTarget(this);
+}
+
+void CGSprite::onExit()
+{
+    CAView::onExit();
+    CAApplication::getApplication()->getActionManager()->pauseTarget(this);
 }
 
 CGSprite* CGSprite::createWithImage(CAImage *image)

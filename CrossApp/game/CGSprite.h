@@ -137,6 +137,10 @@ public:
     
     virtual const Mat4& getViewToSuperviewTransform() const;
     
+    virtual void onEnter();
+    
+    virtual void onExit();
+    
 protected:
 
     void updateRotation3D();
