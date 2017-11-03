@@ -710,6 +710,31 @@ ca.DRect.intersectsRect = function (r1, r2)
     return true;
 };
 
+ca.DRect.containsPoint = function (r, p)
+{
+    if (r.x + r.width < p.x)
+    {
+        return false;
+    }
+
+    if (r.x > p.x)
+    {
+        return false;
+    }
+
+    if (r.y + r.height < p.y)
+    {
+        return false;
+    }
+
+    if (r.y > p.y)
+    {
+        return false;
+    }
+
+    return true;
+};
+
 ca.CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
 ca.CROSSAPP_CCLOG_NOTIFICATION = "CROSSAPP_CCLOG_NOTIFICATION";
 
