@@ -474,12 +474,7 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (atof(CADevice::getSystemVersion().version.c_str()) >= 7.0f)
-    {
-        m_bClearance = this->getView()->convertToWorldSpace(DPointZero).y < 1;
-    }
-#endif
+    m_bClearance = this->getView()->convertToWorldSpace(DPointZero).y < 1;
     
     m_iNavigationBarHeight = m_bClearance ? 128 : 88;
     
@@ -1426,8 +1421,7 @@ void CATabBarController::viewDidLoad()
     bool clearance = false;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (atof(CADevice::getSystemVersion().version.c_str()) >= 7.0f
-        && m_iTabBarHeight == 0
+    if (m_iTabBarHeight == 0
         && m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
     {
         clearance = true;

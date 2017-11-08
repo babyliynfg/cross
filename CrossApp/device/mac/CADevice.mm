@@ -10,71 +10,97 @@
 
 NS_CC_BEGIN
 
-namespace CADevice
+const CAValueMap& CADevice::getSystemVersion()
 {
-    const char* getSystemVersionWithIOS()
-    {
-        return "";
-    }
+    NSTask *task;
+    task = [[NSTask alloc] init];
+    [task setLaunchPath: @"/usr/bin/sw_vers"];
     
-    const char* getAppVersion()
-    {
-        return "";
-    }
+    NSArray *arguments;
+    arguments = [NSArray arrayWithObjects: @"-productVersion", nil];
+    [task setArguments: arguments];
     
-    void setScreenBrightness(float brightness)
-    {
-     
-    }
+    NSPipe *pipe;
+    pipe = [NSPipe pipe];
+    [task setStandardOutput: pipe];
     
-    float getScreenBrightness()
-    {
-        return 0;
-    }
+    NSFileHandle *file;
+    file = [pipe fileHandleForReading];
     
-    CADevice::NetWorkData getNetWorkType()
-    {
-        return CADevice::NetWorkData::None;
-    }
+    [task launch];
     
-    bool isNetWorkAvailble()
-    {
-        return true;
-    }
+    NSData *data;
+    data = [file readDataToEndOfFile];
     
-    CADevice::WifiDate getWifiConnectionInfo()
-    {
-        CADevice::WifiDate wifiInfo;
+    NSString *string;
+    string = [[NSString alloc] initWithData: data
+                                   encoding: NSUTF8StringEncoding];
+    
+    CAValueMap valueMap;
+    valueMap["os"] = "OS X";
+    valueMap["version"] = [string UTF8String];
+    return valueMap;
+}
 
-        return wifiInfo;
-    }
+const std::string& CADevice::getAppVersion()
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleVersion"];
+    return [app_Version UTF8String];
+}
+
+void CADevice::setScreenBrightness(float brightness)
+{
     
-    void setVolume(float sender, CADevice::VolumeData type)
-    {
-    }
+}
+
+float CADevice::getScreenBrightness()
+{
+    return 0;
+}
+
+CADevice::NetWorkData CADevice::getNetWorkType()
+{
+    return CADevice::NetWorkData::Wifi;
+}
+
+bool CADevice::isNetWorkAvailble()
+{
+    return true;
+}
+
+CADevice::WifiDate CADevice::getWifiConnectionInfo()
+{
+    CADevice::WifiDate wifiInfo;
     
-    float getVolume(CADevice::VolumeData type)
-    {
-        return 0;
-    }
-    
-    float getBatteryLevel()
-    {
-        return 0;
-    }
-    
-    void sendLocalNotification(const char* title, const char* content,int time)
-    {
-            }
-    
-    void openUrl(const std::string &url)
-    {
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];
-    }
-    
-    void setIdleTimerDisabled(bool isIdleTimerDisabled)
-    {
-    }
-};
+    return wifiInfo;
+}
+
+void CADevice::setVolume(float sender, CADevice::VolumeData type)
+{
+}
+
+float CADevice::getVolume(CADevice::VolumeData type)
+{
+    return 0;
+}
+
+float CADevice::getBatteryLevel()
+{
+    return 1.0f;
+}
+
+void CADevice::sendLocalNotification(const char* title, const char* content,int time)
+{
+}
+
+void CADevice::openUrl(const std::string &url)
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];
+}
+
+void CADevice::setIdleTimerDisabled(bool isIdleTimerDisabled)
+{
+}
 
 NS_CC_END

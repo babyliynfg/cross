@@ -81,14 +81,14 @@ void CACell::setBackgroundImage(CAImage* image, bool isScale9)
         {
             CAScale9ImageView* backgroundView = CAScale9ImageView::createWithImage(image);
             backgroundView->setLayout(DLayoutFill);
-            this->insertSubview(backgroundView, -1);
+            m_pContentView->insertSubview(backgroundView, -1);
             m_pBackgroundView = backgroundView;
         }
         else
         {
             CAImageView* backgroundView = CAImageView::createWithImage(image);
             backgroundView->setLayout(DLayoutFill);
-            this->insertSubview(backgroundView, -1);
+            m_pContentView->insertSubview(backgroundView, -1);
             m_pBackgroundView = backgroundView;
         }
     }
@@ -113,10 +113,12 @@ void CACell::setControlState(CAControl::State var)
 {
     if (m_bAllowsSelected == false && var == CAControl::State::Selected)
     {
+        CC_RETURN_IF(m_eState == CAControl::State::Normal);
         m_eState = CAControl::State::Normal;
     }
     else
     {
+        CC_RETURN_IF(m_eState == var);
         m_eState = var;
     }
     

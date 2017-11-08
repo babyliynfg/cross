@@ -514,11 +514,6 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
             CCLog("Evaluating %s failed (evaluatedOK == JS_FALSE)", path);
             JS_ReportPendingException(cx);
         }
-//        else
-//        {
-//            JSString *str = rval.toString();
-//            printf("Runscript:-->%s",JS_EncodeString(cx, str));
-//        }
     }
     
     return evaluatedOK;
@@ -536,8 +531,8 @@ bool ScriptingCore::requireScript(const char *path, JS::HandleObject global, JSC
         cx = _cx;
     }
     
-    compileScript(path,global,cx);
-    JS::RootedScript script(cx,getScript(path));
+    this->compileScript(path, global, cx);
+    JS::RootedScript script(cx, this->getScript(path));
     bool evaluateOK = false;
     if (script) {
         JSAutoCompartment ac(cx,global);

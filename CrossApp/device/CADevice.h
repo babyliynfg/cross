@@ -4,13 +4,16 @@
 #define CADevice_h
 
 #include "basics/CAObject.h"
+#include "basics/CAValue.h"
 NS_CC_BEGIN
 
-namespace CADevice
+class CADevice
 {
+public:
+    
     enum class NetWorkData : int
     {
-        Wifi=0,
+        Wifi = 0,
         ReachableViaWWAN,
         None,
     };
@@ -31,44 +34,32 @@ namespace CADevice
         Alarm,
         Notification
     };
-        
-    enum class PlatForm : int
-    {
-        ios,
-        android,
-    };
-        
-    struct SystemVersion
-    {
-        PlatForm platform;
-        std::string version;
-    };
-        
-    CADevice::SystemVersion getSystemVersion();
 
-    const char* getAppVersion();
+    static const CAValueMap& getSystemVersion();
+
+    static const std::string& getAppVersion();
         
-    void setScreenBrightness(float brightness);
+    static void setScreenBrightness(float brightness);
     
-    float getScreenBrightness();
+    static float getScreenBrightness();
         
-    CADevice::NetWorkData getNetWorkType();
+    static CADevice::NetWorkData getNetWorkType();
     
-    CADevice::WifiDate getWifiConnectionInfo();
+    static CADevice::WifiDate getWifiConnectionInfo();
         
-    bool isNetWorkAvailble();
+    static bool isNetWorkAvailble();
         
-    void setVolume(float sender, CADevice::VolumeData type);
+    static void setVolume(float sender, CADevice::VolumeData type);
     
-    float getVolume(CADevice::VolumeData type);
+    static float getVolume(CADevice::VolumeData type);
     
-    float getBatteryLevel();
+    static float getBatteryLevel();
         
-    void sendLocalNotification(const char* title, const char* content, int time);
+    static void sendLocalNotification(const char* title, const char* content, int time);
         
-    void openUrl(const std::string &url);
+    static void openUrl(const std::string &url);
         
-    void setIdleTimerDisabled(bool isIdleTimerDisabled);
+    static void setIdleTimerDisabled(bool isIdleTimerDisabled);
 };
 
 NS_CC_END

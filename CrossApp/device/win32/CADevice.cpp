@@ -9,58 +9,65 @@
 #include "../CADevice.h"
 
 NS_CC_BEGIN
-namespace CADevice
+
+const CAValueMap& CADevice::getSystemVersion()
 {
-    const char* getAppVersion()
-    {
-        return "";
-    }
+    CAValueMap valueMap;
+    valueMap["os"] = "Windows";
+    valueMap["version"] = "Windows";
+    return valueMap;
+}
 
-    void setScreenBrightness(float brightness)
-    {
-    }
+const std::string& CADevice::getAppVersion()
+{
+    return "";
+}
 
-    float getScreenBrightness()
-    {
-        return 0.f;
-    }
+void CADevice::setScreenBrightness(float brightness)
+{
+}
 
-    CADevice::NetWorkData getNetWorkType()
-    {
-		return NetWorkData::Wifi;
-    }
+float CADevice::getScreenBrightness()
+{
+    return 0.f;
+}
 
-    bool isNetWorkAvailble()
-    {
-        return true;
-    }
+CADevice::NetWorkData CADevice::getNetWorkType()
+{
+    return NetWorkData::Wifi;
+}
 
-    void setVolume(float sender, CADevice::VolumeData type)
-	{
-    }
+bool CADevice::isNetWorkAvailble()
+{
+    return true;
+}
 
-    float getVolume(CADevice::VolumeData type)
-    {
-		return 0.0f;
-    }
+void CADevice::setVolume(float sender, CADevice::VolumeData type)
+{
+}
 
-    float getBatteryLevel()
-    {
-        return 0.f;
-    }
+float CADevice::getVolume(CADevice::VolumeData type)
+{
+    return 0.0f;
+}
 
-    void sendLocalNotification(const char* title, const char* content,int time)
-    {
-    }
+float CADevice::getBatteryLevel()
+{
+    return 0.f;
+}
 
-    void openUrl(const std::string &url)
-    {
-		::ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOW);
-    }
+void CADevice::sendLocalNotification(const char* title, const char* content,int time)
+{
+}
 
-    void setIdleTimerDisabled(bool isIdleTimerDisabled)
-    {
+void CADevice::openUrl(const std::string &url)
+{
+    ::ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOW);
+}
 
-    }
-};
+void CADevice::setIdleTimerDisabled(bool isIdleTimerDisabled)
+{
+    
+}
+
 NS_CC_END
