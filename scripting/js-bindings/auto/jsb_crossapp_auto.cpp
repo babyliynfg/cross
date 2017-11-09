@@ -49516,6 +49516,254 @@ void js_register_crossapp_CAFontProcesstor(JSContext *cx, JS::HandleObject globa
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CADevice_class;
+JSObject *jsb_CrossApp_CADevice_prototype;
+
+bool js_crossapp_CADevice_getVolume(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CADevice::VolumeData arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADevice_getVolume : Error processing arguments");
+        double ret = CrossApp::CADevice::getVolume(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_getVolume : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_openUrl(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADevice_openUrl : Error processing arguments");
+        CrossApp::CADevice::openUrl(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_openUrl : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_getAppVersion(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        const std::string& ret = CrossApp::CADevice::getAppVersion();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_getAppVersion : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_getScreenBrightness(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        double ret = CrossApp::CADevice::getScreenBrightness();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_getScreenBrightness : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_getNetWorkType(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        int ret = (int)CrossApp::CADevice::getNetWorkType();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_getNetWorkType : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_getSystemVersion(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        const CrossApp::CAValueMap& ret = CrossApp::CADevice::getSystemVersion();
+        jsval jsret = JSVAL_NULL;
+        jsret = cavaluemap_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_getSystemVersion : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_getBatteryLevel(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        double ret = CrossApp::CADevice::getBatteryLevel();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_getBatteryLevel : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_setIdleTimerDisabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADevice_setIdleTimerDisabled : Error processing arguments");
+        CrossApp::CADevice::setIdleTimerDisabled(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_setIdleTimerDisabled : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_sendLocalNotification(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 3) {
+        const char* arg0 = nullptr;
+        const char* arg1 = nullptr;
+        int arg2 = 0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADevice_sendLocalNotification : Error processing arguments");
+        CrossApp::CADevice::sendLocalNotification(arg0, arg1, arg2);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_sendLocalNotification : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_setScreenBrightness(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADevice_setScreenBrightness : Error processing arguments");
+        CrossApp::CADevice::setScreenBrightness(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_setScreenBrightness : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_setVolume(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        double arg0 = 0;
+        CrossApp::CADevice::VolumeData arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADevice_setVolume : Error processing arguments");
+        CrossApp::CADevice::setVolume(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_setVolume : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADevice_isNetWorkAvailble(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        bool ret = CrossApp::CADevice::isNetWorkAvailble();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADevice_isNetWorkAvailble : wrong number of arguments");
+    return false;
+}
+
+void js_CrossApp_CADevice_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CADevice)", obj);
+}
+void js_register_crossapp_CADevice(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CADevice_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CADevice_class->name = "CADevice";
+    jsb_CrossApp_CADevice_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CADevice_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CADevice_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CADevice_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CADevice_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CADevice_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CADevice_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CADevice_class->finalize = js_CrossApp_CADevice_finalize;
+    jsb_CrossApp_CADevice_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("getVolume", js_crossapp_CADevice_getVolume, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("openUrl", js_crossapp_CADevice_openUrl, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAppVersion", js_crossapp_CADevice_getAppVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getScreenBrightness", js_crossapp_CADevice_getScreenBrightness, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getNetWorkType", js_crossapp_CADevice_getNetWorkType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getSystemVersion", js_crossapp_CADevice_getSystemVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBatteryLevel", js_crossapp_CADevice_getBatteryLevel, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setIdleTimerDisabled", js_crossapp_CADevice_setIdleTimerDisabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("sendLocalNotification", js_crossapp_CADevice_sendLocalNotification, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setScreenBrightness", js_crossapp_CADevice_setScreenBrightness, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setVolume", js_crossapp_CADevice_setVolume, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isNetWorkAvailble", js_crossapp_CADevice_isNetWorkAvailble, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CADevice_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_CrossApp_CADevice_class,
+        dummy_constructor<CrossApp::CADevice>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CADevice", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CADevice> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CADevice_class;
+        p->proto = jsb_CrossApp_CADevice_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CAMotionManager_class;
 JSObject *jsb_CrossApp_CAMotionManager_prototype;
 
@@ -68408,6 +68656,8 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAControl(cx, ns);
     js_register_crossapp_CACustomAnimation(cx, ns);
     js_register_crossapp_ActionInterval(cx, ns);
+    js_register_crossapp_BezierBy(cx, ns);
+    js_register_crossapp_BezierTo(cx, ns);
     js_register_crossapp_ActionCamera(cx, ns);
     js_register_crossapp_CATabBar(cx, ns);
     js_register_crossapp_MoveBy(cx, ns);
@@ -68517,8 +68767,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_EaseCircleActionOut(cx, ns);
     js_register_crossapp_EaseQuarticActionOut(cx, ns);
     js_register_crossapp_EaseBackIn(cx, ns);
-    js_register_crossapp_BezierBy(cx, ns);
-    js_register_crossapp_BezierTo(cx, ns);
+    js_register_crossapp_CADevice(cx, ns);
     js_register_crossapp_CAImagePickerController(cx, ns);
     js_register_crossapp_TintBy(cx, ns);
     js_register_crossapp_Animate(cx, ns);

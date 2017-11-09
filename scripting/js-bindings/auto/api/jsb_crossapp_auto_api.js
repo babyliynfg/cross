@@ -18463,6 +18463,141 @@ cafont
 };
 
 /**
+ * @class CADevice
+ */
+ca.CADevice = {
+
+/**
+ * @method getVolume
+ * @param {ca.CADevice::VolumeData} arg0
+ * @return {float}
+ */
+getVolume : function (
+volumedata 
+)
+{
+    return 0;
+},
+
+/**
+ * @method openUrl
+ * @param {String} arg0
+ */
+openUrl : function (
+str 
+)
+{
+},
+
+/**
+ * @method getAppVersion
+ * @return {String}
+ */
+getAppVersion : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getScreenBrightness
+ * @return {float}
+ */
+getScreenBrightness : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNetWorkType
+ * @return {ca.CADevice::NetWorkData}
+ */
+getNetWorkType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSystemVersion
+ * @return {map_object}
+ */
+getSystemVersion : function (
+)
+{
+    return map_object;
+},
+
+/**
+ * @method getBatteryLevel
+ * @return {float}
+ */
+getBatteryLevel : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setIdleTimerDisabled
+ * @param {bool} arg0
+ */
+setIdleTimerDisabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method sendLocalNotification
+ * @param {char} arg0
+ * @param {char} arg1
+ * @param {int} arg2
+ */
+sendLocalNotification : function (
+char, 
+char, 
+int 
+)
+{
+},
+
+/**
+ * @method setScreenBrightness
+ * @param {float} arg0
+ */
+setScreenBrightness : function (
+float 
+)
+{
+},
+
+/**
+ * @method setVolume
+ * @param {float} arg0
+ * @param {ca.CADevice::VolumeData} arg1
+ */
+setVolume : function (
+float, 
+volumedata 
+)
+{
+},
+
+/**
+ * @method isNetWorkAvailble
+ * @return {bool}
+ */
+isNetWorkAvailble : function (
+)
+{
+    return false;
+},
+
+};
+
+/**
  * @class CAMotionManager
  */
 ca.CAMotionManager = {

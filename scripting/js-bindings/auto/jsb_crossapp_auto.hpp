@@ -2301,6 +2301,26 @@ bool js_crossapp_CAFontProcesstor_imageForText(JSContext *cx, uint32_t argc, jsv
 bool js_crossapp_CAFontProcesstor_heightForTextAtWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAFontProcesstor_widthForTextAtOneLine(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CADevice_class;
+extern JSObject *jsb_CrossApp_CADevice_prototype;
+
+bool js_crossapp_CADevice_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CADevice_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CADevice(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CADevice_getVolume(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_openUrl(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_getAppVersion(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_getScreenBrightness(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_getNetWorkType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_getSystemVersion(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_getBatteryLevel(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_setIdleTimerDisabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_sendLocalNotification(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_setScreenBrightness(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_setVolume(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADevice_isNetWorkAvailble(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CAMotionManager_class;
 extern JSObject *jsb_CrossApp_CAMotionManager_prototype;
 

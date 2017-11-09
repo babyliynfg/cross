@@ -70,29 +70,29 @@ bool CADevice::isNetWorkAvailble()
     return [reach isReachable];
 }
 
-CADevice::WifiDate CADevice::getWifiConnectionInfo()
-{
-    NSArray *array = (id)CNCopySupportedInterfaces();
-    id info = nil;
-    for (NSString *ifnam in array) {
-        info = (id)CNCopyCurrentNetworkInfo((CFStringRef)ifnam);
-        if (info && [info count]) {
-            
-            break;
-        }
-        [info release];
-    }
-    [array release];
-    NSDictionary *dic = info;
-    NSString *ssid = [[dic objectForKey:@"SSID"] lowercaseString];
-    NSString *mac = [[dic objectForKey:@"BSSID"] lowercaseString];
-    
-    CADevice::WifiDate wifiInfo;
-    wifiInfo.ssid = [ssid cStringUsingEncoding:NSUTF8StringEncoding];
-    wifiInfo.mac = [mac cStringUsingEncoding:NSUTF8StringEncoding];
-    wifiInfo.level = 0;
-    return wifiInfo;
-}
+//CADevice::WifiDate CADevice::getWifiConnectionInfo()
+//{
+//    NSArray *array = (id)CNCopySupportedInterfaces();
+//    id info = nil;
+//    for (NSString *ifnam in array) {
+//        info = (id)CNCopyCurrentNetworkInfo((CFStringRef)ifnam);
+//        if (info && [info count]) {
+//            
+//            break;
+//        }
+//        [info release];
+//    }
+//    [array release];
+//    NSDictionary *dic = info;
+//    NSString *ssid = [[dic objectForKey:@"SSID"] lowercaseString];
+//    NSString *mac = [[dic objectForKey:@"BSSID"] lowercaseString];
+//    
+//    CADevice::WifiDate wifiInfo;
+//    wifiInfo.ssid = [ssid cStringUsingEncoding:NSUTF8StringEncoding];
+//    wifiInfo.mac = [mac cStringUsingEncoding:NSUTF8StringEncoding];
+//    wifiInfo.level = 0;
+//    return wifiInfo;
+//}
 
 void CADevice::setVolume(float sender, CADevice::VolumeData type)
 {

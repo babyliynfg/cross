@@ -18,12 +18,12 @@ public:
         None,
     };
     
-    struct WifiDate
-    {
-        std::string ssid;
-        int level{0};
-        std::string mac;
-    };
+//    struct WifiDate
+//    {
+//        std::string ssid;
+//        int level{0};
+//        std::string mac;
+//    };
     
     enum class VolumeData : int
     {
@@ -45,8 +45,8 @@ public:
         
     static CADevice::NetWorkData getNetWorkType();
     
-    static CADevice::WifiDate getWifiConnectionInfo();
-        
+//    static CADevice::WifiDate getWifiConnectionInfo();
+    
     static bool isNetWorkAvailble();
         
     static void setVolume(float sender, CADevice::VolumeData type);

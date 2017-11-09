@@ -69,12 +69,12 @@ bool CADevice::isNetWorkAvailble()
     return true;
 }
 
-CADevice::WifiDate CADevice::getWifiConnectionInfo()
-{
-    CADevice::WifiDate wifiInfo;
-    
-    return wifiInfo;
-}
+//CADevice::WifiDate CADevice::getWifiConnectionInfo()
+//{
+//    CADevice::WifiDate wifiInfo;
+//
+//    return wifiInfo;
+//}
 
 void CADevice::setVolume(float sender, CADevice::VolumeData type)
 {
