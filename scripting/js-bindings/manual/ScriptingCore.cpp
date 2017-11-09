@@ -321,14 +321,14 @@ static JSSecurityCallbacks securityCallbacks = {
 
 void ScriptingCore::createGlobalContext()
 {
-//    if (_cx && _rt)
-//    {
-//        ScriptingCore::removeAllRoots(_cx);
-//        JS_DestroyContext(_cx);
-//        JS_DestroyRuntime(_rt);
-//        _cx = nullptr;
-//        _rt = nullptr;
-//    }
+    if (_cx && _rt)
+    {
+        ScriptingCore::removeAllRoots(_cx);
+        JS_DestroyContext(_cx);
+        JS_DestroyRuntime(_rt);
+        _cx = nullptr;
+        _rt = nullptr;
+    }
     
     if (!_jsInited && !JS_Init())
     {
@@ -378,7 +378,7 @@ bool ScriptingCore::evalString(const char *string)
     return evalString(string, &retVal);
 }
 
-bool ScriptingCore::evalString(const char *string,JS::RootedValue *outVal, const char *filename, JSContext *cx, JSObject* global )
+bool ScriptingCore::evalString(const char *string, JS::RootedValue *outVal, const char *filename, JSContext *cx, JSObject* global )
 {
     if (cx == NULL) {
         cx = _cx;
@@ -390,13 +390,16 @@ bool ScriptingCore::evalString(const char *string,JS::RootedValue *outVal, const
     JSAutoCompartment ac(cx,global);
     JS::RootedObject cc(cx, global);
     JS::RootedValue rval(cx);
-    bool ok =  JS_EvaluateScript(cx, cc, string, strlen(string), "ScriptingCore::evalString", 1,&rval);
+    bool ok =  JS_EvaluateScript(cx, cc, string, strlen(string), "ScriptingCore::evalString", 1, &rval);
     /*
     if (ok) {
         JSString *str = rval.toString();
         printf("javascript:-->%s",JS_EncodeString(cx, str));
     }
     */
+    if (!ok) {
+        CCLog("ScriptingCore::evalString faild-->   %s",string);
+    }
     return ok;
 }
 
@@ -614,7 +617,7 @@ void ScriptingCore::cleanup()
     filename_script.clear();
     registrationList.clear();
     
-     _needCleanup = false;
+    _needCleanup = false;
 }
 void ScriptingCore::reset()
 {
