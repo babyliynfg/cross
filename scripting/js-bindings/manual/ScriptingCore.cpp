@@ -145,6 +145,7 @@ ScriptingCore::ScriptingCore()
 ,_global(nullptr)
 ,_debugGlobal(nullptr)
 ,_callFromScript(false)
+,_enabledReportError(false)
 {
     initRegister();
 }
@@ -624,6 +625,11 @@ void ScriptingCore::reset()
     CAApplication::getApplication()->restart();
 }
 
+void ScriptingCore::setEnabledReportError(bool var)
+{
+    _enabledReportError = var;
+}
+
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
 {
     std::string error_info = CrossApp::crossapp_format_string("%s:%u:%s\n",
@@ -632,7 +638,7 @@ void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorRepor
                                                               message);
     js_log(error_info.c_str());
     
-    if (true)
+    if (ScriptingCore::getInstance()->_enabledReportError)
     {
         CAAlertView::create("JavaScript报错信息", error_info)->show();
     }
