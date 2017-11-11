@@ -626,10 +626,16 @@ void ScriptingCore::reset()
 
 void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorReport *report)
 {
-    js_log("%s:%u:%s\n",
-           report->filename ? report->filename : "<no filename=\"filename\">",
-           (unsigned int) report->lineno,
-           message);
+    std::string error_info = CrossApp::crossapp_format_string("%s:%u:%s\n",
+                                                              report->filename ? report->filename : "<no filename=\"filename\">",
+                                                              (unsigned int) report->lineno,
+                                                              message);
+    js_log(error_info.c_str());
+    
+    if (true)
+    {
+        CAAlertView::create("JavaScript报错信息", error_info)->show();
+    }
 };
 
 void removeJSObject(JSContext* cx, void* nativeObj)

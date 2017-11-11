@@ -323,6 +323,12 @@ void CAScheduler::schedule(SEL_Schedule selector, CrossApp::CAObject *target, fl
 
 void CAScheduler::schedule(const CAScheduler::Callback& callback, const std::string& callbackName, CAObject *target, float interval, unsigned int repeat, float delay, bool paused)
 {
+    if (callbackName.empty())
+    {
+        CCLog("error, callbackName can not be empty.");
+        return;
+    }
+    
     CCAssert(target, "Argument target must be non-nullptr");
     CCAssert(!callbackName.empty(), "key should not be empty!");
     

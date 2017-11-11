@@ -905,6 +905,8 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
         //CCLOG("Default root path doesn't exist, adding it.");
         _searchPathArray.push_back(_defaultResRootPath);
     }
+    
+	CAApplication::getApplication()->setThemeManager(CAThemeManager::create("source_material"));
 }
 
 void FileUtils::addSearchPath(const std::string &searchpath,const bool front)

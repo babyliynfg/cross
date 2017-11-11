@@ -1016,127 +1016,7 @@ var _initSys = function () {
      * @type {string}
      */
     sys.OS_UNKNOWN = "Unknown";
-    
-    /**
-     * @memberof ca.sys
-     * @name UNKNOWN
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.UNKNOWN = -1;
-    /**
-     * @memberof ca.sys
-     * @name WIN32
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.WIN32 = 0;
-    /**
-     * @memberof ca.sys
-     * @name LINUX
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.LINUX = 1;
-    /**
-     * @memberof ca.sys
-     * @name MACOS
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.MACOS = 2;
-    /**
-     * @memberof ca.sys
-     * @name ANDROID
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.ANDROID = 3;
-    /**
-     * @memberof ca.sys
-     * @name IOS
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.IPHONE = 4;
-    /**
-     * @memberof ca.sys
-     * @name IOS
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.IPAD = 5;
-    /**
-     * @memberof ca.sys
-     * @name BLACKBERRY
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.BLACKBERRY = 6;
-    /**
-     * @memberof ca.sys
-     * @name NACL
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.NACL = 7;
-    /**
-     * @memberof ca.sys
-     * @name EMSCRIPTEN
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.EMSCRIPTEN = 8;
-    /**
-     * @memberof ca.sys
-     * @name TIZEN
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.TIZEN = 9;
-    /**
-     * @memberof ca.sys
-     * @name WINRT
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.WINRT = 10;
-    /**
-     * @memberof ca.sys
-     * @name WP8
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.WP8 = 11;
-    /**
-     * @memberof ca.sys
-     * @name MOBILE_BROWSER
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.MOBILE_BROWSER = 100;
-    /**
-     * @memberof ca.sys
-     * @name DESKTOP_BROWSER
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.DESKTOP_BROWSER = 101;
+
     
     sys.BROWSER_TYPE_WECHAT = "wechat";
     sys.BROWSER_TYPE_ANDROID = "androidbrowser";
@@ -1166,24 +1046,15 @@ var _initSys = function () {
      * @type {Boolean}
      */
     sys.isNative = true;
-    
-    /**
-     * Indicate the running platform
-     * @memberof ca.sys
-     * @name platform
-     * @type {Number}
-     */
-    var platform = sys.platform = __getPlatform();
-    
+
     /**
      * Indicate whether system is mobile system
      * @memberof ca.sys
      * @name isMobile
      * @type {Boolean}
      */
-    sys.isMobile = (platform === sys.ANDROID ||
-                    platform === sys.IPAD ||
-                    platform === sys.IPHONE) ? true : false;
+    sys.isMobile = (sys.os === sys.OS_ANDROID ||
+                    sys.os === sys.OS_IOS) ? true : false;
     
     /**
      * Indicate the current language of the running system
@@ -1347,13 +1218,36 @@ ca.log = function (str){log(str);};
 
 ca.logArray = function (array)
 {
-    ca.log("******** <logArray> ********");
-    ca.log("[key]: [value]");
+    /********************************/
+    _logArray_ = function (array, _key_)
+    {
+        for (var key in array)
+        {
+            var k = _key_ + "." + key;
+            if (array[key] instanceof Object)
+            {
+                _logArray_(array[key], k);
+            }
+            else {
+                ca.log(k + " :        " + array[key]);
+            }
+        }
+    }
+    /********************************/
+
+    ca.log("<--------logArray-------->");
+    ca.log("[key] :     [value]");
     for (var key in array)
     {
-        ca.log( key + ": " + array[key]);
+        if (array[key] instanceof Object)
+        {
+            _logArray_(array[key], key);
+        }
+        else {
+            ca.log(key + " :     " + array[key]);
+        }
     }
-    ca.log("****************\n");
+    ca.log("<________logArray-End________>\n");
 }
 
 

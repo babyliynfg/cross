@@ -635,8 +635,10 @@ ca.DPoint.set = function( _x, _y )
     return {x:_x, y:_y};
 };
 
-ca.DPointZero = {x:0, y:0};
-
+ca.DPointZero = function ()
+{
+    return ca.DPoint.set(0, 0);
+};
 
 ca.DPointEquals = function (p1, p2)
 {
@@ -661,7 +663,10 @@ ca.DSizeEquals = function (s1, s2)
     return ((s1.width == s2.width) && (s1.height == s2.height));
 };
 
-ca.DSizeZero = {width:0, height:0};
+ca.DSizeZero = function ()
+{
+    return ca.DSize.set(0, 0);
+};
 
 ca.DRect = {}
 
@@ -670,7 +675,10 @@ ca.DRect.set = function(_x, _y, _width, _height)
     return {x:_x, y:_y, width:_width, height:_height};
 };
 
-ca.DRectZero = {x:0, y:0, width:0, height:0};
+ca.DRectZero = function ()
+{
+    return ca.DRect.set(0, 0, 0, 0);
+};
 
 ca.DRectEquals = function (r1, r2)
 {

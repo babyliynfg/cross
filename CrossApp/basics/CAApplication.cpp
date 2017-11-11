@@ -738,8 +738,8 @@ void CAApplication::purgeApplication()
 
 void CAApplication::restartApplication()
 {
-    std::string rootPath = FileUtils::getInstance()->getDefaultResourceRootPath();
-    
+    std::vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
+
     reset();
     
     // RenderState need to be reinitialized
@@ -756,12 +756,18 @@ void CAApplication::restartApplication()
     // Restart animation
     this->startAnimation();
     
-    FileUtils::getInstance()->setDefaultResourceRootPath(rootPath);
+    FileUtils::getInstance()->setSearchPaths(searchPaths);
     
 // Real restart in script level
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEvent scriptEvent(kRestartGame, nullptr);
-    CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->sendEvent(&scriptEvent);
+    if (auto manager = CAScriptEngineManager::getScriptEngineManager())
+    {
+        if (auto script = CAScriptEngineManager::getScriptEngineManager()->getScriptEngine())
+        {
+            script->sendEvent(&scriptEvent);
+        }
+    }
 #endif
 }
 
