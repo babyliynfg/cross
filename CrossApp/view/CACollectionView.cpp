@@ -23,6 +23,7 @@ CACollectionView::CACollectionView()
 , m_nVertInterval(0)
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
+, m_bLoadData(true)
 {
     
 }
@@ -32,22 +33,13 @@ CACollectionView::~CACollectionView()
 {
 	CC_SAFE_RELEASE_NULL(m_pCollectionHeaderView);
 	CC_SAFE_RELEASE_NULL(m_pCollectionFooterView);
-	m_pCollectionViewDataSource = NULL;
-	m_pCollectionViewDelegate = NULL;
+	m_pCollectionViewDataSource = nullptr;
+	m_pCollectionViewDelegate = nullptr;
 }
 
 void CACollectionView::onEnterTransitionDidFinish()
 {
 	CAScrollView::onEnterTransitionDidFinish();
-
-    CAViewAnimation::beginAnimations("");
-    CAViewAnimation::setAnimationDuration(0);
-    CAViewAnimation::setAnimationDidStopSelector([&]()
-    {
-        CC_RETURN_IF(!m_mpUsedCollectionCells.empty());
-        this->reloadData();
-    });
-    CAViewAnimation::commitAnimations();
 }
 
 void CACollectionView::onExitTransitionDidStart()
@@ -64,7 +56,7 @@ CACollectionView* CACollectionView::createWithFrame(const DRect& rect)
 		return collectionView;
 	}
 	CC_SAFE_DELETE(collectionView);
-	return NULL;
+	return nullptr;
 }
 
 CACollectionView* CACollectionView::createWithCenter(const DRect& rect)
@@ -76,7 +68,7 @@ CACollectionView* CACollectionView::createWithCenter(const DRect& rect)
 		return collectionView;
 	}
 	CC_SAFE_DELETE(collectionView);
-	return NULL;
+	return nullptr;
 }
 
 CACollectionView* CACollectionView::createWithLayout(const CrossApp::DLayout &layout)
@@ -88,7 +80,7 @@ CACollectionView* CACollectionView::createWithLayout(const CrossApp::DLayout &la
         return collectionView;
     }
     CC_SAFE_DELETE(collectionView);
-    return NULL;
+    return nullptr;
 }
 
 bool CACollectionView::init()
@@ -214,31 +206,30 @@ bool CACollectionView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	{
 		DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
 
-		std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
-		for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); ++itr)
+        for (auto& pair : m_mpUsedCollectionCells)
 		{
-			CACollectionViewCell* pCell = itr->second;
-			CC_CONTINUE_IF(pCell == NULL);
+			CACollectionViewCell* cell = pair.second;
+			CC_CONTINUE_IF(cell == nullptr);
 
-			if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
+			if (cell->getFrame().containsPoint(point) && cell->isVisible())
 			{
-				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Disabled);
+				CC_BREAK_IF(cell->getControlState() == CAControl::State::Disabled);
 
-                if (m_pHighlightedCollectionCells != pCell)
+                if (m_pHighlightedCollectionCells != cell)
                 {
                     if (m_pHighlightedCollectionCells)
                     {
                         m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
                     }
                     
-                    m_pHighlightedCollectionCells = pCell;
+                    m_pHighlightedCollectionCells = cell;
                 }
 
-				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
+				CC_BREAK_IF(cell->getControlState() == CAControl::State::Selected);
 
                 CAViewAnimation::beginAnimations(m_s__StrID);
                 CAViewAnimation::setAnimationDuration(0.05f);
-                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CACollectionViewCell::setControlStateHighlighted, pCell));
+                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CACollectionViewCell::setControlStateHighlighted, cell));
                 CAViewAnimation::commitAnimations();
 				break;
 			}
@@ -261,7 +252,7 @@ void CACollectionView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 			m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
 		}
 
-		m_pHighlightedCollectionCells = NULL;
+		m_pHighlightedCollectionCells = nullptr;
 	}
 
 }
@@ -328,7 +319,7 @@ void CACollectionView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			}
 		}
         
-        m_pHighlightedCollectionCells = NULL;
+        m_pHighlightedCollectionCells = nullptr;
 	}
 }
 
@@ -345,7 +336,7 @@ void CACollectionView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         {
             m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
         }
-		m_pHighlightedCollectionCells = NULL;
+		m_pHighlightedCollectionCells = nullptr;
 	}
 }
 
@@ -355,11 +346,10 @@ void CACollectionView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
     {
         DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
         
-        std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
-        for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); ++itr)
+        for (auto& pair : m_mpUsedCollectionCells)
         {
-            CACollectionViewCell* cell = itr->second;
-            CC_CONTINUE_IF(cell == NULL);
+            CACollectionViewCell* cell = pair.second;
+            CC_CONTINUE_IF(cell == nullptr);
             if (cell->getFrame().containsPoint(point) && cell->isVisible())
             {
                 CC_BREAK_IF(cell->getControlState() == CAControl::State::Disabled);
@@ -404,7 +394,7 @@ void CACollectionView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
         {
             m_pHighlightedCollectionCells->setControlState(CAControl::State::Normal);
         }
-        m_pHighlightedCollectionCells = NULL;
+        m_pHighlightedCollectionCells = nullptr;
     }
 }
 
@@ -534,172 +524,20 @@ void CACollectionView::clearData()
 	for (int i = 0; i < m_vpUsedCollectionCells.size(); i++)
 	{
 		CACollectionViewCell* cell = m_vpUsedCollectionCells.at(i);
-		CC_CONTINUE_IF(cell == NULL);
+		CC_CONTINUE_IF(cell == nullptr);
 		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
 		cell->resetCell();
 	}
 	m_vpUsedCollectionCells.clear();
 
-	m_pHighlightedCollectionCells = NULL;
+	m_pHighlightedCollectionCells = nullptr;
 }
 
 void CACollectionView::reloadData()
 {    
-	this->reloadViewSizeData();
-    
-	this->removeAllSubviews();
-    
-	DRect winRect = this->getBounds();
-	winRect.origin = getContentOffset();
-	float width = winRect.size.width;
-	int y = 0;
-    
-	if (m_nCollectionHeaderHeight > 0 && m_pCollectionHeaderView)
-	{
-		m_pCollectionHeaderView->setDisplayRange(true);
-		m_pCollectionHeaderView->setFrame(DRect(0, y, width, m_nCollectionHeaderHeight));
-		this->addSubview(m_pCollectionHeaderView);
-		y += m_nCollectionHeaderHeight;
-	}
-    
-;
-    int begin = (int)m_rSectionRects.size();
-    m_rSectionRects.resize(m_rSectionRects.size() + m_nSections);
-	for (int i = 0; i < m_nSections; i++)
-	{
-		unsigned int iSectionHeaderHeight = m_nSectionHeaderHeights.at(i);
-		DRect sectionHeaderRect = DRect(0, y, width, iSectionHeaderHeight);
-		if (iSectionHeaderHeight>0)
-		{
-            CAView* pSectionHeaderView = nullptr;
-            if (m_obSectionViewForHeaderInSection)
-            {
-                pSectionHeaderView = m_obSectionViewForHeaderInSection(sectionHeaderRect.size, i);
-            }
-            else if (m_pCollectionViewDataSource)
-            {
-                pSectionHeaderView = m_pCollectionViewDataSource->collectionViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
-            }
-            
-			if (pSectionHeaderView != NULL)
-			{
-				pSectionHeaderView->setDisplayRange(true);
-				pSectionHeaderView->setFrame(sectionHeaderRect);
-				this->insertSubview(pSectionHeaderView, 1);
-				m_pSectionHeaderViews[i] = pSectionHeaderView;
-				y += iSectionHeaderHeight;
-			}
-		}
-        
-		y += m_nVertInterval;
-		unsigned int rowCount = m_nRowsInSections.at(i);
-		for (int j = 0; j < rowCount; j++)
-		{
-			int iHeight = m_nRowHeightss.at(i).at(j);
-            
-            unsigned int itemCount = 0;
-            if (m_obNumberOfItemsAtIndexPath)
-            {
-                itemCount = m_obNumberOfItemsAtIndexPath(i, j);
-            }
-            else if (m_pCollectionViewDataSource)
-            {
-                itemCount = m_pCollectionViewDataSource->numberOfItemsInRowsInSection(this, i, j);
-            }
-            
-			unsigned int cellWidth = 0;
-			if (itemCount>0)
-			{
-				cellWidth = (width - m_nHoriInterval) / itemCount - m_nHoriInterval;
-			}
-			for (int k = 0; k < itemCount; k++)
-			{
-				CAIndexPath3E indexPath = CAIndexPath3E(i, j, k);
-				DRect cellRect = DRect(m_nHoriInterval + (cellWidth + m_nHoriInterval)*k, y, cellWidth, iHeight);
-				m_rUsedCollectionCellRects[indexPath] = cellRect;
-                
-				std::pair<std::map<CAIndexPath3E, CACollectionViewCell*>::iterator, bool> itrResult =
-                m_mpUsedCollectionCells.insert(std::make_pair(indexPath, (CACollectionViewCell*)NULL));
-                
-				CC_CONTINUE_IF(!winRect.intersectsRect(cellRect));
-                
-                CACollectionViewCell* cell = nullptr;
-                if (m_obCellAtIndexPath)
-                {
-                    cell = m_obCellAtIndexPath(cellRect.size, i, j, k);
-                }
-                else if (m_pCollectionViewDataSource)
-                {
-                    cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, j, k);
-                }
-				if (cell)
-				{
-					this->addSubview(cell);
-					cell->setFrame(cellRect);
-					cell->m_nSection = i;
-					cell->m_nRow = j;
-					cell->m_nItem = k;
-					itrResult.first->second = cell;
-                    m_vpUsedCollectionCells.pushBack(cell);
-                    
-                    if (m_obWillDisplayCellAtIndexPath)
-                    {
-                        m_obWillDisplayCellAtIndexPath(cell, i, j, k);
-                    }
-                    else if (m_pCollectionViewDataSource)
-                    {
-                        m_pCollectionViewDataSource->collectionViewWillDisplayCellAtIndex(this, cell, i, j, k);
-                    }
-				}
-			}
-			y += (iHeight + m_nVertInterval);
-		}
-        
-		unsigned int iSectionFooterHeight = m_nSectionFooterHeights.at(i);
-		DRect sectionFooterRect = DRect(0, y, width, iSectionFooterHeight);
-		if (iSectionFooterHeight > 0)
-		{
-            CAView* pSectionFooterView = nullptr;
-            if (m_obSectionViewForFooterInSection)
-            {
-                pSectionFooterView = m_obSectionViewForFooterInSection(sectionFooterRect.size, i);
-            }
-            else if (m_pCollectionViewDataSource)
-            {
-                pSectionFooterView = m_pCollectionViewDataSource->collectionViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
-            }
-			if (pSectionFooterView != NULL)
-			{
-				pSectionFooterView->setDisplayRange(true);
-				pSectionFooterView->setFrame(sectionFooterRect);
-				this->insertSubview(pSectionFooterView, 1);
-				m_pSectionFooterViews[i] = pSectionFooterView;
-				y += iSectionFooterHeight;
-			}
-		}
-        
-		DRect sectionRect = sectionHeaderRect;
-		sectionRect.size.height = sectionFooterRect.origin.y
-        + sectionFooterRect.size.height
-        - sectionHeaderRect.origin.y;
-        m_rSectionRects[begin + i] = sectionRect;
-	}
-    
-	if (m_nCollectionFooterHeight > 0 && m_pCollectionFooterView)
-	{
-		m_pCollectionFooterView->setFrame(DRect(0, y, width, m_nCollectionFooterHeight));
-		this->addSubview(m_pCollectionFooterView);
-		y += m_nCollectionFooterHeight;
-	}
-    
-	this->updateSectionHeaderAndFooterRects();
-	this->layoutPullToRefreshView();
-	
-    if (this->isScrollWindowNotOutSide())
-    {
-        this->startDeaccelerateScroll();
-    }
+    m_bLoadData = true;
+    this->updateDraw();
 }
 
 void CACollectionView::recoveryCollectionCell()
@@ -709,11 +547,10 @@ void CACollectionView::recoveryCollectionCell()
 	rect.origin.y -= rect.size.height * 0.1f;
 	rect.size.height *= 1.2f;
 
-	std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
-	for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); itr++)
+    for (auto& pair : m_mpUsedCollectionCells)
 	{
-		CACollectionViewCell* cell = itr->second;
-		CC_CONTINUE_IF(cell == NULL);
+		CACollectionViewCell* cell = pair.second;
+		CC_CONTINUE_IF(cell == nullptr);
 
 		DRect cellRect = cell->getFrame();
 		CC_CONTINUE_IF(rect.intersectsRect(cellRect));
@@ -721,7 +558,7 @@ void CACollectionView::recoveryCollectionCell()
 		m_mpFreedCollectionCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
 		cell->resetCell();
-		itr->second = NULL;
+		pair.second = nullptr;
         m_vpUsedCollectionCells.eraseObject(cell);
 	}
 }
@@ -733,12 +570,11 @@ void CACollectionView::loadCollectionCell()
 	rect.origin.y -= rect.size.height * 0.1f;
 	rect.size.height *= 1.2f;
 
-	std::map<CAIndexPath3E, CACollectionViewCell*>::iterator itr;
-	for (itr = m_mpUsedCollectionCells.begin(); itr != m_mpUsedCollectionCells.end(); itr++)
+	for (auto& pair : m_mpUsedCollectionCells)
 	{
-		CC_CONTINUE_IF(itr->second != NULL);
+		CC_CONTINUE_IF(pair.second != nullptr);
 
-		CAIndexPath3E r = itr->first;
+		CAIndexPath3E r = pair.first;
 		DRect cellRect = m_rUsedCollectionCellRects[r];
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
@@ -760,7 +596,7 @@ void CACollectionView::loadCollectionCell()
 			cell->updateDisplayedAlpha(this->getAlpha());
 			this->addSubview(cell);
 			cell->setFrame(cellRect);
-			itr->second = cell;
+			pair.second = cell;
             m_vpUsedCollectionCells.pushBack(cell);
             
 			if (m_pSelectedCollectionCells.count(r))
@@ -784,13 +620,12 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
 	DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
 
-	std::vector<DRect>::iterator itr;
-	for (itr = m_rSectionRects.begin(); itr != m_rSectionRects.end(); itr++)
+    int i = 0;
+    for (auto& r : m_rSectionRects)
 	{
-		CC_CONTINUE_IF(!rect.intersectsRect(*itr));
-		int i = (int)(itr - m_rSectionRects.begin());
-		CAView* header = NULL;
-		CAView* footer = NULL;
+		CC_CONTINUE_IF(!rect.intersectsRect(r));
+		CAView* header = nullptr;
+		CAView* footer = nullptr;
 		float headerHeight = 0;
 		float footerHeight = 0;
 		if (m_pSectionHeaderViews.find(i) != m_pSectionHeaderViews.end())
@@ -806,8 +641,8 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
 		if (header && m_bAlwaysTopSectionHeader)
 		{
 			DPoint p1 = rect.origin;
-			p1.y = MAX(p1.y, itr->origin.y);
-			p1.y = MIN(p1.y, itr->origin.y + itr->size.height
+			p1.y = MAX(p1.y, r.origin.y);
+			p1.y = MIN(p1.y, r.origin.y + r.size.height
 				- headerHeight - footerHeight);
 			header->setFrameOrigin(p1);
 		}
@@ -815,10 +650,11 @@ void CACollectionView::updateSectionHeaderAndFooterRects()
 		{
 			DPoint p2 = DPointZero;
 			p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
-				itr->origin.y + itr->size.height - footerHeight);
-			p2.y = MAX(p2.y, itr->origin.y + headerHeight);
+				r.origin.y + r.size.height - footerHeight);
+			p2.y = MAX(p2.y, r.origin.y + headerHeight);
 			footer->setFrameOrigin(p2);
 		}
+        ++i;
 	}
 }
 
@@ -833,6 +669,169 @@ void CACollectionView::update(float dt)
 	updateSectionHeaderAndFooterRects();
 }
 
+void CACollectionView::visitEve()
+{
+    CAScrollView::visitEve();
+    if (m_bLoadData)
+    {
+        m_bLoadData = false;
+        
+        this->reloadViewSizeData();
+        
+        this->removeAllSubviews();
+        
+        DRect winRect = this->getBounds();
+        winRect.origin = getContentOffset();
+        float width = winRect.size.width;
+        int y = 0;
+        
+        if (m_nCollectionHeaderHeight > 0 && m_pCollectionHeaderView)
+        {
+            m_pCollectionHeaderView->setFrame(DRect(0, y, width, m_nCollectionHeaderHeight));
+            this->addSubview(m_pCollectionHeaderView);
+            y += m_nCollectionHeaderHeight;
+        }
+        
+        ;
+        int begin = (int)m_rSectionRects.size();
+        m_rSectionRects.resize(m_rSectionRects.size() + m_nSections);
+        for (int i = 0; i < m_nSections; i++)
+        {
+            unsigned int iSectionHeaderHeight = m_nSectionHeaderHeights.at(i);
+            DRect sectionHeaderRect = DRect(0, y, width, iSectionHeaderHeight);
+            if (iSectionHeaderHeight>0)
+            {
+                CAView* pSectionHeaderView = nullptr;
+                if (m_obSectionViewForHeaderInSection)
+                {
+                    pSectionHeaderView = m_obSectionViewForHeaderInSection(sectionHeaderRect.size, i);
+                }
+                else if (m_pCollectionViewDataSource)
+                {
+                    pSectionHeaderView = m_pCollectionViewDataSource->collectionViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
+                }
+                
+                if (pSectionHeaderView != nullptr)
+                {
+                    pSectionHeaderView->setDisplayRange(true);
+                    pSectionHeaderView->setFrame(sectionHeaderRect);
+                    this->insertSubview(pSectionHeaderView, 1);
+                    m_pSectionHeaderViews[i] = pSectionHeaderView;
+                    y += iSectionHeaderHeight;
+                }
+            }
+            
+            y += m_nVertInterval;
+            unsigned int rowCount = m_nRowsInSections.at(i);
+            for (int j = 0; j < rowCount; j++)
+            {
+                int iHeight = m_nRowHeightss.at(i).at(j);
+                
+                unsigned int itemCount = 0;
+                if (m_obNumberOfItemsAtIndexPath)
+                {
+                    itemCount = m_obNumberOfItemsAtIndexPath(i, j);
+                }
+                else if (m_pCollectionViewDataSource)
+                {
+                    itemCount = m_pCollectionViewDataSource->numberOfItemsInRowsInSection(this, i, j);
+                }
+                
+                unsigned int cellWidth = 0;
+                if (itemCount>0)
+                {
+                    cellWidth = (width - m_nHoriInterval) / itemCount - m_nHoriInterval;
+                }
+                for (int k = 0; k < itemCount; k++)
+                {
+                    CAIndexPath3E indexPath = CAIndexPath3E(i, j, k);
+                    DRect cellRect = DRect(m_nHoriInterval + (cellWidth + m_nHoriInterval)*k, y, cellWidth, iHeight);
+                    m_rUsedCollectionCellRects[indexPath] = cellRect;
+                    
+                    std::pair<std::map<CAIndexPath3E, CACollectionViewCell*>::iterator, bool> itrResult =
+                    m_mpUsedCollectionCells.insert(std::make_pair(indexPath, (CACollectionViewCell*)nullptr));
+                    
+                    CC_CONTINUE_IF(!winRect.intersectsRect(cellRect));
+                    
+                    CACollectionViewCell* cell = nullptr;
+                    if (m_obCellAtIndexPath)
+                    {
+                        cell = m_obCellAtIndexPath(cellRect.size, i, j, k);
+                    }
+                    else if (m_pCollectionViewDataSource)
+                    {
+                        cell = m_pCollectionViewDataSource->collectionCellAtIndex(this, cellRect.size, i, j, k);
+                    }
+                    if (cell)
+                    {
+                        this->addSubview(cell);
+                        cell->setFrame(cellRect);
+                        cell->m_nSection = i;
+                        cell->m_nRow = j;
+                        cell->m_nItem = k;
+                        itrResult.first->second = cell;
+                        m_vpUsedCollectionCells.pushBack(cell);
+                        
+                        if (m_obWillDisplayCellAtIndexPath)
+                        {
+                            m_obWillDisplayCellAtIndexPath(cell, i, j, k);
+                        }
+                        else if (m_pCollectionViewDataSource)
+                        {
+                            m_pCollectionViewDataSource->collectionViewWillDisplayCellAtIndex(this, cell, i, j, k);
+                        }
+                    }
+                }
+                y += (iHeight + m_nVertInterval);
+            }
+            
+            unsigned int iSectionFooterHeight = m_nSectionFooterHeights.at(i);
+            DRect sectionFooterRect = DRect(0, y, width, iSectionFooterHeight);
+            if (iSectionFooterHeight > 0)
+            {
+                CAView* pSectionFooterView = nullptr;
+                if (m_obSectionViewForFooterInSection)
+                {
+                    pSectionFooterView = m_obSectionViewForFooterInSection(sectionFooterRect.size, i);
+                }
+                else if (m_pCollectionViewDataSource)
+                {
+                    pSectionFooterView = m_pCollectionViewDataSource->collectionViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
+                }
+                if (pSectionFooterView != nullptr)
+                {
+                    pSectionFooterView->setDisplayRange(true);
+                    pSectionFooterView->setFrame(sectionFooterRect);
+                    this->insertSubview(pSectionFooterView, 1);
+                    m_pSectionFooterViews[i] = pSectionFooterView;
+                    y += iSectionFooterHeight;
+                }
+            }
+            
+            DRect sectionRect = sectionHeaderRect;
+            sectionRect.size.height = sectionFooterRect.origin.y
+            + sectionFooterRect.size.height
+            - sectionHeaderRect.origin.y;
+            m_rSectionRects[begin + i] = sectionRect;
+        }
+        
+        if (m_nCollectionFooterHeight > 0 && m_pCollectionFooterView)
+        {
+            m_pCollectionFooterView->setFrame(DRect(0, y, width, m_nCollectionFooterHeight));
+            this->addSubview(m_pCollectionFooterView);
+            y += m_nCollectionFooterHeight;
+        }
+        
+        this->updateSectionHeaderAndFooterRects();
+        this->layoutPullToRefreshView();
+        
+        if (this->isScrollWindowNotOutSide())
+        {
+            this->startDeaccelerateScroll();
+        }
+    }
+}
+
 float CACollectionView::maxSpeed(float dt)
 {
     return (128 * 60 * dt);
@@ -845,7 +844,7 @@ float CACollectionView::decelerationRatio(float dt)
 
 CACollectionViewCell* CACollectionView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
 {
-    CACollectionViewCell* cell = NULL;
+    CACollectionViewCell* cell = nullptr;
     
     if (reuseIdentifier && !m_mpFreedCollectionCells[reuseIdentifier].empty())
     {
@@ -887,32 +886,32 @@ CACollectionViewCell* CACollectionViewCell::create(const std::string& reuseIdent
 		return cell;
 	}
 	CC_SAFE_DELETE(cell);
-	return NULL;
+	return nullptr;
 }
 
 void CACollectionViewCell::normalCell()
 {
-	CC_RETURN_IF(m_pBackgroundView == NULL);
+	CC_RETURN_IF(m_pBackgroundView == nullptr);
 	m_pBackgroundView->setColor(CAColor4B(255, 255, 255, 255));
 }
 
 void CACollectionViewCell::highlightedCell()
 {
-	CC_RETURN_IF(m_pBackgroundView == NULL);
+	CC_RETURN_IF(m_pBackgroundView == nullptr);
 	m_pBackgroundView->setColor(CAColor4B(240, 240, 240, 255));
 }
 
 
 void CACollectionViewCell::selectedCell()
 {
-	CC_RETURN_IF(m_pBackgroundView == NULL);
+	CC_RETURN_IF(m_pBackgroundView == nullptr);
 	m_pBackgroundView->setColor(CAColor4B(50, 193, 255, 255));
 }
 
 
 void CACollectionViewCell::disabledCell()
 {
-	CC_RETURN_IF(m_pBackgroundView == NULL);
+	CC_RETURN_IF(m_pBackgroundView == nullptr);
 	m_pBackgroundView->setColor(CAColor4B(127, 127, 127, 255));
 }
 
