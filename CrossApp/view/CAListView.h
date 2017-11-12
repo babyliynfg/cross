@@ -133,6 +133,8 @@ public:
 
     virtual void switchPCMode(bool var);
     
+    virtual void visitEve();
+        
 protected:
     
     virtual void setContentSize(const DSize& var);
@@ -236,6 +238,8 @@ private:
     CAListViewCell* m_pHighlightedListCells;
     
     std::set<unsigned int> m_pSelectedListCells;
+        
+    bool m_bLoadData;
 };
 
 class CC_DLL CAListViewCell : public CACell
