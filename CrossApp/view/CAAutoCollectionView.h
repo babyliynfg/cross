@@ -238,6 +238,8 @@ public:
     
     virtual void switchPCMode(bool var);
     
+    virtual void visitEve();
+    
 protected:
     
     virtual void setContentSize(const DSize& var);
@@ -333,6 +335,8 @@ private:
 	CAVector<CACollectionViewCell*> m_vpUsedCollectionCells;
     
 	std::map<std::string, CAVector<CACollectionViewCell*> > m_mpFreedCollectionCells;
+    
+    bool m_bLoadData;
 };
 
 NS_CC_END
