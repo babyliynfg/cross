@@ -37,6 +37,7 @@ CATableView::CATableView()
 ,m_bAllowsMultipleSelection(false)
 ,m_bAlwaysTopSectionHeader(true)
 ,m_bAlwaysBottomSectionFooter(true)
+,m_bLoadData(true)
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CACell");
     m_obSeparatorColor = ccc4Int(CrossApp::hex2Int(map.at("separatorColor")));
@@ -55,21 +56,13 @@ CATableView::~CATableView()
     
     CC_SAFE_RELEASE_NULL(m_pTableHeaderView);
     CC_SAFE_RELEASE_NULL(m_pTableFooterView);
-    m_pTableViewDataSource = NULL;
-    m_pTableViewDelegate = NULL;
+    m_pTableViewDataSource = nullptr;
+    m_pTableViewDelegate = nullptr;
 }
 
 void CATableView::onEnterTransitionDidFinish()
 {
     CAScrollView::onEnterTransitionDidFinish();
-    
-    CAScheduler::getScheduler()->scheduleOnce([=](float dt)
-    {
-        if (m_mpUsedTableCells.empty())
-        {
-            this->reloadData();
-        }
-    }, "first_reload_data", this, 0);
 }
 
 void CATableView::onExitTransitionDidStart()
@@ -86,7 +79,7 @@ CATableView* CATableView::createWithFrame(const DRect& rect)
         return tableView;
     }
     CC_SAFE_DELETE(tableView);
-    return NULL;
+    return nullptr;
 }
 
 CATableView* CATableView::createWithCenter(const DRect& rect)
@@ -98,7 +91,7 @@ CATableView* CATableView::createWithCenter(const DRect& rect)
         return tableView;
     }
     CC_SAFE_DELETE(tableView);
-    return NULL;
+    return nullptr;
 }
 
 CATableView* CATableView::createWithLayout(const CrossApp::DLayout &layout)
@@ -110,7 +103,7 @@ CATableView* CATableView::createWithLayout(const CrossApp::DLayout &layout)
         return tableView;
     }
     CC_SAFE_DELETE(tableView);
-    return NULL;
+    return nullptr;
 }
 
 bool CATableView::init()
@@ -180,7 +173,7 @@ float CATableView::decelerationRatio(float dt)
 
 CATableViewCell* CATableView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
 {
-    CATableViewCell* cell = NULL;
+    CATableViewCell* cell = nullptr;
     
     if (!m_mpFreedTableCells[reuseIdentifier].empty())
     {
@@ -282,34 +275,18 @@ void CATableView::clearData()
     m_nRowsInSections.clear();
     m_nSectionHeaderHeights.clear();
     m_nSectionFooterHeights.clear();
-    
-    for (auto& vec : m_nRowHeightss)
-    {
-        vec.clear();
-    }
     m_nRowHeightss.clear();
-    
-    for (auto& vec : m_rTableCellRectss)
-    {
-        vec.clear();
-    }
     m_rTableCellRectss.clear();
-    
     m_rSectionRects.clear();
-    
-    for (auto& vec : m_rLineRectss)
-    {
-        vec.clear();
-    }
     m_rLineRectss.clear();
     m_pUsedLines.clear();
     
     for (auto& pair : m_mpUsedTableCells)
     {
         CATableViewCell* cell = pair.second;
-        CC_CONTINUE_IF(cell == NULL);
+        CC_CONTINUE_IF(cell == nullptr);
         m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
-        pair.second = NULL;
+        pair.second = nullptr;
         cell->removeFromSuperview();
         cell->resetCell();
     }
@@ -418,100 +395,8 @@ void CATableView::reloadViewSizeData()
 
 void CATableView::reloadData()
 {
-    this->reloadViewSizeData();
-    
-    this->removeAllSubviews();
-    
-    float width = m_obContentSize.width;
-    unsigned int y = 0;
-    
-    if (m_pTableHeaderView)
-    {
-        m_pTableHeaderView->setFrame(DRect(0, y, width, m_nTableHeaderHeight));
-        this->addSubview(m_pTableHeaderView);
-        y += m_nTableHeaderHeight;
-    }
-    
-    unsigned int sectionCount = m_nSections;
-    
-    m_rTableCellRectss.resize(sectionCount);
-    m_rLineRectss.resize(sectionCount);
-    for (unsigned int i=0; i<sectionCount; i++)
-    {
-        DRect sectionHeaderRect = DRect(0, y, width, m_nSectionHeaderHeights.at(i));
-        CAView* sectionHeaderView = nullptr;
-        
-        if (m_obSectionViewForHeaderInSection)
-        {
-            sectionHeaderView = m_obSectionViewForHeaderInSection(sectionHeaderRect.size, i);
-        }
-        else if (m_pTableViewDataSource)
-        {
-            sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
-        }
-        
-        if (sectionHeaderView)
-        {
-            sectionHeaderView->setFrame(sectionHeaderRect);
-            this->insertSubview(sectionHeaderView, 2);
-            m_pSectionHeaderViews[i] = sectionHeaderView;
-        }
-        y += m_nSectionHeaderHeights[i];
-        
-        m_rTableCellRectss[i].resize(m_nRowHeightss[i].size());
-        m_rLineRectss[i].resize(m_nRowHeightss[i].size());
-        for (unsigned int j=0; j<m_rTableCellRectss[i].size(); j++)
-        {
-            m_rTableCellRectss[i][j] = DRect(0, y, width, m_nRowHeightss[i][j]);
-            y += m_nRowHeightss[i][j];
-            
-            m_rLineRectss[i][j] = DRect(0, y, width, s_px_to_dip(m_nSeparatorViewHeight));
-            y += s_px_to_dip(m_nSeparatorViewHeight);
-        }
-        
-        DRect sectionFooterRect = DRect(0, y, width, m_nSectionFooterHeights.at(i));
-        
-        CAView* sectionFooterView = nullptr;
-        if (m_obSectionViewForFooterInSection)
-        {
-            sectionFooterView = m_obSectionViewForFooterInSection(sectionFooterRect.size, i);
-        }
-        else if (m_pTableViewDataSource)
-        {
-            sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
-        }
-        
-        if (sectionFooterView)
-        {
-            sectionFooterView->setFrame(sectionFooterRect);
-            this->insertSubview(sectionFooterView, 2);
-            m_pSectionFooterViews[i] = sectionFooterView;
-        }
-        
-        DRect sectionRect = sectionHeaderRect;
-        sectionRect.size.height = sectionFooterRect.origin.y
-        + sectionFooterRect.size.height
-        - sectionHeaderRect.origin.y;
-        m_rSectionRects.push_back(sectionRect);
-        
-        y += m_nSectionFooterHeights.at(i);
-    }
-    
-    if (m_pTableFooterView)
-    {
-        m_pTableFooterView->setFrame(DRect(0, y, width, m_nTableFooterHeight));
-        this->addSubview(m_pTableFooterView);
-        y += m_nTableFooterHeight;
-    }
-    
-    this->loadTableCell();
-    this->updateSectionHeaderAndFooterRects();
-    this->layoutPullToRefreshView();
-    
-    if (this->isScrollWindowNotOutSide())
-    {
-        this->startDeaccelerateScroll();
-    }
+    m_bLoadData = true;
+    this->updateDraw();
 }
 
 void CATableView::loadTableCell()
@@ -539,7 +424,7 @@ void CATableView::loadTableCell()
                 cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
             }
             
-            CC_CONTINUE_IF(cell == NULL);
+            CC_CONTINUE_IF(cell == nullptr);
             cell->m_pTarget = this;
             cell->m_nSection = i;
             cell->m_nRow = j;
@@ -560,7 +445,7 @@ void CATableView::loadTableCell()
             
             CAView* view = this->dequeueReusableLine();
             DRect lineRect = m_rLineRectss[i][j];
-            if (view == NULL)
+            if (view == nullptr)
             {
                 view = CAView::createWithFrame(lineRect, m_obSeparatorColor);
             }
@@ -581,21 +466,21 @@ void CATableView::recoveryTableCell()
     for (auto& pair : m_mpUsedTableCells)
     {
         CATableViewCell* cell = pair.second;
-        CC_CONTINUE_IF(cell == NULL);
+        CC_CONTINUE_IF(cell == nullptr);
         DRect cellRect = cell->getFrame();
         
         CC_CONTINUE_IF(rect.intersectsRect(cellRect));
         m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
         cell->removeFromSuperview();
         cell->resetCell();
-        pair.second = NULL;
+        pair.second = nullptr;
         m_vpUsedTableCells.eraseObject(cell);
         
         CAView* line = m_pUsedLines[pair.first];
-        CC_CONTINUE_IF(line == NULL);
+        CC_CONTINUE_IF(line == nullptr);
         m_pFreedLines.pushBack(line);
         line->removeFromSuperview();
-        m_pUsedLines[pair.first] = NULL;
+        m_pUsedLines[pair.first] = nullptr;
     }
 }
 
@@ -603,7 +488,7 @@ CAView* CATableView::dequeueReusableLine()
 {
     if (m_pFreedLines.empty())
     {
-        return NULL;
+        return nullptr;
     }
     CAView* view = m_pFreedLines.front();
     view->retain()->autorelease();
@@ -621,8 +506,8 @@ void CATableView::updateSectionHeaderAndFooterRects()
     {
         if (rect.intersectsRect(r))
         {
-            CAView* header = NULL;
-            CAView* footer = NULL;
+            CAView* header = nullptr;
+            CAView* footer = nullptr;
             float headerHeight = m_nSectionHeaderHeights[i];
             float footerHeight = m_nSectionFooterHeights[i];
             if (m_pSectionHeaderViews.find(i) != m_pSectionHeaderViews.end())
@@ -662,6 +547,110 @@ void CATableView::update(float dt)
     this->recoveryTableCell();
     this->loadTableCell();
     this->updateSectionHeaderAndFooterRects();
+}
+
+void CATableView::visitEve()
+{
+    CAScrollView::visitEve();
+    if (m_bLoadData)
+    {
+        m_bLoadData = false;
+        
+        this->reloadViewSizeData();
+        
+        this->removeAllSubviews();
+        
+        float width = m_obContentSize.width;
+        unsigned int y = 0;
+        
+        if (m_pTableHeaderView && m_nTableHeaderHeight > 0)
+        {
+            m_pTableHeaderView->setFrame(DRect(0, y, width, m_nTableHeaderHeight));
+            this->addSubview(m_pTableHeaderView);
+            y += m_nTableHeaderHeight;
+        }
+        
+        unsigned int sectionCount = m_nSections;
+        
+        m_rTableCellRectss.resize(sectionCount);
+        m_rLineRectss.resize(sectionCount);
+        for (unsigned int i=0; i<sectionCount; i++)
+        {
+            DRect sectionHeaderRect = DRect(0, y, width, m_nSectionHeaderHeights.at(i));
+            CAView* sectionHeaderView = nullptr;
+            
+            if (m_obSectionViewForHeaderInSection)
+            {
+                sectionHeaderView = m_obSectionViewForHeaderInSection(sectionHeaderRect.size, i);
+            }
+            else if (m_pTableViewDataSource)
+            {
+                sectionHeaderView = m_pTableViewDataSource->tableViewSectionViewForHeaderInSection(this, sectionHeaderRect.size, i);
+            }
+            
+            if (sectionHeaderView)
+            {
+                sectionHeaderView->setFrame(sectionHeaderRect);
+                this->insertSubview(sectionHeaderView, 2);
+                m_pSectionHeaderViews[i] = sectionHeaderView;
+            }
+            y += m_nSectionHeaderHeights[i];
+            
+            m_rTableCellRectss[i].resize(m_nRowHeightss[i].size());
+            m_rLineRectss[i].resize(m_nRowHeightss[i].size());
+            for (unsigned int j=0; j<m_rTableCellRectss[i].size(); j++)
+            {
+                m_rTableCellRectss[i][j] = DRect(0, y, width, m_nRowHeightss[i][j]);
+                y += m_nRowHeightss[i][j];
+                
+                m_rLineRectss[i][j] = DRect(0, y, width, s_px_to_dip(m_nSeparatorViewHeight));
+                y += s_px_to_dip(m_nSeparatorViewHeight);
+            }
+            
+            DRect sectionFooterRect = DRect(0, y, width, m_nSectionFooterHeights.at(i));
+            
+            CAView* sectionFooterView = nullptr;
+            if (m_obSectionViewForFooterInSection)
+            {
+                sectionFooterView = m_obSectionViewForFooterInSection(sectionFooterRect.size, i);
+            }
+            else if (m_pTableViewDataSource)
+            {
+                sectionFooterView = m_pTableViewDataSource->tableViewSectionViewForFooterInSection(this, sectionFooterRect.size, i);
+            }
+            
+            if (sectionFooterView)
+            {
+                sectionFooterView->setFrame(sectionFooterRect);
+                this->insertSubview(sectionFooterView, 2);
+                m_pSectionFooterViews[i] = sectionFooterView;
+            }
+            
+            DRect sectionRect = sectionHeaderRect;
+            sectionRect.size.height = sectionFooterRect.origin.y
+            + sectionFooterRect.size.height
+            - sectionHeaderRect.origin.y;
+            m_rSectionRects.push_back(sectionRect);
+            
+            y += m_nSectionFooterHeights.at(i);
+        }
+        
+        if (m_pTableFooterView && m_nTableFooterHeight > 0)
+        {
+            m_pTableFooterView->setFrame(DRect(0, y, width, m_nTableFooterHeight));
+            this->addSubview(m_pTableFooterView);
+            y += m_nTableFooterHeight;
+        }
+        
+        this->loadTableCell();
+        this->updateSectionHeaderAndFooterRects();
+        this->layoutPullToRefreshView();
+        
+        if (this->isScrollWindowNotOutSide())
+        {
+            this->startDeaccelerateScroll();
+        }
+    }
 }
 
 unsigned int CATableView::getNumberOfSections()
@@ -745,19 +734,19 @@ CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
         return cell;
     }
     CC_SAFE_DELETE(cell);
-    return NULL;
+    return nullptr;
 }
 void CATableViewCell::normalCell()
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CACell");
-    CC_RETURN_IF(m_pBackgroundView == NULL);
+    CC_RETURN_IF(m_pBackgroundView == nullptr);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_normal"))));
 }
 
 void CATableViewCell::highlightedCell()
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CACell");
-    CC_RETURN_IF(m_pBackgroundView == NULL);
+    CC_RETURN_IF(m_pBackgroundView == nullptr);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_highlighted"))));
 }
 
@@ -765,7 +754,7 @@ void CATableViewCell::highlightedCell()
 void CATableViewCell::selectedCell()
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CACell");
-    CC_RETURN_IF(m_pBackgroundView == NULL);
+    CC_RETURN_IF(m_pBackgroundView == nullptr);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_selected"))));
 }
 
@@ -773,7 +762,7 @@ void CATableViewCell::selectedCell()
 void CATableViewCell::disabledCell()
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CACell");
-    CC_RETURN_IF(m_pBackgroundView == NULL);
+    CC_RETURN_IF(m_pBackgroundView == nullptr);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_disabled"))));
 }
 
@@ -805,7 +794,7 @@ bool CATableViewCell::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     if (m_pTarget->m_pDraggingOutCell)
     {
         m_pTarget->m_pDraggingOutCell->dragInAnimation();
-        m_pTarget->m_pDraggingOutCell = NULL;
+        m_pTarget->m_pDraggingOutCell = nullptr;
     }
     return true;
 }

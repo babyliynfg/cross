@@ -168,6 +168,8 @@ public:
     
     virtual void switchPCMode(bool var);
     
+    virtual void visitEve();
+    
 public:
     
     unsigned int getNumberOfSections();
@@ -295,6 +297,8 @@ protected:
     CAList<CAView*> m_pFreedLines;
     
     CATableViewCell* m_pDraggingOutCell;
+    
+    bool m_bLoadData;
     
     friend class CATableViewCell;
 };
