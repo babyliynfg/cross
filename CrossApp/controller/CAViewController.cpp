@@ -474,8 +474,10 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     m_bClearance = this->getView()->convertToWorldSpace(DPointZero).y < 1;
-    
+#endif
+
     m_iNavigationBarHeight = m_bClearance ? 128 : 88;
     
     CAViewController* viewController = m_pViewControllers.front();
