@@ -112,6 +112,10 @@ public:
 
 	virtual void switchPCMode(bool var);
 
+    virtual void visitEve();
+    
+protected:
+    
 	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAWaterfallViewDataSource*, m_pWaterfallViewDataSource, WaterfallViewDataSource);
 	
 	CC_SYNTHESIZE_DEPRECATED_ATTRIBUTE(CAWaterfallViewDelegate*, m_pWaterfallViewDelegate, WaterfallViewDelegate);
@@ -230,6 +234,8 @@ private:
 	std::map<std::string, CAVector<CAWaterfallViewCell*> > m_mpFreedWaterfallCells;
 
 	std::vector<unsigned int> m_nColumnHeightVect;
+    
+    bool m_bLoadData;
 };
 
 class CC_DLL CAWaterfallViewCell : public CACell

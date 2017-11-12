@@ -22,6 +22,7 @@ CAWaterfallView::CAWaterfallView()
 , m_nColumnMargin(4)
 , m_bAlwaysTopSectionHeader(true)
 , m_bAlwaysBottomSectionFooter(true)
+, m_bLoadData(true)
 {
 }
 
@@ -31,25 +32,13 @@ CAWaterfallView::~CAWaterfallView()
     m_mpUsedWaterfallCells.clear();
 	CC_SAFE_RELEASE_NULL(m_pWaterfallHeaderView);
 	CC_SAFE_RELEASE_NULL(m_pWaterfallFooterView);
-	m_pWaterfallViewDataSource = NULL;
-	m_pWaterfallViewDelegate = NULL;
+	m_pWaterfallViewDataSource = nullptr;
+	m_pWaterfallViewDelegate = nullptr;
 }
 
 void CAWaterfallView::onEnterTransitionDidFinish()
 {
 	CAScrollView::onEnterTransitionDidFinish();
-
-    if (m_mpUsedWaterfallCells.empty())
-    {
-        CAViewAnimation::beginAnimations("");
-        CAViewAnimation::setAnimationDuration(0);
-        CAViewAnimation::setAnimationDidStopSelector([&]()
-        {
-            CC_RETURN_IF(!m_mpUsedWaterfallCells.empty());
-            this->reloadData();
-        });
-        CAViewAnimation::commitAnimations();
-    }
 }
 
 void CAWaterfallView::onExitTransitionDidStart()
@@ -66,7 +55,7 @@ CAWaterfallView* CAWaterfallView::createWithFrame(const DRect& rect)
 		return pWaterfallView;
 	}
 	CC_SAFE_DELETE(pWaterfallView);
-	return NULL;
+	return nullptr;
 }
 
 CAWaterfallView* CAWaterfallView::createWithCenter(const DRect& rect)
@@ -78,7 +67,7 @@ CAWaterfallView* CAWaterfallView::createWithCenter(const DRect& rect)
 		return pWaterfallView;
 	}
 	CC_SAFE_DELETE(pWaterfallView);
-	return NULL;
+	return nullptr;
 }
 
 CAWaterfallView* CAWaterfallView::createWithLayout(const CrossApp::DLayout &layout)
@@ -90,7 +79,7 @@ CAWaterfallView* CAWaterfallView::createWithLayout(const CrossApp::DLayout &layo
         return pWaterfallView;
     }
     CC_SAFE_DELETE(pWaterfallView);
-    return NULL;
+    return nullptr;
 }
 
 bool CAWaterfallView::init()
@@ -209,31 +198,30 @@ bool CAWaterfallView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 	{
 		DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
 		
-		std::map<int, CAWaterfallViewCell*>::iterator itr;
-		for (itr = m_mpUsedWaterfallCells.begin(); itr != m_mpUsedWaterfallCells.end(); ++itr)
+        for (auto& pair : m_mpUsedWaterfallCells)
 		{
-			CAWaterfallViewCell* pCell = itr->second;
-			CC_CONTINUE_IF(pCell == NULL);
+			CAWaterfallViewCell* cell = pair.second;
+			CC_CONTINUE_IF(cell == nullptr);
 
-			if (pCell->getFrame().containsPoint(point) && pCell->isVisible())
+			if (cell->getFrame().containsPoint(point) && cell->isVisible())
 			{
-				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Disabled);
+				CC_BREAK_IF(cell->getControlState() == CAControl::State::Disabled);
 
-				if (m_pHighlightedWaterfallCells != pCell)
+				if (m_pHighlightedWaterfallCells != cell)
 				{
 					if (m_pHighlightedWaterfallCells)
 					{
 						m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 					}
 
-					m_pHighlightedWaterfallCells = pCell;
+					m_pHighlightedWaterfallCells = cell;
 				}
 
-				CC_BREAK_IF(pCell->getControlState() == CAControl::State::Selected);
+				CC_BREAK_IF(cell->getControlState() == CAControl::State::Selected);
 
 				CAViewAnimation::beginAnimations(m_s__StrID);
 				CAViewAnimation::setAnimationDuration(0.05f);
-                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAWaterfallViewCell::setControlStateHighlighted, pCell));
+                CAViewAnimation::setAnimationDidStopSelector(std::bind(&CAWaterfallViewCell::setControlStateHighlighted, cell));
 				CAViewAnimation::commitAnimations();
 				break;
 			}
@@ -256,7 +244,7 @@ void CAWaterfallView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 			m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 		}
 
-		m_pHighlightedWaterfallCells = NULL;
+		m_pHighlightedWaterfallCells = nullptr;
 	}
 
 }
@@ -321,7 +309,7 @@ void CAWaterfallView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 			}
 		}
 
-		m_pHighlightedWaterfallCells = NULL;
+		m_pHighlightedWaterfallCells = nullptr;
 	}
 }
 
@@ -338,7 +326,7 @@ void CAWaterfallView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 		{
 			m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 		}
-		m_pHighlightedWaterfallCells = NULL;
+		m_pHighlightedWaterfallCells = nullptr;
 	}
 }
 
@@ -348,11 +336,10 @@ void CAWaterfallView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 	{
 		DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
 		
-		std::map<int, CAWaterfallViewCell*>::iterator itr;
-		for (itr = m_mpUsedWaterfallCells.begin(); itr != m_mpUsedWaterfallCells.end(); ++itr)
+        for (auto& pair : m_mpUsedWaterfallCells)
 		{
-			CAWaterfallViewCell* cell = itr->second;
-			CC_CONTINUE_IF(cell == NULL);
+			CAWaterfallViewCell* cell = pair.second;
+			CC_CONTINUE_IF(cell == nullptr);
 			if (cell->getFrame().containsPoint(point) && cell->isVisible())
 			{
 				CC_BREAK_IF(cell->getControlState() == CAControl::State::Disabled);
@@ -392,7 +379,7 @@ void CAWaterfallView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
 		{
 			m_pHighlightedWaterfallCells->setControlState(CAControl::State::Normal);
 		}
-		m_pHighlightedWaterfallCells = NULL;
+		m_pHighlightedWaterfallCells = nullptr;
 	}
 }
 
@@ -444,7 +431,7 @@ void CAWaterfallView::reloadViewSizeData()
 		int y = m_nColumnHeightVect[index];
 
 		m_rUsedWaterfallCellRects[i] = DRect(x, y + viewHeight, nColumnWidth, nColumnHeight);
-		m_mpUsedWaterfallCells[i] = NULL;
+		m_mpUsedWaterfallCells[i] = nullptr;
 
 		m_nColumnHeightVect[index] += nColumnHeight;
 	}
@@ -460,7 +447,7 @@ void CAWaterfallView::clearData()
     
     for (auto& cell : m_vpUsedWaterfallCells)
 	{
-		CC_CONTINUE_IF(cell == NULL);
+		CC_CONTINUE_IF(cell == nullptr);
 		m_mpFreedWaterfallCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
 		cell->resetCell();
@@ -470,7 +457,7 @@ void CAWaterfallView::clearData()
     m_rUsedWaterfallCellRects.clear();
     m_nColumnHeightVect.clear();
     
-	m_pHighlightedWaterfallCells = NULL;
+	m_pHighlightedWaterfallCells = nullptr;
 }
 
 unsigned int CAWaterfallView::getCurColumnIndex()
@@ -511,38 +498,8 @@ unsigned int CAWaterfallView::getMaxColumnValue()
 
 void CAWaterfallView::reloadData()
 {
-	this->reloadViewSizeData();
-
-	this->removeAllSubviews();
-
-	DRect winRect = this->getBounds();
-	winRect.origin = getContentOffset();
-
-	if (m_nWaterfallHeaderHeight > 0 && m_pWaterfallHeaderView)
-	{
-		m_pWaterfallHeaderView->setDisplayRange(true);
-		m_pWaterfallHeaderView->setFrame(DRect(0, 0, winRect.size.width, m_nWaterfallHeaderHeight));
-		this->addSubview(m_pWaterfallHeaderView);
-	}
-
-	int dwValue = getMaxColumnValue();
-	dwValue += m_nWaterfallHeaderHeight;
-	dwValue += 2 * m_nItemMargin;
-
-	if (m_nWaterfallFooterHeight > 0 && m_pWaterfallFooterView)
-	{
-		m_pWaterfallFooterView->setFrame(DRect(0, dwValue, winRect.size.width, m_nWaterfallFooterHeight));
-		this->addSubview(m_pWaterfallFooterView);
-	}
-
-    this->loadWaterfallCell();
-	this->updateSectionHeaderAndFooterRects();
-	this->layoutPullToRefreshView();
-	
-    if (this->isScrollWindowNotOutSide())
-    {
-        this->startDeaccelerateScroll();
-    }
+    m_bLoadData = true;
+    this->updateDraw();
 }
 
 void CAWaterfallView::recoveryWaterfallCell()
@@ -552,11 +509,10 @@ void CAWaterfallView::recoveryWaterfallCell()
 	rect.origin.y -= rect.size.height * 0.1f;
 	rect.size.height *= 1.2f;
 
-	std::map<int, CAWaterfallViewCell*>::iterator itr;
-	for (itr = m_mpUsedWaterfallCells.begin(); itr != m_mpUsedWaterfallCells.end(); itr++)
+    for (auto& pair : m_mpUsedWaterfallCells)
 	{
-		CAWaterfallViewCell* cell = itr->second;
-		CC_CONTINUE_IF(cell == NULL);
+		CAWaterfallViewCell* cell = pair.second;
+		CC_CONTINUE_IF(cell == nullptr);
 
 		DRect cellRect = cell->getFrame();
 		CC_CONTINUE_IF(rect.intersectsRect(cellRect));
@@ -564,7 +520,7 @@ void CAWaterfallView::recoveryWaterfallCell()
 		m_mpFreedWaterfallCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
 		cell->resetCell();
-		itr->second = NULL;
+		pair.second = nullptr;
 		m_vpUsedWaterfallCells.eraseObject(cell);
 	}
 }
@@ -576,12 +532,11 @@ void CAWaterfallView::loadWaterfallCell()
 	rect.origin.y -= rect.size.height * 0.1f;
 	rect.size.height *= 1.2f;
 
-	std::map<int, CAWaterfallViewCell*>::iterator itr;
-	for (itr = m_mpUsedWaterfallCells.begin(); itr != m_mpUsedWaterfallCells.end(); itr++)
+	for (auto& pair : m_mpUsedWaterfallCells)
 	{
-		CC_CONTINUE_IF(itr->second != NULL);
+		CC_CONTINUE_IF(pair.second != nullptr);
 
-		int index = itr->first;
+		int index = pair.first;
 		DRect cellRect = m_rUsedWaterfallCellRects[index];
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
@@ -663,6 +618,48 @@ void CAWaterfallView::update(float dt)
 	updateSectionHeaderAndFooterRects();
 }
 
+void CAWaterfallView::visitEve()
+{
+    CAScrollView::visitEve();
+    if (m_bLoadData)
+    {
+        m_bLoadData = false;
+        
+        this->reloadViewSizeData();
+        
+        this->removeAllSubviews();
+        
+        DRect winRect = this->getBounds();
+        winRect.origin = getContentOffset();
+        
+        if (m_nWaterfallHeaderHeight > 0 && m_pWaterfallHeaderView)
+        {
+            m_pWaterfallHeaderView->setDisplayRange(true);
+            m_pWaterfallHeaderView->setFrame(DRect(0, 0, winRect.size.width, m_nWaterfallHeaderHeight));
+            this->addSubview(m_pWaterfallHeaderView);
+        }
+        
+        int dwValue = getMaxColumnValue();
+        dwValue += m_nWaterfallHeaderHeight;
+        dwValue += 2 * m_nItemMargin;
+        
+        if (m_nWaterfallFooterHeight > 0 && m_pWaterfallFooterView)
+        {
+            m_pWaterfallFooterView->setFrame(DRect(0, dwValue, winRect.size.width, m_nWaterfallFooterHeight));
+            this->addSubview(m_pWaterfallFooterView);
+        }
+        
+        this->loadWaterfallCell();
+        this->updateSectionHeaderAndFooterRects();
+        this->layoutPullToRefreshView();
+        
+        if (this->isScrollWindowNotOutSide())
+        {
+            this->startDeaccelerateScroll();
+        }
+    }
+}
+
 float CAWaterfallView::maxSpeed(float dt)
 {
 	return (128 * 60 * dt);
@@ -675,7 +672,7 @@ float CAWaterfallView::decelerationRatio(float dt)
 
 CAWaterfallViewCell* CAWaterfallView::dequeueReusableCellWithIdentifier(const char* reuseIdentifier)
 {
-	CAWaterfallViewCell* cell = NULL;
+	CAWaterfallViewCell* cell = nullptr;
 
 	if (reuseIdentifier && !m_mpFreedWaterfallCells[reuseIdentifier].empty())
 	{
@@ -716,32 +713,32 @@ CAWaterfallViewCell* CAWaterfallViewCell::create(const std::string& reuseIdentif
 		return cell;
 	}
 	CC_SAFE_DELETE(cell);
-	return NULL;
+	return nullptr;
 }
 
 void CAWaterfallViewCell::normalCell()
 {
-	CC_RETURN_IF(m_pBackgroundView == NULL);
+	CC_RETURN_IF(m_pBackgroundView == nullptr);
 	m_pBackgroundView->setColor(CAColor4B(255, 255, 255, 255));
 }
 
 void CAWaterfallViewCell::highlightedCell()
 {
-	CC_RETURN_IF(m_pBackgroundView == NULL);
+	CC_RETURN_IF(m_pBackgroundView == nullptr);
 	m_pBackgroundView->setColor(CAColor4B(240, 240, 240, 255));
 }
 
 
 void CAWaterfallViewCell::selectedCell()
 {
-	CC_RETURN_IF(m_pBackgroundView == NULL);
+	CC_RETURN_IF(m_pBackgroundView == nullptr);
 	m_pBackgroundView->setColor(CAColor4B(50, 193, 255, 255));
 }
 
 
 void CAWaterfallViewCell::disabledCell()
 {
-	CC_RETURN_IF(m_pBackgroundView == NULL);
+	CC_RETURN_IF(m_pBackgroundView == nullptr);
 	m_pBackgroundView->setColor(CAColor4B(127, 127, 127, 255));
 }
 
