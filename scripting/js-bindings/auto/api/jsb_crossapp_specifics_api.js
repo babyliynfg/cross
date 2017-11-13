@@ -1,3 +1,61 @@
+
+/**
+ * @method localStorageInit
+ * @param {String} arg0
+ */
+ca.localStorageInit = function (
+fullpath
+)
+{
+    
+};
+
+/**
+ * @method localStorageGetItem
+ */
+ca.localStorageFree = function (
+)
+{
+    
+};
+
+/**
+ * @method localStorageGetItem
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+ca.localStorageSetItem = function (
+key,
+value
+)
+{
+    
+};
+
+/**
+ * @method localStorageGetItem
+ * @param {String} arg0
+ * @return {String}
+ */
+ca.localStorageGetItem = function (
+key
+)
+{
+    return "";
+};
+
+/**
+ * @method localStorageGetItem
+ * @param {String} arg0
+ */
+ca.localStorageRemoveItem = function (
+key
+)
+{
+    
+};
+
+
 /**
  * @class CAMotionManager
  */
@@ -66,5 +124,7 @@ str
 {
 },
 };
+
+
 
 

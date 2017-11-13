@@ -65,6 +65,13 @@ JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* stri
 void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj);
 
 void register_crossapp_js_core(JSContext* cx, JS::HandleObject obj);
+
+bool js_crossapp_ca_localStorageInit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ca_localStorageFree(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ca_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ca_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_ca_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp);
+
 bool js_crossapp_retain(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_release(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAMotionManager_startGyroscope(JSContext *cx, uint32_t argc, jsval *vp);

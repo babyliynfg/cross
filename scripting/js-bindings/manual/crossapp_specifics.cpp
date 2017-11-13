@@ -178,12 +178,18 @@ void js_remove_object_root(JS::HandleValue target)
 
 void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
 {
-    JS::RootedObject ccObj(cx);
+    JS::RootedObject caObj(cx);
     JS::RootedObject jsbObj(cx);
     JS::RootedValue tmpVal(cx);
     JS::RootedObject tmpObj(cx);
-    get_or_create_js_obj(cx, global, "ca", &ccObj);
+    get_or_create_js_obj(cx, global, "ca", &caObj);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
+    
+    JS_DefineFunction(cx, caObj, "localStorageInit", js_crossapp_ca_localStorageInit, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, caObj, "localStorageFree", js_crossapp_ca_localStorageFree, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, caObj, "localStorageSetItem", js_crossapp_ca_localStorageSetItem, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, caObj, "localStorageGetItem", js_crossapp_ca_localStorageGetItem, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, caObj, "localStorageRemoveItem", js_crossapp_ca_localStorageRemoveItem, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     tmpObj.set(jsb_CrossApp_CAObject_prototype);
     JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -197,14 +203,89 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj.set(jsb_CrossApp_CADatePickerView_prototype);
     JS_DefineFunction(cx, tmpObj, "onSelectRow", js_crossapp_CADatePickerView_onSelectRow, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    JS_GetProperty(cx, ccObj, "CACustomAnimation", &tmpVal);
+    JS_GetProperty(cx, caObj, "CACustomAnimation", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "schedule", js_crossapp_CACustomAnimation_schedule, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     
     tmpObj.set(jsb_CrossApp_CANotificationCenter_prototype);
     JS_DefineFunction(cx, tmpObj, "addObserver", js_crossapp_CANotificationCenter_addObserver, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+
 
 }
+
+bool js_crossapp_ca_localStorageInit(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 1) {
+        JSString *string = JS::ToString(cx, args.get(0));
+        if (string) {
+            
+            JSStringWrapper wrapper(string);
+            localStorageInit(wrapper.get());
+        }
+    }
+    args.rval().setUndefined();
+    return true;
+}
+
+bool js_crossapp_ca_localStorageFree(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        localStorageFree();
+    }
+    args.rval().setUndefined();
+    return true;
+}
+
+bool js_crossapp_ca_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 2) {
+        JSString *js_key = JS::ToString(cx, args.get(0));
+        JSString *js_value = JS::ToString(cx, args.get(0));
+        if (js_key && js_value) {
+            
+            JSStringWrapper key(js_key);
+            JSStringWrapper value(js_value);
+            localStorageSetItem(key.get(), value.get());
+        }
+    }
+    args.rval().setUndefined();
+    return true;
+}
+
+bool js_crossapp_ca_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 1) {
+        JSString *js_key = JS::ToString(cx, args.get(0));
+        if (js_key) {
+            
+            JSStringWrapper key(js_key);
+            localStorageGetItem(key.get());
+        }
+    }
+    args.rval().setUndefined();
+    return true;
+}
+
+bool js_crossapp_ca_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 1) {
+        JSString *js_key = JS::ToString(cx, args.get(0));
+        if (js_key) {
+            
+            JSStringWrapper key(js_key);
+            localStorageRemoveItem(key.get());
+        }
+    }
+    args.rval().setUndefined();
+    return true;
+}
+
 
 bool js_crossapp_retain(JSContext *cx, uint32_t argc, jsval *vp)
 {
