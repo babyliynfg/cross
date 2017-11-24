@@ -39,7 +39,7 @@ public:
     
     virtual void applicationDidExitFullScreen(){};
 
-    virtual DSize applicationScreenSize(){return DSizeZero;};
+    virtual DSize applicationScreenSize(const DSize& screenSize){return DSizeZero;};
     
     virtual void setAnimationInterval(double interval) = 0;
 

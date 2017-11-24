@@ -73,9 +73,9 @@ void CCEGLViewProtocol::setFrameSize(float width, float height)
     
     CCApplication* nativeApp = CCApplication::sharedApplication();
     
-    if (nativeApp && !nativeApp->applicationScreenSize().equals(DSizeZero))
+    DSize customScreenSize = nativeApp->applicationScreenSize(m_obScreenSize);
+    if (nativeApp && !customScreenSize.equals(DSizeZero))
     {
-        DSize customScreenSize = nativeApp->applicationScreenSize();
         float x = customScreenSize.width > 0 ? width / customScreenSize.width : 0;
         float y = customScreenSize.height > 0 ? height / customScreenSize.height : 0;
         m_fScale = MIN(x, y);
