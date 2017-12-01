@@ -12259,6 +12259,14 @@ bool
 },
 
 /**
+ * @method visitEve
+ */
+visitEve : function (
+)
+{
+},
+
+/**
  * @method setListHeaderHeight
  * @param {unsigned int} arg0
  */
@@ -12909,6 +12917,14 @@ isAlwaysTopSectionHeader : function (
 },
 
 /**
+ * @method visitEve
+ */
+visitEve : function (
+)
+{
+},
+
+/**
  * @method setTableFooterView
  * @param {ca.CAView} arg0
  */
@@ -13406,6 +13422,14 @@ bool
  */
 onSectionViewForHeaderInSection : function (
 func 
+)
+{
+},
+
+/**
+ * @method visitEve
+ */
+visitEve : function (
 )
 {
 },
@@ -14017,6 +14041,14 @@ func
 },
 
 /**
+ * @method visitEve
+ */
+visitEve : function (
+)
+{
+},
+
+/**
  * @method displayingCollectionCell
  * @return {Array}
  */
@@ -14506,6 +14538,14 @@ int
 )
 {
     return ca.CAWaterfallViewCell;
+},
+
+/**
+ * @method visitEve
+ */
+visitEve : function (
+)
+{
 },
 
 /**

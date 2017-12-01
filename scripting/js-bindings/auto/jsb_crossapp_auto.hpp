@@ -1531,6 +1531,7 @@ bool js_crossapp_CAListView_setListHeaderView(JSContext *cx, uint32_t argc, jsva
 bool js_crossapp_CAListView_getListFooterHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAListView_onCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAListView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAListView_visitEve(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAListView_setListHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAListView_onWillDisplayCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAListView_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1609,6 +1610,7 @@ bool js_crossapp_CATableView_setAlwaysBottomSectionFooter(JSContext *cx, uint32_
 bool js_crossapp_CATableView_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableView_onNumberOfRowsAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableView_isAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CATableView_visitEve(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableView_setTableFooterView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableView_setSeparatorViewHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableView_onCellHeightAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1672,6 +1674,7 @@ bool js_crossapp_CACollectionView_getCollectionHeaderView(JSContext *cx, uint32_
 bool js_crossapp_CACollectionView_onCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACollectionView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACollectionView_onSectionViewForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACollectionView_visitEve(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACollectionView_displayingCollectionCell(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACollectionView_getCollectionHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACollectionView_onWillDisplayCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1746,6 +1749,7 @@ bool js_crossapp_CAAutoCollectionView_onCellAtIndexPath(JSContext *cx, uint32_t 
 bool js_crossapp_CAAutoCollectionView_setAlwaysTopSectionHeader(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAutoCollectionView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAAutoCollectionView_visitEve(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAutoCollectionView_displayingCollectionCell(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAAutoCollectionView_onWillDisplayCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1802,6 +1806,7 @@ bool js_crossapp_CAWaterfallView_setAllowsMultipleSelection(JSContext *cx, uint3
 bool js_crossapp_CAWaterfallView_onCellAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWaterfallView_setShowsScrollIndicators(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWaterfallView_cellForRowAtIndexPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAWaterfallView_visitEve(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWaterfallView_setWaterfallFooterView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWaterfallView_getColumnMargin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWaterfallView_getWaterfallFooterView(JSContext *cx, uint32_t argc, jsval *vp);

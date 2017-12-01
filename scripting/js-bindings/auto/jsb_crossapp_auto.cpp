@@ -32349,6 +32349,23 @@ bool js_crossapp_CAListView_setShowsScrollIndicators(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_crossapp_CAListView_setShowsScrollIndicators : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAListView_visitEve(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAListView* cobj = (CrossApp::CAListView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAListView_visitEve : Invalid Native Object");
+    if (argc == 0) {
+        cobj->visitEve();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAListView_visitEve : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CAListView_setListHeaderHeight(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -32980,6 +32997,7 @@ void js_register_crossapp_CAListView(JSContext *cx, JS::HandleObject global) {
         JS_FN("getListFooterHeight", js_crossapp_CAListView_getListFooterHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onCellAtIndexPath", js_crossapp_CAListView_onCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CAListView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("visitEve", js_crossapp_CAListView_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setListHeaderHeight", js_crossapp_CAListView_setListHeaderHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onWillDisplayCellAtIndexPath", js_crossapp_CAListView_onWillDisplayCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CAListView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -34234,6 +34252,23 @@ bool js_crossapp_CATableView_isAlwaysTopSectionHeader(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_crossapp_CATableView_isAlwaysTopSectionHeader : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CATableView_visitEve(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATableView* cobj = (CrossApp::CATableView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATableView_visitEve : Invalid Native Object");
+    if (argc == 0) {
+        cobj->visitEve();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATableView_visitEve : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CATableView_setTableFooterView(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -34682,6 +34717,7 @@ void js_register_crossapp_CATableView(JSContext *cx, JS::HandleObject global) {
         JS_FN("onExitTransitionDidStart", js_crossapp_CATableView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onNumberOfRowsAtIndexPath", js_crossapp_CATableView_onNumberOfRowsAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isAlwaysTopSectionHeader", js_crossapp_CATableView_isAlwaysTopSectionHeader, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("visitEve", js_crossapp_CATableView_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTableFooterView", js_crossapp_CATableView_setTableFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSeparatorViewHeight", js_crossapp_CATableView_setSeparatorViewHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onCellHeightAtIndexPath", js_crossapp_CATableView_onCellHeightAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -35722,6 +35758,23 @@ bool js_crossapp_CACollectionView_onSectionViewForHeaderInSection(JSContext *cx,
     JS_ReportError(cx, "js_crossapp_CACollectionView_onSectionViewForHeaderInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CACollectionView_visitEve(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACollectionView* cobj = (CrossApp::CACollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACollectionView_visitEve : Invalid Native Object");
+    if (argc == 0) {
+        cobj->visitEve();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACollectionView_visitEve : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CACollectionView_displayingCollectionCell(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -36391,6 +36444,7 @@ void js_register_crossapp_CACollectionView(JSContext *cx, JS::HandleObject globa
         JS_FN("onCellAtIndexPath", js_crossapp_CACollectionView_onCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CACollectionView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onSectionViewForHeaderInSection", js_crossapp_CACollectionView_onSectionViewForHeaderInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("visitEve", js_crossapp_CACollectionView_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("displayingCollectionCell", js_crossapp_CACollectionView_displayingCollectionCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionHeaderHeight", js_crossapp_CACollectionView_getCollectionHeaderHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onWillDisplayCellAtIndexPath", js_crossapp_CACollectionView_onWillDisplayCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -37493,6 +37547,23 @@ bool js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection(JSContext 
     JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CAAutoCollectionView_visitEve(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAutoCollectionView* cobj = (CrossApp::CAAutoCollectionView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAutoCollectionView_visitEve : Invalid Native Object");
+    if (argc == 0) {
+        cobj->visitEve();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAAutoCollectionView_visitEve : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CAAutoCollectionView_displayingCollectionCell(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -38217,6 +38288,7 @@ void js_register_crossapp_CAAutoCollectionView(JSContext *cx, JS::HandleObject g
         JS_FN("setAlwaysTopSectionHeader", js_crossapp_CAAutoCollectionView_setAlwaysTopSectionHeader, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CAAutoCollectionView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onSectionViewForHeaderInSection", js_crossapp_CAAutoCollectionView_onSectionViewForHeaderInSection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("visitEve", js_crossapp_CAAutoCollectionView_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("displayingCollectionCell", js_crossapp_CAAutoCollectionView_displayingCollectionCell, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCollectionHeaderHeight", js_crossapp_CAAutoCollectionView_getCollectionHeaderHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onWillDisplayCellAtIndexPath", js_crossapp_CAAutoCollectionView_onWillDisplayCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -38804,6 +38876,23 @@ bool js_crossapp_CAWaterfallView_cellForRowAtIndexPath(JSContext *cx, uint32_t a
     }
 
     JS_ReportError(cx, "js_crossapp_CAWaterfallView_cellForRowAtIndexPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAWaterfallView_visitEve(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAWaterfallView* cobj = (CrossApp::CAWaterfallView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWaterfallView_visitEve : Invalid Native Object");
+    if (argc == 0) {
+        cobj->visitEve();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAWaterfallView_visitEve : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAWaterfallView_setWaterfallFooterView(JSContext *cx, uint32_t argc, jsval *vp)
@@ -39440,6 +39529,7 @@ void js_register_crossapp_CAWaterfallView(JSContext *cx, JS::HandleObject global
         JS_FN("onCellAtIndexPath", js_crossapp_CAWaterfallView_onCellAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setShowsScrollIndicators", js_crossapp_CAWaterfallView_setShowsScrollIndicators, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("cellForRowAtIndexPath", js_crossapp_CAWaterfallView_cellForRowAtIndexPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("visitEve", js_crossapp_CAWaterfallView_visitEve, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWaterfallFooterView", js_crossapp_CAWaterfallView_setWaterfallFooterView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getColumnMargin", js_crossapp_CAWaterfallView_getColumnMargin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getWaterfallFooterView", js_crossapp_CAWaterfallView_getWaterfallFooterView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

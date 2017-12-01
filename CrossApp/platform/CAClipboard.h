@@ -20,7 +20,7 @@ class CC_DLL CAClipboard
 {
 public:
 	static std::string getText();
-	static void setText(const std::string& cszStrText);
+	static void setText(const std::string& text);
 };
 
 NS_CC_END
