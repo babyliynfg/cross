@@ -49606,6 +49606,96 @@ void js_register_crossapp_CAFontProcesstor(JSContext *cx, JS::HandleObject globa
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CAClipboard_class;
+JSObject *jsb_CrossApp_CAClipboard_prototype;
+
+bool js_crossapp_CAClipboard_setText(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAClipboard_setText : Error processing arguments");
+        CrossApp::CAClipboard::setText(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAClipboard_setText : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAClipboard_getText(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        std::string ret = CrossApp::CAClipboard::getText();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAClipboard_getText : wrong number of arguments");
+    return false;
+}
+
+void js_CrossApp_CAClipboard_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CAClipboard)", obj);
+}
+void js_register_crossapp_CAClipboard(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CAClipboard_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CAClipboard_class->name = "CAClipboard";
+    jsb_CrossApp_CAClipboard_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CAClipboard_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CAClipboard_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CAClipboard_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CAClipboard_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CAClipboard_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CAClipboard_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CAClipboard_class->finalize = js_CrossApp_CAClipboard_finalize;
+    jsb_CrossApp_CAClipboard_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("setText", js_crossapp_CAClipboard_setText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getText", js_crossapp_CAClipboard_getText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CAClipboard_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_CrossApp_CAClipboard_class,
+        dummy_constructor<CrossApp::CAClipboard>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CAClipboard", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CAClipboard> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CAClipboard_class;
+        p->proto = jsb_CrossApp_CAClipboard_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CADevice_class;
 JSObject *jsb_CrossApp_CADevice_prototype;
 
@@ -68779,12 +68869,13 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAProgress(cx, ns);
     js_register_crossapp_CAAlertView(cx, ns);
     js_register_crossapp_Show(cx, ns);
-    js_register_crossapp_FadeOut(cx, ns);
+    js_register_crossapp_CAClipboard(cx, ns);
     js_register_crossapp_CallFunc(cx, ns);
     js_register_crossapp_EaseBezierAction(cx, ns);
     js_register_crossapp_CAViewController(cx, ns);
     js_register_crossapp_CATabBarController(cx, ns);
     js_register_crossapp_CAAVPlayerView(cx, ns);
+    js_register_crossapp_FadeOut(cx, ns);
     js_register_crossapp_CACell(cx, ns);
     js_register_crossapp_CAWaterfallViewCell(cx, ns);
     js_register_crossapp_CGSpriteFrameCache(cx, ns);

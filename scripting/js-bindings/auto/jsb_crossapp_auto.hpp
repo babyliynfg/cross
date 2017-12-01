@@ -2306,6 +2306,16 @@ bool js_crossapp_CAFontProcesstor_imageForText(JSContext *cx, uint32_t argc, jsv
 bool js_crossapp_CAFontProcesstor_heightForTextAtWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAFontProcesstor_widthForTextAtOneLine(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CAClipboard_class;
+extern JSObject *jsb_CrossApp_CAClipboard_prototype;
+
+bool js_crossapp_CAClipboard_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAClipboard_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAClipboard(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAClipboard_setText(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAClipboard_getText(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CADevice_class;
 extern JSObject *jsb_CrossApp_CADevice_prototype;
 

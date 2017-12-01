@@ -18503,6 +18503,33 @@ cafont
 };
 
 /**
+ * @class CAClipboard
+ */
+ca.CAClipboard = {
+
+/**
+ * @method setText
+ * @param {String} arg0
+ */
+setText : function (
+str 
+)
+{
+},
+
+/**
+ * @method getText
+ * @return {String}
+ */
+getText : function (
+)
+{
+    return ;
+},
+
+};
+
+/**
  * @class CADevice
  */
 ca.CADevice = {

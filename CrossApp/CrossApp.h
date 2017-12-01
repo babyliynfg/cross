@@ -178,6 +178,7 @@
 #include "platform/CATextView.h"
 #include "platform/CADensityDpi.h"
 #include "platform/CAFontProcesstor.h"
+#include "platform/CAClipboard.h"
 
 // device
 #include "device/CADevice.h"
