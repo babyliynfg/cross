@@ -244,7 +244,7 @@ bool js_crossapp_ca_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp)
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 2) {
         JSString *js_key = JS::ToString(cx, args.get(0));
-        JSString *js_value = JS::ToString(cx, args.get(0));
+        JSString *js_value = JS::ToString(cx, args.get(1));
         if (js_key && js_value) {
             
             JSStringWrapper key(js_key);
@@ -264,7 +264,13 @@ bool js_crossapp_ca_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp)
         if (js_key) {
             
             JSStringWrapper key(js_key);
-            localStorageGetItem(key.get());
+            if (const char* ret = localStorageGetItem(key.get()))
+            {
+                jsval jsret = JSVAL_NULL;
+                jsret = std_string_to_jsval(cx, std::string(ret));
+                args.rval().set(jsret);
+                return true;
+            }
         }
     }
     args.rval().setUndefined();
