@@ -63,7 +63,7 @@ void CACustomAnimationM::startAnimation(const CACustomAnimation::Callback& callb
             info.callback(info.model);
         }
         
-    }, "update", this, 0);
+    }, "update", this, interval);
 }
 
 void CACustomAnimationM::end()
