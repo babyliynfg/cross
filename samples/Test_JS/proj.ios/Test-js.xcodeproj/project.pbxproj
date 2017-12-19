@@ -38,7 +38,6 @@
 		4875146E1CC0E4B800FF2062 /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4875146C1CC0E4B800FF2062 /* js_manual_conversions.cpp */; };
 		48AAE7741D5043D000C130E7 /* image in Resources */ = {isa = PBXBuildFile; fileRef = 48AAE7731D5043D000C130E7 /* image */; };
 		48AAE7761D5094DB00C130E7 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = 48AAE7751D5094DB00C130E7 /* animation */; };
-		48EAB9B21CE968A6009FAA3D /* script in Resources */ = {isa = PBXBuildFile; fileRef = 48EAB9B11CE968A6009FAA3D /* script */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
 		B0621E261AC3ECEC005EBCA7 /* r in Resources */ = {isa = PBXBuildFile; fileRef = B0621E251AC3ECEC005EBCA7 /* r */; };
 		B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */; };
@@ -51,6 +50,7 @@
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		D62815DA1FE9169900E93520 /* script in Resources */ = {isa = PBXBuildFile; fileRef = D62815D91FE9169900E93520 /* script */; };
 		D6B1E7A61F20B2B800723750 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A51F20B2B800723750 /* CoreImage.framework */; };
 		D6B1E7A81F20B2BD00723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
@@ -138,7 +138,6 @@
 		4875146D1CC0E4B800FF2062 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
 		48AAE7731D5043D000C130E7 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
 		48AAE7751D5094DB00C130E7 /* animation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animation; sourceTree = "<group>"; };
-		48EAB9B11CE968A6009FAA3D /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		48F16C931D1A5EBF00CB6895 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../../../CrossApp/the_third_party/websockets/ios/lib/libwebsockets.a; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B056375B195276CF00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
@@ -156,6 +155,7 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		D62815D91FE9169900E93520 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		D6B1E7A51F20B2B800723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -338,7 +338,6 @@
 		48750DE31CC0CAC300FF2062 /* js-bindings */ = {
 			isa = PBXGroup;
 			children = (
-				48EAB9B11CE968A6009FAA3D /* script */,
 				487514541CC0E10C00FF2062 /* manual */,
 				487511261CC0CC4900FF2062 /* spidermonkey */,
 				48750DE41CC0CAC400FF2062 /* auto */,
@@ -405,6 +404,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D62815D91FE9169900E93520 /* script */,
 				48AAE7751D5094DB00C130E7 /* animation */,
 				48AAE7731D5043D000C130E7 /* image */,
 				484049491CC8C66400BECCC7 /* js */,
@@ -500,7 +500,7 @@
 			files = (
 				B0621E261AC3ECEC005EBCA7 /* r in Resources */,
 				026964B31BEB435100C8BCD7 /* CrossApp.xib in Resources */,
-				48EAB9B21CE968A6009FAA3D /* script in Resources */,
+				D62815DA1FE9169900E93520 /* script in Resources */,
 				4840494A1CC8C66400BECCC7 /* js in Resources */,
 				48AAE7741D5043D000C130E7 /* image in Resources */,
 				026964B11BEB433600C8BCD7 /* Images.xcassets in Resources */,

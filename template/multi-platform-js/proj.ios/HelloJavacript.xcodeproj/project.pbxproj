@@ -35,7 +35,6 @@
 		487514661CC0E19000FF2062 /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 487514641CC0E19000FF2062 /* ScriptingCore.cpp */; };
 		4875146A1CC0E25700FF2062 /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 487514681CC0E25700FF2062 /* js_bindings_core.cpp */; };
 		4875146E1CC0E4B800FF2062 /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4875146C1CC0E4B800FF2062 /* js_manual_conversions.cpp */; };
-		48EAB9B21CE968A6009FAA3D /* script in Resources */ = {isa = PBXBuildFile; fileRef = 48EAB9B11CE968A6009FAA3D /* script */; };
 		B01F71671951682600BA07A6 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = B01F71661951682600BA07A6 /* source_material */; };
 		B0621E261AC3ECEC005EBCA7 /* r in Resources */ = {isa = PBXBuildFile; fileRef = B0621E251AC3ECEC005EBCA7 /* r */; };
 		B0A030081A8E071D0005CB8F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A030071A8E071D0005CB8F /* CoreBluetooth.framework */; };
@@ -48,6 +47,7 @@
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
+		D62815CF1FE9160800E93520 /* script in Resources */ = {isa = PBXBuildFile; fileRef = D62815CE1FE9160800E93520 /* script */; };
 		D6B1E79F1F20B25500723750 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E79E1F20B25500723750 /* CoreImage.framework */; };
 		D6B1E7A11F20B26C00723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A01F20B26C00723750 /* CoreMedia.framework */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
@@ -133,7 +133,6 @@
 		487514691CC0E25700FF2062 /* js_bindings_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_core.h; sourceTree = "<group>"; };
 		4875146C1CC0E4B800FF2062 /* js_manual_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_manual_conversions.cpp; sourceTree = "<group>"; };
 		4875146D1CC0E4B800FF2062 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
-		48EAB9B11CE968A6009FAA3D /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		48F16C931D1A5EBF00CB6895 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../../../CrossApp/the_third_party/websockets/ios/lib/libwebsockets.a; sourceTree = "<group>"; };
 		B01F71661951682600BA07A6 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
 		B056375B195276CF00C63FAA /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.ios/CrossApp.xcodeproj; sourceTree = "<group>"; };
@@ -151,6 +150,7 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		D62815CE1FE9160800E93520 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		D6B1E79E1F20B25500723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D6B1E7A01F20B26C00723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -332,7 +332,6 @@
 		48750DE31CC0CAC300FF2062 /* js-bindings */ = {
 			isa = PBXGroup;
 			children = (
-				48EAB9B11CE968A6009FAA3D /* script */,
 				487514541CC0E10C00FF2062 /* manual */,
 				487511261CC0CC4900FF2062 /* spidermonkey */,
 				48750DE41CC0CAC400FF2062 /* auto */,
@@ -399,6 +398,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D62815CE1FE9160800E93520 /* script */,
 				484049491CC8C66400BECCC7 /* js */,
 				026964B01BEB433600C8BCD7 /* Images.xcassets */,
 				B0621E251AC3ECEC005EBCA7 /* r */,
@@ -492,8 +492,8 @@
 			files = (
 				B0621E261AC3ECEC005EBCA7 /* r in Resources */,
 				026964B31BEB435100C8BCD7 /* CrossApp.xib in Resources */,
-				48EAB9B21CE968A6009FAA3D /* script in Resources */,
 				4840494A1CC8C66400BECCC7 /* js in Resources */,
+				D62815CF1FE9160800E93520 /* script in Resources */,
 				026964B11BEB433600C8BCD7 /* Images.xcassets in Resources */,
 				B01F71671951682600BA07A6 /* source_material in Resources */,
 			);

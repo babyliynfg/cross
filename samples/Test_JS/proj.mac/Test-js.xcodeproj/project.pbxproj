@@ -45,11 +45,11 @@
 		48E144371CED67980029BABC /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141141CED67970029BABC /* js_bindings_core.cpp */; };
 		48E144381CED67980029BABC /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141161CED67970029BABC /* js_manual_conversions.cpp */; };
 		48E144391CED67980029BABC /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141181CED67970029BABC /* ScriptingCore.cpp */; };
-		48E1445B1CED67B60029BABC /* script in Resources */ = {isa = PBXBuildFile; fileRef = 48E1445A1CED67B60029BABC /* script */; };
 		48E1445D1CED68760029BABC /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E1445C1CED68760029BABC /* libjs_static.a */; };
 		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
 		B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */; };
 		B09FC0BC1AD3A25F0009C2D7 /* r in Resources */ = {isa = PBXBuildFile; fileRef = B09FC0BB1AD3A25F0009C2D7 /* r */; };
+		D62815D71FE9168700E93520 /* script in Resources */ = {isa = PBXBuildFile; fileRef = D62815D61FE9168700E93520 /* script */; };
 		D6B1E77C1F204D6200723750 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E77B1F204D6200723750 /* AVFoundation.framework */; };
 		D6B1E77E1F204D6700723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E77D1F204D6700723750 /* CoreMedia.framework */; };
 		D6C72A461EF29BF00094B191 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6C72A451EF29BF00094B191 /* WebKit.framework */; };
@@ -133,12 +133,12 @@
 		48E141181CED67970029BABC /* ScriptingCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptingCore.cpp; sourceTree = "<group>"; };
 		48E141191CED67970029BABC /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		48E1411A1CED67970029BABC /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spidermonkey_specifics.h; sourceTree = "<group>"; };
-		48E1445A1CED67B60029BABC /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		48E1445C1CED68760029BABC /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = "../../../scripting/js-bindings/spidermonkey/prebuilt/mac/libjs_static.a"; sourceTree = "<group>"; };
 		B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		B0621C291AC3DCB2005EBCA7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
 		B09FC0BB1AD3A25F0009C2D7 /* r */ = {isa = PBXFileReference; lastKnownFileType = folder; path = r; sourceTree = "<group>"; };
+		D62815D61FE9168700E93520 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		D6B1E77B1F204D6200723750 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D6B1E77D1F204D6700723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D6C72A451EF29BF00094B191 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -311,7 +311,6 @@
 		48E141091CED67970029BABC /* js-bindings */ = {
 			isa = PBXGroup;
 			children = (
-				48E1445A1CED67B60029BABC /* script */,
 				48E1410A1CED67970029BABC /* auto */,
 				48E1410D1CED67970029BABC /* manual */,
 			);
@@ -360,6 +359,7 @@
 		B04C0BBA19011F33009854FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D62815D61FE9168700E93520 /* script */,
 				4851EDAD1D81714500863BD1 /* image */,
 				4851EDAE1D81714500863BD1 /* animation */,
 				48D960981D58A17000158611 /* source_material */,
@@ -441,9 +441,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */,
-				48E1445B1CED67B60029BABC /* script in Resources */,
 				48D9609C1D58A17000158611 /* source_material in Resources */,
 				48E141061CED674B0029BABC /* js in Resources */,
+				D62815D71FE9168700E93520 /* script in Resources */,
 				4851EDAF1D81714500863BD1 /* image in Resources */,
 				41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */,
 				B09FC0BC1AD3A25F0009C2D7 /* r in Resources */,
