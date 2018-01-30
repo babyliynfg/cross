@@ -148,9 +148,16 @@ public abstract class CrossAppDevice  extends Activity  {
         });
 	}
     
-	public static void CAImageCapture(int type)
+	public static void CAImageCapture(final int type)
 	{
-		CrossAppNativeTool.CAImageCapture(type);
+		s_pContext.runOnUiThread(new Runnable() 
+    	{
+            @Override
+            public void run()
+            {
+            	CrossAppNativeTool.CAImageCapture(type);
+            }
+    	});
 	}
 	
 	public static void CAVideoCapture()
@@ -163,9 +170,16 @@ public abstract class CrossAppDevice  extends Activity  {
 		CrossAppNativeTool.CAVideoAlbum();
 	}
 	
-	public static void CAImageAlbum(int type)
+	public static void CAImageAlbum(final int type)
 	{
-		CrossAppNativeTool.CAImageAlbum(type);
+		s_pContext.runOnUiThread(new Runnable() 
+    	{
+            @Override
+            public void run()
+            {
+            	CrossAppNativeTool.CAImageAlbum(type);
+            }
+    	});
 	}
 	
 	public static void browserOpenURL(final String url)

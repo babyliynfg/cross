@@ -1,9 +1,15 @@
 package org.CrossApp.lib;
 
 import org.CrossApp.lib.CrossAppGLSurfaceView;
+
+import java.nio.ByteBuffer;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -17,23 +23,25 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
+import android.widget.FrameLayout;
 
 
-@SuppressLint("SdCardPath")
+@SuppressLint({ "SdCardPath", "NewApi", "SimpleDateFormat" })
 public class CrossAppNativeTool
 {
 	private static AlertDialog mDialog = null;
 	private static Activity s_pContext;
-	native static void NativeReturn( String arg1 , Object arg2 );
-
+	native static void ImageReturn( String arg1 , Object arg2 );
 	public CrossAppNativeTool( final Activity context )
 	{
 		s_pContext = context;
@@ -92,20 +100,19 @@ public class CrossAppNativeTool
 	
 	public static void CAImageAlbum(int type)
 	{
-		Intent getImage = new Intent();
-		getImage.setAction(Intent.ACTION_GET_CONTENT);
-        getImage.addCategory(Intent.CATEGORY_OPENABLE);
-        getImage.setType("image/*");
-        
-        Intent wrapperIntent2 = Intent.createChooser(getImage, null);
-        int selectedType = 0;
-        if (type ==0) {
-            selectedType = 0;
-        }
-        else {
-            selectedType = 4;
-        }
-        s_pContext.startActivityForResult(getImage, selectedType);//3
+		   int selectedType = 0;
+	        if (type ==0) {
+	            selectedType = 0;
+	        }
+	        else {
+	            selectedType = 4;
+	        }
+
+			Intent intent = new Intent();
+			intent.setType("image/*");//可选择图片视频
+			intent.setAction(Intent.ACTION_PICK);
+			intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			s_pContext.startActivityForResult(intent, selectedType);
 	}
 	
 	public static int getScreenBrightness() 
@@ -121,7 +128,6 @@ public class CrossAppNativeTool
 	    {
 	        
 	    }
-	    Log.d("6666666", "value:" + value);
 	    return value;
 	}
 
@@ -191,7 +197,7 @@ public class CrossAppNativeTool
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
     	
-    	Log.d("liuguoyan", "requestCode=" + requestCode) ; 
+    	Log.d("CrossApp", "requestCode= " + requestCode) ; 
     	
         if (resultCode == -1)
         {  
@@ -204,13 +210,12 @@ public class CrossAppNativeTool
                 CrossAppActivity.getContext().runOnGLThread(new Runnable() {
 					@Override
 					public void run() {
-						NativeReturn( fileStr , null );
+						ImageReturn( fileStr , null );
 					}
 				});
                 
                 break;  
             case 1:
-            	
             	Uri originalUri1;
             	if (intent != null && intent.getData() != null) 
             	{
@@ -224,10 +229,9 @@ public class CrossAppNativeTool
             	//1414136613714.jpg
                 String[] proj1 = {MediaStore.Images.Media.DATA};
 
-                Cursor cursor1 = s_pContext.managedQuery(originalUri1, proj1, null, null, null); 
+                Cursor cursor1 = s_pContext.getContentResolver().query(originalUri1, proj1, null, null, null); 
 
                 int column_index1 = cursor1.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
                 cursor1.moveToFirst();
 
                 final String path1 = cursor1.getString(column_index1);
@@ -235,10 +239,10 @@ public class CrossAppNativeTool
                 CrossAppGLSurfaceView.getInstance().queueEvent(new Runnable() {
 					@Override
 					public void run() {
-		                NativeReturn( path1 , null );
+						ImageReturn( path1 , null );
 					}
 				});
-
+       
             	break;
             case 2:
             case 3:
@@ -268,7 +272,7 @@ public class CrossAppNativeTool
 					@Override
 					public void run() 
 					{
-						NativeReturn( path , null );
+						ImageReturn( path , null );
 					}
 				});
                 
@@ -285,8 +289,6 @@ public class CrossAppNativeTool
             		cropImageUri(photoUri, 640, 640, 1);   
 				}
 
-            	 
-            	 
             	break;
  
             default:  
@@ -296,7 +298,8 @@ public class CrossAppNativeTool
        
         
     }
-    
+
+    @TargetApi(Build.VERSION_CODES.KITKAT) @SuppressLint("NewApi") 
     public static String getPath(final Context context, final Uri uri) {  
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;  
       
@@ -370,6 +373,7 @@ public class CrossAppNativeTool
     }  
       
     public static String getRealFilePath( final Context context, final Uri uri ) {
+    	
         if ( null == uri ) return null;
         final String scheme = uri.getScheme();
         String data = null;
@@ -379,6 +383,7 @@ public class CrossAppNativeTool
             data = uri.getPath();
         } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
             Cursor cursor = context.getContentResolver().query( uri, new String[] { ImageColumns.DATA }, null, null, null );
+
             if ( null != cursor ) {
                 if ( cursor.moveToFirst() ) {
                     int index = cursor.getColumnIndex( ImageColumns.DATA );
@@ -389,6 +394,7 @@ public class CrossAppNativeTool
                 cursor.close();
             }
         }
+        
         return data;
     }
     
@@ -475,7 +481,7 @@ public class CrossAppNativeTool
         return path;
     }
     
-    //����ͼ��
+    //锟斤拷锟斤拷图锟斤拷
     public static void UpdateCamera(final String url){ 
     	s_pContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + url)));
     } 

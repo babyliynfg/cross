@@ -29,7 +29,7 @@ extern "C"
     void JAVAOpenAlbum(int type)
     {
         JniMethodInfo jmi;
-        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppNativeTool" , "CAImageAlbum" , "(I)V"))
+        if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "CAImageAlbum" , "(I)V"))
         {
             jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
             jmi.env->DeleteLocalRef(jmi.classID);
@@ -103,7 +103,7 @@ void CAImagePickerController::open(const std::function<void(CrossApp::CAImage*)>
             break;
         case CAImagePickerController::SourceType::CameraDeviceRear:
         {
-            JAVAOpenCamera(1);
+            JAVAOpenCamera(2);
         }
             break;
         case CAImagePickerController::SourceType::CameraDeviceFront:
@@ -130,8 +130,8 @@ void CAImagePickerController::writeImageToPhoto(CAImage* image, const std::funct
 
 extern "C"
 {
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppNativeTool_NativeReturn
-    ( JNIEnv* env,jobject thiz ,jstring arg1, jobject arg2)
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppNativeTool_ImageReturn
+    ( JNIEnv* env,jclass thiz ,jstring arg1, jobject arg2)
     {
         const char* str = env->GetStringUTFChars(arg1, false);
 
@@ -140,13 +140,14 @@ extern "C"
            if (_imagePickerControllerCallBack)
            {
                CAImage *image = new CAImage();
+               
                if (image->initWithImageFile(str))
                {
                    _imagePickerControllerCallBack(CAImage::generateMipmapsWithImage(image));
                    image->release();
                }
            }
-           
+
            CC_SAFE_RELEASE_NULL(s_pImagePickerController);
        });
     }
