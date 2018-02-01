@@ -168,24 +168,6 @@ ca.CAKeypadDispatcher.KeypadMSGType = {};
 ca.CAKeypadDispatcher.KeypadMSGType.BackClicked = 1;
 ca.CAKeypadDispatcher.KeypadMSGType.MenuClicked = 2;
 
-ca.DLayout = {}
-
-ca.DHorizontalLayout = {}
-ca.DHorizontalLayout.Type = {};
-ca.DHorizontalLayout.Type.L_R = 0;
-ca.DHorizontalLayout.Type.L_W = 1;
-ca.DHorizontalLayout.Type.R_W = 2;
-ca.DHorizontalLayout.Type.W_C = 3;
-ca.DHorizontalLayout.Type.NW_C = 4;
-
-ca.DVerticalLayout = {}
-ca.DVerticalLayout.Type = {};
-ca.DVerticalLayout.Type.T_B = 0;
-ca.DVerticalLayout.Type.T_H = 1;
-ca.DVerticalLayout.Type.B_H = 2;
-ca.DVerticalLayout.Type.H_C = 3;
-ca.DVerticalLayout.Type.NH_C = 4;
-
 ca.CAPageControl.Style = {};
 ca.CAPageControl.Style.Dot = 0;
 ca.CAPageControl.Style.Round = 1;
@@ -374,366 +356,501 @@ ca.tLongAudioSourceState.kLAS_Stopped = 4;
 
 
 ca.FLT_MAX = 0xFFFFFFFF;
-// dlayout
-ca.DHorizontalLayout.set = function(var1, var2, _type)
-{
-    var _left = ca.FLT_MAX;
-    var _right = ca.FLT_MAX;
-    var _width = ca.FLT_MAX;
-    var _center = ca.FLT_MAX;
-    var _normalizedWidth = ca.FLT_MAX;
-    
-    switch (_type)
+
+ca.DHorizontalLayout = {
+
+    L_R:0,
+    L_W:1,
+    R_W:2,
+    W_C:3,
+    NW_C:4,
+
+    set: function(var1, var2, type)
     {
-        case ca.DHorizontalLayout.Type.L_R:
+        var dhorizontal_layout = {};
+        dhorizontal_layout.left = ca.FLT_MAX;
+        dhorizontal_layout.right = ca.FLT_MAX;
+        dhorizontal_layout.width = ca.FLT_MAX;
+        dhorizontal_layout.center = ca.FLT_MAX;
+        dhorizontal_layout.normalizedWidth = ca.FLT_MAX;
+        dhorizontal_layout.type = type;
+
+        switch (type)
         {
-            _left = var1;
-            _right = var2;
+            case ca.DHorizontalLayout.L_R:
+            {
+                dhorizontal_layout.left = var1;
+                dhorizontal_layout.right = var2;
+            }
+                break;
+            case ca.DHorizontalLayout.L_W:
+            {
+                dhorizontal_layout.left = var1;
+                dhorizontal_layout.width = var2;
+            }
+                break;
+            case ca.DHorizontalLayout.R_W:
+            {
+                dhorizontal_layout.right = var1;
+                dhorizontal_layout.width = var2;
+            }
+                break;
+            case ca.DHorizontalLayout.W_C:
+            {
+                dhorizontal_layout.width = var1;
+                dhorizontal_layout.center = var2;
+            }
+                break;
+            case ca.DHorizontalLayout.NW_C:
+            {
+                dhorizontal_layout.normalizedWidth = var1;
+                dhorizontal_layout.center = var2;
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case ca.DHorizontalLayout.Type.L_W:
-        {
-            _left = var1;
-            _width = var2;
-        }
-            break;
-        case ca.DHorizontalLayout.Type.R_W:
-        {
-            _right = var1;
-            _width = var2;
-        }
-            break;
-        case ca.DHorizontalLayout.Type.W_C:
-        {
-            _width = var1;
-            _center = var2;
-        }
-            break;
-        case ca.DHorizontalLayout.Type.NW_C:
-        {
-            _normalizedWidth = var1;
-            _center = var2;
-        }
-            break;
-        default:
-            break;
-    }
-    
-    return {left:_left, right:_right, width:_width, center:_center, normalizedWidth:_normalizedWidth, type:_type};
+
+        return dhorizontal_layout;
+    },
+
+    fill: function () {
+
+        return this.set(0, 0, ca.DHorizontalLayout.L_R);
+    },
+
+    zero: function () {
+
+        return this.set(ca.FLT_MAX, ca.FLT_MAX, ca.FLT_MAX);
+    },
 };
 
-ca.DVerticalLayout.set = function (var1, var2, _type){
-    
-    var _top = ca.FLT_MAX;
-    var _bottom = ca.FLT_MAX;
-    var _height = ca.FLT_MAX;
-    var _center = ca.FLT_MAX;
-    var _normalizedHeight = ca.FLT_MAX;
-    
-    switch (_type)
+ca.DHorizontalLayout_L_R = function(left, right)
+{
+    return ca.DHorizontalLayout.set(left, right, ca.DHorizontalLayout.L_R);
+};
+
+ca.DHorizontalLayout_L_W = function(left, width)
+{
+    return ca.DHorizontalLayout.set(left, width, ca.DHorizontalLayout.L_W);
+};
+
+ca.DHorizontalLayout_R_W = function(right, width)
+{
+    return ca.DHorizontalLayout.set(right, width, ca.DHorizontalLayout.R_W);
+};
+
+ca.DHorizontalLayout_W_C = function(width, center)
+{
+    return ca.DHorizontalLayout.set(width, center, ca.DHorizontalLayout.W_C);
+};
+ca.DHorizontalLayout_NW_C = function(width, center)
+{
+    return ca.DHorizontalLayout.set(width, center, ca.DHorizontalLayout.NW_C);
+};
+
+ca.DVerticalLayout = {
+
+    T_B:0,
+    T_H:1,
+    B_H:2,
+    H_C:3,
+    NH_C:4,
+
+    set: function(var1, var2, type)
     {
-        case ca.DVerticalLayout.Type.T_B:
+        var dvertical_layout = {};
+        dvertical_layout.top = ca.FLT_MAX;
+        dvertical_layout.bottom = ca.FLT_MAX;
+        dvertical_layout.height = ca.FLT_MAX;
+        dvertical_layout.center = ca.FLT_MAX;
+        dvertical_layout.normalizedHeight = ca.FLT_MAX;
+        dvertical_layout.type = type;
+
+        switch (type)
         {
-            _top = var1;
-            _bottom = var2;
+            case ca.DVerticalLayout.T_B:
+            {
+                dvertical_layout.top = var1;
+                dvertical_layout.bottom = var2;
+            }
+                break;
+            case ca.DVerticalLayout.T_H:
+            {
+                dvertical_layout.top = var1;
+                dvertical_layout.height = var2;
+            }
+                break;
+            case ca.DVerticalLayout.B_H:
+            {
+                dvertical_layout.bottom = var1;
+                dvertical_layout.height = var2;
+            }
+                break;
+            case ca.DVerticalLayout.H_C:
+            {
+                dvertical_layout.height = var1;
+                dvertical_layout.center = var2;
+            }
+                break;
+            case ca.DVerticalLayout.NH_C:
+            {
+                dvertical_layout.normalizedHeight = var1;
+                dvertical_layout.center = var2;
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case ca.DVerticalLayout.Type.T_H:
+
+        return dvertical_layout;
+    },
+
+    fill: function () {
+
+        return this.set(0, 0, ca.DVerticalLayout.T_B);
+    },
+
+    zero: function () {
+
+        return this.set(ca.FLT_MAX, ca.FLT_MAX, ca.FLT_MAX);
+    },
+};
+
+ca.DVerticalLayout_T_B = function(top, bottom)
+{
+    return ca.DVerticalLayout.set(top, bottom, ca.DVerticalLayout.T_B);
+};
+
+ca.DVerticalLayout_T_H = function(top, height)
+{
+    return ca.DVerticalLayout.set(top, height, ca.DVerticalLayout.T_H);
+};
+
+ca.DVerticalLayout_B_H = function(bottom, height)
+{
+    return ca.DVerticalLayout.set(bottom, height, ca.DVerticalLayout.B_H);
+};
+
+ca.DVerticalLayout_H_C = function(height, center)
+{
+    return ca.DVerticalLayout.set(height, center, ca.DVerticalLayout.H_C);
+};
+
+ca.DVerticalLayout_NH_C = function(height, center)
+{
+    return ca.DVerticalLayout.set(height, center, ca.DVerticalLayout.NH_C);
+};
+
+ca.DLayout = {
+
+    set: function (hor, ver)
+    {
+        var dlayout = {};
+        dlayout.horizontal = hor;
+        dlayout.vertical = ver;
+        return dlayout;
+    },
+
+    fill: function () {
+
+        return this.set(ca.DHorizontalLayout.fill(), ca.DVerticalLayout.fill());
+    },
+
+    zero: function () {
+
+        return this.set(ca.DHorizontalLayout.zero(), ca.DVerticalLayout.zero());
+    },
+};
+
+ca.CAFont = {
+
+    create: function()
+    {
+        var shadow = {};
+        shadow.shadowEnabled = false;
+        shadow.shadowOffset = ca.DSize.zero();
+        shadow.shadowBlur = 0;
+        shadow.shadowColor = ca.CAColor4B.set(0, 0, 0, 88);
+
+        var stroke = {};
+        stroke.strokeEnabled = false;
+        stroke.strokeColor = ca.CAColor4B.BLACK;
+        stroke.strokeSize = 0;
+
+        var cafont = {};
+        cafont.bold = false;
+        cafont.underLine = false;
+        cafont.deleteLine = false;
+        cafont.italics = false;
+        cafont.italicsValue = 0.5;
+        cafont.wordWrap = false;
+        cafont.fontName = "";
+        cafont.fontSize = 24;
+        cafont.lineSpacing = 0;
+        cafont.color = ca.CAColor4B.BLACK;
+        cafont.shadow = shadow;
+        cafont.stroke = stroke;
+
+        return cafont;
+    },
+};
+
+ca.CAColor4B = {
+
+    WHITE: {r:255, g:255, b:255, a:255},
+    YELLOW: {r:255, g:255, b:0, a:255},
+    GREEN: {r:0, g:255, b:0, a:255},
+    BLUE: {r:0, g:0, b:255, a:255},
+    RED: {r:255, g:0, b:0,a: 255},
+    MAGENTA: {r:255, g:0, b:255, a:255},
+    BLACK: {r:0, g:0, b:0, a:255},
+    ORANGE: {r:255, g:127, b:0, a:255},
+    GRAY: {r:166, g:166, b:166, a:255},
+    CLEAR: {r:255, g:255, b:255, a:0},
+
+    set: function (r, g, b, a)
+    {
+        var c4b = {};
+        c4b.r = r;
+        c4b.g = g;
+        c4b.b = b;
+        c4b.a = a;
+        return c4b;
+    },
+
+    copy: function (color4b) {
+
+        var c4b = {};
+        c4b.r = color4b.r;
+        c4b.g = color4b.g;
+        c4b.b = color4b.b;
+        c4b.a = color4b.a;
+        return c4b;
+    },
+
+    setUInt32: function (rgba)
+    {
+        var b = rgba % 0x100;
+        rgba /= 0x100;
+        var g = rgba % 0x100;
+        rgba /= 0x100;
+        var r = rgba % 0x100;
+        rgba /= 0x100;
+        var a = rgba % 0x100;
+
+        return this.set(r, g, b, a);
+    },
+
+    getUInt32: function (c4b)
+    {
+        return (c4b.b + c4b.g * 0x100 + c4b.r * 0x10000 + c4b.a * 0x1000000);
+    },
+
+    equals: function (c1, c2)
+    {
+        return (c1.r == c2.r && c1.g == c2.g && c1.b == c2.b && c1.a == c2.a);
+    },
+};
+
+ca.CAColor4F = {
+
+    WHITE: {r:1, g:1, b:1,a:1},
+    YELLOW: {r:1, g:1, b:0,a:1},
+    GREEN: {r:0, g:1, b:0,a:1},
+    BLUE: {r:0, g:0, b:1,a:1},
+    RED: {r:1, g:0, b:0,a:1},
+    MAGENTA: {r:1, g:0, b:1,a:1},
+    BLACK: {r:0, g:0, b:0,a:1},
+    ORANGE: {r:1, g:0.5, b:0,a:1},
+    GRAY: {r:0.65, g:0.65, b:0.65,a:1},
+    CLEAR: {r:1, g:1, b:1,a:0},
+
+    set: function (r, g, b, a)
+    {
+        var c4f = {};
+        c4f.r = r;
+        c4f.g = g;
+        c4f.b = b;
+        c4f.a = a;
+        return c4f;
+    },
+
+    copy: function (c4f) {
+
+        var c4f = {};
+        c4f.r = color4f.r;
+        c4f.g = color4f.g;
+        c4f.b = color4f.b;
+        c4f.a = color4f.a;
+        return c4f;
+    },
+
+    equals: function (c1, c2)
+    {
+        return (c1.r == c2.r && c1.g == c2.g && c1.b == c2.b && c1.a == c2.a);
+    },
+};
+
+ca.DPoint = {
+
+    set: function(x, y)
+    {
+        var dpoint = {};
+        dpoint.x = x;
+        dpoint.y = y;
+        return dpoint;
+    },
+
+    zero: function () {
+
+        return this.set(0, 0);
+    },
+
+    copy: function (p) {
+
+        var dpoint = {};
+        dpoint.x = p.x;
+        dpoint.y = p.y;
+        return dpoint;
+    },
+
+    equals: function (p1, p2) {
+
+        return ((p1.x == p2.x) && (p1.y == p2.y));
+    },
+
+    getDistance: function (p1, p2)
+    {
+        var xx = p1.x - p2.x;
+        var yy = p1.y - p2.y;
+        return Math.sqrt(xx*xx + yy*yy)
+    },
+};
+
+ca.DSize = {
+
+    set: function(width, height)
+    {
+        var dsize = {};
+        dsize.width = width;
+        dsize.height = height;
+        return dsize;
+    },
+
+    zero: function () {
+
+        return this.set(0, 0);
+    },
+
+    copy: function (s) {
+
+        var dsize = {};
+        dsize.width = s.width;
+        dsize.height = s.height;
+        return dsize;
+    },
+
+    equals: function (s1, s2) {
+
+        return ((s1.width == s2.width) && (s1.height == s2.height));
+    },
+
+};
+
+ca.DRect = {
+
+    set: function(x, y, width, height)
+    {
+        var drect = {};
+        drect.x = x;
+        drect.y = y;
+        drect.width = width;
+        drect.height = height;
+        return drect;
+    },
+
+    set2: function (point, size) {
+
+        var drect = {};
+        drect.x = point.x;
+        drect.y = point.y;
+        drect.width = size.width;
+        drect.height = size.height;
+        return drect;
+    },
+
+    zero: function () {
+
+        return this.set(0, 0);
+    },
+
+    copy: function (r) {
+
+        var drect = {};
+        drect.x = r.x;
+        drect.y = r.y;
+        drect.width = r.width;
+        drect.height = r.height;
+        return drect;
+    },
+
+    equals: function (r1, r2)
+    {
+        return ( r1.x == r2.x && r1.y == r2.y && r1.width == r2.width && r1.height == r2.height);
+    },
+
+    intersectsRect: function (r1, r2)
+    {
+        if (r1.x + r1.width < r2.x)
         {
-            _top = var1;
-            _height = var2;
+            return false;
         }
-            break;
-        case ca.DVerticalLayout.Type.B_H:
+
+        if (r2.x + r2.width < r1.x)
         {
-            _bottom = var1;
-            _height = var2;
+            return false;
         }
-            break;
-        case ca.DVerticalLayout.Type.H_C:
+
+        if (r1.y + r1.height < r2.y)
         {
-            _height = var1;
-            _center = var2;
+            return false;
         }
-            break;
-        case ca.DVerticalLayout.Type.NH_C:
+
+        if (r2.y + r2.height < r1.y)
         {
-            _normalizedHeight = var1;
-            _center = var2;
+            return false;
         }
-            break;
-        default:
-            break;
-    }
-    
-    return {top:_top, bottom:_bottom, height:_height, center:_center, type:_type, normalizedHeight:_normalizedHeight};
-};
 
+        return true;
+    },
 
-ca.DLayout.set = function (hor, ver)
-{
-    return {horizontal:hor, vertical:ver};
-};
-
-ca.DHorizontalLayout_L_R = function(left,right)
-{
-    return ca.DHorizontalLayout.set(left, right, ca.DHorizontalLayout.Type.L_R);
-};
-
-ca.DHorizontalLayout_L_W = function(left,width)
-{
-    return ca.DHorizontalLayout.set(left, width, ca.DHorizontalLayout.Type.L_W);
-};
-
-ca.DHorizontalLayout_R_W = function(right,width)
-{
-    return ca.DHorizontalLayout.set(right,width, ca.DHorizontalLayout.Type.R_W);
-};
-
-ca.DHorizontalLayout_W_C = function(width,center)
-{
-    return ca.DHorizontalLayout.set(width, center, ca.DHorizontalLayout.Type.W_C);
-};
-ca.DHorizontalLayout_NW_C = function(width,center)
-{
-    return ca.DHorizontalLayout.set(width, center, ca.DHorizontalLayout.Type.NW_C);
-};
-
-ca.DVerticalLayout_T_B = function(top,bottom)
-{
-    return ca.DVerticalLayout.set(top,bottom, ca.DVerticalLayout.Type.T_B);
-};
-
-ca.DVerticalLayout_T_H = function(top,height)
-{
-    return ca.DVerticalLayout.set(top,height, ca.DVerticalLayout.Type.T_H);
-};
-
-ca.DVerticalLayout_B_H = function(bottom,height)
-{
-    return ca.DVerticalLayout.set(bottom,height, ca.DVerticalLayout.Type.B_H);
-};
-
-ca.DVerticalLayout_H_C = function(height,center)
-{
-    return ca.DVerticalLayout.set(height,center, ca.DVerticalLayout.Type.H_C);
-};
-ca.DVerticalLayout_NH_C = function(height,center)
-{
-    return ca.DVerticalLayout.set(height,center, ca.DVerticalLayout.Type.NH_C);
-};
-
-ca.DHorizontalLayouttZero  = ca.DHorizontalLayout.set(ca.FLT_MAX, ca.FLT_MAX, ca.FLT_MAX);
-ca.DVerticalLayoutZero     = ca.DVerticalLayout.set(ca.FLT_MAX,ca.FLT_MAX, ca.FLT_MAX);
-ca.DLayoutZero             = ca.DLayout.set(ca.DHorizontalLayouttZero, ca.DVerticalLayoutZero);
-ca.DHorizontalLayoutFill   = ca.DHorizontalLayout_L_R(0, 0);
-ca.DVerticalLayoutFill     = ca.DVerticalLayout_T_B(0, 0);
-ca.DLayoutFill             = ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayoutFill);
-
-ca.CAFontShadow = function()
-{
-    return  {
-    shadowEnabled: false,
-    shadowOffset: ca.DSizeZero,
-    shadowBlur: 0,
-    shadowColor: {r:0, g:0, b:0, a:88},
-    };
-};
-
-ca.CAFontStroke = function()
-{
-    return  {
-    strokeEnabled: false,
-    strokeColor: ca.CAColor4B.BLACK,
-    strokeSize: 0,
-    };
-};
-
-ca.CAFont = function()
-{
-    return  {
-    bold: false,
-    underLine: false,
-    deleteLine: false,
-    italics: false,
-    italicsValue: 0.5,
-    wordWrap: false,
-    fontName: "",
-    fontSize: 24,
-    lineSpacing: 0,
-    color: ca.CAColor4B.BLACK,
-    shadow: ca.CAFontShadow(),
-    stroke: ca.CAFontStroke(),
-    };
-};
-
-ca.CAColor4B = {}
-ca.CAColor4B.WHITE = {r:255, g:255, b:255,a:255};
-ca.CAColor4B.YELLOW = {r:255, g:255, b:0,a:255};
-ca.CAColor4B.GREEN = {r:0, g:255, b:0,a:255};
-ca.CAColor4B.BLUE = {r:0, g:0, b:255,a:255};
-ca.CAColor4B.RED = {r:255, g:0, b:0,a:255};
-ca.CAColor4B.MAGENTA = {r:255, g:0, b:255,a:255};
-ca.CAColor4B.BLACK = {r:0, g:0, b:0,a:255};
-ca.CAColor4B.ORANGE = {r:255, g:127, b:0,a:255};
-ca.CAColor4B.GRAY = {r:166, g:166, b:166,a:255};
-ca.CAColor4B.CLEAR = {r:255, g:255, b:255,a:0};
-
-ca.CAColor4B.set = function (_r, _g, _b, _a)
-{
-    return {r:_r, g:_g, b:_b, a:_a};
-};
-
-ca.CAColor4B.setUInt32 = function (_rgba)
-{
-    var _b = _rgba % 0x100;
-    _rgba /= 0x100;
-    var _g = _rgba % 0x100;
-    _rgba /= 0x100;
-    var _r = _rgba % 0x100;
-    _rgba /= 0x100;
-    var _a = _rgba % 0x100;
-    
-    return {r:_r, g:_g, b:_b, a:_a};
-};
-
-ca.CAColor4B.getUInt32 = function (_color)
-{
-    return (_color.b + _color.g * 0x100 + _color.r * 0x10000 + _color.a * 0x1000000);
-};
-
-ca.CAColor4BEquals = function (_color1, _color2)
-{
-    return (_color1.r == _color2.r && _color1.g == _color2.g && _color1.b == _color2.b && _color1.a == _color2.a);
-};
-
-ca.CAColor4F = {}
-ca.CAColor4F.WHITE = {r:1, g:1, b:1,a:1};
-ca.CAColor4F.YELLOW = {r:1, g:1, b:0,a:1};
-ca.CAColor4F.GREEN = {r:0, g:1, b:0,a:1};
-ca.CAColor4F.BLUE = {r:0, g:0, b:1,a:1};
-ca.CAColor4F.RED = {r:1, g:0, b:0,a:1};
-ca.CAColor4F.MAGENTA = {r:1, g:0, b:1,a:1};
-ca.CAColor4F.BLACK = {r:0, g:0, b:0,a:1};
-ca.CAColor4F.ORANGE = {r:1, g:0.5, b:0,a:1};
-ca.CAColor4F.GRAY = {r:0.65, g:0.65, b:0.65,a:1};
-ca.CAColor4F.CLEAR = {r:1, g:1, b:1,a:0};
-
-ca.CAColor4F.set = function (_r, _g, _b, _a)
-{
-    return {r:_r, g:_g, b:_b, a:_a};
-};
-
-ca.CAColor4FEquals = function (_color1, _color2)
-{
-    return (_color1.r == _color2.r && _color1.g == _color2.g && _color1.b == _color2.b && _color1.a == _color2.a);
-};
-
-ca.DPoint = {}
-ca.DPoint.set = function( _x, _y )
-{
-    return {x:_x, y:_y};
-};
-
-ca.DPointZero = function ()
-{
-    return ca.DPoint.set(0, 0);
-};
-
-ca.DPointEquals = function (p1, p2)
-{
-    return ((p1.x == p2.x) && (p1.y == p2.y));
-};
-
-ca.DPoint.getDistance = function (p1, p2)
-{
-    var xx = p1.x - p2.x;
-    var yy = p1.y - p2.y;
-    return Math.sqrt(xx*xx + yy*yy)
-}
-
-ca.DSize = {}
-ca.DSize.set = function(_width, _height)
-{
-    return {width:_width, height:_height};
-};
-
-ca.DSizeEquals = function (s1, s2)
-{
-    return ((s1.width == s2.width) && (s1.height == s2.height));
-};
-
-ca.DSizeZero = function ()
-{
-    return ca.DSize.set(0, 0);
-};
-
-ca.DRect = {}
-
-ca.DRect.set = function(_x, _y, _width, _height)
-{
-    return {x:_x, y:_y, width:_width, height:_height};
-};
-
-ca.DRectZero = function ()
-{
-    return ca.DRect.set(0, 0, 0, 0);
-};
-
-ca.DRectEquals = function (r1, r2)
-{
-    return ( r1.x == r2.x && r1.y == r2.y && r1.width == r2.width && r1.height == r2.height);
-};
-
-ca.DRect.intersectsRect = function (r1, r2)
-{
-    if (r1.x + r1.width < r2.x)
+    containsPoint: function (r, p)
     {
-        return false;
+        if (r.x + r.width < p.x)
+        {
+            return false;
+        }
+
+        if (r.x > p.x)
+        {
+            return false;
+        }
+
+        if (r.y + r.height < p.y)
+        {
+            return false;
+        }
+
+        if (r.y > p.y)
+        {
+            return false;
+        }
+
+        return true;
     }
-    
-    if (r2.x + r2.width < r1.x)
-    {
-        return false;
-    }
-    
-    if (r1.y + r1.height < r2.y)
-    {
-        return false;
-    }
-    
-    if (r2.y + r2.height < r1.y)
-    {
-        return false;
-    }
-    
-    return true;
 };
 
-ca.DRect.containsPoint = function (r, p)
-{
-    if (r.x + r.width < p.x)
-    {
-        return false;
-    }
-
-    if (r.x > p.x)
-    {
-        return false;
-    }
-
-    if (r.y + r.height < p.y)
-    {
-        return false;
-    }
-
-    if (r.y > p.y)
-    {
-        return false;
-    }
-
-    return true;
-};
 
 ca.CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
 ca.CROSSAPP_CCLOG_NOTIFICATION = "CROSSAPP_CCLOG_NOTIFICATION";
