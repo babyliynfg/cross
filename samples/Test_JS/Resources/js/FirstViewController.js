@@ -13,7 +13,7 @@ var FirstViewController = ca.CAViewController.extend({
             ["SegmentedControl",                "image/SegmentedControl.png",       "SegmentedControlTest()"],
             ["ImageView",                       "image/ImageView.png",              "ImageViewTest()"],
             ["Scale9ImageView",                 "image/Scale9ImageView.png",        "Scale9ImageViewTest()"],
-            ["IndicatorView",                   "image/indicatorView.png",          "ActivityIndicatorViewTest()"],
+            ["IndicatorView",                   "image/indicatorView.png",   "ActivityIndicatorViewTest()"],
             ["Progress",                        "image/Progress.png",               "ProgressTest()"],
             ["Slider",                          "image/slider.png",                 "SliderTest()"],
             ["Switch",                          "image/Switch.png",                 "SwitchTest()"],
@@ -34,15 +34,36 @@ var FirstViewController = ca.CAViewController.extend({
             ["PickerView",                      "image/PickerView.png",             "PickerViewTest()"],
             ["WebView",                         "image/WebView.png",                "WebViewTest()"],
             ["GifView",                         "image/GifView.png",                "GifViewTest()"],
-            ["AVPlayer",                        "image/Video.png",                  "AVPlayerViewTest()"],
-            ["RenderImage",                     "image/RenderImage.png",            "RenderImageTest()"],
-            ["Animation",                       "image/Video.png",                  "ViewAnimationTest()"],
-            ["DrawView",                        "image/RenderImage.png",            "DrawViewTest()"],
-            ["ClipView",                        "image/RenderImage.png",            "ClipViewTest()"],
+            ["AVPlayer",                        "image/AVPlayer.png",                  "AVPlayerViewTest()"],
+            ["RenderImage",                     "image/Render.png",                 "RenderImageTest()"],
+            ["Animation",                       "image/Animation.png",              "ViewAnimationTest()"],
+            ["DrawView",                        "image/Painting.png",               "DrawViewTest()"],
+            ["ClipView",                        "image/Clip.png",            "ClipViewTest()"],
+            ["ImagePickerController",           "image/Camera.png",                 "ImagePickerControllerTest()"],
         ];
     },
     viewDidLoad: function() {
-        this._collectionView = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
+
+        ca.CGSpriteFrameCache.getInstance().addSpriteFramesWithFile("animation/monster_12000.plist");
+
+        var vec = []
+        for (var i=0; i<7; i++)
+        {
+            var spriteFrameName = "monster_12000_2_2_0" + (i+1) + ".png";
+            var spriteFrame = ca.CGSpriteFrameCache.getInstance().getSpriteFrameByName(spriteFrameName);
+            vec.push(spriteFrame);
+        }
+
+        var sprite = ca.CGSprite.create();
+        this.getView().insertSubview(sprite, 1000);
+        sprite.setPosition(ca.DPoint.set(100, 600));
+        sprite.setScale(1.5);
+
+        var moveBy = ca.MoveBy.create(8, ca.DPoint.set(500, 0));
+        var repeatForever = ca.RepeatForever.create(moveBy);
+        sprite.runAction(repeatForever);
+
+        this._collectionView = ca.CAAutoCollectionView.createWithLayout(ca.DLayout.fill());
         this._collectionView.setAllowsSelection(true);
         this._collectionView.setHoriCellInterval(3);
         this._collectionView.setVertCellInterval(3);
@@ -60,6 +81,8 @@ var FirstViewController = ca.CAViewController.extend({
     {
         var viewController = eval("new " + this._array[item][2]);
         viewController.init();
+        viewController.setTitle(this._array[item][0]);
+
         ca.rootWindow.getRootNavigationController().pushViewController(viewController, true);
         viewController.getView().setColor(ca.CAColor4B.GRAY);
         viewController.release();
@@ -73,7 +96,7 @@ var FirstViewController = ca.CAViewController.extend({
             cell.setAllowsSelected(false);
 
             var background = ca.CAView.createWithColor(ca.CAColor4B.set(240, 240, 240, 255));
-            background.setLayout(ca.DLayoutFill);
+            background.setLayout(ca.DLayout.fill());
             cell.getContentView().addSubview(background);
 
             var label = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0,0), ca.DVerticalLayout_B_H(5,80)));

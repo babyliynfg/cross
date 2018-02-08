@@ -1,4 +1,4 @@
-﻿
+
 
 #include "RootWindow.h"
 #include "MenuViewController.h"
@@ -79,12 +79,11 @@ bool RootWindow::init()
     tabBarConttoller->initWithViewControllers(conttollers);
     tabBarConttoller->setNavigationBarItem(firstItem);
     tabBarConttoller->autorelease();
-    
+
     m_pRootNavigationController = new CANavigationController();
     m_pRootNavigationController->initWithRootViewController(tabBarConttoller);
     m_pRootNavigationController->autorelease();
 
-    
     CADrawerController* drawer = new CADrawerController();
     drawer->initWithController(MenuViewController::create(), m_pRootNavigationController);
     drawer->autorelease();

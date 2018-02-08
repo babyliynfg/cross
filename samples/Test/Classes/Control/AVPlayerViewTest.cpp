@@ -14,7 +14,7 @@ AVPlayerViewTest::~AVPlayerViewTest()
 void AVPlayerViewTest::viewDidLoad()
 {
     CAAVPlayer* avplayer = CAAVPlayer::createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
-    //CAAVPlayer* avplayer = CAAVPlayer::createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
+//    CAAVPlayer* avplayer = CAAVPlayer::createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
 
     avplayer->onDidPlayToEndTime([=]
     {

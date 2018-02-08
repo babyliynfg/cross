@@ -25,7 +25,7 @@ void ClippingViewTest::viewDidLoad()
     CADrawView* drawView = CADrawView::create() ;
     drawView->setLayout(DLayoutFill) ;
     drawView->drawSolidCircle(DPoint(width * 0.5 , 700) , width * 0.4 , 270 , 5  , 1 , 1 , CAColor4B::YELLOW) ;
-    
+
     CAClippingView* clipView = CAClippingView::create(drawView);
     clipView->setLayout(DLayout(DHorizontalLayout_L_R(0,0), DVerticalLayout_T_B(0,0)));
     clipView->setClippingEnabled(true) ;

@@ -15,7 +15,7 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
             var headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
             var footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
-            this.autoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
+            this.autoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayout.fill());
             this.autoCollection.setAllowsSelection(true);
             this.autoCollection.setAllowsMultipleSelection(true);
             this.autoCollection.setHeaderRefreshView(headerRefreshView) ;
@@ -88,11 +88,11 @@ var AutoCollectionViewVerticalTest = ca.CAViewController.extend({
             {
                 cell = ca.CACollectionViewCell.create("CrossApp");
 
-                var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
+                var itemImage = ca.CAView.createWithLayout(ca.DLayout.fill());
                 itemImage.setTag(99);
                 cell.getContentView().addSubview(itemImage);
 
-                var itemText = ca.CALabel.createWithLayout(ca.DLayoutFill);
+                var itemText = ca.CALabel.createWithLayout(ca.DLayout.fill());
                 itemText.setTag(100);
                 itemText.setFontSize(29);
                 itemText.setTextAlignment(ca.CATextAlignment.Center);

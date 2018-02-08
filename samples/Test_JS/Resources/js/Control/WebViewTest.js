@@ -6,7 +6,7 @@ var WebViewTest = ca.CAViewController.extend({
         this._super();
     },
     viewDidLoad: function() {
-        var web = ca.CAWebView.createWithLayout(ca.DLayoutFill);
+        var web = ca.CAWebView.createWithLayout(ca.DLayout.fill());
         web.loadURL("http://crossapp.9miao.com");
         this.getView().addSubview(web);
     },

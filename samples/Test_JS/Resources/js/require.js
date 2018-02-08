@@ -33,4 +33,7 @@ require('js/Control/ViewAnimationTest.js');
 require('js/Control/WebViewTest.js');
 require('js/Control/WaterfallViewTest.js');
 require('js/Control/PageControlTest.js');
+require('js/Control/ImagePickerControllerTest.js');
+require('js/MenuViewController.js');
+require('js/MyWebViewController.js');
 require('js/FirstViewController.js');

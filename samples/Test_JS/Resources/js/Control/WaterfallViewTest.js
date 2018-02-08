@@ -16,7 +16,7 @@ var WaterfallViewTest = ca.CAViewController.extend({
         var headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
         var footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
-        this.Waterfall = ca.CAWaterfallView.createWithLayout(ca.DLayoutFill);
+        this.Waterfall = ca.CAWaterfallView.createWithLayout(ca.DLayout.fill());
         this.Waterfall.setHeaderRefreshView(headerRefreshView) ;
         this.Waterfall.setFooterRefreshView(footerRefreshView) ;
         this.Waterfall.setItemMargin(10);
@@ -96,11 +96,11 @@ var WaterfallViewTest = ca.CAViewController.extend({
         {
             cell = ca.CAWaterfallViewCell.create("CrossApp");
 
-            var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
+            var itemImage = ca.CAView.createWithLayout(ca.DLayout.fill());
             itemImage.setTag(99);
             cell.getContentView().addSubview(itemImage);
 
-            var itemText = ca.CALabel.createWithLayout(ca.DLayoutFill);
+            var itemText = ca.CALabel.createWithLayout(ca.DLayout.fill());
             itemText.setTag(100);
             itemText.setFontSize(24);
             itemText.setTextAlignment(ca.CATextAlignment.Center);

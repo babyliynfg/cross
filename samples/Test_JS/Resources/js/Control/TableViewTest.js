@@ -12,7 +12,7 @@ var TableViewTest = ca.CAViewController.extend({
     viewDidLoad: function() {
         this.sectionTitle = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 
-        this.tableView = ca.CATableView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0, 0), ca.DVerticalLayoutFill));
+        this.tableView = ca.CATableView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(0, 0), ca.DVerticalLayout.fill()));
         this.tableView.setAllowsSelection(true);
         this.tableView.setAllowsMultipleSelection(false);
         this.tableView.setShowsScrollIndicators(false);
@@ -47,7 +47,7 @@ var TableViewTest = ca.CAViewController.extend({
         if (cell == null)
         {
             cell = ca.CATableViewCell.create("CrossApp");
-            var image = ca.CAImageView.createWithLayout(ca.DLayoutFill);
+            var image = ca.CAImageView.createWithLayout(ca.DLayout.fill());
             image.setImage(ca.CAImage.create("source_material/second_2.png"));
             cell.getContentView().addSubview(image);
 
@@ -58,7 +58,7 @@ var TableViewTest = ca.CAViewController.extend({
             cellText.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             cell.getContentView().addSubview(cellText);
 
-            var deleteBtn = ca.CAButton.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_R_W(0, 180), ca.DVerticalLayoutFill), ca.CAButton.Type.Custom);
+            var deleteBtn = ca.CAButton.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_R_W(0, 180), ca.DVerticalLayout.fill()), ca.CAButton.Type.Custom);
             deleteBtn.setBackgroundImageForState(ca.CAControl.State.Normal, ca.CAImage.createWithColor4B(ca.CAColor4B.RED), false);
             deleteBtn.setBackgroundImageForState(ca.CAControl.State.Highlighted, ca.CAImage.createWithColor4B(ca.CAColor4B.ORANGE), false);
             deleteBtn.setTitleForState(ca.CAControl.State.Normal, "Delete");
@@ -88,7 +88,7 @@ var TableViewTest = ca.CAViewController.extend({
         var head = this.sectionTitle[section];
         var view = ca.CAView.createWithColor(ca.CAColor4B.GRAY);
 
-        var header = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(50, 0), ca.DVerticalLayoutFill));
+        var header = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(50, 0), ca.DVerticalLayout.fill()));
         header.setText(head);
         header.setFontSize(30);
         header.setColor(ca.CAColor4B.WHITE);

@@ -14,12 +14,12 @@ var ViewAnimationTest = ca.CAViewController.extend({
     viewDidLoad: function() {
 
         var bg = ca.CAImageView.createWithImage(ca.CAImage.create("image/1.jpg"));
-        bg.setLayout(ca.DLayoutFill);
+        bg.setLayout(ca.DLayout.fill());
         this.getView().addSubview(bg);
 
         if (viewAnimationTest_Index == 0)
         {
-            var imageView = ca.CAImageView.createWithLayout(ca.DLayoutZero);
+            var imageView = ca.CAImageView.createWithLayout(ca.DLayout.zero());
             imageView.setImage(ca.CAImage.create("image/start.jpg"));
             this.getView().addSubview(imageView);
 
@@ -29,13 +29,13 @@ var ViewAnimationTest = ca.CAViewController.extend({
 
             btn.addTarget(function () {
 
-                imageView.setLayout(ca.DLayoutZero);
+                imageView.setLayout(ca.DLayout.zero());
                 imageView.setAlpha(0);
 
                 ca.CAViewAnimation.beginAnimations("");
                 ca.CAViewAnimation.setAnimationDuration(1.0);
 
-                imageView.setLayout(ca.DLayoutFill);
+                imageView.setLayout(ca.DLayout.fill());
                 imageView.setAlpha(1.0);
 
                 ca.CAViewAnimation.commitAnimations();
@@ -69,7 +69,7 @@ var ViewAnimationTest = ca.CAViewController.extend({
         }
         else if(viewAnimationTest_Index == 2)
         {
-            var imageView = ca.CAImageView.createWithLayout(ca.DLayoutFill);
+            var imageView = ca.CAImageView.createWithLayout(ca.DLayout.fill());
             imageView.setImage(ca.CAImage.create("image/start.jpg"));
             this.getView().addSubview(imageView);
 
@@ -83,14 +83,14 @@ var ViewAnimationTest = ca.CAViewController.extend({
 
             btn.addTarget(function () {
 
-                imageView.setLayout(ca.DLayoutFill);
+                imageView.setLayout(ca.DLayout.fill());
                 imageView.setImageRect(fillRect);
 
                 ca.CAViewAnimation.beginAnimations("");
                 ca.CAViewAnimation.setAnimationDuration(1.0);
                 ca.CAViewAnimation.setAnimationRepeatAutoreverses(true);
 
-                imageView.setLayout(ca.DLayout.set(ca.DHorizontalLayouttZero, ca.DVerticalLayoutFill));
+                imageView.setLayout(ca.DLayout.set(ca.DHorizontalLayouttZero, ca.DVerticalLayout.fill()));
                 imageView.setImageRect(zeroRect);
 
                 ca.CAViewAnimation.commitAnimations();
@@ -99,7 +99,7 @@ var ViewAnimationTest = ca.CAViewController.extend({
         }
         else
         {
-            var imageView = ca.CAImageView.createWithLayout(ca.DLayoutFill);
+            var imageView = ca.CAImageView.createWithLayout(ca.DLayout.fill());
             imageView.setImage(ca.CAImage.create("image/start.jpg"));
             this.getView().addSubview(imageView);
 

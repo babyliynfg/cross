@@ -35,8 +35,10 @@
 #include "WaterfallViewTest.h"
 #include "ClippingViewTest.h"
 #include "DrawViewTest.h"
+#include "ImagePickerControllerTest.h"
 
-static const char* iconTag[32] =
+
+static const char* iconTag[33] =
 {
     "image/AlertView.png",
     "image/button.png",
@@ -74,11 +76,14 @@ static const char* iconTag[32] =
     "image/WebView.png",
     "image/GifView.png",
     
-    "image/FlashView.png",
-    "image/Video.png",
-    "image/RenderImage.png",
-    "image/RenderImage.png",
-    "image/RenderImage.png",
+    "image/AVPlayer.png",
+    "image/Render.png",
+    "image/Animation.png",
+    
+    "image/Painting.png",
+    "image/Clip.png",
+    "image/Camera.png",
+
 };
 
 
@@ -123,9 +128,10 @@ FirstViewController::FirstViewController()
     m_vTitles.push_back("AVPlayer");
     m_vTitles.push_back("RenderImage");
     m_vTitles.push_back("Animation");
-    m_vTitles.push_back("ClippingView");
+    
     m_vTitles.push_back("DrawView");
-
+    m_vTitles.push_back("ClippingView");
+    m_vTitles.push_back("ImagePickerController");
 }
 
 FirstViewController::~FirstViewController()
@@ -170,7 +176,7 @@ void FirstViewController::viewDidLoad()
     MoveBy* moveBy = MoveBy::create(8, DPoint(500, 0));
     sprite->runAction(moveBy);
      //*/
-    
+
 }
 
 void FirstViewController::viewDidUnload()
@@ -337,12 +343,17 @@ void FirstViewController::collectionViewDidSelectCellAtIndexPath(unsigned int se
         }
         case 30:
         {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ClippingViewTest::create(), true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(DrawViewTest::create(), true);
             break;
         }
         case 31:
         {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(DrawViewTest::create(), true);
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ClippingViewTest::create(), true);
+            break;
+        }
+        case 32:
+        {
+            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ImagePickerControllerTest::create(), true);
             break;
         }
         default:
@@ -384,7 +395,7 @@ CACollectionViewCell* FirstViewController::collectionCellAtIndex(const DSize& ce
     itemText->setColor(CAColor4B(34, 151, 254, 255));
     
     CAImageView* icon = (CAImageView*)cell->getContentView()->getSubviewByTag(101);
-    //icon->setImage(CAImage::create(iconTag[item]));
+//    icon->setImage(CAImage::create(iconTag[item]));
     icon->setImageAsyncWithFile(iconTag[item]);
     return cell;
 }

@@ -15,7 +15,7 @@ var CollectionViewTest = ca.CAViewController.extend({
         var headerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Header);
         var footerRefreshView = ca.CAPullToRefreshView.create(ca.CAPullToRefreshView.Type.Footer);
 
-        this.conllection = ca.CACollectionView.createWithLayout(ca.DLayoutFill);
+        this.conllection = ca.CACollectionView.createWithLayout(ca.DLayout.fill());
         this.conllection.setAllowsSelection(true);
         this.conllection.setHeaderRefreshView(headerRefreshView);
         this.conllection.setFooterRefreshView(footerRefreshView);
@@ -94,11 +94,11 @@ var CollectionViewTest = ca.CAViewController.extend({
         {
             cell = ca.CACollectionViewCell.create("cell");
 
-            var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
+            var itemImage = ca.CAView.createWithLayout(ca.DLayout.fill());
             itemImage.setTag(99);
             cell.getContentView().addSubview(itemImage);
 
-            var itemText = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(50, 50)));
+            var itemText = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout.fill(), ca.DVerticalLayout_T_B(50, 50)));
             itemText.setTag(100);
             itemText.setFontSize(29);
             itemText.setTextAlignment(ca.CATextAlignment.Center);

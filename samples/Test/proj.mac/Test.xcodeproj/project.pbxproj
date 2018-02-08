@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		026964BB1BEB468300C8BCD7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 026964BA1BEB468300C8BCD7 /* Images.xcassets */; };
+		0450F8BD202857BE00468491 /* ImagePickerControllerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0450F8BB202857BD00468491 /* ImagePickerControllerTest.cpp */; };
 		04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EAA03F1956D14700198A8E /* libCrossApp.a */; };
 		15C64823165F391E007D4F18 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
@@ -101,6 +102,8 @@
 
 /* Begin PBXFileReference section */
 		026964BA1BEB468300C8BCD7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Test/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		0450F8BB202857BD00468491 /* ImagePickerControllerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImagePickerControllerTest.cpp; sourceTree = "<group>"; };
+		0450F8BC202857BE00468491 /* ImagePickerControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerControllerTest.h; sourceTree = "<group>"; };
 		04EAA0371956D14600198A8E /* CrossApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrossApp.xcodeproj; path = ../../../CrossApp/proj.mac/CrossApp.xcodeproj; sourceTree = "<group>"; };
 		15C1580E168315CE00D239F2 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		15C1580F168315CE00D239F2 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
@@ -443,6 +446,8 @@
 		D6B1E88F1F234C4000723750 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				0450F8BB202857BD00468491 /* ImagePickerControllerTest.cpp */,
+				0450F8BC202857BE00468491 /* ImagePickerControllerTest.h */,
 				D6B1E8901F234C4000723750 /* ActivityIndicatorViewTest.cpp */,
 				D6B1E8911F234C4000723750 /* ActivityIndicatorViewTest.h */,
 				D6B1E8921F234C4000723750 /* AlertViewTest.cpp */,
@@ -639,6 +644,7 @@
 				D6B1E8E91F234C4000723750 /* TabBarTest.cpp in Sources */,
 				D6B1E8D51F234C4000723750 /* ButtonTest.cpp in Sources */,
 				D6F39B0F1F2596FD0097E44E /* CommonHttpManager.cpp in Sources */,
+				0450F8BD202857BE00468491 /* ImagePickerControllerTest.cpp in Sources */,
 				D6B1E8E31F234C4000723750 /* Scale9ImageViewTest.cpp in Sources */,
 				15D8B241168318C3006C7997 /* CocosDenshion.m in Sources */,
 				D6B1E8EC1F234C4000723750 /* TextViewTest.cpp in Sources */,

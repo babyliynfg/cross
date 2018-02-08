@@ -20,14 +20,14 @@ var ClipViewTest = ca.CAViewController.extend({
         var win_wid = ca.winSize.width ;
 
         var drawView = ca.CADrawView.create() ;
-        drawView.setLayout(ca.DLayoutFill) ;
+        drawView.setLayout(ca.DLayout.fill()) ;
         drawView.drawSolidCircle(ca.DPoint.set(win_wid * 0.5 , 700) , win_wid * 0.4 , 270 , 5  , 1 , 1 , ca.CAColor4B.YELLOW) ;
         clipView.setStencil(drawView) ;
 
-        var scrllVeiw = ca.CAScrollView.createWithLayout(ca.DLayoutFill) ;
+        var scrllVeiw = ca.CAScrollView.createWithLayout(ca.DLayout.fill()) ;
         scrllVeiw.setViewSize(ca.DSize.set(1080, 1920)) ;
         var imgView = ca.CAImageView.createWithImage(ca.CAImage.create("r/HelloWorld.png")) ;
-        imgView.setLayout(ca.DLayoutFill) ;
+        imgView.setLayout(ca.DLayout.fill()) ;
         scrllVeiw.addSubview(imgView) ;
         clipView.addSubview(scrllVeiw) ;
 

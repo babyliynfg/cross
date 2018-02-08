@@ -8,14 +8,14 @@ var ListViewTest = ca.CAViewController.extend({
     },
     viewDidLoad: function() {
 
-        this.listview1 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 120)));
+        this.listview1 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout.fill(), ca.DVerticalLayout_T_H(0, 120)));
 
         list1DataSourceDelegate.init(this.listview1) ;
 
         this.getView().addSubview(this.listview1);
 
 
-        this.listview2 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_B(122,0)));
+        this.listview2 = ca.CAListView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout.fill(), ca.DVerticalLayout_T_B(122,0)));
 
         list2DataSourceDelegate.init(this.listview2) ;
 
@@ -56,7 +56,7 @@ var list1DataSourceDelegate = {
         if (cell == null) {
             cell = ca.CAListViewCell.create("ListViewCell");
 
-            var test = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_W(0, 200), ca.DVerticalLayoutFill));
+            var test = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_W(0, 200), ca.DVerticalLayout.fill()));
             test.setColor(ca.CAColor4B.set(51, 204, 255, 255));
             test.setTextAlignment(ca.CATextAlignment.Center);
             test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
@@ -111,7 +111,7 @@ var list2DataSourceDelegate = {
         if (cell == null) {
             cell = ca.CAListViewCell.create("ListViewCell");
 
-            var test = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_W(0, 200), ca.DVerticalLayoutFill));
+            var test = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_W(0, 200), ca.DVerticalLayout.fill()));
             test.setColor(ca.CAColor4B.set(51, 204, 255, 255));
             test.setTextAlignment(ca.CATextAlignment.Center);
             test.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);

@@ -19,11 +19,11 @@ var AVPlayerViewTest = ca.CAViewController.extend({
             ca.log("进度调整");
         });
 
-        var playerView = ca.CAAVPlayerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(0, 640)));
+        var playerView = ca.CAAVPlayerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout.fill(), ca.DVerticalLayout_T_H(0, 640)));
         playerView.setPlayer(avplayer);
         this.getView().addSubview(playerView);
 
-        playerView.insertSubview(ca.CAView.createWithLayout(ca.DLayoutFill, ca.CAColor4B.BLACK), -1);
+        playerView.insertSubview(ca.CAView.createWithLayout(ca.DLayout.fill(), ca.CAColor4B.BLACK), -1);
 
         var slider = ca.CASlider.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(50, 50), ca.DVerticalLayout_B_H(200, 100)));
         slider.setValue(0);
@@ -40,7 +40,7 @@ var AVPlayerViewTest = ca.CAViewController.extend({
              slider.setValue(current / duration);
          });
 
-        var progress = ca.CAProgress.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(3, 3), ca.DVerticalLayoutFill));
+        var progress = ca.CAProgress.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(3, 3), ca.DVerticalLayout.fill()));
         progress.setZOrder(-1);
         slider.addSubview(progress);
         progress.setProgressTintImage(progress.getProgressTrackImage());
@@ -95,7 +95,7 @@ var AVPlayerViewTest = ca.CAViewController.extend({
             avplayer.stop();
         }, ca.CAButton.Event.TouchUpInSide);
 
-        var activity = ca.CAActivityIndicatorView.createWithLayout(ca.DLayoutFill);
+        var activity = ca.CAActivityIndicatorView.createWithLayout(ca.DLayout.fill());
         playerView.addSubview(activity);
         activity.stopAnimating();
          avplayer.onPlayBufferLoadingState(function(state)

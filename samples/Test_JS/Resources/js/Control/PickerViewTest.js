@@ -49,7 +49,7 @@ var PickerViewTest = ca.CAViewController.extend({
 
     viewDidLoad: function() {
 
-        this.city_value = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayoutFill, ca.DVerticalLayout_T_H(100, 40)));
+        this.city_value = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout.fill(), ca.DVerticalLayout_T_H(100, 40)));
         this.city_value.setText("北京市");
         this.city_value.setColor(ca.CAColor4B.BLACK);
         this.city_value.setFontSize(28);

@@ -17,7 +17,7 @@ var LabelTest = ca.CAViewController.extend({
     viewDidLoad: function() {
 
         this._labelNum = 0 ;
-        this._viewContainer = ca.CAView.createWithLayout(ca.DLayoutFill);
+        this._viewContainer = ca.CAView.createWithLayout(ca.DLayout.fill());
         this.getView().addSubview(this._viewContainer);
 
         this._initLabels() ;
@@ -28,7 +28,7 @@ var LabelTest = ca.CAViewController.extend({
         var str = "Hello World";
         if (this._labelNum == 0)
         {
-            var Font = ca.CAFont();
+            var Font = ca.CAFont.create();
             Font.fontSize = 36;
             Font.color = ca.RED;
 
@@ -39,7 +39,7 @@ var LabelTest = ca.CAViewController.extend({
             label.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
             label.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.16)));
 
-            var Font1 = ca.CAFont() ;
+            var Font1 = ca.CAFont.create() ;
             Font1.fontSize = 36;
             Font1.color = ca.RED;
             Font1.underLine = true;
@@ -52,7 +52,7 @@ var LabelTest = ca.CAViewController.extend({
             label1.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.32)));
 
             var label2 = ca.CALabel.create();
-            var Font2 = ca.CAFont() ;
+            var Font2 = ca.CAFont.create() ;
             Font2.fontSize = 36;
             Font2.color = ca.RED;
             Font2.bold = true;
@@ -63,7 +63,7 @@ var LabelTest = ca.CAViewController.extend({
             label2.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.48)));
 
             var label3 = ca.CALabel.create();
-            var Font3 = ca.CAFont() ;
+            var Font3 = ca.CAFont.create() ;
             Font3.fontSize = 36;
             Font3.color = ca.RED;
             Font3.italics = true;
@@ -74,7 +74,7 @@ var LabelTest = ca.CAViewController.extend({
             label3.setLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_H_C(40, 0.64)));
 
             var label4 = ca.CALabel.create();
-            var Font4 = ca.CAFont() ;
+            var Font4 = ca.CAFont.create() ;
             Font4.fontSize = 36;
             Font4.color = ca.RED;
             label4.setText("Enable Copy");
@@ -93,7 +93,7 @@ var LabelTest = ca.CAViewController.extend({
         else if (this._labelNum == 1)
         {
             var label5 = ca.CALabel.create();
-            var Font5 = ca.CAFont() ;
+            var Font5 = ca.CAFont.create() ;
             Font5.fontSize = 36;
             Font5.color = ca.RED;
             Font5.bold = true;
@@ -113,19 +113,19 @@ var LabelTest = ca.CAViewController.extend({
         {
 
             var RichLabel = ca.CARichLabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_B(200, 200)));
-            var RichLabelFont = ca.CAFont() ;
+            var RichLabelFont = ca.CAFont.create() ;
             RichLabelFont.bold = true;
             RichLabelFont.fontSize = 42;
             RichLabelFont.color = ca.RED;
             RichLabel.appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont);
 
-            var RichLabelFont1 = ca.CAFont() ;
+            var RichLabelFont1 = ca.CAFont.create() ;
             RichLabelFont1.italics = true;
             RichLabelFont1.fontSize = 42;
             RichLabelFont1.color = ca.RED;
             RichLabel.appendText("Hello World Hello World Hello World Hello World Hello World Hello World ", RichLabelFont1);
 
-            var RichLabelFont2 = ca.CAFont() ;
+            var RichLabelFont2 = ca.CAFont.create() ;
             RichLabelFont2.underLine = true;
             RichLabelFont2.fontSize = 42;
             RichLabelFont2.color = ca.RED;

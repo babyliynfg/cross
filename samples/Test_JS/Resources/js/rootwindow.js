@@ -8,18 +8,41 @@ var RootWindow = ca.CAWindow.extend(
 
             var viewController = new FirstViewController();
 
-            var navItem = ca.CANavigationBarItem.create("控件展示");
-            var item = ca.CABarButtonItem.create("", ca.CAImage.create("image/ic_category_list.png"), null);
-            item.setCallbackFunction(function (){});
-            navItem.addLeftButtonItem(item);
-            viewController.setNavigationBarItem(navItem);
+            var controllers = [];
+            for(var i=0; i<3; i++)
+            {
+                controllers.push(new FirstViewController());
+            }
+
+            var firstItem = ca.CANavigationBarItem.create("控件展示");
+            var barButtonItem = ca.CABarButtonItem.create("", ca.CAImage.create("image/ic_category_list.png"), null);
+            barButtonItem.setCallbackFunction(function (){
+                this.drawer.showLeftViewController(true);
+            }.bind(this));
+            firstItem.addLeftButtonItem(barButtonItem);
+
+            this.tabBarConttoller = new ca.CATabBarController();
+            this.tabBarConttoller.initWithViewControllers(controllers);
+            this.tabBarConttoller.setNavigationBarItem(firstItem);
 
             this.m_pRootNavigationController = new ca.CANavigationController();
-            this.m_pRootNavigationController.initWithRootViewController(viewController);
-            this.setRootViewController(this.m_pRootNavigationController);
+            this.m_pRootNavigationController.initWithRootViewController(this.tabBarConttoller);
+
+
+            this.drawer = new ca.CADrawerController();
+            this.drawer.initWithController(new MenuViewController(), this.m_pRootNavigationController);
+            this.drawer.autorelease();
+            this.drawer.setBackgroundImage(ca.CAImage.create("image/bg.jpg"));
+            this.drawer.setEffect3D(true);
+
+            this.setRootViewController(this.drawer);
+
         },
         getRootNavigationController:function(){
             return this.m_pRootNavigationController;
-        }
+        },
+        getDrawerController:function () {
+            return this.drawer;
+        },
     }
 );

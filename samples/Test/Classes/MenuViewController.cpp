@@ -12,7 +12,7 @@
 
 #pragma execution_character_set("utf-8")
 
-static const wchar_t* menuList[4] = { L"CrossApp", L"9" };
+static const wchar_t* menuList[4] = { L"CrossApp", L"9秒" };
 
 MenuViewController::MenuViewController()
 {
@@ -92,6 +92,7 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(unsigned int section, 
     if(row == 0)
     {
         MyWebViewController* webViewController = new MyWebViewController("http://crossapp.9miao.com");
+        webViewController->setTitle("CrossApp");
         webViewController->init();
         webViewController->autorelease();
         RootWindow::getInstance()->getRootNavigationController()->pushViewController(webViewController, true);
@@ -99,6 +100,7 @@ void MenuViewController::tableViewDidSelectRowAtIndexPath(unsigned int section, 
     else if(row == 1)
     {
         MyWebViewController* webViewController = new MyWebViewController("http://www.9miao.com/");
+        webViewController->setTitle("9秒");
         webViewController->init();
         webViewController->autorelease();
         RootWindow::getInstance()->getRootNavigationController()->pushViewController(webViewController, true);

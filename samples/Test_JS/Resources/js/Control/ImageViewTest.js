@@ -20,7 +20,7 @@ var ImageViewTest = ca.CAViewController.extend({
         if (this._imageViewNum == 0)
         {
             var image1 = ca.CAImageView.createWithImage(ca.CAImage.create("image/h1.png"));
-            image1.setLayout(ca.DLayoutFill);
+            image1.setLayout(ca.DLayout.fill());
 
             var view1 = ca.CAView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(50, 50), ca.DVerticalLayout_T_B(50, 50)));
             view1.addSubview(image1);
@@ -28,7 +28,7 @@ var ImageViewTest = ca.CAViewController.extend({
         }
         else if (this._imageViewNum == 1)
         {
-            var image2 = ca.CAImageView.createWithLayout(ca.DLayoutFill);
+            var image2 = ca.CAImageView.createWithLayout(ca.DLayout.fill());
 
             image2.setImage(ca.CAImage.create("image/h1.png"));
             image2.setScaleType(ca.CAImageView.ScaleType.FitImageXY);
@@ -38,7 +38,7 @@ var ImageViewTest = ca.CAViewController.extend({
         }
         else if (this._imageViewNum == 2)
         {
-            var image3 = ca.CAImageView.createWithLayout(ca.DLayoutFill);
+            var image3 = ca.CAImageView.createWithLayout(ca.DLayout.fill());
             image3.setImage(ca.CAImage.create("image/h1.png"));
             image3.setScaleType(ca.CAImageView.ScaleType.FitImageCrop);
 
@@ -48,7 +48,7 @@ var ImageViewTest = ca.CAViewController.extend({
         }
         else if (this._imageViewNum == 3)
         {
-            var image4 = ca.CAImageView.createWithLayout(ca.DLayoutFill);
+            var image4 = ca.CAImageView.createWithLayout(ca.DLayout.fill());
             image4.setImage(ca.CAImage.create("image/h1.png"));
             image4.setScaleType(ca.CAImageView.ScaleType.FitImageInside);
 
@@ -67,7 +67,7 @@ var ImageViewTest = ca.CAViewController.extend({
                 img[i] = ca.CAImage.create(str);
             }
             var image7 = ca.CAImageView.createWithImage(ca.CAImage.create("animation/npc_382-1.png"));
-            image7.setLayout(ca.DLayoutFill);
+            image7.setLayout(ca.DLayout.fill());
             image7.setAnimationImages(img);
             image7.setAnimationDuration(0.1);
             image7.startAnimating();

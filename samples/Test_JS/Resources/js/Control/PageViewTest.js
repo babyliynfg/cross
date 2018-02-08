@@ -17,7 +17,7 @@ var PageViewTest = ca.CAViewController.extend({
         views.push(view2);
         views.push(view3);
 
-        this._pageView = ca.CAPageView.createWithLayout(ca.DLayoutFill, 0);
+        this._pageView = ca.CAPageView.createWithLayout(ca.DLayout.fill(), 0);
         this._pageView.setViews(views);
         this.getView().addSubview(this._pageView);
 

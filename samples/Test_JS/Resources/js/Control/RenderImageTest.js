@@ -25,7 +25,7 @@ var RenderImageTest = ca.CAViewController.extend({
 
     _onButtonEvent:function(){
 
-        var layer = ca.CAView.createWithLayout(ca.DLayoutFill) ;
+        var layer = ca.CAView.createWithLayout(ca.DLayout.fill()) ;
         layer.setColor(ca.CAColor4B.WHITE) ;
         layer.setAlpha(0) ;
         ca.rootWindow.insertSubview(layer , 0xffff) ;

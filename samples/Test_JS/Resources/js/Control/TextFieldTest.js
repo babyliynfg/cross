@@ -18,7 +18,15 @@ var TextFieldTest = ca.CAViewController.extend({
         textField1.setAlign(ca.CATextField.Align.Left);
         this.getView().addSubview(textField1);
 
-
+        var textField2 = ca.CATextField.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_L_R(100, 100), ca.DVerticalLayout_T_H(450, 100)));
+        textField2.setTag(101);
+        textField2.setPlaceHolderText("Input");
+        textField2.setKeyboardType(ca.CATextField.KeyboardType.Default);
+        textField2.setMarginImageLeft(ca.DSize.set(60,60),"source_material/search.png");
+        textField2.setClearButtonMode(ca.CATextField.ClearButtonMode.WhileEditing);
+        textField2.setAlign(ca.CATextField.Align.Left);
+        textField2.setSecureTextEntry(true);
+        this.getView().addSubview(textField2);
     },
 
     textFieldShouldBeginEditing: function(){

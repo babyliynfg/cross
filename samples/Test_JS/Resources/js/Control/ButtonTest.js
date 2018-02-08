@@ -4,8 +4,13 @@
 var ButtonTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
+        // var navItem = ca.CANavigationBarItem.create("按钮1");
+        // this.setNavigationBarItem(navItem);
+        this.setTitle("asdfasdf");
     },
     viewDidLoad: function() {
+
+
 
         var btn1 = ca.CAButton.create(ca.CAButton.Type.Custom);
         btn1.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(240, 0.5), ca.DVerticalLayout_H_C(54, 0.16)));

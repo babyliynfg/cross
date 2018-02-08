@@ -21,7 +21,7 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
         }
                                                                   
 
-        this.autoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayoutFill);
+        this.autoCollection = ca.CAAutoCollectionView.createWithLayout(ca.DLayout.fill());
         this.autoCollection.setAllowsSelection(true);
         this.autoCollection.setAllowsMultipleSelection(true);
         this.autoCollection.setOrientation(ca.CAAutoCollectionView.Orientation.Horizontal);
@@ -56,11 +56,11 @@ var AutoCollectionViewHorizontalTest = ca.CAViewController.extend({
         {
             cell = ca.CACollectionViewCell.create("cell");
 
-            var itemImage = ca.CAView.createWithLayout(ca.DLayoutFill);
+            var itemImage = ca.CAView.createWithLayout(ca.DLayout.fill());
             itemImage.setTag(99);
             cell.getContentView().addSubview(itemImage);
 
-            var itemText = ca.CALabel.createWithLayout(ca.DLayoutFill);
+            var itemText = ca.CALabel.createWithLayout(ca.DLayout.fill());
             itemText.setTag(100);
             itemText.setFontSize(29);
             itemText.setTextAlignment(ca.CATextAlignment.Center);

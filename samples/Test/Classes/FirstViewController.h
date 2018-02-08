@@ -27,7 +27,7 @@ protected:
     DSize collectionViewCellSizeAtIndexPath(unsigned int section, unsigned int item);
     
     unsigned int numberOfItemsInSection(unsigned int section);
-    
+
 private:
     
     CAAutoCollectionView* m_pAutoCollection;

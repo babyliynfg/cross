@@ -10,6 +10,7 @@
 		026964AD1BEB419E00C8BCD7 /* CrossApp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 026964AC1BEB419E00C8BCD7 /* CrossApp.xib */; };
 		026964B61BEB450400C8BCD7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 026964B51BEB450400C8BCD7 /* Images.xcassets */; };
 		04033E2E1954849600473756 /* libCrossApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0563760195276D000C63FAA /* libCrossApp.a */; };
+		04DAC8BE2029951C0085DD99 /* ImagePickerControllerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DAC8BC2029951B0085DD99 /* ImagePickerControllerTest.cpp */; };
 		15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA861682F8A6002FB0C5 /* CDAudioManager.m */; };
 		15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA891682F8A6002FB0C5 /* CDOpenALSupport.m */; };
 		15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DA8B1682F8A6002FB0C5 /* CocosDenshion.m */; };
@@ -106,6 +107,8 @@
 /* Begin PBXFileReference section */
 		026964AC1BEB419E00C8BCD7 /* CrossApp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CrossApp.xib; sourceTree = "<group>"; };
 		026964B51BEB450400C8BCD7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = SOURCE_ROOT; };
+		04DAC8BC2029951B0085DD99 /* ImagePickerControllerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImagePickerControllerTest.cpp; sourceTree = "<group>"; };
+		04DAC8BD2029951C0085DD99 /* ImagePickerControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerControllerTest.h; sourceTree = "<group>"; };
 		15A3DA821682F8A6002FB0C5 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		15A3DA831682F8A6002FB0C5 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
 		15A3DA851682F8A6002FB0C5 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
@@ -444,6 +447,8 @@
 		D6B1E8F11F23527900723750 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				04DAC8BC2029951B0085DD99 /* ImagePickerControllerTest.cpp */,
+				04DAC8BD2029951C0085DD99 /* ImagePickerControllerTest.h */,
 				D6B1E8F21F23527900723750 /* ActivityIndicatorViewTest.cpp */,
 				D6B1E8F31F23527900723750 /* ActivityIndicatorViewTest.h */,
 				D6B1E8F41F23527900723750 /* AlertViewTest.cpp */,
@@ -606,6 +611,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6B1E93D1F23527900723750 /* ImageViewTest.cpp in Sources */,
+				04DAC8BE2029951C0085DD99 /* ImagePickerControllerTest.cpp in Sources */,
 				D6B1E9481F23527900723750 /* SliderTest.cpp in Sources */,
 				B0DB988F1B1452EC00710982 /* MyWebViewController.h.cpp in Sources */,
 				D6B1E93C1F23527900723750 /* GifViewTest.cpp in Sources */,

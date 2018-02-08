@@ -11,7 +11,7 @@ var ScrollViewTest = ca.CAViewController.extend({
 
         this.colorArr = new Array();
 
-        this.scrollView = ca.CAScrollView.createWithLayout(ca.DLayoutFill);
+        this.scrollView = ca.CAScrollView.createWithLayout(ca.DLayout.fill());
         this.scrollView.setMinimumZoomScale(0.2);
         this.scrollView.setMaximumZoomScale(5.0);
         this.scrollView.setMultitouchGesture(ca.CAScrollView.MultitouchGesture.ZoomAndRotate);
@@ -20,7 +20,7 @@ var ScrollViewTest = ca.CAViewController.extend({
         this.getView().addSubview(this.scrollView);
 
         this.p_imageView = ca.CAImageView.createWithImage(ca.CAImage.create("image/h1.png"));
-        this.p_imageView.setLayout(ca.DLayoutFill);
+        this.p_imageView.setLayout(ca.DLayout.fill());
         this.scrollView.addSubview(this.p_imageView);
 
         this.scrollView.onDidMoved(this.scrollViewDidMoved.bind(this));
