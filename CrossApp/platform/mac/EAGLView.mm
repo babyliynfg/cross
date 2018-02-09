@@ -237,7 +237,8 @@ static EAGLView *view;
         NSRect displayRect = [[NSScreen mainScreen] frame];
 
         // Create a screen-sized window on the display you want to take over
-        fullScreenWindow_ = [[CCWindow alloc] initWithFrame:displayRect fullscreen:YES];
+        if (fullScreenWindow_ == nil)
+            fullScreenWindow_ = [[CCWindow alloc] initWithFrame:displayRect fullscreen:YES];
 
         // Remove glView from window
         [openGLview removeFromSuperview];
@@ -261,8 +262,7 @@ static EAGLView *view;
         [openGLview removeFromSuperview];
 
         // Release fullscreen window
-        [fullScreenWindow_ release];
-        fullScreenWindow_ = nil;
+        [fullScreenWindow_ setIsVisible:NO];
 
         // Attach glView to superview
         [superViewGLView_ addSubview:openGLview];
