@@ -156,9 +156,9 @@ OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData)
 @end
 
 /**
- A "do nothing" implementation - AVAudioSession is not really relevant to Mac OS X.
+ A "do nothing" implementation - CDAVAudioSession is not really relevant to Mac OS X.
  */
-@implementation AVAudioSession
+@implementation CDAVAudioSession
 @synthesize delegate, category, preferredHardwareSampleRate, preferredIOBufferDuration;
 @synthesize inputIsAvailable, currentHardwareSampleRate, currentHardwareInputNumberOfChannels, currentHardwareOutputNumberOfChannels;
 

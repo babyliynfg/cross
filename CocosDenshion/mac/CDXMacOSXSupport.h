@@ -24,13 +24,13 @@
 
 /**
  A set of proxy classes to allow iOS audio code to run on MacOS X. d_AVAudioPlayer is implemented using NSSound.
- AVAudioSession is a "do nothing" class as it isn't really relevant on MacOS X.
+ CDAVAudioSession is a "do nothing" class as it isn't really relevant on MacOS X.
  
  Limitations:
  d_AVAudioPlayer numberOfLoops not correctly supported.  Looping is either on or off, can not specify a specific number of loops.
  d_AVAudioPlayer panning not supported.
  d_AVAudioPlayer metering not supported.
- AVAudioSession nothing is supported, not applicable to MacOS X.
+ CDAVAudioSession nothing is supported, not applicable to MacOS X.
  */
 
 #import <Availability.h>
@@ -158,7 +158,7 @@ extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *o
 
 
 /**
- Taken from AVAudioSession.h header in AVFoundation headers
+ Taken from CDAVAudioSession.h header in AVFoundation headers
  */
 
 /* This protocol is available with iPhone 3.0 or later */
@@ -181,7 +181,7 @@ enum {
 	AVAudioSessionSetActiveFlags_NotifyOthersOnDeactivation = 1
 };
 
-@interface AVAudioSession : NSObject {
+@interface CDAVAudioSession : NSObject {
 	
 	// properties
 	NSString* category;
@@ -222,7 +222,7 @@ enum {
 @end
 
 
-/* A protocol for delegates of AVAudioSession */
+/* A protocol for delegates of CDAVAudioSession */
 @protocol AVAudioSessionDelegate <NSObject>
 @optional 
 

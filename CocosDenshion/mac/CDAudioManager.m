@@ -246,7 +246,7 @@ static BOOL configured = FALSE;
 
 -(BOOL) audioSessionSetActive:(BOOL) active {
     NSError *activationError = nil;
-    if ([[AVAudioSession sharedInstance] setActive:active error:&activationError]) {
+    if ([[CDAVAudioSession sharedInstance] setActive:active error:&activationError]) {
         _audioSessionActive = active;
         CDLOGINFO(@"Denshion::CDAudioManager - Audio session set active %i succeeded", active); 
         return YES;
@@ -259,7 +259,7 @@ static BOOL configured = FALSE;
 
 -(BOOL) audioSessionSetCategory:(NSString*) category {
     NSError *categoryError = nil;
-    if ([[AVAudioSession sharedInstance] setCategory:category error:&categoryError]) {
+    if ([[CDAVAudioSession sharedInstance] setCategory:category error:&categoryError]) {
         CDLOGINFO(@"Denshion::CDAudioManager - Audio session set category %@ succeeded", category); 
         return YES;
     } else {
@@ -404,7 +404,7 @@ static BOOL configured = FALSE;
     if ((self = [super init])) {
         
         //Initialise the audio session 
-        AVAudioSession* session = [AVAudioSession sharedInstance];
+        CDAVAudioSession* session = [CDAVAudioSession sharedInstance];
         session.delegate = self;
     
         _mode = mode;
