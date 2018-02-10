@@ -107,6 +107,7 @@
 /* Begin PBXFileReference section */
 		026964AC1BEB419E00C8BCD7 /* CrossApp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CrossApp.xib; sourceTree = "<group>"; };
 		026964B51BEB450400C8BCD7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = SOURCE_ROOT; };
+		04B0F744202C96B500702D35 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuViewController.h; path = ../Classes/MenuViewController.h; sourceTree = "<group>"; };
 		04DAC8BC2029951B0085DD99 /* ImagePickerControllerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImagePickerControllerTest.cpp; sourceTree = "<group>"; };
 		04DAC8BD2029951C0085DD99 /* ImagePickerControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerControllerTest.h; sourceTree = "<group>"; };
 		15A3DA821682F8A6002FB0C5 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
@@ -348,6 +349,7 @@
 				B0DB98861B1452EC00710982 /* CommonHttpManager.h */,
 				B0DB98871B1452EC00710982 /* MenuViewController.cpp */,
 				B0DB98881B1452EC00710982 /* MenuViewController.h */,
+				04B0F744202C96B500702D35 /* MenuViewController.h */,
 				B0621E1F1AC3ECB0005EBCA7 /* RootWindow.cpp */,
 				B0621E201AC3ECB0005EBCA7 /* RootWindow.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
