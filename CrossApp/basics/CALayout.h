@@ -164,7 +164,7 @@ static inline DVerticalLayout DVerticalLayout_NH_C(float normalizedHeight, float
     return DVerticalLayout(normalizedHeight, center, DVerticalLayout::Type::NH_C);
 }
 
-const DHorizontalLayout DHorizontalLayouttZero  = DHorizontalLayout();
+const DHorizontalLayout DHorizontalLayoutZero  = DHorizontalLayout();
 const DVerticalLayout   DVerticalLayoutZero     = DVerticalLayout();
 const DLayout           DLayoutZero             = DLayout();
 const DHorizontalLayout DHorizontalLayoutFill   = DHorizontalLayout_L_R(0, 0);
