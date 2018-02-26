@@ -38,7 +38,8 @@ var AVPlayerViewTest = ca.CAViewController.extend({
 
         this.avplayer.onDidPlayToEndTime(function ()
         {
-            _this_.avplayer.pause();
+            _this_.previewBtn.setVisible(true);
+            _this_.avplayer.stop();
         });
 
         this.avplayer.onTimeJumped(function ()

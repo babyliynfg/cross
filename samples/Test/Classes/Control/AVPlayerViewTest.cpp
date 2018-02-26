@@ -50,13 +50,13 @@ void AVPlayerViewTest::playVideo()
     
     m_pAvplayer->onDidPlayToEndTime([=]
     {
-       m_pAvplayer->pause();
+        m_pPreviewBtn->setVisible(true);
+        m_pAvplayer->stop();
     });
     m_pAvplayer->onTimeJumped([=]
     {
         CCLog("进度调整");
     });
-
     
     CAAVPlayerView* playerView = CAAVPlayerView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(640, 0.3)));
     playerView->setPlayer(m_pAvplayer);
