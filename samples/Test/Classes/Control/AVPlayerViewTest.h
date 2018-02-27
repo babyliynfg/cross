@@ -22,6 +22,15 @@ protected:
     
     void viewDidUnload();
     
+    void playVideo();
+    
+    void setTextTagAndBackgroundImage(CAButton* btn, const std::string& textTag, const std::string& filePath);
+    
+private:
+    
+    CAButton* m_pPreviewBtn;
+    
+    CAAVPlayer* m_pAvplayer;
 };
 
 

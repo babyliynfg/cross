@@ -106,7 +106,7 @@ void ViewAnimationTest::showIndex(ssize_t index)
             CAViewAnimation::setAnimationDuration(1.0f);
             CAViewAnimation::setAnimationRepeatAutoreverses(true);
             
-            imageView->setLayout(DLayout(DHorizontalLayouttZero, DVerticalLayoutFill));
+            imageView->setLayout(DLayout(DHorizontalLayoutZero, DVerticalLayoutFill));
             imageView->setImageRect(zeroRect);
             
             CAViewAnimation::commitAnimations();
