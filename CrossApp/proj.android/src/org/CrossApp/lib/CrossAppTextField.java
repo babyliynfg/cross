@@ -698,7 +698,7 @@ import android.widget.TextView.OnEditorActionListener;
         });
     }
     
-    public void setMaxLenght(final int var)
+    public void setMaxLength(final int var)
     {
     	context.runOnUiThread(new Runnable() 
     	{
