@@ -40,7 +40,7 @@ NS_CC_BEGIN
 
 CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
 {
-    CARenderImage* renderImage = CARenderImage::create(size.width, size.height);
+    CARenderImage* renderImage = CARenderImage::create(s_px_to_dip(size.width), s_px_to_dip(size.height));
     
     CAApplication* application = CAApplication::getApplication();
     application->getRenderer()->clean();
@@ -66,10 +66,10 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
         
         GLfloat    vertices[] =
         {
-            0,            0,                    /*0.0f,*/
-            size.width,   0,                    /*0.0f,*/
-            0,            size.height,          /*0.0f,*/
-            size.width,   size.height           /*0.0f*/
+            0,                          0,                    /*0.0f,*/
+            s_px_to_dip(size.width),    0,                    /*0.0f,*/
+            0,                          s_px_to_dip(size.height),          /*0.0f,*/
+            s_px_to_dip(size.width),    s_px_to_dip(size.height)           /*0.0f*/
         };
         
         GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
