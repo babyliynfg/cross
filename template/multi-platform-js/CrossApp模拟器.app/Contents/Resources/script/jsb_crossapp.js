@@ -321,6 +321,12 @@ ca.CAAVPlayer.PlayStatePause = "PlayStatePause";
 ca.CAAVPlayer.PlayStatePlaying = "PlayStatePlaying";
 ca.CAAVPlayer.PlayStatePlayback = "PlayStatePlayback";
 
+ca.CAImagePickerController.SourceType = {};
+ca.CAImagePickerController.SourceType.PhotoLibrary = 0;
+ca.CAImagePickerController.SourceType.CameraDeviceRear = 1;
+ca.CAImagePickerController.SourceType.CameraDeviceFront = 2;
+ca.CAImagePickerController.SourceType.SavedPhotosAlbum = 2;
+
 ca.NetworkStatus = {};
 ca.NetworkStatus.NotReachable     = 0,
 ca.NetworkStatus.ReachableViaWiFi = 2,

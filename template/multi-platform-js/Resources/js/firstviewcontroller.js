@@ -5,11 +5,11 @@ var FirstViewController = ca.CAViewController.extend({
     viewDidLoad: function () {
 
         var img = ca.CAImageView.createWithImage(ca.CAImage.create("r/HelloWorld.png"));
-        img.setLayout(ca.DLayoutFill);
+        img.setLayout(ca.DLayout.fill());
         img.setScaleType(1);
         this.getView().addSubview(img);
 
-        var font = ca.CAFont();
+        var font = ca.CAFont.create();
         font.color = ca.CAColor4B.WHITE;
         font.fontSize = 72;
 
