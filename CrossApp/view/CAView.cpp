@@ -1084,6 +1084,7 @@ int CAView::getTag()
 
 void CAView::addSubview(CAView *subview)
 {
+    if (!subview) return;
     this->insertSubview(subview, subview->getZOrder());
 }
 

@@ -1,4 +1,4 @@
-require('js/rootwindow.js');
+require('js/root_window.js');
 
 var window = new RootWindow();
 window.init();

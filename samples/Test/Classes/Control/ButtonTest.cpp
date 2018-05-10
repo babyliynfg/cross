@@ -45,7 +45,7 @@ void ButtonTest::viewDidLoad()
         CCLog("Button SquareRect");
     }, CAButton::Event::TouchUpInSide);
     this->getView()->addSubview(btn2);
-    
+
     CAButton* btn3 = CAButton::create(CAButton::Type::RoundedRect);
     //设置tag
     btn3->setTag(3);

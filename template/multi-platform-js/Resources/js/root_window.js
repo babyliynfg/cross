@@ -1,4 +1,4 @@
-require('js/firstviewcontroller.js');
+require('js/first_view_controller.js');
 
 var RootWindow = ca.CAWindow.extend(
     {

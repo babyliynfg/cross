@@ -1316,7 +1316,14 @@ int ScriptingCore::handleViewControllerEvent(void* data)
     {
         ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewSizeDidChanged", 0, &dataVal, &retval);
     }
-    
+    else if (action == script::viewDidAppear)
+    {
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidAppear", 0, &dataVal, &retval);
+    }
+    else if (action == script::viewDidDisappear)
+    {
+        ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "viewDidDisappear", 0, &dataVal, &retval);
+    }
     return ret;
 }
 

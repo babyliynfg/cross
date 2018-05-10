@@ -82,9 +82,9 @@ public:
     
     virtual void viewDidUnload() {};
     
-    virtual void viewDidAppear() {};
+    virtual void viewDidAppear();
     
-    virtual void viewDidDisappear() {};
+    virtual void viewDidDisappear();
     
     virtual void viewSizeDidChanged() {};
     

@@ -164,6 +164,32 @@ void CAViewController::viewOnSizeTransitionDidChanged()
     }
 }
 
+void CAViewController::viewDidAppear()
+{
+    if(CAScriptEngineManager::getScriptEngineManager())
+    {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        {
+            if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidDisappear));
+        }
+#endif
+    }
+}
+
+void CAViewController::viewDidDisappear()
+{
+    if(CAScriptEngineManager::getScriptEngineManager())
+    {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        {
+            if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidDisappear));
+        }
+#endif
+    }
+}
+
 std::string CAViewController::getNibName()
 {
     return typeid(*this).name();
