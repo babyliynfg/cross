@@ -194,20 +194,20 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     NSURL* videoUrl = [NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]];
     [self setup:videoUrl load:NO];
 }
-
+#include "CAFileUtils.h"
 - (void)setFilePath:(std::string)filePath
 {
-
-    std::string resource;
-    std::string type;
-    size_t pos = filePath.find_last_of(".");
-    resource = filePath.substr(0, pos);
-    type = filePath.substr(pos + 1, filePath.length() - pos - 1);
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:resource.c_str()]
-                                                   ofType:[NSString stringWithUTF8String:type.c_str()]];
-    
-    NSURL* videoUrl = [NSURL fileURLWithPath:path];
+//    std::string resource;
+//    std::string type;
+//    size_t pos = filePath.find_last_of(".");
+//    resource = filePath.substr(0, pos);
+//    type = filePath.substr(pos + 1, filePath.length() - pos - 1);
+//
+//    NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:resource.c_str()]
+//                                                   ofType:[NSString stringWithUTF8String:type.c_str()]];
+//    ;
+    std::string path = CrossApp::FileUtils::getInstance()->fullPathForFilename(filePath);
+    NSURL* videoUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String:path.c_str()]];
     [self setup:videoUrl load:YES];
 }
 

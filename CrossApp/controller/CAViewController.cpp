@@ -171,7 +171,7 @@ void CAViewController::viewDidAppear()
 #if CC_ENABLE_SCRIPT_BINDING
         if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
         {
-            if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidDisappear));
+            if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidAppear));
         }
 #endif
     }
