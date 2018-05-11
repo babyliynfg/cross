@@ -217,7 +217,7 @@ namespace script
     static int viewDidUnload = 0x12;
     static int viewSizeDidChanged = 0x13;
     static int viewDidAppear = 0x14;
-    static int viewDidDisappear = 0x14;
+    static int viewDidDisappear = 0x15;
 }
 
 
