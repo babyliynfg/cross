@@ -2,6 +2,7 @@
 
 #include "platform/CAAVPlayerImpl.h"
 #include "view/CAAVPlayerView.h"
+#include "platform/CAFileUtils.h"
 #include "images/CAImage.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
@@ -42,13 +43,6 @@ static void playerLayer_play(AVPlayer* player, float rate, const std::function<v
         
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
         [s_pAVPlayerLayer setBackgroundColor:[NSColor blackColor].CGColor];
-        NSWindow* window = [[NSApplication sharedApplication] mainWindow];
-        if (window.contentView.layer == nil)
-        {
-            window.contentView.layer = [CALayer layer];
-        }
-        
-        [window.contentView.layer addSublayer:s_pAVPlayerLayer];
 #else
         [s_pAVPlayerLayer setBackgroundColor:[UIColor blackColor].CGColor];
         UIWindow* window = [[UIApplication sharedApplication] keyWindow];
@@ -194,7 +188,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     NSURL* videoUrl = [NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]];
     [self setup:videoUrl load:NO];
 }
-#include "CAFileUtils.h"
+
 - (void)setFilePath:(std::string)filePath
 {
 //    std::string resource;

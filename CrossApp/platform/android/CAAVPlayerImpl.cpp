@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <jni.h>
 #include "jni/JniHelper.h"
-
+#include "platform/CAFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -116,10 +116,11 @@ void CAAVPlayerImpl::setUrl(const std::string& url)
 void CAAVPlayerImpl::setFilePath(const std::string& filePath)
 {
     s_mapUrl[m_pPlayer] = std::pair<bool, std::string>(false, filePath);
+    std::string path = CrossApp::FileUtils::getInstance()->fullPathForFilename(filePath);
     JniMethodInfo jni;
     if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppVideoPlayer", "setFilePath", "(Ljava/lang/String;I)V"))
     {
-        jstring jFilePath = jni.env->NewStringUTF(filePath.c_str());
+        jstring jFilePath = jni.env->NewStringUTF(path.c_str());
         jni.env->CallStaticVoidMethod(jni.classID, jni.methodID , jFilePath , (jint)m_pPlayer->m_u__ID);
         jni.env->DeleteLocalRef(jni.classID);
     }

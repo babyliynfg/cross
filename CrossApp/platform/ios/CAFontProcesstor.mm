@@ -83,7 +83,7 @@ void dipFontToPxFont(CAFont& font)
     font.shadow.shadowOffset.width = s_dip_to_px(font.shadow.shadowOffset.width) /2;
     font.shadow.shadowOffset.height = s_dip_to_px(font.shadow.shadowOffset.height) /2;
     font.shadow.shadowBlur = s_dip_to_px(font.shadow.shadowBlur);
-    font.stroke.strokeSize = s_dip_to_px(font.stroke.strokeSize) / 2;
+    font.stroke.strokeSize = s_dip_to_px(font.stroke.strokeSize) / [[UIScreen mainScreen] scale];
 }
 
 NSAttributedString* NSAttributedStringForText(const std::string& text, const CAFont& font, const DSize& dim, CATextAlignment textAlignment)
@@ -137,7 +137,7 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
     
     if (font.bold)
     {
-        [tokenAttributesDict setObject:@(-shrinkFontSize / 20.f) forKey:NSStrokeWidthAttributeName];
+        [tokenAttributesDict setObject:@(-shrinkFontSize / 40.f) forKey:NSStrokeWidthAttributeName];
         [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
     }
     
