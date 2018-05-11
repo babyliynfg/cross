@@ -43,6 +43,7 @@ static void playerLayer_play(AVPlayer* player, float rate, const std::function<v
         
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
         [s_pAVPlayerLayer setBackgroundColor:[NSColor blackColor].CGColor];
+        [s_pAVPlayerLayer retain];
 #else
         [s_pAVPlayerLayer setBackgroundColor:[UIColor blackColor].CGColor];
         UIWindow* window = [[UIApplication sharedApplication] keyWindow];
