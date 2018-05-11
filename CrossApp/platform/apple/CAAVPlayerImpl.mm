@@ -139,6 +139,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     NSTimer*                    _timer;
     CrossApp::DSize             _presentationSize;
     CrossApp::CAImage*          _firstFrameImage;
+    std::string                 _PlayBufferLoadingStateTag;
 }
 @property (nonatomic, assign, setter=onPeriodicTime:) std::function<void(float, float)> periodicTime;
 @property (nonatomic, assign, setter=onLoadedTime:) std::function<void(float, float)> loadedTime;
@@ -463,18 +464,27 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
     }
     else if ([keyPath isEqualToString:@"playbackBufferEmpty"])
     { //监听播放器在缓冲数据的状态
-        NSLog(@"正在缓冲");
-        if (self.playBufferLoadingState)
+        
+        if (_PlayBufferLoadingStateTag.compare("playbackBufferEmpty"))
         {
-            self.playBufferLoadingState(CrossApp::CAAVPlayer::PlaybackBufferEmpty);
+            NSLog(@"正在缓冲");
+            _PlayBufferLoadingStateTag = "playbackBufferEmpty";
+            if (self.playBufferLoadingState)
+            {
+                self.playBufferLoadingState(CrossApp::CAAVPlayer::PlaybackBufferEmpty);
+            }
         }
     }
     else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"])
     {
-        NSLog(@"缓冲达到可播放");
-        if (self.playBufferLoadingState)
+        if (_PlayBufferLoadingStateTag.compare("playbackLikelyToKeepUp"))
         {
-            self.playBufferLoadingState(CrossApp::CAAVPlayer::PlaybackLikelyToKeepUp);
+            NSLog(@"缓冲达到可播放");
+            _PlayBufferLoadingStateTag = "playbackLikelyToKeepUp";
+            if (self.playBufferLoadingState)
+            {
+                self.playBufferLoadingState(CrossApp::CAAVPlayer::PlaybackLikelyToKeepUp);
+            }
         }
     }
     else if ([keyPath isEqualToString:@"rate"])
