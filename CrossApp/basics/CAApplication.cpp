@@ -1006,8 +1006,10 @@ void CCDisplayLinkDirector::mainLoop(void)
             CAScheduler::getScheduler()->update(m_fDeltaTime);
             drawScene();
         }
-        CAPoolManager::getInstance()->pop();}
+        CAPoolManager::getInstance()->pop();
+        
     }
+}
 
 
 void CCDisplayLinkDirector::stopAnimation(void)
