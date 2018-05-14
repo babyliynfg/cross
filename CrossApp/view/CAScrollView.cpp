@@ -399,7 +399,6 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
                 m_tCloseToPoint = this->getViewSize();
                 m_tInitialPoint = m_tCloseToPoint;
                 this->changedFromPullToRefreshView();
-                this->setTouchEnabledAtSubviews(true);
                 
                 if (m_obDidMoved)
                 {
@@ -412,7 +411,6 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
                 this->performSelector(callfunc_selector(CAScrollView::contentOffsetFinish), 0);
             }
         }, "contentOffset:" + m_s__StrID, 0.2f);
-        this->setTouchEnabledAtSubviews(false);
     }
     else
     {
