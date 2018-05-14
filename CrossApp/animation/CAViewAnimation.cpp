@@ -132,7 +132,11 @@ CAViewModel::CAViewModel(CAView* v)
 
 CAViewModel::~CAViewModel()
 {
-    CC_SAFE_RELEASE(view);
+    if (view)
+    {
+        view->autorelease();
+        view = nullptr;
+    }
 }
 
 CAViewModel* CAViewModel::create(CAView* v)
