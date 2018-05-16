@@ -514,19 +514,15 @@ void CANavigationController::viewDidLoad()
 
 void CANavigationController::viewDidUnload()
 {
-    for (CADeque<CAViewController*>::iterator itr=m_pViewControllers.begin();
-         itr!=m_pViewControllers.end();
-         itr++)
+    for (auto& var : m_pViewControllers)
     {
-        (*itr)->removeViewFromSuperview();
+        var->removeViewFromSuperview();
     }
     
-    for (CADeque<CAView*>::iterator itr=m_pContainers.begin();
-         itr!=m_pContainers.end();
-         itr++)
+    for (auto& var : m_pContainers)
     {
-        (*itr)->removeAllSubviews();
-        (*itr)->removeFromSuperview();
+        var->removeAllSubviews();
+        var->removeFromSuperview();
     }
 }
 
@@ -1546,6 +1542,10 @@ void CATabBarController::viewDidLoad()
 
 void CATabBarController::viewDidUnload()
 {
+    for (auto& var : m_pViewControllers)
+    {
+        var->removeViewFromSuperview();
+    }
     this->getView()->removeAllSubviews();
 }
 

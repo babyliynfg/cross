@@ -48,6 +48,7 @@ bool CACell::initWithReuseIdentifier(const std::string& reuseIdentifier)
     m_pContentView = new CAView();
     m_pContentView->setLayout(DLayoutFill);
     this->addSubview(m_pContentView);
+    m_pContentView->setTextTag("CACell::ContentView");
     
     this->setBackgroundView(CAView::create());
     this->setReuseIdentifier(reuseIdentifier);

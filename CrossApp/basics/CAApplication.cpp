@@ -678,16 +678,18 @@ void CAApplication::reset()
     
     if (m_pRootWindow)
     {
+        m_pRootWindow->onExitTransitionDidStart();
+        m_pRootWindow->onExit();
+        
 #if CC_ENABLE_SCRIPT_BINDING
         if (CAScriptEngineManager::getScriptEngineManager())
         {
             CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->releaseScriptObject(this, m_pRootWindow);
         }
 #endif
-        m_pRootWindow->onExitTransitionDidStart();
-        m_pRootWindow->onExit();
         m_pRootWindow->release();
-		m_pRootWindow = nullptr;
+        m_pRootWindow = nullptr;
+
     }
     // cleanup scheduler
     getScheduler()->unscheduleAll();
@@ -702,6 +704,7 @@ void CAApplication::reset()
     
     // CrossApp specific data structures
     CAUserDefault::destroyInstance();
+    CC_SAFE_RELEASE_NULL(m_pNotificationCenter);
     
     ccDrawFree();
     
@@ -746,7 +749,7 @@ void CAApplication::restartApplication()
     RenderState::initialize();
     
     m_pImageCache = new (std::nothrow) CAImageCache();
-    
+    m_pNotificationCenter = new (std::nothrow) CANotificationCenter();
     // Reschedule for action manager
     m_pScheduler->scheduleUpdate(this->getActionManager(), CAScheduler::PRIORITY_SYSTEM, false);
     

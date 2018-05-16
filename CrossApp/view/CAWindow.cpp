@@ -20,6 +20,7 @@ CAWindow::CAWindow()
     
     m_pDefaultCamera = CACamera::create();
     this->addSubview(m_pDefaultCamera);
+
 }
 
 CAWindow::~CAWindow()
@@ -60,6 +61,17 @@ CAWindow *CAWindow::create()
         CC_SAFE_DELETE(pRet);
         return NULL;
     }
+}
+
+void CAWindow::onEnterTransitionDidFinish()
+{
+    CAView::onEnterTransitionDidFinish();
+}
+
+void CAWindow::onExitTransitionDidStart()
+{
+    CAView::onExitTransitionDidStart();
+    this->setRootViewController(nullptr);
 }
 
 void CAWindow::setRootViewController(CrossApp::CAViewController *var)

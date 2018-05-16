@@ -28,6 +28,10 @@ public:
     
     bool init() override;
     
+    virtual void onEnterTransitionDidFinish();
+        
+    virtual void onExitTransitionDidStart();
+    
     void presentModalViewController(CAViewController* controller, bool animated);
     
     void dismissModalViewController(bool animated);
