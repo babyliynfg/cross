@@ -669,6 +669,7 @@ void CAApplication::end()
 void CAApplication::restart()
 {
     m_bRestartApplicationInNextLoop = true;
+    m_pobOpenGLView->setTouchDelegate(nullptr);
 }
 
 void CAApplication::reset()
@@ -704,7 +705,7 @@ void CAApplication::reset()
     
     // CrossApp specific data structures
     CAUserDefault::destroyInstance();
-    CC_SAFE_RELEASE_NULL(m_pNotificationCenter);
+//    CC_SAFE_RELEASE_NULL(m_pNotificationCenter);
     
     ccDrawFree();
     
@@ -749,7 +750,7 @@ void CAApplication::restartApplication()
     RenderState::initialize();
     
     m_pImageCache = new (std::nothrow) CAImageCache();
-    m_pNotificationCenter = new (std::nothrow) CANotificationCenter();
+//    m_pNotificationCenter = new (std::nothrow) CANotificationCenter();
     // Reschedule for action manager
     m_pScheduler->scheduleUpdate(this->getActionManager(), CAScheduler::PRIORITY_SYSTEM, false);
     
@@ -772,6 +773,8 @@ void CAApplication::restartApplication()
         }
     }
 #endif
+    
+    m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
 }
 
 void CAApplication::pause(void)

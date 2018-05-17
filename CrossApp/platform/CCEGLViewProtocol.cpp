@@ -199,7 +199,7 @@ void CCEGLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], 
         return;
     }
 
-    m_pDelegate->touchesBegan(&set, event);
+    if (m_pDelegate) m_pDelegate->touchesBegan(&set, event);
 }
 
 void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
@@ -238,7 +238,7 @@ void CCEGLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], f
         return;
     }
 
-    m_pDelegate->touchesMoved(&set, event);
+    if (m_pDelegate) m_pDelegate->touchesMoved(&set, event);
 }
 
 void CCEGLViewProtocol::getSetOfTouchesEndOrCancel(CCSet& set, int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
@@ -290,14 +290,14 @@ void CCEGLViewProtocol::handleTouchesEnd(int num, intptr_t ids[], float xs[], fl
 {
     CCSet set;
     getSetOfTouchesEndOrCancel(set, num, ids, xs, ys, event);
-    m_pDelegate->touchesEnded(&set, event);
+    if (m_pDelegate) m_pDelegate->touchesEnded(&set, event);
 }
 
 void CCEGLViewProtocol::handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[], CAEvent* event)
 {
     CCSet set;
     getSetOfTouchesEndOrCancel(set, num, ids, xs, ys, event);
-    m_pDelegate->touchesCancelled(&set, event);
+    if (m_pDelegate) m_pDelegate->touchesCancelled(&set, event);
 }
 
 void CCEGLViewProtocol::handleMouseMoved(float x, float y, CAEvent* event)
@@ -310,7 +310,7 @@ void CCEGLViewProtocol::handleMouseMoved(float x, float y, CAEvent* event)
                          (x - m_obViewPortRect.origin.x) / m_fScale,
                          (y - m_obViewPortRect.origin.y) / m_fScale);
     
-    m_pDelegate->mouseMoved(s_pMouseMoved, event);
+    if (m_pDelegate) m_pDelegate->mouseMoved(s_pMouseMoved, event);
 }
 
 void CCEGLViewProtocol::handleScrollWheel(float x, float y, float offx, float offy, CAEvent* event)
@@ -323,7 +323,7 @@ void CCEGLViewProtocol::handleScrollWheel(float x, float y, float offx, float of
                                 (x - m_obViewPortRect.origin.x) / m_fScale,
                                 (y - m_obViewPortRect.origin.y) / m_fScale);
     
-    m_pDelegate->mouseScrollWheel(s_pMouseMoved, offx, offy, event);
+    if (m_pDelegate) m_pDelegate->mouseScrollWheel(s_pMouseMoved, offx, offy, event);
 }
 
 
