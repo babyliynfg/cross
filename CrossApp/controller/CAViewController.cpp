@@ -475,6 +475,7 @@ void CANavigationController::updateItem(CAViewController* viewController)
     }
 
     m_pNavigationBars.at(index)->setTitleColor(m_sNavigationBarTitleColor);
+    m_pNavigationBars.at(index)->setButtonColor(m_sNavigationBarButtonColor);
     m_pNavigationBars.at(index)->setItem(viewController->getNavigationBarItem());
     
     DLayout navLayout;
@@ -591,6 +592,7 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     navigationBar->getBackgroundView()->setColor(m_sNavigationBarBackgroundColor);
 
     navigationBar->setTitleColor(m_sNavigationBarTitleColor);
+    navigationBar->setButtonColor(m_sNavigationBarButtonColor);
     container->insertSubview(navigationBar, 1);
     navigationBar->onPopViewController([&]
     {
