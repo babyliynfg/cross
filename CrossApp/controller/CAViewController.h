@@ -229,7 +229,7 @@ protected:
     
     int m_iNavigationBarHeight;
     
-    bool m_bClearance;
+    int m_iClearance;
 };
 
 class CC_DLL CATabBarController

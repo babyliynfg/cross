@@ -23,15 +23,15 @@ class CC_DLL CANavigationBar
 {
 public:
     
-    CANavigationBar(bool clearance = false);
+    CANavigationBar(int clearance = 0);
     
     virtual ~CANavigationBar();
     
-    static CANavigationBar* createWithFrame(const DRect& rect, bool clearance = false);
+    static CANavigationBar* createWithFrame(const DRect& rect, int clearance = 0);
     
-    static CANavigationBar* createWithCenter(const DRect& rect, bool clearance = false);
+    static CANavigationBar* createWithCenter(const DRect& rect, int clearance = 0);
     
-    static CANavigationBar* createWithLayout(const DLayout& layout, bool clearance = false);
+    static CANavigationBar* createWithLayout(const DLayout& layout, int clearance = 0);
     
     virtual void onEnterTransitionDidFinish();
     
@@ -87,7 +87,7 @@ protected:
     
     std::vector<CAButton*> m_pRightButtons;
     
-    bool m_bClearance;
+    int m_iClearance;
 };
 
 class CC_DLL CABadgeView: public CAView
@@ -122,15 +122,15 @@ public:
         Bottom
     };
     
-    CATabBar(bool clearance = false);
+    CATabBar(int clearance = 0, VerticalAlignment alignment = VerticalAlignment::Bottom);
     
     virtual ~CATabBar();
 
-    static CATabBar* createWithFrame(const DRect& rect, bool clearance = false);
+    static CATabBar* createWithFrame(const DRect& rect, int clearance = 0, VerticalAlignment alignment = VerticalAlignment::Bottom);
     
-    static CATabBar* createWithCenter(const DRect& rect, bool clearance = false);
+    static CATabBar* createWithCenter(const DRect& rect, int clearance = 0, VerticalAlignment alignment = VerticalAlignment::Bottom);
     
-    static CATabBar* createWithLayout(const DLayout& layout, bool clearance = false);
+    static CATabBar* createWithLayout(const DLayout& layout, int clearance = 0, VerticalAlignment alignment = VerticalAlignment::Bottom);
     
     virtual void onEnterTransitionDidFinish();
     
@@ -200,7 +200,9 @@ protected:
     
     CAVector<CABadgeView*> m_pBadgeViews;
     
-    bool m_bClearance;
+    int m_iClearance;
+    
+    VerticalAlignment m_eAlignment;
 };
 
 

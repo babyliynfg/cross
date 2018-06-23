@@ -20,7 +20,7 @@ NS_CC_BEGIN
 
 #pragma CANavigationBar
 
-CANavigationBar::CANavigationBar(bool clearance)
+CANavigationBar::CANavigationBar(int clearance)
 :m_pContentView(nullptr)
 ,m_pTitle(nullptr)
 ,m_pBackgroundView(nullptr)
@@ -28,7 +28,7 @@ CANavigationBar::CANavigationBar(bool clearance)
 ,m_cButtonColor(CAColor4B::WHITE)
 ,m_pItem(nullptr)
 ,m_pGoBackBarButtonItem(nullptr)
-,m_bClearance(clearance)
+,m_iClearance(clearance)
 {
 
 }
@@ -40,7 +40,7 @@ CANavigationBar::~CANavigationBar()
     CC_SAFE_RELEASE(m_pBackgroundView);
 }
 
-CANavigationBar* CANavigationBar::createWithFrame(const DRect& rect, bool clearance)
+CANavigationBar* CANavigationBar::createWithFrame(const DRect& rect, int clearance)
 {
     CANavigationBar* navigationBar = new CANavigationBar(clearance);
     if (navigationBar && navigationBar->initWithFrame(rect))
@@ -52,7 +52,7 @@ CANavigationBar* CANavigationBar::createWithFrame(const DRect& rect, bool cleara
     return NULL;
 }
 
-CANavigationBar* CANavigationBar::createWithCenter(const DRect& rect, bool clearance)
+CANavigationBar* CANavigationBar::createWithCenter(const DRect& rect, int clearance)
 {
     CANavigationBar* navigationBar = new CANavigationBar(clearance);
     if (navigationBar && navigationBar->initWithFrame(rect))
@@ -64,7 +64,7 @@ CANavigationBar* CANavigationBar::createWithCenter(const DRect& rect, bool clear
     return NULL;
 }
 
-CANavigationBar* CANavigationBar::createWithLayout(const CrossApp::DLayout &layout, bool clearance)
+CANavigationBar* CANavigationBar::createWithLayout(const CrossApp::DLayout &layout, int clearance)
 {
     CANavigationBar* navigationBar = new CANavigationBar(clearance);
     if (navigationBar && navigationBar->initWithLayout(layout))
@@ -79,7 +79,7 @@ CANavigationBar* CANavigationBar::createWithLayout(const CrossApp::DLayout &layo
 bool CANavigationBar::init()
 {
     m_pContentView = new CAView();
-    m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(m_bClearance ? 40 : 0, 0)));
+    m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(m_iClearance, 0)));
     this->addSubview(m_pContentView);
     m_pContentView->release();
     
@@ -477,7 +477,7 @@ void CABadgeView::setBadgeText(const std::string& text)
 
 #pragma CATabBar
 
-CATabBar::CATabBar(bool clearance)
+CATabBar::CATabBar(int clearance, VerticalAlignment alignment)
 :m_pContentView(nullptr)
 ,m_pBackgroundView(nullptr)
 ,m_pSelectedIndicatorView(nullptr)
@@ -489,7 +489,8 @@ CATabBar::CATabBar(bool clearance)
 ,m_nSelectedIndex(-1)
 ,m_bSelectedTitleBold(false)
 ,m_bShowIndicator(false)
-,m_bClearance(clearance)
+,m_iClearance(clearance)
+,m_eAlignment(alignment)
 {
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATabBar");
     m_pBackgroundImage = CAImage::create(map.at("backgroundView_normal"));
@@ -522,9 +523,9 @@ CATabBar::~CATabBar()
     CC_SAFE_RELEASE_NULL(m_pSelectedIndicatorImage);
 }
 
-CATabBar* CATabBar::createWithFrame(const DRect& rect, bool clearance)
+CATabBar* CATabBar::createWithFrame(const DRect& rect, int clearance, VerticalAlignment alignment)
 {
-    CATabBar* tabBar = new CATabBar(clearance);
+    CATabBar* tabBar = new CATabBar(clearance, alignment);
     if (tabBar && tabBar->initWithFrame(rect))
     {
         tabBar->autorelease();
@@ -533,9 +534,9 @@ CATabBar* CATabBar::createWithFrame(const DRect& rect, bool clearance)
     CC_SAFE_DELETE(tabBar);
     return NULL;
 }
-CATabBar* CATabBar::createWithCenter(const DRect& rect, bool clearance)
+CATabBar* CATabBar::createWithCenter(const DRect& rect, int clearance, VerticalAlignment alignment)
 {
-    CATabBar* tabBar = new CATabBar(clearance);
+    CATabBar* tabBar = new CATabBar(clearance, alignment);
     if (tabBar && tabBar->initWithCenter(rect))
     {
         tabBar->autorelease();
@@ -545,9 +546,9 @@ CATabBar* CATabBar::createWithCenter(const DRect& rect, bool clearance)
     return NULL;
 }
 
-CATabBar* CATabBar::createWithLayout(const CrossApp::DLayout &layout, bool clearance)
+CATabBar* CATabBar::createWithLayout(const CrossApp::DLayout &layout, int clearance, VerticalAlignment alignment)
 {
-    CATabBar* tabBar = new CATabBar(clearance);
+    CATabBar* tabBar = new CATabBar(clearance, alignment);
     if (tabBar && tabBar->initWithLayout(layout))
     {
         tabBar->autorelease();
@@ -663,8 +664,8 @@ void CATabBar::setContentSize(const DSize & var)
     DRect rect = this->getBounds();
     rect.size.width = MIN(rect.size.width, 1024);
     rect.origin.x = (this->getBounds().size.width - rect.size.width) / 2;
-    rect.origin.y = m_bClearance ? 40 : 0;
-    rect.size.height = rect.size.height - rect.origin.y;
+    rect.origin.y = m_eAlignment == VerticalAlignment::Top ? m_iClearance : 0;
+    rect.size.height = MIN(rect.size.height - rect.origin.y, m_eAlignment == VerticalAlignment::Top ? 88 : 98);
     
     m_pContentView->setFrame(rect);
     

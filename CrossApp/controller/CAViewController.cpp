@@ -279,6 +279,52 @@ void CAViewController::dismissModalViewController(bool animated)
 }
 
 
+int get_top_clearance(CAView* view)
+{
+    int clearance = 0;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (view->convertToWorldSpace(DPointZero).y < 1)
+    {
+        auto winSize = CAApplication::getApplication()->getWinSize();
+        /****** iphone X ******/
+        if (winSize.equals(DSize(750, 1624)))
+        {
+            clearance = 88;
+        }
+        else if (winSize.equals(DSize(1624, 750)))
+        {
+            clearance = 0;
+        }
+        else
+        {
+            clearance = 40;
+        }
+    }
+#endif
+    
+    return clearance;
+}
+
+int get_bottom_clearance(CAView* view)
+{
+    int clearance = 0;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    auto winSize = CAApplication::getApplication()->getWinSize();
+    /****** iphone X ******/
+    if (winSize.equals(DSize(750, 1624)))
+    {
+        clearance = 34;
+    }
+    else if (winSize.equals(DSize(1624, 750)))
+    {
+        clearance = 34;
+    }
+#endif
+    
+    return clearance;
+}
 #pragma CANavigationController
 
 CANavigationController::CANavigationController()
@@ -290,7 +336,7 @@ CANavigationController::CANavigationController()
 ,m_sNavigationBarButtonColor(CAColor4B::WHITE)
 ,m_pNavigationBarGoBackBarButtonItem(nullptr)
 ,m_fProgress(1.0f)
-,m_bClearance(false)
+,m_iClearance(0)
 {
     this->setTouchMoved(true);
     
@@ -501,11 +547,9 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    m_bClearance = this->getView()->convertToWorldSpace(DPointZero).y < 1;
-#endif
+    m_iClearance = get_top_clearance(this->getView());
 
-    m_iNavigationBarHeight = m_bClearance ? 128 : 88;
+    m_iNavigationBarHeight = m_iClearance + 88;
     
     CAViewController* viewController = m_pViewControllers.front();
     viewController->retain()->autorelease();
@@ -564,7 +608,7 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
         navLayout.vertical.top = 0;
     }
     
-    CANavigationBar* navigationBar = CANavigationBar::createWithLayout(navLayout, m_bClearance);
+    CANavigationBar* navigationBar = CANavigationBar::createWithLayout(navLayout, m_iClearance);
     if (viewController->getNavigationBarItem() == NULL && viewController->getTitle().compare("") != 0)
     {
         viewController->setNavigationBarItem(CANavigationBarItem::create(viewController->getTitle()));
@@ -1444,29 +1488,25 @@ void CATabBarController::viewDidLoad()
         view->m_pTabBarController = this;
     }
     
-    bool clearance = false;
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (m_iTabBarHeight == 0
-        && m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
-    {
-        clearance = true;
-    }
-#endif
-
     DLayout tabBarLayout;
     tabBarLayout.horizontal = DHorizontalLayoutFill;
     
+    int clearance = 0;
+    
     if (m_iTabBarHeight == 0)
     {
+        
         if (m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
         {
-            m_iTabBarHeight = clearance ? 138 : 98;
+            clearance = get_top_clearance(this->getView());
+            m_iTabBarHeight = clearance + 88;
         }
         else
         {
-            m_iTabBarHeight = 98;
+            clearance = get_bottom_clearance(this->getView());
+            m_iTabBarHeight = clearance + 98;
         }
+        
     }
     
     if (m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
@@ -1494,7 +1534,7 @@ void CATabBarController::viewDidLoad()
     }
     m_obViewLayout = viewLayout;
 
-    m_pTabBar = CATabBar::createWithLayout(m_obTabBarLayout, clearance);
+    m_pTabBar = CATabBar::createWithLayout(m_obTabBarLayout, get_top_clearance(this->getView()), m_eTabBarVerticalAlignment);
     m_pTabBar->setItems(items);
     m_pTabBar->onSelectedItem(CALLBACK_BIND_2(CATabBarController::tabBarSelectedItem, this));
     this->getView()->insertSubview(m_pTabBar, 1);

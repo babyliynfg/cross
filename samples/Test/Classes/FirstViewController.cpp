@@ -176,186 +176,120 @@ void FirstViewController::viewDidLoad()
     MoveBy* moveBy = MoveBy::create(8, DPoint(500, 0));
     sprite->runAction(moveBy);
      //*/
-
+    auto winsize = CAApplication::getApplication()->getWinSize();
+    CCLog("%f %f", winsize.width, winsize.height);
 }
 
 void FirstViewController::viewDidUnload()
 {
 }
 
+#define PUSH_VIEW_CONTROLLER(_VIEWCONTROLLER_) \
+RootWindow::getInstance()->getRootNavigationController()->pushViewController(_VIEWCONTROLLER_::create(), true)
+
 void FirstViewController::collectionViewDidSelectCellAtIndexPath(unsigned int section, unsigned int item)
 {
     switch (item)
     {
         case 0:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(AlertViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(AlertViewTest);
             break;
-        }
         case 1:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ButtonTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ButtonTest);
             break;
-        }
         case 2:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(CheckboxTest::create(), true);
+            PUSH_VIEW_CONTROLLER(CheckboxTest);
             break;
-        }
         case 3:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(SegmentedControlTest::create(), true);
+            PUSH_VIEW_CONTROLLER(SegmentedControlTest);
             break;
-        }
         case 4:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ImageViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ImageViewTest);
             break;
-        }
         case 5:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(Scale9ImageViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(Scale9ImageViewTest);
             break;
-        }
         case 6:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ActivityIndicatorViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ActivityIndicatorViewTest);
             break;
-        }
         case 7:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ProgressTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ProgressTest);
             break;
-        }
         case 8:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(SliderTest::create(), true);
+            PUSH_VIEW_CONTROLLER(SliderTest);
             break;
-        }
         case 9:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(SwitchTest::create(), true);
+            PUSH_VIEW_CONTROLLER(SwitchTest);
             break;
-        }
         case 10:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(StepperTest::create(), true);
+            PUSH_VIEW_CONTROLLER(StepperTest);
             break;
-        }
         case 11:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(LabelTest::create(), true);
+            PUSH_VIEW_CONTROLLER(LabelTest);
             break;
-        }
-            
         case 12:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(TextFieldTest::create(), true);
+            PUSH_VIEW_CONTROLLER(TextFieldTest);
             break;
-        }
         case 13:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(TextViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(TextViewTest);
             break;
-        }
         case 14:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(TabBarTest::create(), true);
+            PUSH_VIEW_CONTROLLER(TabBarTest);
             break;
-        }
-            
         case 15:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(PageViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(PageViewTest);
             break;
-        }
         case 16:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(PageControlTest::create(), true);
-            
+            PUSH_VIEW_CONTROLLER(PageControlTest);
             break;
-        }
         case 17:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ScrollViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ScrollViewTest);
             break;
-        }
         case 18:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(AutoCollectionViewVerticalTest::create(), true);
+            PUSH_VIEW_CONTROLLER(AutoCollectionViewVerticalTest);
             break;
-        }
         case 19:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(AutoCollectionViewHorizontalTest::create(), true);
+            PUSH_VIEW_CONTROLLER(AutoCollectionViewHorizontalTest);
             break;
-        }
         case 20:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(CollectionViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(CollectionViewTest);
             break;
-        }
         case 21:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(WaterfallViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(WaterfallViewTest);
             break;
-        }
         case 22:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ListViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ListViewTest);
             break;
-        }
         case 23:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(TableViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(TableViewTest);
             break;
-        }
-            
         case 24:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(PickerViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(PickerViewTest);
             break;
-        }
         case 25:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(WebViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(WebViewTest);
             break;
-        }
         case 26:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(GifViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(GifViewTest);
             break;
-        }
         case 27:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(AVPlayerViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(AVPlayerViewTest);
             break;
-        }
         case 28:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(RenderImageTest::create(), true);
+            PUSH_VIEW_CONTROLLER(RenderImageTest);
             break;
-        }
         case 29:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewAnimationTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ViewAnimationTest);
             break;
-        }
         case 30:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(DrawViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(DrawViewTest);
             break;
-        }
         case 31:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ClippingViewTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ClippingViewTest);
             break;
-        }
         case 32:
-        {
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ImagePickerControllerTest::create(), true);
+            PUSH_VIEW_CONTROLLER(ImagePickerControllerTest);
             break;
-        }
         default:
             break;
     }
