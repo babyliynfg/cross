@@ -116,7 +116,7 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
     
     NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
     [paragraphStyle setLineBreakMode:font.wordWrap ? NSLineBreakByWordWrapping : NSLineBreakByCharWrapping];
-    [paragraphStyle setLineSpacing:font.lineSpacing];
+    [paragraphStyle setLineSpacing:font.lineSpacing * 2];
     [paragraphStyle setAlignment:textAlign];
     
     // attribute
@@ -128,7 +128,7 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
     
     if (font.bold)
     {
-        [tokenAttributesDict setObject:@(-shrinkFontSize / 10.f) forKey:NSStrokeWidthAttributeName];
+        [tokenAttributesDict setObject:@(-shrinkFontSize / 20.f) forKey:NSStrokeWidthAttributeName];
         [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
     }
     
@@ -250,7 +250,11 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         [[NSAffineTransform transform] set];
         
         
-        [stringWithAttributes drawInRect:textRect];
+//        [stringWithAttributes drawInRect:textRect];
+        //modify by zmr 用于解决多行文本，显示不下时最后一行以省略号显示
+        NSStringDrawingContext *drawcontext = [[NSStringDrawingContext alloc] init];
+        [stringWithAttributes drawWithRect:textRect options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine context:drawcontext];
+        [drawcontext release];
         
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
         [image unlockFocus];
@@ -315,9 +319,13 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         [image lockFocus];
         // patch for mac retina display and lableTTF
         [[NSAffineTransform transform] set];
-        [stringWithAttributes drawInRect:textRect];
         
-
+//        [stringWithAttributes drawInRect:textRect];
+        //modify by zmr 用于解决多行文本，显示不下时最后一行以省略号显示
+        NSStringDrawingContext *drawcontext = [[NSStringDrawingContext alloc] init];
+        [stringWithAttributes drawWithRect:textRect options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine context:drawcontext];
+        [drawcontext release];
+        
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
         [image unlockFocus];
         
@@ -424,7 +432,7 @@ float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFo
         
         NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         [paragraphStyle setLineBreakMode:font.wordWrap ? NSLineBreakByWordWrapping : NSLineBreakByCharWrapping];
-        [paragraphStyle setLineSpacing:font.lineSpacing];
+        [paragraphStyle setLineSpacing:font.lineSpacing * 2];
         [paragraphStyle setAlignment:NSTextAlignmentLeft];
         
         // attribute

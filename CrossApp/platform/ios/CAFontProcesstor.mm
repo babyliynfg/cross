@@ -129,7 +129,7 @@ NSAttributedString* NSAttributedStringForText(const std::string& text, const CAF
     
     if (font.bold)
     {
-        [tokenAttributesDict setObject:@(-shrinkFontSize / 40.f) forKey:NSStrokeWidthAttributeName];
+        [tokenAttributesDict setObject:@(-shrinkFontSize / 20.f) forKey:NSStrokeWidthAttributeName];
         [tokenAttributesDict setObject:foregroundColor forKey:NSStrokeColorAttributeName];
     }
     
@@ -300,7 +300,11 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         CGContextSetTextDrawingMode(context, kCGTextFill);
         
         // actually draw the text in the context
-        [stringWithAttributes drawInRect:textRect];
+        //[stringWithAttributes drawInRect:textRect];
+        //modify by zmr 用于解决多行文本，显示不下时最后一行以省略号显示
+        NSStringDrawingContext *drawcontext = [[NSStringDrawingContext alloc] init];
+        [stringWithAttributes drawWithRect:textRect options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine context:drawcontext];
+        [drawcontext release];
         
         CGContextEndTransparencyLayer(context);
         
@@ -406,8 +410,9 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         // actually draw the text in the context
         //[stringWithAttributes drawInRect:textRect];
         //modify by zmr 用于解决多行文本，显示不下时最后一行以省略号显示
-        NSStringDrawingContext *drawcontext =[[NSStringDrawingContext alloc] init];
+        NSStringDrawingContext *drawcontext = [[NSStringDrawingContext alloc] init];
         [stringWithAttributes drawWithRect:textRect options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine context:drawcontext];
+        [drawcontext release];
         /*
          if (true)
          {
