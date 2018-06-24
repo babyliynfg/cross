@@ -12,6 +12,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Color;
+import android.text.TextPaint;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -104,10 +105,11 @@ public final class CrossAppAlertView
 				
 				
 				int dimi_dialog_min_width = CrossAppHelper.dip2px(context, 250) ; 
-				int dimi_msg_horizental_margin = CrossAppHelper.dip2px(context, 10) ; 
-				int dimi_title_vertical_margin = CrossAppHelper.dip2px(context, 5) ;
+				int dimi_msg_horizental_margin = CrossAppHelper.dip2px(context, 16) ; 
+				int dimi_title_vertical_margin = CrossAppHelper.dip2px(context, 8) ;
+				int dimi_msg_vertical_margin = CrossAppHelper.dip2px(context, 4) ;
 				int dimi_btn_hei = CrossAppHelper.dip2px(context, 38);
-				int txt_size_title = CrossAppHelper.dip2px(context, 18) ; 
+				int txt_size_title = CrossAppHelper.dip2px(context, 16) ; 
 				int txt_size_msg = CrossAppHelper.dip2px(context, 14) ; 
 				String btn_txt_color_hex = "#417bf9";
 				
@@ -121,9 +123,10 @@ public final class CrossAppAlertView
 				TextView titleView = new TextView(context) ; 
 				titleView.setGravity(Gravity.CENTER);
 				titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, txt_size_title);
+				titleView.setTextColor(Color.parseColor("#000000"));
+				titleView.getPaint().setFakeBoldText(true);
 				titleView.setSingleLine(true);
 				titleView.setText(alertView.titile);
-				titleView.setTextColor(Color.parseColor("#000000")); 
 				
 				LinearLayout.LayoutParams title_param = new LinearLayout.LayoutParams(dimi_dialog_min_width, LayoutParams.WRAP_CONTENT) ; 
 				title_param.topMargin = (dimi_title_vertical_margin * 2);
@@ -134,13 +137,15 @@ public final class CrossAppAlertView
 				
 				//add msgview to contentview
 				TextView msgView = new TextView(context) ; 
+				msgView.setGravity(Gravity.CENTER);
 				msgView.setTextSize(TypedValue.COMPLEX_UNIT_PX,txt_size_msg);
-				msgView.setText(alertView.message);
 				msgView.setTextColor(Color.parseColor("#000000")); 
+				msgView.setText(alertView.message);
 				
 				
 				LinearLayout.LayoutParams msg_param = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT) ; 
 				msg_param.gravity = Gravity.CENTER_HORIZONTAL ; 
+				msg_param.topMargin = dimi_msg_vertical_margin;
 				msg_param.leftMargin= dimi_msg_horizental_margin ; 
 				msg_param.rightMargin = dimi_msg_horizental_margin ; 
 				container.addView(msgView,msg_param);	
@@ -158,16 +163,23 @@ public final class CrossAppAlertView
 				//add buttons 
 				LinearLayout buttons_container = new LinearLayout(context) ; 
 				buttons_container.setOrientation(alertView.bottonTitles.size() < 3 ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
-				for (int i = 0; i < alertView.bottonTitles.size(); i++) {
+				for (int i = 0; i < alertView.bottonTitles.size(); i++) 
+				{
 					final int position = i ; 
 					TextView textView = new TextView(context) ; 
 					textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,txt_size_msg);
-					textView.setGravity(Gravity.CENTER);
+					if (alertView.bottonTitles.size()<=2 || i==alertView.bottonTitles.size()-1)
+					{
+						textView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+					}
+					else
+					{
+						textView.setGravity(Gravity.CENTER);
+					}
 					textView.setText(alertView.bottonTitles.get(i));
 					textView.setClickable(true);
 					textView.setTextColor(Color.parseColor(btn_txt_color_hex));
 					LinearLayout.LayoutParams txt_params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, dimi_btn_hei) ; 
-					
 					
 					if (alertView.bottonTitles.size()==1) 
 					{
