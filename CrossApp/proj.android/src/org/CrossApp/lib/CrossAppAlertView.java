@@ -123,6 +123,7 @@ public final class CrossAppAlertView
 				titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, txt_size_title);
 				titleView.setSingleLine(true);
 				titleView.setText(alertView.titile);
+				titleView.setTextColor(Color.parseColor("#000000")); 
 				
 				LinearLayout.LayoutParams title_param = new LinearLayout.LayoutParams(dimi_dialog_min_width, LayoutParams.WRAP_CONTENT) ; 
 				title_param.topMargin = (dimi_title_vertical_margin * 2);
@@ -135,6 +136,7 @@ public final class CrossAppAlertView
 				TextView msgView = new TextView(context) ; 
 				msgView.setTextSize(TypedValue.COMPLEX_UNIT_PX,txt_size_msg);
 				msgView.setText(alertView.message);
+				msgView.setTextColor(Color.parseColor("#000000")); 
 				
 				
 				LinearLayout.LayoutParams msg_param = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT) ; 
@@ -155,7 +157,7 @@ public final class CrossAppAlertView
 				
 				//add buttons 
 				LinearLayout buttons_container = new LinearLayout(context) ; 
-				buttons_container.setOrientation(alertView.bottonTitles.size() <= 3 ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
+				buttons_container.setOrientation(alertView.bottonTitles.size() < 3 ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
 				for (int i = 0; i < alertView.bottonTitles.size(); i++) {
 					final int position = i ; 
 					TextView textView = new TextView(context) ; 
@@ -167,15 +169,17 @@ public final class CrossAppAlertView
 					LinearLayout.LayoutParams txt_params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, dimi_btn_hei) ; 
 					
 					
-					if (alertView.bottonTitles.size()==1) {
+					if (alertView.bottonTitles.size()==1) 
+					{
 						textView.setBackgroundResource(R.drawable.selector_crossapp_alert_02);
-					}else if (alertView.bottonTitles.size()==2) {
+					}
+					else if (alertView.bottonTitles.size()==2) 
+					{
 						txt_params.weight = 1 ;
 						textView.setBackgroundResource(i == 0 ? R.drawable.selector_crossapp_alert_03: R.drawable.selector_crossapp_alert_04);
-					}else if (alertView.bottonTitles.size()==3) {
-						textView.setBackgroundResource(i==0 ? R.drawable.selector_crossapp_alert_03 : (i== 3 ? R.drawable.selector_crossapp_alert_04 : R.drawable.selector_crossapp_alert_01));
-						txt_params.weight = 1 ;
-					}else {
+					}
+					else
+					{
 						textView.setBackgroundResource((i==alertView.bottonTitles.size()-1) ? R.drawable.selector_crossapp_alert_02 : R.drawable.selector_crossapp_alert_01);
 					}
 					buttons_container.addView(textView, txt_params);
@@ -185,16 +189,10 @@ public final class CrossAppAlertView
 						public void onClick(View v) {
 							dialog.dismiss();  
 							dict.remove(key) ; 
-							context.runOnGLThread(new Runnable() 
-					    	{
-					            @Override
-					            public void run()
-					            {
-					            	CrossAppAlertView.onClick(position, key);
-					            }
-					        });
+							CrossAppAlertView.onClick(position, key);
 						}
 					});
+					
 				}
 				scrollView.addView(buttons_container); 
 				
