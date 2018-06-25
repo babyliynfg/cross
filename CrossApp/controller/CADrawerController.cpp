@@ -145,11 +145,11 @@ void CADrawerController::viewDidAppear()
 {
     if (m_bShow)
     {
-        m_pLeftViewController->viewDidAppear();
+        m_pLeftViewController->setViewVisibleTrue();
     }
     else
     {
-        m_pRightViewController->viewDidAppear();
+        m_pRightViewController->setViewVisibleTrue();
     }
 }
 
@@ -157,11 +157,11 @@ void CADrawerController::viewDidDisappear()
 {
     if (m_bShow)
     {
-        m_pLeftViewController->viewDidDisappear();
+        m_pLeftViewController->setViewVisibleFalse();
     }
     else
     {
-        m_pRightViewController->viewDidDisappear();
+        m_pRightViewController->setViewVisibleFalse();
     }
 }
 
@@ -286,16 +286,16 @@ void CADrawerController::begin()
 void CADrawerController::showEnded()
 {
     m_pContainer[0]->setTouchEnabled(true);
-    m_pRightViewController->viewDidDisappear();
-    m_pLeftViewController->viewDidAppear();
+    m_pRightViewController->setViewVisibleFalse();
+    m_pLeftViewController->setViewVisibleTrue();
 }
 
 void CADrawerController::hideEnded()
 {
     m_pContainer[0]->setVisible(false);
     m_pContainer[1]->setTouchEnabled(true);
-    m_pLeftViewController->viewDidDisappear();
-    m_pRightViewController->viewDidAppear();
+    m_pLeftViewController->setViewVisibleFalse();
+    m_pRightViewController->setViewVisibleTrue();
 }
 
 void CADrawerController::updateViewFrame()

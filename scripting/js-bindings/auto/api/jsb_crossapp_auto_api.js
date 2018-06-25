@@ -6689,12 +6689,12 @@ caview
 /**
  * @method createWithFrame
  * @param {rect_object} arg0
- * @param {bool} arg1
+ * @param {int} arg1
  * @return {ca.CANavigationBar}
  */
 createWithFrame : function (
 drect, 
-bool 
+int 
 )
 {
     return ca.CANavigationBar;
@@ -6703,12 +6703,12 @@ bool
 /**
  * @method createWithLayout
  * @param {layout_object} arg0
- * @param {bool} arg1
+ * @param {int} arg1
  * @return {ca.CANavigationBar}
  */
 createWithLayout : function (
 dlayout, 
-bool 
+int 
 )
 {
     return ca.CANavigationBar;
@@ -6717,12 +6717,12 @@ bool
 /**
  * @method createWithCenter
  * @param {rect_object} arg0
- * @param {bool} arg1
+ * @param {int} arg1
  * @return {ca.CANavigationBar}
  */
 createWithCenter : function (
 drect, 
-bool 
+int 
 )
 {
     return ca.CANavigationBar;
@@ -7003,12 +7003,14 @@ onEnterTransitionDidFinish : function (
 /**
  * @method createWithFrame
  * @param {rect_object} arg0
- * @param {bool} arg1
+ * @param {int} arg1
+ * @param {ca.CATabBar::VerticalAlignment} arg2
  * @return {ca.CATabBar}
  */
 createWithFrame : function (
 drect, 
-bool 
+int, 
+verticalalignment 
 )
 {
     return ca.CATabBar;
@@ -7017,12 +7019,14 @@ bool
 /**
  * @method createWithLayout
  * @param {layout_object} arg0
- * @param {bool} arg1
+ * @param {int} arg1
+ * @param {ca.CATabBar::VerticalAlignment} arg2
  * @return {ca.CATabBar}
  */
 createWithLayout : function (
 dlayout, 
-bool 
+int, 
+verticalalignment 
 )
 {
     return ca.CATabBar;
@@ -7031,12 +7035,14 @@ bool
 /**
  * @method createWithCenter
  * @param {rect_object} arg0
- * @param {bool} arg1
+ * @param {int} arg1
+ * @param {ca.CATabBar::VerticalAlignment} arg2
  * @return {ca.CATabBar}
  */
 createWithCenter : function (
 drect, 
-bool 
+int, 
+verticalalignment 
 )
 {
     return ca.CATabBar;
@@ -8245,6 +8251,14 @@ str
 },
 
 /**
+ * @method parser
+ */
+parser : function (
+)
+{
+},
+
+/**
  * @method isViewRunning
  * @return {bool}
  */
@@ -8270,6 +8284,14 @@ viewDidLoad : function (
 presentModalViewController : function (
 caviewcontroller, 
 bool 
+)
+{
+},
+
+/**
+ * @method setViewVisibleTrue
+ */
+setViewVisibleTrue : function (
 )
 {
 },
@@ -8303,9 +8325,25 @@ removeViewFromSuperview : function (
 },
 
 /**
+ * @method viewOnSizeTransitionDidChanged
+ */
+viewOnSizeTransitionDidChanged : function (
+)
+{
+},
+
+/**
  * @method viewDidDisappear
  */
 viewDidDisappear : function (
+)
+{
+},
+
+/**
+ * @method viewOnExitTransitionDidStart
+ */
+viewOnExitTransitionDidStart : function (
 )
 {
 },
@@ -8331,6 +8369,14 @@ canavigationbaritem
 },
 
 /**
+ * @method setViewVisibleFalse
+ */
+setViewVisibleFalse : function (
+)
+{
+},
+
+/**
  * @method getTitle
  * @return {String}
  */
@@ -8344,6 +8390,24 @@ getTitle : function (
  * @method viewDidAppear
  */
 viewDidAppear : function (
+)
+{
+},
+
+/**
+ * @method viewOnEnterTransitionDidFinish
+ */
+viewOnEnterTransitionDidFinish : function (
+)
+{
+},
+
+/**
+ * @method setView
+ * @param {ca.CAView} arg0
+ */
+setView : function (
+caview 
 )
 {
 },
@@ -9109,6 +9173,16 @@ bool
 },
 
 /**
+ * @method getModalViewController
+ * @return {ca.CAViewController}
+ */
+getModalViewController : function (
+)
+{
+    return ca.CAViewController;
+},
+
+/**
  * @method getRootViewController
  * @return {ca.CAViewController}
  */
@@ -9119,13 +9193,21 @@ getRootViewController : function (
 },
 
 /**
- * @method getModalViewController
- * @return {ca.CAViewController}
+ * @method onExitTransitionDidStart
  */
-getModalViewController : function (
+onExitTransitionDidStart : function (
 )
 {
-    return ca.CAViewController;
+},
+
+/**
+ * @method getDefaultCamera
+ * @return {ca.CACamera}
+ */
+getDefaultCamera : function (
+)
+{
+    return ca.CACamera;
 },
 
 /**
@@ -9139,13 +9221,11 @@ caviewcontroller
 },
 
 /**
- * @method getDefaultCamera
- * @return {ca.CACamera}
+ * @method onEnterTransitionDidFinish
  */
-getDefaultCamera : function (
+onEnterTransitionDidFinish : function (
 )
 {
-    return ca.CACamera;
 },
 
 /**
@@ -11435,6 +11515,54 @@ touchCancelled : function (
  * @constructor
  */
 CATouchController : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAKeypadDispatcher
+ */
+ca.CAKeypadDispatcher = {
+
+/**
+ * @method onBackClicked
+ * @param {function} arg0
+ */
+onBackClicked : function (
+func 
+)
+{
+},
+
+/**
+ * @method onMenuClicked
+ * @param {function} arg0
+ */
+onMenuClicked : function (
+func 
+)
+{
+},
+
+/**
+ * @method dispatchKeypadMSG
+ * @param {ca.CAKeypadDispatcher::KeypadMSGType} arg0
+ * @return {bool}
+ */
+dispatchKeypadMSG : function (
+keypadmsgtype 
+)
+{
+    return false;
+},
+
+/**
+ * @method CAKeypadDispatcher
+ * @constructor
+ */
+CAKeypadDispatcher : function (
 )
 {
 },
@@ -19866,6 +19994,238 @@ cgsprite
  * @constructor
  */
 CGProgressTimer : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Animation
+ */
+ca.Animation = {
+
+/**
+ * @method getLoops
+ * @return {unsigned int}
+ */
+getLoops : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addSpriteFrame
+ * @param {ca.CGSpriteFrame} arg0
+ */
+addSpriteFrame : function (
+cgspriteframe 
+)
+{
+},
+
+/**
+ * @method setRestoreOriginalFrame
+ * @param {bool} arg0
+ */
+setRestoreOriginalFrame : function (
+bool 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {ca.Animation}
+ */
+clone : function (
+)
+{
+    return ca.Animation;
+},
+
+/**
+ * @method getDuration
+ * @return {float}
+ */
+getDuration : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithAnimationFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {bool}
+ */
+initWithAnimationFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method addSpriteFrameWithImage
+ * @param {ca.CAImage} arg0
+ * @param {rect_object} arg1
+ */
+addSpriteFrameWithImage : function (
+caimage, 
+drect 
+)
+{
+},
+
+/**
+ * @method setFrames
+ * @param {Array} arg0
+ */
+setFrames : function (
+array 
+)
+{
+},
+
+/**
+ * @method getFrames
+ * @return {Array}
+ */
+getFrames : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setLoops
+ * @param {unsigned int} arg0
+ */
+setLoops : function (
+int 
+)
+{
+},
+
+/**
+ * @method setDelayPerUnit
+ * @param {float} arg0
+ */
+setDelayPerUnit : function (
+float 
+)
+{
+},
+
+/**
+ * @method addSpriteFrameWithFile
+ * @param {String} arg0
+ */
+addSpriteFrameWithFile : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTotalDelayUnits
+ * @return {float}
+ */
+getTotalDelayUnits : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDelayPerUnit
+ * @return {float}
+ */
+getDelayPerUnit : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithSpriteFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {bool}
+ */
+initWithSpriteFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method getRestoreOriginalFrame
+ * @return {bool}
+ */
+getRestoreOriginalFrame : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {Array} array
+* @param {float} float
+* @param {unsigned int} int
+* @return {ca.Animation|ca.Animation}
+*/
+create : function(
+array,
+float,
+int 
+)
+{
+    return ca.Animation;
+},
+
+/**
+ * @method createWithSpriteFrames
+ * @param {Array} arg0
+ * @param {float} arg1
+ * @param {unsigned int} arg2
+ * @return {ca.Animation}
+ */
+createWithSpriteFrames : function (
+array, 
+float, 
+int 
+)
+{
+    return ca.Animation;
+},
+
+/**
+ * @method Animation
+ * @constructor
+ */
+Animation : function (
 )
 {
 },

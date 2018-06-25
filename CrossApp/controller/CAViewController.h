@@ -58,6 +58,8 @@ public:
     
     CAView* getView();
     
+    void setView(CAView* view);
+    
     CAView* getViewWithID(const std::string& tag);
 
 public:
@@ -70,21 +72,13 @@ public:
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
-    friend class CATabBarController;
-    
-    friend class CANavigationController;
-    
-    friend class CADrawerController;
-    
-    friend class CAWindow;
-    
     virtual void viewDidLoad() {};
     
     virtual void viewDidUnload() {};
     
-    virtual void viewDidAppear();
+    virtual void viewDidAppear(){};
     
-    virtual void viewDidDisappear();
+    virtual void viewDidDisappear(){};
     
     virtual void viewSizeDidChanged() {};
     
@@ -96,7 +90,7 @@ public:
     
     virtual void removeViewFromSuperview();
     
-private:
+public:
     
     void viewOnEnterTransitionDidFinish();
     
@@ -104,7 +98,19 @@ private:
     
     void viewOnSizeTransitionDidChanged();
     
+    virtual void setViewVisibleTrue();
+    
+    virtual void setViewVisibleFalse();
+    
     void parser();
+    
+    friend class CATabBarController;
+    
+    friend class CANavigationController;
+    
+    friend class CADrawerController;
+    
+    friend class CAWindow;
     
 private:
     

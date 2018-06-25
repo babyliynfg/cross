@@ -105,7 +105,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
     
     m_pModalViewController->addViewFromSuperview(this);
     m_pModalViewController->getView()->setZOrder(CAWindowZOrderCenter);
-    m_pModalViewController->viewDidAppear();
+    m_pModalViewController->setViewVisibleTrue();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     if (animated)
@@ -124,7 +124,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         {
             if (m_pRootViewController)
             {
-                m_pRootViewController->viewDidDisappear();
+                m_pRootViewController->setViewVisibleFalse();
             }
             CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
         });
@@ -135,7 +135,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
     {
         if (m_pRootViewController)
         {
-            m_pRootViewController->viewDidDisappear();
+            m_pRootViewController->setViewVisibleFalse();
         }
         CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
     }
@@ -147,7 +147,7 @@ void CAWindow::dismissModalViewController(bool animated)
     
     if (m_pRootViewController)
     {
-        m_pRootViewController->viewDidAppear();
+        m_pRootViewController->setViewVisibleTrue();
     }
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
@@ -161,7 +161,7 @@ void CAWindow::dismissModalViewController(bool animated)
         CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
         CAViewAnimation::setAnimationDidStopSelector([&]()
         {
-            m_pModalViewController->viewDidDisappear();
+            m_pModalViewController->setViewVisibleFalse();
             m_pModalViewController->removeViewFromSuperview();
             CC_SAFE_RELEASE_NULL(m_pModalViewController);
             CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
@@ -174,7 +174,7 @@ void CAWindow::dismissModalViewController(bool animated)
     }
     else
     {
-        m_pModalViewController->viewDidDisappear();
+        m_pModalViewController->setViewVisibleFalse();
         m_pModalViewController->removeViewFromSuperview();
         CC_SAFE_RELEASE_NULL(m_pModalViewController);
         CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();

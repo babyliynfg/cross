@@ -1010,17 +1010,24 @@ bool js_crossapp_CAViewController_keyBackClicked(JSContext *cx, uint32_t argc, j
 bool js_crossapp_CAViewController_setTabBarItem(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getViewWithID(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_setTitle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewController_parser(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_isViewRunning(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_viewDidLoad(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_presentModalViewController(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewController_setViewVisibleTrue(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getNavigationBarItem(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_removeViewFromSuperview(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewController_viewOnSizeTransitionDidChanged(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_viewDidDisappear(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewController_viewOnExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getNibName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_setNavigationBarItem(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewController_setViewVisibleFalse(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getTitle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_viewDidAppear(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewController_viewOnEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewController_setView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_addViewFromSuperview(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_viewSizeDidChanged(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getNavigationController(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1117,10 +1124,12 @@ bool js_crossapp_CAWindow_presentModalViewController(JSContext *cx, uint32_t arg
 bool js_crossapp_CAWindow_setCameraOrderDirty(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWindow_render(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWindow_dismissModalViewController(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAWindow_getRootViewController(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWindow_getModalViewController(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAWindow_setRootViewController(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAWindow_getRootViewController(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAWindow_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWindow_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAWindow_setRootViewController(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAWindow_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWindow_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAWindow_CAWindow(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -1414,6 +1423,18 @@ bool js_crossapp_CATouchController_getTouchID(JSContext *cx, uint32_t argc, jsva
 bool js_crossapp_CATouchController_setTouch(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATouchController_touchCancelled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATouchController_CATouchController(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CAKeypadDispatcher_class;
+extern JSObject *jsb_CrossApp_CAKeypadDispatcher_prototype;
+
+bool js_crossapp_CAKeypadDispatcher_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAKeypadDispatcher_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAKeypadDispatcher(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAKeypadDispatcher_onBackClicked(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAKeypadDispatcher_onMenuClicked(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAKeypadDispatcher_dispatchKeypadMSG(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAKeypadDispatcher_CAKeypadDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAGif_class;
 extern JSObject *jsb_CrossApp_CAGif_prototype;
@@ -2492,6 +2513,34 @@ bool js_crossapp_CGProgressTimer_setPercentage(JSContext *cx, uint32_t argc, jsv
 bool js_crossapp_CGProgressTimer_setType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGProgressTimer_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CGProgressTimer_CGProgressTimer(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_Animation_class;
+extern JSObject *jsb_CrossApp_Animation_prototype;
+
+bool js_crossapp_Animation_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_Animation_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_Animation(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_Animation_getLoops(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_addSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_setRestoreOriginalFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_clone(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_initWithAnimationFrames(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_addSpriteFrameWithImage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_setFrames(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_getFrames(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_setLoops(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_setDelayPerUnit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_addSpriteFrameWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_getTotalDelayUnits(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_getDelayPerUnit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_initWithSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_getRestoreOriginalFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_createWithSpriteFrames(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Animation_Animation(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_AnimationCache_class;
 extern JSObject *jsb_CrossApp_AnimationCache_prototype;

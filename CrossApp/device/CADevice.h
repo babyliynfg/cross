@@ -7,7 +7,7 @@
 #include "basics/CAValue.h"
 NS_CC_BEGIN
 
-class CADevice
+class CC_DLL CADevice
 {
 public:
     
