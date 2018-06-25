@@ -1,4 +1,4 @@
-ca.ENGINE_VERSION = "CrossApp-JS v2.1.0";
+ca.ENGINE_VERSION = "CrossApp-JS v2.1.1";
 
 ca.LANGUAGE_ENGLISH    = 0;
 ca.LANGUAGE_CHINESE    = 1;
@@ -105,7 +105,6 @@ ca.CABlueToothType.CABLUETOOTHCLOSE = 1;
 ca.CABlueToothType.CABLUETOOTHDISCOVERY = 3 ;
 ca.CABlueToothType.CABLUETOOTHCANCELDISCOVERY = 4;
 
-ca.CADevice = {};
 ca.CADevice.NetWorkData = {};
 ca.CADevice.NetWorkData.Wifi= 0;
 ca.CADevice.NetWorkData.ReachableViaWWAN = 1;
@@ -320,6 +319,12 @@ ca.CAAVPlayer.PlaybackLikelyToKeepUp = "PlaybackLikelyToKeepUp";
 ca.CAAVPlayer.PlayStatePause = "PlayStatePause";
 ca.CAAVPlayer.PlayStatePlaying = "PlayStatePlaying";
 ca.CAAVPlayer.PlayStatePlayback = "PlayStatePlayback";
+
+ca.CAImagePickerController.SourceType = {};
+ca.CAImagePickerController.SourceType.PhotoLibrary = 0;
+ca.CAImagePickerController.SourceType.CameraDeviceRear = 1;
+ca.CAImagePickerController.SourceType.CameraDeviceFront = 2;
+ca.CAImagePickerController.SourceType.SavedPhotosAlbum = 2;
 
 ca.NetworkStatus = {};
 ca.NetworkStatus.NotReachable     = 0,
