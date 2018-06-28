@@ -105,7 +105,6 @@ ca.CABlueToothType.CABLUETOOTHCLOSE = 1;
 ca.CABlueToothType.CABLUETOOTHDISCOVERY = 3 ;
 ca.CABlueToothType.CABLUETOOTHCANCELDISCOVERY = 4;
 
-ca.CADevice = {};
 ca.CADevice.NetWorkData = {};
 ca.CADevice.NetWorkData.Wifi= 0;
 ca.CADevice.NetWorkData.ReachableViaWWAN = 1;

@@ -978,6 +978,9 @@ void CANavigationController::homingViewControllerFinish()
     CAView* lastContainer = m_pContainers.at(index);
     lastContainer->setVisible(false);
     
+    CAViewController* lastViewController = m_pViewControllers.at(index);
+    lastViewController->setViewVisibleFalse();
+    
     m_pContainers.back()->setLayout(DLayoutFill);
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
@@ -1147,7 +1150,7 @@ bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     }
     
 
-    m_bTouchBeganRange = pTouch->getLocation().x <= 80 ? true : false;
+    m_bTouchBeganRange = pTouch->getLocation().x <= 120 ? true : false;
     
     m_bPopViewController = false;
     return true;
@@ -1165,6 +1168,10 @@ void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     }
     showContainer->setVisible(true);
     showContainer->setTouchEnabled(false);
+    
+    size_t index = m_pViewControllers.size() - 2;
+    CAViewController* showViewController = m_pViewControllers.at(index);
+    showViewController->setViewVisibleTrue();
     
     CAView* backContainer = m_pContainers.back();
     
@@ -1202,8 +1209,6 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_bPopViewController)
     {
-        lastViewController->setViewVisibleTrue();
-        
         CAViewAnimation::beginAnimations("navigation_animation");
         CAViewAnimation::setAnimationDuration(0.2f);
         CAViewAnimation::setAnimationDelay(0.02f);
