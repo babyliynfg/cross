@@ -130,6 +130,10 @@ USING_NS_CC;
 
 - (void)loadHTMLString:(const std::string &)string baseURL:(const std::string &)baseURL
 {
+    if (!self.uiWebView)
+    {
+        [self setupWebView];
+    }
     [self.uiWebView loadHTMLString:@(string.c_str()) baseURL:[NSURL URLWithString:@(baseURL.c_str())]];
 }
 
