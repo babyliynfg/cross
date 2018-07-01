@@ -199,9 +199,16 @@ public final class CrossAppAlertView
 					textView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							dialog.dismiss();  
-							dict.remove(key) ; 
-							CrossAppAlertView.onClick(position, key);
+							dialog.dismiss();
+							context.runOnGLThread(new Runnable() 
+                        	{
+                                @Override
+                                public void run()
+                                {
+                                	dict.remove(key);
+        							CrossAppAlertView.onClick(position, key);
+                                }
+                            });
 						}
 					});
 					
