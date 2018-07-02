@@ -747,7 +747,7 @@ void CAApplication::restartApplication()
     std::vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
 
     reset();
-    
+    m_pKeypadDispatcher = new CAKeypadDispatcher();
     // RenderState need to be reinitialized
     RenderState::initialize();
     
@@ -777,7 +777,6 @@ void CAApplication::restartApplication()
 #endif
     
     m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
-    m_pKeypadDispatcher = new CAKeypadDispatcher();
 }
 
 void CAApplication::pause(void)
