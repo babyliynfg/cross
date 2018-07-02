@@ -318,7 +318,7 @@ int get_top_clearance(CAView* view)
         }
         else if (winSize.equals(DSize(1624, 750)))
         {
-            clearance = 0;
+            clearance = 40;
         }
         else
         {
@@ -1166,12 +1166,15 @@ void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     {
         showContainer->setFrame(this->getView()->getBounds());
     }
-    showContainer->setVisible(true);
-    showContainer->setTouchEnabled(false);
-    
-    size_t index = m_pViewControllers.size() - 2;
-    CAViewController* showViewController = m_pViewControllers.at(index);
-    showViewController->setViewVisibleTrue();
+    if (showContainer->isVisible() == false)
+    {
+        showContainer->setVisible(true);
+        showContainer->setTouchEnabled(false);
+        
+        size_t index = m_pViewControllers.size() - 2;
+        CAViewController* showViewController = m_pViewControllers.at(index);
+        showViewController->setViewVisibleTrue();
+    }
     
     CAView* backContainer = m_pContainers.back();
     
