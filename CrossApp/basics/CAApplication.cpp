@@ -137,7 +137,7 @@ CAApplication::~CAApplication(void)
     CC_SAFE_RELEASE(m_pRootWindow);
     CC_SAFE_RELEASE(m_pNotificationView);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
-    CC_SAFE_RELEASE(m_pKeypadDispatcher);
+    CC_SAFE_RELEASE_NULL(m_pKeypadDispatcher);
     CC_SAFE_RELEASE(m_pThemeManager);
 	CC_SAFE_DELETE(m_defaultFBO);
 	CC_SAFE_RELEASE_NULL(m_pActionManager);
@@ -692,6 +692,7 @@ void CAApplication::reset()
         m_pRootWindow = nullptr;
 
     }
+    
     // cleanup scheduler
     getScheduler()->unscheduleAll();
     
@@ -705,6 +706,7 @@ void CAApplication::reset()
     
     // CrossApp specific data structures
     CAUserDefault::destroyInstance();
+    CC_SAFE_RELEASE_NULL(m_pKeypadDispatcher);
 //    CC_SAFE_RELEASE_NULL(m_pNotificationCenter);
     
     ccDrawFree();
@@ -775,6 +777,7 @@ void CAApplication::restartApplication()
 #endif
     
     m_pobOpenGLView->setTouchDelegate(m_pTouchDispatcher);
+    m_pKeypadDispatcher = new CAKeypadDispatcher();
 }
 
 void CAApplication::pause(void)
