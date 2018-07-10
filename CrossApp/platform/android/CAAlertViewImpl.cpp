@@ -2,7 +2,7 @@
 
 #include "../CAAlertViewImpl.h"
 #include "basics/CAApplication.h"
-#include "dispatcher/CATouchDispatcher.h"
+#include "view/CAWindow.h"
 #include <map>
 #include <string>
 #include <android/log.h>
@@ -13,6 +13,7 @@
 NS_CC_BEGIN
 
 static std::map<int, std::function<void(int)> > s_map;
+static std::map<int, CAView*> s_mask_map;
 
 #define CLASS_NAME "org/CrossApp/lib/CrossAppAlertView"
 
@@ -68,6 +69,8 @@ extern "C"
                 callback(index);
             }
             s_map.erase(key);
+            s_mask_map.at(key)->removeFromSuperview();
+            s_mask_map.erase(key);
         }
         
     }
@@ -78,12 +81,12 @@ extern "C"
 
 void __show_alertView(const std::string& title, const std::string& message, const std::vector<std::string>& buttonTitles, const std::function<void(int)>& callback)
 {
-    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
-    
-    CAApplication::getApplication()->getTouchDispatcher()->performSelector(callfunc_selector(CATouchDispatcher::setDispatchEventsTrue), 0.1f);
-    
     static int key = 0;
     
+    auto mask = new CAView();
+    CAApplication::getApplication()->getRootWindow()->insertSubview(mask, 0xffffffff);
+    mask->release();
+    s_mask_map[key] = mask;
     s_map[key] = callback;
     
     createAlertJNI(title.c_str(), message.c_str(), key);

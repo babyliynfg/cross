@@ -188,7 +188,7 @@ public:
      */
     void removeScrollRunningResponder(CAResponder* var);
     
-protected:
+public:
 
     CC_SYNTHESIZE_RETAIN(CAResponder*, m_pFirstResponder, FirstResponder);
     

@@ -527,7 +527,6 @@ void CATouchDispatcher::setDispatchEvents(bool dispatchEvents)
     if (dispatchEvents)
     {
         --m_iDispatchEvents;
-        m_iDispatchEvents = MAX(m_iDispatchEvents, 0);
     }
     else
     {

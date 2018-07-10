@@ -93,11 +93,13 @@ public final class CrossAppAlertView
 	
 	private static native void onClick(int index, int key);
 	
-	public static void show(final int key){
+	public static void show(final int key)
+	{
+		final AlertView alertView =  dict.get(key);
 		context.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				AlertView alertView =  dict.get(key) ; 
+				
 				final Dialog dialog = new Dialog(context) ; 
 				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 				dialog.getWindow().getDecorView().setBackgroundColor(Color.TRANSPARENT);
@@ -158,7 +160,7 @@ public final class CrossAppAlertView
 				FrameLayout.LayoutParams scroll_param = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT) ; 
 				scroll_param.topMargin = dimi_title_vertical_margin * 2 ; 
 				scroll_param.gravity = Gravity.CENTER_HORIZONTAL ; 
-				rConerLayout.addView(scrollView,scroll_param);	
+				rConerLayout.addView(scrollView,scroll_param);
 				
 				//add buttons 
 				LinearLayout buttons_container = new LinearLayout(context) ; 
@@ -198,7 +200,8 @@ public final class CrossAppAlertView
 					
 					textView.setOnClickListener(new View.OnClickListener() {
 						@Override
-						public void onClick(View v) {
+						public void onClick(View v)
+						{
 							dialog.dismiss();
 							context.runOnGLThread(new Runnable() 
                         	{
