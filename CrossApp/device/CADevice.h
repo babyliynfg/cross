@@ -55,7 +55,7 @@ public:
     
     static float getBatteryLevel();
         
-    static void sendLocalNotification(const char* title, const char* content, int time);
+    static void sendLocalNotification(const char* title, const char* content, int leftMessage);
         
     static void openUrl(const std::string &url);
         

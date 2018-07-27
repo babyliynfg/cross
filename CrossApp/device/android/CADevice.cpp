@@ -130,7 +130,7 @@ extern "C"
         }
     }
     
-    void JAVAsendLocalNotification(const char* title, const char* content, int time)
+    void JAVAsendLocalNotification(const char* title, const char* content, int leftMessage)
     {
         JniMethodInfo jmi;
         if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "sendLocalNotification" , "(Ljava/lang/String;Ljava/lang/String;I)V"))
@@ -215,9 +215,9 @@ float CADevice::getBatteryLevel()
     return JAVAgetBattery();
 }
 
-void CADevice::sendLocalNotification(const char* title, const char* content,int time)
+void CADevice::sendLocalNotification(const char* title, const char* content, int leftMessage)
 {
-    JAVAsendLocalNotification(title,content,time);
+    JAVAsendLocalNotification(title, content, leftMessage);
 }
 
 void CADevice::openUrl(const std::string &url)

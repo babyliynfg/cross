@@ -44,7 +44,7 @@ public:
     CC_SYNTHESIZE_READONLY(CAView*, m_pContentView, ContentView);
     
 	CC_DEPRECATED_ATTRIBUTE void setBackgroundView(CAView *var);
-	CC_DEPRECATED_ATTRIBUTE CAView* getBackgroundView();
+    CAView* getBackgroundView();
 
 	void setBackgroundImage(CAImage* image, bool isScale9);
 

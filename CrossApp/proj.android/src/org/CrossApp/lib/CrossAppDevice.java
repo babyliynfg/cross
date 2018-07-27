@@ -347,21 +347,9 @@ public abstract class CrossAppDevice  extends Activity  {
         manager.notify(mIndex, notification); 	
 	}
 	
-	public static void sendLocalNotification(final String title,final String content,int time)
+	public static void sendLocalNotification(final String title,final String content,int leftMessage)
 	{
-		
-		TimerTask task = new TimerTask(){   
-
-		    public void run(){   
-		    	
-		    	showNotification(title, content);
-		    }   
-
-		};   
-
-		Timer timer = new Timer(); 
-		 
-		timer.schedule(task, (long)time*1000); 
+		showNotification(title, content);
 	}
 	
     public static boolean isGooglePhotosUri(Uri uri) {  

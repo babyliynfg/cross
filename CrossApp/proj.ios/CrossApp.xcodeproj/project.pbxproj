@@ -64,6 +64,7 @@
 		B0C3BD481ADE726B009BE71A /* CAClipboard.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0C3BD471ADE726B009BE71A /* CAClipboard.mm */; };
 		B0CA5A3B1A77A8B400BECD89 /* CAWebViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = B0CA5A391A77A8B400BECD89 /* CAWebViewImpl.h */; };
 		B0CA5A3C1A77A8B400BECD89 /* CAWebViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */; };
+		D60E2237210AB3B900CDBB44 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E2236210AB3B900CDBB44 /* UserNotifications.framework */; };
 		D644B38B1F19F59700E90A86 /* CAAVPlayerImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B38A1F19F59700E90A86 /* CAAVPlayerImpl.h */; };
 		D644B38E1F19F79D00E90A86 /* CACustomAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D644B38C1F19F79D00E90A86 /* CACustomAnimation.cpp */; };
 		D644B38F1F19F79D00E90A86 /* CACustomAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B38D1F19F79D00E90A86 /* CACustomAnimation.h */; };
@@ -496,6 +497,7 @@
 		B0CA5A3A1A77A8B400BECD89 /* CAWebViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAWebViewImpl.mm; sourceTree = "<group>"; };
 		B0D7FA7C1B21506B004B2B86 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../the_third_party/curl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
 		B0D7FA7D1B21506B004B2B86 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../the_third_party/curl/prebuilt/ios/libssl.a; sourceTree = "<group>"; };
+		D60E2236210AB3B900CDBB44 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		D644B38A1F19F59700E90A86 /* CAAVPlayerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerImpl.h; sourceTree = "<group>"; };
 		D644B38C1F19F79D00E90A86 /* CACustomAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACustomAnimation.cpp; sourceTree = "<group>"; };
 		D644B38D1F19F79D00E90A86 /* CACustomAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACustomAnimation.h; sourceTree = "<group>"; };
@@ -919,6 +921,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60E2237210AB3B900CDBB44 /* UserNotifications.framework in Frameworks */,
 				D644B3971F19FA1200E90A86 /* CoreMedia.framework in Frameworks */,
 				D644B3951F19FA0000E90A86 /* AVFoundation.framework in Frameworks */,
 				D6EB4B0A1F138B6100650417 /* AVKit.framework in Frameworks */,
@@ -958,6 +961,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D60E2236210AB3B900CDBB44 /* UserNotifications.framework */,
 				D644B3961F19FA1200E90A86 /* CoreMedia.framework */,
 				D644B3941F19FA0000E90A86 /* AVFoundation.framework */,
 				D6EB4B091F138B6100650417 /* AVKit.framework */,
@@ -1180,8 +1184,8 @@
 				D6ADC4721E56A72700750771 /* CAButton.h */,
 				D6ADC4731E56A72700750771 /* CAControl.cpp */,
 				D6ADC4741E56A72700750771 /* CAControl.h */,
-				D6ADC4751E56A72700750771 /* CAPageControl.cpp */,
 				D6ADC4761E56A72700750771 /* CAPageControl.h */,
+				D6ADC4751E56A72700750771 /* CAPageControl.cpp */,
 				D6ADC4771E56A72700750771 /* CAProgress.cpp */,
 				D6ADC4781E56A72700750771 /* CAProgress.h */,
 				D6ADC4791E56A72700750771 /* CASegmentedControl.cpp */,

@@ -16,6 +16,11 @@
 #import <MediaPlayer/MPMusicPlayerController.h>
 #import <MediaPlayer/MediaPlayer.h>
 
+#import "Availability.h"
+#import <UserNotifications/UserNotifications.h>
+#import <UserNotificationsUI/UserNotificationsUI.h>
+
+
 NS_CC_BEGIN
 
 const CAValueMap& CADevice::getSystemVersion()
@@ -110,42 +115,54 @@ float CADevice::getBatteryLevel()
     return [UIDevice currentDevice].batteryLevel;
 }
 
-void CADevice::sendLocalNotification(const char* title, const char* content,int time)
+void CADevice::sendLocalNotification(const char* title, const char* message, int leftMessage)
 {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+    float version = [UIDevice currentDevice].systemVersion.floatValue;
+    
+    if (version >= 10)
+    {
+        //第二步：新建通知内容对象
+        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+        //content.title = @"手持矿机";
+        content.subtitle = [NSString stringWithUTF8String:title];
+        content.body = [NSString stringWithUTF8String:message];
+        content.badge = @0;
+        UNNotificationSound *sound = [UNNotificationSound soundNamed:@"caodi.m4a"];
+        content.sound = sound;
         
-        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        //第三步：通知触发机制。（重复提醒，时间间隔要大于60s）
+        UNTimeIntervalNotificationTrigger *trigger1 = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
         
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        //第四步：创建UNNotificationRequest通知请求对象
+        NSString *requertIdentifier = @"RequestIdentifier";
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:requertIdentifier content:content trigger:trigger1];
         
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-        
+        //第五步：将通知加到通知中心
+        [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+            NSLog(@"Error:%@",error);
+            
+        }];
     }
     else
     {
-        
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
-        
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-        
-    }
-    
-    UILocalNotification *notification = [[[UILocalNotification alloc] init] autorelease];
-    NSDate *pushDate = [NSDate dateWithTimeIntervalSinceNow:time];
-    if (notification != nil)
-    {
-        notification.fireDate = pushDate;
-        notification.timeZone = [NSTimeZone defaultTimeZone];
-        notification.repeatInterval = kCFCalendarUnitDay;
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertTitle = [NSString stringWithCString:title encoding:NSUTF8StringEncoding];
-        notification.alertBody = [NSString stringWithCString:content encoding:NSUTF8StringEncoding];
-        notification.applicationIconBadgeNumber = 1;
-        NSDictionary *info = [NSDictionary dictionaryWithObject:@"name" forKey:@"key"];
-        notification.userInfo = info;
-        UIApplication *app = [UIApplication sharedApplication];
-        [app scheduleLocalNotification:notification];
-        
+        // 1.创建通知
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        // 2.设置通知的必选参数
+        // 设置通知显示的标题
+        localNotification.alertTitle = [NSString stringWithUTF8String:title];
+        // 设置通知显示的内容
+        localNotification.alertBody = [NSString stringWithUTF8String:message];
+        // 设置通知的发送时间,单位秒
+        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+        //解锁滑动时的事件
+        localNotification.alertAction = @"";
+        //收到通知时App icon的角标
+        localNotification.applicationIconBadgeNumber = leftMessage;
+        //推送是带的声音提醒，设置默认的字段为UILocalNotificationDefaultSoundName
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        // 3.发送通知(? : 根据项目需要使用)
+        // 方式二: 立即发送通知
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     }
 }
 

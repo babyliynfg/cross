@@ -117,11 +117,34 @@ public:
 //    std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
 //    
 //    std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
+    static bool SendRequest(const std::string &url,
+                            const std::map<std::string, std::string> parameters,
+                            const std::string &upload_file,
+                            const std::string &file_part_name,
+                            const std::string &proxy,
+                            const std::string &proxy_user_pwd,
+                            const std::string &ca_certificate_file,
+                            std::string *response_body,
+                            long *response_code,
+                            std::string *error_description);
+    
+    static bool MySendRequest( const std::string &upload_file);
+
 private:
     CAHttpClient(ssize_t thread_id);
     virtual ~CAHttpClient();
     bool init();
     
+    // Checks that the given list of parameters has only printable
+    // ASCII characters in the parameter name, and does not contain
+    // any quote (") characters.  Returns true if so.
+    static bool CheckParameters(const std::map<std::string, std::string> parameters);
+    
+    // No instances of this class should be created.
+    // Disallow all constructors, destructors, and operator=.
+    explicit CAHttpClient(const CAHttpClient &);
+    void operator=(const CAHttpClient &);
+
     /**
      * Init pthread mutex, semaphore, and create new thread for http requests
      * @return bool
