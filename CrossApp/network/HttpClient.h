@@ -127,8 +127,6 @@ public:
                             std::string *response_body,
                             long *response_code,
                             std::string *error_description);
-    
-    static bool MySendRequest( const std::string &upload_file);
 
 private:
     CAHttpClient(ssize_t thread_id);

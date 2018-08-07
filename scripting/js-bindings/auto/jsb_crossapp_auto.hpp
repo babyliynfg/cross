@@ -567,6 +567,7 @@ bool js_crossapp_CAApplication_setDefaultValues(JSContext *cx, uint32_t argc, js
 bool js_crossapp_CAApplication_setCrossAppCCLogNotification(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getStatusBarOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getNotificationCenter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAApplication_getCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getImageCache(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getDeltaTime(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setGLDefaultValues(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1513,11 +1514,12 @@ bool js_crossapp_CACell_setReuseIdentifier(JSContext *cx, uint32_t argc, jsval *
 bool js_crossapp_CACell_isAllowsSelected(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_isControlStateEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACell_setControlStateNormal(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_onHighlightedState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_setControlStateHighlighted(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_onRecovery(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_onDsabledState(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CACell_setControlStateNormal(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CACell_getBackgroundView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_getReuseIdentifier(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_getControlState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CACell_setControlStateEffect(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2197,6 +2199,7 @@ bool js_crossapp_CAHttpClient_getTimeoutForRead(JSContext *cx, uint32_t argc, js
 bool js_crossapp_CAHttpClient_getCookieFilename(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_destroyAllInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAHttpClient_SendRequest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAHttpClient_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CADownloadManager_class;

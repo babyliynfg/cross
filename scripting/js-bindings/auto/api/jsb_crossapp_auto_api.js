@@ -4652,6 +4652,16 @@ getNotificationCenter : function (
 },
 
 /**
+ * @method getCurrentLanguage
+ * @return {ca.LanguageType}
+ */
+getCurrentLanguage : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getImageCache
  * @return {ca.CAImageCache}
  */
@@ -12077,6 +12087,14 @@ bool
 },
 
 /**
+ * @method setControlStateNormal
+ */
+setControlStateNormal : function (
+)
+{
+},
+
+/**
  * @method onHighlightedState
  * @param {function} arg0
  */
@@ -12115,11 +12133,13 @@ func
 },
 
 /**
- * @method setControlStateNormal
+ * @method getBackgroundView
+ * @return {ca.CAView}
  */
-setControlStateNormal : function (
+getBackgroundView : function (
 )
 {
+    return ca.CAView;
 },
 
 /**
@@ -17572,6 +17592,48 @@ long
 destroyAllInstance : function (
 )
 {
+},
+
+/**
+ * @method SendRequest
+ * @param {String} arg0
+ * @param {map_object} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @param {String} arg6
+ * @param {String} arg7
+ * @param {long} arg8
+ * @param {String} arg9
+ * @return {bool}
+ */
+SendRequest : function (
+str, 
+map, 
+str, 
+str, 
+str, 
+str, 
+str, 
+str, 
+long, 
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method MySendRequest
+ * @param {String} arg0
+ * @return {bool}
+ */
+MySendRequest : function (
+str 
+)
+{
+    return false;
 },
 
 /**

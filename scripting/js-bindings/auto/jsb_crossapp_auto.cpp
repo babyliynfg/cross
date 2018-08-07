@@ -11901,6 +11901,25 @@ bool js_crossapp_CAApplication_getNotificationCenter(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_crossapp_CAApplication_getNotificationCenter : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAApplication_getCurrentLanguage(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAApplication* cobj = (CrossApp::CAApplication *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAApplication_getCurrentLanguage : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getCurrentLanguage();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAApplication_getCurrentLanguage : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CAApplication_getImageCache(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -13441,6 +13460,7 @@ void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global) 
         JS_FN("setCrossAppCCLogNotification", js_crossapp_CAApplication_setCrossAppCCLogNotification, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStatusBarOrientation", js_crossapp_CAApplication_getStatusBarOrientation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNotificationCenter", js_crossapp_CAApplication_getNotificationCenter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCurrentLanguage", js_crossapp_CAApplication_getCurrentLanguage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getImageCache", js_crossapp_CAApplication_getImageCache, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDeltaTime", js_crossapp_CAApplication_getDeltaTime, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setGLDefaultValues", js_crossapp_CAApplication_setGLDefaultValues, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -31936,6 +31956,23 @@ bool js_crossapp_CACell_setBackgroundImage(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CACell_setBackgroundImage : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
+bool js_crossapp_CACell_setControlStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateNormal : Invalid Native Object");
+    if (argc == 0) {
+        cobj->setControlStateNormal();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CACell_setControlStateNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CACell_onHighlightedState(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -32073,21 +32110,30 @@ bool js_crossapp_CACell_onDsabledState(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CACell_onDsabledState : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CACell_setControlStateNormal(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CACell_getBackgroundView(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CACell* cobj = (CrossApp::CACell *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_setControlStateNormal : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CACell_getBackgroundView : Invalid Native Object");
     if (argc == 0) {
-        cobj->setControlStateNormal();
-        args.rval().setUndefined();
+        CrossApp::CAView* ret = cobj->getBackgroundView();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CACell_setControlStateNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CACell_getBackgroundView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CACell_getReuseIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
@@ -32318,11 +32364,12 @@ void js_register_crossapp_CACell(JSContext *cx, JS::HandleObject global) {
         JS_FN("isAllowsSelected", js_crossapp_CACell_isAllowsSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isControlStateEffect", js_crossapp_CACell_isControlStateEffect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundImage", js_crossapp_CACell_setBackgroundImage, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setControlStateNormal", js_crossapp_CACell_setControlStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onHighlightedState", js_crossapp_CACell_onHighlightedState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setControlStateHighlighted", js_crossapp_CACell_setControlStateHighlighted, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onRecovery", js_crossapp_CACell_onRecovery, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDsabledState", js_crossapp_CACell_onDsabledState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setControlStateNormal", js_crossapp_CACell_setControlStateNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBackgroundView", js_crossapp_CACell_getBackgroundView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getReuseIdentifier", js_crossapp_CACell_getReuseIdentifier, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getControlState", js_crossapp_CACell_getControlState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setControlStateEffect", js_crossapp_CACell_setControlStateEffect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -47321,6 +47368,45 @@ bool js_crossapp_CAHttpClient_destroyAllInstance(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAHttpClient_destroyAllInstance : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CAHttpClient_SendRequest(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 10) {
+        std::string arg0;
+        std::map<std::string, std::string> arg1;
+        std::string arg2;
+        std::string arg3;
+        std::string arg4;
+        std::string arg5;
+        std::string arg6;
+        std::string* arg7 = nullptr;
+        long* arg8 = 0;
+        std::string* arg9 = nullptr;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_map_string_string(cx, args.get(1), &arg1);
+        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= jsval_to_std_string(cx, args.get(5), &arg5);
+        ok &= jsval_to_std_string(cx, args.get(6), &arg6);
+        #pragma warning NO CONVERSION TO NATIVE FOR std::string*
+		ok = false;
+        #pragma warning NO CONVERSION TO NATIVE FOR long*
+		ok = false;
+        #pragma warning NO CONVERSION TO NATIVE FOR std::string*
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAHttpClient_SendRequest : Error processing arguments");
+        bool ret = CrossApp::CAHttpClient::SendRequest(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAHttpClient_SendRequest : wrong number of arguments");
+    return false;
+}
+
 bool js_crossapp_CAHttpClient_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -47388,6 +47474,7 @@ void js_register_crossapp_CAHttpClient(JSContext *cx, JS::HandleObject global) {
     static JSFunctionSpec st_funcs[] = {
         JS_FN("destroyInstance", js_crossapp_CAHttpClient_destroyInstance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("destroyAllInstance", js_crossapp_CAHttpClient_destroyAllInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("SendRequest", js_crossapp_CAHttpClient_SendRequest, 10, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getInstance", js_crossapp_CAHttpClient_getInstance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
