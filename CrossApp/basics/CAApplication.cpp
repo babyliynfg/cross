@@ -968,6 +968,11 @@ unsigned long CAApplication::getCurrentNumberOfDraws()
     return ++m_uNumberOfDraws;
 }
 
+LanguageType CAApplication::getCurrentLanguage()
+{
+     return CCApplication::sharedApplication()->getCurrentLanguage();
+}
+
 /***************************************************
 * implementation of DisplayLinkDirector
 **************************************************/
@@ -1018,7 +1023,6 @@ void CCDisplayLinkDirector::mainLoop(void)
         
     }
 }
-
 
 void CCDisplayLinkDirector::stopAnimation(void)
 {

@@ -311,7 +311,7 @@ public abstract class CrossAppDevice  extends Activity  {
 
 	
 	@TargetApi(16)
-	public static void showNotification(String title,String content)
+	public static void showNotification(String title, String content)
 	{
 		
         NotificationManager manager = (NotificationManager) s_pContext.getSystemService(Context.NOTIFICATION_SERVICE); 
@@ -344,7 +344,7 @@ public abstract class CrossAppDevice  extends Activity  {
         
         ++mIndex;
 		
-        manager.notify(mIndex, notification); 	
+        manager.notify(mIndex, notification);
 	}
 	
 	public static void sendLocalNotification(final String title,final String content,int leftMessage)

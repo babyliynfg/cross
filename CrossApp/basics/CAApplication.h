@@ -209,6 +209,8 @@ public:
     
     CAMotionManager* getMotionManager() const { return m_pMotionManager; }
     
+    LanguageType getCurrentLanguage();
+    
     CAConsole* getConsole() const { return m_pConsole; }
 
     const std::thread::id& getCrossAppThreadId() const { return m_uCrossAppThreadID; }
