@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-#import "Reachability.h"
+#import "CrossAppReachability.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import <MediaPlayer/MPMusicPlayerController.h>
 #import <MediaPlayer/MediaPlayer.h>
@@ -53,7 +53,7 @@ float CADevice::getScreenBrightness()
 CADevice::NetWorkData CADevice::getNetWorkType()
 {
     CADevice::NetWorkData networkType = CADevice::NetWorkData::None;
-    Reachability *reach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
+    CrossAppReachability *reach = [CrossAppReachability reachabilityWithHostname:@"www.baidu.com"];
     switch ([reach currentReachabilityStatus])
     {
         case NotReachable:
@@ -71,7 +71,7 @@ CADevice::NetWorkData CADevice::getNetWorkType()
 
 bool CADevice::isNetWorkAvailble()
 {
-    Reachability *reach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
+    CrossAppReachability *reach = [CrossAppReachability reachabilityWithHostname:@"www.baidu.com"];
     return [reach isReachable];
 }
 

@@ -25,6 +25,8 @@
 		04EAA0271956CE3B00198A8E /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0221956CE3900198A8E /* ccTypes.h */; };
 		04EAA0281956CE3B00198A8E /* CrossApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0231956CE3A00198A8E /* CrossApp.h */; };
 		04EABB4A1956DE7100198A8E /* CrossApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EABB491956DE7100198A8E /* CrossApp.cpp */; };
+		0A38727121258DCB0052C2DB /* CrossAppReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A38726F21258DCB0052C2DB /* CrossAppReachability.h */; };
+		0A38727221258DCB0052C2DB /* CrossAppReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A38727021258DCB0052C2DB /* CrossAppReachability.m */; };
 		1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		1551A71B158F2ADE00E66CFE /* CACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A46E158F2ADE00E66CFE /* CACommon.h */; };
 		1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */; };
@@ -425,8 +427,6 @@
 		E0FCFF191E5C1F7700CCA191 /* CAImagePickerController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0FCFF181E5C1F7700CCA191 /* CAImagePickerController.mm */; };
 		E0FCFF231E5C23C400CCA191 /* CAAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = E0FCFF221E5C23BF00CCA191 /* CAAddressBook.h */; };
 		E0FCFF251E5C23E600CCA191 /* CAAddressBook.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0FCFF241E5C23E600CCA191 /* CAAddressBook.mm */; };
-		E0FCFF351E5C396D00CCA191 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = E0FCFF331E5C396D00CCA191 /* Reachability.h */; };
-		E0FCFF361E5C396D00CCA191 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FCFF341E5C396D00CCA191 /* Reachability.m */; };
 		E0FCFF401E5C4D6000CCA191 /* CADevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E0FCFF3F1E5C4D6000CCA191 /* CADevice.h */; };
 		E0FCFF421E5C4E2B00CCA191 /* CADevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0FCFF411E5C4E2B00CCA191 /* CADevice.mm */; };
 /* End PBXBuildFile section */
@@ -449,6 +449,8 @@
 		04EAA0221956CE3900198A8E /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		04EAA0231956CE3A00198A8E /* CrossApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossApp.h; sourceTree = "<group>"; };
 		04EABB491956DE7100198A8E /* CrossApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrossApp.cpp; sourceTree = "<group>"; };
+		0A38726F21258DCB0052C2DB /* CrossAppReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppReachability.h; sourceTree = "<group>"; };
+		0A38727021258DCB0052C2DB /* CrossAppReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossAppReachability.m; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libCrossApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCrossApp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1551A46E158F2ADE00E66CFE /* CACommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACommon.h; sourceTree = "<group>"; };
@@ -910,8 +912,6 @@
 		E0FCFF181E5C1F7700CCA191 /* CAImagePickerController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAImagePickerController.mm; sourceTree = "<group>"; };
 		E0FCFF221E5C23BF00CCA191 /* CAAddressBook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAAddressBook.h; sourceTree = "<group>"; };
 		E0FCFF241E5C23E600CCA191 /* CAAddressBook.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAddressBook.mm; sourceTree = "<group>"; };
-		E0FCFF331E5C396D00CCA191 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		E0FCFF341E5C396D00CCA191 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		E0FCFF3F1E5C4D6000CCA191 /* CADevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADevice.h; sourceTree = "<group>"; };
 		E0FCFF411E5C4E2B00CCA191 /* CADevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CADevice.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1739,12 +1739,12 @@
 		E0FCFEFF1E5BEEF400CCA191 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				0A38726F21258DCB0052C2DB /* CrossAppReachability.h */,
+				0A38727021258DCB0052C2DB /* CrossAppReachability.m */,
 				E0FCFF411E5C4E2B00CCA191 /* CADevice.mm */,
 				E0FCFF001E5BEEF400CCA191 /* CAMotionManager.mm */,
 				E0FCFF181E5C1F7700CCA191 /* CAImagePickerController.mm */,
 				E0FCFF241E5C23E600CCA191 /* CAAddressBook.mm */,
-				E0FCFF331E5C396D00CCA191 /* Reachability.h */,
-				E0FCFF341E5C396D00CCA191 /* Reachability.m */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -1779,7 +1779,6 @@
 				B07E81141C33B34800A39C95 /* CATextView.h in Headers */,
 				D6ADC6501E56A72800750771 /* CGActionEase.h in Headers */,
 				D6C7299E1EEE74740094B191 /* CADatePickerView.h in Headers */,
-				E0FCFF351E5C396D00CCA191 /* Reachability.h in Headers */,
 				D6ADC7001E56A72800750771 /* sweep.h in Headers */,
 				D6ADC6EC1E56A72800750771 /* json_tool.h in Headers */,
 				D6ADC6D21E56A72800750771 /* CAUIEditorParser.h in Headers */,
@@ -1861,6 +1860,7 @@
 				D6ADC6D61E56A72800750771 /* ccUtils.h in Headers */,
 				D6ADC5F61E56A72800750771 /* CACamera.h in Headers */,
 				D6CA51861E604C4D00317AB9 /* CACheckbox.h in Headers */,
+				0A38727121258DCB0052C2DB /* CrossAppReachability.h in Headers */,
 				1551A74C158F2ADE00E66CFE /* AccelerometerSimulation.h in Headers */,
 				D6ADC64A1E56A72800750771 /* CGAction.h in Headers */,
 				D6ADC6341E56A72800750771 /* CASwitch.h in Headers */,
@@ -2143,6 +2143,7 @@
 				D6ADC70F1E56A72800750771 /* ioapi.cpp in Sources */,
 				D6ADC6A21E56A72800750771 /* CCGLProgramStateCache.cpp in Sources */,
 				D6ADC6271E56A72800750771 /* CAControl.cpp in Sources */,
+				0A38727221258DCB0052C2DB /* CrossAppReachability.m in Sources */,
 				D6ADC68A1E56A72800750771 /* CAVertex.cpp in Sources */,
 				D644B39F1F1A02F600E90A86 /* CAAVPlayerImpl.mm in Sources */,
 				D6ADC5F11E56A72800750771 /* CAApplication.cpp in Sources */,
@@ -2216,7 +2217,6 @@
 				D6ADC6B21E56A72800750771 /* CCProperties.cpp in Sources */,
 				D6ADC60B1E56A72800750771 /* CAPointExtension.cpp in Sources */,
 				0460ED301957019600D13001 /* CCEGLView.mm in Sources */,
-				E0FCFF361E5C396D00CCA191 /* Reachability.m in Sources */,
 				D6ADC6331E56A72800750771 /* CASwitch.cpp in Sources */,
 				D6C729BF1EEE74740094B191 /* CAWaterfallView.cpp in Sources */,
 			);
