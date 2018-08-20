@@ -47406,7 +47406,6 @@ bool js_crossapp_CAHttpClient_SendRequest(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CAHttpClient_SendRequest : wrong number of arguments");
     return false;
 }
-
 bool js_crossapp_CAHttpClient_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -50982,6 +50981,89 @@ void js_register_crossapp_CAImagePickerController(JSContext *cx, JS::HandleObjec
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_CrossApp_CAImagePickerController_class;
         p->proto = jsb_CrossApp_CAImagePickerController_prototype;
+        p->parentProto = jsb_CrossApp_CAObject_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+JSClass  *jsb_CrossApp_CAAddressBook_class;
+JSObject *jsb_CrossApp_CAAddressBook_prototype;
+
+bool js_crossapp_CAAddressBook_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::CAAddressBook* ret = CrossApp::CAAddressBook::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAAddressBook>(cx, (CrossApp::CAAddressBook*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAAddressBook_create : wrong number of arguments");
+    return false;
+}
+
+extern JSObject *jsb_CrossApp_CAObject_prototype;
+
+void js_CrossApp_CAAddressBook_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CAAddressBook)", obj);
+}
+void js_register_crossapp_CAAddressBook(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CAAddressBook_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CAAddressBook_class->name = "CAAddressBook";
+    jsb_CrossApp_CAAddressBook_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CAAddressBook_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CAAddressBook_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CAAddressBook_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CAAddressBook_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CAAddressBook_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CAAddressBook_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CAAddressBook_class->finalize = js_CrossApp_CAAddressBook_finalize;
+    jsb_CrossApp_CAAddressBook_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_CAAddressBook_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CAAddressBook_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_CAObject_prototype),
+        jsb_CrossApp_CAAddressBook_class,
+        dummy_constructor<CrossApp::CAAddressBook>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CAAddressBook", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CAAddressBook> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CAAddressBook_class;
+        p->proto = jsb_CrossApp_CAAddressBook_prototype;
         p->parentProto = jsb_CrossApp_CAObject_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
@@ -70105,12 +70187,13 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_SkewTo(cx, ns);
     js_register_crossapp_SkewBy(cx, ns);
     js_register_crossapp_CAAVPlayer(cx, ns);
+    js_register_crossapp_EaseElasticInOut(cx, ns);
     js_register_crossapp_FadeTo(cx, ns);
     js_register_crossapp_FadeIn(cx, ns);
     js_register_crossapp_AnimationCache(cx, ns);
     js_register_crossapp_CAScheduler(cx, ns);
     js_register_crossapp_EaseSineInOut(cx, ns);
-    js_register_crossapp_EaseElasticInOut(cx, ns);
+    js_register_crossapp_CAAddressBook(cx, ns);
     js_register_crossapp_CAProgress(cx, ns);
     js_register_crossapp_CAAlertView(cx, ns);
     js_register_crossapp_Show(cx, ns);

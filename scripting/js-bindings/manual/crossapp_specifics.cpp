@@ -209,7 +209,8 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     
     tmpObj.set(jsb_CrossApp_CANotificationCenter_prototype);
     JS_DefineFunction(cx, tmpObj, "addObserver", js_crossapp_CANotificationCenter_addObserver, 3, JSPROP_READONLY | JSPROP_PERMANENT);
-    
+    tmpObj.set(jsb_CrossApp_CAAddressBook_prototype);
+    JS_DefineFunction(cx, tmpObj, "addObserver", js_crossapp_CAAddressBook_getAddressBook, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
 
 }
@@ -628,3 +629,78 @@ bool js_crossapp_CANotificationCenter_addObserver(JSContext *cx, uint32_t argc, 
     return false;
 
 }
+
+bool js_crossapp_CAAddressBook_getAddressBook(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAAddressBook* cobj = (CrossApp::CAAddressBook *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAAddressBook_getAddressBook : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (const std::vector<CrossApp::CAAddressBook::Data, std::allocator<CrossApp::CAAddressBook::Data> > &)> arg0;
+        do {
+            if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+            {
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+                auto lambda = [=, &ok](const std::vector<CAAddressBook::Data>& vec) -> void {
+                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                    jsval largv[1];
+                    CAValueVector largVec;
+                    for (auto& data : vec)
+                    {
+                        CAValueMap larg0;
+                        larg0["firstName"]     = CAValue(data.firstName);
+                        larg0["lastName"]     = CAValue(data.lastName);
+                        larg0["middleName"]     = CAValue(data.middleName);
+                        larg0["prefix"]     = CAValue(data.prefix);
+                        larg0["suffix"]     = CAValue(data.suffix);
+                        larg0["nickname"]     = CAValue(data.nickname);
+                        larg0["firstNamePhonetic"]     = CAValue(data.firstNamePhonetic);
+                        larg0["lastNamePhonetic"]     = CAValue(data.lastNamePhonetic);
+                        larg0["middleNamePhonetic"]     = CAValue(data.middleNamePhonetic);
+                        larg0["organization"]     = CAValue(data.organization);
+                        larg0["jobtitle"]     = CAValue(data.jobtitle);
+                        larg0["department"]     = CAValue(data.department);
+                        larg0["birthday"]     = CAValue(data.birthday);
+                        larg0["note"]     = CAValue(data.note);
+                        larg0["lastEdit"]     = CAValue(data.lastEdit);
+                        larg0["email"]     = CAValue(data.email);
+                        larg0["country"]     = CAValue(data.country);
+                        larg0["city"]     = CAValue(data.city);
+                        larg0["province"]     = CAValue(data.province);
+                        larg0["street"]     = CAValue(data.street);
+                        larg0["zip"]     = CAValue(data.zip);
+                        larg0["countrycode"]     = CAValue(data.countrycode);
+                        larg0["phoneNumber"]     = CAValue(data.phoneNumber);
+                        larg0["fullname"]     = CAValue(data.fullname);
+                        
+                    }
+                    
+                    largv[0] = cavaluevector_to_jsval(cx, largVec);
+                    JS::RootedValue rval(cx);
+                    bool succeed = func->invoke(1, &largv[0], &rval);
+                    if (!succeed && JS_IsExceptionPending(cx)) {
+                        JS_ReportPendingException(cx);
+                    }
+                };
+                arg0 = lambda;
+            }
+            else
+            {
+                arg0 = nullptr;
+            }
+        } while(0)
+            ;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAAddressBook_getAddressBook : Error processing arguments");
+        cobj->getAddressBook(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_crossapp_CAAddressBook_getAddressBook : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+

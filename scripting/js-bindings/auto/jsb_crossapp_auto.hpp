@@ -2385,6 +2385,15 @@ bool js_crossapp_CAImagePickerController_open(JSContext *cx, uint32_t argc, jsva
 bool js_crossapp_CAImagePickerController_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAImagePickerController_CAImagePickerController(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CAAddressBook_class;
+extern JSObject *jsb_CrossApp_CAAddressBook_prototype;
+
+bool js_crossapp_CAAddressBook_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAAddressBook_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAAddressBook(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAAddressBook_create(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CGSprite_class;
 extern JSObject *jsb_CrossApp_CGSprite_prototype;
 

@@ -17625,18 +17625,6 @@ str
 },
 
 /**
- * @method MySendRequest
- * @param {String} arg0
- * @return {bool}
- */
-MySendRequest : function (
-str 
-)
-{
-    return false;
-},
-
-/**
  * @method getInstance
  * @param {long} arg0
  * @return {ca.CAHttpClient}
@@ -18958,6 +18946,23 @@ CAImagePickerController : function (
 sourcetype 
 )
 {
+},
+
+};
+
+/**
+ * @class CAAddressBook
+ */
+ca.CAAddressBook = {
+
+/**
+ * @method create
+ * @return {ca.CAAddressBook}
+ */
+create : function (
+)
+{
+    return ca.CAAddressBook;
 },
 
 };
