@@ -210,7 +210,7 @@ void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj.set(jsb_CrossApp_CANotificationCenter_prototype);
     JS_DefineFunction(cx, tmpObj, "addObserver", js_crossapp_CANotificationCenter_addObserver, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     tmpObj.set(jsb_CrossApp_CAAddressBook_prototype);
-    JS_DefineFunction(cx, tmpObj, "addObserver", js_crossapp_CAAddressBook_getAddressBook, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "getAddressBook", js_crossapp_CAAddressBook_getAddressBook, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
 
 }
@@ -676,7 +676,7 @@ bool js_crossapp_CAAddressBook_getAddressBook(JSContext *cx, uint32_t argc, jsva
                         larg0["countrycode"]     = CAValue(data.countrycode);
                         larg0["phoneNumber"]     = CAValue(data.phoneNumber);
                         larg0["fullname"]     = CAValue(data.fullname);
-                        
+                        largVec.push_back(CAValue(larg0));
                     }
                     
                     largv[0] = cavaluevector_to_jsval(cx, largVec);

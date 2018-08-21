@@ -179,13 +179,13 @@ void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CA
             
             NSString *firstknow = (NSString*)ABRecordCopyValue(person, kABPersonCreationDateProperty);
             
-            NSLog(@"第一次添加该条记录的时间%@\n",firstknow);
+            //NSLog(@"第一次添加该条记录的时间%@\n",firstknow);
             
             //最后一次修改該条记录的时间
             
             NSString *lastknow = (NSString*)ABRecordCopyValue(person, kABPersonModificationDateProperty);
             
-            NSLog(@"最后一次修改該条记录的时间%@\n",lastknow);
+            //NSLog(@"最后一次修改該条记录的时间%@\n",lastknow);
             
             //获取email多值
             
