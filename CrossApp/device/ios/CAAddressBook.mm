@@ -260,6 +260,16 @@ void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CA
                 
             }
             
+            //获取中英文名称首字母
+            UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
+            
+            //获取collation的索引
+            NSString *fullName = [NSString stringWithUTF8String:address.fullname.c_str()];
+            NSArray *sectionTitles = [collation sectionTitles];
+            NSUInteger sectionNumAll = [[collation sectionTitles] count];
+            //NSLog(@"firstLetter %@",[fullName firstLetter]);
+            address.firstLetter = [[fullName firstLetter] UTF8String];
+            
             arr.push_back(address);
         }
         
@@ -270,5 +280,7 @@ void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CA
         callback(arr);
     }
 }
+
+
 
 NS_CC_END

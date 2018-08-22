@@ -37,6 +37,7 @@ public:
         std::string countrycode;
         std::string phoneNumber;
         std::string fullname;
+        std::string firstLetter;
     };
     
     typedef std::function<void(const std::vector<CAAddressBook::Data>&)> Callback;

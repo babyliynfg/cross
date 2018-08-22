@@ -676,6 +676,7 @@ bool js_crossapp_CAAddressBook_getAddressBook(JSContext *cx, uint32_t argc, jsva
                         larg0["countrycode"]     = CAValue(data.countrycode);
                         larg0["phoneNumber"]     = CAValue(data.phoneNumber);
                         larg0["fullname"]     = CAValue(data.fullname);
+                        larg0["firstLetter"]     = CAValue(data.firstLetter);
                         largVec.push_back(CAValue(larg0));
                     }
                     
