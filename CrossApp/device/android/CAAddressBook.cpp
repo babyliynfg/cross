@@ -88,6 +88,8 @@ extern "C"
                 
                 addrec.nickname = person["nickname"].asString();
                 
+                addrec.firstLetter = person["firstLetter"].asString();
+                
                 addrec.zip = person["address_postCode"].asString();
                 
                 _addressBookVec.push_back(addrec);
