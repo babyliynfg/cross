@@ -27,6 +27,8 @@
 		04EABB4A1956DE7100198A8E /* CrossApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EABB491956DE7100198A8E /* CrossApp.cpp */; };
 		0A38727121258DCB0052C2DB /* CrossAppReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A38726F21258DCB0052C2DB /* CrossAppReachability.h */; };
 		0A38727221258DCB0052C2DB /* CrossAppReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A38727021258DCB0052C2DB /* CrossAppReachability.m */; };
+		0ACE3B74212D494E008CF054 /* NSString+PeopleNameGetLetter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0ACE3B72212D494E008CF054 /* NSString+PeopleNameGetLetter.h */; };
+		0ACE3B75212D494E008CF054 /* NSString+PeopleNameGetLetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACE3B73212D494E008CF054 /* NSString+PeopleNameGetLetter.m */; };
 		1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		1551A71B158F2ADE00E66CFE /* CACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A46E158F2ADE00E66CFE /* CACommon.h */; };
 		1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 1551A475158F2ADE00E66CFE /* CCPlatformConfig.h */; };
@@ -451,6 +453,8 @@
 		04EABB491956DE7100198A8E /* CrossApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrossApp.cpp; sourceTree = "<group>"; };
 		0A38726F21258DCB0052C2DB /* CrossAppReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossAppReachability.h; sourceTree = "<group>"; };
 		0A38727021258DCB0052C2DB /* CrossAppReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossAppReachability.m; sourceTree = "<group>"; };
+		0ACE3B72212D494E008CF054 /* NSString+PeopleNameGetLetter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+PeopleNameGetLetter.h"; sourceTree = "<group>"; };
+		0ACE3B73212D494E008CF054 /* NSString+PeopleNameGetLetter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+PeopleNameGetLetter.m"; sourceTree = "<group>"; };
 		1551A33F158F2AB200E66CFE /* libCrossApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCrossApp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1551A342158F2AB200E66CFE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1551A46E158F2ADE00E66CFE /* CACommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACommon.h; sourceTree = "<group>"; };
@@ -1745,6 +1749,8 @@
 				E0FCFF001E5BEEF400CCA191 /* CAMotionManager.mm */,
 				E0FCFF181E5C1F7700CCA191 /* CAImagePickerController.mm */,
 				E0FCFF241E5C23E600CCA191 /* CAAddressBook.mm */,
+				0ACE3B72212D494E008CF054 /* NSString+PeopleNameGetLetter.h */,
+				0ACE3B73212D494E008CF054 /* NSString+PeopleNameGetLetter.m */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -1774,6 +1780,7 @@
 				D644B38F1F19F79D00E90A86 /* CACustomAnimation.h in Headers */,
 				D6ADC6661E56A72800750771 /* CGSprite.h in Headers */,
 				D6ADC6991E56A72800750771 /* CCCustomCommand.h in Headers */,
+				0ACE3B74212D494E008CF054 /* NSString+PeopleNameGetLetter.h in Headers */,
 				D6ADC6201E56A72800750771 /* CCNS.h in Headers */,
 				D6ADC6441E56A72800750771 /* CAProtocols.h in Headers */,
 				B07E81141C33B34800A39C95 /* CATextView.h in Headers */,
@@ -2206,6 +2213,7 @@
 				D6ADC6AC1E56A72800750771 /* CCPass.cpp in Sources */,
 				04EABB4A1956DE7100198A8E /* CrossApp.cpp in Sources */,
 				E0FCFF251E5C23E600CCA191 /* CAAddressBook.mm in Sources */,
+				0ACE3B75212D494E008CF054 /* NSString+PeopleNameGetLetter.m in Sources */,
 				0460ED1C195700EE00D13001 /* CCEGLViewProtocol.cpp in Sources */,
 				D6ADC65F1E56A72800750771 /* CGTweenFunction.cpp in Sources */,
 				E0FCFF191E5C1F7700CCA191 /* CAImagePickerController.mm in Sources */,
