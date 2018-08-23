@@ -41,14 +41,14 @@ public class CrossAppPersonList {
 
 	public static void getPersonList() {
 //		 Log.d("ceshi", "通讯录1");
-//		ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
-//		// 联系人集合
-//		ContentResolver resolver = s_pContext.getContentResolver();
-//		// 搜索字段//尽量不用嵌套搜索，性能过低
-//		String[] projection = new String[] {
-//				ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-//				ContactsContract.CommonDataKinds.Phone.NUMBER,
-//				ContactsContract.Contacts.DISPLAY_NAME,
+		ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
+		// 联系人集合
+		ContentResolver resolver = s_pContext.getContentResolver();
+		// 搜索字段//尽量不用嵌套搜索，性能过低
+		String[] projection = new String[] {
+				ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+				ContactsContract.CommonDataKinds.Phone.NUMBER,
+				ContactsContract.Contacts.DISPLAY_NAME,
 //				ContactsContract.CommonDataKinds.Email.DATA,
 //				ContactsContract.CommonDataKinds.StructuredPostal.STREET,
 //				ContactsContract.CommonDataKinds.StructuredPostal.CITY,
@@ -56,22 +56,22 @@ public class CrossAppPersonList {
 //				ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE,
 //				ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS,
 //				ContactsContract.CommonDataKinds.Nickname.DATA,
-//				ContactsContract.Contacts.SORT_KEY_PRIMARY };
-//
-//		// 获取手机联系人
-//		Cursor contactsCursor = resolver.query(
-//				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,
-//				null, null, ContactsContract.Contacts.SORT_KEY_PRIMARY);
-//		if (contactsCursor.moveToFirst()) {
-//			// key: contactId,value: 该contactId在联系人集合data的index
-//			Map<Integer, Integer> contactIdMap = new HashMap<Integer, Integer>();
-//			while (contactsCursor.moveToNext()) {
-//				// 获取联系人的ID
-//				int contactId = contactsCursor.getInt(0);
-//				// 获取联系人的号码
-//				String phoneNumber = contactsCursor.getString(1);
-//				// 获取联系人的姓名
-//				String name = contactsCursor.getString(2);				
+				ContactsContract.Contacts.SORT_KEY_PRIMARY };
+
+		// 获取手机联系人
+		Cursor contactsCursor = resolver.query(
+				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,
+				null, null, ContactsContract.Contacts.SORT_KEY_PRIMARY);
+		if (contactsCursor.moveToFirst()) {
+			// key: contactId,value: 该contactId在联系人集合data的index
+			Map<Integer, Integer> contactIdMap = new HashMap<Integer, Integer>();
+			while (contactsCursor.moveToNext()) {
+				// 获取联系人的ID
+				int contactId = contactsCursor.getInt(0);
+				// 获取联系人的号码
+				String phoneNumber = contactsCursor.getString(1);
+				// 获取联系人的姓名
+				String name = contactsCursor.getString(2);
 //				// 获取联系人的邮箱
 //				String email = contactsCursor.getString(3);
 //				// 获取联系人的街道
@@ -86,27 +86,27 @@ public class CrossAppPersonList {
 //				String formatted_address = contactsCursor.getString(8);
 //				// 获取联系人的Nickname
 //				String nickName = contactsCursor.getString(9);
-//				// 获取联系人的全拼
-//				String sortkey = contactsCursor.getString(10);
-//
-//				
-//				// 号码处理
-//				String replace = phoneNumber.replace(" ", "").replace("-", "")
-//						.replace("+", "");
-//				// 判断号码是否符合手机号
-//				if (replace.length() > 0) {
-//					// 如果联系人Map已经包含该contactId
-//					if (contactIdMap.containsKey(contactId)) {
-//						// 得到该contactId在data的index
-//						Integer index = contactIdMap.get(contactId);
-//						// 重新设置号码数组
-//						FriendData contacts = vecFriend.get(index);
-//						contacts.phoneNumber.add(replace);
-//					} else {
-//						FriendData contacts = new FriendData();
-//						// 如果联系人Map不包含该contactId
-//						contacts.phoneNumber.add(phoneNumber);
-//						contacts.name = name;
+				// 获取联系人的全拼
+				String sortkey = contactsCursor.getString(3);
+
+				
+				// 号码处理
+				String replace = phoneNumber.replace(" ", "").replace("-", "")
+						.replace("+", "");
+				// 判断号码是否符合手机号
+				if (replace.length() > 0) {
+					// 如果联系人Map已经包含该contactId
+					if (contactIdMap.containsKey(contactId)) {
+						// 得到该contactId在data的index
+						Integer index = contactIdMap.get(contactId);
+						// 重新设置号码数组
+						FriendData contacts = vecFriend.get(index);
+						contacts.phoneNumber.add(replace);
+					} else {
+						FriendData contacts = new FriendData();
+						// 如果联系人Map不包含该contactId
+						contacts.phoneNumber.add(phoneNumber);
+						contacts.name = name;
 //						contacts.emailValue = email;
 //						contacts.address_street = street;
 //						contacts.address_city = city;
@@ -114,22 +114,22 @@ public class CrossAppPersonList {
 //						contacts.address_postCode = postcode;
 //						contacts.address_formatAddress = formatted_address;
 //						contacts.nickname = nickName;
-//						
-//						String key = sortkey.substring(0, 1).toUpperCase();
-//						if (key.matches("[A-Z]")) {
-//							contacts.firstLetter = key;
-//						} else {
-//							contacts.firstLetter = "#";
-//						}
-//						
-//						vecFriend.add(contacts);
-//						contactIdMap.put(contactId, vecFriend.size() - 1);
-//					}
-//				}
-//
-//			}
-//			contactsCursor.close();
-//		}
+						
+						String key = sortkey.substring(0, 1).toUpperCase();
+						if (key.matches("[A-Z]")) {
+							contacts.firstLetter = key;
+						} else {
+							contacts.firstLetter = "#";
+						}
+						
+						vecFriend.add(contacts);
+						contactIdMap.put(contactId, vecFriend.size() - 1);
+					}
+				}
+
+			}
+			contactsCursor.close();
+		}
 
 		//
 		//
@@ -147,155 +147,155 @@ public class CrossAppPersonList {
 //	                ContactsContract.Contacts.DISPLAY_NAME  
 //	                        + " COLLATE LOCALIZED ASC");  
 		 
-	        Cursor cur = s_pContext.getContentResolver().query(  
-	                ContactsContract.Contacts.CONTENT_URI,  
-	                null,  
-	                null,  
-	                null,  
-	                ContactsContract.Contacts.SORT_KEY_PRIMARY);  
-	        
-	        ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
-	        
-	        
-	        if (cur.moveToFirst())
-	        {
-	            int idColumn = cur.getColumnIndex(ContactsContract.Contacts._ID);  
-	  
-	            int displayNameColumn = cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);  
-	            int sortkey = cur.getColumnIndex(ContactsContract.Contacts.SORT_KEY_PRIMARY);  
-	  
-	       	    do 
-	       	    {
-	       	    	try
-					{
-		            	FriendData data = new FriendData();
-		            	
-		                String contactId = cur.getString(idColumn);  
-		                 
-		                String disPlayName = cur.getString(displayNameColumn);  
-		                String sortkeypinyin = cur.getString(sortkey);  
-		                
-
-						String key = sortkeypinyin.substring(0, 1).toUpperCase();
-						if (key.matches("[A-Z]")) {
-							data.firstLetter = key;
-						} else {
-							data.firstLetter = "#";
-						}
-		                
-		                data.name = disPlayName;
-		                
-		                int phoneCount = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));  
-		                
-		                if (phoneCount > 0)
-		                {  
-		                    Cursor phones = s_pContext.getContentResolver().query(  
-		                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  
-		                            null,  
-		                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
-		                                    + " = " + contactId, null, null);
-		                    
-		                    if (phones.moveToFirst())
-		                    {  
-		                        do
-		                        {   
-		                            String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));   
-		                            
-		                            data.phoneNumber.add( phoneNumber );
-		                        }
-		                        while (phones.moveToNext());  
-		                    }
-		                    
-		                    phones.close();
-		                }  
-		  
-		                Cursor emails = s_pContext.getContentResolver().query(  
-		                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,  
-		                        null,  
-		                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
-		                                + " = " + contactId, null, null);  
-		                
-		                if (emails.moveToFirst())
-		                {  
-		                    do
-		                    {  
-		                        
-		                        String emailValue = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));  
-
-		                        data.emailValue = emailValue;
-		                    }
-		                    while (emails.moveToNext());  
-		                }  
-		                
-		                emails.close();
-		                
-		                Cursor address = s_pContext.getContentResolver().query(  
-		                                ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,  
-		                                null,  
-		                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
-		                                        + " = " + contactId, null, null);  
-		                if (address.moveToFirst()) 
-		                {  
-		                    do {  
-		                        
-		                        String street = address.getString(address  
-		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));  
-		                        
-		                        String city = address.getString(address  
-		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CITY));  
-		                        
-		                        String region = address.getString(address  
-		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.REGION));  
-		                        
-		                        String postCode = address.getString(address  
-		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE)); 
-		                        
-		                        String formatAddress = address.getString(address  
-		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS));
-		                        
-		                        data.address_street = street;  
-		                        data.address_city = city;  
-		                        data.address_region = region;  
-		                        data.address_postCode = postCode;  
-		                        data.address_formatAddress = formatAddress;
-		                    } 
-		                    while (address.moveToNext());  
-		                }  
-		                
-		                address.close();
-		                
-		                
-		                Cursor nicknames = s_pContext.getContentResolver().query(  
-		                        Data.CONTENT_URI,  
-		                        new String[] { Data._ID, Nickname.NAME },  
-		                        Data.CONTACT_ID + "=?" + " AND " + Data.MIMETYPE + "='"+ Nickname.CONTENT_ITEM_TYPE + "'",  
-		                        new String[] { contactId }, null);  
-		                
-		                if (nicknames.moveToFirst()) 
-		                {  
-		                    do 
-		                    {  
-		                        String nickname_ = nicknames.getString(nicknames.getColumnIndex(Nickname.NAME));
-	 
-		                        data.nickname = nickname_;
-		                    } 
-		                    while (nicknames.moveToNext());  
-		                } 
-		                
-		                nicknames.close();
-		                
-		                if ( data.name != null )
-		                	vecFriend.add(data);
-
-		        }
-		        catch( Exception e )
-		        {
-		
-		         }
-		   }
-		 while (cur.moveToNext());
-		 }
-		
+//	        Cursor cur = s_pContext.getContentResolver().query(  
+//	                ContactsContract.Contacts.CONTENT_URI,  
+//	                null,  
+//	                null,  
+//	                null,  
+//	                ContactsContract.Contacts.SORT_KEY_PRIMARY);  
+//	        
+//	        ArrayList<FriendData> vecFriend = new ArrayList<FriendData>();
+//	        
+//	        
+//	        if (cur.moveToFirst())
+//	        {
+//	            int idColumn = cur.getColumnIndex(ContactsContract.Contacts._ID);  
+//	  
+//	            int displayNameColumn = cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);  
+//	            int sortkey = cur.getColumnIndex(ContactsContract.Contacts.SORT_KEY_PRIMARY);  
+//	  
+//	       	    do 
+//	       	    {
+//	       	    	try
+//					{
+//		            	FriendData data = new FriendData();
+//		            	
+//		                String contactId = cur.getString(idColumn);  
+//		                 
+//		                String disPlayName = cur.getString(displayNameColumn);  
+//		                String sortkeypinyin = cur.getString(sortkey);  
+//		                
+//
+//						String key = sortkeypinyin.substring(0, 1).toUpperCase();
+//						if (key.matches("[A-Z]")) {
+//							data.firstLetter = key;
+//						} else {
+//							data.firstLetter = "#";
+//						}
+//		                
+//		                data.name = disPlayName;
+//		                
+//		                int phoneCount = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));  
+//		                
+//		                if (phoneCount > 0)
+//		                {  
+//		                    Cursor phones = s_pContext.getContentResolver().query(  
+//		                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,  
+//		                            null,  
+//		                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
+//		                                    + " = " + contactId, null, null);
+//		                    
+//		                    if (phones.moveToFirst())
+//		                    {  
+//		                        do
+//		                        {   
+//		                            String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));   
+//		                            
+//		                            data.phoneNumber.add( phoneNumber );
+//		                        }
+//		                        while (phones.moveToNext());  
+//		                    }
+//		                    
+//		                    phones.close();
+//		                }  
+//		  
+//		                Cursor emails = s_pContext.getContentResolver().query(  
+//		                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,  
+//		                        null,  
+//		                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
+//		                                + " = " + contactId, null, null);  
+//		                
+//		                if (emails.moveToFirst())
+//		                {  
+//		                    do
+//		                    {  
+//		                        
+//		                        String emailValue = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));  
+//
+//		                        data.emailValue = emailValue;
+//		                    }
+//		                    while (emails.moveToNext());  
+//		                }  
+//		                
+//		                emails.close();
+//		                
+//		                Cursor address = s_pContext.getContentResolver().query(  
+//		                                ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,  
+//		                                null,  
+//		                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID  
+//		                                        + " = " + contactId, null, null);  
+//		                if (address.moveToFirst()) 
+//		                {  
+//		                    do {  
+//		                        
+//		                        String street = address.getString(address  
+//		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));  
+//		                        
+//		                        String city = address.getString(address  
+//		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CITY));  
+//		                        
+//		                        String region = address.getString(address  
+//		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.REGION));  
+//		                        
+//		                        String postCode = address.getString(address  
+//		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE)); 
+//		                        
+//		                        String formatAddress = address.getString(address  
+//		                                        .getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS));
+//		                        
+//		                        data.address_street = street;  
+//		                        data.address_city = city;  
+//		                        data.address_region = region;  
+//		                        data.address_postCode = postCode;  
+//		                        data.address_formatAddress = formatAddress;
+//		                    } 
+//		                    while (address.moveToNext());  
+//		                }  
+//		                
+//		                address.close();
+//		                
+//		                
+//		                Cursor nicknames = s_pContext.getContentResolver().query(  
+//		                        Data.CONTENT_URI,  
+//		                        new String[] { Data._ID, Nickname.NAME },  
+//		                        Data.CONTACT_ID + "=?" + " AND " + Data.MIMETYPE + "='"+ Nickname.CONTENT_ITEM_TYPE + "'",  
+//		                        new String[] { contactId }, null);  
+//		                
+//		                if (nicknames.moveToFirst()) 
+//		                {  
+//		                    do 
+//		                    {  
+//		                        String nickname_ = nicknames.getString(nicknames.getColumnIndex(Nickname.NAME));
+//	 
+//		                        data.nickname = nickname_;
+//		                    } 
+//		                    while (nicknames.moveToNext());  
+//		                } 
+//		                
+//		                nicknames.close();
+//		                
+//		                if ( data.name != null )
+//		                	vecFriend.add(data);
+//
+//		        }
+//		        catch( Exception e )
+//		        {
+//		
+//		         }
+//		   }
+//		 while (cur.moveToNext());
+//		 }
+//		
 	        
 	        
 		try {
