@@ -138,9 +138,7 @@ public class CrossAppPersonList {
 		//
 		//
 		//
-		//
-		 Log.d("ceshi", "通讯录1");
-			
+		//		
 //	        Cursor cur = s_pContext.getContentResolver().query(  
 //	                ContactsContract.Contacts.CONTENT_URI,  
 //	                null,  
@@ -344,9 +342,6 @@ public class CrossAppPersonList {
 
 			personList.put("person", personArray);
 			String ret = personList.toString();
-
-			Log.d("ceshi", "通讯录2" + ret);
-
 			onReturnPersonList(ret);
 		} catch (JSONException ex) {
 
