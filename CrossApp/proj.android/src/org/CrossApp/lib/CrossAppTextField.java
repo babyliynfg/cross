@@ -826,7 +826,6 @@ import android.widget.TextView.OnEditorActionListener;
 						textField.setSelection(selection);
 						isSetText = false;
 					}
-					
 				}
 				else
 				{
@@ -836,9 +835,17 @@ import android.widget.TextView.OnEditorActionListener;
 						textField.setText(string);
 						textField.setSelection(selection - arg2 + arg3);
 					}
-					ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
-					text(mykey, textBuffer.array(), textBuffer.array().length);
-					didTextChanged(mykey);
+					final ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
+					
+					context.runOnGLThread(new Runnable() 
+                	{
+                        @Override
+                        public void run()
+                        {
+                        	text(mykey, textBuffer.array(), textBuffer.array().length);
+                        	didTextChanged(mykey);
+                        }
+                    });
 					isSetText = false;
 				}
 			}
