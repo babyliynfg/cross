@@ -57,11 +57,17 @@ public class CrossAppPersonList {
 //				ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS,
 //				ContactsContract.CommonDataKinds.Nickname.DATA,
 				ContactsContract.Contacts.SORT_KEY_PRIMARY };
-
-		// 获取手机联系人
+		 
+//		// 获取手机联系人
 		Cursor contactsCursor = resolver.query(
 				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,
 				null, null, ContactsContract.Contacts.SORT_KEY_PRIMARY);
+		 
+//		// 获取手机联系人
+//		Cursor contactsCursor = resolver.query(
+//				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,
+//				null, null, ContactsContract.Contacts.DISPLAY_NAME  
+//	          + " COLLATE LOCALIZED ASC");
 		if (contactsCursor.moveToFirst()) {
 			// key: contactId,value: 该contactId在联系人集合data的index
 			Map<Integer, Integer> contactIdMap = new HashMap<Integer, Integer>();
@@ -342,6 +348,7 @@ public class CrossAppPersonList {
 
 			personList.put("person", personArray);
 			String ret = personList.toString();
+//			Log.d("ceshi","引擎---通讯录----"+ret);
 			onReturnPersonList(ret);
 		} catch (JSONException ex) {
 
