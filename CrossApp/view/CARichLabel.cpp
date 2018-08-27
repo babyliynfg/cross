@@ -19,6 +19,7 @@ CARichLabel::CARichLabel()
 , m_iNumberOfLine(0)
 , m_obPadding(DSizeZero)
 , m_obLabelSize(DSizeZero)
+, m_bFitFlag(false)
 {
 }
 
