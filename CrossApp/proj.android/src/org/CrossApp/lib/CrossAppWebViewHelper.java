@@ -333,7 +333,7 @@ public class CrossAppWebViewHelper {
         });
     	
         try {
-        	while (s_bWaitGetHemlSource) {
+        	while (s_bWaitGetHemlSource == false) {
             	Thread.sleep(100);
             }
         } catch (Exception e) {
