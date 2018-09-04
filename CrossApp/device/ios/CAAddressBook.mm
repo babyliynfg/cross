@@ -267,7 +267,7 @@ void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CA
             NSString *fullName = [NSString stringWithUTF8String:address.fullname.c_str()];
             NSArray *sectionTitles = [collation sectionTitles];
             NSUInteger sectionNumAll = [[collation sectionTitles] count];
-            //NSLog(@"firstLetter %@",[fullName firstLetter]);
+            //NSLog(@"fullName %@",fullName);
             if (fullName.length > 0) {
                 address.firstLetter = [[fullName firstLetter] UTF8String];
             }else{
