@@ -265,14 +265,20 @@ void CAAddressBook::getAddressBook(const std::function<void(const std::vector<CA
             
             //获取collation的索引
             NSString *fullName = [NSString stringWithUTF8String:address.fullname.c_str()];
+            NSString *organizationName = [NSString stringWithUTF8String:address.organization.c_str()];
+        
+            //NSLog(@"fullName %@ organizationName=%@",fullName,organizationName);
             NSArray *sectionTitles = [collation sectionTitles];
             NSUInteger sectionNumAll = [[collation sectionTitles] count];
-            //NSLog(@"fullName %@",fullName);
             if (fullName.length > 0) {
                 address.firstLetter = [[fullName firstLetter] UTF8String];
+            }else if (organizationName.length > 0){
+                address.firstLetter = [[organizationName firstLetter] UTF8String];
+                address.fullname = address.organization;
             }else{
                 address.firstLetter = "#";
             }
+            //NSLog(@"fullName %@ address.firstLetter=%s",fullName,address.firstLetter.c_str());
             
             
             arr.push_back(address);
