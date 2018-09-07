@@ -1062,28 +1062,27 @@ var _initSys = function () {
      * @name language
      * @type {String}
      */
-    //** 先注释掉
-//    sys.language = (function(){
-//                    var language = ca.application.getCurrentLanguage();
-//                    switch(language){
-//                    case 0: return sys.LANGUAGE_ENGLISH;
-//                    case 1: return sys.LANGUAGE_CHINESE;
-//                    case 2: return sys.LANGUAGE_FRENCH;
-//                    case 3: return sys.LANGUAGE_ITALIAN;
-//                    case 4: return sys.LANGUAGE_GERMAN;
-//                    case 5: return sys.LANGUAGE_SPANISH;
-//                    case 6: return sys.LANGUAGE_DUTCH;
-//                    case 7: return sys.LANGUAGE_RUSSIAN;
-//                    case 8: return sys.LANGUAGE_KOREAN;
-//                    case 9: return sys.LANGUAGE_JAPANESE;
-//                    case 10: return sys.LANGUAGE_HUNGARIAN;
-//                    case 11: return sys.LANGUAGE_PORTUGUESE;
-//                    case 12: return sys.LANGUAGE_ARABIC;
-//                    case 13: return sys.LANGUAGE_NORWEGIAN;
-//                    case 14: return sys.LANGUAGE_POLISH;
-//                    default : return sys.LANGUAGE_ENGLISH;
-//                    }
-//                    })();
+   sys.language = (function(){
+                   var language = ca.application.getCurrentLanguage();
+                   switch(language){
+                   case 0: return sys.LANGUAGE_ENGLISH;
+                   case 1: return sys.LANGUAGE_CHINESE;
+                   case 2: return sys.LANGUAGE_FRENCH;
+                   case 3: return sys.LANGUAGE_ITALIAN;
+                   case 4: return sys.LANGUAGE_GERMAN;
+                   case 5: return sys.LANGUAGE_SPANISH;
+                   case 6: return sys.LANGUAGE_DUTCH;
+                   case 7: return sys.LANGUAGE_RUSSIAN;
+                   case 8: return sys.LANGUAGE_KOREAN;
+                   case 9: return sys.LANGUAGE_JAPANESE;
+                   case 10: return sys.LANGUAGE_HUNGARIAN;
+                   case 11: return sys.LANGUAGE_PORTUGUESE;
+                   case 12: return sys.LANGUAGE_ARABIC;
+                   case 13: return sys.LANGUAGE_NORWEGIAN;
+                   case 14: return sys.LANGUAGE_POLISH;
+                   default : return sys.LANGUAGE_ENGLISH;
+                   }
+                   })();
     
     /**
      * Indicate the running os name
