@@ -116,11 +116,6 @@ public:
 
     int executeCustomTouchesEvent(int eventType,const std::vector<CATouch*>& touches, JSObject *obj);
     
-    //Keypad
-    int executeCustomKeyBackClicked(JSObject *obj);
-    
-    int executeCustomKeyMenuClicked(JSObject *obj);
-
     JSContext* getGlobalContext() {
         return _cx;
     };

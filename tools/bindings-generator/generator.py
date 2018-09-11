@@ -1557,7 +1557,6 @@ def main():
 
 if __name__ == '__main__':
     try:
-        print'##################3333333333333'
         main()
     except Exception as e:
         traceback.print_exc()

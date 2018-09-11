@@ -1007,7 +1007,6 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAViewController_getView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_dismissModalViewController(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getTabBarItem(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAViewController_keyBackClicked(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_setTabBarItem(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getViewWithID(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_setTitle(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1034,7 +1033,6 @@ bool js_crossapp_CAViewController_viewSizeDidChanged(JSContext *cx, uint32_t arg
 bool js_crossapp_CAViewController_getNavigationController(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getTabBarController(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_viewDidUnload(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAViewController_keyMenuClicked(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_CAViewController(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CANavigationController_class;

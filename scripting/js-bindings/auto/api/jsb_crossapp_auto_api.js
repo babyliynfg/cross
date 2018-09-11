@@ -8221,14 +8221,6 @@ getTabBarItem : function (
 },
 
 /**
- * @method keyBackClicked
- */
-keyBackClicked : function (
-)
-{
-},
-
-/**
  * @method setTabBarItem
  * @param {ca.CATabBarItem} arg0
  */
@@ -8464,14 +8456,6 @@ getTabBarController : function (
  * @method viewDidUnload
  */
 viewDidUnload : function (
-)
-{
-},
-
-/**
- * @method keyMenuClicked
- */
-keyMenuClicked : function (
 )
 {
 },

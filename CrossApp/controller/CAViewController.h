@@ -82,10 +82,6 @@ public:
     
     virtual void viewSizeDidChanged() {};
     
-    virtual void keyBackClicked() {};
-    
-    virtual void keyMenuClicked() {};
-    
     virtual void addViewFromSuperview(CAView* node);
     
     virtual void removeViewFromSuperview();

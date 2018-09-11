@@ -1220,18 +1220,6 @@ int ScriptingCore::executeCustomTouchesEvent(int eventType,const std::vector<CAT
     return 1;
 }
 
-int ScriptingCore::executeCustomKeyBackClicked(JSObject *obj){
-    executeFunctionWithOwner(OBJECT_TO_JSVAL(obj),"keyBackClicked",0,NULL);
-    return 1;
-}
-
-
-int ScriptingCore::executeCustomKeyMenuClicked(JSObject *obj){
-     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "keyMenuClicked",0,NULL);
-     return 1;
-}
-
-
 int ScriptingCore::executeCustomTouchEvent(int eventType,CATouch *pTouch, JSObject *obj)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
@@ -1249,7 +1237,6 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,CATouch *pTouch, JSObje
     return 1;
     
 }
-
 
 int ScriptingCore::executeCustomTouchEvent(int eventType,CATouch *pTouch, JSObject *obj,JS::MutableHandleValue retval)
 {
