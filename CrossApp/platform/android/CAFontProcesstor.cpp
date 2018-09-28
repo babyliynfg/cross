@@ -344,7 +344,7 @@ float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAF
         //jstring string = jni.env->NewStringUTF(text.c_str());
         int fontSize = (int)font.fontSize;
         ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID, jni.methodID, bytes, fontSize);
-        ret = ceilf(s_px_to_dip(ret));
+//        ret = ceilf(s_px_to_dip(ret));
         jni.env->DeleteLocalRef(jni.classID);
         jni.env->DeleteLocalRef(bytes);
     }
