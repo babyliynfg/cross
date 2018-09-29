@@ -678,12 +678,15 @@ void ScriptingCore::removeScriptObjectByObject(CAObject* pObj)
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     void *ptr = (void*)pObj;
-    nproxy = jsb_get_native_proxy(ptr);
-    if (nproxy) {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        jsproxy = jsb_get_js_proxy(nproxy->obj);
-        RemoveObjectRoot(cx, &jsproxy->obj);
-        jsb_remove_proxy(nproxy, jsproxy);
+    if (ptr)
+    {
+        nproxy = jsb_get_native_proxy(ptr);
+        if (nproxy) {
+            JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+            jsproxy = jsb_get_js_proxy(nproxy->obj);
+            RemoveObjectRoot(cx, &jsproxy->obj);
+            jsb_remove_proxy(nproxy, jsproxy);
+        }
     }
 }
 
@@ -1220,18 +1223,6 @@ int ScriptingCore::executeCustomTouchesEvent(int eventType,const std::vector<CAT
     return 1;
 }
 
-int ScriptingCore::executeCustomKeyBackClicked(JSObject *obj){
-    executeFunctionWithOwner(OBJECT_TO_JSVAL(obj),"keyBackClicked",0,NULL);
-    return 1;
-}
-
-
-int ScriptingCore::executeCustomKeyMenuClicked(JSObject *obj){
-     executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "keyMenuClicked",0,NULL);
-     return 1;
-}
-
-
 int ScriptingCore::executeCustomTouchEvent(int eventType,CATouch *pTouch, JSObject *obj)
 {
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
@@ -1249,7 +1240,6 @@ int ScriptingCore::executeCustomTouchEvent(int eventType,CATouch *pTouch, JSObje
     return 1;
     
 }
-
 
 int ScriptingCore::executeCustomTouchEvent(int eventType,CATouch *pTouch, JSObject *obj,JS::MutableHandleValue retval)
 {

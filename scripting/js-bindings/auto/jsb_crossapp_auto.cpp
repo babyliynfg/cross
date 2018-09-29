@@ -21515,23 +21515,6 @@ bool js_crossapp_CAViewController_getTabBarItem(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAViewController_getTabBarItem : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAViewController_keyBackClicked(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAViewController* cobj = (CrossApp::CAViewController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAViewController_keyBackClicked : Invalid Native Object");
-    if (argc == 0) {
-        cobj->keyBackClicked();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAViewController_keyBackClicked : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAViewController_setTabBarItem(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -22088,23 +22071,6 @@ bool js_crossapp_CAViewController_viewDidUnload(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAViewController_viewDidUnload : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAViewController_keyMenuClicked(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAViewController* cobj = (CrossApp::CAViewController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAViewController_keyMenuClicked : Invalid Native Object");
-    if (argc == 0) {
-        cobj->keyMenuClicked();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAViewController_keyMenuClicked : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAViewController_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -22184,7 +22150,6 @@ void js_register_crossapp_CAViewController(JSContext *cx, JS::HandleObject globa
         JS_FN("getView", js_crossapp_CAViewController_getView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("dismissModalViewController", js_crossapp_CAViewController_dismissModalViewController, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarItem", js_crossapp_CAViewController_getTabBarItem, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("keyBackClicked", js_crossapp_CAViewController_keyBackClicked, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTabBarItem", js_crossapp_CAViewController_setTabBarItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewWithID", js_crossapp_CAViewController_getViewWithID, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitle", js_crossapp_CAViewController_setTitle, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -22211,7 +22176,6 @@ void js_register_crossapp_CAViewController(JSContext *cx, JS::HandleObject globa
         JS_FN("getNavigationController", js_crossapp_CAViewController_getNavigationController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarController", js_crossapp_CAViewController_getTabBarController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("viewDidUnload", js_crossapp_CAViewController_viewDidUnload, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("keyMenuClicked", js_crossapp_CAViewController_keyMenuClicked, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_crossapp_CAViewController_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
