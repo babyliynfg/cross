@@ -355,7 +355,6 @@ CANavigationController::CANavigationController()
 :m_bNavigationBarHidden(false)
 ,m_bPopViewController(false)
 ,m_pNavigationBarBackgroundImage(nullptr)
-,m_sNavigationBarBackgroundColor(CAColor4B::WHITE)
 ,m_sNavigationBarTitleColor(CAColor4B::WHITE)
 ,m_sNavigationBarButtonColor(CAColor4B::WHITE)
 ,m_pNavigationBarGoBackBarButtonItem(nullptr)
@@ -394,22 +393,13 @@ void CANavigationController::setNavigationBarBackgroundImage(CrossApp::CAImage *
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pNavigationBarBackgroundImage);
     m_pNavigationBarBackgroundImage = var;
-    m_sNavigationBarBackgroundColor = CAColor4B::WHITE;
     
     if (!m_pNavigationBars.empty())
     {
         CADeque<CANavigationBar*>::iterator itr;
         for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
         {
-            if (m_pNavigationBarBackgroundImage)
-            {
-                (*itr)->setBackgroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackgroundImage));
-            }
-            else
-            {
-                (*itr)->setBackgroundView(CAView::create());
-            }
-            (*itr)->getBackgroundView()->setColor(m_sNavigationBarBackgroundColor);
+            (*itr)->setBackgroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackgroundImage));
         }
     }
 }
@@ -417,34 +407,6 @@ void CANavigationController::setNavigationBarBackgroundImage(CrossApp::CAImage *
 CAImage* CANavigationController::getNavigationBarBackgroundImage()
 {
     return m_pNavigationBarBackgroundImage;
-}
-
-void CANavigationController::setNavigationBarBackgroundColor(const CAColor4B &var)
-{
-    m_sNavigationBarBackgroundColor = var;
-    CC_SAFE_RELEASE_NULL(m_pNavigationBarBackgroundImage);
-    
-    if (!m_pNavigationBars.empty())
-    {
-        CADeque<CANavigationBar*>::iterator itr;
-        for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
-        {
-            if (m_pNavigationBarBackgroundImage)
-            {
-                (*itr)->setBackgroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackgroundImage));
-            }
-            else
-            {
-                (*itr)->setBackgroundView(CAView::create());
-            }
-            (*itr)->getBackgroundView()->setColor(m_sNavigationBarBackgroundColor);
-        }
-    }
-}
-
-const CAColor4B& CANavigationController::getNavigationBarBackgroundColor()
-{
-    return m_sNavigationBarBackgroundColor;
 }
 
 void CANavigationController::setNavigationBarTitleColor(const CAColor4B &var)
@@ -534,15 +496,8 @@ void CANavigationController::updateItem(CAViewController* viewController)
         viewController->getNavigationBarItem()->setShowGoBackButton(false);
     }
     
-    if (m_pNavigationBarBackgroundImage)
-    {
-        m_pNavigationBars.at(index)->setBackgroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackgroundImage));
-    }
-    else
-    {
-        m_pNavigationBars.at(index)->setBackgroundView(CAView::create());
-        m_pNavigationBars.at(index)->getBackgroundView()->setColor(m_sNavigationBarBackgroundColor);
-    }
+    m_pNavigationBars.at(index)->setBackgroundView(CAScale9ImageView::createWithImage(m_pNavigationBarBackgroundImage));
+
 
     m_pNavigationBars.at(index)->setTitleColor(m_sNavigationBarTitleColor);
     m_pNavigationBars.at(index)->setButtonColor(m_sNavigationBarButtonColor);
@@ -657,7 +612,6 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
         navigationBar->setGoBackBarButtonItem(m_pNavigationBarGoBackBarButtonItem);
     }
     
-    navigationBar->getBackgroundView()->setColor(m_sNavigationBarBackgroundColor);
 
     navigationBar->setTitleColor(m_sNavigationBarTitleColor);
     navigationBar->setButtonColor(m_sNavigationBarButtonColor);
@@ -1277,9 +1231,6 @@ CATabBarController::CATabBarController()
 ,m_pTabBarBackgroundImage(nullptr)
 ,m_pTabBarSelectedBackgroundImage(nullptr)
 ,m_pTabBarSelectedIndicatorImage(nullptr)
-,m_sTabBarBackgroundColor(CAColor4B::WHITE)
-,m_sTabBarSelectedBackgroundColor(CAColor4B::WHITE)
-,m_sTabBarSelectedIndicatorColor(CAColor4B::WHITE)
 ,m_bTabBarSelectedTitleBold(false)
 ,m_sTabBarTitleColor(CAColor4B::WHITE)
 ,m_sTabBarSelectedTitleColor(CAColor4B(50, 193, 255, 255))
@@ -1326,7 +1277,6 @@ void CATabBarController::setTabBarBackgroundImage(CrossApp::CAImage *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pTabBarBackgroundImage);
     m_pTabBarBackgroundImage = var;
-    m_sTabBarBackgroundColor = CAColor4B::WHITE;
     
     if (m_pTabBar)
     {
@@ -1339,28 +1289,11 @@ CAImage* CATabBarController::getTabBarBackgroundImage()
     return m_pTabBarBackgroundImage;
 }
 
-void CATabBarController::setTabBarBackgroundColor(const CAColor4B &var)
-{
-    m_sTabBarBackgroundColor = var;
-    CC_SAFE_RELEASE_NULL(m_pTabBarBackgroundImage);
-    
-    if (m_pTabBar)
-    {
-        m_pTabBar->setBackgroundImage(CAImage::createWithColor4B(m_sTabBarBackgroundColor));
-    }
-}
-
-const CAColor4B& CATabBarController::getTabBarBackgroundColor()
-{
-    return m_sTabBarBackgroundColor;
-}
-
 void CATabBarController::setTabBarSelectedBackgroundImage(CrossApp::CAImage *var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedBackgroundImage);
     m_pTabBarSelectedBackgroundImage = var;
-    m_sTabBarSelectedBackgroundColor = CAColor4B::WHITE;
     
     if (m_pTabBar)
     {
@@ -1373,28 +1306,11 @@ CAImage* CATabBarController::getTabBarSelectedBackgroundImage()
     return m_pTabBarSelectedBackgroundImage;
 }
 
-void CATabBarController::setTabBarSelectedBackgroundColor(const CAColor4B &var)
-{
-    m_sTabBarSelectedBackgroundColor = var;
-    CC_SAFE_RELEASE_NULL(m_pTabBarSelectedBackgroundImage);
-    
-    if (m_pTabBar)
-    {
-        m_pTabBar->setSelectedBackgroundImage(CAImage::createWithColor4B(m_sTabBarSelectedBackgroundColor));
-    }
-}
-
-const CAColor4B& CATabBarController::getTabBarSelectedBackgroundColor()
-{
-    return m_sTabBarSelectedBackgroundColor;
-}
-
 void CATabBarController::setTabBarSelectedIndicatorImage(CrossApp::CAImage *var)
 {
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pTabBarSelectedIndicatorImage);
     m_pTabBarSelectedIndicatorImage = var;
-    m_sTabBarSelectedIndicatorColor = CAColor4B::WHITE;
     
     if (m_pTabBar)
     {
@@ -1405,22 +1321,6 @@ void CATabBarController::setTabBarSelectedIndicatorImage(CrossApp::CAImage *var)
 CAImage* CATabBarController::getTabBarSelectedIndicatorImage()
 {
     return m_pTabBarSelectedIndicatorImage;
-}
-
-void CATabBarController::setTabBarSelectedIndicatorColor(const CAColor4B &var)
-{
-    m_sTabBarSelectedIndicatorColor = var;
-    CC_SAFE_RELEASE_NULL(m_pTabBarSelectedIndicatorImage);
-    
-    if (m_pTabBar)
-    {
-        m_pTabBar->setSelectedIndicatorImage(CAImage::createWithColor4B(m_sTabBarSelectedIndicatorColor));
-    }
-}
-
-const CAColor4B& CATabBarController::getTabBarSelectedIndicatorColor()
-{
-    return m_sTabBarSelectedIndicatorColor;
 }
 
 void CATabBarController::setTabBarTitleColorForNormal(const CAColor4B &var)
@@ -1571,36 +1471,10 @@ void CATabBarController::viewDidLoad()
     m_pTabBar->onSelectedItem(CALLBACK_BIND_2(CATabBarController::tabBarSelectedItem, this));
     this->getView()->insertSubview(m_pTabBar, 1);
     
-    if (m_pTabBarBackgroundImage)
-    {
-        m_pTabBar->setBackgroundImage(m_pTabBarBackgroundImage);
-    }
-    else
-    {
-        m_pTabBar->setBackgroundImage(CAImage::createWithColor4B(m_sTabBarBackgroundColor));
-    }
-    
-    
-    if (m_pTabBarSelectedBackgroundImage)
-    {
-        m_pTabBar->setSelectedBackgroundImage(m_pTabBarSelectedBackgroundImage);
-    }
-    else
-    {
-        m_pTabBar->setSelectedBackgroundImage(CAImage::createWithColor4B(m_sTabBarSelectedBackgroundColor));
-    }
-    
-    
-    if (m_pTabBarSelectedIndicatorImage)
-    {
-        m_pTabBar->setSelectedIndicatorImage(m_pTabBarSelectedIndicatorImage);
-    }
-    else
-    {
-        m_pTabBar->setSelectedIndicatorImage(CAImage::createWithColor4B(m_sTabBarSelectedIndicatorColor));
-    }
-    
-    
+    m_pTabBar->setBackgroundImage(m_pTabBarBackgroundImage);
+    m_pTabBar->setSelectedBackgroundImage(m_pTabBarSelectedBackgroundImage);
+    m_pTabBar->setSelectedIndicatorImage(m_pTabBarSelectedIndicatorImage);
+
     m_pTabBar->setTitleColorForNormal(m_sTabBarTitleColor);
     m_pTabBar->setTitleColorForSelected(m_sTabBarSelectedTitleColor);
     m_pTabBar->setTitleBoldForSelected(m_bTabBarSelectedTitleBold);

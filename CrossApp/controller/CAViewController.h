@@ -158,8 +158,6 @@ public:
     CC_PROPERTY_IS(bool, m_bTouchMoved, TouchMoved);
 
     CC_PROPERTY(CAImage*, m_pNavigationBarBackgroundImage, NavigationBarBackgroundImage);
-
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarBackgroundColor, NavigationBarBackgroundColor);
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarTitleColor, NavigationBarTitleColor);
 
@@ -264,17 +262,11 @@ public:
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CATabBar::VerticalAlignment, m_eTabBarVerticalAlignment, TabBarVerticalAlignment);
     
     CC_PROPERTY(CAImage*, m_pTabBarBackgroundImage, TabBarBackgroundImage);
-    
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarBackgroundColor, TabBarBackgroundColor);
-    
+        
     CC_PROPERTY(CAImage*, m_pTabBarSelectedBackgroundImage, TabBarSelectedBackgroundImage);
-    
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedBackgroundColor, TabBarSelectedBackgroundColor);
-    
+        
     CC_PROPERTY(CAImage*, m_pTabBarSelectedIndicatorImage, TabBarSelectedIndicatorImage);
-    
-    CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedIndicatorColor, TabBarSelectedIndicatorColor);
-    
+        
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarTitleColor, TabBarTitleColorForNormal);
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedTitleColor, TabBarTitleColorForSelected);

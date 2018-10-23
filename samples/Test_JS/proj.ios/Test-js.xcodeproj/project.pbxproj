@@ -53,6 +53,7 @@
 		D62815DA1FE9169900E93520 /* script in Resources */ = {isa = PBXBuildFile; fileRef = D62815D91FE9169900E93520 /* script */; };
 		D6B1E7A61F20B2B800723750 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A51F20B2B800723750 /* CoreImage.framework */; };
 		D6B1E7A81F20B2BD00723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */; };
+		D6E0A747216B462900E592D8 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E0A746216B462900E592D8 /* UserNotifications.framework */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
 		EB1818D819388001002856FF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D719388001002856FF /* AddressBook.framework */; };
 		EB1818DA19388005002856FF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D919388005002856FF /* AddressBookUI.framework */; };
@@ -158,6 +159,7 @@
 		D62815D91FE9169900E93520 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		D6B1E7A51F20B2B800723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		D6E0A746216B462900E592D8 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB1818D719388001002856FF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		EB1818D919388005002856FF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -168,6 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6E0A747216B462900E592D8 /* UserNotifications.framework in Frameworks */,
 				D6B1E7A81F20B2BD00723750 /* CoreMedia.framework in Frameworks */,
 				D6B1E7A61F20B2B800723750 /* CoreImage.framework in Frameworks */,
 				480EDE961D9546E200C758DA /* libwebsockets.a in Frameworks */,
@@ -287,6 +290,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6E0A746216B462900E592D8 /* UserNotifications.framework */,
 				D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */,
 				D6B1E7A51F20B2B800723750 /* CoreImage.framework */,
 				480EDE041D9538EC00C758DA /* libiconv.tbd */,
