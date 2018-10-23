@@ -60,9 +60,13 @@ void CADevice::sendLocalNotification(const char* title, const char* content,int 
 {
 }
 
-void CADevice::openUrl(const std::string &url)
+void CADevice::openUrl(const std::string &url, const std::function<void(bool)>& callback)
 {
-    ::ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOW);
+    int errCode = ::ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOW);
+    if (callback)
+    {
+        callback(bool(errCode > 32));
+    }
 }
 
 void CADevice::setIdleTimerDisabled(bool isIdleTimerDisabled)

@@ -140,13 +140,18 @@ extern "C"
         }
     }
     
-    void JAVAOpenUrl(const std::string &url)
+    void JAVAOpenUrl(const std::string &url, const std::function<void(bool)>& callback)
     {
         JniMethodInfo jmi;
         if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "browserOpenURL" , "(Ljava/lang/String;)V"))
         {
             jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()));
             jmi.env->DeleteLocalRef(jmi.classID);
+        }
+
+        if (callback)
+        {
+            callback(true);
         }
     }
     

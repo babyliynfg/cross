@@ -57,7 +57,7 @@ public:
         
     static void sendLocalNotification(const char* title, const char* content, int leftMessage);
         
-    static void openUrl(const std::string &url);
+    static void openUrl(const std::string &url, const std::function<void(bool)>& callback = nullptr);
         
     static void setIdleTimerDisabled(bool isIdleTimerDisabled);
 };

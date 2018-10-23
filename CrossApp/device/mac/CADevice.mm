@@ -94,9 +94,13 @@ void CADevice::sendLocalNotification(const char* title, const char* content,int 
 {
 }
 
-void CADevice::openUrl(const std::string &url)
+void CADevice::openUrl(const std::string &url, const std::function<void(bool)>& callback)
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];
+    bool isOpen = [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];
+    if (callback)
+    {
+        callback(isOpen);
+    }
 }
 
 void CADevice::setIdleTimerDisabled(bool isIdleTimerDisabled)

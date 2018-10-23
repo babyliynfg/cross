@@ -341,15 +341,15 @@ public final class CrossAppBitmap {
      */
 	public static String autoSplitText( Paint tvPaint , String rawText ,  float tvWidth) {
 		
-		// ½«Ô­Ê¼ÎÄ±¾°´ÐÐ²ð·Ö
+		// ï¿½ï¿½Ô­Ê¼ï¿½Ä±ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½
 		String[] rawTextLines = rawText.replaceAll("\r", "").split("\n");
 		StringBuilder sbNewText = new StringBuilder();
 		for (String rawTextLine : rawTextLines) {
 			if (tvPaint.measureText(rawTextLine) <= tvWidth) {
-				// Èç¹ûÕûÐÐ¿í¶ÈÔÚ¿Ø¼þ¿ÉÓÃ¿í¶ÈÖ®ÄÚ£¬¾Í²»´¦ÀíÁË
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½ï¿½ï¿½Ú¿Ø¼ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Ö®ï¿½Ú£ï¿½ï¿½Í²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				sbNewText.append(rawTextLine);
 			} else {
-				// Èç¹ûÕûÐÐ¿í¶È³¬¹ý¿Ø¼þ¿ÉÓÃ¿í¶È£¬Ôò°´×Ö·û²âÁ¿£¬ÔÚ³¬¹ý¿ÉÓÃ¿í¶ÈµÄÇ°Ò»¸ö×Ö·û´¦ÊÖ¶¯»»ÐÐ
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½È³ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½È£ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½Èµï¿½Ç°Ò»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½
 				float lineWidth = 0;
 				for (int cnt = 0; cnt != rawTextLine.length(); ++cnt) {
 					char ch = rawTextLine.charAt(cnt);
@@ -366,7 +366,7 @@ public final class CrossAppBitmap {
 			sbNewText.append("\n");
 		}
 
-		// °Ñ½áÎ²¶àÓàµÄ\nÈ¥µô
+		// ï¿½Ñ½ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½\nÈ¥ï¿½ï¿½
 		if (!rawText.endsWith("\n")) {
 			sbNewText.deleteCharAt(sbNewText.length() - 1);
 		}
@@ -400,10 +400,9 @@ public final class CrossAppBitmap {
   public static float widthForTextAtOneLine(byte[] stringbyte ,  int fontSize)
   {
       String string=new String(stringbyte);
-	  TextPaint paint = new TextPaint();
-      paint.setTextSize(fontSize);
-      
-      return paint.measureText(string) ; 
+      TextPaint textPaint = new TextPaint();
+      textPaint.setTextSize(fontSize);//è®¾ç½®å­—ä½“å¤§å°
+      return Layout.getDesiredWidth(string,textPaint)+1 ;//é˜²æ­¢Androidä¸Šæ˜¾ç¤ºä¸å…¨ 
   }
 
     private static TextPaint newPaint(final String fontName, final int fontSize) {
@@ -499,7 +498,7 @@ public final class CrossAppBitmap {
     	        TextUtils.TruncateAt.END, false, new TextUtils.EllipsizeCallback() {
     	          @Override
     	          public void ellipsized(int start, int end) {
-    	            range[0] = start;  // µ¥ÐÐÎÄ±¾ËõÂÔÆðÊ¼
+    	            range[0] = start;  // ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼
     	          }
     	        });
     	    pos = start + range[0];
