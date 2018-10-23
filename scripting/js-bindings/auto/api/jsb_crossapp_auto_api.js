@@ -8487,13 +8487,13 @@ cacolor4b
 },
 
 /**
- * @method setNavigationBarButtonColor
- * @param {color4b_object} arg0
+ * @method popFirstViewController
+ * @return {ca.CAViewController}
  */
-setNavigationBarButtonColor : function (
-cacolor4b 
+popFirstViewController : function (
 )
 {
+    return ca.CAViewController;
 },
 
 /**
@@ -8514,16 +8514,6 @@ getBackViewController : function (
 )
 {
     return ca.CAViewController;
-},
-
-/**
- * @method getNavigationBarBackgroundColor
- * @return {color4b_object}
- */
-getNavigationBarBackgroundColor : function (
-)
-{
-    return ca.CAColor4B;
 },
 
 /**
@@ -8647,16 +8637,6 @@ bool
 },
 
 /**
- * @method getNavigationBarButtonColor
- * @return {color4b_object}
- */
-getNavigationBarButtonColor : function (
-)
-{
-    return ca.CAColor4B;
-},
-
-/**
  * @method isTouchMoved
  * @return {bool}
  */
@@ -8694,16 +8674,6 @@ isReachBoundaryLeft : function (
 )
 {
     return false;
-},
-
-/**
- * @method setNavigationBarBackgroundColor
- * @param {color4b_object} arg0
- */
-setNavigationBarBackgroundColor : function (
-cacolor4b 
-)
-{
 },
 
 /**
@@ -8759,13 +8729,13 @@ caimage
 },
 
 /**
- * @method popFirstViewController
- * @return {ca.CAViewController}
+ * @method getNavigationBarButtonColor
+ * @return {color4b_object}
  */
-popFirstViewController : function (
+getNavigationBarButtonColor : function (
 )
 {
-    return ca.CAViewController;
+    return ca.CAColor4B;
 },
 
 /**
@@ -8778,6 +8748,16 @@ int
 )
 {
     return ca.CAViewController;
+},
+
+/**
+ * @method setNavigationBarButtonColor
+ * @param {color4b_object} arg0
+ */
+setNavigationBarButtonColor : function (
+cacolor4b 
+)
+{
 },
 
 /**
@@ -8911,16 +8891,6 @@ getSelectedViewControllerAtIndex : function (
 },
 
 /**
- * @method getTabBarSelectedBackgroundColor
- * @return {color4b_object}
- */
-getTabBarSelectedBackgroundColor : function (
-)
-{
-    return ca.CAColor4B;
-},
-
-/**
  * @method showSelectedViewController
  * @param {ca.CAViewController} arg0
  * @return {bool}
@@ -8953,13 +8923,13 @@ bool
 },
 
 /**
- * @method getTabBarBackgroundColor
- * @return {color4b_object}
+ * @method getTabBar
+ * @return {ca.CATabBar}
  */
-getTabBarBackgroundColor : function (
+getTabBar : function (
 )
 {
-    return ca.CAColor4B;
+    return ca.CATabBar;
 },
 
 /**
@@ -8983,16 +8953,6 @@ getTabBarVerticalAlignment : function (
 },
 
 /**
- * @method getTabBarSelectedIndicatorColor
- * @return {color4b_object}
- */
-getTabBarSelectedIndicatorColor : function (
-)
-{
-    return ca.CAColor4B;
-},
-
-/**
  * @method getTabBarTitleBoldForSelected
  * @return {bool}
  */
@@ -9000,16 +8960,6 @@ getTabBarTitleBoldForSelected : function (
 )
 {
     return false;
-},
-
-/**
- * @method setTabBarSelectedIndicatorColor
- * @param {color4b_object} arg0
- */
-setTabBarSelectedIndicatorColor : function (
-cacolor4b 
-)
-{
 },
 
 /**
@@ -9067,26 +9017,6 @@ int
 },
 
 /**
- * @method setTabBarBackgroundColor
- * @param {color4b_object} arg0
- */
-setTabBarBackgroundColor : function (
-cacolor4b 
-)
-{
-},
-
-/**
- * @method setTabBarSelectedBackgroundColor
- * @param {color4b_object} arg0
- */
-setTabBarSelectedBackgroundColor : function (
-cacolor4b 
-)
-{
-},
-
-/**
  * @method isTabBarHidden
  * @return {bool}
  */
@@ -9094,16 +9024,6 @@ isTabBarHidden : function (
 )
 {
     return false;
-},
-
-/**
- * @method getTabBar
- * @return {ca.CATabBar}
- */
-getTabBar : function (
-)
-{
-    return ca.CATabBar;
 },
 
 /**
@@ -18711,9 +18631,11 @@ volumedata
 /**
  * @method openUrl
  * @param {String} arg0
+ * @param {function} arg1
  */
 openUrl : function (
-str 
+str, 
+func 
 )
 {
 },

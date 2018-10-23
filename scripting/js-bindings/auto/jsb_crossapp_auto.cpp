@@ -22234,25 +22234,30 @@ bool js_crossapp_CANavigationController_setNavigationBarTitleColor(JSContext *cx
     JS_ReportError(cx, "js_crossapp_CANavigationController_setNavigationBarTitleColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CANavigationController_setNavigationBarButtonColor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CANavigationController_popFirstViewController(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CANavigationController* cobj = (CrossApp::CANavigationController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_setNavigationBarButtonColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANavigationController_setNavigationBarButtonColor : Error processing arguments");
-        cobj->setNavigationBarButtonColor(arg0);
-        args.rval().setUndefined();
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_popFirstViewController : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CAViewController* ret = cobj->popFirstViewController();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAViewController>(cx, (CrossApp::CAViewController*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CANavigationController_setNavigationBarButtonColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_crossapp_CANavigationController_popFirstViewController : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CANavigationController_updateItem(JSContext *cx, uint32_t argc, jsval *vp)
@@ -22308,25 +22313,6 @@ bool js_crossapp_CANavigationController_getBackViewController(JSContext *cx, uin
     }
 
     JS_ReportError(cx, "js_crossapp_CANavigationController_getBackViewController : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CANavigationController_getNavigationBarBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CANavigationController* cobj = (CrossApp::CANavigationController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_getNavigationBarBackgroundColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getNavigationBarBackgroundColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CANavigationController_getNavigationBarBackgroundColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CANavigationController_getViewControllerCount(JSContext *cx, uint32_t argc, jsval *vp)
@@ -22600,25 +22586,6 @@ bool js_crossapp_CANavigationController_popViewControllerAnimated(JSContext *cx,
     JS_ReportError(cx, "js_crossapp_CANavigationController_popViewControllerAnimated : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CANavigationController_getNavigationBarButtonColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CANavigationController* cobj = (CrossApp::CANavigationController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_getNavigationBarButtonColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getNavigationBarButtonColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CANavigationController_getNavigationBarButtonColor : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CANavigationController_isTouchMoved(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -22693,27 +22660,6 @@ bool js_crossapp_CANavigationController_isReachBoundaryLeft(JSContext *cx, uint3
     }
 
     JS_ReportError(cx, "js_crossapp_CANavigationController_isReachBoundaryLeft : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CANavigationController_setNavigationBarBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CANavigationController* cobj = (CrossApp::CANavigationController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_setNavigationBarBackgroundColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANavigationController_setNavigationBarBackgroundColor : Error processing arguments");
-        cobj->setNavigationBarBackgroundColor(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CANavigationController_setNavigationBarBackgroundColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CANavigationController_setNavigationBarGoBackBarButtonItem(JSContext *cx, uint32_t argc, jsval *vp)
@@ -22849,30 +22795,23 @@ bool js_crossapp_CANavigationController_setNavigationBarBackgroundImage(JSContex
     JS_ReportError(cx, "js_crossapp_CANavigationController_setNavigationBarBackgroundImage : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CANavigationController_popFirstViewController(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CANavigationController_getNavigationBarButtonColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CANavigationController* cobj = (CrossApp::CANavigationController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_popFirstViewController : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_getNavigationBarButtonColor : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::CAViewController* ret = cobj->popFirstViewController();
+        const CrossApp::CAColor4B& ret = cobj->getNavigationBarButtonColor();
         jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAViewController>(cx, (CrossApp::CAViewController*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
+        jsret = cacolor4b_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CANavigationController_popFirstViewController : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CANavigationController_getNavigationBarButtonColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CANavigationController_popViewControllerAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -22903,6 +22842,27 @@ bool js_crossapp_CANavigationController_popViewControllerAtIndex(JSContext *cx, 
     }
 
     JS_ReportError(cx, "js_crossapp_CANavigationController_popViewControllerAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CANavigationController_setNavigationBarButtonColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANavigationController* cobj = (CrossApp::CANavigationController *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_setNavigationBarButtonColor : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::CAColor4B arg0;
+        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANavigationController_setNavigationBarButtonColor : Error processing arguments");
+        cobj->setNavigationBarButtonColor(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANavigationController_setNavigationBarButtonColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CANavigationController_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -22968,10 +22928,9 @@ void js_register_crossapp_CANavigationController(JSContext *cx, JS::HandleObject
 
     static JSFunctionSpec funcs[] = {
         JS_FN("setNavigationBarTitleColor", js_crossapp_CANavigationController_setNavigationBarTitleColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNavigationBarButtonColor", js_crossapp_CANavigationController_setNavigationBarButtonColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("popFirstViewController", js_crossapp_CANavigationController_popFirstViewController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("updateItem", js_crossapp_CANavigationController_updateItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBackViewController", js_crossapp_CANavigationController_getBackViewController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNavigationBarBackgroundColor", js_crossapp_CANavigationController_getNavigationBarBackgroundColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewControllerCount", js_crossapp_CANavigationController_getViewControllerCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNavigationBarHidden", js_crossapp_CANavigationController_setNavigationBarHidden, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("replaceViewController", js_crossapp_CANavigationController_replaceViewController, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -22983,19 +22942,18 @@ void js_register_crossapp_CANavigationController(JSContext *cx, JS::HandleObject
         JS_FN("initWithRootViewController", js_crossapp_CANavigationController_initWithRootViewController, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isReachBoundaryRight", js_crossapp_CANavigationController_isReachBoundaryRight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("popViewControllerAnimated", js_crossapp_CANavigationController_popViewControllerAnimated, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNavigationBarButtonColor", js_crossapp_CANavigationController_getNavigationBarButtonColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isTouchMoved", js_crossapp_CANavigationController_isTouchMoved, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNavigationBarTitleColor", js_crossapp_CANavigationController_getNavigationBarTitleColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isReachBoundaryUp", js_crossapp_CANavigationController_isReachBoundaryUp, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isReachBoundaryLeft", js_crossapp_CANavigationController_isReachBoundaryLeft, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNavigationBarBackgroundColor", js_crossapp_CANavigationController_setNavigationBarBackgroundColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNavigationBarGoBackBarButtonItem", js_crossapp_CANavigationController_setNavigationBarGoBackBarButtonItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isNavigationBarHidden", js_crossapp_CANavigationController_isNavigationBarHidden, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNavigationBarBackgroundImage", js_crossapp_CANavigationController_getNavigationBarBackgroundImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewControllerAtIndex", js_crossapp_CANavigationController_getViewControllerAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNavigationBarBackgroundImage", js_crossapp_CANavigationController_setNavigationBarBackgroundImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("popFirstViewController", js_crossapp_CANavigationController_popFirstViewController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getNavigationBarButtonColor", js_crossapp_CANavigationController_getNavigationBarButtonColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("popViewControllerAtIndex", js_crossapp_CANavigationController_popViewControllerAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setNavigationBarButtonColor", js_crossapp_CANavigationController_setNavigationBarButtonColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -23299,25 +23257,6 @@ bool js_crossapp_CATabBarController_getSelectedViewControllerAtIndex(JSContext *
     JS_ReportError(cx, "js_crossapp_CATabBarController_getSelectedViewControllerAtIndex : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CATabBarController_getTabBarSelectedBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATabBarController* cobj = (CrossApp::CATabBarController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBarController_getTabBarSelectedBackgroundColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getTabBarSelectedBackgroundColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATabBarController_getTabBarSelectedBackgroundColor : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CATabBarController_showSelectedViewController(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -23396,23 +23335,30 @@ bool js_crossapp_CATabBarController_setTabBarTitleBoldForSelected(JSContext *cx,
     JS_ReportError(cx, "js_crossapp_CATabBarController_setTabBarTitleBoldForSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATabBarController_getTabBarBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CATabBarController_getTabBar(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CATabBarController* cobj = (CrossApp::CATabBarController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBarController_getTabBarBackgroundColor : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBarController_getTabBar : Invalid Native Object");
     if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getTabBarBackgroundColor();
+        CrossApp::CATabBar* ret = cobj->getTabBar();
         jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CATabBar>(cx, (CrossApp::CATabBar*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CATabBarController_getTabBarBackgroundColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CATabBarController_getTabBar : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CATabBarController_getTabBarBackgroundImage(JSContext *cx, uint32_t argc, jsval *vp)
@@ -23460,25 +23406,6 @@ bool js_crossapp_CATabBarController_getTabBarVerticalAlignment(JSContext *cx, ui
     JS_ReportError(cx, "js_crossapp_CATabBarController_getTabBarVerticalAlignment : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CATabBarController_getTabBarSelectedIndicatorColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATabBarController* cobj = (CrossApp::CATabBarController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBarController_getTabBarSelectedIndicatorColor : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::CAColor4B& ret = cobj->getTabBarSelectedIndicatorColor();
-        jsval jsret = JSVAL_NULL;
-        jsret = cacolor4b_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATabBarController_getTabBarSelectedIndicatorColor : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CATabBarController_getTabBarTitleBoldForSelected(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -23496,27 +23423,6 @@ bool js_crossapp_CATabBarController_getTabBarTitleBoldForSelected(JSContext *cx,
     }
 
     JS_ReportError(cx, "js_crossapp_CATabBarController_getTabBarTitleBoldForSelected : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CATabBarController_setTabBarSelectedIndicatorColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATabBarController* cobj = (CrossApp::CATabBarController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBarController_setTabBarSelectedIndicatorColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATabBarController_setTabBarSelectedIndicatorColor : Error processing arguments");
-        cobj->setTabBarSelectedIndicatorColor(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATabBarController_setTabBarSelectedIndicatorColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CATabBarController_showTabBarSelectedIndicator(JSContext *cx, uint32_t argc, jsval *vp)
@@ -23646,48 +23552,6 @@ bool js_crossapp_CATabBarController_getViewControllerAtIndex(JSContext *cx, uint
     JS_ReportError(cx, "js_crossapp_CATabBarController_getViewControllerAtIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CATabBarController_setTabBarBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATabBarController* cobj = (CrossApp::CATabBarController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBarController_setTabBarBackgroundColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATabBarController_setTabBarBackgroundColor : Error processing arguments");
-        cobj->setTabBarBackgroundColor(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATabBarController_setTabBarBackgroundColor : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_crossapp_CATabBarController_setTabBarSelectedBackgroundColor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATabBarController* cobj = (CrossApp::CATabBarController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBarController_setTabBarSelectedBackgroundColor : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAColor4B arg0;
-        ok &= jsval_to_cacolor4b(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATabBarController_setTabBarSelectedBackgroundColor : Error processing arguments");
-        cobj->setTabBarSelectedBackgroundColor(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATabBarController_setTabBarSelectedBackgroundColor : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CATabBarController_isTabBarHidden(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -23705,32 +23569,6 @@ bool js_crossapp_CATabBarController_isTabBarHidden(JSContext *cx, uint32_t argc,
     }
 
     JS_ReportError(cx, "js_crossapp_CATabBarController_isTabBarHidden : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CATabBarController_getTabBar(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CATabBarController* cobj = (CrossApp::CATabBarController *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBarController_getTabBar : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CATabBar* ret = cobj->getTabBar();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CATabBar>(cx, (CrossApp::CATabBar*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CATabBarController_getTabBar : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CATabBarController_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -23806,25 +23644,19 @@ void js_register_crossapp_CATabBarController(JSContext *cx, JS::HandleObject glo
         JS_FN("setTabBarSelectedIndicatorImage", js_crossapp_CATabBarController_setTabBarSelectedIndicatorImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarTitleColorForSelected", js_crossapp_CATabBarController_getTabBarTitleColorForSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSelectedViewControllerAtIndex", js_crossapp_CATabBarController_getSelectedViewControllerAtIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTabBarSelectedBackgroundColor", js_crossapp_CATabBarController_getTabBarSelectedBackgroundColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("showSelectedViewController", js_crossapp_CATabBarController_showSelectedViewController, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarSelectedBackgroundImage", js_crossapp_CATabBarController_getTabBarSelectedBackgroundImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTabBarTitleBoldForSelected", js_crossapp_CATabBarController_setTabBarTitleBoldForSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTabBarBackgroundColor", js_crossapp_CATabBarController_getTabBarBackgroundColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTabBar", js_crossapp_CATabBarController_getTabBar, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarBackgroundImage", js_crossapp_CATabBarController_getTabBarBackgroundImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarVerticalAlignment", js_crossapp_CATabBarController_getTabBarVerticalAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTabBarSelectedIndicatorColor", js_crossapp_CATabBarController_getTabBarSelectedIndicatorColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarTitleBoldForSelected", js_crossapp_CATabBarController_getTabBarTitleBoldForSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTabBarSelectedIndicatorColor", js_crossapp_CATabBarController_setTabBarSelectedIndicatorColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("showTabBarSelectedIndicator", js_crossapp_CATabBarController_showTabBarSelectedIndicator, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarSelectedIndicatorImage", js_crossapp_CATabBarController_getTabBarSelectedIndicatorImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithViewControllers", js_crossapp_CATabBarController_initWithViewControllers, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTabBarTitleColorForNormal", js_crossapp_CATabBarController_getTabBarTitleColorForNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewControllerAtIndex", js_crossapp_CATabBarController_getViewControllerAtIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTabBarBackgroundColor", js_crossapp_CATabBarController_setTabBarBackgroundColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTabBarSelectedBackgroundColor", js_crossapp_CATabBarController_setTabBarSelectedBackgroundColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isTabBarHidden", js_crossapp_CATabBarController_isTabBarHidden, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTabBar", js_crossapp_CATabBarController_getTabBar, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -50279,6 +50111,37 @@ bool js_crossapp_CADevice_openUrl(JSContext *cx, uint32_t argc, jsval *vp)
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADevice_openUrl : Error processing arguments");
         CrossApp::CADevice::openUrl(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 2) {
+        std::string arg0;
+        std::function<void (bool)> arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        do {
+		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(1)));
+		        auto lambda = [=, &ok](bool larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = BOOLEAN_TO_JSVAL(larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADevice_openUrl : Error processing arguments");
+        CrossApp::CADevice::openUrl(arg0, arg1);
         args.rval().setUndefined();
         return true;
     }
