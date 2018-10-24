@@ -225,9 +225,9 @@ void CADevice::sendLocalNotification(const char* title, const char* content, int
     JAVAsendLocalNotification(title, content, leftMessage);
 }
 
-void CADevice::openUrl(const std::string &url)
+void CADevice::openUrl(const std::string &url, const std::function<void(bool)>& callback)
 {
-    JAVAOpenUrl(url);
+    JAVAOpenUrl(url, callback);
 }
 
 void CADevice::setIdleTimerDisabled(bool isIdleTimerDisabled)
