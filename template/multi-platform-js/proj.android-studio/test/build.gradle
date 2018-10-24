@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "28.0.3"
+
+    defaultConfig {
+        applicationId "org.CrossApp.test"
+        minSdkVersion 14
+        targetSdkVersion 19
+        externalNativeBuild {
+            ndkBuild {
+                arguments 'NDK_TOOLCHAIN_VERSION=clang'
+            }
+        }
+
+        ndk {
+            abiFilters 'armeabi'
+            moduleName "CrossApp_cpp_shared"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['../../Resources']
+        }
+    }
+}
+
+dependencies {
+    implementation project(':proj.android-studio')
+}

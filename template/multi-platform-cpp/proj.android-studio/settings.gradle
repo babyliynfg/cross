@@ -1,0 +1,4 @@
+include  ':proj.android-studio'
+project (':proj.android-studio').projectDir = new File(settingsDir,'../../../CrossApp/proj.android-studio')
+
+include ':test'
