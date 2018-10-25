@@ -7,10 +7,16 @@
 //
 
 #include "../CADevice.h"
+#include "basics/CAScheduler.h"
+#include <map>
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 
 NS_CC_BEGIN
+
+
+static std::map<std::string , std::function<void(bool isSuccess)> > s_browserOpenURLCallBack_map;
+
 extern "C"
 {
     const char* JAVAGetSystemVersion()
@@ -151,7 +157,7 @@ extern "C"
 
         if (callback)
         {
-            callback(true);
+            s_browserOpenURLCallBack_map[url]=  callback;
         }
     }
     
@@ -235,4 +241,25 @@ void CADevice::setIdleTimerDisabled(bool isIdleTimerDisabled)
     int type = isIdleTimerDisabled ? 1 : 0;
     JAVASetIdleTimerDisabled(type);
 }
+
+extern "C"
+{
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppNativeTool_browserOpenURLCallBack
+    ( JNIEnv* env,jclass thiz ,jstring url,jboolean isSuccess)
+    {
+        const char* str = env->GetStringUTFChars(url, false);
+        
+        CAScheduler::getScheduler()->performFunctionInUIThread( [=]()
+                                                               {
+                                                                   if (s_browserOpenURLCallBack_map.count(str))
+                                                                   {
+                                                                       s_browserOpenURLCallBack_map[str](isSuccess == JNI_TRUE);
+                                                                       s_browserOpenURLCallBack_map.erase(str);
+                                                                    
+                                                                   }
+                                                                
+                                                               });
+    }
+}
+
 NS_CC_END

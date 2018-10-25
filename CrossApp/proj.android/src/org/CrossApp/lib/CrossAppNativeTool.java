@@ -139,6 +139,8 @@ public class CrossAppNativeTool
 	            Settings.System.SCREEN_BRIGHTNESS, value);
 	}	
 	
+	public static native void  browserOpenURLCallBack(String url,boolean isSuccess);
+	
 	public static void browserOpenURL(final String url)
 	{
 		s_pContext.runOnUiThread(new Runnable()
@@ -152,11 +154,13 @@ public class CrossAppNativeTool
 					Intent intent = new Intent();
 					intent.setAction("android.intent.action.VIEW");
 					Uri content_url = Uri.parse(url);
-					intent.setData(content_url);
-					s_pContext.startActivity(intent);
+					intent.setData(content_url);		
+					s_pContext.startActivity(intent);				
+					browserOpenURLCallBack(url,true);
 				} 
 				catch (Exception e) 
 				{
+					browserOpenURLCallBack(url,false);
 					Log.d("CrossApp", "browserOpenURL", e);
 				}
 			}
