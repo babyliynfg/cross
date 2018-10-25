@@ -306,41 +306,49 @@ void CANavigationBar::showLeftButton()
         }
         else if (item)
         {
-            CAImage* image = item->getImage();
-            
-            if (image)
+            if (item->getCustomView())
             {
-                float ratio = image->getAspectRatio();
-                button->setImageSize(DSize(item->getImageWidth(), item->getImageWidth() / ratio));
-                button->setImageOffset(DSize(item->getImageOffsetX(), 0));
-                button->setImageForState(CAControl::State::Normal, image);
+                CAView* view = item->getCustomView();
+                view->setLayout(DLayoutFill);
+                button->addSubview(view);
+            }
+            else
+            {
+                CAImage* image = item->getImage();
                 
-                if (item->getHighlightedImage())
+                if (image)
                 {
-                    button->setImageForState(CAControl::State::Highlighted, item->getHighlightedImage());
+                    float ratio = image->getAspectRatio();
+                    button->setImageSize(DSize(item->getImageWidth(), item->getImageWidth() / ratio));
+                    button->setImageOffset(DSize(item->getImageOffsetX(), 0));
+                    button->setImageForState(CAControl::State::Normal, image);
+                    
+                    if (item->getHighlightedImage())
+                    {
+                        button->setImageForState(CAControl::State::Highlighted, item->getHighlightedImage());
+                    }
+                    else
+                    {
+                        button->setImageColorForState(CAControl::State::Highlighted, CAColor4B(127, 127, 127, 255));
+                    }
                 }
-                else
+                
+                std::string title = item->getTitle();
+                if (!title.empty())
                 {
-                    button->setImageColorForState(CAControl::State::Highlighted, CAColor4B(127, 127, 127, 255));
+                    button->setTitleForState(CAControl::State::Normal, title);
+                    button->setTitleLabelSize(DSize(item->getLabelWidth(), 44));
+                    button->setTitleOffset(DSize(item->getLabelOffsetX(), 0));
+                    button->setTitleForState(CAControl::State::Normal, item->getTitle());
+                    button->setTitleForState(CAControl::State::Highlighted, item->getTitle());
+                    button->setTitleColorForState(CAControl::State::Normal, m_cButtonColor);
+                    button->setTitleColorForState(CAControl::State::Highlighted, CAColor4B(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
                 }
+                
             }
-            
-            std::string title = item->getTitle();
-            if (!title.empty())
-            {
-                button->setTitleForState(CAControl::State::Normal, title);
-                button->setTitleLabelSize(DSize(item->getLabelWidth(), 44));
-                button->setTitleOffset(DSize(item->getLabelOffsetX(), 0));
-                button->setTitleForState(CAControl::State::Normal, item->getTitle());
-                button->setTitleForState(CAControl::State::Highlighted, item->getTitle());
-                button->setTitleColorForState(CAControl::State::Normal, m_cButtonColor);
-                button->setTitleColorForState(CAControl::State::Highlighted, CAColor4B(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
-            }
-            
             button->addTarget(item->getCallbackFunction(), CAButton::Event::TouchUpInSide);
         }
         m_pLeftButtons.push_back(button);
-        
         layout.horizontal.left += layout.horizontal.width;
     }
 }
