@@ -8,21 +8,51 @@
 package org.CrossApp.lib;
 
 public final class R {
+    public static final class anim {
+        public static int push_up_in=0x7f040000;
+        public static int push_up_out=0x7f040001;
+    }
     public static final class attr {
     }
     public static final class drawable {
-        public static int img_cross_alert_def_01=0x7f020000;
-        public static int img_cross_alert_def_02=0x7f020001;
-        public static int img_cross_alert_def_03=0x7f020002;
-        public static int img_cross_alert_def_04=0x7f020003;
-        public static int img_cross_alert_def_05=0x7f020004;
-        public static int img_cross_alert_sel_01=0x7f020005;
-        public static int img_cross_alert_sel_02=0x7f020006;
-        public static int img_cross_alert_sel_03=0x7f020007;
-        public static int img_cross_alert_sel_04=0x7f020008;
-        public static int selector_crossapp_alert_01=0x7f020009;
-        public static int selector_crossapp_alert_02=0x7f02000a;
-        public static int selector_crossapp_alert_03=0x7f02000b;
-        public static int selector_crossapp_alert_04=0x7f02000c;
+        public static int actionsheet_bottom_normal=0x7f020000;
+        public static int actionsheet_bottom_pressed=0x7f020001;
+        public static int actionsheet_bottom_selector=0x7f020002;
+        public static int actionsheet_middle_normal=0x7f020003;
+        public static int actionsheet_middle_pressed=0x7f020004;
+        public static int actionsheet_middle_selector=0x7f020005;
+        public static int actionsheet_single_normal=0x7f020006;
+        public static int actionsheet_single_pressed=0x7f020007;
+        public static int actionsheet_single_selector=0x7f020008;
+        public static int actionsheet_top_normal=0x7f020009;
+        public static int actionsheet_top_pressed=0x7f02000a;
+        public static int actionsheet_top_selector=0x7f02000b;
+        public static int img_cross_alert_def_01=0x7f02000c;
+        public static int img_cross_alert_def_02=0x7f02000d;
+        public static int img_cross_alert_def_03=0x7f02000e;
+        public static int img_cross_alert_def_04=0x7f02000f;
+        public static int img_cross_alert_def_05=0x7f020010;
+        public static int img_cross_alert_sel_01=0x7f020011;
+        public static int img_cross_alert_sel_02=0x7f020012;
+        public static int img_cross_alert_sel_03=0x7f020013;
+        public static int img_cross_alert_sel_04=0x7f020014;
+        public static int selector_crossapp_alert_01=0x7f020015;
+        public static int selector_crossapp_alert_02=0x7f020016;
+        public static int selector_crossapp_alert_03=0x7f020017;
+        public static int selector_crossapp_alert_04=0x7f020018;
+    }
+    public static final class id {
+        public static int cancel_txt=0x7f060002;
+        public static int tv_album_txt=0x7f060001;
+        public static int tv_camera_txt=0x7f060000;
+    }
+    public static final class layout {
+        public static int dlg_actionsheet=0x7f030000;
+    }
+    public static final class style {
+        public static int ActionSheet=0x7f050001;
+        /**  ActionSheet 
+         */
+        public static int ActionSheetAnimation=0x7f050000;
     }
 }

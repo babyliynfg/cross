@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,6 +20,7 @@ import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 import com.tencent.smtt.sdk.WebView;
@@ -65,7 +67,7 @@ public class CrossAppWebView extends WebView {
         }
 
         this.setWebViewClient(new CrossAppWebViewClient());
-        this.setWebChromeClient(new WebChromeClient());
+        this.setWebChromeClient(new MyWebChromeClient());
     }
 
     @Override
@@ -186,4 +188,37 @@ public class CrossAppWebView extends WebView {
         layoutParams.height = height;
         this.setLayoutParams(layoutParams);
     }
+    public class MyWebChromeClient extends WebChromeClient {
+
+        // Android 3.0 以下
+        public void openFileChooser(ValueCallback<Uri> valueCallback) {
+            CrossAppActivity.getContext().getOnValueCallbackListenner().OnValueCallback(valueCallback);
+        }
+
+        // Android 3~4.1
+        public void openFileChooser(ValueCallback valueCallback, String acceptType) {
+            CrossAppActivity.getContext().getOnValueCallbackListenner().OnValueCallback(valueCallback,acceptType);
+        }
+
+        // Android  4.1以上
+        public void openFileChooser(ValueCallback<Uri> valueCallback, String acceptType, String capture) {
+            CrossAppActivity.getContext().getOnValueCallbackListenner().OnValueCallback(valueCallback,acceptType,capture);
+        }
+
+        // Android 5.0以上
+        @Override
+        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
+            CrossAppActivity.getContext().getOnValueCallbackListenner().OnValueCallback(webView,filePathCallback,fileChooserParams);
+            return true;
+        }
+    }
+     public interface  OnValueCallbackListenner{
+         void  OnValueCallback(ValueCallback<Uri> valueCallback);
+         void  OnValueCallback(ValueCallback valueCallback, String acceptType);
+         void  OnValueCallback(ValueCallback<Uri> valueCallback, String acceptType, String capture);
+         void  OnValueCallback(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) ;
+
+         }
+
+
 }

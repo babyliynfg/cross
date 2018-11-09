@@ -82,6 +82,11 @@ public class CrossAppNativeTool
 			intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 			s_pContext.startActivityForResult(intent,1);
 		}
+		else if(type == 3)
+        {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            s_pContext.startActivityForResult(intent,5);
+        }
 	}
 	
 	public static void CAVideoCapture()
@@ -114,7 +119,14 @@ public class CrossAppNativeTool
 			intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 			s_pContext.startActivityForResult(intent, selectedType);
 	}
-	
+	  public static void CAWebViewImageAlbum(int requestCode)
+	    {
+	        Intent intent = new Intent();
+	        intent.setType("image/*");//可选择图片视频
+	        intent.setAction(Intent.ACTION_PICK);
+	        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+	        s_pContext.startActivityForResult(intent, requestCode);
+	    }
 	public static int getScreenBrightness() 
 	{
 	    int value = 0;
@@ -294,13 +306,35 @@ public class CrossAppNativeTool
 				}
 
             	break;
- 
+            case 5:
+                Uri originalUri5;
+                if (intent != null && intent.getData() != null)
+                {
+                    originalUri5= intent.getData();
+                }
+                else
+                {
+                    originalUri5= photoUri;
+                }
+                if( CrossAppActivity.getContext().getValueCallback()!=null){
+                    CrossAppActivity.getContext().getValueCallback().onReceiveValue(originalUri5);
+                    CrossAppActivity.getContext().setValueCallback(null);
+                }
+                if(  CrossAppActivity.getContext().getValueCallbackUri()!=null){
+                    CrossAppActivity.getContext().getValueCallbackUri().onReceiveValue(originalUri5);
+                    CrossAppActivity.getContext().setValueCallbackUri(null);
+                }
+                if(  CrossAppActivity.getContext().getValueCallbackUriArry()!=null){
+                    CrossAppActivity.getContext().getValueCallbackUriArry().onReceiveValue(new Uri[]{originalUri5});
+                    CrossAppActivity.getContext().setValueCallbackUriArry(null);
+                }
+            break;
             default:  
                 break;  
             }  
         }
+        CrossAppActivity.getContext().cancelCallback();
        
-        
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT) @SuppressLint("NewApi") 

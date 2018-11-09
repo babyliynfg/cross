@@ -9,26 +9,32 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import org.CrossApp.lib.CrossAppVolumeControl;
-import org.CrossApp.lib.CrossAppNetWorkManager;
-import org.CrossApp.lib.CrossAppDevice;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
 
 @SuppressLint("HandlerLeak")
 public abstract class CrossAppActivity extends Activity implements CrossAppHelperListener {
@@ -353,4 +359,152 @@ public void init()
    }
 
 
+   public  CrossAppWebView.OnValueCallbackListenner getOnValueCallbackListenner(){
+    	return onValueCallbackListenner;
+   };
+	private ValueCallback valueCallback;
+	private ValueCallback<Uri> valueCallbackUri;
+	private  ValueCallback<Uri[]> valueCallbackUriArry;
+
+	public  ValueCallback getValueCallback(){
+		return valueCallback;
+	}
+
+	public  void setValueCallback(ValueCallback valueCallback){
+		this.valueCallback=valueCallback;
+	}
+	public  ValueCallback<Uri> getValueCallbackUri(){
+		return valueCallbackUri;
+	}
+
+	public  void setValueCallbackUri(ValueCallback<Uri> valueCallback){
+		this.valueCallbackUri=valueCallback;
+	}
+	public  ValueCallback<Uri[]> getValueCallbackUriArry(){
+		return valueCallbackUriArry;
+	}
+
+	public  void setValueCallbackUriArry(ValueCallback<Uri[]> valueCallback){
+		this.valueCallbackUriArry=valueCallback;
+	}
+
+    private CrossAppWebView.OnValueCallbackListenner onValueCallbackListenner=new CrossAppWebView.OnValueCallbackListenner() {
+		@Override
+		public void OnValueCallback(ValueCallback<Uri> valueCallback) {
+			Log.d("ceshi","回调1");
+			showBottomDialog();
+			setValueCallback(valueCallback);
+		}
+
+		@Override
+		public void OnValueCallback(ValueCallback valueCallback, String acceptType) {
+			Log.d("ceshi","回调2");
+			showBottomDialog();
+			setValueCallbackUri(valueCallback);
+
+		}
+
+		@Override
+		public void OnValueCallback(ValueCallback<Uri> valueCallback, String acceptType, String capture) {
+				Log.d("ceshi","回调3");
+			showBottomDialog();
+				setValueCallbackUri(valueCallback);
+		}
+
+		@Override
+		public void OnValueCallback(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
+Log.d("ceshi","回调4");
+			showBottomDialog();
+			setValueCallbackUriArry(filePathCallback);
+		}
+	};
+
+
+	  boolean isvalid =false;
+
+    private void showBottomDialog() {
+
+		isvalid=false;
+
+		final Dialog   dialog = new Dialog(CrossAppActivity.getContext(), R.style.ActionSheet);
+            LayoutInflater inflater = (LayoutInflater) CrossAppActivity.getContext()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View mDlgCallView = inflater.inflate(R.layout.dlg_actionsheet, null);
+            final int cFullFillWidth = 10000;
+            mDlgCallView.setMinimumWidth(cFullFillWidth);
+            TextView tv_camera_txt = (TextView) mDlgCallView
+                    .findViewById(R.id.tv_camera_txt);
+            TextView tv_album_txt = (TextView) mDlgCallView
+                    .findViewById(R.id.tv_album_txt);
+
+            TextView cancel_txt = (TextView) mDlgCallView
+                    .findViewById(R.id.cancel_txt);
+
+			tv_camera_txt.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+					isvalid=true;
+                	nativeTool.CAImageCapture(3);
+					dialog.dismiss();
+                }
+            });
+			tv_album_txt.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+					isvalid=true;
+					nativeTool.CAWebViewImageAlbum(5);
+					dialog.dismiss();
+                }
+            });
+
+			dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+				@Override
+				public void onDismiss(DialogInterface dialogInterface) {
+                     if(!isvalid){
+		                 cancelCallback();
+                      }
+	                 Log.d("ceshi","xiaoshi");
+				}
+			});
+
+			cancel_txt.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+					Log.d("ceshi","点击取消");
+					dialog.dismiss();
+                }
+            });
+
+            Window w = dialog.getWindow();
+            WindowManager.LayoutParams lp = w.getAttributes();
+            lp.x = 0;
+
+            final int cMakeBottom = -1000;
+            lp.y = cMakeBottom;
+            lp.gravity = Gravity.BOTTOM;
+            dialog.onWindowAttributesChanged(lp);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.setCancelable(true);
+            dialog.setContentView(mDlgCallView);
+            dialog.show();
+    }
+
+	public void cancelCallback() {
+	    if(getValueCallback()!=null){
+			getValueCallback().onReceiveValue(null);
+		}
+		if(getValueCallbackUri()!=null){
+			getValueCallbackUri().onReceiveValue(null);
+		}
+		if(getValueCallbackUriArry()!=null){
+			getValueCallbackUriArry().onReceiveValue(null);
+		}
+		setValueCallback(null);
+		setValueCallbackUri(null);
+		setValueCallbackUriArry(null);
+	}
 }

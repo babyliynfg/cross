@@ -143,9 +143,8 @@ USING_NS_CC;
     {
         [self setupWebView];
     }
-    
     NSURL *url = [NSURL URLWithString:@(urlString.c_str())];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy: NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0f];
     [self.uiWebView loadRequest:request];
 }
 
@@ -157,7 +156,7 @@ USING_NS_CC;
     }
     
     NSURL *url = [NSURL fileURLWithPath:@(filePath.c_str())];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy: NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0f];
     [self.uiWebView loadRequest:request];
 }
 
