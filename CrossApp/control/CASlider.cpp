@@ -363,12 +363,12 @@ void CASlider::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CASlider::setTarget(const std::function<void(float)>& function)
 {
-    m_function = function;
+    if (function) m_function = function;
 }
 
 void CASlider::setTargetForTouchUpSide(const std::function<void(float)>& function)
 {
-    m_functionTouchUpSide = function;
+    if (function) m_functionTouchUpSide = function;
 }
 
 void CASlider::setContentSize(const DSize & var)

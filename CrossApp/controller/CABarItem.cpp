@@ -77,6 +77,10 @@ bool CABarButtonItem::initWithCustomView(CAView* customView)
 {
     CC_SAFE_RETAIN(customView);
     m_pCustomView = customView;
+    if (m_pCustomView->getLayout().equals(DLayoutZero))
+    {
+        m_pCustomView->setLayout(DLayoutFill);
+    }
     return true;
 }
 

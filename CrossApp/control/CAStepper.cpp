@@ -559,7 +559,7 @@ void CAStepper::setContentSize(const DSize & var)
 
 void CAStepper::setTarget(const std::function<void(float)>& function)
 {
-    m_function = function;
+    if (function) m_function = function;
 }
 
 NS_CC_END

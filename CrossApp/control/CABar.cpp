@@ -308,9 +308,7 @@ void CANavigationBar::showLeftButton()
         {
             if (item->getCustomView())
             {
-                CAView* view = item->getCustomView();
-                view->setLayout(DLayoutFill);
-                button->addSubview(view);
+                button->addSubview(item->getCustomView());
             }
             else
             {
@@ -385,9 +383,7 @@ void CANavigationBar::showRightButton()
         {
             if (item->getCustomView())
             {
-                CAView* view = item->getCustomView();
-                view->setLayout(DLayoutFill);
-                button->addSubview(view);
+                button->addSubview(item->getCustomView());
             }
             else
             {

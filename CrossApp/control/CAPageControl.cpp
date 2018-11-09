@@ -264,7 +264,7 @@ CAPageControl::Style CAPageControl::getStyle()
 
 void CAPageControl::setTarget(const std::function<void(int)>& function)
 {
-    m_function = function;
+    if (function) m_function = function;
 }
 
 NS_CC_END

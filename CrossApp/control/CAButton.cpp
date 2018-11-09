@@ -664,7 +664,7 @@ const CAFont& CAButton::getTitleFont()
 
 void CAButton::addTarget(const std::function<void()>& function, CAButton::Event event)
 {
-    m_mFunctions[event] = function;
+    if (function) m_mFunctions[event] = function;
 }
 
 void CAButton::callBackFunction(CAButton::Event event)

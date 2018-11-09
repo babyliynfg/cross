@@ -54,7 +54,7 @@ void CAAlertView::show()
 }
 void CAAlertView::show(const std::function<void(int)>& callback)
 {
-    m_callback = callback;
+    if (callback) m_callback = callback;
     s_gMessageBoxs.insert(m_u__ID, this);
     
     std::vector<std::string> buttonTitles = m_vButtonTitles;
