@@ -146,6 +146,7 @@ USING_NS_CC;
     NSURL *url = [NSURL URLWithString:@(urlString.c_str())];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy: NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0f];
     [self.uiWebView loadRequest:request];
+    [request autorelease];
 }
 
 - (void)loadFile:(const std::string &)filePath
@@ -158,6 +159,7 @@ USING_NS_CC;
     NSURL *url = [NSURL fileURLWithPath:@(filePath.c_str())];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy: NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0f];
     [self.uiWebView loadRequest:request];
+    [request autorelease];
 }
 
 - (void)stopLoading
