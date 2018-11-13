@@ -112,7 +112,6 @@ public class CrossAppWebView extends WebView {
     class CrossAppWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, final String urlString) {
-            Log.d("ceshi", urlString + "--------)uri.getScheme()");
             if (urlString.startsWith("weixin://wap/pay?")) {
                 try {
                     Intent intent = new Intent();
