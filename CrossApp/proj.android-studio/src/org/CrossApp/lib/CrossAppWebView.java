@@ -56,7 +56,7 @@ public class CrossAppWebView extends WebView {
         this.getSettings().setJavaScriptEnabled(true);
         this.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
         this.getSettings().setUseWideViewPort(true);
-
+        this.getSettings().setDomStorageEnabled(true);
         this.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
         this.getSettings().setLoadWithOverviewMode(true);
 
