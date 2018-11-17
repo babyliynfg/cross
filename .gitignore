@@ -45,6 +45,7 @@ bin/
 obj/
 gen/
 assets/
+.metadata/
 #local.properties
 
 
