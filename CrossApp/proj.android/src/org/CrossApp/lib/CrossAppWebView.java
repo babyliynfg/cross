@@ -56,7 +56,7 @@ public class CrossAppWebView extends WebView {
         this.getSettings().setJavaScriptEnabled(true);
         this.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
         this.getSettings().setUseWideViewPort(true);
-
+        this.getSettings().setDomStorageEnabled(true);
         this.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
         this.getSettings().setLoadWithOverviewMode(true);
 
@@ -119,7 +119,7 @@ public class CrossAppWebView extends WebView {
                     intent.setData(Uri.parse(urlString));
                     CrossAppActivity.getContext().startActivity(intent);
                 } catch (Exception exception) {
-                    Toast.makeText(CrossAppActivity.getContext(), "支付失败,请重试", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrossAppActivity.getContext(), "���浠�澶辫触,璇烽��璇�", Toast.LENGTH_SHORT).show();
                 }
                 CrossAppActivity.getContext().runOnGLThread(new Runnable() {
                     @Override
@@ -137,7 +137,7 @@ public class CrossAppWebView extends WebView {
                     intent.setComponent(null);
                     CrossAppActivity.getContext().startActivity(intent);
                 } catch (Exception exception) {
-                    Toast.makeText(CrossAppActivity.getContext(), "支付失败,请重试", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrossAppActivity.getContext(), "���浠�澶辫触,璇烽��璇�", Toast.LENGTH_SHORT).show();
                 }
                 CrossAppActivity.getContext().runOnGLThread(new Runnable() {
                     @Override
@@ -224,7 +224,7 @@ public class CrossAppWebView extends WebView {
 
     public class MyWebChromeClient extends WebChromeClient {
 
-        // Android 3.0 以下
+        // Android 3.0 浠ヤ��
         public void openFileChooser(ValueCallback<Uri> valueCallback) {
             CrossAppActivity.getContext().getOnValueCallbackListenner().OnValueCallback(valueCallback);
         }
@@ -234,12 +234,12 @@ public class CrossAppWebView extends WebView {
             CrossAppActivity.getContext().getOnValueCallbackListenner().OnValueCallback(valueCallback, acceptType);
         }
 
-        // Android  4.1以上
+        // Android  4.1浠ヤ��
         public void openFileChooser(ValueCallback<Uri> valueCallback, String acceptType, String capture) {
             CrossAppActivity.getContext().getOnValueCallbackListenner().OnValueCallback(valueCallback, acceptType, capture);
         }
 
-        // Android 5.0以上
+        // Android 5.0浠ヤ��
         @Override
         public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
             CrossAppActivity.getContext().getOnValueCallbackListenner().OnValueCallback(webView, filePathCallback, fileChooserParams);

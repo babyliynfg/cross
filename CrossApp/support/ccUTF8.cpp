@@ -196,6 +196,47 @@ long getCharacterCountInUTF8String(const std::string& utf8)
     return getUTF8StringLength((const UTF8*)utf8.c_str());
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
+    {
+        std::string utf8Str;
+        const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
+        size_t unicodeCharLength = env->GetStringLength(srcjStr);
+        const std::u16string unicodeStr((const char16_t *)unicodeChar, unicodeCharLength);
+        bool flag = UTF16ToUTF8(unicodeStr, utf8Str);
+        
+        if (ret)
+        {
+            *ret = flag;
+        }
+        
+        if (!flag)
+        {
+            utf8Str = "";
+        }
+        env->ReleaseStringChars(srcjStr, unicodeChar);
+        return utf8Str;
+    }
+    
+    jstring newStringUTFJNI(JNIEnv* env, const std::string& utf8Str, bool* ret)
+    {
+        std::u16string utf16Str;
+        bool flag = CrossApp::StringUtils::UTF8ToUTF16(utf8Str, utf16Str);
+        
+        if (ret)
+        {
+            *ret = flag;
+        }
+        
+        if(!flag)
+        {
+            utf16Str.clear();
+        }
+        jstring stringText = env->NewString((const jchar*)utf16Str.data(), utf16Str.length());
+        return stringText;
+    }
+#endif
+    
 } //namespace StringUtils {
 
 NS_CC_END
