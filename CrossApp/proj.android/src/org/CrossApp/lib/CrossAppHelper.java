@@ -70,7 +70,7 @@ public class CrossAppHelper {
 	// ===========================================================
 	// Methods
 	// ===========================================================
-	public static native int evalString(String value);
+	public static native int evalString(final String value);
 	private static native void nativeSetApkPath(final String pApkPath);
 
 	private static native void nativeSetEditTextDialogResult(final byte[] pBytes);
