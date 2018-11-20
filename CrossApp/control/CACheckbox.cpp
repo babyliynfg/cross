@@ -327,7 +327,7 @@ const CAFont& CACheckbox::getTitleFont()
 
 void CACheckbox::setTarget(const std::function<void(bool on)>& function)
 {
-    m_function = function;
+    if (function) m_function = function;
 }
 
 void CACheckbox::setIsOn(bool on)

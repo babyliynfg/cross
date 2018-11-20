@@ -743,7 +743,7 @@ void CASegmentedControl::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CASegmentedControl::setTarget(const std::function<void(int)>& function)
 {
-    m_function = function;
+    if (function) m_function = function;
 }
 
 NS_CC_END

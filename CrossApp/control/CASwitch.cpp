@@ -317,7 +317,7 @@ void CASwitch::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CASwitch::setTarget(const std::function<void(bool)>& function)
 {
-    m_function = function;
+    if (function) m_function = function;
 }
 
 
