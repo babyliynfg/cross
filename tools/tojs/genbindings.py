@@ -18,7 +18,8 @@ def _check_ndk_root_env():
     '''
 
     try:
-        NDK_ROOT = os.environ['NDK_ROOT']
+        # NDK_ROOT = os.environ['NDK_ROOT']
+        NDK_ROOT = "/Users/liyuanfeng/work/android-ndk-r9"
     except Exception:
         print "NDK_ROOT not defined. Please define NDK_ROOT in your environment."
         sys.exit(1)

@@ -9205,6 +9205,18 @@ str
 },
 
 /**
+ * @method postNotificationWithJsonStringValue
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+postNotificationWithJsonStringValue : function (
+str, 
+str 
+)
+{
+},
+
+/**
  * @method removeObserver
  * @param {ca.CAObject} arg0
  * @param {String} arg1

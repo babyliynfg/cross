@@ -1134,6 +1134,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CANotificationCenter_postNotificationWithIntValue(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_postNotification(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_postNotificationWithStringValue(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CANotificationCenter_postNotificationWithJsonStringValue(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_removeObserver(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_getObserverHandlerByName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CANotificationCenter_removeAllObservers(JSContext *cx, uint32_t argc, jsval *vp);

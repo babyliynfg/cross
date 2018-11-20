@@ -3,6 +3,7 @@
 #include "CANotificationCenter.h"
 #include "CAValue.h"
 #include "basics/CAApplication.h"
+#include "support/Json/lib_json/json_lib.h"
 NS_CC_BEGIN
 
 CANotificationCenter::CANotificationCenter()
@@ -176,6 +177,81 @@ void CANotificationCenter::postNotificationWithDoubleValue(const std::string& na
 void CANotificationCenter::postNotificationWithStringValue(const std::string& name, const std::string& value)
 {
     CAValue v = CAValue(value);
+    this->postNotification(name, &v);
+}
+enum ValueType2
+{
+    nullValue = 0, ///< 'null' value
+    intValue,      ///< signed integer value
+    uintValue,     ///< unsigned integer value
+    realValue,     ///< double value
+    stringValue,   ///< UTF-8 string value
+    booleanValue,  ///< bool value
+    arrayValue,    ///< array value (ordered list)
+    objectValue    ///< object value (collection of name/value pairs).
+};
+
+CAValue jsonvalue_to_cavalue(const CSJson::Value& json_value)
+{
+    CAValue value;
+    
+    switch (json_value.type())
+    {
+        case CSJson::ValueType::intValue:
+        case CSJson::ValueType::uintValue:
+            value = CAValue(json_value.asInt());
+            break;
+        case CSJson::ValueType::realValue:
+            value = CAValue(json_value.asDouble());
+            break;
+        case CSJson::ValueType::stringValue:
+            value = CAValue(json_value.asString());
+            break;
+        case CSJson::ValueType::booleanValue:
+            value = CAValue(json_value.asBool());
+            break;
+        case CSJson::ValueType::arrayValue:
+        {
+            CrossApp::CAValueVector value_vector;
+            unsigned int length = json_value.size();
+            for(unsigned int i=0; i<length; i++)
+            {
+                value_vector.push_back(jsonvalue_to_cavalue(json_value[i]));
+            }
+            value = CAValue(value_vector);
+        }
+            break;
+        case CSJson::ValueType::objectValue:
+        {
+            CrossApp::CAValueMap value_map;
+            CSJson::Value::Members members = json_value.getMemberNames();
+            for(auto& key : members)
+            {
+                value_map[key] = jsonvalue_to_cavalue(json_value[key]);
+            }
+            value = CAValue(value_map);
+        }
+            break;
+        case CSJson::ValueType::nullValue:
+            break;
+        default:
+            break;
+    }
+    
+    return value;
+}
+
+void CANotificationCenter::postNotificationWithJsonStringValue(const std::string& name, const std::string& value)
+{
+    CSJson::Reader read;
+    CSJson::Value root;
+    bool succ = read.parse(value, root);
+    if (succ == false)
+    {
+        CCLog("GetParseError \n");
+    }
+    
+    CAValue v = jsonvalue_to_cavalue(root);
     this->postNotification(name, &v);
 }
 

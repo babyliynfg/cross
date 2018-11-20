@@ -206,7 +206,6 @@ public abstract class CrossAppDevice  extends Activity  {
 	public static void enableGyroscope() {
 		
 		CrossAppHelper.setGyroscopeEnable(true);
-		
 		CrossAppHelper.getCrossAppGyroscope().enable();
 	}
 

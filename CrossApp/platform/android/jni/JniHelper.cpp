@@ -1,297 +1,204 @@
 
-#include "platform/android/jni/JniHelper.h"
+#include "JniHelper.h"
 #include <android/log.h>
 #include <string.h>
-#include <pthread.h>
 
-#include "support/ccUTF8.h"
-
+#if 1
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  CCLOG(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#else
+#define  LOGD(...) 
+#endif
 
-static pthread_key_t g_key;
+#define JAVAVM    CrossApp::JniHelper::getJavaVM()
 
-jclass _getClassID(const char *className) {
-    if (nullptr == className) {
-        return nullptr;
+using namespace std;
+
+extern "C"
+{
+
+    //////////////////////////////////////////////////////////////////////////
+    // java vm helper function
+    //////////////////////////////////////////////////////////////////////////
+
+    static pthread_key_t s_threadKey;
+
+    static void detach_current_thread (void *env) {
+        JAVAVM->DetachCurrentThread();
     }
-
-    JNIEnv* env = CrossApp::JniHelper::getEnv();
-
-    jstring _jstrClassName = env->NewStringUTF(className);
-
-    jclass _clazz = (jclass) env->CallObjectMethod(CrossApp::JniHelper::classloader,
-                                                   CrossApp::JniHelper::loadclassMethod_methodID,
-                                                   _jstrClassName);
-
-    if (nullptr == _clazz) {
-        CCLOG("Classloader failed to find class of %s", className);
-        env->ExceptionClear();
-    }
-
-    env->DeleteLocalRef(_jstrClassName);
-        
-    return _clazz;
-}
-
-void _detachCurrentThread(void* a) {
-    CrossApp::JniHelper::getJavaVM()->DetachCurrentThread();
-}
-
-namespace CrossApp {
-
-    JavaVM* JniHelper::_psJavaVM = nullptr;
-    jmethodID JniHelper::loadclassMethod_methodID = nullptr;
-    jobject JniHelper::classloader = nullptr;
-    std::function<void()> JniHelper::classloaderCallback = nullptr;
     
-    jobject JniHelper::_activity = nullptr;
-    std::unordered_map<JNIEnv*, std::vector<jobject>> JniHelper::localRefs;
+    static bool getEnv(JNIEnv **env)
+    {
+        bool bRet = false;
 
-    JavaVM* JniHelper::getJavaVM() {
-        pthread_t thisthread = pthread_self();
-        LOGD("JniHelper::getJavaVM(), pthread_self() = %ld", thisthread);
-        return _psJavaVM;
-    }
-
-    void JniHelper::setJavaVM(JavaVM *javaVM) {
-        pthread_t thisthread = pthread_self();
-        LOGD("JniHelper::setJavaVM(%p), pthread_self() = %ld", javaVM, thisthread);
-        _psJavaVM = javaVM;
-
-        pthread_key_create(&g_key, _detachCurrentThread);
-    }
-
-    JNIEnv* JniHelper::cacheEnv(JavaVM* jvm) {
-        JNIEnv* _env = nullptr;
-        // get jni environment
-        jint ret = jvm->GetEnv((void**)&_env, JNI_VERSION_1_4);
-        
-        switch (ret) {
-        case JNI_OK :
-            // Success!
-            pthread_setspecific(g_key, _env);
-            return _env;
-                
-        case JNI_EDETACHED :
-            // Thread not attached
-            if (jvm->AttachCurrentThread(&_env, nullptr) < 0)
-                {
-                    CCLOG("Failed to get the environment using AttachCurrentThread()");
-
-                    return nullptr;
-                } else {
-                // Success : Attached and obtained JNIEnv!
-                pthread_setspecific(g_key, _env);
-                return _env;
+        switch(JAVAVM->GetEnv((void**)env, JNI_VERSION_1_4))
+        {
+        case JNI_OK:
+            bRet = true;
+            break;
+        case JNI_EDETACHED:
+            pthread_key_create (&s_threadKey, detach_current_thread);
+            if (JAVAVM->AttachCurrentThread(env, 0) < 0)
+            {
+                LOGD("Failed to get the environment using AttachCurrentThread()");
+                break;
             }
-                
-        case JNI_EVERSION :
-            // Cannot recover from this error
-            CCLOG("JNI interface version 1.4 not supported");
-        default :
-            CCLOG("Failed to get the environment using GetEnv()");
-            return nullptr;
-        }
+            if (pthread_getspecific(s_threadKey) == NULL)
+                pthread_setspecific(s_threadKey, env); 
+            bRet = true;
+            break;
+        default:
+            LOGD("Failed to get the environment using GetEnv()");
+            break;
+        }      
+
+        return bRet;
     }
 
-    JNIEnv* JniHelper::getEnv() {
-        JNIEnv *_env = (JNIEnv *)pthread_getspecific(g_key);
-        if (_env == nullptr)
-            _env = JniHelper::cacheEnv(_psJavaVM);
-        return _env;
-    }
-    
-    jobject JniHelper::getActivity() {
-        return _activity;
-    }
+    static jclass getClassID_(const char *className, JNIEnv *env)
+    {
+        JNIEnv *pEnv = env;
+        jclass ret = 0;
 
-    bool JniHelper::setClassLoaderFrom(jobject activityinstance) {
-        JniMethodInfo _getclassloaderMethod;
-        if (!JniHelper::getMethodInfo_DefaultClassLoader(_getclassloaderMethod,
-                                                         "android/content/Context",
-                                                         "getClassLoader",
-                                                         "()Ljava/lang/ClassLoader;")) {
-            return false;
-        }
-
-        jobject _c = CrossApp::JniHelper::getEnv()->CallObjectMethod(activityinstance,
-                                                                    _getclassloaderMethod.methodID);
-
-        if (nullptr == _c) {
-            return false;
-        }
-
-        JniMethodInfo _m;
-        if (!JniHelper::getMethodInfo_DefaultClassLoader(_m,
-                                                         "java/lang/ClassLoader",
-                                                         "loadClass",
-                                                         "(Ljava/lang/String;)Ljava/lang/Class;")) {
-            return false;
-        }
-
-        JniHelper::classloader = CrossApp::JniHelper::getEnv()->NewGlobalRef(_c);
-        JniHelper::loadclassMethod_methodID = _m.methodID;
-        JniHelper::_activity = CrossApp::JniHelper::getEnv()->NewGlobalRef(activityinstance);
-        if (JniHelper::classloaderCallback != nullptr){
-            JniHelper::classloaderCallback();
-        }
-
-        return true;
-    }
-
-    bool JniHelper::getStaticMethodInfo(JniMethodInfo &methodinfo,
-                                        const char *className, 
-                                        const char *methodName,
-                                        const char *paramCode) {
-        if ((nullptr == className) ||
-            (nullptr == methodName) ||
-            (nullptr == paramCode)) {
-            return false;
-        }
-
-        JNIEnv *env = JniHelper::getEnv();
-        if (!env) {
-            CCLOG("Failed to get JNIEnv");
-            return false;
-        }
+        do 
+        {
+            if (! pEnv)
+            {
+                if (! getEnv(&pEnv))
+                {
+                    break;
+                }
+            }
             
-        jclass classID = _getClassID(className);
-        if (! classID) {
-            CCLOG("Failed to find class %s", className);
-            env->ExceptionClear();
-            return false;
-        }
+            ret = pEnv->FindClass(className);
+            if (! ret)
+            {
+                 LOGD("Failed to find class of %s", className);
+                break;
+            }
+        } while (0);
 
-        jmethodID methodID = env->GetStaticMethodID(classID, methodName, paramCode);
-        if (! methodID) {
-            CCLOG("Failed to find static method id of %s", methodName);
-            env->ExceptionClear();
-            return false;
-        }
-            
-        methodinfo.classID = classID;
-        methodinfo.env = env;
-        methodinfo.methodID = methodID;
-        return true;
-    }
-
-    bool JniHelper::getMethodInfo_DefaultClassLoader(JniMethodInfo &methodinfo,
-                                                     const char *className,
-                                                     const char *methodName,
-                                                     const char *paramCode) {
-        if ((nullptr == className) ||
-            (nullptr == methodName) ||
-            (nullptr == paramCode)) {
-            return false;
-        }
-
-        JNIEnv *env = JniHelper::getEnv();
-        if (!env) {
-            return false;
-        }
-
-        jclass classID = env->FindClass(className);
-        if (! classID) {
-            CCLOG("Failed to find class %s", className);
-            env->ExceptionClear();
-            return false;
-        }
-
-        jmethodID methodID = env->GetMethodID(classID, methodName, paramCode);
-        if (! methodID) {
-            CCLOG("Failed to find method id of %s", methodName);
-            env->ExceptionClear();
-            return false;
-        }
-
-        methodinfo.classID = classID;
-        methodinfo.env = env;
-        methodinfo.methodID = methodID;
-
-        return true;
-    }
-
-    bool JniHelper::getMethodInfo(JniMethodInfo &methodinfo,
-                                  const char *className,
-                                  const char *methodName,
-                                  const char *paramCode) {
-        if ((nullptr == className) ||
-            (nullptr == methodName) ||
-            (nullptr == paramCode)) {
-            return false;
-        }
-
-        JNIEnv *env = JniHelper::getEnv();
-        if (!env) {
-            return false;
-        }
-
-        jclass classID = _getClassID(className);
-        if (! classID) {
-            CCLOG("Failed to find class %s", className);
-            env->ExceptionClear();
-            return false;
-        }
-
-        jmethodID methodID = env->GetMethodID(classID, methodName, paramCode);
-        if (! methodID) {
-            CCLOG("Failed to find method id of %s", methodName);
-            env->ExceptionClear();
-            return false;
-        }
-
-        methodinfo.classID = classID;
-        methodinfo.env = env;
-        methodinfo.methodID = methodID;
-
-        return true;
-    }
-
-    std::string JniHelper::jstring2string(jstring jstr) {
-        if (jstr == nullptr) {
-            return "";
-        }
-        
-        JNIEnv *env = JniHelper::getEnv();
-        if (!env) {
-            return "";
-        }
-
-        std::string strValue = CrossApp::StringUtils::getStringUTFCharsJNI(env, jstr);
-
-        return strValue;
-    }
-
-    jstring JniHelper::convert(CrossApp::JniMethodInfo& t, const char* x) {
-        jstring ret = CrossApp::StringUtils::newStringUTFJNI(t.env, x ? x : "");
-        localRefs[t.env].push_back(ret);
         return ret;
     }
 
-    jstring JniHelper::convert(CrossApp::JniMethodInfo& t, const std::string& x) {
-        return convert(t, x.c_str());
-    }
-
-    void JniHelper::deleteLocalRefs(JNIEnv* env) {
-        if (!env) {
-            return;
-        }
-
-        for (const auto& ref : localRefs[env]) {
-            env->DeleteLocalRef(ref);
-        }
-        localRefs[env].clear();
-    }
-
-    void JniHelper::reportError(const std::string& className, const std::string& methodName, const std::string& signature) {
-        CCLOG("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className.c_str(), methodName.c_str(), signature.c_str());
-    }
-    
-    jclass JniHelper::getClassID(const char *className, JNIEnv *env)
+    static bool getStaticMethodInfo_(CrossApp::JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
     {
-        return _getClassID(className);
+        jmethodID methodID = 0;
+        JNIEnv *pEnv = 0;
+        bool bRet = false;
+
+        do 
+        {
+            if (! getEnv(&pEnv))
+            {
+                break;
+            }
+
+            jclass classID = getClassID_(className, pEnv);
+
+            methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
+            if (! methodID)
+            {
+                LOGD("Failed to find static method id of %s", methodName);
+                break;
+            }
+
+            methodinfo.classID = classID;
+            methodinfo.env = pEnv;
+            methodinfo.methodID = methodID;
+
+            bRet = true;
+        } while (0);
+
+        return bRet;
     }
-    
-} //namespace CrossApp
+
+    static bool getMethodInfo_(CrossApp::JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
+    {
+        jmethodID methodID = 0;
+        JNIEnv *pEnv = 0;
+        bool bRet = false;
+
+        do 
+        {
+            if (! getEnv(&pEnv))
+            {
+                break;
+            }
+
+            jclass classID = getClassID_(className, pEnv);
+
+            methodID = pEnv->GetMethodID(classID, methodName, paramCode);
+            if (! methodID)
+            {
+                LOGD("Failed to find method id of %s", methodName);
+                break;
+            }
+
+            methodinfo.classID = classID;
+            methodinfo.env = pEnv;
+            methodinfo.methodID = methodID;
+
+            bRet = true;
+        } while (0);
+
+        return bRet;
+    }
+
+    static string jstring2string_(jstring jstr)
+    {
+        if (jstr == NULL)
+        {
+            return "";
+        }
+        
+        JNIEnv *env = 0;
+
+        if (! getEnv(&env))
+        {
+            return 0;
+        }
+
+        const char* chars = env->GetStringUTFChars(jstr, NULL);
+        string ret(chars);
+        env->ReleaseStringUTFChars(jstr, chars);
+
+        return ret;
+    }
+}
+
+NS_CC_BEGIN
+
+JavaVM* JniHelper::m_psJavaVM = NULL;
+
+JavaVM* JniHelper::getJavaVM()
+{
+    return m_psJavaVM;
+}
+
+void JniHelper::setJavaVM(JavaVM *javaVM)
+{
+    m_psJavaVM = javaVM;
+}
+
+jclass JniHelper::getClassID(const char *className, JNIEnv *env)
+{
+    return getClassID_(className, env);
+}
+
+bool JniHelper::getStaticMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
+{
+    return getStaticMethodInfo_(methodinfo, className, methodName, paramCode);
+}
+
+bool JniHelper::getMethodInfo(JniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
+{
+    return getMethodInfo_(methodinfo, className, methodName, paramCode);
+}
+
+string JniHelper::jstring2string(jstring str)
+{
+    return jstring2string_(str);
+}
+
+NS_CC_END

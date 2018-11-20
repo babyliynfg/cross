@@ -1484,7 +1484,6 @@
 				D6ADC5691E56A72800750771 /* ConvertUTFWrapper.cpp */,
 				D6ADC56A1E56A72800750771 /* data_support */,
 				D6ADC56F1E56A72800750771 /* deelx.h */,
-				D6ADC5701E56A72800750771 /* gif */,
 				D6ADC5711E56A72800750771 /* image_support */,
 				D6ADC5741E56A72800750771 /* Json */,
 				D6ADC5891E56A72800750771 /* LocalStorage */,
@@ -1518,13 +1517,6 @@
 				D6ADC56E1E56A72800750771 /* utlist.h */,
 			);
 			path = data_support;
-			sourceTree = "<group>";
-		};
-		D6ADC5701E56A72800750771 /* gif */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = gif;
 			sourceTree = "<group>";
 		};
 		D6ADC5711E56A72800750771 /* image_support */ = {

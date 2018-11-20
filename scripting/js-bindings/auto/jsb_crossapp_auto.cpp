@@ -24200,6 +24200,29 @@ bool js_crossapp_CANotificationCenter_postNotificationWithStringValue(JSContext 
     JS_ReportError(cx, "js_crossapp_CANotificationCenter_postNotificationWithStringValue : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
+bool js_crossapp_CANotificationCenter_postNotificationWithJsonStringValue(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANotificationCenter* cobj = (CrossApp::CANotificationCenter *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANotificationCenter_postNotificationWithJsonStringValue : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANotificationCenter_postNotificationWithJsonStringValue : Error processing arguments");
+        cobj->postNotificationWithJsonStringValue(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANotificationCenter_postNotificationWithJsonStringValue : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
 bool js_crossapp_CANotificationCenter_removeObserver(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -24499,6 +24522,7 @@ void js_register_crossapp_CANotificationCenter(JSContext *cx, JS::HandleObject g
         JS_FN("postNotificationWithIntValue", js_crossapp_CANotificationCenter_postNotificationWithIntValue, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("postNotification", js_crossapp_CANotificationCenter_postNotification, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("postNotificationWithStringValue", js_crossapp_CANotificationCenter_postNotificationWithStringValue, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("postNotificationWithJsonStringValue", js_crossapp_CANotificationCenter_postNotificationWithJsonStringValue, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeObserver", js_crossapp_CANotificationCenter_removeObserver, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getObserverHandlerByName", js_crossapp_CANotificationCenter_getObserverHandlerByName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllObservers", js_crossapp_CANotificationCenter_removeAllObservers, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
