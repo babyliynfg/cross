@@ -92,3 +92,11 @@ tags
 /CocosDenshion/proj.win32/Debug.win32/*.log
 /CocosDenshion/proj.win32/Debug.win32/CocosDenshion.log
 /extensions/proj.win32/Debug.win32/libExtensions.log
+samples/Test/.idea/misc.xml
+samples/Test/.idea/modules.xml
+samples/Test/.idea/Test.iml
+samples/Test/.idea/workspace.xml
+samples/Test_JS/.idea/misc.xml
+samples/Test_JS/.idea/modules.xml
+samples/Test_JS/.idea/Test_JS.iml
+samples/Test_JS/.idea/workspace.xml
