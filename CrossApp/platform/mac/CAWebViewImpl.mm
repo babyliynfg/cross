@@ -157,6 +157,7 @@ std::map<NSWebView_MAC*, CrossApp::CAWebViewImpl*> s_WebViewImpls;
     NSURL *url = [NSURL URLWithString:@(urlString.c_str())];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy: NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0f];
     [[self.webView mainFrame] loadRequest:request];
+    [request autorelease];
 }
 
 - (void)loadFile:(const std::string &)filePath
@@ -169,6 +170,7 @@ std::map<NSWebView_MAC*, CrossApp::CAWebViewImpl*> s_WebViewImpls;
     NSURL *url = [NSURL fileURLWithPath:@(filePath.c_str())];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy: NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0f];
     [[self.webView mainFrame] loadRequest:request];
+    [request autorelease];
 }
 
 - (void)stopLoading
