@@ -117,7 +117,7 @@ public:
 //    std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
 //    
 //    std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
-    static bool SendRequest(const std::string &url,
+    static bool uploadFile(const std::string &url,
                             const std::map<std::string, std::string> parameters,
                             const std::string &upload_file,
                             const std::string &file_part_name,

@@ -21,6 +21,10 @@
 #include <netdb.h>
 #endif
 
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jni/JniHelper.h"
+#include <jni.h>
+#endif
 
 #include <thread>
 #include <iostream>
@@ -1478,3 +1482,22 @@ void jsb_remove_proxy(js_proxy_t* proxy)
     }
     else CCLOG("jsb_remove_proxy: failed. JS key not found");
 }
+
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+extern "C" {
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppHelper_evalString(JNIEnv *env, jclass cls, jstring value) {
+        
+        const char* strValue = env->GetStringUTFChars(value, NULL);
+        ScriptingCore::getInstance()->evalString(strValue);
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppHelper_evalStringOnGLThread(JNIEnv *env, jclass cls, jstring value) {
+        
+        const char* strValue = env->GetStringUTFChars(value, NULL);
+        CrossApp::CAScheduler::getScheduler()->performFunctionInUIThread([=](){
+            ScriptingCore::getInstance()->evalString(strValue);
+        });
+    }
+}
+#endif

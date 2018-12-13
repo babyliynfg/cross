@@ -716,7 +716,7 @@ static size_t WriteCallback(void *ptr, size_t size,
 static const char kUserAgent[] = "Breakpad/1.0 (Linux)";
 
 // static
-bool CAHttpClient::SendRequest(const std::string &url,
+bool CAHttpClient::uploadFile(const std::string &url,
                              const std::map<std::string, std::string> parameters,
                              const std::string &upload_file,        //"E:\\install.res.1041.zip"
                              const std::string &file_part_name,    //"upload_file_minidump",
