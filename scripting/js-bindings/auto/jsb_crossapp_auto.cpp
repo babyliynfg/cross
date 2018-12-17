@@ -47217,7 +47217,7 @@ bool js_crossapp_CAHttpClient_SendRequest(JSContext *cx, uint32_t argc, jsval *v
         #pragma warning NO CONVERSION TO NATIVE FOR std::string*
 		ok = false;
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAHttpClient_SendRequest : Error processing arguments");
-        bool ret = CrossApp::CAHttpClient::SendRequest(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+        bool ret = CrossApp::CAHttpClient::uploadFile(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
