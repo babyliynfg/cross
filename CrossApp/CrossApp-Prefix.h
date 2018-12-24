@@ -19,6 +19,6 @@
 
 static float DPI_STANDARD = DPI_IPHONE_6S;
 
-static float DPI_SIMULATOR = 200.0f;
+static float DPI_SIMULATOR = 160.0f;
 
 #endif
