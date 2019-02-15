@@ -133,7 +133,7 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppNativeTool_ImageReturn
     ( JNIEnv* env,jclass thiz ,jstring arg1, jobject arg2)
     {
-        const char* str = env->GetStringUTFChars(arg1, false);
+        const char* str = env->GetStringUTFChars(arg1, NULL);
 
         CAScheduler::getScheduler()->performFunctionInUIThread( [=]()
        {

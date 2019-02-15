@@ -53,7 +53,7 @@ extern "C"
     {
         _addressBookVec.clear();
         
-        const char *sPersonList = env->GetStringUTFChars(arg1,false);
+        const char *sPersonList = env->GetStringUTFChars(arg1,NULL);
         
         CSJson::Reader read;
         CSJson::Value root;
