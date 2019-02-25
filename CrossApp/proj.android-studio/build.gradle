@@ -5,8 +5,10 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
-
+    compileSdkVersion 26
+    defaultConfig {
+        minSdkVersion 15
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
