@@ -101,6 +101,13 @@ public class CrossAppWebViewHelper {
     }
 
     @SuppressWarnings("unused")
+    public static int createWebView() {
+        final int index = viewTag;
+        createWebView(index, 0);//默认非原生webview（为x5 ）；
+        return viewTag++;
+    }
+
+    @SuppressWarnings("unused")
     public static void removeWebView(final int index) {
         CrossAppActivity.runOnUiThread(new Runnable() {
             @Override
