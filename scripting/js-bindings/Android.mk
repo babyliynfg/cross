@@ -27,7 +27,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := spidermonkey_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
 
 LOCAL_LDLIBS := -landroid
 LOCAL_LDLIBS += -llog

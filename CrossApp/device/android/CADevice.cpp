@@ -247,7 +247,7 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppNativeTool_browserOpenURLCallBack
     ( JNIEnv* env,jclass thiz ,jstring url,jboolean isSuccess)
     {
-        const char* str = env->GetStringUTFChars(url, false);
+        const char* str = env->GetStringUTFChars(url, NULL);
         
         CAScheduler::getScheduler()->performFunctionInUIThread( [=]()
                                                                {
