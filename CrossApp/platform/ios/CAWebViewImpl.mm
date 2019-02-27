@@ -1,10 +1,12 @@
 
 #import <UIKit/UIKit.h>
+#import <JavaScriptCore/JavaScriptCore.h>
 #include "CAWebViewImpl.h"
 #include "EAGLView.h"
 #include "basics/CAApplication.h"
 #include "platform/CAFileUtils.h"
 #include "platform/CADensityDpi.h"
+#include "support/Json/lib_json/json_lib.h"
 
 USING_NS_CC;
 
@@ -222,6 +224,25 @@ USING_NS_CC;
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    JSContext *context = [self.uiWebView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    
+    context[@"openInSafari"] = ^(NSString *str1) {
+        
+        CSJson::Value root;
+        root["type"] = "openInSafari";
+        root["context"] = [str1 UTF8String];
+        CSJson::FastWriter writer;
+        std::string str_callback = writer.write(root);
+        
+        CAWebViewImpl::onJsCallback(self, str_callback);
+        return @"JS调用了OC方法";
+    };
+    
+    context[@"jsMethod"] = ^(NSString *str1) {
+        NSLog(@"jsMethod调用了OC方法:%@", str1);
+        return @"JS调用了OC方法";
+    };
+    
     NSString *url = [[webView.request URL] absoluteString];
     CAWebViewImpl::didFinishLoading(self, [url UTF8String]);
 }
