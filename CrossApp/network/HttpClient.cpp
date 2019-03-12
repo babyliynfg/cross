@@ -174,6 +174,7 @@ static bool configureCURL(CAHttpClient* client, CURL* handle, char* errorBuffer)
     // FIXED #3224: The subthread of CCCAHttpClient interrupts main thread if timeout comes.
     // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL
     curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1L);
+    //curl_easy_setopt(handle, CURLOPT_VERBOSE, 1L);
     
     curl_easy_setopt(handle, CURLOPT_ACCEPT_ENCODING, "");
     
