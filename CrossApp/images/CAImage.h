@@ -240,21 +240,6 @@ public:
     
     static const PixelFormatInfoMap& getPixelFormatInfoMap();
     
-protected:
-    
-    bool initWithJpgData(const unsigned char *  data, unsigned long dataLen);
-    bool initWithPngData(const unsigned char * data, unsigned long dataLen);
-    bool initWithGifData(const unsigned char * data, unsigned long dataLen);
-    bool initWithTiffData(const unsigned char * data, unsigned long dataLen);
-    bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
-    typedef struct sImageTGA tImageTGA;
-    bool initWithTGAData(tImageTGA* tgaData);
-    
-    bool saveImageToPNG(const std::string& filePath, bool isToRGB);
-    bool saveImageToJPG(const std::string& filePath);
-
-    void convertToRawData();
-    
     CAImage::PixelFormat convertDataToFormat(const unsigned char* data,
                                              unsigned long dataLen,
                                              CAImage::PixelFormat originFormat,
@@ -283,6 +268,21 @@ protected:
                                                  unsigned char** outData,
                                                  unsigned long* outDataLen);
     
+protected:
+    
+    bool initWithJpgData(const unsigned char *  data, unsigned long dataLen);
+    bool initWithPngData(const unsigned char * data, unsigned long dataLen);
+    bool initWithGifData(const unsigned char * data, unsigned long dataLen);
+    bool initWithTiffData(const unsigned char * data, unsigned long dataLen);
+    bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
+    typedef struct sImageTGA tImageTGA;
+    bool initWithTGAData(tImageTGA* tgaData);
+    
+    bool saveImageToPNG(const std::string& filePath, bool isToRGB);
+    bool saveImageToJPG(const std::string& filePath);
+
+    void convertToRawData();
+
     void convertRGBA8888ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     void convertRGB888ToRGB5A1(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     void convertRGBA8888ToRGBA4444(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
