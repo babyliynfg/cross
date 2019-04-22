@@ -2,46 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ed66ee7-187e-4346-bc2c-765902e7bbed" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Test_JS-proj.android-studio.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/multi-platform-js-proj.android-studio.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____Users_guangtou_Desktop_GTcontent_GT_project_cross_CrossApp_proj_android_studio_libs_tbs_sdk_thirdapp_v2_5_0_1031_36880_sharewithdownload_obfs_20161107_154437_jar_unspecified_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proj.android-studio.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/jni/Application.mk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/4.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/4.4.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/4.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/4.4.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/libraries/Gradle____local_aars____Users_guangtou_Desktop_GTcontent_GT_project_cross_CrossApp_proj_android_studio_libs_tbs_sdk_thirdapp_v2_5_0_1031_36880_sharewithdownload_obfs_20161107_154437_jar_unspecified_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/proj.android-studio.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/test/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/test/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/test/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/test/src/main/jni/Application.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/test/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../template/multi-platform-js/proj.android-studio/test/test.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +24,7 @@
     <session id="-1212160691">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -181,8 +146,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="142" />
-    <option name="y" value="76" />
+    <option name="x" value="292" />
+    <option name="y" value="107" />
     <option name="width" value="1651" />
     <option name="height" value="976" />
   </component>
@@ -275,7 +240,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test" type="AndroidRunConfigurationType" factoryName="Android App">
+    <configuration name="test" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="test" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
@@ -343,7 +308,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="142" y="76" width="1651" height="976" extended-state="0" />
+    <frame x="292" y="107" width="1651" height="976" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" visible="true" weight="0.32939714" />
       <window_info id="Structure" side_tool="true" />
@@ -357,7 +323,7 @@
       <window_info anchor="bottom" id="Logcat" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" />
-      <window_info anchor="bottom" id="Android Profiler" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Android Profiler" />
       <window_info anchor="bottom" id="Debug" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
