@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "org.CrossApp.test"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 19
         externalNativeBuild {
             ndkBuild {
@@ -15,7 +15,7 @@ android {
         }
 
         ndk {
-            abiFilters 'armeabi'
+            abiFilters "armeabi-v7a"
             moduleName "CrossApp_cpp_shared"
         }
     }
