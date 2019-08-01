@@ -223,12 +223,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
-		 -landroid \
+		        -landroid \
                 -lz
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-			-landroid \
+			            -landroid \
                        -lz
 
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_jpeg_static
