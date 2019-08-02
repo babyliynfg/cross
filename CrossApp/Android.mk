@@ -223,19 +223,20 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
-		 -landroid \
+		        -landroid \
                 -lz
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-			-landroid \
+			            -landroid \
                        -lz
-
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_crypto_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_ssl_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_png_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_tiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_webp_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
 # define the macro to compile through support/zip_support/ioapi.c
