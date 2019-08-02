@@ -8,3 +8,4 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../include/android
 LOCAL_STATIC_LIBRARIES += ext_ssl
 LOCAL_STATIC_LIBRARIES += ext_crypto
 include $(PREBUILT_STATIC_LIBRARY)
+$(call import-module,$(LOCAL_PATH)/../../../openssl/prebuilt/android)
