@@ -415,6 +415,7 @@ public class CrossAppTextField {
                 clearButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         textField.setText("");
+                        textField.setSelection(textField.getText().length());
                     }
                 });
             }
@@ -670,6 +671,7 @@ public class CrossAppTextField {
         textField.setHint(placeHolder);
         textField.setHintTextColor(placeHolderColor);
         textField.setText(textFieldText);
+        textField.setSelection(textField.getText().length());
         textField.setTextColor(textFieldTextColor);
         textField.setImeOptions(keyBoardReturnType);
 
@@ -694,11 +696,9 @@ public class CrossAppTextField {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
                 // TODO Auto-generated method stub
-
                 if (isSetText) {
                     return;
                 }
-
                 String string = arg0.toString();
 
                 String changedText = "";
@@ -707,7 +707,6 @@ public class CrossAppTextField {
                 } else {
                     changedText = "";
                 }
-
                 if (!textChange(mykey, beforeTextString, changedText, arg1, arg2)) {
                     if (isSetText == false) {
                         isSetText = true;
@@ -718,11 +717,10 @@ public class CrossAppTextField {
                 } else {
                     if (isSetText == false) {
                         isSetText = true;
-                        textField.setText(string);
-                        textField.setSelection(selection - arg2 + arg3);
+//                        textField.setText(string);
+//                        textField.setSelection(selection - arg2 + arg3);
                     }
                     final ByteBuffer textBuffer = ByteBuffer.wrap(textField.getText().toString().getBytes());
-
                     context.runOnGLThread(new Runnable() {
                         @Override
                         public void run() {
@@ -747,6 +745,10 @@ public class CrossAppTextField {
 
             @Override
             public void afterTextChanged(Editable arg0) {
+//                textField.setFocusable(true);
+//                textField.setFocusableInTouchMode(true);
+//                textField.requestFocus();
+//                textField.setSelection(textField.getText().length());
                 if (isSetText) {
                     return;
                 }
