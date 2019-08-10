@@ -231,15 +231,15 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
 			            -landroid \
                        -lz
 
-LOCAL_WHOLE_STATIC_LIBRARIES += ext_ssl
-LOCAL_WHOLE_STATIC_LIBRARIES += ext_crypto
-LOCAL_WHOLE_STATIC_LIBRARIES += ext_uv
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_jpeg_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_png_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_tiff_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_webp_static
-LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
+LOCAL_STATIC_LIBRARIES += ext_ssl
+LOCAL_STATIC_LIBRARIES += ext_crypto
+LOCAL_STATIC_LIBRARIES += ext_uv
+LOCAL_STATIC_LIBRARIES += CrossApp_curl_static
+LOCAL_STATIC_LIBRARIES += CrossApp_jpeg_static
+LOCAL_STATIC_LIBRARIES += CrossApp_png_static
+LOCAL_STATIC_LIBRARIES += CrossApp_tiff_static
+LOCAL_STATIC_LIBRARIES += CrossApp_webp_static
+LOCAL_STATIC_LIBRARIES += libwebsockets_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -Wno-psabi
@@ -254,13 +254,13 @@ LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations
 
 include $(BUILD_STATIC_LIBRARY)
 
-
+$(call import-module,openssl/prebuilt/android)
+$(call import-module,uv/prebuilt/android)
 $(call import-module,jpeg/prebuilt/android)
 $(call import-module,png/prebuilt/android)
 $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
-$(call import-module,openssl/prebuilt/android)
-$(call import-module,uv/prebuilt/android)
+
 
