@@ -5,6 +5,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := CrossApp_cpp_shared
 LOCAL_MODULE_FILENAME := libCrossApp_cpp
 LOCAL_CPPFLAGS := -std=c++11 -pthread -frtti -fexceptions
+LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 
 MY_FILES_PATH := $(LOCAL_PATH) \
                  $(LOCAL_PATH)/../../../../../Classes \
