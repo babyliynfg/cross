@@ -8,7 +8,7 @@
     </facet>
     <facet type="native-android-gradle" name="Native-Android-Gradle">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="debug-armeabi-v7a" />
+        <option name="SELECTED_BUILD_VARIANT" value="debug-arm64-v8a" />
       </configuration>
     </facet>
     <facet type="android" name="Android">
