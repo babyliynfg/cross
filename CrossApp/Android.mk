@@ -232,7 +232,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lz
 
 LOCAL_STATIC_LIBRARIES += ext_ssl
-LOCAL_STATIC_LIBRARIES += ext_crypto
+#LOCAL_STATIC_LIBRARIES += ext_crypto
 LOCAL_STATIC_LIBRARIES += ext_uv
 LOCAL_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_STATIC_LIBRARIES += CrossApp_jpeg_static

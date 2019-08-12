@@ -3,7 +3,7 @@
 #define __Java_org_CrossApp_lib_CrossAppHelper_H__
 
 #include <string>
-
+#include <stdio.h>
 typedef void (*EditTextCallback)(const char* pText, void* ctx);
 
 extern const char * getApkPath();

@@ -5,7 +5,9 @@
 
 #include "platform/CCPlatformMacros.h"
 #include <vector>
-#include <string>
+#include <stdio.h>
+#include <malloc.h>
+#include <string.h>
 #include "ConvertUTF.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
