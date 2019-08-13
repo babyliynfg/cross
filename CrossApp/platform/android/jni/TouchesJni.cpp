@@ -52,7 +52,7 @@ extern "C" {
         for (int i=0; i<size; i++)
         {
             ids[i] = id[i];
-            x_s[i] =  [i];
+            x_s[i] = x[i];
             y_s[i] = y[i];
         }
         
@@ -79,7 +79,7 @@ extern "C" {
         for (int i=0; i<size; i++)
         {
             ids[i] = id[i];
-            x_s[i] =  [i];
+            x_s[i] = x[i];
             y_s[i] = y[i];
         }
         
