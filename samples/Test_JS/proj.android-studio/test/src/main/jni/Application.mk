@@ -2,7 +2,7 @@ APP_STL := gnustl_static
 #NDK_TOOLCHAIN_VERSION := 4.8
 APP_CPPFLAGS := -frtti -DCC_ENABLE_CHIPMUNK_INTEGRATION=1 -std=c++11 -fsigned-char
 APP_LDFLAGS := -latomic
-APP_ABI := armeabi-v7a
+APP_ABI := arm64-v8a armeabi-v7a
 #armeabi-v7a
 APP_SHORT_COMMANDS := true
 USE_ARM_MODE := 1
