@@ -46,16 +46,21 @@ extern "C" {
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        intptr_t ids[5] = {0};      ids[0] = id;
-        float x_s[5] = {0};         x_s[0] = x;
-        float* y_s[5] = {0};        y_s[0] = y;
+        intptr_t ids[size] = {0};
+        float x_s[size] = {0};
+        float* y_s[size] = {0};
+        for (int i=0; i<size; i++)
+        {
+            ids[i] = id[i];
+            x_s[i] =  [i];
+            y_s[i] = y[i];
+        }
         
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
         CAApplication::getApplication()->getOpenGLView()->handleTouchesMove(size, ids, x_s, y_s, theEvent);
         theEvent->release();
         
-        delete id_ptr;
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
@@ -68,16 +73,21 @@ extern "C" {
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        intptr_t ids[5] = {0};      ids[0] = id;
-        float x_s[5] = {0};         x_s[0] = x;
-        float* y_s[5] = {0};        y_s[0] = y;
+        intptr_t ids[size] = {0};
+        float x_s[size] = {0};
+        float* y_s[size] = {0};
+        for (int i=0; i<size; i++)
+        {
+            ids[i] = id[i];
+            x_s[i] =  [i];
+            y_s[i] = y[i];
+        }
         
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
         CAApplication::getApplication()->getOpenGLView()->handleTouchesCancel(size, ids, x_s, y_s, theEvent);
         theEvent->release();
         
-        delete id_ptr;
     }
 
     #define KEYCODE_BACK 0x04
