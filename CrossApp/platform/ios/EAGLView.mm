@@ -333,7 +333,7 @@ static EAGLView *view = 0;
         ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
         ++i;
     }
-    
+   
     CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
     theEvent->setEventType(CrossApp::EventType::iosEvent);
     CrossApp::CCEGLView::sharedOpenGLView()->handleTouchesBegin(i, (intptr_t*)ids, xs, ys, theEvent);

@@ -15,9 +15,9 @@ extern "C" {
     {
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
-        intptr_t ids[5] = {0};      ids[0] = id;
+        intptr_t ids[5] = {0};      static_cast<intptr_t>(id);
         float x_s[5] = {0};         x_s[0] = x;
-        float* y_s[5] = {0};        y_s[0] = y;
+        float y_s[5] = {0};        y_s[0] = y;
 
         CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, ids, x_s, y_s, theEvent);
         theEvent->release();
@@ -28,30 +28,30 @@ extern "C" {
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
         
-        intptr_t ids[5] = {0};      ids[0] = id;
+        intptr_t ids[5] = {0};      ids[0] = static_cast<intptr_t>(id);
         float x_s[5] = {0};         x_s[0] = x;
-        float* y_s[5] = {0};        y_s[0] = y;
+        float y_s[5] = {0};        y_s[0] = y;
         
         CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, ids, x_s, y_s, theEvent);
         theEvent->release();
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesMove(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
-        int size = env->GetArrayLength(ids);
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesMove(JNIEnv * env, jobject thiz, jintArray id_array, jfloatArray xs, jfloatArray ys) {
+        int size = env->GetArrayLength(id_array);
         jint id[size];
         jfloat x[size];
         jfloat y[size];
 
-        env->GetIntArrayRegion(ids, 0, size, id);
+        env->GetIntArrayRegion(id_array, 0, size, id);
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        intptr_t ids[size] = {0};
-        float x_s[size] = {0};
-        float* y_s[size] = {0};
+        intptr_t ids[size];
+        float x_s[size];
+        float y_s[size];
         for (int i=0; i<size; i++)
         {
-            ids[i] = id[i];
+            ids[i] = static_cast<intptr_t>(id[i]);
             x_s[i] = x[i];
             y_s[i] = y[i];
         }
@@ -63,22 +63,22 @@ extern "C" {
         
     }
 
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
-        int size = env->GetArrayLength(ids);
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray id_array, jfloatArray xs, jfloatArray ys) {
+        int size = env->GetArrayLength(id_array);
         jint id[size];
         jfloat x[size];
         jfloat y[size];
 
-        env->GetIntArrayRegion(ids, 0, size, id);
+        env->GetIntArrayRegion(id_array, 0, size, id);
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        intptr_t ids[size] = {0};
-        float x_s[size] = {0};
-        float* y_s[size] = {0};
+        intptr_t ids[size];
+        float x_s[size];
+        float y_s[size];
         for (int i=0; i<size; i++)
         {
-            ids[i] = id[i];
+            ids[i] = static_cast<intptr_t>(id[i]);
             x_s[i] = x[i];
             y_s[i] = y[i];
         }
