@@ -15,9 +15,9 @@ extern "C" {
     {
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
-        intptr_t ids[5] = {0};      static_cast<intptr_t>(id);
-        float x_s[5] = {0};         x_s[0] = x;
-        float y_s[5] = {0};        y_s[0] = y;
+        intptr_t ids[1] = {0};      static_cast<intptr_t>(id);
+        float x_s[1] = {0};         x_s[0] = x;
+        float y_s[1] = {0};        y_s[0] = y;
 
         CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, ids, x_s, y_s, theEvent);
         theEvent->release();
@@ -28,9 +28,9 @@ extern "C" {
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
         
-        intptr_t ids[5] = {0};      ids[0] = static_cast<intptr_t>(id);
-        float x_s[5] = {0};         x_s[0] = x;
-        float y_s[5] = {0};        y_s[0] = y;
+        intptr_t ids[1] = {0};      ids[0] = static_cast<intptr_t>(id);
+        float x_s[1] = {0};         x_s[0] = x;
+        float y_s[1] = {0};        y_s[0] = y;
         
         CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, ids, x_s, y_s, theEvent);
         theEvent->release();
