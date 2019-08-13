@@ -15,13 +15,11 @@ extern "C" {
     {
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
-        intptr_t* id_ptr;
-        *id_ptr = id;
-        float* x_f; float* y_f;
-        *x_f = x;
-        *y_f = y;
+        intptr_t ids[5] = {0};      ids[0] = id;
+        float x_s[5] = {0};         x_s[0] = x;
+        float* y_s[5] = {0};        y_s[0] = y;
 
-        CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, id_ptr, x_f, y_f, theEvent);
+        CAApplication::getApplication()->getOpenGLView()->handleTouchesBegin(1, ids, x_s, y_s, theEvent);
         theEvent->release();
     }
 
@@ -30,13 +28,11 @@ extern "C" {
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
         
-        intptr_t* id_ptr;
-        *id_ptr = id;
-        float* x_f; float* y_f;
-        *x_f = x;
-        *y_f = y;
+        intptr_t ids[5] = {0};      ids[0] = id;
+        float x_s[5] = {0};         x_s[0] = x;
+        float* y_s[5] = {0};        y_s[0] = y;
         
-        CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, id_ptr, x_f, y_f, theEvent);
+        CAApplication::getApplication()->getOpenGLView()->handleTouchesEnd(1, ids, x_s, y_s, theEvent);
         theEvent->release();
     }
 
@@ -50,15 +46,13 @@ extern "C" {
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        intptr_t* id_ptr = new intptr_t(size);
-        for (int i=0; i<size; i++)
-        {
-            id_ptr[i] = id[i];
-        }
+        intptr_t ids[5] = {0};      ids[0] = id;
+        float x_s[5] = {0};         x_s[0] = x;
+        float* y_s[5] = {0};        y_s[0] = y;
         
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
-        CAApplication::getApplication()->getOpenGLView()->handleTouchesMove(size, id_ptr, x, y, theEvent);
+        CAApplication::getApplication()->getOpenGLView()->handleTouchesMove(size, ids, x_s, y_s, theEvent);
         theEvent->release();
         
         delete id_ptr;
@@ -74,15 +68,13 @@ extern "C" {
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        intptr_t* id_ptr = new intptr_t(size);
-        for (int i=0; i<size; i++)
-        {
-            id_ptr[i] = id[i];
-        }
+        intptr_t ids[5] = {0};      ids[0] = id;
+        float x_s[5] = {0};         x_s[0] = x;
+        float* y_s[5] = {0};        y_s[0] = y;
         
         CrossApp::CAEvent* theEvent = new CrossApp::CAEvent();
         theEvent->setEventType(CrossApp::EventType::androidEvent);
-        CAApplication::getApplication()->getOpenGLView()->handleTouchesCancel(size, id_ptr, x, y, theEvent);
+        CAApplication::getApplication()->getOpenGLView()->handleTouchesCancel(size, ids, x_s, y_s, theEvent);
         theEvent->release();
         
         delete id_ptr;
