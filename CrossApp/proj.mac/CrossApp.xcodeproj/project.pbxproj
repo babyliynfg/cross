@@ -2277,6 +2277,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					USE_FILE32API,
 					CC_TARGET_OS_MAC,
 					"CROSSAPP_DEBUG=0",
@@ -2290,6 +2291,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/openssl/include/mac\"",
+					"\"$(SRCROOT)/../the_third_party/uv/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -2298,6 +2300,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/openssl/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/uv/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2318,6 +2321,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					USE_FILE32API,
 					CC_TARGET_OS_MAC,
 				);
@@ -2330,6 +2334,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/openssl/include/mac\"",
+					"\"$(SRCROOT)/../the_third_party/uv/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -2338,6 +2343,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/openssl/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/uv/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
