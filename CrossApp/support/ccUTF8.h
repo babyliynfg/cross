@@ -6,10 +6,10 @@
 #include "platform/CCPlatformMacros.h"
 #include <vector>
 #include <stdio.h>
-#include <malloc.h>
 #include <string.h>
 #include "ConvertUTF.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include <malloc.h>
 #include "platform/android/jni/JniHelper.h"
 #endif
 NS_CC_BEGIN

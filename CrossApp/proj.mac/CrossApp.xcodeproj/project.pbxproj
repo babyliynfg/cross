@@ -2288,9 +2288,8 @@
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
-					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
+					"\"$(SRCROOT)/../the_third_party/openssl/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -2298,6 +2297,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/openssl/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2328,9 +2328,8 @@
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
-					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
+					"\"$(SRCROOT)/../the_third_party/openssl/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
@@ -2338,6 +2337,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/openssl/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
