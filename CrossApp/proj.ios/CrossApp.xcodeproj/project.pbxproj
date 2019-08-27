@@ -2301,7 +2301,6 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
-					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SRCROOT)/../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
@@ -2309,6 +2308,8 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/openssl/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/uv/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2317,6 +2318,8 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/openssl/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/uv/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2340,7 +2343,6 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
-					"\"$(SRCROOT)/../kazmath/include\"",
 					"\"$(SRCROOT)/../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
@@ -2348,6 +2350,8 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/openssl/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/uv/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
@@ -2356,6 +2360,8 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/openssl/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/uv/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

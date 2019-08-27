@@ -275,6 +275,9 @@
 		D673AC0A1E52E2A0007E7A5B /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = D673ABA11E52E2A0007E7A5B /* EAGLView.mm */; };
 		D674DCFF1ECC4C2900D25BFC /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D674DCFD1ECC4C2900D25BFC /* HttpCookie.cpp */; };
 		D674DD001ECC4C2900D25BFC /* HttpCookie.h in Headers */ = {isa = PBXBuildFile; fileRef = D674DCFE1ECC4C2900D25BFC /* HttpCookie.h */; };
+		D67E61C62315279A00179965 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67E61C42315279A00179965 /* libssl.a */; };
+		D67E61C72315279A00179965 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67E61C52315279A00179965 /* libcrypto.a */; };
+		D67E61C9231527C300179965 /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67E61C8231527C300179965 /* libuv_a.a */; };
 		D67ECD761E5EBEC800C9CA49 /* CACheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D67ECD741E5EBEC800C9CA49 /* CACheckbox.cpp */; };
 		D67ECD771E5EBEC800C9CA49 /* CACheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = D67ECD751E5EBEC800C9CA49 /* CACheckbox.h */; };
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
@@ -710,6 +713,9 @@
 		D673ABA11E52E2A0007E7A5B /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
 		D674DCFD1ECC4C2900D25BFC /* HttpCookie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpCookie.cpp; sourceTree = "<group>"; };
 		D674DCFE1ECC4C2900D25BFC /* HttpCookie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpCookie.h; sourceTree = "<group>"; };
+		D67E61C42315279A00179965 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../the_third_party/openssl/prebuilt/mac/libssl.a; sourceTree = "<group>"; };
+		D67E61C52315279A00179965 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../the_third_party/openssl/prebuilt/mac/libcrypto.a; sourceTree = "<group>"; };
+		D67E61C8231527C300179965 /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../the_third_party/uv/prebuilt/mac/libuv_a.a; sourceTree = "<group>"; };
 		D67ECD741E5EBEC800C9CA49 /* CACheckbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CACheckbox.cpp; sourceTree = "<group>"; };
 		D67ECD751E5EBEC800C9CA49 /* CACheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACheckbox.h; sourceTree = "<group>"; };
 		D693E7C51D34F75F003D97A4 /* CAVec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVec4.h; sourceTree = "<group>"; };
@@ -920,11 +926,14 @@
 				D69B766B1E4B059B007D9771 /* OpenGL.framework in Frameworks */,
 				D69B76731E4B05C3007D9771 /* IOKit.framework in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
+				D67E61C72315279A00179965 /* libcrypto.a in Frameworks */,
+				D67E61C62315279A00179965 /* libssl.a in Frameworks */,
+				B0621A4F1AC3A22D005EBCA7 /* libwebp.a in Frameworks */,
+				D67E61C9231527C300179965 /* libuv_a.a in Frameworks */,
 				D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */,
 				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
 				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
-				B0621A4F1AC3A22D005EBCA7 /* libwebp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1236,6 +1245,9 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D67E61C8231527C300179965 /* libuv_a.a */,
+				D67E61C52315279A00179965 /* libcrypto.a */,
+				D67E61C42315279A00179965 /* libssl.a */,
 				D644B3811F18B72D00E90A86 /* AVFoundation.framework */,
 				D6CBC1931EE95CD30083E8C3 /* WebKit.framework */,
 				485203E71E63C73D00571433 /* CoreMedia.framework */,
