@@ -100,3 +100,7 @@ samples/Test_JS/proj.android-studio/.gradle
 test.iml
 Test_JS-proj.android-studio.iml
 
+Test-proj.android-studio.iml
+samples/Test/proj.android-studio/.gradle
+template/multi-platform-cpp/proj.android-studio/.gradle
+template/multi-platform-js/proj.android-studio/.gradle

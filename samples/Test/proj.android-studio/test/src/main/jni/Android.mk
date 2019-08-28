@@ -5,9 +5,12 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := CrossApp_cpp_shared
 LOCAL_MODULE_FILENAME := libCrossApp_cpp
 LOCAL_CPPFLAGS := -std=c++11 -pthread -frtti -fexceptions
+LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 
 MY_FILES_PATH := $(LOCAL_PATH) \
                  $(LOCAL_PATH)/../../../../../Classes \
+                 $(LOCAL_PATH)/../../../../../../../scripting/js-bindings/manual \
+				 $(LOCAL_PATH)/../../../../../../../scripting/js-bindings/auto
 
 MY_FILES_SUFFIX := %.cpp
 
@@ -32,6 +35,7 @@ LOCAL_C_INCLUDES := $(MY_ALL_DIRS)
 
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
+LOCAL_WHOLE_STATIC_LIBRARIES += scriptingcore-spidermonkey
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -40,4 +44,4 @@ $(call import-add-path, $(LOCAL_PATH)/../../../../../../../CrossApp/the_third_pa
 
 $(call import-module,CrossApp)
 $(call import-module,CocosDenshion/android)
-
+$(call import-module,scripting/js-bindings)
