@@ -104,3 +104,5 @@ Test-proj.android-studio.iml
 samples/Test/proj.android-studio/.gradle
 template/multi-platform-cpp/proj.android-studio/.gradle
 template/multi-platform-js/proj.android-studio/.gradle
+multi-platform-cpp-proj.android-studio.iml
+multi-platform-js-proj.android-studio.iml
