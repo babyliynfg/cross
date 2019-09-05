@@ -79,6 +79,9 @@
 		D644B39F1F1A02F600E90A86 /* CAAVPlayerImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D644B39E1F1A02F600E90A86 /* CAAVPlayerImpl.mm */; };
 		D6596E0D1E56D1C200A55CF9 /* CAAlertViewImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */; };
 		D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */; };
+		D66B31002320BCB300A8E4CA /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D66B30FF2320BCB300A8E4CA /* libuv_a.a */; };
+		D66B31032320BCCA00A8E4CA /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D66B31012320BCCA00A8E4CA /* libssl.a */; };
+		D66B31042320BCCA00A8E4CA /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D66B31022320BCCA00A8E4CA /* libcrypto.a */; };
 		D66F533B1ED8402300546E5E /* CAData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66F53391ED8402300546E5E /* CAData.cpp */; };
 		D66F533C1ED8402300546E5E /* CAData.h in Headers */ = {isa = PBXBuildFile; fileRef = D66F533A1ED8402300546E5E /* CAData.h */; };
 		D69DA6991EE54F4E00590961 /* CAFontProcesstor.h in Headers */ = {isa = PBXBuildFile; fileRef = D69DA6981EE54F4E00590961 /* CAFontProcesstor.h */; };
@@ -362,8 +365,6 @@
 		D6ADC7141E56A72800750771 /* ZipUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC5B71E56A72800750771 /* ZipUtils.h */; };
 		D6ADC74F1E56A78000750771 /* CANotificationCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC74D1E56A78000750771 /* CANotificationCenter.cpp */; };
 		D6ADC7501E56A78000750771 /* CANotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC74E1E56A78000750771 /* CANotificationCenter.h */; };
-		D6B0368E1D95270200388A90 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7C1B21506B004B2B86 /* libcrypto.a */; };
-		D6B0368F1D95270200388A90 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7D1B21506B004B2B86 /* libssl.a */; };
 		D6B0C63F1D6587DD00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */; };
 		D6B12EB31DC9C7D300944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB21DC9C7D300944576 /* libwebsockets.a */; };
 		D6C513291E691EA600B0BE19 /* CAColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6C513271E691EA600B0BE19 /* CAColor.cpp */; };
@@ -514,6 +515,9 @@
 		D644B39E1F1A02F600E90A86 /* CAAVPlayerImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAVPlayerImpl.mm; sourceTree = "<group>"; };
 		D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAlertViewImpl.mm; sourceTree = "<group>"; };
 		D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertViewImpl.h; sourceTree = "<group>"; };
+		D66B30FF2320BCB300A8E4CA /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../the_third_party/uv/prebuilt/ios/libuv_a.a; sourceTree = "<group>"; };
+		D66B31012320BCCA00A8E4CA /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../the_third_party/openssl/prebuilt/ios/libssl.a; sourceTree = "<group>"; };
+		D66B31022320BCCA00A8E4CA /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../the_third_party/openssl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
 		D66F53391ED8402300546E5E /* CAData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAData.cpp; sourceTree = "<group>"; };
 		D66F533A1ED8402300546E5E /* CAData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAData.h; sourceTree = "<group>"; };
 		D69DA6981EE54F4E00590961 /* CAFontProcesstor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFontProcesstor.h; sourceTree = "<group>"; };
@@ -929,10 +933,11 @@
 				D644B3971F19FA1200E90A86 /* CoreMedia.framework in Frameworks */,
 				D644B3951F19FA0000E90A86 /* AVFoundation.framework in Frameworks */,
 				D6EB4B0A1F138B6100650417 /* AVKit.framework in Frameworks */,
+				D66B31032320BCCA00A8E4CA /* libssl.a in Frameworks */,
+				D66B31042320BCCA00A8E4CA /* libcrypto.a in Frameworks */,
+				D66B31002320BCB300A8E4CA /* libuv_a.a in Frameworks */,
 				D6B12EB31DC9C7D300944576 /* libwebsockets.a in Frameworks */,
-				D6B0368E1D95270200388A90 /* libcrypto.a in Frameworks */,
 				B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */,
-				D6B0368F1D95270200388A90 /* libssl.a in Frameworks */,
 				02AE826E1BC252AD005181F8 /* libtiff.a in Frameworks */,
 				B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */,
 				B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */,
@@ -965,6 +970,9 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D66B31022320BCCA00A8E4CA /* libcrypto.a */,
+				D66B31012320BCCA00A8E4CA /* libssl.a */,
+				D66B30FF2320BCB300A8E4CA /* libuv_a.a */,
 				D60E2236210AB3B900CDBB44 /* UserNotifications.framework */,
 				D644B3961F19FA1200E90A86 /* CoreMedia.framework */,
 				D644B3941F19FA0000E90A86 /* AVFoundation.framework */,
