@@ -96,3 +96,7 @@ tags
 
 IDEWorkspaceChecks.plist
 samples/Test_JS/proj.android-studio/.gradle
+samples/Test/proj.android-studio/.gradle
+template/multi-platform-cpp/proj.android-studio/.gradle
+Test-proj.android-studio.iml
+*.iml

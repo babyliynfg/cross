@@ -103,7 +103,7 @@ public class CrossAppWebViewHelper {
     @SuppressWarnings("unused")
     public static int createWebView() {
         final int index = viewTag;
-        createWebView(index, 0);//默认非原生webview（为x5 ）；
+        createWebView(index, 0);//0==默认非原生webview（为x5 ）；1==原生webview
         return viewTag++;
     }
 

@@ -3,12 +3,15 @@ package org.CrossApp.lib;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -25,6 +28,8 @@ import android.widget.Toast;
 //import com.tencent.smtt.sdk.WebView;
 //import com.tencent.smtt.sdk.WebViewClient;
 
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
+
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.ByteBuffer;
@@ -38,6 +43,8 @@ public class CrossAppWebViewNative extends WebView {
     private static final String TAG = CrossAppWebViewHelper.class.getSimpleName();
 
     private int viewTag;
+    private View videoView;
+    private WebChromeClient.CustomViewCallback videoCallback;
     private String jsScheme;
     private String szWebViewRect;
 
@@ -247,9 +254,68 @@ public class CrossAppWebViewNative extends WebView {
 
         // Android 5.0以上
         @Override
-        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,   FileChooserParams fileChooserParams) {
+        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
             CrossAppActivity.getContext().getOnValueNativeCallbackListenner().OnValueCallback(webView, filePathCallback, fileChooserParams);
             return true;
+        }
+
+        @Override
+        public void onShowCustomView(final View view, final CustomViewCallback callback) {
+            super.onShowCustomView(view, callback);
+            CrossAppActivity.getContext().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    videoCallback = callback;
+                    if (videoView != null) {
+                        Log.d("cross----", "videoView != null");
+                        videoCallback.onCustomViewHidden();
+                        return;
+                    }
+                    view.setTag("videoView");
+                    videoView = view;
+                    setVisibility(View.GONE);
+                    videoView.setVisibility(VISIBLE);
+                    CrossAppActivity.getFrameLayout().addView(view);
+
+                    videoView.bringToFront();
+                    // 横屏显示
+                    CrossAppActivity.getContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    //设置全屏
+                    CrossAppActivity.getContext().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    Log.d("cross----", "展示1");
+
+                }
+            });
+        }
+
+
+        @Override
+        public void onHideCustomView() {
+            super.onHideCustomView();
+            CrossAppActivity.getContext().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (videoView == null) {
+                        Log.d("cross----", "videoView == null");
+                        return;
+                    }
+
+                    setVisibility(VISIBLE);
+                    videoView.setVisibility(GONE);
+                    CrossAppActivity.getFrameLayout().removeView(videoView);
+                    videoView = null;
+
+                    try {
+                        videoCallback.onCustomViewHidden();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //换成竖屏
+                    CrossAppActivity.getContext().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    Log.d("cross----", "隐藏2");
+                }
+            });
         }
     }
 
