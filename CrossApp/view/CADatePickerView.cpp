@@ -26,7 +26,21 @@ CADatePickerView::CADatePickerView(CADatePickerView::Mode m_mode)
 , isSetDate(false)
 , m_obBackgroundImageForSelected(nullptr)
 {
-
+    std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    auto tm = std::localtime(&t);
+    m_tTM.tm_sec = tm->tm_sec;
+    m_tTM.tm_min = tm->tm_min;
+    m_tTM.tm_hour = tm->tm_hour;
+    m_tTM.tm_mday = tm->tm_mday;
+    m_tTM.tm_mon = tm->tm_mon;
+    m_tTM.tm_year = tm->tm_year;
+    m_tTM.tm_wday = tm->tm_wday;
+    m_tTM.tm_yday = tm->tm_yday;
+    m_tTM.tm_isdst = tm->tm_isdst;
+    
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt){
+        if (!isSetDate) this->setMode(m_eMode);
+    }, "CADatePickerView::update", this, 0.1);
 }
 
 CADatePickerView::~CADatePickerView()
@@ -92,17 +106,7 @@ bool CADatePickerView::init()
 
 	m_pPickerView->onTitleForRow(CALLBACK_BIND_2(CADatePickerView::titleForRow, this));
     
-	std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    auto tm = std::localtime(&t);
-	m_tTM.tm_sec = tm->tm_sec;
-	m_tTM.tm_min = tm->tm_min;
-	m_tTM.tm_hour = tm->tm_hour;
-	m_tTM.tm_mday = tm->tm_mday;
-	m_tTM.tm_mon = tm->tm_mon;
-	m_tTM.tm_year = tm->tm_year;
-	m_tTM.tm_wday = tm->tm_wday;
-	m_tTM.tm_yday = tm->tm_yday;
-	m_tTM.tm_isdst = tm->tm_isdst;
+	
     return true;
 }
 
@@ -153,55 +157,43 @@ void CADatePickerView::setBackgroundImageForSelected(CAImage* image, bool isScal
 
 void CADatePickerView::setDate(int year, int month, int day, bool animated)
 {
-    isSetDate = true;
+    isSetDate = false;
     if (year>=1900 && year<=2100) {
         m_tTM.tm_year = year-1900;
-    }else{
-        isSetDate = false;
-        return;
-    }
-    if (month>=1 && month<=12) {
-        m_tTM.tm_mon = month-1;
-    }else{
-        isSetDate = false;
-        return;
-    }
-    if (day>=1 && day<=31) {
-        m_tTM.tm_mday = day;
-    }else{
-        isSetDate = false;
-        return;
     }
     
-    int tem_day = CACalendar::create()->_dayCountOfMonth(year,month);
-    while (m_tTM.tm_mday>tem_day) {
-        m_tTM.tm_mday--;
+    if (month>=1 && month<=12) {
+        m_tTM.tm_mon = month-1;
     }
+    
+    if (day>=1 && day<=31) {
+        m_tTM.tm_mday = day;
+    }
+    
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt){
+        if (!isSetDate) this->setMode(m_eMode);
+    }, "CADatePickerView::update", this, 0.1);
+}
 
-    if (m_pPickerView)
-    {
-        m_pPickerView->setPickerViewDelegate(this);
-        m_pPickerView->setPickerViewDataSource(this);
-        m_pPickerView->reloadAllComponents();
-        switch (m_eMode)
-        {
-            case CADatePickerView::Mode::Date:
-            {
-                m_pPickerView->selectRow(m_tTM.tm_year, 0, animated);
-                m_pPickerView->selectRow(m_tTM.tm_mon, 1, animated);
-                m_pPickerView->selectRow(m_tTM.tm_mday-1, 2, animated);
-                break;
-            }
-            case CADatePickerView::Mode::DateAndTime:
-                m_tTM.tm_mon--;
-                m_pPickerView->selectRow(CACalendar::create(mktime(&m_tTM))->dayOfYear(), 0, animated);
-                m_pPickerView->selectRow(m_tTM.tm_hour, 1);
-                m_pPickerView->selectRow(m_tTM.tm_min, 2);
-                break;
-            default:
-                break;
-        }
-    }
+void CADatePickerView::setTime(long time)
+{
+    isSetDate = false;
+
+    std::time_t t = (std::time_t)time;
+    auto tm = std::localtime(&t);
+    m_tTM.tm_sec = tm->tm_sec;
+    m_tTM.tm_min = tm->tm_min;
+    m_tTM.tm_hour = tm->tm_hour;
+    m_tTM.tm_mday = tm->tm_mday;
+    m_tTM.tm_mon = tm->tm_mon;
+    m_tTM.tm_year = tm->tm_year;
+    m_tTM.tm_wday = tm->tm_wday;
+    m_tTM.tm_yday = tm->tm_yday;
+    m_tTM.tm_isdst = tm->tm_isdst;
+    
+    CAScheduler::getScheduler()->scheduleOnce([=](float dt){
+        if (!isSetDate) this->setMode(m_eMode);
+    }, "CADatePickerView::update", this, 0.1);
 }
 
 unsigned int CADatePickerView::numberOfComponentsInPickerView(CAPickerView* pickerView)

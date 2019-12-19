@@ -49,6 +49,7 @@ public:
         
 public:
     void setDate(int year, int month, int day, bool animated);
+    void setTime(long time);
 
 protected:
     virtual unsigned int numberOfComponentsInPickerView(CAPickerView* pickerView);
