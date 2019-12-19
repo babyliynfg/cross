@@ -49,32 +49,41 @@ var PickerViewTest = ca.CAViewController.extend({
 
     viewDidLoad: function() {
 
-        this.city_value = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout.fill(), ca.DVerticalLayout_T_H(100, 40)));
-        this.city_value.setText("北京市");
-        this.city_value.setColor(ca.CAColor4B.BLACK);
-        this.city_value.setFontSize(28);
-        this.city_value.setTextAlignment(ca.CATextAlignment.Center);
-        this.city_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
-        this.getView().addSubview(this.city_value);
+        // this.city_value = ca.CALabel.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout.fill(), ca.DVerticalLayout_T_H(100, 40)));
+        // this.city_value.setText("北京市");
+        // this.city_value.setColor(ca.CAColor4B.BLACK);
+        // this.city_value.setFontSize(28);
+        // this.city_value.setTextAlignment(ca.CATextAlignment.Center);
+        // this.city_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.Center);
+        // this.getView().addSubview(this.city_value);
+        //
+        //
+        // this.pickerView = ca.CAPickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(480, 0.5), ca.DVerticalLayout_T_H(200, 400)));
+        // this.pickerView.setFontSizeNormal(40);
+        // this.pickerView.setFontSizeSelected(40);
+        // this.pickerView.setFontColorNormal(ca.CAColor4B.BLACK);
+        // this.pickerView.setFontColorSelected(ca.CAColor4B.BLACK);
+        // this.pickerView.setBackgroundImage(ca.CAImage.createWithColor4B(ca.CAColor4B.YELLOW));
+        // this.getView().addSubview(this.pickerView);
+        //
+        // this.pickerView.onDidSelectRow(this.didSelectRow.bind(this)) ;
+        // this.pickerView.onNumberOfComponents(this.numberOfComponentsInPickerView.bind(this)) ;
+        // this.pickerView.onNumberOfRowsInComponent(this.numberOfRowsInComponent.bind(this)) ;
+        // this.pickerView.onWidthForComponent(this.widthForComponent.bind(this)) ;
+        // this.pickerView.onHeightForComponent(this.rowHeightForComponent.bind(this)) ;
+        // this.pickerView.onTitleForRow(this.titleForRow.bind(this)) ;
+        // this.pickerView.onViewForSelected(this.viewForSelected.bind(this));
+        //
+        // this.pickerView.reloadAllComponents();
 
+        var dpv3 = ca.CADatePickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_NW_C(0.8, 0.5), ca.DVerticalLayout_T_H(200, 400)),ca.CADatePickerView.Mode.DateAndTime);
+        dpv3.setBackgroundImage(ca.CAImage.createWithColor4B(ca.CAColor4B.YELLOW));
+        dpv3.setBackgroundImageForSelected(ca.CAImage.createWithColor4B(ca.CAColor4B.GREEN));
+        this.getView().addSubview(dpv3);
 
-        this.pickerView = ca.CAPickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(480, 0.5), ca.DVerticalLayout_T_H(200, 400)));
-        this.pickerView.setFontSizeNormal(40);
-        this.pickerView.setFontSizeSelected(40);
-        this.pickerView.setFontColorNormal(ca.CAColor4B.BLACK);
-        this.pickerView.setFontColorSelected(ca.CAColor4B.BLACK);
-        this.pickerView.setBackgroundImage(ca.CAImage.createWithColor4B(ca.CAColor4B.YELLOW));
-        this.getView().addSubview(this.pickerView);
+        dpv3.onSelectRow(function (data) {
 
-        this.pickerView.onDidSelectRow(this.didSelectRow.bind(this)) ;
-        this.pickerView.onNumberOfComponents(this.numberOfComponentsInPickerView.bind(this)) ;
-        this.pickerView.onNumberOfRowsInComponent(this.numberOfRowsInComponent.bind(this)) ;
-        this.pickerView.onWidthForComponent(this.widthForComponent.bind(this)) ;
-        this.pickerView.onHeightForComponent(this.rowHeightForComponent.bind(this)) ;
-        this.pickerView.onTitleForRow(this.titleForRow.bind(this)) ;
-        this.pickerView.onViewForSelected(this.viewForSelected.bind(this));
-
-        this.pickerView.reloadAllComponents();
+        });
     },
     didSelectRow: function ( row, component) {
         this.city_value.setText(this.cityArr[row]);

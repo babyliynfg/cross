@@ -486,7 +486,8 @@ void CADatePickerView::setMode(CADatePickerView::Mode mode)
     {
         m_pPickerView->setPickerViewDelegate(this);
         m_pPickerView->setPickerViewDataSource(this);
-        
+        m_pPickerView->reloadAllComponents();
+
         switch (m_eMode)
         {
             case CADatePickerView::Mode::Date:
@@ -506,7 +507,6 @@ void CADatePickerView::setMode(CADatePickerView::Mode mode)
             default:
                 break;
         }
-        m_pPickerView->reloadAllComponents();
     }
 }
 
