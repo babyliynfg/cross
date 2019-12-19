@@ -167,6 +167,10 @@ ca.CAKeypadDispatcher.KeypadMSGType = {};
 ca.CAKeypadDispatcher.KeypadMSGType.BackClicked = 1;
 ca.CAKeypadDispatcher.KeypadMSGType.MenuClicked = 2;
 
+ca.CAPageView.Orientation = {};
+ca.CAPageView.Orientation.Horizontal = 0;
+ca.CAPageView.Orientation.Vertical = 1;
+
 ca.CAPageControl.Style = {};
 ca.CAPageControl.Style.Dot = 0;
 ca.CAPageControl.Style.Round = 1;
