@@ -622,7 +622,9 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
     m_cPlaceHdolderColor = var;
     
     UIColor* color = [UIColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
-    [textField_iOS setValue:color forKeyPath:@"_placeholderLabel.textColor"];
+    //[textField_iOS setValue:color forKeyPath:@"_placeholderLabel.textColor"];
+    
+    textField_iOS.attributedPlaceholder = [[NSMutableAttributedString alloc] initWithString:@" " attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:14], NSForegroundColorAttributeName : color}];
     
     this->delayShowImage();
 }
@@ -638,7 +640,9 @@ void CATextField::setFontSize(int var)
     
     CGFloat scale = [[UIScreen mainScreen] scale];
     textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
-    [textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
+    //[textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
+    
+    textField_iOS.attributedPlaceholder = [[NSMutableAttributedString alloc] initWithString:@" " attributes:@{NSFontAttributeName : textField_iOS.font, NSForegroundColorAttributeName : textField_iOS.textColor}];
     
     this->delayShowImage();
 }
