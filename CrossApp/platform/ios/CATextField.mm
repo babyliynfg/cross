@@ -35,7 +35,7 @@ static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_
 
 @interface IOSTextField: UITextField<UITextFieldDelegate>
 {
-
+    
 }
 
 @property(nonatomic,assign) CrossApp::CATextField* textField;
@@ -99,9 +99,9 @@ static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_
     else if (crossTextField->getDelegate())
     {
         return crossTextField->getDelegate()->textFieldShouldChangeCharacters(crossTextField,
-                                                                          (unsigned int)range.location,
-                                                                          (unsigned int)range.length,
-                                                                          [string UTF8String]);
+                                                                              (unsigned int)range.location,
+                                                                              (unsigned int)range.length,
+                                                                              [string UTF8String]);
     }
     
     
@@ -131,7 +131,7 @@ static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_
 
 @implementation IOSTextField
 {
-
+    
 }
 
 -(id)initWithFrame:(CGRect)frame
@@ -168,7 +168,7 @@ static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_
 -(void)regiestKeyBoardMessage
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillWasShown:) name:UIKeyboardWillShowNotification object:nil];
-
+    
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
     
     [self addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -321,7 +321,7 @@ bool CATextField::resignFirstResponder()
     }
     
     bool result = CAControl::resignFirstResponder();
-
+    
     if ([textField_iOS isFirstResponder])
     {
         [textField_iOS resignFirstResponder];
@@ -403,7 +403,7 @@ void CATextField::showImage()
     ca_data->fastSet(data, [iOSData length]);
     
     CAImage *image = CAImage::createWithImageDataNoCache(ca_data);
-
+    
     m_pImgeView->setImage(image);
 }
 
@@ -456,7 +456,7 @@ bool CATextField::init()
     m_pImgeView = CAImageView::createWithLayout(DLayoutFill);
     this->addSubview(m_pImgeView);
     m_pImgeView->setTextTag("textField");
-
+    
     return true;
 }
 
@@ -466,7 +466,7 @@ void CATextField::update(float dt)
     {
         //CC_BREAK_IF(!CAApplication::getApplication()->isDrawing());
         DPoint point = this->convertToWorldSpace(DPointZero);
-
+        
         CGFloat scale = [[UIScreen mainScreen] scale];
         CGRect rect = textField_iOS.frame;
         rect.origin.x = s_dip_to_px(point.x) / scale;
@@ -622,7 +622,9 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
     m_cPlaceHdolderColor = var;
     
     UIColor* color = [UIColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
-    [textField_iOS setValue:color forKeyPath:@"_placeholderLabel.textColor"];
+    //[textField_iOS setValue:color forKeyPath:@"_placeholderLabel.textColor"];
+    
+    textField_iOS.attributedPlaceholder = [[NSMutableAttributedString alloc] initWithString:@" " attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:14], NSForegroundColorAttributeName : color}];
     
     this->delayShowImage();
 }
@@ -638,7 +640,9 @@ void CATextField::setFontSize(int var)
     
     CGFloat scale = [[UIScreen mainScreen] scale];
     textField_iOS.font = [UIFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
-    [textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
+    //[textField_iOS setValue:textField_iOS.font forKeyPath:@"_placeholderLabel.font"];
+    
+    textField_iOS.attributedPlaceholder = [[NSMutableAttributedString alloc] initWithString:@" " attributes:@{NSFontAttributeName : textField_iOS.font, NSForegroundColorAttributeName : textField_iOS.textColor}];
     
     this->delayShowImage();
 }
