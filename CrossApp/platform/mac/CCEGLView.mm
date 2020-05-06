@@ -85,7 +85,7 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
+    float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor] * 2;
     
     experimental::Viewport vp((float)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
                               (float)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
@@ -97,7 +97,7 @@ void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 
 void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor];
+    float frameZoomFactor = [[EAGLView sharedEGLView] frameZoomFactor] * 2;
     
     glScissor((GLint)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
               (GLint)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
