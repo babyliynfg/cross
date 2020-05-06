@@ -55,9 +55,7 @@
 	NSWindow		*windowGLView_;
     NSView          *superViewGLView_;
     NSRect          originalWinRect_; // Original size and position
-    
-    float           frameZoomFactor_;
-    
+        
     NSString *              markedText_;
 }
 
@@ -65,8 +63,6 @@
 
 // whether or not the view is in fullscreen mode
 @property (nonatomic, readonly) BOOL isFullScreen;
-
-@property (nonatomic, readwrite) float frameZoomFactor;
 
 // initializes the MacGLView with a frame rect and an OpenGL context
 - (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context;
@@ -81,8 +77,6 @@
 
 /** returns the depth format of the view in BPP */
 - (NSUInteger) depthFormat;
-
-- (void) setFrameZoomFactor:(float)frameZoomFactor;
 
 // get the view object
 +(id) sharedEGLView;
