@@ -183,6 +183,8 @@ public:
     
 protected:
     
+    void updateAttributedPlaceholder();
+    
     void delayShowImage();
 
     void showImage();
