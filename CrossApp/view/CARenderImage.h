@@ -79,10 +79,6 @@ protected:
     void end();
     
     virtual void setContentSize(const DSize& contentSize) override;
-    
-    float px_to_dip(float px);
-    
-    float dip_to_px(float dip);
 
 protected:
 

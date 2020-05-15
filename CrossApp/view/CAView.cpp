@@ -1350,8 +1350,8 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
         
             float minX = m_tModelViewTransform.m[12];
             float minY = m_tModelViewTransform.m[13];
-            float maxX = ceilf(max.m[12] + 0.5f);
-            float maxY = ceilf(max.m[13] + 0.5f);
+            float maxX = max.m[12];
+            float maxY = max.m[13];
             
             auto glview = m_pApplication->getOpenGLView();
 
@@ -1360,18 +1360,32 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
             {
                 m_obSupviewScissorRect = glview->getScissorRect();
 
-                float x1 = MAX(minX, m_obSupviewScissorRect.getMinX());
-                float y1 = MAX(minY, m_obSupviewScissorRect.getMinY());
-                float x2 = MIN(maxX, m_obSupviewScissorRect.getMaxX());
-                float y2 = MIN(maxY, m_obSupviewScissorRect.getMaxY());
+                float tmp_x1 = MAX(minX, m_obSupviewScissorRect.getMinX());
+                float tmp_x2 = MIN(maxX, m_obSupviewScissorRect.getMaxX());
+                float tmp_y1 = MAX(minY, m_obSupviewScissorRect.getMinY());
+                float tmp_y2 = MIN(maxY, m_obSupviewScissorRect.getMaxY());
+                
+                float x1 = MIN(tmp_x1, tmp_x2);
+                float x2 = MAX(tmp_x1, tmp_x2);
+                float y1 = MIN(tmp_y1, tmp_y2);
+                float y2 = MAX(tmp_y1, tmp_y2);
                 float width = MAX(x2-x1, 0);
                 float height = MAX(y2-y1, 0);
+                
                 glview->setScissorInPoints(x1, y1, width, height);
             }
             else
             {
                 glEnable(GL_SCISSOR_TEST);
-                glview->setScissorInPoints(minX, minY, maxX - minX, maxY - minY);
+                
+                float x1 = MIN(minX, maxX);
+                float x2 = MAX(minX, maxX);
+                float y1 = MIN(minY, maxY);
+                float y2 = MAX(minY, maxY);
+                float width = MAX(x2-x1, 0);
+                float height = MAX(y2-y1, 0);
+                
+                glview->setScissorInPoints(x1, y1, width, height);
             }
             
         };
