@@ -624,9 +624,8 @@ void CASegmentedControl::printWithSegmentItemBackground()
 
     CAScale9ImageView* scale9ImageView = CAScale9ImageView::createWithFrame(rect);
     scale9ImageView->setImage(m_pSegmentItemBackgroundImage);
-    scale9ImageView->setScale(s_px_to_dip(1));
 
-    CARenderImage* render = CARenderImage::create(s_px_to_dip(rect.size.width), s_px_to_dip(rect.size.height));
+    CARenderImage* render = CARenderImage::create(rect.size.width, rect.size.height);
     render->printscreenWithView(scale9ImageView);
     
     CC_SAFE_RELEASE(m_pNewSegmentItemBackgroundImage);

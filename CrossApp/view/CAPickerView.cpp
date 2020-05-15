@@ -1,4 +1,4 @@
-﻿//
+//
 //  CAPickerView.cpp
 //  CrossApp
 //
@@ -246,7 +246,7 @@ void CAPickerView::reloadAllComponents()
         tableView->setSeparatorViewHeight(0);
         tableView->setSeparatorColor(CAColor4B::CLEAR);
         tableView->setShowsScrollIndicators(false);
-        tableView->setDisplayRange(true);
+//        tableView->setDisplayRange(true);
         tableView->setBackgroundImage(nullptr);
         this->insertSubview(tableView, 1);
         m_tableViews.pushBack(tableView);
