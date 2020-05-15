@@ -233,7 +233,7 @@ void CADrawerController::showLeftViewController(bool animated)
     m_bShow = true;
 
     this->begin();
-    
+
     if (animated)
     {
         m_fCurrDivision = m_pContainer[1]->getFrameOrigin().x;
@@ -286,16 +286,12 @@ void CADrawerController::begin()
 void CADrawerController::showEnded()
 {
     m_pContainer[0]->setTouchEnabled(true);
-    m_pRightViewController->setViewVisibleFalse();
-    m_pLeftViewController->setViewVisibleTrue();
 }
 
 void CADrawerController::hideEnded()
 {
     m_pContainer[0]->setVisible(false);
     m_pContainer[1]->setTouchEnabled(true);
-    m_pLeftViewController->setViewVisibleFalse();
-    m_pRightViewController->setViewVisibleTrue();
 }
 
 void CADrawerController::updateViewFrame()

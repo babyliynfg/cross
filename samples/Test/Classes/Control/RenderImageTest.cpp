@@ -23,10 +23,10 @@ void RenderImageTest::viewDidLoad()
     this->getView()->addSubview(button);
     button->addTarget([=]
     {
-        auto size = imageView->getBounds().size;
+        auto size = CAApplication::getApplication()->getWinSize();
         
         CARenderImage* render = CARenderImage::create(size.width, size.height , CAImage::PixelFormat::RGBA8888);
-        render->printscreenWithView(imageView) ;
+        render->printscreenWithView(CAApplication::getApplication()->getRootWindow());
 
         imageView->setImage(render->getImageView()->getImage()) ;
 

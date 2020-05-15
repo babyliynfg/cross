@@ -700,7 +700,7 @@ float CARenderImage::px_to_dip(float px)
     if (s_px_to_dip(1) > 1)
         return px / 4;
     else
-        return s_px_to_dip(px);
+        return s_px_to_dip(px) / 2;
 }
 
 float CARenderImage::dip_to_px(float dip)
@@ -708,7 +708,7 @@ float CARenderImage::dip_to_px(float dip)
     if (s_px_to_dip(1) > 1)
         return dip * 4;
     else
-        return s_dip_to_px(dip);
+        return s_dip_to_px(dip) * 2;
 }
 
 
