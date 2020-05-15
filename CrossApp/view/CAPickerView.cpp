@@ -23,7 +23,6 @@ CAPickerView::CAPickerView()
 , m_displayRow(7)
 , m_pBackgroundView(nullptr)
 {
-    this->setDisplayRange(false);
 }
 
 CAPickerView::~CAPickerView()
@@ -82,6 +81,7 @@ CAPickerView* CAPickerView::createWithLayout(const CrossApp::DLayout &layout)
 bool CAPickerView::init()
 {
     this->setBackgroundImage(CAImage::WHITE_IMAGE());
+    this->setDisplayRange(false);
     return true;
 }
 
@@ -246,7 +246,7 @@ void CAPickerView::reloadAllComponents()
         tableView->setSeparatorViewHeight(0);
         tableView->setSeparatorColor(CAColor4B::CLEAR);
         tableView->setShowsScrollIndicators(false);
-//        tableView->setDisplayRange(true);
+        tableView->setDisplayRange(true);
         tableView->setBackgroundImage(nullptr);
         this->insertSubview(tableView, 1);
         m_tableViews.pushBack(tableView);
@@ -408,7 +408,8 @@ CATableViewCell* CAPickerView::tableCellAtIndex(CATableView* table, const DSize&
     if (cell == nullptr)
     {
         cell = CATableViewCell::create("CrossApp");
-        cell->setBackgroundView(nullptr);
+        cell->setBackgroundImage(nullptr, false);
+        cell->setDisplayRange(true);
     }
     else
     {
