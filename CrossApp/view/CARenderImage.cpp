@@ -314,6 +314,14 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
     return bRet;
 }
 
+CARenderImage* CARenderImage::printscreen()
+{
+    auto size = CAApplication::getApplication()->getWinSize();
+    CARenderImage* render = CARenderImage::create(size.width, size.height , CAImage::PixelFormat::RGBA8888);
+    render->printscreenWithView(CAApplication::getApplication()->getRootWindow());
+    return render;
+}
+
 void CARenderImage::printscreenWithView(CAView* view)
 {
     this->printscreenWithView(view, DPointZero);
@@ -358,7 +366,9 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     view->setPoint(point);
     view->setScale(ori_s);
     
-    m_pApplication->getRenderer()->clean();
+    Renderer* renderer = m_pApplication->getRenderer();
+
+    renderer->clean();
     experimental::FrameBuffer::clearAllFBOs();
     
     this->beginWithClear(backgroundColor);
@@ -367,8 +377,9 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     view->visit();
     m_bInTheScreenshot = false;
     this->end();
-    m_pApplication->getRenderer()->render();
     
+    renderer->render();
+
     view->setRotationX(ori_ro_x);
     view->setAnchorPoint(orig_anp);
     view->setPoint(ori_p);

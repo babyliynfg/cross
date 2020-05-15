@@ -142,8 +142,8 @@ DRect CCEGLViewProtocol::getScissorRect()
 
 	GLfloat params[4];
 	glGetFloatv(GL_SCISSOR_BOX, params);
-	float x = (params[0] / frameZoomFactor - m_obViewPortRect.origin.x) / m_fScale;
-	float y = (params[1] / frameZoomFactor - m_obViewPortRect.origin.y) / m_fScale;
+	float x = (params[0] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.x);
+	float y = (params[1] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.y);
 	float w = params[2] / frameZoomFactor / m_fScale;
 	float h = params[3] / frameZoomFactor / m_fScale;
 	return DRect(x, y, w, h);

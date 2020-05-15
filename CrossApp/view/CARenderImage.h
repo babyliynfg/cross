@@ -27,10 +27,12 @@ public:
 
     static CARenderImage * create(int w, int h);
 
+    static CARenderImage* printscreen();
+
     bool initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat);
 
     bool initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eFormat, GLuint uDepthStencilFormat);
-
+    
     void printscreenWithView(CAView* view);
     
     void printscreenWithView(CAView* view, DPoint offset);
