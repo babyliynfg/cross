@@ -12227,32 +12227,6 @@ bool js_crossapp_CAApplication_runWindow(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CAApplication_runWindow : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAApplication_getNotificationView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAApplication* cobj = (CrossApp::CAApplication *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAApplication_getNotificationView : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAView* ret = cobj->getNotificationView();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAView>(cx, (CrossApp::CAView*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAApplication_getNotificationView : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAApplication_getVisibleOrigin(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -13162,35 +13136,7 @@ bool js_crossapp_CAApplication_setTouchDispatcher(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CAApplication_setTouchDispatcher : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAApplication_setNotificationView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAApplication* cobj = (CrossApp::CAApplication *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAApplication_setNotificationView : Invalid Native Object");
-    if (argc == 1) {
-        CrossApp::CAView* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAApplication_setNotificationView : Error processing arguments");
-        cobj->setNotificationView(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
 
-    JS_ReportError(cx, "js_crossapp_CAApplication_setNotificationView : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAApplication_getScheduler(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -13474,7 +13420,6 @@ void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global) 
         JS_FN("end", js_crossapp_CAApplication_end, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("multiplyMatrix", js_crossapp_CAApplication_multiplyMatrix, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("runWindow", js_crossapp_CAApplication_runWindow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getNotificationView", js_crossapp_CAApplication_getNotificationView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVisibleOrigin", js_crossapp_CAApplication_getVisibleOrigin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("mainLoop", js_crossapp_CAApplication_mainLoop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDrawing", js_crossapp_CAApplication_isDrawing, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -13518,7 +13463,6 @@ void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global) 
         JS_FN("popMatrix", js_crossapp_CAApplication_popMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVisibleSize", js_crossapp_CAApplication_getVisibleSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchDispatcher", js_crossapp_CAApplication_setTouchDispatcher, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setNotificationView", js_crossapp_CAApplication_setNotificationView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScheduler", js_crossapp_CAApplication_getScheduler, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRootWindow", js_crossapp_CAApplication_getRootWindow, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getClassTypeInfo", js_crossapp_CAApplication_getClassTypeInfo, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

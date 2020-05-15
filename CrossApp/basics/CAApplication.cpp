@@ -66,8 +66,6 @@ bool CAApplication::init(void)
     // scenes
     m_pRootWindow = nullptr;
 
-    m_pNotificationView = nullptr;
-
     // FPS
     m_fAccumDt = 0.0f;
     m_fFrameRate = 0.0f;
@@ -135,7 +133,6 @@ CAApplication::~CAApplication(void)
     CC_SAFE_RELEASE(m_pFPSLabel);
     
     CC_SAFE_RELEASE(m_pRootWindow);
-    CC_SAFE_RELEASE(m_pNotificationView);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
     CC_SAFE_RELEASE_NULL(m_pKeypadDispatcher);
     CC_SAFE_RELEASE(m_pThemeManager);
@@ -200,12 +197,6 @@ void CAApplication::drawScene(float dt)
             m_pRootWindow->render(m_pRenderer, Mat4::IDENTITY, nullptr);
         }
         
-        // draw the notifications node
-        if (m_pNotificationView)
-        {
-            m_pNotificationView->visit(m_pRenderer, Mat4::IDENTITY, 0);
-        }
-
         if (m_bDisplayStats)
         {
             showStats();
@@ -873,28 +864,6 @@ void CAApplication::createStatsLabel()
     CC_SAFE_RETAIN(m_pFPSLabel);
     m_pFPSLabel->onEnter();
     m_pFPSLabel->onEnterTransitionDidFinish();
-}
-
-CAView* CAApplication::getNotificationView()
-{ 
-    return m_pNotificationView; 
-}
-
-void CAApplication::setNotificationView(CAView *view)
-{
-    if (m_pNotificationView)
-    {
-        m_pNotificationView->resignFirstResponder();
-    }
-    CC_SAFE_RELEASE(m_pNotificationView);
-    m_pNotificationView = view;
-    if (m_pNotificationView)
-    {
-        m_pNotificationView->becomeFirstResponder();
-        m_pNotificationView->reViewlayout(m_obWinSizeInPoints);
-    }
-    CC_SAFE_RETAIN(m_pNotificationView);
-    this->updateDraw();
 }
 
 void CAApplication::setScheduler(CAScheduler* scheduler)

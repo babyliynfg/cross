@@ -121,10 +121,6 @@ public:
     
     void setViewport();
 
-    CAView* getNotificationView();
-    
-    void setNotificationView(CAView *view);
-
     DSize getWinSize(void);
 
     DSize getVisibleSize();
@@ -314,8 +310,6 @@ protected:
     DSize    m_obWinSizeInPoints;
 
     char *m_pszFPS;
-
-    CAView *m_pNotificationView;
     
     CAStatusBarStyle m_eStatusBarStyle;
     

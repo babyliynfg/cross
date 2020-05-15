@@ -581,7 +581,6 @@ bool js_crossapp_CAApplication_getWinSize(JSContext *cx, uint32_t argc, jsval *v
 bool js_crossapp_CAApplication_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_multiplyMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_runWindow(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAApplication_getNotificationView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getVisibleOrigin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_mainLoop(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_isDrawing(JSContext *cx, uint32_t argc, jsval *vp);
@@ -625,7 +624,6 @@ bool js_crossapp_CAApplication_getThemeManager(JSContext *cx, uint32_t argc, jsv
 bool js_crossapp_CAApplication_popMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getVisibleSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setTouchDispatcher(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAApplication_setNotificationView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getScheduler(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getRootWindow(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getClassTypeInfo(JSContext *cx, uint32_t argc, jsval *vp);
