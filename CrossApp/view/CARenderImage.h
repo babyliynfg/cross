@@ -115,6 +115,8 @@ protected:
     GLclampf     m_fClearDepth;
     GLint        m_nClearStencil;
     bool         m_bAutoDraw;
+    bool         m_bInTheScreenshot
+    
     
     friend class CAImage;
     

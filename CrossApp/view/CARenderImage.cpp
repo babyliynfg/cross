@@ -16,7 +16,6 @@
 #include "platform/CAFileUtils.h"
 #include "platform/CADensityDpi.h"
 NS_CC_BEGIN
-
 // implementation CARenderImage
 CARenderImage::CARenderImage()
 : m_pImageView(nullptr)
@@ -31,6 +30,7 @@ CARenderImage::CARenderImage()
 , m_fClearDepth(0.0f)
 , m_nClearStencil(0)
 , m_bAutoDraw(false)
+, m_bInTheScreenshot(false)
 , m_uPixelsWide(0)
 , m_uPixelsHigh(0)
 {
@@ -365,8 +365,10 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     experimental::FrameBuffer::clearAllFBOs();
     
     this->beginWithClear(backgroundColor);
+    m_bInTheScreenshot = true;
     view->visitEve();
     view->visit();
+    m_bInTheScreenshot = false;
     this->end();
     m_pApplication->getRenderer()->render();
     
@@ -635,6 +637,7 @@ void CARenderImage::visitEve()
 
 void CARenderImage::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
+    CC_RETURN_IF(m_bInTheScreenshot);
     CC_RETURN_IF(!m_bVisible);
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
@@ -697,18 +700,20 @@ void CARenderImage::setContentSize(const DSize& contentSize)
 
 float CARenderImage::px_to_dip(float px)
 {
-    if (s_px_to_dip(1) > 1)
-        return px / 4;
-    else
-        return s_px_to_dip(px) / 2;
+    return px;
+//    if (s_px_to_dip(1) > 1)
+//        return px / 4;
+//    else
+//        return s_px_to_dip(px) / 2;
 }
 
 float CARenderImage::dip_to_px(float dip)
 {
-    if (s_px_to_dip(1) > 1)
-        return dip * 4;
-    else
-        return s_dip_to_px(dip) * 2;
+    return dip;
+//    if (s_px_to_dip(1) > 1)
+//        return dip * 4;
+//    else
+//        return s_dip_to_px(dip) * 2;
 }
 
 

@@ -93,7 +93,6 @@ bool RootWindow::init()
     this->setRootViewController(drawer);
     
     m_pRootDrawerController = drawer;
-    CAApplication::getApplication()->setNotificationView(NULL);
 
     return true;
 }
