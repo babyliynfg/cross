@@ -7,6 +7,7 @@
 #include "CATouchDispatcher.h"
 #include "basics/CAApplication.h"
 #include "basics/CACamera.h"
+#include "CrossApp-Prefix.h"
 #import "EAGLView.h"
 
 NS_CC_BEGIN
@@ -85,7 +86,7 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactor = 2;
+    float frameZoomFactor = CC_FRAME_ZOOM_FACTOR;
     
     experimental::Viewport vp((float)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
                               (float)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
@@ -97,7 +98,7 @@ void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 
 void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactor = 2;
+    float frameZoomFactor = CC_FRAME_ZOOM_FACTOR;
     
     glScissor((GLint)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
               (GLint)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),

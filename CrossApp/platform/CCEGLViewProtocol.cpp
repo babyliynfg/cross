@@ -6,6 +6,7 @@
 #include "basics/CACamera.h"
 #include "basics/CAApplication.h"
 #include "basics/CANotificationCenter.h"
+#include "CrossApp-Prefix.h"
 #include "CCApplication.h"
 NS_CC_BEGIN
 
@@ -137,12 +138,14 @@ bool CCEGLViewProtocol::isScissorEnabled()
 
 DRect CCEGLViewProtocol::getScissorRect()
 {
+    float frameZoomFactor = CC_FRAME_ZOOM_FACTOR;
+
 	GLfloat params[4];
 	glGetFloatv(GL_SCISSOR_BOX, params);
-	float x = (params[0] - m_obViewPortRect.origin.x) / m_fScale;
-	float y = (params[1] - m_obViewPortRect.origin.y) / m_fScale;
-	float w = params[2] / m_fScale;
-	float h = params[3] / m_fScale;
+	float x = (params[0] / frameZoomFactor - m_obViewPortRect.origin.x) / m_fScale;
+	float y = (params[1] / frameZoomFactor - m_obViewPortRect.origin.y) / m_fScale;
+	float w = params[2] / frameZoomFactor / m_fScale;
+	float h = params[3] / frameZoomFactor / m_fScale;
 	return DRect(x, y, w, h);
 }
 

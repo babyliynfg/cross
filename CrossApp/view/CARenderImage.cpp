@@ -190,8 +190,8 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
     {
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
 
-        w = s_dip_to_px(w);
-        h = s_dip_to_px(h);
+        w = this->dip_to_px(w + 0.5);
+        h = this->dip_to_px(h + 0.5);
         
         // textures must be power of two squared
         unsigned long powW = 0;
@@ -351,7 +351,7 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     float ori_ro_x = view->getRotationX();
     float ori_s = view->getScale();
     
-    point.y -= view->m_obContentSize.height * s_dip_to_px(ori_s);
+    point.y -= view->m_obContentSize.height * this->dip_to_px(ori_s);
     point.y += offset.y;
     point.x -= offset.x;
     
@@ -359,7 +359,7 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     view->setRotationX(ori_ro_x + 180);
     view->setAnchorPoint(DPoint(0.0f, 1.0f));
     view->setPoint(point);
-    view->setScale(s_dip_to_px(ori_s));
+    view->setScale(this->dip_to_px(ori_s));
     
     m_pApplication->getRenderer()->clean();
     experimental::FrameBuffer::clearAllFBOs();
@@ -692,6 +692,24 @@ bool CARenderImage::saveToFile(const char *szFilePath)
 
 void CARenderImage::setContentSize(const DSize& contentSize)
 {
-    CAView::setContentSize(DSize(s_px_to_dip(m_uPixelsWide), s_px_to_dip(m_uPixelsHigh)));
+    CAView::setContentSize(DSize(this->px_to_dip(m_uPixelsWide), this->px_to_dip(m_uPixelsHigh)));
 }
+
+float CARenderImage::px_to_dip(float px)
+{
+    if (s_px_to_dip(1) > 1)
+        return px / 4;
+    else
+        return s_px_to_dip(px);
+}
+
+float CARenderImage::dip_to_px(float dip)
+{
+    if (s_px_to_dip(1) > 1)
+        return dip * 4;
+    else
+        return s_dip_to_px(dip);
+}
+
+
 NS_CC_END
