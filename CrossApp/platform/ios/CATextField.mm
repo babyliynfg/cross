@@ -750,12 +750,14 @@ void CATextField::setMarginImageLeft(const DSize& imgSize,const std::string& fil
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     
+    UIView *paddingView = [[UIView alloc]initWithFrame:rect];
     UIImage* image = [UIImage imageNamed:[NSString stringWithUTF8String:filePath.c_str()]];
-    UIImageView* paddingView=[[UIImageView alloc]initWithImage:image];
-    [paddingView setFrame:rect];
+    UIImageView *accountLView = [[UIImageView alloc]initWithImage:image];
+    accountLView.frame = rect;
+    [paddingView addSubview:accountLView];
     textField_iOS.leftView = paddingView;
     textField_iOS.leftViewMode = UITextFieldViewModeAlways;
-    
+
     this->delayShowImage();
 }
 
@@ -769,9 +771,11 @@ void CATextField::setMarginImageRight(const DSize& imgSize,const std::string& fi
     rect.size.width = s_dip_to_px(worldContentSize.width) / scale;
     rect.size.height =  s_dip_to_px(worldContentSize.height) / scale;
     
+    UIView *paddingView = [[UIView alloc]initWithFrame:rect];
     UIImage* image = [UIImage imageNamed:[NSString stringWithUTF8String:filePath.c_str()]];
-    UIImageView* paddingView=[[UIImageView alloc]initWithImage:image];
-    [paddingView setFrame:rect];
+    UIImageView *accountLView = [[UIImageView alloc]initWithImage:image];
+    accountLView.frame = rect;
+    [paddingView addSubview:accountLView];
     textField_iOS.rightView = paddingView;
     textField_iOS.rightViewMode = UITextFieldViewModeAlways;
     

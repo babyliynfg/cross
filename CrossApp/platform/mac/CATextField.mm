@@ -676,15 +676,18 @@ void CATextField::setContentSize(const DSize& contentSize)
 
     if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
     {
-        m_eClearBtn = CATextField::ClearButtonMode::None;
-        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), map.at("clearImage"));
-        DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
-        [textField_MAC setMarginRight:worldContentSize.width];
-        m_eClearBtn = CATextField::ClearButtonMode::WhileEditing;
+        this->setClearButtonMode(CATextField::ClearButtonMode::WhileEditing);
     }
-    
-    m_pImgeView->setFrame([textField_MAC getDRect]);
-    
+    else
+    {
+        CAButton* rightMarginView = (CAButton*)this->getSubviewByTextTag("ImageRight");
+        if (rightMarginView)
+        {
+            rightMarginView->removeFromSuperview();
+        }
+        this->setMarginRight(m_iMarginRight);
+    }
+        
     this->showImage();
 }
 
@@ -914,7 +917,8 @@ void CATextField::setClearButtonMode(CATextField::ClearButtonMode var)
 {
     if (var == CATextField::ClearButtonMode::WhileEditing)
     {
-        this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
+        float width = m_obContentSize.height/2;
+        this->setMarginImageRight(DSize(width, width), "");
         const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CATextField");
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTextTag("ImageRight");
         rightMarginView->setImageForState(CAControl::State::Normal, CAImage::create(map.at("clearImage")));
