@@ -194,15 +194,18 @@ bool CARenderImage::initWithWidthAndHeight(int w, int h, CAImage::PixelFormat eF
         unsigned long powW = 0;
         unsigned long powH = 0;
         
+        float width = this->to_px(w);
+        float height = this->to_px(h);
+        
         if (CAConfiguration::getInstance()->supportsNPOT())
         {
-            powW = w;
-            powH = h;
+            powW = width;
+            powH = height;
         }
         else
         {
-            powW = ccNextPOT(w);
-            powH = ccNextPOT(h);
+            powW = ccNextPOT(width);
+            powH = ccNextPOT(height);
         }
         
         data = (unsigned char *)malloc((unsigned long)(powW * powH * 4));
@@ -366,14 +369,17 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     view->setPoint(point);
     view->setScale(ori_s);
     
-    Renderer* renderer = m_pApplication->getRenderer();
+    auto renderer = m_pApplication->getRenderer();
+
+    view->visitEve();
 
     renderer->clean();
     experimental::FrameBuffer::clearAllFBOs();
     
+    renderer->clearDrawStats();
+    
     this->beginWithClear(backgroundColor);
     m_bInTheScreenshot = true;
-    view->visitEve();
     view->visit();
     m_bInTheScreenshot = false;
     this->end();
@@ -510,11 +516,26 @@ void CARenderImage::onBegin()
         
         Mat4 orthoMatrix;
         Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
+        
+        
+//        Quaternion rotationQuat;
+//        float halfRadx = CC_DEGREES_TO_RADIANS(180 / 2.f);
+//        float halfRady = CC_DEGREES_TO_RADIANS(0 / 2.f);
+//        float halfRadz = -CC_DEGREES_TO_RADIANS(0 / 2.f);
+//
+//        float coshalfRadx = cosf(halfRadx), sinhalfRadx = sinf(halfRadx), coshalfRady = cosf(halfRady), sinhalfRady = sinf(halfRady), coshalfRadz = cosf(halfRadz), sinhalfRadz = sinf(halfRadz);
+//
+//        rotationQuat.x = sinhalfRadx * coshalfRady * coshalfRadz - coshalfRadx * sinhalfRady * sinhalfRadz;
+//        rotationQuat.y = coshalfRadx * sinhalfRady * coshalfRadz + sinhalfRadx * coshalfRady * sinhalfRadz;
+//        rotationQuat.z = coshalfRadx * coshalfRady * sinhalfRadz - sinhalfRadx * sinhalfRady * coshalfRadz;
+//        rotationQuat.w = coshalfRadx * coshalfRady * coshalfRadz + sinhalfRadx * sinhalfRady * sinhalfRadz;
+//        Mat4::createRotation(rotationQuat, &orthoMatrix);
+        
         m_pApplication->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
     
     {
-        glViewport(0, 0, (GLsizei)m_uPixelsWide, (GLsizei)m_uPixelsHigh);
+        glViewport(0, 0, (GLsizei)this->to_px(m_uPixelsWide), (GLsizei)this->to_px(m_uPixelsHigh));
     }
     
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
@@ -587,13 +608,15 @@ void CARenderImage::onClear()
     // backup and set
     if (m_uClearFlags & GL_COLOR_BUFFER_BIT)
     {
-        glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
+        auto glview = m_pApplication->getOpenGLView();
+        glview->getGlGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
         glClearColor(m_sClearColor.r, m_sClearColor.g, m_sClearColor.b, m_sClearColor.a);
     }
     
     if (m_uClearFlags & GL_DEPTH_BUFFER_BIT)
     {
-        glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
+        auto glview = m_pApplication->getOpenGLView();
+        glview->getGlGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
         glClearDepth(m_fClearDepth);
     }
     
@@ -625,7 +648,8 @@ void CARenderImage::onClearDepth()
 {
     //! save old depth value
     GLfloat depthClearValue;
-    glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+    auto glview = m_pApplication->getOpenGLView();
+    glview->getGlGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
     
     glClearDepth(m_uClearFlags);
     glClear(GL_DEPTH_BUFFER_BIT);
@@ -704,6 +728,11 @@ bool CARenderImage::saveToFile(const char *szFilePath)
 void CARenderImage::setContentSize(const DSize& contentSize)
 {
     CAView::setContentSize(DSize(m_uPixelsWide, m_uPixelsHigh));
+}
+
+float CARenderImage::to_px(float dip)
+{
+    return s_dip_to_px(dip * CC_FRAME_ZOOM_FACTOR);
 }
 
 NS_CC_END

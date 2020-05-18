@@ -82,6 +82,8 @@ protected:
     
     virtual void setContentSize(const DSize& contentSize) override;
 
+    float to_px(float dip);
+    
 protected:
 
     GroupCommand  m_obGroupCommand;

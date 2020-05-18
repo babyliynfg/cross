@@ -1341,9 +1341,9 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
         m_obBeforeDrawCommand.init(0);
         m_obBeforeDrawCommand.func = [&](){
 
-            Mat4 tm = Mat4::IDENTITY;
-            tm.m[12] = m_obContentSize.width;
-            tm.m[13] = m_obContentSize.height;
+            Mat4 tm = m_tModelViewTransform;
+            tm.m[12] += m_obContentSize.width;
+            tm.m[13] += m_obContentSize.height;
             
             Mat4 max;
             Mat4::multiply(m_tModelViewTransform, tm, &max);

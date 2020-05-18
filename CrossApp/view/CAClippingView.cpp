@@ -8,8 +8,7 @@
 #include "basics/CAApplication.h"
 #include "basics/CAPointExtension.h"
 #include "view/CADrawingPrimitives.h"
-
-
+#include "CCEGLView.h"
 
 NS_CC_BEGIN
 
@@ -315,7 +314,9 @@ void CAClippingView::visit(Renderer *renderer, const Mat4 &parentTransform, uint
             GLclampf currentAlphaTestRef = 1;
             GLboolean currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
             glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&currentAlphaTestFunc);
-            glGetFloatv(GL_ALPHA_TEST_REF, &currentAlphaTestRef);
+            
+            auto glview = CAApplication::getApplication()->getOpenGLView();
+            glview->getGlGetFloatv(GL_ALPHA_TEST_REF, &currentAlphaTestRef);
             // enable alpha testing
             glEnable(GL_ALPHA_TEST);
             // check for OpenGL error while enabling alpha test

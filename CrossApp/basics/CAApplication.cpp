@@ -292,10 +292,6 @@ void CAApplication::setViewport()
     {
         m_pobOpenGLView->setViewPortInPoints(0, 0, m_obWinSizeInPoints.width, m_obWinSizeInPoints.height);
     }
-    else
-    {
-        CACamera::setDefaultViewport(experimental::Viewport(0, 0, s_dip_to_px(m_obWinSizeInPoints.width), s_dip_to_px(m_obWinSizeInPoints.height)));
-    }
 }
 
 void CAApplication::setNextDeltaTimeZero(bool bNextDeltaTimeZero)
@@ -573,10 +569,11 @@ DPoint CAApplication::getVisibleOrigin()
 void CAApplication::reshapeProjection(const DSize& newWindowSize)
 {
     m_obWinSizeInPoints = DSize(newWindowSize.width, newWindowSize.height);
-    setProjection(m_eProjection);
     
     if (m_pRootWindow)
     {
+        setProjection(m_eProjection);
+
         DRect rect = DRectZero;
         rect.size = newWindowSize;
         m_pRootWindow->setFrame(rect);
