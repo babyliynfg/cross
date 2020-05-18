@@ -115,6 +115,12 @@ void CANavigationBar::setContentSize(const DSize & var)
     CAView::setContentSize(var);
 }
 
+void CANavigationBar::updateClearance(int clearance)
+{
+    m_iClearance = clearance;
+    m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(m_iClearance, 0)));
+}
+
 void CANavigationBar::setItem(CANavigationBarItem* item)
 {
     if (item == NULL)
@@ -707,6 +713,12 @@ void CATabBar::setContentSize(const DSize & var)
         layout.horizontal.left = m_nSelectedIndex * m_cItemSize.width;
         m_pSelectedIndicatorView->setLayout(layout);
     }
+}
+
+void CATabBar::updateClearance(int clearance)
+{
+    m_iClearance = clearance;
+    this->setContentSize(m_obContentSize);
 }
 
 void CATabBar::replaceItemAtIndex(size_t index, CATabBarItem* item)

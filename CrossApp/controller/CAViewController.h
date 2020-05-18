@@ -87,7 +87,7 @@ public:
     virtual void removeViewFromSuperview();
     
 public:
-    
+        
     void viewOnEnterTransitionDidFinish();
     
     void viewOnExitTransitionDidStart();
@@ -99,7 +99,7 @@ public:
     virtual void setViewVisibleFalse();
     
     void parser();
-    
+        
     friend class CATabBarController;
     
     friend class CANavigationController;
@@ -191,7 +191,11 @@ protected:
     
     virtual void viewDidDisappear();
     
+    virtual void viewSizeDidChanged();
+    
 protected:
+    
+    void layout();
     
     void createWithContainer(CAViewController* viewController, const DLayout& layout);
     
@@ -289,7 +293,11 @@ protected:
     
     virtual void viewDidDisappear();
     
+    virtual void viewSizeDidChanged();
+    
 protected:
+    
+    void layout();
     
     virtual void tabBarSelectedItem(CATabBarItem* item, unsigned int index);
 

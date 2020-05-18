@@ -339,11 +339,11 @@ int get_bottom_clearance(CAView* view)
     /****** iphone X ******/
     if (winSize.equals(DSize(750, 1624)))
     {
-        clearance = 34;
+        clearance = 80;
     }
     else if (winSize.equals(DSize(1624, 750)))
     {
-        clearance = 34;
+        clearance = 80;
     }
 #endif
     
@@ -526,13 +526,12 @@ void CANavigationController::updateItem(CAViewController* viewController)
 
 void CANavigationController::viewDidLoad()
 {
-    m_iClearance = get_top_clearance(this->getView());
-
-    m_iNavigationBarHeight = m_iClearance + 88;
-    
     CAViewController* viewController = m_pViewControllers.front();
     viewController->retain()->autorelease();
     m_pViewControllers.popFront();
+    
+    this->layout();
+
     this->createWithContainer(viewController, DLayoutFill);
 }
 
@@ -560,6 +559,40 @@ void CANavigationController::viewDidDisappear()
 {
     CC_RETURN_IF(m_pViewControllers.empty());
     m_pViewControllers.back()->setViewVisibleFalse();
+}
+
+void CANavigationController::viewSizeDidChanged()
+{
+    this->layout();
+}
+
+void CANavigationController::layout()
+{
+    m_iClearance = get_top_clearance(this->getView());
+
+    m_iNavigationBarHeight = m_iClearance + 88;
+    
+    for (int i=0; i < m_pNavigationBars.size(); i++)
+    {
+        auto navbar = m_pNavigationBars.at(i);
+        navbar->updateClearance(m_iClearance);
+        
+        DLayout navLayout = navbar->getLayout();
+        navLayout.vertical.height = m_iNavigationBarHeight;
+    
+        if (navLayout.vertical.top < 0)
+        {
+            navLayout.vertical.top = -m_iNavigationBarHeight;
+        }
+        navbar->setLayout(navLayout);
+        
+        DLayout secondLayout;
+        secondLayout.horizontal = DHorizontalLayoutFill;
+        secondLayout.vertical = DVerticalLayout_T_B(navLayout.vertical.top + navLayout.vertical.height, 0);
+        
+        auto secondContainer = m_pSecondContainers.at(i);
+        secondContainer->setLayout(secondLayout);
+    }
 }
 
 void CANavigationController::createWithContainer(CAViewController* viewController, const DLayout& layout)
@@ -1403,6 +1436,8 @@ void CATabBarController::updateItem(CAViewController* viewController)
 
 void CATabBarController::viewDidLoad()
 {
+    this->layout();
+
     std::vector<CATabBarItem*> items;
     
     for (unsigned int i=0; i<m_pViewControllers.size(); i++)
@@ -1419,7 +1454,56 @@ void CATabBarController::viewDidLoad()
         items.push_back(view->getTabBarItem());
         view->m_pTabBarController = this;
     }
+
+    m_pTabBar = CATabBar::createWithLayout(m_obTabBarLayout, get_top_clearance(this->getView()), m_eTabBarVerticalAlignment);
+    m_pTabBar->setItems(items);
+    m_pTabBar->onSelectedItem(CALLBACK_BIND_2(CATabBarController::tabBarSelectedItem, this));
+    this->getView()->insertSubview(m_pTabBar, 1);
     
+    m_pTabBar->setBackgroundImage(m_pTabBarBackgroundImage);
+    m_pTabBar->setSelectedBackgroundImage(m_pTabBarSelectedBackgroundImage);
+    m_pTabBar->setSelectedIndicatorImage(m_pTabBarSelectedIndicatorImage);
+
+    m_pTabBar->setTitleColorForNormal(m_sTabBarTitleColor);
+    m_pTabBar->setTitleColorForSelected(m_sTabBarSelectedTitleColor);
+    m_pTabBar->setTitleBoldForSelected(m_bTabBarSelectedTitleBold);
+    
+    if (m_bShowTabBarSelectedIndicator)
+    {
+        m_pTabBar->showSelectedIndicator();
+    }
+
+    m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
+    this->renderingSelectedViewController();
+    
+}
+
+void CATabBarController::viewDidUnload()
+{
+    for (auto& var : m_pViewControllers)
+    {
+        var->removeViewFromSuperview();
+    }
+    this->getView()->removeAllSubviews();
+}
+
+void CATabBarController::viewDidAppear()
+{
+    m_pViewControllers.at(m_nSelectedIndex)->setViewVisibleTrue();
+}
+
+void CATabBarController::viewDidDisappear()
+{
+    m_pViewControllers.at(m_nSelectedIndex)->setViewVisibleFalse();
+}
+
+void CATabBarController::viewSizeDidChanged()
+{
+    this->layout();
+}
+
+void CATabBarController::layout()
+{
     DLayout tabBarLayout;
     tabBarLayout.horizontal = DHorizontalLayoutFill;
     
@@ -1465,46 +1549,11 @@ void CATabBarController::viewDidLoad()
         viewLayout.vertical = DVerticalLayout_T_B(0, tabBarLayout.vertical.bottom + tabBarLayout.vertical.height);
     }
     m_obViewLayout = viewLayout;
-
-    m_pTabBar = CATabBar::createWithLayout(m_obTabBarLayout, get_top_clearance(this->getView()), m_eTabBarVerticalAlignment);
-    m_pTabBar->setItems(items);
-    m_pTabBar->onSelectedItem(CALLBACK_BIND_2(CATabBarController::tabBarSelectedItem, this));
-    this->getView()->insertSubview(m_pTabBar, 1);
     
-    m_pTabBar->setBackgroundImage(m_pTabBarBackgroundImage);
-    m_pTabBar->setSelectedBackgroundImage(m_pTabBarSelectedBackgroundImage);
-    m_pTabBar->setSelectedIndicatorImage(m_pTabBarSelectedIndicatorImage);
-
-    m_pTabBar->setTitleColorForNormal(m_sTabBarTitleColor);
-    m_pTabBar->setTitleColorForSelected(m_sTabBarSelectedTitleColor);
-    m_pTabBar->setTitleBoldForSelected(m_bTabBarSelectedTitleBold);
-    
-    if (m_bShowTabBarSelectedIndicator)
+    if (m_pTabBar)
     {
-        m_pTabBar->showSelectedIndicator();
+        m_pTabBar->updateClearance(clearance);
     }
-
-    m_pTabBar->setSelectedAtIndex(m_nSelectedIndex);
-    this->renderingSelectedViewController();
-}
-
-void CATabBarController::viewDidUnload()
-{
-    for (auto& var : m_pViewControllers)
-    {
-        var->removeViewFromSuperview();
-    }
-    this->getView()->removeAllSubviews();
-}
-
-void CATabBarController::viewDidAppear()
-{
-    m_pViewControllers.at(m_nSelectedIndex)->setViewVisibleTrue();
-}
-
-void CATabBarController::viewDidDisappear()
-{
-    m_pViewControllers.at(m_nSelectedIndex)->setViewVisibleFalse();
 }
 
 bool CATabBarController::showSelectedViewController(CAViewController* viewController)

@@ -59,6 +59,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(CABarButtonItem*, m_pGoBackBarButtonItem, GoBackBarButtonItem);
     
+    void updateClearance(int clearance);
+    
 protected:
     
     virtual bool init();
@@ -172,6 +174,8 @@ public:
     
     DRect getContentViewFrame();
 
+    void updateClearance(int clearance);
+    
 protected:
     
     virtual bool init();
