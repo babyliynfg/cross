@@ -1339,19 +1339,21 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     if (m_bDisplayRange == false)
     {
         m_obBeforeDrawCommand.init(0);
-        m_obBeforeDrawCommand.func = [&](){
+        m_obBeforeDrawCommand.func = [&, parentTransform](){
 
-            Mat4 tm = m_tModelViewTransform;
+            float minX = 0, maxX = 0, minY = 0, maxY = 0;
+        
+            Mat4 tm = Mat4::IDENTITY;
             tm.m[12] += m_obContentSize.width;
             tm.m[13] += m_obContentSize.height;
-            
+
             Mat4 max;
             Mat4::multiply(m_tModelViewTransform, tm, &max);
-        
-            float minX = m_tModelViewTransform.m[12];
-            float minY = m_tModelViewTransform.m[13];
-            float maxX = max.m[12];
-            float maxY = max.m[13];
+
+            minX =  MIN(max.m[12], m_tModelViewTransform.m[12]);
+            maxX =  MAX(max.m[12], m_tModelViewTransform.m[12]);
+            minY =  MIN(max.m[13], m_tModelViewTransform.m[13]);
+            maxY =  MAX(max.m[13], m_tModelViewTransform.m[13]);
             
             auto glview = m_pApplication->getOpenGLView();
             

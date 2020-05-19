@@ -1,4 +1,4 @@
-﻿
+
 #include "PickerViewTest.h"
 
 #define _T(x) L##x
