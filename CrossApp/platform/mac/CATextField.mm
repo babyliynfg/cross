@@ -124,19 +124,19 @@ static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_
 
 -(void)setMarginLeft:(int)marginLeft
 {
-    CGFloat scale = MAC_SCALE;
-    _marginLeft = CrossApp::s_dip_to_px(marginLeft) / scale;
-}
-
--(int)getMarginLeft
-{
     int olbMarginLeft = _marginLeft;
     CGFloat scale = MAC_SCALE;
-    return CrossApp::s_px_to_dip(_marginLeft) * scale;
+    _marginLeft = CrossApp::s_dip_to_px(marginLeft) / scale;
     
     NSRect rect = self.frame;
     rect.size.width -= _marginLeft - olbMarginLeft;
     [self setFrame:rect];
+}
+
+-(int)getMarginLeft
+{
+    CGFloat scale = MAC_SCALE;
+    return CrossApp::s_px_to_dip(_marginLeft) * scale;
 }
 
 -(void)setMarginRight:(int)marginRight
@@ -442,7 +442,7 @@ CATextField::CATextField()
 {
     this->setHaveNextResponder(false);
     this->setPoint(DPoint(-5000, -5000));
-    CGPoint point = CGPointMake(-50000, -50000);
+    NSPoint point = CGPointMake(-50000, -50000);
     m_pTextField = [[MACTextField alloc]initWithFrame:CGRectMake(point.x, point.y, 100, 40)];
     EAGLView * eaglview = [EAGLView sharedEGLView];
     [eaglview addSubview:textField_MAC];
@@ -563,9 +563,9 @@ void CATextField::delayShowImage()
 void CATextField::showImage()
 {
     [textField_MAC setFrameOrigin:CGPointMake(-50000, -50000)];
-    
+
     NSImage* image_MAC = [[[NSImage alloc]initWithData:[textField_MAC dataWithPDFInsideRect:[textField_MAC bounds]]]autorelease];
-    
+
     NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
     
     unsigned char* pData = (unsigned char*)malloc([data_MAC length]);
@@ -574,6 +574,8 @@ void CATextField::showImage()
     CAData* data = CAData::create();
     data->fastSet(pData, [data_MAC length]);
     CAImage *image = CAImage::createWithImageDataNoCache(data);
+    
+    m_pImgeView->setLayout(DLayout(DHorizontalLayout_L_R(m_iMarginLeft, m_iMarginRight), DVerticalLayoutFill));
     m_pImgeView->setImage(image);
 }
 
@@ -627,7 +629,7 @@ bool CATextField::init()
     m_pBackgroundView->setCapInsets(capInsets);
     this->insertSubview(m_pBackgroundView, -1);
     
-    m_pImgeView = CAImageView::createWithFrame(DRect(0, 0, 1, 1));
+    m_pImgeView = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_R(2, 2), DVerticalLayout_T_B(1, 0)));
     this->addSubview(m_pImgeView);
     m_pImgeView->setTextTag("textField");
 
@@ -836,8 +838,6 @@ void CATextField::setMarginLeft(int var)
     
     [textField_MAC setMarginLeft:worldContentSize.width];
     
-    m_pImgeView->setFrame([textField_MAC getDRect]);
-    
     this->delayShowImage();
 }
 
@@ -855,9 +855,7 @@ void CATextField::setMarginRight(int var)
         DSize worldContentSize = this->convertToWorldSize(DSize(var, 0));
         
         [textField_MAC setMarginRight:worldContentSize.width];
-        
-        m_pImgeView->setFrame([textField_MAC getDRect]);
-        
+                
         this->delayShowImage();
     }
 }
@@ -940,9 +938,7 @@ void CATextField::setClearButtonMode(CATextField::ClearButtonMode var)
         DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
         
         [textField_MAC setMarginRight:worldContentSize.width];
-        
-        m_pImgeView->setFrame([textField_MAC getDRect]);
-    }
+            }
     else
     {
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTextTag("ImageRight");
