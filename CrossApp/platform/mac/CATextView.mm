@@ -537,7 +537,7 @@ void CATextView::setTextColor(const CAColor4B &var)
 {
     m_sTextColor = var;
     
-    textView_Mac.textColor = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
+    textView_Mac.textColor = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a/255.f];
     
     delayShowImage();
 }

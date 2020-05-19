@@ -771,7 +771,7 @@ void CATextField::setPlaceHolderColor(const CAColor4B &var)
     
     m_cPlaceHdolderColor = var;
     
-//    NSColor* color = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
+//    NSColor* color = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a/255.f];
 //    [textField_MAC setValue:color forKeyPath:@"_placeholderLabel.textColor"];
     CGFloat scale = MAC_SCALE;
     textField_MAC.font = [NSFont systemFontOfSize:s_dip_to_px(m_iFontSize) / scale];
@@ -818,7 +818,7 @@ void CATextField::setTextColor(const CAColor4B &var)
 {
     m_cTextColor = var;
     
-    textField_MAC.textColor = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
+    textField_MAC.textColor = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a/255.f];
     
     this->delayShowImage();
 }
