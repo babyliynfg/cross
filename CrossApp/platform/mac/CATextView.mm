@@ -433,7 +433,7 @@ void CATextView::delayShowImage()
 
 void CATextView::showImage()
 {
-    NSImage* image_MAC = [[[NSImage alloc]initWithData:[textView_Mac dataWithPDFInsideRect:[textView_Mac bounds]]]autorelease];
+    NSImage* image_MAC = [[[NSImage alloc] initWithData:[textView_Mac dataWithPDFInsideRect:[textView_Mac bounds]]] autorelease];
     
     NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
     
@@ -443,6 +443,8 @@ void CATextView::showImage()
     CAData* data = CAData::create();
     data->fastSet(pData, [data_MAC length]);
     CAImage *image = CAImage::createWithImageDataNoCache(data);
+    
+    m_pShowImageView->setLayout(DLayoutFill);
     m_pShowImageView->setImage(image);
 }
 
@@ -481,9 +483,7 @@ void CATextView::setContentSize(const DSize& contentSize)
     NSRect rect = [textView_Mac frame];
     rect.size = size;
     textView_Mac.frame = rect;
-    
-    m_pShowImageView->setFrame(this->getBounds());
-    
+        
     this->showImage();
 }
 
