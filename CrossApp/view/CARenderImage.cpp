@@ -507,35 +507,21 @@ void CARenderImage::onBegin()
     
     {
         m_pApplication->setProjection(m_pApplication->getProjection());
-        const DSize texSize = DSize((float)m_uPixelsWide, (float)m_uPixelsHigh);
+        const DSize texSize = DSize(m_uPixelsWide, m_uPixelsHigh);
         
         // Calculate the adjustment ratios based on the old and new projections
         DSize size = m_pApplication->getWinSize();
-        float widthRatio = size.width / texSize.width;
-        float heightRatio = size.height / texSize.height;
+        float widthRatio = texSize.width / size.width;
+        float heightRatio = texSize.height / size.height;
         
         Mat4 orthoMatrix;
-        Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
-        
-        
-//        Quaternion rotationQuat;
-//        float halfRadx = CC_DEGREES_TO_RADIANS(180 / 2.f);
-//        float halfRady = CC_DEGREES_TO_RADIANS(0 / 2.f);
-//        float halfRadz = -CC_DEGREES_TO_RADIANS(0 / 2.f);
-//
-//        float coshalfRadx = cosf(halfRadx), sinhalfRadx = sinf(halfRadx), coshalfRady = cosf(halfRady), sinhalfRady = sinf(halfRady), coshalfRadz = cosf(halfRadz), sinhalfRadz = sinf(halfRadz);
-//
-//        rotationQuat.x = sinhalfRadx * coshalfRady * coshalfRadz - coshalfRadx * sinhalfRady * sinhalfRadz;
-//        rotationQuat.y = coshalfRadx * sinhalfRady * coshalfRadz + sinhalfRadx * coshalfRady * sinhalfRadz;
-//        rotationQuat.z = coshalfRadx * coshalfRady * sinhalfRadz - sinhalfRadx * sinhalfRady * coshalfRadz;
-//        rotationQuat.w = coshalfRadx * coshalfRady * coshalfRadz + sinhalfRadx * sinhalfRady * sinhalfRadz;
-//        Mat4::createRotation(rotationQuat, &orthoMatrix);
+        Mat4::createOrthographicOffCenter(-widthRatio, widthRatio, -heightRatio, heightRatio, -1, 1, &orthoMatrix);
         
         m_pApplication->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
     }
     
     {
-        glViewport(0, 0, (GLsizei)this->to_px(m_uPixelsWide), (GLsizei)this->to_px(m_uPixelsHigh));
+        glViewport(0, 0, this->to_px(m_uPixelsWide), this->to_px(m_uPixelsHigh));
     }
     
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &m_uOldFBO);
