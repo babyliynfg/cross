@@ -103,11 +103,7 @@ public:
      * @lua NA
      */
     virtual DRect getScissorRect();
-    /**
-     * Get the current scissor rectangle
-     * @lua NA
-     */
-    virtual void getGlGetFloatv(GLenum pname, GLfloat* params);
+
     /**
      * @lua NA
      */
