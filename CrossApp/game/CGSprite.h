@@ -135,11 +135,11 @@ public:
 
     virtual DRect boundingBox();
     
-    virtual const Mat4& getViewToSuperviewTransform() const;
+    virtual const Mat4& getViewToSuperviewTransform() const override;
     
-    virtual void onEnter();
+    virtual void onEnter() override;
     
-    virtual void onExit();
+    virtual void onExit() override;
     
 protected:
 
