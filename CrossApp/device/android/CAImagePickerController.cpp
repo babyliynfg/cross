@@ -125,6 +125,11 @@ void CAImagePickerController::open(const std::function<void(CrossApp::CAImage*)>
 void CAImagePickerController::writeImageToPhoto(CAImage* image, const std::function<void(bool)>& finishCallback, const std::string &imageName)
 {
     JAVAwriteImageToPhoto(image, imageName);
+    
+    if (finishCallback)
+    {
+        finishCallback(true);
+    }
 }
 
 
