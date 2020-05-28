@@ -28,9 +28,9 @@ public:
     
     bool init() override;
     
-    virtual void onEnterTransitionDidFinish();
+    virtual void onEnterTransitionDidFinish() override;
         
-    virtual void onExitTransitionDidStart();
+    virtual void onExitTransitionDidStart() override;
     
     void presentModalViewController(CAViewController* controller, bool animated);
     
