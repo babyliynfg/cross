@@ -3,7 +3,6 @@
 #include "CARenderImage.h"
 #include "CCGL.h"
 #include "ccTypes.h"
-#include "CCEGLView.h"
 #include <string>
 #include "basics/CAApplication.h"
 #include "renderer/CCRenderer.h"
@@ -608,15 +607,13 @@ void CARenderImage::onClear()
     // backup and set
     if (m_uClearFlags & GL_COLOR_BUFFER_BIT)
     {
-        auto glview = m_pApplication->getOpenGLView();
-        glview->getGlGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
+        glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
         glClearColor(m_sClearColor.r, m_sClearColor.g, m_sClearColor.b, m_sClearColor.a);
     }
     
     if (m_uClearFlags & GL_DEPTH_BUFFER_BIT)
     {
-        auto glview = m_pApplication->getOpenGLView();
-        glview->getGlGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
+        glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
         glClearDepth(m_fClearDepth);
     }
     
@@ -648,8 +645,7 @@ void CARenderImage::onClearDepth()
 {
     //! save old depth value
     GLfloat depthClearValue;
-    auto glview = m_pApplication->getOpenGLView();
-    glview->getGlGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+    glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
     
     glClearDepth(m_uClearFlags);
     glClear(GL_DEPTH_BUFFER_BIT);

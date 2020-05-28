@@ -139,19 +139,16 @@ bool CCEGLViewProtocol::isScissorEnabled()
 DRect CCEGLViewProtocol::getScissorRect()
 {
 	GLfloat params[4];
-	this->getGlGetFloatv(GL_SCISSOR_BOX, params);
-	return DRect(params[0], params[1], params[2], params[3]);
-}
-
-void CCEGLViewProtocol::getGlGetFloatv(GLenum pname, GLfloat* params)
-{
+    
     float frameZoomFactor = CC_FRAME_ZOOM_FACTOR;
 
-    glGetFloatv(pname, params);
+    glGetFloatv(GL_SCISSOR_BOX, params);
     params[0] = (params[0] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.x);
     params[1] = (params[1] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.y);
     params[2] = params[2] / frameZoomFactor / m_fScale;
     params[3] = params[3] / frameZoomFactor / m_fScale;
+    
+	return DRect(params[0], params[1], params[2], params[3]);
 }
 
 void CCEGLViewProtocol::setViewName(const char* pszViewName)
