@@ -143,7 +143,7 @@ DRect CCEGLView::getScissorRect()
 
 float CCEGLView::getFrameZoomFactor() const
 {
-    NSScreen *screen = [NSScreen mainScreen];
+    NSScreen *screen = [[[EAGLView sharedEGLView] window] screen];;
 
     static float s_backingScaleFactor = 0;
     

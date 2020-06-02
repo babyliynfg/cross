@@ -166,6 +166,10 @@ static EAGLView *view;
 {
 	CCLOG(@"ERROE!!! CrossApp: deallocing EAGLView %@", self);
 	[super dealloc];
+    if(windowGLView_)
+       [windowGLView_ release];
+    if (fullScreenWindow_)
+        [fullScreenWindow_ close];
 }
 	
 -(int) getWidth
@@ -220,7 +224,7 @@ static EAGLView *view;
         }
 
         fullScreenWindow_ = [[CCWindow alloc] initWithFrame:displayRect fullscreen:YES];
-
+       
         // Remove glView from window
         [openGLview removeFromSuperview];
 
@@ -234,6 +238,7 @@ static EAGLView *view;
         [fullScreenWindow_ makeKeyAndOrderFront:self];
 		[fullScreenWindow_ makeMainWindow];
 		//[fullScreenWindow_ setNextResponder:superViewGLView_];
+                
         CrossApp::CCApplication::sharedApplication()->applicationDidToggleFullScreen();
     }
     else
@@ -255,6 +260,7 @@ static EAGLView *view;
         // Show the window
         [windowGLView_ makeKeyAndOrderFront:self];
 		[windowGLView_ makeMainWindow];
+        
         CrossApp::CCApplication::sharedApplication()->applicationDidExitFullScreen();
     }
 	

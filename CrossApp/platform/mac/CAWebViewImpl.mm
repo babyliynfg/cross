@@ -100,9 +100,6 @@ std::map<NSWebView_MAC*, CrossApp::CAWebViewImpl*> s_WebViewImpls;
 
 - (void)fullScreenChanged
 {
-    [self.webView removeFromSuperview];
-    EAGLView * eaglview = [EAGLView sharedEGLView];
-    [eaglview addSubview:self.webView];
     s_WebViewImpls.at(self)->update(0);
 }
 

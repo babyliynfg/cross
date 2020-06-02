@@ -111,9 +111,7 @@ static std::map<CrossApp::CATextField*, std::function<void()> > s_DidChangeText_
 
 - (void)fullScreenChanged
 {
-    [self removeFromSuperview];
-    EAGLView * eaglview = [EAGLView sharedEGLView];
-    [eaglview addSubview:self];
+
 }
 
 -(void)setText:(NSString* )value
