@@ -46,6 +46,8 @@ private:
     static CCEGLView* s_sharedView;
     
     CCEGLView(void);
+    
+    bool m_bIsRenderImage;
 };
 
 NS_CC_END 

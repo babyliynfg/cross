@@ -14,7 +14,7 @@
 #include "basics/CANotificationCenter.h"
 #include "platform/CAFileUtils.h"
 #include "platform/CADensityDpi.h"
-#include "CCEGLView.h"
+#include "basics/CANotificationCenter.h"
 
 NS_CC_BEGIN
 // implementation CARenderImage
@@ -461,7 +461,7 @@ void CARenderImage::end()
     
     application->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     application->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    
+
 }
 
 void CARenderImage::clear(const CAColor4B& backgroundColor)
@@ -535,6 +535,9 @@ void CARenderImage::onBegin()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_uName, 0);
     }
+    
+    CANotificationCenter::getInstance()->postNotification("RENDER_IMAGE_BEGIN");
+
 }
 
 void CARenderImage::onEnd()
@@ -583,6 +586,9 @@ void CARenderImage::onEnd()
     
     m_pImageView->setImage(image);
     image->release();
+    
+    CANotificationCenter::getInstance()->postNotification("RENDER_IMAGE_END");
+
 }
 
 void CARenderImage::onClear()
@@ -716,7 +722,11 @@ void CARenderImage::setContentSize(const DSize& contentSize)
 
 float CARenderImage::to_px(float dip)
 {
-    return s_dip_to_px(dip * m_pApplication->getOpenGLView()->getFrameZoomFactor());
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        return s_dip_to_px(dip);
+    #else
+        return dip;
+    #endif
 }
 
 NS_CC_END

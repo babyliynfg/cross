@@ -12,7 +12,7 @@
 						   styleMask:styleMask
 							 backing:NSBackingStoreBuffered
 							   defer:YES];
-
+    self.releasedWhenClosed = YES;
 	if (self != nil)
 	{
 		if(fullscreen)

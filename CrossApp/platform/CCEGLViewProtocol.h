@@ -154,7 +154,7 @@ public:
     virtual float getScale() const;
 
     virtual float getFrameZoomFactor() const;
-    
+        
     virtual void setStatusBarOrientation(const CAInterfaceOrientation& var);
     
     virtual const CAInterfaceOrientation& getStatusBarOrientation();

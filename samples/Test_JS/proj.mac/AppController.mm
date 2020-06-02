@@ -3,8 +3,8 @@
 #import "AppController.h"
 #import "AppDelegate.h"
 
-#define Screen_Width 1080
-#define Screen_Height 1920
+#define Screen_Width 750
+#define Screen_Height 1536
 
 @implementation AppController
 
@@ -20,7 +20,7 @@ static AppDelegate s_sharedApplication;
     NSRect rect = NSMakeRect(200, 100, Screen_Width/2, Screen_Height/2);
     window = [[NSWindow alloc] initWithContentRect:rect
                                          styleMask:( NSClosableWindowMask | NSTitledWindowMask )
-                                           backing:NSBackingStoreBuffered
+                                           backing:NSBackingStoreRetained
                                              defer:YES];
     
     NSOpenGLPixelFormatAttribute attributes[] =

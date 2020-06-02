@@ -6,6 +6,7 @@
 #include "CATouch.h"
 #include "CATouchDispatcher.h"
 #include "basics/CAApplication.h"
+#include "basics/CANotificationCenter.h"
 #include "basics/CACamera.h"
 #include "CrossApp-Prefix.h"
 #import "EAGLView.h"
@@ -24,8 +25,16 @@ CCEGLView* CCEGLView::sharedOpenGLView(void)
 }
 
 CCEGLView::CCEGLView(void)
+:m_bIsRenderImage(false)
 {
-
+    bool * p_IsRenderImage = &m_bIsRenderImage;
+    CANotificationCenter::getInstance()->addObserver([=](CAObject*){
+        *p_IsRenderImage = true;
+    }, CAApplication::getApplication(), "RENDER_IMAGE_BEGIN");
+    
+    CANotificationCenter::getInstance()->addObserver([=](CAObject*){
+        *p_IsRenderImage = false;
+    }, CAApplication::getApplication(), "RENDER_IMAGE_END");
 }
 
 CCEGLView::~CCEGLView(void)
@@ -100,6 +109,11 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 {
     float frameZoomFactor = this->getFrameZoomFactor();
     
+    if (m_bIsRenderImage)
+    {
+        frameZoomFactor = 2;
+    }
+
     glScissor((GLint)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
               (GLint)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
               (GLsizei)ceilf(w * m_fScale * frameZoomFactor),
@@ -117,7 +131,7 @@ DRect CCEGLView::getScissorRect()
     GLfloat params[4];
     
     float frameZoomFactor = this->getFrameZoomFactor();
-
+    
     glGetFloatv(GL_SCISSOR_BOX, params);
     params[0] = (params[0] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.x);
     params[1] = (params[1] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.y);
@@ -129,9 +143,24 @@ DRect CCEGLView::getScissorRect()
 
 float CCEGLView::getFrameZoomFactor() const
 {
-    NSScreen *screen = [NSScreen deepestScreen];
-    NSLog(@"screen factor %f", screen.backingScaleFactor);
-    return screen.backingScaleFactor;
+    NSScreen *screen = [NSScreen mainScreen];
+
+    static float s_backingScaleFactor = 0;
+    
+    if (s_backingScaleFactor == 0)
+    {
+        s_backingScaleFactor = screen.backingScaleFactor;
+        NSLog(@"screen factor %f", screen.backingScaleFactor);
+    }
+    
+    if (s_backingScaleFactor != screen.backingScaleFactor)
+    {
+        s_backingScaleFactor = screen.backingScaleFactor;
+        [[EAGLView sharedEGLView] reshape];
+        NSLog(@"screen factor %f", screen.backingScaleFactor);
+    }
+    
+    return s_backingScaleFactor;
 }
 
 NS_CC_END // end of namespace CossApp;
