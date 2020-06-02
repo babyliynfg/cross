@@ -21,13 +21,4 @@ static float DPI_STANDARD = DPI_IPHONE_6S;
 
 static float DPI_SIMULATOR = 160.0f;
 
-
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-#define CC_FRAME_ZOOM_FACTOR 2
-#else
-#define CC_FRAME_ZOOM_FACTOR 1
-#endif
-
-
 #endif

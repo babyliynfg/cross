@@ -86,7 +86,7 @@ void CCEGLView::setIMEKeyboardState(bool bOpen)
 
 void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactor = CC_FRAME_ZOOM_FACTOR;
+    float frameZoomFactor = this->getFrameZoomFactor();
     
     experimental::Viewport vp((float)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
                               (float)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
@@ -98,7 +98,7 @@ void CCEGLView::setViewPortInPoints(float x , float y , float w , float h)
 
 void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactor = CC_FRAME_ZOOM_FACTOR;
+    float frameZoomFactor = this->getFrameZoomFactor();
     
     glScissor((GLint)(x * m_fScale * frameZoomFactor + m_obViewPortRect.origin.x * frameZoomFactor),
               (GLint)(y * m_fScale * frameZoomFactor + m_obViewPortRect.origin.y * frameZoomFactor),
@@ -110,6 +110,28 @@ void CCEGLView::setMultiTouchMask(bool mask)
 {
 	//EAGLView *glView = [EAGLView sharedEGLView];
 	//glView.multipleTouchEnabled = mask ? YES : NO;
+}
+
+DRect CCEGLView::getScissorRect()
+{
+    GLfloat params[4];
+    
+    float frameZoomFactor = this->getFrameZoomFactor();
+
+    glGetFloatv(GL_SCISSOR_BOX, params);
+    params[0] = (params[0] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.x);
+    params[1] = (params[1] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.y);
+    params[2] = params[2] / frameZoomFactor / m_fScale;
+    params[3] = params[3] / frameZoomFactor / m_fScale;
+    
+    return DRect(params[0], params[1], params[2], params[3]);
+}
+
+float CCEGLView::getFrameZoomFactor() const
+{
+    NSScreen *screen = [NSScreen deepestScreen];
+    NSLog(@"screen factor %f", screen.backingScaleFactor);
+    return screen.backingScaleFactor;
 }
 
 NS_CC_END // end of namespace CossApp;

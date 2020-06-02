@@ -34,6 +34,14 @@ public:
     virtual void setIMEKeyboardState(bool bOpen);
 	virtual void setMultiTouchMask(bool mask);
     
+    /**
+     * Get the current scissor rectangle
+     * @lua NA
+     */
+    virtual DRect getScissorRect();
+    
+    virtual float getFrameZoomFactor() const;
+    
 private:
     static CCEGLView* s_sharedView;
     

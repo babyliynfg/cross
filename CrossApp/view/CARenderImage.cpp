@@ -14,6 +14,8 @@
 #include "basics/CANotificationCenter.h"
 #include "platform/CAFileUtils.h"
 #include "platform/CADensityDpi.h"
+#include "CCEGLView.h"
+
 NS_CC_BEGIN
 // implementation CARenderImage
 CARenderImage::CARenderImage()
@@ -714,7 +716,7 @@ void CARenderImage::setContentSize(const DSize& contentSize)
 
 float CARenderImage::to_px(float dip)
 {
-    return s_dip_to_px(dip * CC_FRAME_ZOOM_FACTOR);
+    return s_dip_to_px(dip * m_pApplication->getOpenGLView()->getFrameZoomFactor());
 }
 
 NS_CC_END

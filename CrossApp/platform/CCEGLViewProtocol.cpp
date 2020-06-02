@@ -140,13 +140,11 @@ DRect CCEGLViewProtocol::getScissorRect()
 {
 	GLfloat params[4];
     
-    float frameZoomFactor = CC_FRAME_ZOOM_FACTOR;
-
     glGetFloatv(GL_SCISSOR_BOX, params);
-    params[0] = (params[0] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.x);
-    params[1] = (params[1] / frameZoomFactor / m_fScale - m_obViewPortRect.origin.y);
-    params[2] = params[2] / frameZoomFactor / m_fScale;
-    params[3] = params[3] / frameZoomFactor / m_fScale;
+    params[0] = (params[0] / m_fScale - m_obViewPortRect.origin.x);
+    params[1] = (params[1] / m_fScale - m_obViewPortRect.origin.y);
+    params[2] = params[2] / m_fScale;
+    params[3] = params[3] / m_fScale;
     
 	return DRect(params[0], params[1], params[2], params[3]);
 }
@@ -365,6 +363,11 @@ const DRect& CCEGLViewProtocol::getViewPortRect() const
 float CCEGLViewProtocol::getScale() const
 {
     return m_fScale;
+}
+
+float CCEGLViewProtocol::getFrameZoomFactor() const
+{
+    return 1;
 }
 
 void CCEGLViewProtocol::setStatusBarOrientation(const CAInterfaceOrientation& var)
