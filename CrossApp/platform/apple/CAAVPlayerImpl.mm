@@ -393,6 +393,9 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
         CVPixelBufferRelease(pixelBuffer);
         
+        // imageWidth = width + ExtendedPixelsLeft + ExtendedPixelsRight;
+        // imageHeight = height + ExtendedPixelsTop + ExtendedPixelsBottom;
+
         CGFloat width = CVPixelBufferGetWidth(pixelBuffer);
         CGFloat height = CVPixelBufferGetHeight(pixelBuffer);
                 
@@ -414,7 +417,7 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         cross_data->copy(data, length);
         CFRelease(ref);
                 
-        CrossApp::CAImage* image = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, (unsigned int)width, (unsigned int)height + 6);
+        CrossApp::CAImage* image = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, (unsigned int)width, (unsigned int)height);
         
         _onImage(image);
         cross_data->release();
