@@ -218,6 +218,7 @@
 		D64A8C9F1D34912200F75021 /* CARect.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C971D34912200F75021 /* CARect.h */; };
 		D64A8CA01D34912200F75021 /* CASize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C981D34912200F75021 /* CASize.cpp */; };
 		D64A8CA11D34912200F75021 /* CASize.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C991D34912200F75021 /* CASize.h */; };
+		D658909D248677D700729AAF /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A71E4B091A007D9771 /* libcurl.tbd */; };
 		D6596E1B1E57040B00A55CF9 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6596E131E57040B00A55CF9 /* DownloadManager.cpp */; };
 		D6596E1C1E57040B00A55CF9 /* DownloadManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E141E57040B00A55CF9 /* DownloadManager.h */; };
 		D6596E1D1E57040B00A55CF9 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6596E151E57040B00A55CF9 /* HttpClient.cpp */; };
@@ -911,6 +912,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D658909D248677D700729AAF /* libcurl.tbd in Frameworks */,
 				D644B3821F18B72D00E90A86 /* AVFoundation.framework in Frameworks */,
 				D644B3801F18B72800E90A86 /* CoreMedia.framework in Frameworks */,
 				D644B35E1F17891100E90A86 /* QuartzCore.framework in Frameworks */,
@@ -1978,6 +1980,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 1551A334158F2AB200E66CFE;
@@ -2288,8 +2291,6 @@
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
-					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -2328,8 +2329,6 @@
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/include\"",
-					"\"$(SRCROOT)/../the_third_party/FFmpeg/include\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (

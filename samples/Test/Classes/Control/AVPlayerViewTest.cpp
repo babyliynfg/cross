@@ -44,9 +44,8 @@ void AVPlayerViewTest::playVideo()
         m_pAvplayer->play();
         return;
     }
-    
-    m_pAvplayer = CAAVPlayer::createWithUrl("https://download.qiaochucn.com/turbine/videos/ipc_xinshidai.mp4");
-    //m_pAvplayer = CAAVPlayer::createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
+
+    m_pAvplayer = CAAVPlayer::createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
     
     m_pAvplayer->onDidPlayToEndTime([=]
     {

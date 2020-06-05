@@ -390,16 +390,18 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         CVPixelBufferRef pixelBuffer = [_videoOutPut copyPixelBufferForItemTime:itemTime itemTimeForDisplay:nil];
         
         CC_BREAK_IF(pixelBuffer == nil);
-        
         CIImage *ciImage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
         CVPixelBufferRelease(pixelBuffer);
         
         CGFloat width = CVPixelBufferGetWidth(pixelBuffer);
         CGFloat height = CVPixelBufferGetHeight(pixelBuffer);
-        
+                
         CIContext *temporaryContext = [CIContext contextWithOptions:nil];
         CGImageRef videoImage = [temporaryContext createCGImage:ciImage fromRect:CGRectMake(0, 0, width, height)];
         
+        size_t bitsPerComponent = CGImageGetBitsPerComponent(videoImage);
+        size_t bitsPerPixel = CGImageGetBitsPerPixel(videoImage);
+        width = CGImageGetBytesPerRow(videoImage) / (bitsPerPixel / bitsPerComponent);
         
         CGDataProviderRef provider = CGImageGetDataProvider(videoImage);
         CFDataRef ref = CGDataProviderCopyData(provider);
@@ -408,12 +410,11 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         ssize_t length = (ssize_t)CFDataGetLength(ref);
         unsigned char* data = (unsigned char*)CFDataGetBytePtr(ref);
         
-        
         CrossApp::CAData* cross_data = new CrossApp::CAData();
         cross_data->copy(data, length);
         CFRelease(ref);
-        
-        CrossApp::CAImage* image = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, (unsigned int)width, (unsigned int)height);
+                
+        CrossApp::CAImage* image = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, (unsigned int)width, (unsigned int)height + 6);
         
         _onImage(image);
         cross_data->release();

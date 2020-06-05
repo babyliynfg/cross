@@ -53,7 +53,7 @@ public:
     /**
      * Override autorelease method to prevent developers from calling it.
      * If this method is called , it would trigger CCASSERT.
-     * @return cocos2d::Ref* always return nullptr.
+     * @return CrossApp::CAObject* always return nullptr.
      */
     CAObject* autorelease()
     {
