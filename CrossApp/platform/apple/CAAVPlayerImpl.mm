@@ -404,20 +404,24 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         
         size_t bitsPerComponent = CGImageGetBitsPerComponent(videoImage);
         size_t bitsPerPixel = CGImageGetBitsPerPixel(videoImage);
-        width = CGImageGetBytesPerRow(videoImage) / (bitsPerPixel / bitsPerComponent);
+        size_t bytesPerRow = CGImageGetBytesPerRow(videoImage);
         
+
         CGDataProviderRef provider = CGImageGetDataProvider(videoImage);
         CFDataRef ref = CGDataProviderCopyData(provider);
         CGImageRelease(videoImage);
         
-        ssize_t length = (ssize_t)CFDataGetLength(ref);
         unsigned char* data = (unsigned char*)CFDataGetBytePtr(ref);
+        ssize_t length = (ssize_t)CFDataGetLength(ref);
+        CGFloat pixelsWide = bytesPerRow / (bitsPerPixel / bitsPerComponent);
+        CGFloat pixelsHigh = length / (bitsPerPixel / bitsPerComponent) / pixelsWide ;
+        
         
         CrossApp::CAData* cross_data = new CrossApp::CAData();
         cross_data->copy(data, length);
         CFRelease(ref);
                 
-        CrossApp::CAImage* image = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, (unsigned int)width, (unsigned int)height);
+        CrossApp::CAImage* image = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
         
         _onImage(image);
         cross_data->release();
