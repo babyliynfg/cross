@@ -350,7 +350,7 @@ void CAImageCache::reloadAllImages()
 void CAImageCache::dumpCachedImageInfo()
 {
     unsigned int count = 0;
-    unsigned int totalBytes = 0;
+    unsigned int totalByteLength = 0;
 
     CAMap<std::string, CAImage*>::iterator itr;
     for (itr=m_mImages.begin(); itr!=m_mImages.end(); itr++)
@@ -358,8 +358,8 @@ void CAImageCache::dumpCachedImageInfo()
         CAImage* image = itr->second;
         unsigned int bpp = image->bitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
-        unsigned int bytes = image->getPixelsWide() * image->getPixelsHigh() * bpp / 8;
-        totalBytes += bytes;
+        unsigned int byteLength = image->getPixelsWide() * image->getPixelsHigh() * bpp / 8;
+        totalByteLength += byteLength;
         count++;
         CCLog("CrossApp: \"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB",
               itr->first.c_str(),
@@ -368,11 +368,11 @@ void CAImageCache::dumpCachedImageInfo()
               (long)image->getPixelsWide(),
               (long)image->getPixelsHigh(),
               (long)bpp,
-              (long)bytes / 1024);
+              (long)byteLength / 1024);
 
     }
 
-    CCLog("CrossApp: CAImageCache dumpDebugInfo: %ld images, for %lu KB (%.2f MB)", (long)count, (long)totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
+    CCLog("CrossApp: CAImageCache dumpDebugInfo: %ld images, for %lu KB (%.2f MB)", (long)count, (long)totalByteLength / 1024, totalByteLength / (1024.0f*1024.0f));
 }
 
 

@@ -5,6 +5,9 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/QuartzCore.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 
 NSTextAlignment _calculateTextAlignment(CrossApp::CATextAlignment alignment)
 {
@@ -328,23 +331,31 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
         [image unlockFocus];
+
+        CIImage * ciImage = [[CIImage alloc] initWithBitmapImageRep:bitmap];
         
-        unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
-        unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
+        CIContext *temporaryContext = [CIContext contextWithOptions:nil];
+        CGImageRef videoImage = [temporaryContext createCGImage:ciImage fromRect:CGRectMake(0, 0, (CGFloat)POTWide, (CGFloat)POTHigh)];
         
-        dim = DSize((pixelsWide), (pixelsHigh));
+        size_t bitsPerComponent = CGImageGetBitsPerComponent(videoImage);
+        size_t bitsPerPixel = CGImageGetBitsPerPixel(videoImage);
+        size_t bytesPerRow = CGImageGetBytesPerRow(videoImage);
         
-        ssize_t length = pixelsWide * pixelsHigh * 4;
-        unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);
-        memcpy(bytes, (unsigned char*) [bitmap bitmapData], length);
+
+        CGDataProviderRef provider = CGImageGetDataProvider(videoImage);
+        CFDataRef ref = CGDataProviderCopyData(provider);
+        CGImageRelease(videoImage);
         
-        [bitmap release];
-        [image release];
+        unsigned char* data = (unsigned char*)CFDataGetBytePtr(ref);
+        ssize_t length = (ssize_t)CFDataGetLength(ref);
+        CGFloat pixelsWide = bytesPerRow / (bitsPerPixel / bitsPerComponent);
+        CGFloat pixelsHigh = length / (bitsPerPixel / bitsPerComponent) / pixelsWide ;
         
-        CAData* data = new CAData();
-        data->fastSet(bytes, length);
-        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
-        data->release();
+        
+        CAData* cross_data = new CAData();
+        cross_data->copy(data, length);
+        ret = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
+        cross_data->release();
     } while (0);
     
     
