@@ -351,6 +351,8 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         CGFloat pixelsWide = bytesPerRow / (bitsPerPixel / bitsPerComponent);
         CGFloat pixelsHigh = length / (bitsPerPixel / bitsPerComponent) / pixelsWide ;
         
+        dim = DSize((pixelsWide), (pixelsHigh));
+
         
         CAData* cross_data = new CAData();
         cross_data->copy(data, length);
