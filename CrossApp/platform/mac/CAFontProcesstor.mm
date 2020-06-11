@@ -262,22 +262,36 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
         [image unlockFocus];
         
-        unsigned int pixelsWide = static_cast<unsigned int>(POTWide);
-        unsigned int pixelsHigh = static_cast<unsigned int>(POTHigh);
+        CIImage * ciImage = [[CIImage alloc] initWithBitmapImageRep:bitmap];
+        [bitmap release];
+        
+        CIContext *ciContext = [CIContext contextWithOptions:nil];
+        CGImageRef videoImage = [ciContext createCGImage:ciImage fromRect:ciImage.extent];
+        [ciImage release];
+        
+        size_t bitsPerComponent = CGImageGetBitsPerComponent(videoImage);
+        size_t bitsPerPixel = CGImageGetBitsPerPixel(videoImage);
+        size_t bytesPerRow = CGImageGetBytesPerRow(videoImage);
+        size_t width = CGImageGetWidth(videoImage);
+        size_t height = CGImageGetHeight(videoImage);
+
+        CGDataProviderRef provider = CGImageGetDataProvider(videoImage);
+        CFDataRef ref = CGDataProviderCopyData(provider);
+        CGImageRelease(videoImage);
+        
+        unsigned char* data = (unsigned char*)CFDataGetBytePtr(ref);
+        ssize_t length = (ssize_t)CFDataGetLength(ref);
+        CGFloat pixelsWide = bytesPerRow / (bitsPerPixel / bitsPerComponent);
+        CGFloat pixelsHigh = length / (bitsPerPixel / bitsPerComponent) / pixelsWide ;
         
         dim = DSize((pixelsWide), (pixelsHigh));
+
+        CAData* cross_data = CAData::create();
+        cross_data->copy(data, length);
+        CFRelease(ref);
         
-        ssize_t length = pixelsWide * pixelsHigh * 4;
-        unsigned char *bytes = (unsigned char*)malloc(sizeof(unsigned char) * length);
-        memcpy(bytes, (unsigned char*) [bitmap bitmapData], length);
+        ret = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
         
-        [bitmap release];
-        [image release];
-        
-        CAData* data = new CAData();
-        data->fastSet(bytes, length);
-        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
-        data->release();
     } while (0);
     
     return ret;
@@ -333,15 +347,18 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         [image unlockFocus];
 
         CIImage * ciImage = [[CIImage alloc] initWithBitmapImageRep:bitmap];
+        [bitmap release];
         
-        CIContext *temporaryContext = [CIContext contextWithOptions:nil];
-        CGImageRef videoImage = [temporaryContext createCGImage:ciImage fromRect:CGRectMake(0, 0, (CGFloat)POTWide, (CGFloat)POTHigh)];
+        CIContext *ciContext = [CIContext contextWithOptions:nil];
+        CGImageRef videoImage = [ciContext createCGImage:ciImage fromRect:ciImage.extent];
+        [ciImage release];
         
         size_t bitsPerComponent = CGImageGetBitsPerComponent(videoImage);
         size_t bitsPerPixel = CGImageGetBitsPerPixel(videoImage);
         size_t bytesPerRow = CGImageGetBytesPerRow(videoImage);
-        
-
+        size_t width = CGImageGetWidth(videoImage);
+        size_t height = CGImageGetHeight(videoImage);
+ 
         CGDataProviderRef provider = CGImageGetDataProvider(videoImage);
         CFDataRef ref = CGDataProviderCopyData(provider);
         CGImageRelease(videoImage);
@@ -353,11 +370,12 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         
         dim = DSize((pixelsWide), (pixelsHigh));
 
-        
-        CAData* cross_data = new CAData();
+        CAData* cross_data = CAData::create();
         cross_data->copy(data, length);
+        CFRelease(ref);
+        
         ret = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
-        cross_data->release();
+        
     } while (0);
     
     
