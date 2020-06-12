@@ -401,7 +401,6 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
                 
         CIContext *ciContext = [CIContext contextWithOptions:nil];
         CGImageRef videoImage = [ciContext createCGImage:ciImage fromRect:ciImage.extent];
-        [ciImage release];
         
         size_t bitsPerComponent = CGImageGetBitsPerComponent(videoImage);
         size_t bitsPerPixel = CGImageGetBitsPerPixel(videoImage);
