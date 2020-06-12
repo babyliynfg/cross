@@ -193,8 +193,12 @@ void CARichLabel::updateImage()
                 this->setCenter(rect);
             }
         }
+        #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
+                this->setImageRect(DRect(DPointZero, size));
+        #else
+                this->setImageRect(DRect(DPointZero, image->getContentSize()));
+        #endif
         
-        this->setImageRect(DRect(DPointZero, size));
     }
     else
     {

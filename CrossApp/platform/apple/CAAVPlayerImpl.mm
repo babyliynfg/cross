@@ -416,14 +416,14 @@ static CrossApp::CAImage* get_first_frame_image_with_filePath(NSURL* url)
         CGFloat pixelsWide = bytesPerRow / (bitsPerPixel / bitsPerComponent);
         CGFloat pixelsHigh = length / (bitsPerPixel / bitsPerComponent) / pixelsWide ;
         
-        CrossApp::CAData* cross_data = CrossApp::CAData::create();
+        CrossApp::CAData* cross_data = new CrossApp::CAData();
         cross_data->copy(data, length);
         CFRelease(ref);
                 
         CrossApp::CAImage* image = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
         
         _onImage(image);
-
+        cross_data->release();
     } while (0);
     
 }
