@@ -59,6 +59,9 @@ public:
     
     CC_SYNTHESIZE_READONLY(CABarButtonItem*, m_pGoBackBarButtonItem, GoBackBarButtonItem);
     
+    CC_PROPERTY_IS(bool, m_bEnabledShadow, EnabledShadow);
+
+    
     void updateClearance(int clearance);
     
 protected:

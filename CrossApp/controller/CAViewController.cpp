@@ -354,6 +354,7 @@ int get_bottom_clearance(CAView* view)
 CANavigationController::CANavigationController()
 :m_bNavigationBarHidden(false)
 ,m_bPopViewController(false)
+,m_bNavigationBarEnabledShadow(true)
 ,m_pNavigationBarBackgroundImage(nullptr)
 ,m_sNavigationBarTitleColor(CAColor4B::WHITE)
 ,m_sNavigationBarButtonColor(CAColor4B::WHITE)
@@ -466,6 +467,21 @@ void CANavigationController::setNavigationBarGoBackBarButtonItem(CrossApp::CABar
 CABarButtonItem* CANavigationController::getNavigationBarGoBackBarButtonItem()
 {
     return m_pNavigationBarGoBackBarButtonItem;
+}
+
+void CANavigationController::setNavigationBarEnabledShadow(bool var)
+{
+    m_bNavigationBarEnabledShadow = var;
+    
+    for (auto itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
+    {
+        (*itr)->setEnabledShadow(m_bNavigationBarEnabledShadow);
+    }
+}
+
+bool CANavigationController::isNavigationBarEnabledShadow()
+{
+    return m_bNavigationBarEnabledShadow;
 }
 
 bool CANavigationController::initWithRootViewController(CAViewController* viewController)
@@ -648,6 +664,7 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
 
     navigationBar->setTitleColor(m_sNavigationBarTitleColor);
     navigationBar->setButtonColor(m_sNavigationBarButtonColor);
+    navigationBar->setEnabledShadow(m_bNavigationBarEnabledShadow);
     container->insertSubview(navigationBar, 1);
     navigationBar->onPopViewController([&]
     {

@@ -2132,6 +2132,41 @@ bool js_crossapp_CAImage_getGifImageIndex(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_crossapp_CAImage_getGifImageIndex : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAImage_convertDataToFormat(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_convertDataToFormat : Invalid Native Object");
+    if (argc == 6) {
+        const unsigned char* arg0 = nullptr;
+        unsigned long arg1 = 0;
+        CrossApp::CAImage::PixelFormat arg2;
+        CrossApp::CAImage::PixelFormat arg3;
+        unsigned char** arg4 = nullptr;
+        unsigned long* arg5 = 0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = (unsigned char*)arg0_tmp.c_str();
+        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned char**
+		ok = false;
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned long*
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_convertDataToFormat : Error processing arguments");
+        int ret = (int)cobj->convertDataToFormat(arg0, arg1, arg2, arg3, arg4, arg5);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAImage_convertDataToFormat : wrong number of arguments: %d, was expecting %d", argc, 6);
+    return false;
+}
 bool js_crossapp_CAImage_setMaxT(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -2292,6 +2327,39 @@ bool js_crossapp_CAImage_getData(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAImage_getData : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAImage_convertRGBA8888ToFormat(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_convertRGBA8888ToFormat : Invalid Native Object");
+    if (argc == 5) {
+        const unsigned char* arg0 = nullptr;
+        unsigned long arg1 = 0;
+        CrossApp::CAImage::PixelFormat arg2;
+        unsigned char** arg3 = nullptr;
+        unsigned long* arg4 = 0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = (unsigned char*)arg0_tmp.c_str();
+        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned char**
+		ok = false;
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned long*
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_convertRGBA8888ToFormat : Error processing arguments");
+        int ret = (int)cobj->convertRGBA8888ToFormat(arg0, arg1, arg2, arg3, arg4);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAImage_convertRGBA8888ToFormat : wrong number of arguments: %d, was expecting %d", argc, 5);
+    return false;
+}
 bool js_crossapp_CAImage_setAliasTexParameters(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -2426,6 +2494,39 @@ bool js_crossapp_CAImage_description(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAImage_description : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAImage_convertI8ToFormat(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_convertI8ToFormat : Invalid Native Object");
+    if (argc == 5) {
+        const unsigned char* arg0 = nullptr;
+        unsigned long arg1 = 0;
+        CrossApp::CAImage::PixelFormat arg2;
+        unsigned char** arg3 = nullptr;
+        unsigned long* arg4 = 0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = (unsigned char*)arg0_tmp.c_str();
+        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned char**
+		ok = false;
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned long*
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_convertI8ToFormat : Error processing arguments");
+        int ret = (int)cobj->convertI8ToFormat(arg0, arg1, arg2, arg3, arg4);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAImage_convertI8ToFormat : wrong number of arguments: %d, was expecting %d", argc, 5);
     return false;
 }
 bool js_crossapp_CAImage_isMonochrome(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2727,6 +2828,39 @@ bool js_crossapp_CAImage_repremultipliedImageData(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CAImage_repremultipliedImageData : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CAImage_convertAI88ToFormat(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_convertAI88ToFormat : Invalid Native Object");
+    if (argc == 5) {
+        const unsigned char* arg0 = nullptr;
+        unsigned long arg1 = 0;
+        CrossApp::CAImage::PixelFormat arg2;
+        unsigned char** arg3 = nullptr;
+        unsigned long* arg4 = 0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = (unsigned char*)arg0_tmp.c_str();
+        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned char**
+		ok = false;
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned long*
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_convertAI88ToFormat : Error processing arguments");
+        int ret = (int)cobj->convertAI88ToFormat(arg0, arg1, arg2, arg3, arg4);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAImage_convertAI88ToFormat : wrong number of arguments: %d, was expecting %d", argc, 5);
+    return false;
+}
 bool js_crossapp_CAImage_detectFormat(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -2813,6 +2947,39 @@ bool js_crossapp_CAImage_isJpg(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAImage_isJpg : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_crossapp_CAImage_convertRGB888ToFormat(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_convertRGB888ToFormat : Invalid Native Object");
+    if (argc == 5) {
+        const unsigned char* arg0 = nullptr;
+        unsigned long arg1 = 0;
+        CrossApp::CAImage::PixelFormat arg2;
+        unsigned char** arg3 = nullptr;
+        unsigned long* arg4 = 0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = (unsigned char*)arg0_tmp.c_str();
+        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned char**
+		ok = false;
+        #pragma warning NO CONVERSION TO NATIVE FOR unsigned long*
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_convertRGB888ToFormat : Error processing arguments");
+        int ret = (int)cobj->convertRGB888ToFormat(arg0, arg1, arg2, arg3, arg4);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAImage_convertRGB888ToFormat : wrong number of arguments: %d, was expecting %d", argc, 5);
     return false;
 }
 bool js_crossapp_CAImage_isPvr(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3533,6 +3700,7 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
         JS_FN("bitsPerPixelForFormat", js_crossapp_CAImage_bitsPerPixelForFormat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getName", js_crossapp_CAImage_getName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getGifImageIndex", js_crossapp_CAImage_getGifImageIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertDataToFormat", js_crossapp_CAImage_convertDataToFormat, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxT", js_crossapp_CAImage_setMaxT, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithImageFile", js_crossapp_CAImage_initWithImageFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawInRect", js_crossapp_CAImage_drawInRect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -3540,12 +3708,14 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
         JS_FN("getGifImageCounts", js_crossapp_CAImage_getGifImageCounts, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentSize", js_crossapp_CAImage_getContentSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getData", js_crossapp_CAImage_getData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertRGBA8888ToFormat", js_crossapp_CAImage_convertRGBA8888ToFormat, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAliasTexParameters", js_crossapp_CAImage_setAliasTexParameters, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isPng", js_crossapp_CAImage_isPng, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithColor4B", js_crossapp_CAImage_initWithColor4B, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("generateMipmap", js_crossapp_CAImage_generateMipmap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("saveToFile", js_crossapp_CAImage_saveToFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("description", js_crossapp_CAImage_description, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertI8ToFormat", js_crossapp_CAImage_convertI8ToFormat, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isMonochrome", js_crossapp_CAImage_isMonochrome, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithImageData", js_crossapp_CAImage_initWithImageData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPixelFormat", js_crossapp_CAImage_getPixelFormat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -3558,10 +3728,12 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
         JS_FN("drawAtPoint", js_crossapp_CAImage_drawAtPoint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithRawData", js_crossapp_CAImage_initWithRawData, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("repremultipliedImageData", js_crossapp_CAImage_repremultipliedImageData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertAI88ToFormat", js_crossapp_CAImage_convertAI88ToFormat, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("detectFormat", js_crossapp_CAImage_detectFormat, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("hasMipmaps", js_crossapp_CAImage_hasMipmaps, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isCompressed", js_crossapp_CAImage_isCompressed, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isJpg", js_crossapp_CAImage_isJpg, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertRGB888ToFormat", js_crossapp_CAImage_convertRGB888ToFormat, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isPvr", js_crossapp_CAImage_isPvr, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isGif", js_crossapp_CAImage_isGif, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -11818,23 +11990,6 @@ void js_register_crossapp_CALabel(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_CrossApp_CAApplication_class;
 JSObject *jsb_CrossApp_CAApplication_prototype;
 
-bool js_crossapp_CAApplication_setDefaultValues(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAApplication* cobj = (CrossApp::CAApplication *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAApplication_setDefaultValues : Invalid Native Object");
-    if (argc == 0) {
-        cobj->setDefaultValues();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAApplication_setDefaultValues : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAApplication_setCrossAppCCLogNotification(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -12225,6 +12380,23 @@ bool js_crossapp_CAApplication_runWindow(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_crossapp_CAApplication_runWindow : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAApplication_setDefaultValues(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAApplication* cobj = (CrossApp::CAApplication *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAApplication_setDefaultValues : Invalid Native Object");
+    if (argc == 0) {
+        cobj->setDefaultValues();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAApplication_setDefaultValues : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAApplication_getVisibleOrigin(JSContext *cx, uint32_t argc, jsval *vp)
@@ -13136,7 +13308,6 @@ bool js_crossapp_CAApplication_setTouchDispatcher(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CAApplication_setTouchDispatcher : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-
 bool js_crossapp_CAApplication_getScheduler(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -13402,7 +13573,6 @@ void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global) 
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("setDefaultValues", js_crossapp_CAApplication_setDefaultValues, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCrossAppCCLogNotification", js_crossapp_CAApplication_setCrossAppCCLogNotification, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStatusBarOrientation", js_crossapp_CAApplication_getStatusBarOrientation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNotificationCenter", js_crossapp_CAApplication_getNotificationCenter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -13420,6 +13590,7 @@ void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global) 
         JS_FN("end", js_crossapp_CAApplication_end, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("multiplyMatrix", js_crossapp_CAApplication_multiplyMatrix, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("runWindow", js_crossapp_CAApplication_runWindow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDefaultValues", js_crossapp_CAApplication_setDefaultValues, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVisibleOrigin", js_crossapp_CAApplication_getVisibleOrigin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("mainLoop", js_crossapp_CAApplication_mainLoop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDrawing", js_crossapp_CAApplication_isDrawing, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -16266,6 +16437,25 @@ bool js_crossapp_CANavigationBarItem_getTitleView(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CANavigationBarItem_getTitleView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CANavigationBarItem_isEnabledShadow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANavigationBarItem* cobj = (CrossApp::CANavigationBarItem *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationBarItem_isEnabledShadow : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isEnabledShadow();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANavigationBarItem_isEnabledShadow : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CANavigationBarItem_setTitleView(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -16364,6 +16554,27 @@ bool js_crossapp_CANavigationBarItem_setTitleViewImage(JSContext *cx, uint32_t a
     }
 
     JS_ReportError(cx, "js_crossapp_CANavigationBarItem_setTitleViewImage : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CANavigationBarItem_setEnabledShadow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANavigationBarItem* cobj = (CrossApp::CANavigationBarItem *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationBarItem_setEnabledShadow : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANavigationBarItem_setEnabledShadow : Error processing arguments");
+        cobj->setEnabledShadow(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANavigationBarItem_setEnabledShadow : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CANavigationBarItem_isNagigationBarHidden(JSContext *cx, uint32_t argc, jsval *vp)
@@ -16497,10 +16708,12 @@ void js_register_crossapp_CANavigationBarItem(JSContext *cx, JS::HandleObject gl
         JS_FN("setShowGoBackButton", js_crossapp_CANavigationBarItem_setShowGoBackButton, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addRightButtonItem", js_crossapp_CANavigationBarItem_addRightButtonItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleView", js_crossapp_CANavigationBarItem_getTitleView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isEnabledShadow", js_crossapp_CANavigationBarItem_isEnabledShadow, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleView", js_crossapp_CANavigationBarItem_setTitleView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CANavigationBarItem_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLeftButtonItems", js_crossapp_CANavigationBarItem_getLeftButtonItems, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleViewImage", js_crossapp_CANavigationBarItem_setTitleViewImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setEnabledShadow", js_crossapp_CANavigationBarItem_setEnabledShadow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isNagigationBarHidden", js_crossapp_CANavigationBarItem_isNagigationBarHidden, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isShowGoBackButton", js_crossapp_CANavigationBarItem_isShowGoBackButton, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -16962,6 +17175,25 @@ bool js_crossapp_CANavigationBar_setTitleColor(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CANavigationBar_setTitleColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_crossapp_CANavigationBar_isEnabledShadow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANavigationBar* cobj = (CrossApp::CANavigationBar *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationBar_isEnabledShadow : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isEnabledShadow();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANavigationBar_isEnabledShadow : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_crossapp_CANavigationBar_setButtonColor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -16981,6 +17213,27 @@ bool js_crossapp_CANavigationBar_setButtonColor(JSContext *cx, uint32_t argc, js
     }
 
     JS_ReportError(cx, "js_crossapp_CANavigationBar_setButtonColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CANavigationBar_setEnabledShadow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANavigationBar* cobj = (CrossApp::CANavigationBar *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationBar_setEnabledShadow : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANavigationBar_setEnabledShadow : Error processing arguments");
+        cobj->setEnabledShadow(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANavigationBar_setEnabledShadow : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CANavigationBar_getTitleColor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -17134,6 +17387,27 @@ bool js_crossapp_CANavigationBar_getButtonColor(JSContext *cx, uint32_t argc, js
     }
 
     JS_ReportError(cx, "js_crossapp_CANavigationBar_getButtonColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CANavigationBar_updateClearance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANavigationBar* cobj = (CrossApp::CANavigationBar *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationBar_updateClearance : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANavigationBar_updateClearance : Error processing arguments");
+        cobj->updateClearance(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANavigationBar_updateClearance : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_crossapp_CANavigationBar_setGoBackBarButtonItem(JSContext *cx, uint32_t argc, jsval *vp)
@@ -17388,7 +17662,9 @@ void js_register_crossapp_CANavigationBar(JSContext *cx, JS::HandleObject global
         JS_FN("onPopViewController", js_crossapp_CANavigationBar_onPopViewController, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getGoBackBarButtonItem", js_crossapp_CANavigationBar_getGoBackBarButtonItem, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleColor", js_crossapp_CANavigationBar_setTitleColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isEnabledShadow", js_crossapp_CANavigationBar_isEnabledShadow, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setButtonColor", js_crossapp_CANavigationBar_setButtonColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setEnabledShadow", js_crossapp_CANavigationBar_setEnabledShadow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleColor", js_crossapp_CANavigationBar_getTitleColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setItem", js_crossapp_CANavigationBar_setItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBackgroundView", js_crossapp_CANavigationBar_getBackgroundView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -17396,6 +17672,7 @@ void js_register_crossapp_CANavigationBar(JSContext *cx, JS::HandleObject global
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CANavigationBar_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getItem", js_crossapp_CANavigationBar_getItem, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getButtonColor", js_crossapp_CANavigationBar_getButtonColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("updateClearance", js_crossapp_CANavigationBar_updateClearance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setGoBackBarButtonItem", js_crossapp_CANavigationBar_setGoBackBarButtonItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBackgroundView", js_crossapp_CANavigationBar_setBackgroundView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -17999,6 +18276,27 @@ bool js_crossapp_CATabBar_getSelectedIndicatorImage(JSContext *cx, uint32_t argc
     JS_ReportError(cx, "js_crossapp_CATabBar_getSelectedIndicatorImage : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CATabBar_updateClearance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CATabBar* cobj = (CrossApp::CATabBar *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CATabBar_updateClearance : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CATabBar_updateClearance : Error processing arguments");
+        cobj->updateClearance(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CATabBar_updateClearance : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CATabBar_setTitleColorForNormal(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -18340,6 +18638,7 @@ void js_register_crossapp_CATabBar(JSContext *cx, JS::HandleObject global) {
         JS_FN("onExitTransitionDidStart", js_crossapp_CATabBar_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getForbidSelectedIndexs", js_crossapp_CATabBar_getForbidSelectedIndexs, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSelectedIndicatorImage", js_crossapp_CATabBar_getSelectedIndicatorImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("updateClearance", js_crossapp_CATabBar_updateClearance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleColorForNormal", js_crossapp_CATabBar_setTitleColorForNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSelectedBackgroundImage", js_crossapp_CATabBar_getSelectedBackgroundImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CATabBar_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -22301,6 +22600,27 @@ bool js_crossapp_CANavigationController_setNavigationBarHidden(JSContext *cx, ui
     JS_ReportError(cx, "js_crossapp_CANavigationController_setNavigationBarHidden : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
+bool js_crossapp_CANavigationController_setNavigationBarEnabledShadow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANavigationController* cobj = (CrossApp::CANavigationController *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_setNavigationBarEnabledShadow : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CANavigationController_setNavigationBarEnabledShadow : Error processing arguments");
+        cobj->setNavigationBarEnabledShadow(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANavigationController_setNavigationBarEnabledShadow : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CANavigationController_replaceViewController(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -22377,6 +22697,25 @@ bool js_crossapp_CANavigationController_getNavigationBarGoBackBarButtonItem(JSCo
     }
 
     JS_ReportError(cx, "js_crossapp_CANavigationController_getNavigationBarGoBackBarButtonItem : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CANavigationController_isNavigationBarEnabledShadow(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CANavigationController* cobj = (CrossApp::CANavigationController *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CANavigationController_isNavigationBarEnabledShadow : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isNavigationBarEnabledShadow();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CANavigationController_isNavigationBarEnabledShadow : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CANavigationController_pushViewController(JSContext *cx, uint32_t argc, jsval *vp)
@@ -22877,9 +23216,11 @@ void js_register_crossapp_CANavigationController(JSContext *cx, JS::HandleObject
         JS_FN("getBackViewController", js_crossapp_CANavigationController_getBackViewController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewControllerCount", js_crossapp_CANavigationController_getViewControllerCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNavigationBarHidden", js_crossapp_CANavigationController_setNavigationBarHidden, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setNavigationBarEnabledShadow", js_crossapp_CANavigationController_setNavigationBarEnabledShadow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("replaceViewController", js_crossapp_CANavigationController_replaceViewController, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("popToRootViewControllerAnimated", js_crossapp_CANavigationController_popToRootViewControllerAnimated, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNavigationBarGoBackBarButtonItem", js_crossapp_CANavigationController_getNavigationBarGoBackBarButtonItem, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isNavigationBarEnabledShadow", js_crossapp_CANavigationController_isNavigationBarEnabledShadow, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pushViewController", js_crossapp_CANavigationController_pushViewController, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isReachBoundaryDown", js_crossapp_CANavigationController_isReachBoundaryDown, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchMoved", js_crossapp_CANavigationController_setTouchMoved, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -23764,32 +24105,6 @@ bool js_crossapp_CAWindow_dismissModalViewController(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_crossapp_CAWindow_dismissModalViewController : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAWindow_getModalViewController(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAWindow* cobj = (CrossApp::CAWindow *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWindow_getModalViewController : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CAViewController* ret = cobj->getModalViewController();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAViewController>(cx, (CrossApp::CAViewController*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAWindow_getModalViewController : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAWindow_getRootViewController(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -23816,37 +24131,20 @@ bool js_crossapp_CAWindow_getRootViewController(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAWindow_getRootViewController : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAWindow_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWindow_getModalViewController(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWindow* cobj = (CrossApp::CAWindow *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWindow_onExitTransitionDidStart : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWindow_getModalViewController : Invalid Native Object");
     if (argc == 0) {
-        cobj->onExitTransitionDidStart();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAWindow_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAWindow_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAWindow* cobj = (CrossApp::CAWindow *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWindow_getDefaultCamera : Invalid Native Object");
-    if (argc == 0) {
-        CrossApp::CACamera* ret = cobj->getDefaultCamera();
+        CrossApp::CAViewController* ret = cobj->getModalViewController();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACamera>(cx, (CrossApp::CACamera*)ret);
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAViewController>(cx, (CrossApp::CAViewController*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -23856,7 +24154,7 @@ bool js_crossapp_CAWindow_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWindow_getDefaultCamera : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAWindow_getModalViewController : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAWindow_setRootViewController(JSContext *cx, uint32_t argc, jsval *vp)
@@ -23888,21 +24186,30 @@ bool js_crossapp_CAWindow_setRootViewController(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CAWindow_setRootViewController : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CAWindow_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAWindow_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAWindow* cobj = (CrossApp::CAWindow *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWindow_onEnterTransitionDidFinish : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAWindow_getDefaultCamera : Invalid Native Object");
     if (argc == 0) {
-        cobj->onEnterTransitionDidFinish();
-        args.rval().setUndefined();
+        CrossApp::CACamera* ret = cobj->getDefaultCamera();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CACamera>(cx, (CrossApp::CACamera*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_crossapp_CAWindow_onEnterTransitionDidFinish : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_crossapp_CAWindow_getDefaultCamera : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAWindow_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -24005,12 +24312,10 @@ void js_register_crossapp_CAWindow(JSContext *cx, JS::HandleObject global) {
         JS_FN("setCameraOrderDirty", js_crossapp_CAWindow_setCameraOrderDirty, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("render", js_crossapp_CAWindow_render, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("dismissModalViewController", js_crossapp_CAWindow_dismissModalViewController, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getModalViewController", js_crossapp_CAWindow_getModalViewController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRootViewController", js_crossapp_CAWindow_getRootViewController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExitTransitionDidStart", js_crossapp_CAWindow_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getDefaultCamera", js_crossapp_CAWindow_getDefaultCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getModalViewController", js_crossapp_CAWindow_getModalViewController, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setRootViewController", js_crossapp_CAWindow_setRootViewController, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onEnterTransitionDidFinish", js_crossapp_CAWindow_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDefaultCamera", js_crossapp_CAWindow_getDefaultCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_crossapp_CAWindow_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -25096,6 +25401,26 @@ bool js_crossapp_CARenderImage_create(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CARenderImage_create : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CARenderImage_printscreen(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::CARenderImage* ret = CrossApp::CARenderImage::printscreen();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CARenderImage>(cx, (CrossApp::CARenderImage*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CARenderImage_printscreen : wrong number of arguments");
+    return false;
+}
 bool js_crossapp_CARenderImage_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -25181,6 +25506,7 @@ void js_register_crossapp_CARenderImage(JSContext *cx, JS::HandleObject global) 
 
     static JSFunctionSpec st_funcs[] = {
         JS_FN("create", js_crossapp_CARenderImage_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("printscreen", js_crossapp_CARenderImage_printscreen, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -43766,6 +44092,7 @@ bool js_crossapp_CAPickerView_setSeparateColor(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_crossapp_CAPickerView_setSeparateColor : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+
 bool js_crossapp_CAPickerView_onTitleForRow(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -43781,7 +44108,7 @@ bool js_crossapp_CAPickerView_onTitleForRow(JSContext *cx, uint32_t argc, jsval 
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-                auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = uint32_to_jsval(cx, larg0);
@@ -44299,6 +44626,27 @@ bool js_crossapp_CADatePickerView_onExitTransitionDidStart(JSContext *cx, uint32
     JS_ReportError(cx, "js_crossapp_CADatePickerView_onExitTransitionDidStart : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_crossapp_CADatePickerView_setTime(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_setTime : Invalid Native Object");
+    if (argc == 1) {
+        long arg0 = 0;
+        ok &= jsval_to_long(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_setTime : Error processing arguments");
+        cobj->setTime(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_setTime : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CADatePickerView_setDate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -44514,6 +44862,7 @@ void js_register_crossapp_CADatePickerView(JSContext *cx, JS::HandleObject globa
         JS_FN("setBackgroundImageForSelected", js_crossapp_CADatePickerView_setBackgroundImageForSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_crossapp_CADatePickerView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onExitTransitionDidStart", js_crossapp_CADatePickerView_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTime", js_crossapp_CADatePickerView_setTime, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDate", js_crossapp_CADatePickerView_setDate, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onEnterTransitionDidFinish", js_crossapp_CADatePickerView_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -47132,7 +47481,31 @@ bool js_crossapp_CAHttpClient_destroyAllInstance(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_crossapp_CAHttpClient_destroyAllInstance : wrong number of arguments");
     return false;
 }
-bool js_crossapp_CAHttpClient_SendRequest(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAHttpClient_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        ssize_t arg0 = 0;
+        ok &= jsval_to_ssize(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAHttpClient_getInstance : Error processing arguments");
+        CrossApp::CAHttpClient* ret = CrossApp::CAHttpClient::getInstance(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAHttpClient>(cx, (CrossApp::CAHttpClient*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAHttpClient_getInstance : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAHttpClient_uploadFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -47160,38 +47533,14 @@ bool js_crossapp_CAHttpClient_SendRequest(JSContext *cx, uint32_t argc, jsval *v
 		ok = false;
         #pragma warning NO CONVERSION TO NATIVE FOR std::string*
 		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAHttpClient_SendRequest : Error processing arguments");
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAHttpClient_uploadFile : Error processing arguments");
         bool ret = CrossApp::CAHttpClient::uploadFile(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_crossapp_CAHttpClient_SendRequest : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAHttpClient_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        ssize_t arg0 = 0;
-        ok &= jsval_to_ssize(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAHttpClient_getInstance : Error processing arguments");
-        CrossApp::CAHttpClient* ret = CrossApp::CAHttpClient::getInstance(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAHttpClient>(cx, (CrossApp::CAHttpClient*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAHttpClient_getInstance : wrong number of arguments");
+    JS_ReportError(cx, "js_crossapp_CAHttpClient_uploadFile : wrong number of arguments");
     return false;
 }
 
@@ -47237,8 +47586,8 @@ void js_register_crossapp_CAHttpClient(JSContext *cx, JS::HandleObject global) {
     static JSFunctionSpec st_funcs[] = {
         JS_FN("destroyInstance", js_crossapp_CAHttpClient_destroyInstance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("destroyAllInstance", js_crossapp_CAHttpClient_destroyAllInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("SendRequest", js_crossapp_CAHttpClient_SendRequest, 10, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getInstance", js_crossapp_CAHttpClient_getInstance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("uploadFile", js_crossapp_CAHttpClient_uploadFile, 10, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -50908,42 +51257,6 @@ bool js_crossapp_CGSprite_setNormalizedPosition(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_crossapp_CGSprite_setNormalizedPosition : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_crossapp_CGSprite_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_onEnter : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onEnter();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_onEnter : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSprite_getViewToSuperviewTransform(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_getViewToSuperviewTransform : Invalid Native Object");
-    if (argc == 0) {
-        const CrossApp::Mat4& ret = cobj->getViewToSuperviewTransform();
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_getViewToSuperviewTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CGSprite_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -51152,23 +51465,6 @@ bool js_crossapp_CGSprite_getScaleZ(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CGSprite_getScaleZ : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CGSprite_onExit(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CGSprite* cobj = (CrossApp::CGSprite *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CGSprite_onExit : Invalid Native Object");
-    if (argc == 0) {
-        cobj->onExit();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CGSprite_onExit : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CGSprite_getRotationQuat(JSContext *cx, uint32_t argc, jsval *vp)
@@ -52191,15 +52487,12 @@ void js_register_crossapp_CGSprite(JSContext *cx, JS::HandleObject global) {
     static JSFunctionSpec funcs[] = {
         JS_FN("stopActionsByFlags", js_crossapp_CGSprite_stopActionsByFlags, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNormalizedPosition", js_crossapp_CGSprite_setNormalizedPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onEnter", js_crossapp_CGSprite_onEnter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getViewToSuperviewTransform", js_crossapp_CGSprite_getViewToSuperviewTransform, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getActionByTag", js_crossapp_CGSprite_getActionByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("runAction", js_crossapp_CGSprite_runAction, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithImage", js_crossapp_CGSprite_initWithImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfRunningActions", js_crossapp_CGSprite_getNumberOfRunningActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOffsetPosition", js_crossapp_CGSprite_getOffsetPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScaleZ", js_crossapp_CGSprite_getScaleZ, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("onExit", js_crossapp_CGSprite_onExit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRotationQuat", js_crossapp_CGSprite_getRotationQuat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithSpriteFrameName", js_crossapp_CGSprite_initWithSpriteFrameName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRotation3D", js_crossapp_CGSprite_getRotation3D, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

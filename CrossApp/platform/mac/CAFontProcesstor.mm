@@ -262,6 +262,8 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
         [image unlockFocus];
         
+        dim = DSize((POTWide), (POTHigh));
+
         CIImage * ciImage = [[CIImage alloc] initWithBitmapImageRep:bitmap];
         [bitmap release];
         
@@ -284,8 +286,6 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         CGFloat pixelsWide = bytesPerRow / (bitsPerPixel / bitsPerComponent);
         CGFloat pixelsHigh = length / (bitsPerPixel / bitsPerComponent) / pixelsWide ;
         
-        dim = DSize((pixelsWide), (pixelsHigh));
-
         CAData* cross_data = CAData::create();
         cross_data->copy(data, length);
         CFRelease(ref);
@@ -346,6 +346,8 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
         [image unlockFocus];
 
+        dim = DSize((POTWide), (POTHigh));
+
         CIImage * ciImage = [[CIImage alloc] initWithBitmapImageRep:bitmap];
         [bitmap release];
         
@@ -368,8 +370,6 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         CGFloat pixelsWide = bytesPerRow / (bitsPerPixel / bitsPerComponent);
         CGFloat pixelsHigh = length / (bitsPerPixel / bitsPerComponent) / pixelsWide ;
         
-        dim = DSize((pixelsWide), (pixelsHigh));
-
         CAData* cross_data = CAData::create();
         cross_data->copy(data, length);
         CFRelease(ref);

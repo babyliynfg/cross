@@ -165,6 +165,8 @@ public:
     
     CC_PROPERTY(CABarButtonItem*, m_pNavigationBarGoBackBarButtonItem, NavigationBarGoBackBarButtonItem);
     
+    CC_PROPERTY_IS(bool, m_bNavigationBarEnabledShadow, NavigationBarEnabledShadow);
+
     virtual bool isReachBoundaryLeft();
     
     virtual bool isReachBoundaryRight() {return true;}

@@ -91,6 +91,7 @@ CANavigationBarItem::CANavigationBarItem()
 ,m_bShowGoBackButton(true)
 ,m_pTitleView(nullptr)
 ,m_bNagigationBarHidden(false)
+,m_bEnabledShadow(true)
 {
     m_vLeftButtonItems.pushBack(CAView::create());
 }

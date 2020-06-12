@@ -28,9 +28,10 @@ CANavigationBar::CANavigationBar(int clearance)
 ,m_cButtonColor(CAColor4B::WHITE)
 ,m_pItem(nullptr)
 ,m_pGoBackBarButtonItem(nullptr)
+,m_bEnabledShadow(true)
 ,m_iClearance(clearance)
 {
-
+    this->enabledBottomShadow(m_bEnabledShadow);
 }
 
 CANavigationBar::~CANavigationBar()
@@ -78,13 +79,12 @@ CANavigationBar* CANavigationBar::createWithLayout(const CrossApp::DLayout &layo
 
 bool CANavigationBar::init()
 {
+    
     m_pContentView = new CAView();
     m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(m_iClearance, 0)));
     this->addSubview(m_pContentView);
     m_pContentView->release();
-    
-    this->enabledBottomShadow(true);
-    
+        
     const CAThemeManager::stringMap& map = GETINSTANCE_THEMEMAP("CANavigationBar");
     
     m_pGoBackBarButtonItem = CABarButtonItem::create("", CAImage::create(map.at("leftButtonImage")), nullptr);
@@ -141,6 +141,17 @@ void CANavigationBar::setGoBackBarButtonItem(CABarButtonItem* item)
     this->updateNavigationBar();
 }
 
+void CANavigationBar::setEnabledShadow(bool var)
+{
+    m_bEnabledShadow = var;
+    this->enabledBottomShadow(var);
+}
+
+bool CANavigationBar::isEnabledShadow()
+{
+    return m_bEnabledShadow;
+}
+
 void CANavigationBar::setBackgroundView(CAView* var)
 {
     var->setTouchEnabled(false);
@@ -173,6 +184,7 @@ void CANavigationBar::updateNavigationBar()
     this->showTitle();
     this->showLeftButton();
     this->showRightButton();
+    this->enabledBottomShadow(m_bEnabledShadow && m_pItem->isEnabledShadow());
 }
 
 void CANavigationBar::showBackground()

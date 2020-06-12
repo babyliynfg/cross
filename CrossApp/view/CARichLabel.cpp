@@ -194,7 +194,7 @@ void CARichLabel::updateImage()
             }
         }
         
-        this->setImageRect(DRect(DPointZero, image->getContentSize()));
+        this->setImageRect(DRect(DPointZero, size));
     }
     else
     {

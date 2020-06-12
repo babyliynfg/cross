@@ -725,6 +725,28 @@ getGifImageIndex : function (
 },
 
 /**
+ * @method convertDataToFormat
+ * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
+ * @param {ca.CAImage::PixelFormat} arg2
+ * @param {ca.CAImage::PixelFormat} arg3
+ * @param {unsigned char} arg4
+ * @param {unsigned long} arg5
+ * @return {ca.CAImage::PixelFormat}
+ */
+convertDataToFormat : function (
+char, 
+long, 
+pixelformat, 
+pixelformat, 
+char, 
+long 
+)
+{
+    return 0;
+},
+
+/**
  * @method setMaxT
  * @param {float} arg0
  */
@@ -799,6 +821,26 @@ getData : function (
 },
 
 /**
+ * @method convertRGBA8888ToFormat
+ * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
+ * @param {ca.CAImage::PixelFormat} arg2
+ * @param {unsigned char} arg3
+ * @param {unsigned long} arg4
+ * @return {ca.CAImage::PixelFormat}
+ */
+convertRGBA8888ToFormat : function (
+char, 
+long, 
+pixelformat, 
+char, 
+long 
+)
+{
+    return 0;
+},
+
+/**
  * @method setAliasTexParameters
  */
 setAliasTexParameters : function (
@@ -859,6 +901,26 @@ bool
  * @return {char}
  */
 description : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method convertI8ToFormat
+ * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
+ * @param {ca.CAImage::PixelFormat} arg2
+ * @param {unsigned char} arg3
+ * @param {unsigned long} arg4
+ * @return {ca.CAImage::PixelFormat}
+ */
+convertI8ToFormat : function (
+char, 
+long, 
+pixelformat, 
+char, 
+long 
 )
 {
     return 0;
@@ -1003,6 +1065,26 @@ repremultipliedImageData : function (
 },
 
 /**
+ * @method convertAI88ToFormat
+ * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
+ * @param {ca.CAImage::PixelFormat} arg2
+ * @param {unsigned char} arg3
+ * @param {unsigned long} arg4
+ * @return {ca.CAImage::PixelFormat}
+ */
+convertAI88ToFormat : function (
+char, 
+long, 
+pixelformat, 
+char, 
+long 
+)
+{
+    return 0;
+},
+
+/**
  * @method detectFormat
  * @param {unsigned char} arg0
  * @param {unsigned long} arg1
@@ -1048,6 +1130,26 @@ long
 )
 {
     return false;
+},
+
+/**
+ * @method convertRGB888ToFormat
+ * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
+ * @param {ca.CAImage::PixelFormat} arg2
+ * @param {unsigned char} arg3
+ * @param {unsigned long} arg4
+ * @return {ca.CAImage::PixelFormat}
+ */
+convertRGB888ToFormat : function (
+char, 
+long, 
+pixelformat, 
+char, 
+long 
+)
+{
+    return 0;
 },
 
 /**
@@ -4614,14 +4716,6 @@ CALabel : function (
 ca.CAApplication = {
 
 /**
- * @method setDefaultValues
- */
-setDefaultValues : function (
-)
-{
-},
-
-/**
  * @method setCrossAppCCLogNotification
  * @param {bool} arg0
  */
@@ -4790,13 +4884,11 @@ cawindow
 },
 
 /**
- * @method getNotificationView
- * @return {ca.CAView}
+ * @method setDefaultValues
  */
-getNotificationView : function (
+setDefaultValues : function (
 )
 {
-    return ca.CAView;
 },
 
 /**
@@ -5209,16 +5301,6 @@ getVisibleSize : function (
  */
 setTouchDispatcher : function (
 catouchdispatcher 
-)
-{
-},
-
-/**
- * @method setNotificationView
- * @param {ca.CAView} arg0
- */
-setNotificationView : function (
-caview 
 )
 {
 },
@@ -6393,6 +6475,16 @@ getTitleView : function (
 },
 
 /**
+ * @method isEnabledShadow
+ * @return {bool}
+ */
+isEnabledShadow : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setTitleView
  * @param {ca.CAView} arg0
  */
@@ -6430,6 +6522,16 @@ getLeftButtonItems : function (
  */
 setTitleViewImage : function (
 caimage 
+)
+{
+},
+
+/**
+ * @method setEnabledShadow
+ * @param {bool} arg0
+ */
+setEnabledShadow : function (
+bool 
 )
 {
 },
@@ -6601,11 +6703,31 @@ cacolor4b
 },
 
 /**
+ * @method isEnabledShadow
+ * @return {bool}
+ */
+isEnabledShadow : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setButtonColor
  * @param {color4b_object} arg0
  */
 setButtonColor : function (
 cacolor4b 
+)
+{
+},
+
+/**
+ * @method setEnabledShadow
+ * @param {bool} arg0
+ */
+setEnabledShadow : function (
+bool 
 )
 {
 },
@@ -6674,6 +6796,16 @@ getButtonColor : function (
 )
 {
     return ca.CAColor4B;
+},
+
+/**
+ * @method updateClearance
+ * @param {int} arg0
+ */
+updateClearance : function (
+int 
+)
+{
 },
 
 /**
@@ -6980,6 +7112,16 @@ getSelectedIndicatorImage : function (
 )
 {
     return ca.CAImage;
+},
+
+/**
+ * @method updateClearance
+ * @param {int} arg0
+ */
+updateClearance : function (
+int 
+)
+{
 },
 
 /**
@@ -8539,6 +8681,16 @@ bool
 },
 
 /**
+ * @method setNavigationBarEnabledShadow
+ * @param {bool} arg0
+ */
+setNavigationBarEnabledShadow : function (
+bool 
+)
+{
+},
+
+/**
  * @method replaceViewController
  * @param {ca.CAViewController} arg0
  * @param {bool} arg1
@@ -8568,6 +8720,16 @@ getNavigationBarGoBackBarButtonItem : function (
 )
 {
     return ca.CABarButtonItem;
+},
+
+/**
+ * @method isNavigationBarEnabledShadow
+ * @return {bool}
+ */
+isNavigationBarEnabledShadow : function (
+)
+{
+    return false;
 },
 
 /**
@@ -9087,16 +9249,6 @@ bool
 },
 
 /**
- * @method getModalViewController
- * @return {ca.CAViewController}
- */
-getModalViewController : function (
-)
-{
-    return ca.CAViewController;
-},
-
-/**
  * @method getRootViewController
  * @return {ca.CAViewController}
  */
@@ -9107,21 +9259,13 @@ getRootViewController : function (
 },
 
 /**
- * @method onExitTransitionDidStart
+ * @method getModalViewController
+ * @return {ca.CAViewController}
  */
-onExitTransitionDidStart : function (
+getModalViewController : function (
 )
 {
-},
-
-/**
- * @method getDefaultCamera
- * @return {ca.CACamera}
- */
-getDefaultCamera : function (
-)
-{
-    return ca.CACamera;
+    return ca.CAViewController;
 },
 
 /**
@@ -9135,11 +9279,13 @@ caviewcontroller
 },
 
 /**
- * @method onEnterTransitionDidFinish
+ * @method getDefaultCamera
+ * @return {ca.CACamera}
  */
-onEnterTransitionDidFinish : function (
+getDefaultCamera : function (
 )
 {
+    return ca.CACamera;
 },
 
 /**
@@ -9545,6 +9691,16 @@ int,
 int,
 pixelformat,
 int 
+)
+{
+    return ca.CARenderImage;
+},
+
+/**
+ * @method printscreen
+ * @return {ca.CARenderImage}
+ */
+printscreen : function (
 )
 {
     return ca.CARenderImage;
@@ -16384,6 +16540,16 @@ onExitTransitionDidStart : function (
 },
 
 /**
+ * @method setTime
+ * @param {long} arg0
+ */
+setTime : function (
+long 
+)
+{
+},
+
+/**
  * @method setDate
  * @param {int} arg0
  * @param {int} arg1
@@ -17511,7 +17677,19 @@ destroyAllInstance : function (
 },
 
 /**
- * @method SendRequest
+ * @method getInstance
+ * @param {long} arg0
+ * @return {ca.CAHttpClient}
+ */
+getInstance : function (
+long 
+)
+{
+    return ca.CAHttpClient;
+},
+
+/**
+ * @method uploadFile
  * @param {String} arg0
  * @param {map_object} arg1
  * @param {String} arg2
@@ -17524,7 +17702,7 @@ destroyAllInstance : function (
  * @param {String} arg9
  * @return {bool}
  */
-SendRequest : function (
+uploadFile : function (
 str, 
 map, 
 str, 
@@ -17538,18 +17716,6 @@ str
 )
 {
     return false;
-},
-
-/**
- * @method getInstance
- * @param {long} arg0
- * @return {ca.CAHttpClient}
- */
-getInstance : function (
-long 
-)
-{
-    return ca.CAHttpClient;
 },
 
 };
@@ -18911,24 +19077,6 @@ dpoint
 },
 
 /**
- * @method onEnter
- */
-onEnter : function (
-)
-{
-},
-
-/**
- * @method getViewToSuperviewTransform
- * @return {ca.Mat4}
- */
-getViewToSuperviewTransform : function (
-)
-{
-    return ca.Mat4;
-},
-
-/**
  * @method getActionByTag
  * @param {int} arg0
  * @return {ca.Action}
@@ -18996,14 +19144,6 @@ getScaleZ : function (
 )
 {
     return 0;
-},
-
-/**
- * @method onExit
- */
-onExit : function (
-)
-{
 },
 
 /**
