@@ -10,7 +10,7 @@ class CC_DLL CAKeypadDispatcher : public CAObject
 {
 public:
     
-    enum class KeypadMSGType
+    enum class KeypadMSGType : int
     {
         BackClicked = 1,
         MenuClicked,
