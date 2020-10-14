@@ -620,7 +620,6 @@ void CAWaterfallView::update(float dt)
 
 void CAWaterfallView::visitEve()
 {
-    CAScrollView::visitEve();
     if (m_bLoadData)
     {
         m_bLoadData = false;
@@ -658,6 +657,7 @@ void CAWaterfallView::visitEve()
             this->startDeaccelerateScroll();
         }
     }
+    CAScrollView::visitEve();
 }
 
 float CAWaterfallView::maxSpeed(float dt)

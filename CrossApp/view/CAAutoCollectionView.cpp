@@ -949,7 +949,6 @@ void CAAutoCollectionView::update(float dt)
 
 void CAAutoCollectionView::visitEve()
 {
-    CAScrollView::visitEve();
     if (m_bLoadData)
     {
         m_bLoadData = false;
@@ -1000,6 +999,7 @@ void CAAutoCollectionView::visitEve()
             this->startDeaccelerateScroll();
         }
     }
+    CAScrollView::visitEve();
 }
 
 float CAAutoCollectionView::maxSpeed(float dt)

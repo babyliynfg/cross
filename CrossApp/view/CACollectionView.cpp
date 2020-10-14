@@ -671,7 +671,6 @@ void CACollectionView::update(float dt)
 
 void CACollectionView::visitEve()
 {
-    CAScrollView::visitEve();
     if (m_bLoadData)
     {
         m_bLoadData = false;
@@ -830,6 +829,7 @@ void CACollectionView::visitEve()
             this->startDeaccelerateScroll();
         }
     }
+    CAScrollView::visitEve();
 }
 
 float CACollectionView::maxSpeed(float dt)
