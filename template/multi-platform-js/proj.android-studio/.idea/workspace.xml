@@ -2,9 +2,430 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="949214ce-feb3-41d1-9ab6-074e1540fb23" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/libs/lint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Classes/AppDelegate.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Classes/AppDelegate.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/MacOS/CrossApp模拟器" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/PkgInfo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Resources/AppIcon.icns" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Resources/Assets.car" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Resources/en.lproj/InfoPlist.strings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Resources/en.lproj/MainMenu.nib" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Resources/script/jsb.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Resources/script/jsb_boot.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Resources/script/jsb_crossapp.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/Resources/script/jsb_prepare.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/CrossApp模拟器.app/Contents/_CodeSignature/CodeResources" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/monster_12000.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/monster_12000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-19.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/animation/npc_382-9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/AVPlayer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/AlertView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Animation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Camera.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Checkbox.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Clip.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/CollectionView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/FlashView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/GifView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/HelloWorld.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/ImageView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Label.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/ListView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/PageControl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/PageView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Painting.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/PickerView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Progress.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Render.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Scale9ImageView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/ScrollView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/SegmentedControl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Stepper.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Switch.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Switch_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/Switch_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/TabBar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/TableView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/TextField.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/TextView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/WebView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/abc.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/about_btn1_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/about_btn1_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/about_btn2_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/about_btn2_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/about_btn3_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/about_btn3_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/about_head_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/avatar_bg_70.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/button_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/button_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/game_title.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/gifview1.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/h1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/heart1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/heart2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/ic_category_list.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/indicator1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/indicator2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/indicatorView.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/navbg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/pagecontrol_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/pagecontrol_selected.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/play.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/preview.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/search_btn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/seg1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/seg2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/slider.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/spark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/start.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/start.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/stepper_dec_h1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/stepper_dec_n1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/stepper_divider1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/stepper_inc_h1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/stepper_inc_n1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/stop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/swfWK.swf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/switch_p.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/tab_image_btn_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/tab_image_btn_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/tab_mine_btn_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/tab_mine_btn_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/tab_news_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/tab_news_btn_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/image/tab_news_btn_up.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/information.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/AVPlayerViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ActivityIndicatorViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/AlertViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/AutoCollectionViewHorizontalTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/AutoCollectionViewVerticalTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ButtonTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/CheckboxTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ClipViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/CollectionViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/DrawViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/GifViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ImagePickerControllerTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ImageViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/LabelTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ListViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/PageControlTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/PageViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/PickerViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ProgressTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/RenderImageTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/Scale9ImageViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ScrollViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/SegmentedControlTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/SliderTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/StepperTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/SwitchTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/TabBarTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/TableViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/TextFieldTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/TextViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/ViewAnimationTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/WaterfallViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/Control/WebViewTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/FirstViewController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/MenuViewController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/MyWebViewController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/require.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/js/rootwindow.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/r/HelloWorld.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/script/jsb.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/script/jsb_boot.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/script/jsb_crossapp.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/script/jsb_prepare.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/GreyDots.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/WhiteDots.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/bg_badge.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/btn_left_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/btn_right_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/btn_rounded_disabled.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/btn_rounded_highlighted.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/btn_rounded_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/btn_square_disabled.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/btn_square_highlighted.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/btn_square_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/cell_btn_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/checkbox1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/checkbox1_r.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/checkbox2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/checkbox2_r.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/clear_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/grayArrow_footer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/grayArrow_header.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/indicator.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/loading_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/loading_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/navigation_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/page_h.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/page_n.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/page_rect_h.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/page_rect_n.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/page_round_h.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/page_round_n.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/progress_tint.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/progress_track.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/segmented_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/segmented_selected.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/slider_indicator.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/slider_max_track.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/slider_min_track.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/stepper_dec_h.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/stepper_dec_n.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/stepper_inc_h.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/stepper_inc_n.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/stepper_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/stepper_selected.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/switch_indicator.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/switch_indicator_r.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/switch_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/switch_off_r.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/switch_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/switch_on_r.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/tabBar_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/tabBar_selected_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/tabBar_selected_indicator.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/tabbar_background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/tabbar_background1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/textField_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/source_material/theme.style" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/Resources/test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/fileContent/fileContent.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/taskHistory/taskHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/taskHistory/taskHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/5.0/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/5.0/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/5.0/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/5.0/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/5.0/taskHistory/taskHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/5.0/taskHistory/taskHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/6.5/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/6.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/6.5/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/checksums/md5-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/lint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/java/com/cross/myapplication/HelloCpp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/jni/Android.mk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/jni/Application.mk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/jni/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/drawable-hdpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/drawable-ldpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/drawable-mdpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/drawable-xhdpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/drawable-xhdpi/icon_return_clicked.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/drawable-xxhdpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/drawable-xxxhdpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/layout/ac_zbar_finder.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/layout/main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/MyApplication/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/import-summary.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/local.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/.classpath" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/.cproject" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/.project" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/.settings/org.eclipse.cdt.codan.core.prefs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/.settings/org.eclipse.cdt.core.prefs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/.settings/org.eclipse.ltk.core.refactoring.prefs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/ant.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/build.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/build_native.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/jni/Android.mk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/jni/Application.mk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/jni/hellocpp/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/libs/armeabi/libCrossApp_cpp.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/lint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/proguard-project.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/project.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/res/drawable-hdpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/res/drawable-ldpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/res/drawable-mdpi/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android/src/org/CrossApp/hellocpp/HelloCpp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/AppController.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/AppController.mm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/CrossApp.xib" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/120x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/24.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/28.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/29x1-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/29x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/29x2-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/29x2-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/29x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/29x3-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/29x3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/40x1-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/40x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/40x2-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/40x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/40x3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/50x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/50x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/57x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/57x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/60x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/60x3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/72x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/72x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/76x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/76x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/86.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/98.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Images.xcassets/AppIcon.appiconset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Prefix.pch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/RootViewController.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/RootViewController.mm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/Test-js.xcodeproj/project.pbxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/120x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/24.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/28.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/29x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/29x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/29x3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/40x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/40x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/40x3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/50x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/50x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/57x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/57x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/60x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/60x3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/72x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/72x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/76x1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/76x2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/86.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/icon/98.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.ios/main.m" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.mac/AppController.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.mac/AppController.mm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.mac/Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.mac/Prefix.pch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.mac/Test-js.xcodeproj/project.pbxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.mac/en.lproj/InfoPlist.strings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.mac/en.lproj/MainMenu.xib" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.mac/main.m" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.win32/HelloJavacript.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.win32/HelloJavacript.vcxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.win32/HelloJavacript.vcxproj.filters" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.win32/Test-js.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.win32/Test-js.vcxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.win32/Test-js.vcxproj.filters" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.win32/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.win32/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/Test_JS-proj.android-studio.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/Test_JS-proj.android-studio.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileChanges/last-build.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.10.1/fileChanges/last-build.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/fileContent/fileContent.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/javaCompile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/taskJars.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS2/proj.android-studio/.gradle/4.4.1/javaCompile/taskJars.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/taskHistory/taskHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/taskHistory/taskHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multi-platform-js-proj.android-studio.iml" beforeDir="false" afterPath="$PROJECT_DIR$/multi-platform-js-proj.android-studio.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,6 +433,11 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="6ba8d2d77d93" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -19,64 +445,22 @@
       </state>
     </system>
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-536586544">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="bat" value="1" />
-          <entry key="gradle" value="6" />
-          <entry key="gradlew" value="1" />
-          <entry key="iml" value="5" />
-          <entry key="mk" value="4" />
-          <entry key="properties" value="8" />
-          <entry key="txt" value="1" />
-          <entry key="xml" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Groovy" value="6" />
-          <entry key="IDEA_MODULE" value="5" />
-          <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Properties" value="8" />
-          <entry key="XML" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="gradle" value="3" />
-          <entry key="mk" value="4" />
-          <entry key="properties" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Groovy" value="3" />
-          <entry key="PLAIN_TEXT" value="4" />
-          <entry key="Properties" value="2" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gradle.properties">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="20" selection-end-line="27" />
+            <state relative-caret-position="345">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
             </state>
           </provider>
         </entry>
@@ -84,8 +468,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="41" column="5" selection-end-line="47" />
+            <state relative-caret-position="240">
+              <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -100,24 +484,32 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings.gradle">
+        <entry file="file://$PROJECT_DIR$/test/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="460">
+              <caret line="60" selection-start-line="60" selection-end-line="60" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/src/main/jni/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/multi-platform-js-proj.android-studio.iml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/local.properties">
+        <entry file="file://$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" selection-start-line="7" selection-end-line="9" />
+            <state relative-caret-position="315">
+              <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -125,23 +517,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/src/main/jni/Android.mk">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="33" selection-end-line="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" selection-end-line="6" />
+            <state relative-caret-position="285">
+              <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/test.iml">
+        <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gradlew">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
@@ -150,31 +542,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
-  <component name="GradleLocalSettings">
-    <option name="projectSyncType">
-      <map>
-        <entry key="$PROJECT_DIR$/../../../projects/market_release/proj.android-studio" value="PREVIEW" />
-      </map>
-    </option>
-  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/local.properties" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
-        <option value="$PROJECT_DIR$/test/build.gradle" />
         <option value="$PROJECT_DIR$/test/src/main/jni/Application.mk" />
-        <option value="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/test/src/main/jni/Android.mk" />
+        <option value="$PROJECT_DIR$/local.properties" />
+        <option value="$PROJECT_DIR$/gradle.properties" />
+        <option value="$PROJECT_DIR$/test/build.gradle" />
+        <option value="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="262" />
-    <option name="y" value="143" />
+    <option name="x" value="228" />
+    <option name="y" value="43" />
     <option name="width" value="1651" />
-    <option name="height" value="976" />
+    <option name="height" value="918" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -209,7 +595,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -252,7 +638,62 @@
               <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="org" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="org" type="462c0819:PsiDirectoryNode" />
+              <item name="CrossApp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="org" type="462c0819:PsiDirectoryNode" />
+              <item name="CrossApp" type="462c0819:PsiDirectoryNode" />
+              <item name="hellocpp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="jni" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="values" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -269,14 +710,16 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../android_adt/adt-bundle-mac/ASsdk" />
     <property name="device.picker.selection" value="510edc20" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -296,6 +739,7 @@
   </component>
   <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <method v="2">
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
@@ -369,51 +813,36 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="262" y="143" width="1651" height="976" extended-state="0" />
-    <editor active="true" />
+    <frame x="228" y="43" width="1651" height="918" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.32939714" />
-      <window_info id="Structure" side_tool="true" />
-      <window_info id="Build Variants" side_tool="true" />
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Resources Explorer" />
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Run" />
-      <window_info anchor="bottom" id="Logcat" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TODO" />
-      <window_info anchor="bottom" id="Android Profiler" />
-      <window_info anchor="bottom" id="Debug" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Build" visible="true" weight="0.32918552" />
-      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Gradle" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Palette&#9;" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.32939714" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Build Variants" order="4" side_tool="true" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Designer" order="6" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Run" order="0" />
+      <window_info anchor="bottom" id="Logcat" order="1" />
+      <window_info anchor="bottom" id="TODO" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="6" />
+      <window_info active="true" anchor="bottom" id="Build" order="7" visible="true" weight="0.3510896" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" />
+      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
     </layout>
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/proj.android-studio.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../CrossApp/proj.android-studio/proj.android-studio.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/proj.android-studio.iml" />
+    <entry file="file://$PROJECT_DIR$/../../../CrossApp/proj.android-studio/proj.android-studio.iml" />
     <entry file="file://$PROJECT_DIR$/../../../CrossApp/proj.android-studio/local.properties">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -423,16 +852,10 @@
     <entry file="file://$PROJECT_DIR$/import-summary.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/gradlew.bat">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradlew">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/multi-platform-js-proj.android-studio.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
@@ -444,25 +867,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="9" />
+        <state relative-caret-position="120">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradlew.bat">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradlew">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="20" selection-end-line="27" />
+        <state relative-caret-position="345">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="41" column="5" selection-end-line="47" />
+        <state relative-caret-position="240">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/src/main/jni/Android.mk">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -473,17 +938,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/jni/Android.mk">
+    <entry file="file://$PROJECT_DIR$/test/src/main/jni/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="33" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-end-line="6" />
+        <state relative-caret-position="375">
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
         </state>
       </provider>
     </entry>

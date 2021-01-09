@@ -6,6 +6,8 @@ android {
 
     defaultConfig {
         applicationId "org.CrossApp.test"
+        versionCode 1
+        versionName "1.0.0"
         minSdkVersion 15
         targetSdkVersion 19
         externalNativeBuild {
@@ -20,11 +22,33 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    signingConfigs {
+        config {
+            storeFile file('../../xxx.keystore')
+            storePassword 'xxxxxx'
+            keyAlias 'xxx'
+            keyPassword 'xxxxxx'
+        }
+    }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//            signingConfig signingConfigs.config
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//            signingConfig signingConfigs.config
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 
     externalNativeBuild {
@@ -36,12 +60,17 @@ android {
     sourceSets {
         main {
             jni.srcDirs = []
-            jniLibs.srcDirs = ['libs']
+            jniLibs.srcDirs = ['src/main/libs']
             assets.srcDirs = ['../../Resources']
         }
     }
 }
-
+repositories {
+    flatDir {
+        dirs 'src/main/libs'
+    }
+}
 dependencies {
+    implementation fileTree(dir: 'src/main/libs', include: ['*.aar', '*.jar'], exclude: [])
     implementation project(':proj.android-studio')
 }
