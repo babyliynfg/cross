@@ -162,7 +162,7 @@ ca.CAImageView.ScaleType.FitImageInside = 2;         //显示全部，不变形,
 ca.CAImageView.ScaleType.FitViewByHorizontal = 3;    //显示全部，不变形，横向适应图片
 ca.CAImageView.ScaleType.FitViewByVertical = 4;       //显示全部，不变形，纵横适应图片
 
-ca.CAKeypadDispatcher = {};
+
 ca.CAKeypadDispatcher.KeypadMSGType = {};
 ca.CAKeypadDispatcher.KeypadMSGType.BackClicked = 1;
 ca.CAKeypadDispatcher.KeypadMSGType.MenuClicked = 2;

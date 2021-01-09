@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.CrossApp.test"
+    package="org.CrossApp.hellocpp"
     >
 
     <!--<uses-sdk android:minSdkVersion="8"/>-->
