@@ -41,14 +41,14 @@
 #import <AppKit/NSSound.h>
 
 enum AudioSessionProperties {
-	kAudioSessionProperty_OtherAudioIsPlaying,
-	kAudioSessionProperty_AudioRoute	
+	kAudioSessionProperties_OtherAudioIsPlaying,
+	kAudioSessionProperties_AudioRoute	
 };
 #ifdef __cplusplus
 extern "C" {
 #endif	
 	
-extern OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData);    
+extern OSStatus MyAudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData);    
 
 #ifdef __cplusplus
 }
