@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">Test</string>
-    <string name="finderview_tag">The QR code can be scanned automatically by aligning it with the box</string>
-    <string name="finderview_scan">scan</string>
-
-</resources>
