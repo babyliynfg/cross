@@ -639,7 +639,6 @@ void CAListView::update(float dt)
 
 void CAListView::visitEve()
 {
-    CAScrollView::visitEve();
     if (m_bLoadData)
     {
         m_bLoadData = false;
@@ -676,6 +675,7 @@ void CAListView::visitEve()
             this->startDeaccelerateScroll();
         }
     }
+    CAScrollView::visitEve();
 }
 
 float CAListView::maxSpeed(float dt)

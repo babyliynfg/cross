@@ -551,7 +551,6 @@ void CATableView::update(float dt)
 
 void CATableView::visitEve()
 {
-    CAScrollView::visitEve();
     if (m_bLoadData)
     {
         m_bLoadData = false;
@@ -651,6 +650,7 @@ void CATableView::visitEve()
             this->startDeaccelerateScroll();
         }
     }
+    CAScrollView::visitEve();
 }
 
 unsigned int CATableView::getNumberOfSections()
