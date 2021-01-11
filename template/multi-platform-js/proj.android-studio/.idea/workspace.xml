@@ -1,7 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="949214ce-feb3-41d1-9ab6-074e1540fb23" name="Default Changelist" comment="" />
+    <list default="true" id="593d60f9-86bc-4adf-95be-86c7fbcd3c30" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/libs/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/fileContent/fileContent.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/javaCompile/classAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/javaCompile/jarAnalysis.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/javaCompile/javaCompile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/javaCompile/taskHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/javaCompile/taskJars.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/taskHistory/taskHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/4.4.1/taskHistory/taskHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/proj.android-studio.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-cpp/proj.android-studio/test/test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileContent/fileContent.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/lint.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/jni/Android.mk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/jni/Application.mk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/jni/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-hdpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-ldpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-mdpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hellocpp/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.gradle/" />
+    <ignored path="$PROJECT_DIR$/test/.externalNativeBuild/" />
+    <ignored path="$PROJECT_DIR$/test/build/generated/not_namespaced_r_class_sources/" />
+    <ignored path="$PROJECT_DIR$/test/build/generated/source/r/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/annotation_processor_list/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/apk_list/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/assets/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/blame/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/build-info/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/builds/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/bundle_manifest/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/check-manifest/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/check_manifest_result/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/classes/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/compatible_screen_manifest/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/dex/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/external_libs_dex/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/incremental/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/incremental-classes/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/incremental-runtime-classes/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/incremental-verifier/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/instant-run-apk/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/instant-run-resources/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/instant_app_manifest/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/instant_run_merged_manifests/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/javaPrecompile/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/javac/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/jniLibs/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/lint_jar/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/manifest-checker/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/manifests/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/merged_assets/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/merged_manifests/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/metadata_feature_manifest/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/ndkBuild/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/prebuild/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/processed_res/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/reload-dex/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/res/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/resources/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/rs/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/shader_assets/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/shaders/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/signing_config/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/split-apk/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/splits-support/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/symbols/" />
+    <ignored path="$PROJECT_DIR$/test/build/intermediates/transforms/" />
+    <ignored path="$PROJECT_DIR$/test/build/outputs/" />
+    <ignored path="$PROJECT_DIR$/test/build/tmp/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,10 +119,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="6ba8d2d77d93" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="emulator-5554" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -23,56 +132,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gradle.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/src/main/jni/Application.mk">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="5" selection-end-line="13" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-manifest" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/src/main/jni/main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+            <state relative-caret-position="405">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
             </state>
           </provider>
         </entry>
@@ -80,20 +143,36 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="300">
+              <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="44" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="24" column="49" lean-forward="true" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/src/main/jni/Android.mk">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+            <state relative-caret-position="345">
+              <caret line="23" column="17" lean-forward="true" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -103,6 +182,24 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
               <caret line="6" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/local.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
@@ -120,49 +217,19 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
-        <option value="$PROJECT_DIR$/test/src/main/jni/Application.mk" />
-        <option value="$PROJECT_DIR$/test/src/main/jni/Android.mk" />
         <option value="$PROJECT_DIR$/local.properties" />
         <option value="$PROJECT_DIR$/gradle.properties" />
         <option value="$PROJECT_DIR$/test/build.gradle" />
         <option value="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/test/src/main/libs/lint.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="228" />
-    <option name="y" value="43" />
-    <option name="width" value="1651" />
-    <option name="height" value="918" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State />
-          <State>
-            <id>Android</id>
-          </State>
-          <State>
-            <id>ComplianceLintAndroid</id>
-          </State>
-          <State>
-            <id>CorrectnessLintAndroid</id>
-          </State>
-          <State>
-            <id>LintAndroid</id>
-          </State>
-          <State>
-            <id>PerformanceLintAndroid</id>
-          </State>
-          <State>
-            <id>UsabilityLintAndroid</id>
-          </State>
-        </expanded-state>
-      </profile-state>
-    </entry>
+    <option name="x" value="563" />
+    <option name="y" value="30" />
+    <option name="width" value="1326" />
+    <option name="height" value="882" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -170,24 +237,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
               <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
-              <item name="wrapper" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
@@ -253,23 +308,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="jni" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="values" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -285,20 +323,19 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="android.project.structure.last.selected" value="SDK Location" />
-    <property name="android.project.structure.proportion" value="0.15" />
-    <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../android_adt/adt-bundle-mac/ASsdk" />
-    <property name="device.picker.selection" value="510edc20" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/test/src/main/libs" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/src/main/libs" />
+      <recent name="$PROJECT_DIR$/test/src/main" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -334,7 +371,7 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
-      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
@@ -379,36 +416,36 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="949214ce-feb3-41d1-9ab6-074e1540fb23" name="Default Changelist" comment="" />
-      <created>1555900448858</created>
+      <changelist id="593d60f9-86bc-4adf-95be-86c7fbcd3c30" name="Default Changelist" comment="" />
+      <created>1609828843625</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1555900448858</updated>
+      <updated>1609828843625</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="228" y="43" width="1651" height="918" extended-state="0" />
+    <frame x="563" y="30" width="1326" height="882" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Resources Explorer" />
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.32939714" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.4127726" />
       <window_info id="Structure" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info id="Build Variants" order="4" side_tool="true" />
-      <window_info id="Image Layers" order="5" />
-      <window_info id="Designer" order="6" />
+      <window_info id="Build Variants" order="3" side_tool="true" />
+      <window_info id="Image Layers" order="4" />
+      <window_info id="Designer" order="5" />
+      <window_info id="Resources Explorer" order="6" />
       <window_info id="Capture Tool" order="7" />
-      <window_info anchor="bottom" id="Run" order="0" />
+      <window_info id="Favorites" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="0" weight="0.32934928" />
       <window_info anchor="bottom" id="Logcat" order="1" />
       <window_info anchor="bottom" id="TODO" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="4" />
-      <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info active="true" anchor="bottom" id="Build" order="7" visible="true" weight="0.3510896" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" />
+      <window_info anchor="bottom" id="Android Profiler" order="3" />
+      <window_info anchor="bottom" id="Debug" order="4" />
+      <window_info anchor="bottom" id="Terminal" order="5" />
+      <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Build" order="8" visible="true" weight="0.27974683" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
@@ -417,22 +454,95 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/proj.android-studio.iml" />
-    <entry file="file://$PROJECT_DIR$/../../../CrossApp/proj.android-studio/proj.android-studio.iml" />
-    <entry file="file://$PROJECT_DIR$/../../../CrossApp/proj.android-studio/local.properties">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/test/src/main/res/drawable-ldpi/icon.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../CrossApp/proj.android-studio/project.properties">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/test/src/main/res/drawable-hdpi/icon.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/src/main/res/drawable-mdpi/icon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Classes/AppDelegate.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="48" column="45" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Test_JS2/Classes/AppDelegate.cpp" />
+    <entry file="file://$PROJECT_DIR$/Test_JS-proj.android-studio.iml" />
     <entry file="file://$PROJECT_DIR$/import-summary.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/multi-platform-js-proj.android-studio.iml">
+    <entry file="file://$PROJECT_DIR$/gradlew.bat">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/lint.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Test_JS2/proj.android-studio/MyApplication/build.gradle" />
+    <entry file="file://$PROJECT_DIR$/test/src/main/jni/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/src/main/jni/Application.mk">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/src/main/libs/lint.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" selection-start-column="11" selection-end-column="11" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/test.iml">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="44" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
@@ -443,133 +553,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradlew.bat">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/gradlew">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/gradle.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        <state relative-caret-position="360">
+          <caret line="24" column="49" lean-forward="true" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
         </state>
       </provider>
       <provider editor-type-id="android-manifest" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/jni/Android.mk">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/test/src/main/jni/Android.mk">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+        <state relative-caret-position="345">
+          <caret line="23" column="17" lean-forward="true" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/jni/Application.mk">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="5" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/jni/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
