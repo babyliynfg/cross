@@ -1,66 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fa0727e9-4aa7-4ffe-a510-48ec3bcc12b4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/test/src/main/libs/lint.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileContent/fileContent.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/classAnalysis.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/jarAnalysis.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/javaCompile.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/taskHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/javaCompile/taskJars.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/taskHistory/taskHistory.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/taskHistory/taskHistory.lock" beforeDir="false" />
+    <list default="true" id="b3367e10-2e98-4334-a04f-643a9ff21084" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/libraries/Gradle____local_aars____Users_guangtou_Desktop_GTcontent_GT_project_cross_CrossApp_proj_android_studio_libs_tbs_sdk_thirdapp_v2_5_0_1031_36880_sharewithdownload_obfs_20161107_154437_jar_unspecified_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/lint.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/jni/Android.mk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/jni/Application.mk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/jni/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/libs/lint.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/res/drawable-hdpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/res/drawable-ldpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/res/drawable-mdpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test/proj.android-studio/test/test.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/jni/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/jni/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/jni/Application.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/jni/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/jni/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/libs/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/libs/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/res/drawable-hdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/res/drawable-hdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/res/drawable-ldpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/res/drawable-ldpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/res/drawable-mdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/res/drawable-mdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/hellocpp/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio/test/test.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars____Users_guangtou_Desktop_GTcontent_GT_project_cross_CrossApp_proj_android_studio_libs_tbs_sdk_thirdapp_v2_5_0_1031_36880_sharewithdownload_obfs_20161107_154437_jar_unspecified_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proj.android-studio.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/test/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/fileContent/fileContent.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/jni/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/jni/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/jni/Application.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/jni/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/jni/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/libs/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/libs/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/res/drawable-hdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-hdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/res/drawable-ldpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-ldpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/res/drawable-mdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/res/drawable-mdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hellocpp/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/lint.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/jni/Android.mk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/jni/Application.mk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/jni/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/res/drawable-hdpi/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/res/drawable-ldpi/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/res/drawable-mdpi/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/java/org/CrossApp/hellocpp/HelloCpp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/jni/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/jni/Android.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/jni/Application.mk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/jni/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/jni/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/libs/lint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/libs/lint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/res/drawable-hdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/res/drawable-hdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/res/drawable-ldpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/res/drawable-ldpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/res/drawable-mdpi/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/res/drawable-mdpi/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/test/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../multi-platform-js/proj.android-studio/hellocpp/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,124 +106,36 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="isMigrated" value="true" />
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="emulator-5554" />
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$/../../../samples/Test_JS/proj.android-studio">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
-  </component>
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$/test">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proj.android-studio" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proj.android-studio" type="f1a62948:ProjectNode" />
-                <item name="test" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="proj.android-studio" type="f1a62948:ProjectNode" />
-                <item name="test" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
+        <projects_view />
       </state>
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.gradle">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hellocpp/hellocpp.iml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/src/main/jni/Android.mk">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/src/main/jni/Application.mk">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/src/main/jni/main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/test.iml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/lint.xml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="76" selection-start-line="76" selection-end-line="76" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-manifest" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/src/main/libs/lint.xml">
+        <entry file="file://$PROJECT_DIR$/hellocpp/build.gradle">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
@@ -195,25 +144,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/test/src/main/jni/Android.mk" />
-        <option value="$PROJECT_DIR$/../proj.android/jni/Android.mk" />
-        <option value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
-        <option value="$PROJECT_DIR$/local.properties" />
-        <option value="$PROJECT_DIR$/gradle.properties" />
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/test/build.gradle" />
-        <option value="$PROJECT_DIR$/test/src/main/AndroidManifest.xml" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="124" />
-    <option name="y" value="47" />
-    <option name="width" value="1535" />
-    <option name="height" value="933" />
+    <option name="x" value="20" />
+    <option name="y" value="195" />
+    <option name="width" value="1401" />
+    <option name="height" value="734" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -221,167 +156,31 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="proj.android-studio" type="1abcf292:AndroidViewProjectNode" />
-              <item name="proj.android-studio-proj.android-studio" type="feadf853:AndroidModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="jni" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
               <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
               <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="gradle" type="462c0819:PsiDirectoryNode" />
-              <item name="wrapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="CrossApp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="CrossApp" type="462c0819:PsiDirectoryNode" />
-              <item name="hellocpp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="jni" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="proj.android-studio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proj.android-studio" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="hellocpp" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="android.project.structure.last.selected" value="SDK Location" />
-    <property name="android.project.structure.proportion" value="0.15" />
-    <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../android_adt/adt-bundle-mac/ASsdk" />
-    <property name="device.picker.selection" value="C7R4C16628006823" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/test/src/main" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
-    <property name="show.do.not.ask.upgrade.gradle.plugin" value="3.1.2" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/test/src/main" />
-    </key>
+    <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../sdk" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -396,15 +195,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="&lt;template&gt;" type="JUnit" default="true" selected="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-    </configuration>
-    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-    </configuration>
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -412,8 +202,8 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
-      <module name="test" />
+    <configuration name="hellocpp" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="hellocpp" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -426,7 +216,7 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
-      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
@@ -465,172 +255,61 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="TestNG">
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fa0727e9-4aa7-4ffe-a510-48ec3bcc12b4" name="Default" comment="" />
-      <created>1540362323347</created>
+      <changelist id="b3367e10-2e98-4334-a04f-643a9ff21084" name="Default Changelist" comment="" />
+      <created>1610428533672</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1540362323347</updated>
+      <updated>1610428533672</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="124" y="47" width="1535" height="933" extended-state="0" />
+    <frame x="20" y="195" width="1401" height="734" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983256" />
-      <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info id="Build Variants" order="3" side_tool="true" />
-      <window_info id="Image Layers" order="4" />
-      <window_info id="Designer" order="5" />
-      <window_info id="Captures" order="6" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info id="Resources Explorer" order="8" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Logcat" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info active="true" anchor="bottom" id="Build" order="11" visible="true" weight="0.33293697" />
-      <window_info anchor="bottom" id="Android Profiler" order="12" show_stripe_button="false" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Gradle" order="5" visible="true" weight="0.32953784" />
-      <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.3620309" />
+      <window_info id="Structure" side_tool="true" />
+      <window_info id="Build Variants" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Run" />
+      <window_info anchor="bottom" id="Logcat" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="TODO" />
+      <window_info anchor="bottom" id="Android Profiler" />
+      <window_info anchor="bottom" id="Debug" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Build" visible="true" weight="0.43146417" />
+      <window_info anchor="right" id="Device File Explorer" side_tool="true" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Gradle" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Palette&#9;" />
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../proj.android/jni/Application.mk">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../proj.android/jni/Android.mk">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="43" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/proj.android-studio.iml" />
-    <entry file="file://$PROJECT_DIR$/multi-platform-cpp-proj.android-studio.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/java/org/CrossApp/hellocpp/HelloCpp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/jni/Application.mk">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/jni/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test.iml">
+    <entry file="file://$PROJECT_DIR$/hellocpp/hellocpp.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/lint.xml">
+    <entry file="file://$PROJECT_DIR$/hellocpp/build.gradle">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="76" selection-start-line="76" selection-end-line="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/libs/lint.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/src/main/jni/Android.mk">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
     </entry>
   </component>
 </project>

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        applicationId "org.CrossApp.test"
+        applicationId "com.CrossApp.hellocpp"
         versionCode 1
         versionName "1.0.0"
         minSdkVersion 15

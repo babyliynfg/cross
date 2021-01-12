@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../../../CrossApp/proj.android-studio/CrossApp-proj.android-studio.iml" filepath="$PROJECT_DIR$/../../../CrossApp/proj.android-studio/CrossApp-proj.android-studio.iml" />
       <module fileurl="file://$PROJECT_DIR$/Test-proj.android-studio.iml" filepath="$PROJECT_DIR$/Test-proj.android-studio.iml" />
-      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hellocpp/hellocpp.iml" filepath="$PROJECT_DIR$/hellocpp/hellocpp.iml" />
     </modules>
   </component>
 </project>
