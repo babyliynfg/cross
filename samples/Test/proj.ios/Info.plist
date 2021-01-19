@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -31,6 +31,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>是否允许此App使用你的相机?</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>保存图片</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>是否允许此App使用你的相册？</string>
 	<key>UIAppFonts</key>

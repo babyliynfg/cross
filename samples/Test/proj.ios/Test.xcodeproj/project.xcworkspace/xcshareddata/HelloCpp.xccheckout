@@ -14,7 +14,7 @@
 		<string>http://git.oschina.net/liyuanfeng/CrossApp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>samples/Test/proj.ios/HelloCpp.xcodeproj</string>
+	<string>template/multi-platform-cpp/proj.ios/HelloCpp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>630594A0C3AF0041EB86DE5D805A5B25A32E1B5D</key>

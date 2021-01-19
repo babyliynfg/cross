@@ -586,7 +586,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/include/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"",
@@ -600,7 +600,6 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/include/ios\"";
-				VALID_ARCHS = "armv6 armv7 arm64";
 			};
 			name = Debug;
 		};
@@ -638,7 +637,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/include/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"",
@@ -652,7 +651,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/include/ios\"";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv6 armv7 arm64";
 			};
 			name = Release;
 		};
@@ -664,8 +662,8 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -677,9 +675,9 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
