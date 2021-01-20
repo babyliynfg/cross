@@ -34,8 +34,6 @@
 		B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */; };
 		B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
-		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
-		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -43,6 +41,7 @@
 		D6AE64771DADD74100E88AD0 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6AE64761DADD74100E88AD0 /* libiconv.tbd */; };
 		D6B1E7891F20609000723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7881F20609000723750 /* CoreMedia.framework */; };
 		D6B1E79C1F20B23C00723750 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E79B1F20B23C00723750 /* CoreImage.framework */; };
+		D6B601F225B7DA2F003F2F6A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B601E325B7D9CD003F2F6A /* libz.tbd */; };
 		D6E0A73E216B45E400E592D8 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E0A73D216B45E400E592D8 /* UserNotifications.framework */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
 		EB1818D819388001002856FF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D719388001002856FF /* AddressBook.framework */; };
@@ -130,6 +129,8 @@
 		D6B036EE1D9529A100388A90 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../extensions/video/SDL/prebuilt/ios/libSDL2.a; sourceTree = "<group>"; };
 		D6B1E7881F20609000723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D6B1E79B1F20B23C00723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		D6B601E325B7D9CD003F2F6A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		D6B601E725B7D9E5003F2F6A /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		D6E0A73D216B45E400E592D8 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB1818D719388001002856FF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -162,9 +163,8 @@
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
-				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
-				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
 				D6AE64771DADD74100E88AD0 /* libiconv.tbd in Frameworks */,
+				D6B601F225B7DA2F003F2F6A /* libz.tbd in Frameworks */,
 				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,6 +263,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B601E725B7D9E5003F2F6A /* libxml2.tbd */,
+				D6B601E325B7D9CD003F2F6A /* libz.tbd */,
 				D6E0A73D216B45E400E592D8 /* UserNotifications.framework */,
 				D6B1E79B1F20B23C00723750 /* CoreImage.framework */,
 				D6B1E7881F20609000723750 /* CoreMedia.framework */,
@@ -463,10 +465,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
+					"\"$(SRCROOT)/../../../CocosDenshion/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -509,10 +511,10 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
+					"\"$(SRCROOT)/../../../CocosDenshion/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

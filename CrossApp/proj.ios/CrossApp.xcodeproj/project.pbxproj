@@ -852,6 +852,7 @@
 		D6ADC74E1E56A78000750771 /* CANotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CANotificationCenter.h; sourceTree = "<group>"; };
 		D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 		D6B12EB21DC9C7D300944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/ios/libwebsockets.a; sourceTree = "<group>"; };
+		D6B601ED25B7DA1C003F2F6A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		D6C513271E691EA600B0BE19 /* CAColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAColor.cpp; sourceTree = "<group>"; };
 		D6C513281E691EA600B0BE19 /* CAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAColor.h; sourceTree = "<group>"; };
 		D6C7295D1EEE74740094B191 /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
@@ -925,10 +926,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D60E2237210AB3B900CDBB44 /* UserNotifications.framework in Frameworks */,
-				D644B3971F19FA1200E90A86 /* CoreMedia.framework in Frameworks */,
-				D644B3951F19FA0000E90A86 /* AVFoundation.framework in Frameworks */,
-				D6EB4B0A1F138B6100650417 /* AVKit.framework in Frameworks */,
 				D6B12EB31DC9C7D300944576 /* libwebsockets.a in Frameworks */,
 				D6B0368E1D95270200388A90 /* libcrypto.a in Frameworks */,
 				B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */,
@@ -937,6 +934,10 @@
 				B0621C021AC3C229005EBCA7 /* libwebp.a in Frameworks */,
 				B0621BFC1AC3C1FA005EBCA7 /* libpng.a in Frameworks */,
 				B0621BFA1AC3C1F0005EBCA7 /* libjpeg.a in Frameworks */,
+				D60E2237210AB3B900CDBB44 /* UserNotifications.framework in Frameworks */,
+				D644B3971F19FA1200E90A86 /* CoreMedia.framework in Frameworks */,
+				D6EB4B0A1F138B6100650417 /* AVKit.framework in Frameworks */,
+				D644B3951F19FA0000E90A86 /* AVFoundation.framework in Frameworks */,
 				1551A343158F2AB200E66CFE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -965,6 +966,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B601ED25B7DA1C003F2F6A /* libz.tbd */,
 				D60E2236210AB3B900CDBB44 /* UserNotifications.framework */,
 				D644B3961F19FA1200E90A86 /* CoreMedia.framework */,
 				D644B3941F19FA0000E90A86 /* AVFoundation.framework */,
@@ -2306,8 +2308,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
-					"\"$(SRCROOT)/../kazmath/include\"",
-					"\"$(SRCROOT)/../../CocosDenshion/include\"",
+					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
@@ -2316,8 +2317,8 @@
 					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
@@ -2345,8 +2346,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
-					"\"$(SRCROOT)/../kazmath/include\"",
-					"\"$(SRCROOT)/../../CocosDenshion/include\"",
+					"\"$(SDKROOT)/usr/include/libxml2\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/png/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/include/ios\"",
@@ -2355,8 +2355,8 @@
 					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/png/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
