@@ -277,6 +277,9 @@
 		D674DD001ECC4C2900D25BFC /* HttpCookie.h in Headers */ = {isa = PBXBuildFile; fileRef = D674DCFE1ECC4C2900D25BFC /* HttpCookie.h */; };
 		D67ECD761E5EBEC800C9CA49 /* CACheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D67ECD741E5EBEC800C9CA49 /* CACheckbox.cpp */; };
 		D67ECD771E5EBEC800C9CA49 /* CACheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = D67ECD751E5EBEC800C9CA49 /* CACheckbox.h */; };
+		D684C7F425BE72AE004DED1D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6023A25B7E4A9003F2F6A /* libz.tbd */; };
+		D684C7F525BE72B5004DED1D /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A71E4B091A007D9771 /* libcurl.tbd */; };
+		D684C7F625BE72BC004DED1D /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6023225B7E461003F2F6A /* libiconv.tbd */; };
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
 		D69B761D1E4AFE12007D9771 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69B75C31E4AFE12007D9771 /* CCBatchCommand.cpp */; };
 		D69B761E1E4AFE12007D9771 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B75C41E4AFE12007D9771 /* CCBatchCommand.h */; };
@@ -357,9 +360,6 @@
 		D69DA6921EE50BA300590961 /* CAFontProcesstor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D69DA6911EE50BA300590961 /* CAFontProcesstor.mm */; };
 		D6B0C6411D6587ED00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */; };
 		D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB51DC9C81500944576 /* libwebsockets.a */; };
-		D6B6021525B7E25C003F2F6A /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A71E4B091A007D9771 /* libcurl.tbd */; };
-		D6B6023325B7E461003F2F6A /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6023225B7E461003F2F6A /* libiconv.tbd */; };
-		D6B6023B25B7E4A9003F2F6A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6023A25B7E4A9003F2F6A /* libz.tbd */; };
 		D6C513241E6910C300B0BE19 /* CAColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6C513221E6910C300B0BE19 /* CAColor.cpp */; };
 		D6C513251E6910C300B0BE19 /* CAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = D6C513231E6910C300B0BE19 /* CAColor.h */; };
 		D6C729F91EEE748D0094B191 /* CAActivityIndicatorView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6C729C51EEE748D0094B191 /* CAActivityIndicatorView.cpp */; };
@@ -916,6 +916,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D684C7F625BE72BC004DED1D /* libiconv.tbd in Frameworks */,
+				D684C7F525BE72B5004DED1D /* libcurl.tbd in Frameworks */,
+				D684C7F425BE72AE004DED1D /* libz.tbd in Frameworks */,
 				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
 				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
@@ -930,9 +933,6 @@
 				D69B766B1E4B059B007D9771 /* OpenGL.framework in Frameworks */,
 				D69B76731E4B05C3007D9771 /* IOKit.framework in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
-				D6B6023325B7E461003F2F6A /* libiconv.tbd in Frameworks */,
-				D6B6023B25B7E4A9003F2F6A /* libz.tbd in Frameworks */,
-				D6B6021525B7E25C003F2F6A /* libcurl.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2218,6 +2218,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2235,8 +2236,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2260,6 +2261,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2271,8 +2273,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
@@ -2285,6 +2287,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/CrossApp.dst;
+				EXCLUDED_ARCHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2308,6 +2311,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
 				SDKROOT = macosx;
@@ -2323,6 +2327,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/CrossApp.dst;
+				EXCLUDED_ARCHS = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
@@ -2346,6 +2351,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
 				SDKROOT = macosx;
