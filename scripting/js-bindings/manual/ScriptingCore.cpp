@@ -367,9 +367,8 @@ void ScriptingCore::createGlobalContext()
     
     JSAutoCompartment ac(_cx, _global->get());
     
-    runScript("script/jsb_prepare.js");
+    runScript("script/jsb.js");
 
-    
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(_cx, *_global);

@@ -76,7 +76,7 @@ var PickerViewTest = ca.CAViewController.extend({
         //
         // this.pickerView.reloadAllComponents();
 
-        var dpv3 = ca.CADatePickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_NW_C(0.8, 0.5), ca.DVerticalLayout_T_H(200, 400)),ca.CADatePickerView.Mode.DateAndTime);
+        var dpv3 = ca.CADatePickerView.createWithLayout(ca.DLayout.set(ca.DHorizontalLayout_NW_C(0.8, 0.5), ca.DVerticalLayout_T_H(200, 400)),ca.CADatePickerView.Mode.Date);
         dpv3.setBackgroundImage(ca.CAImage.createWithColor4B(ca.CAColor4B.YELLOW));
         dpv3.setBackgroundImageForSelected(ca.CAImage.createWithColor4B(ca.CAColor4B.GREEN));
         this.getView().addSubview(dpv3);
