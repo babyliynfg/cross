@@ -695,7 +695,6 @@ void CAApplication::reset()
     // CrossApp specific data structures
     CAUserDefault::destroyInstance();
     CC_SAFE_RELEASE_NULL(m_pKeypadDispatcher);
-//    CC_SAFE_RELEASE_NULL(m_pNotificationCenter);
     
     ccDrawFree();
     
@@ -704,6 +703,11 @@ void CAApplication::reset()
     RenderState::finalize();
     
     destroyImageCache();
+    
+    if (m_obReset)
+    {
+        m_obReset();
+    }
 }
 
 void CAApplication::purgeApplication()
@@ -740,7 +744,6 @@ void CAApplication::restartApplication()
     RenderState::initialize();
     
     m_pImageCache = new (std::nothrow) CAImageCache();
-//    m_pNotificationCenter = new (std::nothrow) CANotificationCenter();
     // Reschedule for action manager
     m_pScheduler->scheduleUpdate(this->getActionManager(), CAScheduler::PRIORITY_SYSTEM, false);
     

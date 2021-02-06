@@ -83,6 +83,13 @@
 		D66F533C1ED8402300546E5E /* CAData.h in Headers */ = {isa = PBXBuildFile; fileRef = D66F533A1ED8402300546E5E /* CAData.h */; };
 		D69DA6991EE54F4E00590961 /* CAFontProcesstor.h in Headers */ = {isa = PBXBuildFile; fileRef = D69DA6981EE54F4E00590961 /* CAFontProcesstor.h */; };
 		D69DA69B1EE54F9B00590961 /* CAFontProcesstor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D69DA69A1EE54F9B00590961 /* CAFontProcesstor.mm */; };
+		D6A1234F25CD456D00A6E8B8 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6A1234725CD456D00A6E8B8 /* AssetsManager.cpp */; };
+		D6A1235025CD456D00A6E8B8 /* Downloader-curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6A1234925CD456D00A6E8B8 /* Downloader-curl.cpp */; };
+		D6A1235125CD456D00A6E8B8 /* Downloader-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A1234A25CD456D00A6E8B8 /* Downloader-curl.h */; };
+		D6A1235225CD456D00A6E8B8 /* IDownloaderImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A1234B25CD456D00A6E8B8 /* IDownloaderImpl.h */; };
+		D6A1235325CD456D00A6E8B8 /* Downloader.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A1234C25CD456D00A6E8B8 /* Downloader.h */; };
+		D6A1235425CD456D00A6E8B8 /* Downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6A1234D25CD456D00A6E8B8 /* Downloader.cpp */; };
+		D6A1235525CD456D00A6E8B8 /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A1234E25CD456D00A6E8B8 /* AssetsManager.h */; };
 		D6ADC5EF1E56A72800750771 /* CAViewAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC4381E56A72700750771 /* CAViewAnimation.cpp */; };
 		D6ADC5F01E56A72800750771 /* CAViewAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = D6ADC4391E56A72700750771 /* CAViewAnimation.h */; };
 		D6ADC5F11E56A72800750771 /* CAApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6ADC43B1E56A72700750771 /* CAApplication.cpp */; };
@@ -518,6 +525,13 @@
 		D66F533A1ED8402300546E5E /* CAData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAData.h; sourceTree = "<group>"; };
 		D69DA6981EE54F4E00590961 /* CAFontProcesstor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFontProcesstor.h; sourceTree = "<group>"; };
 		D69DA69A1EE54F9B00590961 /* CAFontProcesstor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAFontProcesstor.mm; sourceTree = "<group>"; };
+		D6A1234725CD456D00A6E8B8 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
+		D6A1234925CD456D00A6E8B8 /* Downloader-curl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Downloader-curl.cpp"; sourceTree = "<group>"; };
+		D6A1234A25CD456D00A6E8B8 /* Downloader-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Downloader-curl.h"; sourceTree = "<group>"; };
+		D6A1234B25CD456D00A6E8B8 /* IDownloaderImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDownloaderImpl.h; sourceTree = "<group>"; };
+		D6A1234C25CD456D00A6E8B8 /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
+		D6A1234D25CD456D00A6E8B8 /* Downloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Downloader.cpp; sourceTree = "<group>"; };
+		D6A1234E25CD456D00A6E8B8 /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
 		D6ADC4381E56A72700750771 /* CAViewAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAViewAnimation.cpp; sourceTree = "<group>"; };
 		D6ADC4391E56A72700750771 /* CAViewAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAViewAnimation.h; sourceTree = "<group>"; };
 		D6ADC43B1E56A72700750771 /* CAApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAApplication.cpp; sourceTree = "<group>"; };
@@ -1102,6 +1116,28 @@
 			path = apple;
 			sourceTree = "<group>";
 		};
+		D6A1234625CD456D00A6E8B8 /* assets-manager */ = {
+			isa = PBXGroup;
+			children = (
+				D6A1234825CD456D00A6E8B8 /* downloader */,
+				D6A1234725CD456D00A6E8B8 /* AssetsManager.cpp */,
+				D6A1234E25CD456D00A6E8B8 /* AssetsManager.h */,
+			);
+			path = "assets-manager";
+			sourceTree = "<group>";
+		};
+		D6A1234825CD456D00A6E8B8 /* downloader */ = {
+			isa = PBXGroup;
+			children = (
+				D6A1234925CD456D00A6E8B8 /* Downloader-curl.cpp */,
+				D6A1234A25CD456D00A6E8B8 /* Downloader-curl.h */,
+				D6A1234B25CD456D00A6E8B8 /* IDownloaderImpl.h */,
+				D6A1234C25CD456D00A6E8B8 /* Downloader.h */,
+				D6A1234D25CD456D00A6E8B8 /* Downloader.cpp */,
+			);
+			path = downloader;
+			sourceTree = "<group>";
+		};
 		D6ADC4351E56A72700750771 /* animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1347,6 +1383,7 @@
 		D6ADC4EA1E56A72800750771 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				D6A1234625CD456D00A6E8B8 /* assets-manager */,
 				D6ADC4EB1E56A72800750771 /* DownloadManager.cpp */,
 				D6ADC4EC1E56A72800750771 /* DownloadManager.h */,
 				D6ADC4ED1E56A72800750771 /* HttpClient.cpp */,
@@ -1787,12 +1824,14 @@
 				D6ADC6321E56A72800750771 /* CAStepper.h in Headers */,
 				D6ADC6E01E56A72800750771 /* deelx.h in Headers */,
 				1551A71B158F2ADE00E66CFE /* CACommon.h in Headers */,
+				D6A1235225CD456D00A6E8B8 /* IDownloaderImpl.h in Headers */,
 				D6ADC6C01E56A72800750771 /* CCTechnique.h in Headers */,
 				D6ADC6CE1E56A72800750771 /* CAProfiling.h in Headers */,
 				D6C729B01EEE74740094B191 /* CAPullToRefreshView.h in Headers */,
 				D6ADC64C1E56A72800750771 /* CGActionCamera.h in Headers */,
 				1551A722158F2ADE00E66CFE /* CCPlatformConfig.h in Headers */,
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
+				D6A1235125CD456D00A6E8B8 /* Downloader-curl.h in Headers */,
 				D6ADC6741E56A72800750771 /* CAImageCube.h in Headers */,
 				D6ADC67C1E56A72800750771 /* gif_lib_private.h in Headers */,
 				D6ADC6B71E56A72800750771 /* CCRenderCommand.h in Headers */,
@@ -1899,6 +1938,7 @@
 				D6ADC62E1E56A72800750771 /* CASegmentedControl.h in Headers */,
 				D6ADC6F31E56A72800750771 /* LocalStorage.h in Headers */,
 				1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */,
+				D6A1235525CD456D00A6E8B8 /* AssetsManager.h in Headers */,
 				D6ADC6601E56A72800750771 /* CGTweenFunction.h in Headers */,
 				D6ADC6831E56A72800750771 /* CAMat4.h in Headers */,
 				D6ADC66C1E56A72800750771 /* CGSpriteFrameCache.h in Headers */,
@@ -1975,6 +2015,7 @@
 				D6ADC6061E56A72800750771 /* CAObject.h in Headers */,
 				0460ED2F1957019600D13001 /* CCEGLView.h in Headers */,
 				D6C729A21EEE74740094B191 /* CADrawView.h in Headers */,
+				D6A1235325CD456D00A6E8B8 /* Downloader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2098,6 +2139,7 @@
 				D6ADC6591E56A72800750771 /* CGActionTween.cpp in Sources */,
 				D6ADC6761E56A72800750771 /* egif_lib.c in Sources */,
 				D6C729A11EEE74740094B191 /* CADrawView.cpp in Sources */,
+				D6A1234F25CD456D00A6E8B8 /* AssetsManager.cpp in Sources */,
 				D6ADC6BD1E56A72800750771 /* ccShaders.cpp in Sources */,
 				D6ADC6051E56A72800750771 /* CAObject.cpp in Sources */,
 				D6ADC6471E56A72800750771 /* CATouchDispatcher.cpp in Sources */,
@@ -2127,6 +2169,7 @@
 				D6ADC67F1E56A72800750771 /* quantize.c in Sources */,
 				D6ADC61D1E56A72800750771 /* CACalendar.cpp in Sources */,
 				1AC6CE8816B910CD00330EFD /* CAFileUtils.cpp in Sources */,
+				D6A1235025CD456D00A6E8B8 /* Downloader-curl.cpp in Sources */,
 				D6ADC6B41E56A72800750771 /* CCQuadCommand.cpp in Sources */,
 				D6ADC6071E56A72800750771 /* CAPoint.cpp in Sources */,
 				D6ADC6551E56A72800750771 /* CGActionManager.cpp in Sources */,
@@ -2173,6 +2216,7 @@
 				D6ADC6631E56A72800750771 /* CGProgressTimer.cpp in Sources */,
 				D6ADC6391E56A72800750771 /* CAFont.cpp in Sources */,
 				D6C729A71EEE74740094B191 /* CALabel.cpp in Sources */,
+				D6A1235425CD456D00A6E8B8 /* Downloader.cpp in Sources */,
 				D6ADC6E31E56A72800750771 /* CSContentJsonDictionary.cpp in Sources */,
 				D6C729AB1EEE74740094B191 /* CAPageView.cpp in Sources */,
 				D6ADC7071E56A72800750771 /* tinyxml2.cpp in Sources */,
@@ -2254,7 +2298,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-fdiagnostics-show-option";
@@ -2283,7 +2327,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

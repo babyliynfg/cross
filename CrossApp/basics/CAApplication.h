@@ -225,6 +225,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned long, m_uNumberOfDraws, NumberOfDraws);
 
+    CC_LISTENING_FUNCTION(void(), Reset);
+    
 public:
 
     static CAApplication* getApplication(void);

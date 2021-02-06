@@ -367,13 +367,16 @@ void ScriptingCore::createGlobalContext()
     
     JSAutoCompartment ac(_cx, _global->get());
     
-    runScript("script/jsb.js");
-
+    runScript("script/jsb_prepare.js");
+    
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(_cx, *_global);
     }
     _needCleanup = true;
+    
+    runScript("script/jsb_boot.js");
+    runScript("script/jsb_crossapp.js");
 }
 
 bool ScriptingCore::evalString(const char *string)

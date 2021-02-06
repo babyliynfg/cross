@@ -140,7 +140,8 @@ void CALabel::updateImageDraw()
 void CALabel::updateImage()
 {
     int fontHeight = CAFontProcesstor::heightForFont(m_obFont);
- 
+    if (fontHeight == 0)
+        return;
     unsigned int linenumber = (int)m_obContentSize.height / fontHeight;
 
     DSize size = m_obContentSize;

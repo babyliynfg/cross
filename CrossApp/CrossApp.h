@@ -167,6 +167,8 @@
 #include "network/HttpClient.h"
 #include "network/DownloadManager.h"
 #include "network/WebSocket.h"
+#include "network/assets-manager/AssetsManager.h"
+
 // platform
 #include "platform/CACommon.h"
 #include "platform/CAFileUtils.h"
