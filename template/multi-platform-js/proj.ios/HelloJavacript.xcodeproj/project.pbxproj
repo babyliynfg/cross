@@ -41,8 +41,6 @@
 		B0CA5A2B1A77A79900BECD89 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2A1A77A79900BECD89 /* SystemConfiguration.framework */; };
 		B0CA5A2D1A77A7A000BECD89 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0CA5A2C1A77A7A000BECD89 /* MediaPlayer.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
-		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
-		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -50,6 +48,8 @@
 		D62815CF1FE9160800E93520 /* script in Resources */ = {isa = PBXBuildFile; fileRef = D62815CE1FE9160800E93520 /* script */; };
 		D6B1E79F1F20B25500723750 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E79E1F20B25500723750 /* CoreImage.framework */; };
 		D6B1E7A11F20B26C00723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A01F20B26C00723750 /* CoreMedia.framework */; };
+		D6B6021F25B7E3DD003F2F6A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6021E25B7E3DD003F2F6A /* libz.tbd */; };
+		D6B6022225B7E3EC003F2F6A /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE451D953C8A00C758DA /* libiconv.tbd */; };
 		D6E0A741216B45FC00E592D8 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E0A740216B45FC00E592D8 /* UserNotifications.framework */; };
 		EB1818D619387FFA002856FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D519387FFA002856FF /* CoreLocation.framework */; };
 		EB1818D819388001002856FF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1818D719388001002856FF /* AddressBook.framework */; };
@@ -154,6 +154,7 @@
 		D62815CE1FE9160800E93520 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		D6B1E79E1F20B25500723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D6B1E7A01F20B26C00723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		D6B6021E25B7E3DD003F2F6A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D6E0A740216B45FC00E592D8 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB1818D719388001002856FF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -186,8 +187,8 @@
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
-				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
-				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
+				D6B6022225B7E3EC003F2F6A /* libiconv.tbd in Frameworks */,
+				D6B6021F25B7E3DD003F2F6A /* libz.tbd in Frameworks */,
 				487514431CC0CC4A00FF2062 /* libjs_static.a in Frameworks */,
 				04033E2E1954849600473756 /* libCrossApp.a in Frameworks */,
 			);
@@ -284,6 +285,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B6021E25B7E3DD003F2F6A /* libz.tbd */,
 				D6E0A740216B45FC00E592D8 /* UserNotifications.framework */,
 				D6B1E7A01F20B26C00723750 /* CoreMedia.framework */,
 				D6B1E79E1F20B25500723750 /* CoreImage.framework */,
@@ -570,18 +572,17 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
+					"\"$(SRCROOT)/../../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/include/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"";
 				OTHER_CFLAGS = "-O2";
-				PRODUCT_BUNDLE_IDENTIFIER = crossapp.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cross.hellocpp;
 				PRODUCT_NAME = HelloJavacript;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -619,17 +620,16 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
-					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/include/ios\"",
+					"\"$(SRCROOT)/../../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/include/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"";
-				PRODUCT_BUNDLE_IDENTIFIER = crossapp.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cross.hellocpp;
 				PRODUCT_NAME = HelloJavacript;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -650,6 +650,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 x86_64";
 			};
@@ -663,6 +664,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 x86_64";

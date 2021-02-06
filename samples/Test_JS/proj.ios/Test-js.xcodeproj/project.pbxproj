@@ -159,6 +159,7 @@
 		D62815D91FE9169900E93520 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		D6B1E7A51F20B2B800723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		D6B6268725B9B6CC003F2F6A /* jsb_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_helper.h; sourceTree = "<group>"; };
 		D6E0A746216B462900E592D8 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		EB1818D519387FFA002856FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB1818D719388001002856FF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -332,13 +333,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		48173D3B1CC5CE5700209A95 /* component */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = component;
-			sourceTree = "<group>";
-		};
 		48750DE31CC0CAC300FF2062 /* js-bindings */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,11 +380,11 @@
 		487514541CC0E10C00FF2062 /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				D6B6268725B9B6CC003F2F6A /* jsb_helper.h */,
 				4800E45E1E9CA26F00E4B8D9 /* jsb_websocket.cpp */,
 				4800E45F1E9CA26F00E4B8D9 /* jsb_websocket.hpp */,
 				480EDE001D9532E400C758DA /* crossapp_specifics.cpp */,
 				480EDE011D9532E400C758DA /* crossapp_specifics.hpp */,
-				48173D3B1CC5CE5700209A95 /* component */,
 				4875146C1CC0E4B800FF2062 /* js_manual_conversions.cpp */,
 				4875146D1CC0E4B800FF2062 /* js_manual_conversions.h */,
 				487514671CC0E25700FF2062 /* js_bindings_config.h */,
@@ -586,7 +580,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/include/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"",
@@ -600,7 +594,6 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/include/ios\"";
-				VALID_ARCHS = "armv6 armv7 arm64";
 			};
 			name = Debug;
 		};
@@ -638,7 +631,7 @@
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/websockets/include/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/ios\"",
@@ -652,7 +645,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/include/ios\"";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv6 armv7 arm64";
 			};
 			name = Release;
 		};
@@ -664,8 +656,8 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -677,9 +669,9 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};

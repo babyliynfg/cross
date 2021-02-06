@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EAA03F1956D14700198A8E /* libCrossApp.a */; };
-		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B233168318C3006C7997 /* CDAudioManager.m */; };
 		15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B236168318C3006C7997 /* CDOpenALSupport.m */; };
 		15D8B240168318C3006C7997 /* CDXMacOSXSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B238168318C3006C7997 /* CDXMacOSXSupport.mm */; };
@@ -19,7 +18,6 @@
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
-		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
 		B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */; };
 		B0621C301AC3DCB2005EBCA7 /* FirstViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C2B1AC3DCB2005EBCA7 /* FirstViewController.cpp */; };
 		B0621C311AC3DCB2005EBCA7 /* RootWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C2D1AC3DCB2005EBCA7 /* RootWindow.cpp */; };
@@ -36,6 +34,8 @@
 		D69B76A41E4B08B4007D9771 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A31E4B08B4007D9771 /* Security.framework */; };
 		D69B76A61E4B08E1007D9771 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A51E4B08E1007D9771 /* libiconv.tbd */; };
 		D6B1E7741F204D0600723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7731F204D0600723750 /* CoreMedia.framework */; };
+		D6B601FB25B7DADC003F2F6A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B601FA25B7DADC003F2F6A /* libz.tbd */; };
+		D6B6021925B7E290003F2F6A /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6021825B7E290003F2F6A /* libcurl.tbd */; };
 		D6CBC19A1EE97A590083E8C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CBC1991EE97A590083E8C3 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +110,9 @@
 		D69B76A31E4B08B4007D9771 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D69B76A51E4B08E1007D9771 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		D6B1E7731F204D0600723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		D6B601FA25B7DADC003F2F6A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		D6B6020625B7DCAD003F2F6A /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		D6B6021825B7E290003F2F6A /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
 		D6CBC1991EE97A590083E8C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -129,9 +132,9 @@
 				D69B769A1E4B0897007D9771 /* QuartzCore.framework in Frameworks */,
 				D69B76981E4B0891007D9771 /* OpenAL.framework in Frameworks */,
 				D69B76941E4B0884007D9771 /* AudioToolbox.framework in Frameworks */,
+				D6B6021925B7E290003F2F6A /* libcurl.tbd in Frameworks */,
 				D69B76A61E4B08E1007D9771 /* libiconv.tbd in Frameworks */,
-				B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */,
-				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
+				D6B601FB25B7DADC003F2F6A /* libz.tbd in Frameworks */,
 				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,6 +227,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B6021825B7E290003F2F6A /* libcurl.tbd */,
+				D6B6020625B7DCAD003F2F6A /* libxml2.tbd */,
+				D6B601FA25B7DADC003F2F6A /* libz.tbd */,
 				D6B1E7731F204D0600723750 /* CoreMedia.framework */,
 				D6CBC1991EE97A590083E8C3 /* WebKit.framework */,
 				D69B76A51E4B08E1007D9771 /* libiconv.tbd */,
@@ -417,7 +423,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
@@ -437,15 +442,16 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
+					"\"$(SRCROOT)/../../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../../../Classes\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CFLAGS = "-O2";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cross.hellocpp;
 				PRODUCT_NAME = HelloCpp;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -458,7 +464,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
@@ -476,14 +481,15 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../CocosDenshion/include",
 					"\"$(SRCROOT)/../../../CrossApp\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/mac\"",
+					"\"$(SRCROOT)/../../../CocosDenshion/include\"",
 					"\"$(SRCROOT)/../../../Classes\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cross.hellocpp;
 				PRODUCT_NAME = HelloCpp;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -502,6 +508,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx;
 				VALID_ARCHS = "x86_64 i386";
 			};
@@ -517,6 +524,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = macosx;
 				VALID_ARCHS = "x86_64 i386";

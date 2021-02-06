@@ -218,7 +218,6 @@
 		D64A8C9F1D34912200F75021 /* CARect.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C971D34912200F75021 /* CARect.h */; };
 		D64A8CA01D34912200F75021 /* CASize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C981D34912200F75021 /* CASize.cpp */; };
 		D64A8CA11D34912200F75021 /* CASize.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C991D34912200F75021 /* CASize.h */; };
-		D658909D248677D700729AAF /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A71E4B091A007D9771 /* libcurl.tbd */; };
 		D6596E1B1E57040B00A55CF9 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6596E131E57040B00A55CF9 /* DownloadManager.cpp */; };
 		D6596E1C1E57040B00A55CF9 /* DownloadManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E141E57040B00A55CF9 /* DownloadManager.h */; };
 		D6596E1D1E57040B00A55CF9 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6596E151E57040B00A55CF9 /* HttpClient.cpp */; };
@@ -278,6 +277,9 @@
 		D674DD001ECC4C2900D25BFC /* HttpCookie.h in Headers */ = {isa = PBXBuildFile; fileRef = D674DCFE1ECC4C2900D25BFC /* HttpCookie.h */; };
 		D67ECD761E5EBEC800C9CA49 /* CACheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D67ECD741E5EBEC800C9CA49 /* CACheckbox.cpp */; };
 		D67ECD771E5EBEC800C9CA49 /* CACheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = D67ECD751E5EBEC800C9CA49 /* CACheckbox.h */; };
+		D684C7F425BE72AE004DED1D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6023A25B7E4A9003F2F6A /* libz.tbd */; };
+		D684C7F525BE72B5004DED1D /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A71E4B091A007D9771 /* libcurl.tbd */; };
+		D684C7F625BE72BC004DED1D /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6023225B7E461003F2F6A /* libiconv.tbd */; };
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
 		D69B761D1E4AFE12007D9771 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69B75C31E4AFE12007D9771 /* CCBatchCommand.cpp */; };
 		D69B761E1E4AFE12007D9771 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B75C41E4AFE12007D9771 /* CCBatchCommand.h */; };
@@ -565,7 +567,6 @@
 		B047B91219E9181800F24BE6 /* CAScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAScriptSupport.cpp; sourceTree = "<group>"; };
 		B047B91319E9181800F24BE6 /* CAScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScriptSupport.h; sourceTree = "<group>"; };
 		B04CF4301967B2EB00BA7030 /* CASTLContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASTLContainer.h; sourceTree = "<group>"; };
-		B0621A4C1AC3A208005EBCA7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../the_third_party/freetype/prebuilt/mac/libfreetype.a; sourceTree = "<group>"; };
 		B0621A4E1AC3A22D005EBCA7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebp.a; path = ../the_third_party/webp/prebuilt/mac/libwebp.a; sourceTree = "<group>"; };
 		B0621A501AC3A23D005EBCA7 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtiff.a; path = ../the_third_party/tiff/prebuilt/mac/libtiff.a; sourceTree = "<group>"; };
 		B0621A521AC3A24D005EBCA7 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../the_third_party/png/prebuilt/mac/libpng.a; sourceTree = "<group>"; };
@@ -838,6 +839,9 @@
 		D69DA6911EE50BA300590961 /* CAFontProcesstor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAFontProcesstor.mm; sourceTree = "<group>"; };
 		D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 		D6B12EB51DC9C81500944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/mac/libwebsockets.a; sourceTree = "<group>"; };
+		D6B6020325B7DC5A003F2F6A /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../the_third_party/curl/prebuilt/mac/libcurl.a; sourceTree = "<group>"; };
+		D6B6023225B7E461003F2F6A /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		D6B6023A25B7E4A9003F2F6A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D6C513221E6910C300B0BE19 /* CAColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAColor.cpp; sourceTree = "<group>"; };
 		D6C513231E6910C300B0BE19 /* CAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAColor.h; sourceTree = "<group>"; };
 		D6C729C51EEE748D0094B191 /* CAActivityIndicatorView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAActivityIndicatorView.cpp; sourceTree = "<group>"; };
@@ -912,7 +916,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D658909D248677D700729AAF /* libcurl.tbd in Frameworks */,
+				D684C7F625BE72BC004DED1D /* libiconv.tbd in Frameworks */,
+				D684C7F525BE72B5004DED1D /* libcurl.tbd in Frameworks */,
+				D684C7F425BE72AE004DED1D /* libz.tbd in Frameworks */,
+				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
+				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
+				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
+				B0621A4F1AC3A22D005EBCA7 /* libwebp.a in Frameworks */,
+				D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */,
 				D644B3821F18B72D00E90A86 /* AVFoundation.framework in Frameworks */,
 				D644B3801F18B72800E90A86 /* CoreMedia.framework in Frameworks */,
 				D644B35E1F17891100E90A86 /* QuartzCore.framework in Frameworks */,
@@ -922,11 +933,6 @@
 				D69B766B1E4B059B007D9771 /* OpenGL.framework in Frameworks */,
 				D69B76731E4B05C3007D9771 /* IOKit.framework in Frameworks */,
 				1A94D35116C2072800D79D09 /* Foundation.framework in Frameworks */,
-				D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */,
-				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
-				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
-				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
-				B0621A4F1AC3A22D005EBCA7 /* libwebp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,6 +1244,9 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B6023A25B7E4A9003F2F6A /* libz.tbd */,
+				D6B6023225B7E461003F2F6A /* libiconv.tbd */,
+				D6B6020325B7DC5A003F2F6A /* libcurl.a */,
 				D644B3811F18B72D00E90A86 /* AVFoundation.framework */,
 				D6CBC1931EE95CD30083E8C3 /* WebKit.framework */,
 				485203E71E63C73D00571433 /* CoreMedia.framework */,
@@ -1257,7 +1266,6 @@
 				B0621A521AC3A24D005EBCA7 /* libpng.a */,
 				B0621A501AC3A23D005EBCA7 /* libtiff.a */,
 				B0621A4E1AC3A22D005EBCA7 /* libwebp.a */,
-				B0621A4C1AC3A208005EBCA7 /* libfreetype.a */,
 				1551A342158F2AB200E66CFE /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -2210,6 +2218,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2227,8 +2236,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2252,6 +2261,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2263,8 +2273,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)../";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
@@ -2277,6 +2287,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/CrossApp.dst;
+				EXCLUDED_ARCHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2294,12 +2305,13 @@
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
 				SDKROOT = macosx;
@@ -2315,6 +2327,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/CrossApp.dst;
+				EXCLUDED_ARCHS = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
@@ -2332,12 +2345,13 @@
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/png/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
 				SDKROOT = macosx;
