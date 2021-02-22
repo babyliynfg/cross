@@ -72,5 +72,5 @@ repositories {
 }
 dependencies {
     implementation fileTree(dir: 'src/main/libs', include: ['*.aar', '*.jar'], exclude: [])
-    implementation project(':proj.android-studio')
+    implementation project(':proj.android')
 }

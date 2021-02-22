@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 public class CAFrameLayout extends FrameLayout {
-	
+
     private float topLeftRadius;
     private float topRightRadius;
     private float bottomLeftRadius;
@@ -23,38 +23,38 @@ public class CAFrameLayout extends FrameLayout {
 
     public CAFrameLayout(Context context) {
         this(context, null);
-        init();  
+        init();
     }
-    
+
     public CAFrameLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        init();  
+        init();
     }
 
     public CAFrameLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-       init();  
-    }
-    
-    
-    private void init(){
-    	float radious = CrossAppHelper.dip2px(getContext(), 10) ; 
-        
-        topLeftRadius = 0; 
-        topRightRadius = 0 ; 
-        bottomLeftRadius = radious ; 
-        bottomRightRadius = radious; 
-    roundPaint = new Paint();
-    roundPaint.setColor(Color.WHITE);
-    roundPaint.setAntiAlias(true);
-    roundPaint.setStyle(Paint.Style.FILL);
-    roundPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
-    
-    imagePaint = new Paint();
-    imagePaint.setXfermode(null);
+        init();
     }
 
-    //ÊµÏÖ4
+
+    private void init(){
+        float radious = CrossAppHelper.dip2px(getContext(), 10) ;
+
+        topLeftRadius = 0;
+        topRightRadius = 0 ;
+        bottomLeftRadius = radious ;
+        bottomRightRadius = radious;
+        roundPaint = new Paint();
+        roundPaint.setColor(Color.WHITE);
+        roundPaint.setAntiAlias(true);
+        roundPaint.setStyle(Paint.Style.FILL);
+        roundPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+
+        imagePaint = new Paint();
+        imagePaint.setXfermode(null);
+    }
+
+    //å®žçŽ°4
     @Override
     protected void dispatchDraw(Canvas canvas) {
         canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), imagePaint, Canvas.ALL_SAVE_FLAG);
@@ -64,7 +64,7 @@ public class CAFrameLayout extends FrameLayout {
         drawBottomLeft(canvas);
         drawBottomRight(canvas);
         canvas.restore();
-        
+
     }
 
     private void drawTopLeft(Canvas canvas) {
@@ -122,6 +122,6 @@ public class CAFrameLayout extends FrameLayout {
             canvas.drawPath(path, roundPaint);
         }
     }
-	
+
 
 }

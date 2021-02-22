@@ -44,7 +44,7 @@ public class CrossAppHelper {
 
 	public static void init(final Context pContext, final CrossAppHelperListener pCrossAppHelperListener) {
 		final ApplicationInfo applicationInfo = pContext.getApplicationInfo();
-		
+
 		CrossAppHelper.sContext = pContext;
 		CrossAppHelper.sCrossAppHelperListener = pCrossAppHelperListener;
 
@@ -70,8 +70,6 @@ public class CrossAppHelper {
 	// ===========================================================
 	// Methods
 	// ===========================================================
-	public static native void evalString(final String value);
-	public static native void evalStringOnGLThread(final String value);
 
 	private static native void nativeSetApkPath(final String pApkPath);
 
@@ -88,10 +86,10 @@ public class CrossAppHelper {
 	public static String getCurrentLanguage() {
 		return Locale.getDefault().getLanguage();
 	}
-	
+
 	public static String getDeviceModel(){
 		return Build.MODEL;
-    }
+	}
 
 	public static AssetManager getAssetManager() {
 		return CrossAppHelper.sAssetManager;
@@ -110,8 +108,8 @@ public class CrossAppHelper {
 		CrossAppHelper.setGyroscopeEnable(false);
 		CrossAppHelper.getCrossAppGyroscope().disable();
 	}
-	
-	
+
+
 	public static void onResume() {
 
 		if(CrossAppHelper.isGyroscopeEnabled())
@@ -127,7 +125,7 @@ public class CrossAppHelper {
 			CrossAppHelper.getCrossAppGyroscope().disable();
 		}
 	}
-	
+
 	public static void preloadBackgroundMusic(final String pPath) {
 		CrossAppHelper.sCrossAppMusic.preloadBackgroundMusic(pPath);
 	}
@@ -233,8 +231,8 @@ public class CrossAppHelper {
 		}
 	}
 
-    public static float getDPI()
-    {
+	public static float getDPI()
+	{
 		if (sContext != null)
 		{
 			DisplayMetrics metrics = new DisplayMetrics();
@@ -250,42 +248,42 @@ public class CrossAppHelper {
 			}
 		}
 		return -1.0f;
-    }
-    
-    public static int dip2px(Context context, float dpValue) {
-    	final float scale = context.getResources().getDisplayMetrics().density;
-    	return (int) (dpValue * scale + 0.5f);
-    }
-    	 
-    public static int px2dip(Context context, float pxValue) {
-    	final float scale = context.getResources().getDisplayMetrics().density;
-    	return (int) (pxValue / scale + 0.5f);
-    }
-    
-    
-    /**
-	 * …˙≥…’˝∑Ω–Œ‘≤Ω«µƒshape
+	}
+
+	public static int dip2px(Context context, float dpValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dpValue * scale + 0.5f);
+	}
+
+	public static int px2dip(Context context, float pxValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (pxValue / scale + 0.5f);
+	}
+
+
+	/**
+	 * ÁîüÊàêÊ≠£ÊñπÂΩ¢ÂúÜËßíÁöÑshape
 	 * @param context
 	 * @param colorresid
 	 * @param ridous
 	 * @return
 	 */
 	public static Drawable getCornerRectAngle(Context context ,int colorresid,int ridous,Rect rect){
-		return getCorlorRectAngleContaionColor(context, context.getResources().getColor(colorresid), ridous, rect) ; 
+		return getCorlorRectAngleContaionColor(context, context.getResources().getColor(colorresid), ridous, rect) ;
 	}
-	
+
 	public static Drawable getCorlorRectAngle(Context context ,String colorHex,int ridous,Rect rect){
-		return getCorlorRectAngleContaionColor(context, Color.parseColor(colorHex), ridous, rect) ; 
+		return getCorlorRectAngleContaionColor(context, Color.parseColor(colorHex), ridous, rect) ;
 	}
-	
+
 	public static Drawable getCorlorRectAngleContaionColor(Context context ,int color,int ridous,Rect rect){
-		GradientDrawable mGradientDrawable = new GradientDrawable() ; 
+		GradientDrawable mGradientDrawable = new GradientDrawable() ;
 		mGradientDrawable.setCornerRadius(ridous);
-		mGradientDrawable.setBounds(rect== null ? new Rect() : rect) ; 
+		mGradientDrawable.setBounds(rect== null ? new Rect() : rect) ;
 		mGradientDrawable.setColor(color);
-		return mGradientDrawable ; 
+		return mGradientDrawable ;
 	}
-	
+
 	/**
 	 * @param context
 	 * @param colorHex
@@ -295,119 +293,119 @@ public class CrossAppHelper {
 	 * @return
 	 */
 	public static Drawable getColorRectAngleInCorner(Context context , String colorHex  , int ridous , Rect rect , int which){
-		
+
 		int l = which == 0 ? ridous : 0 ;
-		int t = which  ==1 ? ridous : 0  ; 
-		int r = which == 2 ? ridous : 0 ; 
-		int b = which == 3 ? ridous : 0  ; 
-		
+		int t = which  ==1 ? ridous : 0  ;
+		int r = which == 2 ? ridous : 0 ;
+		int b = which == 3 ? ridous : 0  ;
+
 		float[] radii = new float[]{l,l ,t , t , r , t, b , b};
-		
+
 		GradientDrawable drawable = new GradientDrawable();
 		drawable.setCornerRadii(radii);
 		drawable.setBounds(rect== null ? new Rect() : rect);
 		drawable.setColor(Color.parseColor(colorHex));
-		
-		return drawable ; 
+
+		return drawable ;
 	}
-	
+
 	/**
-	 * ¥˙¬Î…˙≥…Selector
+	 * ‰ª£Á†ÅÁîüÊàêSelector
 	 * @param context
 	 * @param normal
 	 * @param pressed
 	 * @return
 	 */
-	 public static StateListDrawable setSelector(Context context,Drawable normal ,Drawable pressed){
-	        StateListDrawable bg=new StateListDrawable();
-	        bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, pressed);
-	        bg.addState(new int[] { android.R.attr.state_enabled }, normal);
-	        bg.addState(new int[] {}, normal);
-	        return bg;
-	  }
-	
+	public static StateListDrawable setSelector(Context context,Drawable normal ,Drawable pressed){
+		StateListDrawable bg=new StateListDrawable();
+		bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, pressed);
+		bg.addState(new int[] { android.R.attr.state_enabled }, normal);
+		bg.addState(new int[] {}, normal);
+		return bg;
+	}
+
 	/**
-	 * µ√µΩƒ≥÷÷—’…´µƒæÿ–Œ
+	 * ÂæóÂà∞ÊüêÁßçÈ¢úËâ≤ÁöÑÁü©ÂΩ¢
 	 * @param context
 	 * @param colorresid
 	 * @return
 	 */
 	public static Drawable getRectAngle(Context context ,int colorresid,Rect rect){
-		GradientDrawable mGradientDrawable = new GradientDrawable() ; 
+		GradientDrawable mGradientDrawable = new GradientDrawable() ;
 		mGradientDrawable.setAlpha(100);
-		mGradientDrawable.setBounds(rect) ; 
+		mGradientDrawable.setBounds(rect) ;
 		mGradientDrawable.setColor(context.getResources().getColor(colorresid));
-		return mGradientDrawable ; 
+		return mGradientDrawable ;
 	}
-    
-	
-    
-    // ===========================================================
- 	// Functions for CCUserDefault
- 	// ===========================================================
-    
-    public static boolean getBoolForKey(String key, boolean defaultValue) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	return settings.getBoolean(key, defaultValue);
-    }
-    
-    public static int getIntegerForKey(String key, int defaultValue) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	return settings.getInt(key, defaultValue);
-    }
-    
-    public static float getFloatForKey(String key, float defaultValue) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	return settings.getFloat(key, defaultValue);
-    }
-    
-    public static double getDoubleForKey(String key, double defaultValue) {
-    	// SharedPreferences doesn't support saving double value
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	return settings.getFloat(key, (float)defaultValue);
-    }
-    
-    public static String getStringForKey(String key, String defaultValue) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	return settings.getString(key, defaultValue);
-    }
-    
-    public static void setBoolForKey(String key, boolean value) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	SharedPreferences.Editor editor = settings.edit();
-    	editor.putBoolean(key, value);
-    	editor.commit();
-    }
-    
-    public static void setIntegerForKey(String key, int value) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	SharedPreferences.Editor editor = settings.edit();
-    	editor.putInt(key, value);
-    	editor.commit();
-    }
-    
-    public static void setFloatForKey(String key, float value) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	SharedPreferences.Editor editor = settings.edit();
-    	editor.putFloat(key, value);
-    	editor.commit();
-    }
-    
-    public static void setDoubleForKey(String key, double value) {
-    	// SharedPreferences doesn't support recording double value
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	SharedPreferences.Editor editor = settings.edit();
-    	editor.putFloat(key, (float)value);
-    	editor.commit();
-    }
-    
-    public static void setStringForKey(String key, String value) {
-    	SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
-    	SharedPreferences.Editor editor = settings.edit();
-    	editor.putString(key, value);
-    	editor.commit();
-    }
-	
+
+
+
+	// ===========================================================
+	// Functions for CCUserDefault
+	// ===========================================================
+
+	public static boolean getBoolForKey(String key, boolean defaultValue) {
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		return settings.getBoolean(key, defaultValue);
+	}
+
+	public static int getIntegerForKey(String key, int defaultValue) {
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		return settings.getInt(key, defaultValue);
+	}
+
+	public static float getFloatForKey(String key, float defaultValue) {
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		return settings.getFloat(key, defaultValue);
+	}
+
+	public static double getDoubleForKey(String key, double defaultValue) {
+		// SharedPreferences doesn't support saving double value
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		return settings.getFloat(key, (float)defaultValue);
+	}
+
+	public static String getStringForKey(String key, String defaultValue) {
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		return settings.getString(key, defaultValue);
+	}
+
+	public static void setBoolForKey(String key, boolean value) {
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putBoolean(key, value);
+		editor.commit();
+	}
+
+	public static void setIntegerForKey(String key, int value) {
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putInt(key, value);
+		editor.commit();
+	}
+
+	public static void setFloatForKey(String key, float value) {
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putFloat(key, value);
+		editor.commit();
+	}
+
+	public static void setDoubleForKey(String key, double value) {
+		// SharedPreferences doesn't support recording double value
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putFloat(key, (float)value);
+		editor.commit();
+	}
+
+	public static void setStringForKey(String key, String value) {
+		SharedPreferences settings = ((Activity)sContext).getSharedPreferences(CrossAppHelper.PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString(key, value);
+		editor.commit();
+	}
+
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
@@ -425,16 +423,16 @@ public class CrossAppHelper {
 	public static void setGyroscopeEnable(boolean gyroEnable) {
 		CrossAppHelper.bGyroscope = gyroEnable;
 	}
-	
+
 	public static CrossAppGyroscope getCrossAppGyroscope() {
 		return sCrossAppGyroscope;
 	}
-	
+
 	public static void setCrossAppGyroscope(CrossAppGyroscope gyroscope) {
 		CrossAppHelper.sCrossAppGyroscope = gyroscope;
 	}
-	
-	public static interface CrossAppHelperListener 
+
+	public static interface CrossAppHelperListener
 	{
 		public void runOnGLThread(final Runnable pRunnable);
 	}

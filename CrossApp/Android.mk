@@ -107,6 +107,9 @@ support/xxhash/xxhash.c \
 network/HttpClient.cpp \
 network/DownloadManager.cpp \
 network/WebSocket.cpp \
+network/assets-manager/AssetsManager.cpp \
+network/assets-manager/downloader/Downloader-curl.cpp \
+network/assets-manager/downloader/Downloader.cpp \
 view/CAAVPlayerView.cpp \
 view/CAClippingView.cpp \
 view/CAImageView.cpp \
