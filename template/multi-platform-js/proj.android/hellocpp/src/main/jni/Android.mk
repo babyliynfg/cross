@@ -3,8 +3,10 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := CrossApp_cpp_shared
+
 LOCAL_MODULE_FILENAME := libCrossApp_cpp
-LOCAL_CPPFLAGS := -std=c++11 -pthread -frtti -fexceptions
+
+LOCAL_ARM_MODE := arm
 
 MY_FILES_PATH := $(LOCAL_PATH) \
                  $(LOCAL_PATH)/../../../../../Classes \
@@ -31,6 +33,7 @@ MY_ALL_DIRS := $(call uniq,$(MY_ALL_DIRS))
 
 LOCAL_SRC_FILES  := $(MY_SRC_LIST)
 LOCAL_C_INCLUDES := $(MY_ALL_DIRS)
+
 
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

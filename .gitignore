@@ -95,14 +95,7 @@ tags
 /extensions/proj.win32/Debug.win32/libExtensions.log
 
 IDEWorkspaceChecks.plist
-samples/Test/proj.android-studio/.gradle
-template/multi-platform-cpp/proj.android-studio/.gradle
-Test-proj.android-studio.iml
-test.iml
-Test_JS-proj.android-studio.iml
-Test-proj.android-studio.iml
-samples/Test/proj.android-studio/.gradle
-template/multi-platform-cpp/proj.android-studio/.gradle
-template/multi-platform-js/proj.android-studio/.gradle
-multi-platform-cpp-proj.android-studio.iml
-multi-platform-js-proj.android-studio.iml
+.gradle/
+.idea/
+build/
+.android-studio.iml
