@@ -223,14 +223,13 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
 
 LOCAL_LDLIBS := -lGLESv2 \
                 -llog \
-		 -landroid \
-                -lz
+                -landroid \
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-			-landroid \
-                       -lz
-
+                       -landroid \
+                       
+LOCAL_WHOLE_STATIC_LIBRARIES += zlib_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_jpeg_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_png_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_tiff_static
@@ -238,20 +237,26 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_webp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
+
+
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS   :=  -Wno-psabi
-LOCAL_CFLAGS   +=  -DUSE_FILE32API
+LOCAL_CFLAGS   :=  -DUSE_FILE32API
 LOCAL_CFLAGS   +=  -fexceptions
 LOCAL_CFLAGS   +=  -D__STDC_CONSTANT_MACROS
+
+#ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+LOCAL_CFLAGS += -DHAVE_NEON=1
+#endif
+
 LOCAL_CPPFLAGS := -Wno-deprecated-declarations
-LOCAL_EXPORT_CFLAGS := -Wno-psabi
-LOCAL_EXPORT_CFLAGS += -DUSE_FILE32API
-LOCAL_EXPORT_CFLAGS += -D__STDC_CONSTANT_MACROS
+
+LOCAL_EXPORT_CFLAGS := -DUSE_FILE32API
 LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations
+
 
 include $(BUILD_STATIC_LIBRARY)
 
-
+$(call import-module,zlib/prebuilt/android)
 $(call import-module,jpeg/prebuilt/android)
 $(call import-module,png/prebuilt/android)
 $(call import-module,tiff/prebuilt/android)

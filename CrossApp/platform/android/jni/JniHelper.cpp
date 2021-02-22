@@ -2,7 +2,7 @@
 #include "JniHelper.h"
 #include <android/log.h>
 #include <string.h>
-
+#include <pthread.h>
 #if 1
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)

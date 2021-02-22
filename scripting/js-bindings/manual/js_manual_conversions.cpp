@@ -215,7 +215,7 @@ bool jsval_to_uint( JSContext *cx, JS::HandleValue vp, unsigned int *ret )
 jsval long_to_jsval( JSContext *cx, long number )
 {
 #ifdef __LP64__
-    assert( sizeof(long)==8);
+    CCAssert( sizeof(long)==8, "Error!");
 
     char chr[128];
     snprintf(chr, sizeof(chr)-1, "%ld", number);
@@ -230,7 +230,7 @@ jsval long_to_jsval( JSContext *cx, long number )
 jsval ulong_to_jsval( JSContext *cx, unsigned long number )
 {
 #ifdef __LP64__
-    assert( sizeof(unsigned long)==8);
+    CCAssert( sizeof(unsigned long)==8, "Error!");
     
     char chr[128];
     snprintf(chr, sizeof(chr)-1, "%lu", number);
@@ -448,7 +448,7 @@ bool jsval_to_long( JSContext *cx, JS::HandleValue vp, long *r )
 {
 #ifdef __LP64__
     // compatibility check
-    assert( sizeof(long)==8);
+    CCAssert( sizeof(long)==8, "");
     JSString *jsstr = JS::ToString(cx, vp);
     JSB_PRECONDITION2(jsstr, cx, false, "Error converting value to string");
     

@@ -1366,6 +1366,10 @@ bool CAImage::initWithImageFile(const std::string& file, bool isOpenGLThread)
     { 
         data->fastSet(pData, pSize);
     }
+    else
+    {
+        CCLog("CAImage:: No files found %s", file.c_str());
+    }
     bool bRet = initWithImageData(data, isOpenGLThread);
     data->release();
 	return bRet;
