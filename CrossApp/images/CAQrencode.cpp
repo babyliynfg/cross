@@ -14,6 +14,8 @@ CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int 
     return CAQrencode::createWithQRString(string, sideLength, backgroundColor, CAColor4B::BLACK);
 }
 
+#define PRINT_QRCODE(code, FUNC)   for(int i = 0; i < code->width; ++i){for(int j = 0; j < code->width; ++j){if (code->data[j + i * code->width] & 1){FUNC(i, j, scale, off, width);}}}
+
 CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int sideLength, const CAColor4B& backgroundColor, const CAColor4B& qrColor)
 {
     QRcode *code = QRcode_encodeString(string.c_str(), 0, QR_ECLEVEL_L, QR_MODE_8, 1);
@@ -34,52 +36,41 @@ CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int 
     }
     data[length] = '\0';
     
+    std::function<void(int i, int j, int scale, int off, int width)> func;
+    
     if (qrColor.a != backgroundColor.a)
     {
-        for(int i = 0; i < code->width; ++i)
+        func = [=](int i, int j, int scale, int off, int width)
         {
-            for(int j = 0; j < code->width; ++j)
-            {
-                if ((code->data[j + i * code->width] & 1))
-                {
-                    for(int h = 0; h < scale; ++h)
-                    {
-                        for(int w = 0; w < scale; ++w)
-                        {
-                            unsigned long index = (w + (j + off) * scale) + (h + (i + off) * scale) * width;
-                            data[index * 4 + 0] = qrColor.r;        //R
-                            data[index * 4 + 1] = qrColor.g;        //G
-                            data[index * 4 + 2] = qrColor.b;        //B
-                            data[index * 4 + 3] = qrColor.a;        //A
-                        }
-                    }
-                }
-            }
-        }
+            int h = 0, w = 0;
+            do {
+                unsigned long index = (w + (j + off) * scale) + (h + (i + off) * scale) * width;
+                data[index * 4 + 0] = qrColor.r;        //R
+                data[index * 4 + 1] = qrColor.g;        //G
+                data[index * 4 + 2] = qrColor.b;        //B
+                data[index * 4 + 3] = qrColor.a;        //A
+                if (++w == scale) ++h, w = 0;
+                if (h == scale) break;;
+            } while (1);
+        };
+            
     }
     else
     {
-        for(int i = 0; i < code->width; ++i)
+        func = [=](int i, int j, int scale, int off, int width)
         {
-            for(int j = 0; j < code->width; ++j)
-            {
-                if ((code->data[j + i * code->width] & 1))
-                {
-                    for(int h = 0; h < scale; ++h)
-                    {
-                        for(int w = 0; w < scale; ++w)
-                        {
-                            unsigned long index = (w + (j + off) * scale) + (h + (i + off) * scale) * width;
-                            data[index * 4 + 0] = qrColor.r;        //R
-                            data[index * 4 + 1] = qrColor.g;        //G
-                            data[index * 4 + 2] = qrColor.b;        //B
-                        }
-                    }
-                }
-            }
-        }
+            int h = 0, w = 0;
+            do {
+                unsigned long index = (w + (j + off) * scale) + (h + (i + off) * scale) * width;
+                data[index * 4 + 0] = qrColor.r;        //R
+                data[index * 4 + 1] = qrColor.g;        //G
+                data[index * 4 + 2] = qrColor.b;        //B
+                if (++w == scale) ++h, w = 0;
+                if (h == scale) break;;
+            } while (1);
+        };
     }
-    
+    PRINT_QRCODE(code, func);
     QRcode_free(code);
 
     CrossApp::CAData* ca_data = CrossApp::CAData::create();
