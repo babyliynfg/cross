@@ -14,7 +14,16 @@ CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int 
     return CAQrencode::createWithQRString(string, sideLength, backgroundColor, CAColor4B::BLACK);
 }
 
-#define PRINT_QRCODE(code, FUNC)   for(int i = 0; i < code->width; ++i){for(int j = 0; j < code->width; ++j){if (code->data[j + i * code->width] & 1){FUNC(i, j);}}}
+inline void QRcode_print(QRcode* code, const std::function<void(int i, int j)>& func)
+{
+    int i = 0, j = 0;
+    do {
+        int index = j + i * code->width;
+        if (code->data[index] & 1) func(i, j);
+        if (++j == code->width) ++i, j = 0;
+        if (i == code->width) break;
+    } while (1);
+}
 
 CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int sideLength, const CAColor4B& backgroundColor, const CAColor4B& qrColor)
 {
@@ -66,11 +75,11 @@ CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int 
                 data[index * 4 + 1] = qrColor.g;        //G
                 data[index * 4 + 2] = qrColor.b;        //B
                 if (++w == scale) ++h, w = 0;
-                if (h == scale) break;;
+                if (h == scale) break;
             } while (1);
         };
     }
-    PRINT_QRCODE(code, func);
+    QRcode_print(code, func);
     QRcode_free(code);
 
     CrossApp::CAData* ca_data = CrossApp::CAData::create();
