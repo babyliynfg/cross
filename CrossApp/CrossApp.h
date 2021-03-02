@@ -77,6 +77,7 @@
 #include "images/CAImage.h"
 #include "images/CAImageCache.h"
 #include "images/CAGif.h"
+#include "images/CAQrencode.h"
 
 
 //view

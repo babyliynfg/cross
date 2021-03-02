@@ -40,7 +40,7 @@ NS_CC_BEGIN
 
 CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
 {
-    CARenderImage* renderImage = CARenderImage::create(s_px_to_dip(size.width), s_px_to_dip(size.height));
+    CARenderImage* renderImage = CARenderImage::create((size.width), (size.height));
     
     CAApplication* application = CAApplication::getApplication();
     application->getRenderer()->clean();
@@ -58,18 +58,18 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
         
         GLfloat    coordinates[] =
         {
-            0.0f,                                   0.0f,
-            s_px_to_dip(image->getMaxS()) ,         0.0f,
-            0.0f,                                   s_px_to_dip(image->getMaxT()),
-            s_px_to_dip(image->getMaxS()),          s_px_to_dip(image->getMaxT())
+            0.0f, 0.0f,
+            (image->getMaxS()) , 0.0f,
+            0.0f, (image->getMaxT()),
+            (image->getMaxS()), (image->getMaxT())
         };
         
         GLfloat    vertices[] =
         {
-            0,                          0,                    /*0.0f,*/
-            s_px_to_dip(size.width),    0,                    /*0.0f,*/
-            0,                          s_px_to_dip(size.height),          /*0.0f,*/
-            s_px_to_dip(size.width),    s_px_to_dip(size.height)           /*0.0f*/
+            0, 0,                    /*0.0f,*/
+            (size.width), 0,                    /*0.0f,*/
+            0, (size.height),          /*0.0f,*/
+            (size.width), (size.height)           /*0.0f*/
         };
         
         GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
@@ -1903,28 +1903,7 @@ bool CAImage::initWithRawData(CAData* data,
     m_fMaxT = 1;
     
     m_bHasMipmaps = false;
-    
-    switch (pixelFormat)
-    {
-        case CAImage::PixelFormat::RGBA8888:
-        case CAImage::PixelFormat::RGBA4444:
-        case CAImage::PixelFormat::RGB5A1:
-        case CAImage::PixelFormat::AI88:
-        {
-            m_bHasPremultipliedAlpha = true;
-        }
-            break;
-        case CAImage::PixelFormat::RGB888:
-        case CAImage::PixelFormat::RGB565:
-        case CAImage::PixelFormat::I8:
-        case CAImage::PixelFormat::A8:
-        default:
-        {
-            m_bHasPremultipliedAlpha = false;
-        }
-            break;
-    }
-
+    m_bHasPremultipliedAlpha = false;
     this->repremultipliedImageData();
     
     return true;

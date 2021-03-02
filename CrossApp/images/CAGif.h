@@ -9,7 +9,7 @@
 #ifndef __CAGIF_H__
 #define __CAGIF_H__
 
-#include "CAImage.h"
+#include "images/CAImage.h"
 #include "basics/CASTLContainer.h"
 #include "gif_lib/gif_lib.h"
 
