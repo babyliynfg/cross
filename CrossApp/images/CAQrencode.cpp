@@ -14,7 +14,7 @@ CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int 
     return CAQrencode::createWithQRString(string, sideLength, backgroundColor, CAColor4B::BLACK);
 }
 
-#define PRINT_QRCODE(code, FUNC)   for(int i = 0; i < code->width; ++i){for(int j = 0; j < code->width; ++j){if (code->data[j + i * code->width] & 1){FUNC(i, j, scale, off, width);}}}
+#define PRINT_QRCODE(code, FUNC)   for(int i = 0; i < code->width; ++i){for(int j = 0; j < code->width; ++j){if (code->data[j + i * code->width] & 1){FUNC(i, j);}}}
 
 CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int sideLength, const CAColor4B& backgroundColor, const CAColor4B& qrColor)
 {
@@ -36,11 +36,11 @@ CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int 
     }
     data[length] = '\0';
     
-    std::function<void(int i, int j, int scale, int off, int width)> func;
+    std::function<void(int i, int j)> func;
     
     if (qrColor.a != backgroundColor.a)
     {
-        func = [=](int i, int j, int scale, int off, int width)
+        func = [&](int i, int j)
         {
             int h = 0, w = 0;
             do {
@@ -57,7 +57,7 @@ CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int 
     }
     else
     {
-        func = [=](int i, int j, int scale, int off, int width)
+        func = [&](int i, int j)
         {
             int h = 0, w = 0;
             do {
