@@ -81,6 +81,27 @@
 		D6596E101E56F55C00A55CF9 /* CAAlertViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */; };
 		D66F533B1ED8402300546E5E /* CAData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66F53391ED8402300546E5E /* CAData.cpp */; };
 		D66F533C1ED8402300546E5E /* CAData.h in Headers */ = {isa = PBXBuildFile; fileRef = D66F533A1ED8402300546E5E /* CAData.h */; };
+		D685DB2525EE5EAF00587E6B /* CAQrencode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D685DB0F25EE5EAF00587E6B /* CAQrencode.cpp */; };
+		D685DB2625EE5EAF00587E6B /* qrencode_inner.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB1125EE5EAF00587E6B /* qrencode_inner.h */; };
+		D685DB2725EE5EAF00587E6B /* mask.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB1225EE5EAF00587E6B /* mask.h */; };
+		D685DB2825EE5EAF00587E6B /* qrinput.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB1325EE5EAF00587E6B /* qrinput.h */; };
+		D685DB2925EE5EAF00587E6B /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB1425EE5EAF00587E6B /* bitstream.c */; };
+		D685DB2A25EE5EAF00587E6B /* rsecc.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB1525EE5EAF00587E6B /* rsecc.h */; };
+		D685DB2B25EE5EAF00587E6B /* mmask.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB1625EE5EAF00587E6B /* mmask.h */; };
+		D685DB2C25EE5EAF00587E6B /* qrencode.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB1725EE5EAF00587E6B /* qrencode.c */; };
+		D685DB2D25EE5EAF00587E6B /* qrspec.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB1825EE5EAF00587E6B /* qrspec.h */; };
+		D685DB2E25EE5EAF00587E6B /* mqrspec.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB1925EE5EAF00587E6B /* mqrspec.h */; };
+		D685DB2F25EE5EAF00587E6B /* split.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB1A25EE5EAF00587E6B /* split.c */; };
+		D685DB3025EE5EAF00587E6B /* qrinput.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB1B25EE5EAF00587E6B /* qrinput.c */; };
+		D685DB3125EE5EAF00587E6B /* bitstream.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB1C25EE5EAF00587E6B /* bitstream.h */; };
+		D685DB3225EE5EAF00587E6B /* mask.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB1D25EE5EAF00587E6B /* mask.c */; };
+		D685DB3325EE5EAF00587E6B /* rsecc.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB1E25EE5EAF00587E6B /* rsecc.c */; };
+		D685DB3425EE5EAF00587E6B /* mqrspec.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB1F25EE5EAF00587E6B /* mqrspec.c */; };
+		D685DB3525EE5EAF00587E6B /* qrspec.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB2025EE5EAF00587E6B /* qrspec.c */; };
+		D685DB3625EE5EAF00587E6B /* qrencode.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB2125EE5EAF00587E6B /* qrencode.h */; };
+		D685DB3725EE5EAF00587E6B /* mmask.c in Sources */ = {isa = PBXBuildFile; fileRef = D685DB2225EE5EAF00587E6B /* mmask.c */; };
+		D685DB3825EE5EAF00587E6B /* split.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB2325EE5EAF00587E6B /* split.h */; };
+		D685DB3925EE5EAF00587E6B /* CAQrencode.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB2425EE5EAF00587E6B /* CAQrencode.h */; };
 		D69DA6991EE54F4E00590961 /* CAFontProcesstor.h in Headers */ = {isa = PBXBuildFile; fileRef = D69DA6981EE54F4E00590961 /* CAFontProcesstor.h */; };
 		D69DA69B1EE54F9B00590961 /* CAFontProcesstor.mm in Sources */ = {isa = PBXBuildFile; fileRef = D69DA69A1EE54F9B00590961 /* CAFontProcesstor.mm */; };
 		D6A1234F25CD456D00A6E8B8 /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6A1234725CD456D00A6E8B8 /* AssetsManager.cpp */; };
@@ -523,6 +544,27 @@
 		D6596E0F1E56F55C00A55CF9 /* CAAlertViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAlertViewImpl.h; sourceTree = "<group>"; };
 		D66F53391ED8402300546E5E /* CAData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAData.cpp; sourceTree = "<group>"; };
 		D66F533A1ED8402300546E5E /* CAData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAData.h; sourceTree = "<group>"; };
+		D685DB0F25EE5EAF00587E6B /* CAQrencode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAQrencode.cpp; sourceTree = "<group>"; };
+		D685DB1125EE5EAF00587E6B /* qrencode_inner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qrencode_inner.h; sourceTree = "<group>"; };
+		D685DB1225EE5EAF00587E6B /* mask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mask.h; sourceTree = "<group>"; };
+		D685DB1325EE5EAF00587E6B /* qrinput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qrinput.h; sourceTree = "<group>"; };
+		D685DB1425EE5EAF00587E6B /* bitstream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bitstream.c; sourceTree = "<group>"; };
+		D685DB1525EE5EAF00587E6B /* rsecc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rsecc.h; sourceTree = "<group>"; };
+		D685DB1625EE5EAF00587E6B /* mmask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmask.h; sourceTree = "<group>"; };
+		D685DB1725EE5EAF00587E6B /* qrencode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qrencode.c; sourceTree = "<group>"; };
+		D685DB1825EE5EAF00587E6B /* qrspec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qrspec.h; sourceTree = "<group>"; };
+		D685DB1925EE5EAF00587E6B /* mqrspec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mqrspec.h; sourceTree = "<group>"; };
+		D685DB1A25EE5EAF00587E6B /* split.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = split.c; sourceTree = "<group>"; };
+		D685DB1B25EE5EAF00587E6B /* qrinput.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qrinput.c; sourceTree = "<group>"; };
+		D685DB1C25EE5EAF00587E6B /* bitstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitstream.h; sourceTree = "<group>"; };
+		D685DB1D25EE5EAF00587E6B /* mask.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mask.c; sourceTree = "<group>"; };
+		D685DB1E25EE5EAF00587E6B /* rsecc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rsecc.c; sourceTree = "<group>"; };
+		D685DB1F25EE5EAF00587E6B /* mqrspec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mqrspec.c; sourceTree = "<group>"; };
+		D685DB2025EE5EAF00587E6B /* qrspec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qrspec.c; sourceTree = "<group>"; };
+		D685DB2125EE5EAF00587E6B /* qrencode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qrencode.h; sourceTree = "<group>"; };
+		D685DB2225EE5EAF00587E6B /* mmask.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mmask.c; sourceTree = "<group>"; };
+		D685DB2325EE5EAF00587E6B /* split.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = split.h; sourceTree = "<group>"; };
+		D685DB2425EE5EAF00587E6B /* CAQrencode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAQrencode.h; sourceTree = "<group>"; };
 		D69DA6981EE54F4E00590961 /* CAFontProcesstor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFontProcesstor.h; sourceTree = "<group>"; };
 		D69DA69A1EE54F9B00590961 /* CAFontProcesstor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAFontProcesstor.mm; sourceTree = "<group>"; };
 		D6A1234725CD456D00A6E8B8 /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
@@ -1116,6 +1158,32 @@
 			path = apple;
 			sourceTree = "<group>";
 		};
+		D685DB1025EE5EAF00587E6B /* qrencode */ = {
+			isa = PBXGroup;
+			children = (
+				D685DB1125EE5EAF00587E6B /* qrencode_inner.h */,
+				D685DB1225EE5EAF00587E6B /* mask.h */,
+				D685DB1325EE5EAF00587E6B /* qrinput.h */,
+				D685DB1425EE5EAF00587E6B /* bitstream.c */,
+				D685DB1525EE5EAF00587E6B /* rsecc.h */,
+				D685DB1625EE5EAF00587E6B /* mmask.h */,
+				D685DB1725EE5EAF00587E6B /* qrencode.c */,
+				D685DB1825EE5EAF00587E6B /* qrspec.h */,
+				D685DB1925EE5EAF00587E6B /* mqrspec.h */,
+				D685DB1A25EE5EAF00587E6B /* split.c */,
+				D685DB1B25EE5EAF00587E6B /* qrinput.c */,
+				D685DB1C25EE5EAF00587E6B /* bitstream.h */,
+				D685DB1D25EE5EAF00587E6B /* mask.c */,
+				D685DB1E25EE5EAF00587E6B /* rsecc.c */,
+				D685DB1F25EE5EAF00587E6B /* mqrspec.c */,
+				D685DB2025EE5EAF00587E6B /* qrspec.c */,
+				D685DB2125EE5EAF00587E6B /* qrencode.h */,
+				D685DB2225EE5EAF00587E6B /* mmask.c */,
+				D685DB2325EE5EAF00587E6B /* split.h */,
+			);
+			path = qrencode;
+			sourceTree = "<group>";
+		};
 		D6A1234625CD456D00A6E8B8 /* assets-manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1321,6 +1389,10 @@
 		D6ADC4BF1E56A72700750771 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				D6ADC4C81E56A72700750771 /* gif_lib */,
+				D685DB1025EE5EAF00587E6B /* qrencode */,
+				D685DB0F25EE5EAF00587E6B /* CAQrencode.cpp */,
+				D685DB2425EE5EAF00587E6B /* CAQrencode.h */,
 				D6ADC4C01E56A72700750771 /* CAGif.cpp */,
 				D6ADC4C11E56A72700750771 /* CAGif.h */,
 				D6ADC4C21E56A72700750771 /* CAImage.cpp */,
@@ -1329,7 +1401,6 @@
 				D6ADC4C51E56A72700750771 /* CAImageCache.h */,
 				D6ADC4C61E56A72700750771 /* CAImageCube.cpp */,
 				D6ADC4C71E56A72700750771 /* CAImageCube.h */,
-				D6ADC4C81E56A72700750771 /* gif_lib */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -1799,6 +1870,7 @@
 				D6ADC6C81E56A72800750771 /* CAScriptSupport.h in Headers */,
 				D6ADC68B1E56A72800750771 /* CAVertex.h in Headers */,
 				D6ADC5F41E56A72800750771 /* CAAutoreleasePool.h in Headers */,
+				D685DB2B25EE5EAF00587E6B /* mmask.h in Headers */,
 				D6ADC6BC1E56A72800750771 /* CCRenderState.h in Headers */,
 				D6ADC6381E56A72800750771 /* CADrawerController.h in Headers */,
 				D6ADC7121E56A72800750771 /* unzip.h in Headers */,
@@ -1810,8 +1882,10 @@
 				D6ADC70A1E56A72800750771 /* CAUserDefault.h in Headers */,
 				D644B38F1F19F79D00E90A86 /* CACustomAnimation.h in Headers */,
 				D6ADC6661E56A72800750771 /* CGSprite.h in Headers */,
+				D685DB2D25EE5EAF00587E6B /* qrspec.h in Headers */,
 				D6ADC6991E56A72800750771 /* CCCustomCommand.h in Headers */,
 				0ACE3B74212D494E008CF054 /* NSString+PeopleNameGetLetter.h in Headers */,
+				D685DB3925EE5EAF00587E6B /* CAQrencode.h in Headers */,
 				D6ADC6201E56A72800750771 /* CCNS.h in Headers */,
 				D6ADC6441E56A72800750771 /* CAProtocols.h in Headers */,
 				B07E81141C33B34800A39C95 /* CATextView.h in Headers */,
@@ -1847,6 +1921,7 @@
 				B01F650A196585B2005C14FC /* CADensityDpi.h in Headers */,
 				D6ADC61A1E56A72800750771 /* CAValue.h in Headers */,
 				D6ADC6141E56A72800750771 /* CASize.h in Headers */,
+				D685DB3825EE5EAF00587E6B /* split.h in Headers */,
 				D6C729AC1EEE74740094B191 /* CAPageView.h in Headers */,
 				D6ADC6B11E56A72800750771 /* CCPrimitiveCommand.h in Headers */,
 				1551A72F158F2ADE00E66CFE /* CAApplicationCaller.h in Headers */,
@@ -1872,6 +1947,7 @@
 				D6C729C41EEE74740094B191 /* CAWindow.h in Headers */,
 				D6ADC6B51E56A72800750771 /* CCQuadCommand.h in Headers */,
 				D6ADC6951E56A72800750771 /* WebSocket.h in Headers */,
+				D685DB2A25EE5EAF00587E6B /* rsecc.h in Headers */,
 				D6ADC65C1E56A72800750771 /* CGAnimation.h in Headers */,
 				1551A737158F2ADE00E66CFE /* CCGL.h in Headers */,
 				D6ADC6E81E56A72800750771 /* forwards.h in Headers */,
@@ -1907,6 +1983,7 @@
 				D6ADC62C1E56A72800750771 /* CAProgress.h in Headers */,
 				D6ADC60A1E56A72800750771 /* CAPoint3D.h in Headers */,
 				D6ADC6DA1E56A72800750771 /* ConvertUTF.h in Headers */,
+				D685DB2625EE5EAF00587E6B /* qrencode_inner.h in Headers */,
 				D6ADC6001E56A72800750771 /* CAIndexPath.h in Headers */,
 				D69DA6991EE54F4E00590961 /* CAFontProcesstor.h in Headers */,
 				1551A74F158F2ADE00E66CFE /* platform.h in Headers */,
@@ -1946,12 +2023,15 @@
 				D6ADC7501E56A78000750771 /* CANotificationCenter.h in Headers */,
 				D6C729AE1EEE74740094B191 /* CAPickerView.h in Headers */,
 				B0C3BD461ADE7264009BE71A /* CAClipboard.h in Headers */,
+				D685DB2825EE5EAF00587E6B /* qrinput.h in Headers */,
 				D6ADC6361E56A72800750771 /* CABarItem.h in Headers */,
 				D6ADC6081E56A72800750771 /* CAPoint.h in Headers */,
 				D6ADC6AD1E56A72800750771 /* CCPass.h in Headers */,
+				D685DB3625EE5EAF00587E6B /* qrencode.h in Headers */,
 				1AC6CE8116B9075B00330EFD /* CCFileUtilsIOS.h in Headers */,
 				D6ADC5FA1E56A72800750771 /* CAConfiguration.h in Headers */,
 				1AC6CE8916B910CD00330EFD /* CAFileUtils.h in Headers */,
+				D685DB2725EE5EAF00587E6B /* mask.h in Headers */,
 				D6ADC64E1E56A72800750771 /* CGActionCatmullRom.h in Headers */,
 				D6ADC6301E56A72800750771 /* CASlider.h in Headers */,
 				D6ADC6561E56A72800750771 /* CGActionManager.h in Headers */,
@@ -1979,6 +2059,7 @@
 				D6ADC6E41E56A72800750771 /* CSContentJsonDictionary.h in Headers */,
 				D6ADC6521E56A72800750771 /* CGActionInstant.h in Headers */,
 				04EAA0251956CE3B00198A8E /* ccMacros.h in Headers */,
+				D685DB2E25EE5EAF00587E6B /* mqrspec.h in Headers */,
 				D6ADC6D01E56A72800750771 /* CAThemeManager.h in Headers */,
 				D6ADC6D81E56A72800750771 /* clipper.hpp in Headers */,
 				04EAA0261956CE3B00198A8E /* ccTypeInfo.h in Headers */,
@@ -2003,6 +2084,7 @@
 				D6ADC6431E56A72800750771 /* CAKeypadDispatcher.h in Headers */,
 				D6ADC6931E56A72800750771 /* HttpResponse.h in Headers */,
 				022160771C1FAD38009FFCFC /* CATextField.h in Headers */,
+				D685DB3125EE5EAF00587E6B /* bitstream.h in Headers */,
 				D6ADC6B31E56A72800750771 /* CCProperties.h in Headers */,
 				D6ADC6FC1E56A72800750771 /* advancing_front.h in Headers */,
 				D6ADC6701E56A72800750771 /* CAImage.h in Headers */,
@@ -2102,6 +2184,7 @@
 				D6ADC6A01E56A72800750771 /* CCGLProgramState.cpp in Sources */,
 				D6ADC6C71E56A72800750771 /* CAScriptSupport.cpp in Sources */,
 				1551A730158F2ADE00E66CFE /* CAApplicationCaller.mm in Sources */,
+				D685DB2925EE5EAF00587E6B /* bitstream.c in Sources */,
 				D6C729A91EEE74740094B191 /* CAListView.cpp in Sources */,
 				D6ADC6191E56A72800750771 /* CAValue.cpp in Sources */,
 				D6ADC67E1E56A72800750771 /* openbsd-reallocarray.c in Sources */,
@@ -2140,12 +2223,14 @@
 				D6ADC6761E56A72800750771 /* egif_lib.c in Sources */,
 				D6C729A11EEE74740094B191 /* CADrawView.cpp in Sources */,
 				D6A1234F25CD456D00A6E8B8 /* AssetsManager.cpp in Sources */,
+				D685DB3725EE5EAF00587E6B /* mmask.c in Sources */,
 				D6ADC6BD1E56A72800750771 /* ccShaders.cpp in Sources */,
 				D6ADC6051E56A72800750771 /* CAObject.cpp in Sources */,
 				D6ADC6471E56A72800750771 /* CATouchDispatcher.cpp in Sources */,
 				D6C729931EEE74740094B191 /* CAAlertView.cpp in Sources */,
 				1551A73F158F2ADE00E66CFE /* EAGLView.mm in Sources */,
 				D6596E0D1E56D1C200A55CF9 /* CAAlertViewImpl.mm in Sources */,
+				D685DB3425EE5EAF00587E6B /* mqrspec.c in Sources */,
 				D6ADC6B91E56A72800750771 /* CCRenderer.cpp in Sources */,
 				D6C729911EEE74740094B191 /* CAActivityIndicatorView.cpp in Sources */,
 				D6ADC6ED1E56A72800750771 /* json_value.cpp in Sources */,
@@ -2178,6 +2263,7 @@
 				D6ADC70B1E56A72800750771 /* CAUserDefault.mm in Sources */,
 				D6ADC6511E56A72800750771 /* CGActionInstant.cpp in Sources */,
 				D6ADC6821E56A72800750771 /* CAMat4.cpp in Sources */,
+				D685DB2C25EE5EAF00587E6B /* qrencode.c in Sources */,
 				D6ADC7011E56A72800750771 /* sweep_context.cc in Sources */,
 				D6ADC6B61E56A72800750771 /* CCRenderCommand.cpp in Sources */,
 				B01F650819658599005C14FC /* CADensityDpi.mm in Sources */,
@@ -2191,6 +2277,7 @@
 				0A38727221258DCB0052C2DB /* CrossAppReachability.m in Sources */,
 				D6ADC68A1E56A72800750771 /* CAVertex.cpp in Sources */,
 				D644B39F1F1A02F600E90A86 /* CAAVPlayerImpl.mm in Sources */,
+				D685DB2525EE5EAF00587E6B /* CAQrencode.cpp in Sources */,
 				D6ADC5F11E56A72800750771 /* CAApplication.cpp in Sources */,
 				D6ADC6451E56A72800750771 /* CATouch.cpp in Sources */,
 				D6ADC6EE1E56A72800750771 /* json_writer.cpp in Sources */,
@@ -2227,6 +2314,7 @@
 				02F19A921D4260E900BE472F /* CASAXParser.cpp in Sources */,
 				022160791C1FAD42009FFCFC /* CATextField.mm in Sources */,
 				D6ADC6251E56A72800750771 /* CAButton.cpp in Sources */,
+				D685DB2F25EE5EAF00587E6B /* split.c in Sources */,
 				D6ADC6F51E56A72800750771 /* md5.cpp in Sources */,
 				D6ADC60F1E56A72800750771 /* CAResponder.cpp in Sources */,
 				D6ADC62B1E56A72800750771 /* CAProgress.cpp in Sources */,
@@ -2241,8 +2329,10 @@
 				D6C7299F1EEE74740094B191 /* CADrawingPrimitives.cpp in Sources */,
 				D6ADC62F1E56A72800750771 /* CASlider.cpp in Sources */,
 				D644B3921F19F8CB00E90A86 /* CAAVPlayerView.cpp in Sources */,
+				D685DB3525EE5EAF00587E6B /* qrspec.c in Sources */,
 				B0C3BD481ADE726B009BE71A /* CAClipboard.mm in Sources */,
 				D6ADC6651E56A72800750771 /* CGSprite.cpp in Sources */,
+				D685DB3325EE5EAF00587E6B /* rsecc.c in Sources */,
 				D6ADC6D91E56A72800750771 /* ConvertUTF.cpp in Sources */,
 				D6ADC6781E56A72800750771 /* gif_font.c in Sources */,
 				D6C729991EEE74740094B191 /* CAClippingView.cpp in Sources */,
@@ -2253,6 +2343,7 @@
 				04EABB4A1956DE7100198A8E /* CrossApp.cpp in Sources */,
 				E0FCFF251E5C23E600CCA191 /* CAAddressBook.mm in Sources */,
 				0ACE3B75212D494E008CF054 /* NSString+PeopleNameGetLetter.m in Sources */,
+				D685DB3225EE5EAF00587E6B /* mask.c in Sources */,
 				0460ED1C195700EE00D13001 /* CCEGLViewProtocol.cpp in Sources */,
 				D6ADC65F1E56A72800750771 /* CGTweenFunction.cpp in Sources */,
 				E0FCFF191E5C1F7700CCA191 /* CAImagePickerController.mm in Sources */,
@@ -2264,6 +2355,7 @@
 				D6ADC6B21E56A72800750771 /* CCProperties.cpp in Sources */,
 				D6ADC60B1E56A72800750771 /* CAPointExtension.cpp in Sources */,
 				0460ED301957019600D13001 /* CCEGLView.mm in Sources */,
+				D685DB3025EE5EAF00587E6B /* qrinput.c in Sources */,
 				D6ADC6331E56A72800750771 /* CASwitch.cpp in Sources */,
 				D6C729BF1EEE74740094B191 /* CAWaterfallView.cpp in Sources */,
 			);

@@ -65,7 +65,17 @@ dispatcher/CATouch.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
 images/CAImageCube.cpp \
+images/CAQrencode.cpp \
 images/CAGif.cpp \
+images/qrencode/bitstream.c \
+images/qrencode/mask.c \
+images/qrencode/mmask.c \
+images/qrencode/mqrspec.c \
+images/qrencode/qrencode.c \
+images/qrencode/qrinput.c \
+images/qrencode/qrspec.c \
+images/qrencode/rsecc.c \
+images/qrencode/split.c \
 images/gif_lib/egif_lib.c \
 images/gif_lib/openbsd-reallocarray.c \
 images/gif_lib/dgif_lib.c \
