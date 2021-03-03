@@ -29,7 +29,7 @@ CAImage* CAQrencode::createWithQRString(const std::string& string, unsigned int 
 {
     QRcode *code = QRcode_encodeString(string.c_str(), 0, QR_ECLEVEL_L, QR_MODE_8, 1);
     
-    float side = CrossApp::s_dip_to_px(1) > 1 ? CrossApp::s_dip_to_px(sideLength) : sideLength;
+    float side = MAX(CrossApp::s_dip_to_px(sideLength), sideLength);
     int scale = std::ceil(side / code->width);
     int off = 0;
     int width = (code->width + off * 2) * scale;
