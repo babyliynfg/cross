@@ -1644,8 +1644,8 @@
 		D685DB4525EFC88D00587E6B /* assets-manager */ = {
 			isa = PBXGroup;
 			children = (
-				D685DB4625EFC88D00587E6B /* AssetsManager.cpp */,
 				D685DB4725EFC88D00587E6B /* downloader */,
+				D685DB4625EFC88D00587E6B /* AssetsManager.cpp */,
 				D685DB4D25EFC88D00587E6B /* AssetsManager.h */,
 			);
 			path = "assets-manager";
