@@ -301,6 +301,13 @@
 		D685DB0625EE53AD00587E6B /* split.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DAF325EE53AD00587E6B /* split.h */; };
 		D685DB0A25EE53C300587E6B /* CAQrencode.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB0825EE53C300587E6B /* CAQrencode.h */; };
 		D685DB0B25EE53C300587E6B /* CAQrencode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D685DB0925EE53C300587E6B /* CAQrencode.cpp */; };
+		D685DB4E25EFC88D00587E6B /* AssetsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D685DB4625EFC88D00587E6B /* AssetsManager.cpp */; };
+		D685DB4F25EFC88D00587E6B /* Downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D685DB4825EFC88D00587E6B /* Downloader.cpp */; };
+		D685DB5025EFC88D00587E6B /* Downloader-curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D685DB4925EFC88D00587E6B /* Downloader-curl.cpp */; };
+		D685DB5125EFC88D00587E6B /* Downloader-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB4A25EFC88D00587E6B /* Downloader-curl.h */; };
+		D685DB5225EFC88D00587E6B /* Downloader.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB4B25EFC88D00587E6B /* Downloader.h */; };
+		D685DB5325EFC88D00587E6B /* IDownloaderImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB4C25EFC88D00587E6B /* IDownloaderImpl.h */; };
+		D685DB5425EFC88D00587E6B /* AssetsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DB4D25EFC88D00587E6B /* AssetsManager.h */; };
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
 		D69B761D1E4AFE12007D9771 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D69B75C31E4AFE12007D9771 /* CCBatchCommand.cpp */; };
 		D69B761E1E4AFE12007D9771 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D69B75C41E4AFE12007D9771 /* CCBatchCommand.h */; };
@@ -756,6 +763,13 @@
 		D685DAF325EE53AD00587E6B /* split.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = split.h; sourceTree = "<group>"; };
 		D685DB0825EE53C300587E6B /* CAQrencode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAQrencode.h; sourceTree = "<group>"; };
 		D685DB0925EE53C300587E6B /* CAQrencode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAQrencode.cpp; sourceTree = "<group>"; };
+		D685DB4625EFC88D00587E6B /* AssetsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetsManager.cpp; sourceTree = "<group>"; };
+		D685DB4825EFC88D00587E6B /* Downloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Downloader.cpp; sourceTree = "<group>"; };
+		D685DB4925EFC88D00587E6B /* Downloader-curl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Downloader-curl.cpp"; sourceTree = "<group>"; };
+		D685DB4A25EFC88D00587E6B /* Downloader-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Downloader-curl.h"; sourceTree = "<group>"; };
+		D685DB4B25EFC88D00587E6B /* Downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Downloader.h; sourceTree = "<group>"; };
+		D685DB4C25EFC88D00587E6B /* IDownloaderImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDownloaderImpl.h; sourceTree = "<group>"; };
+		D685DB4D25EFC88D00587E6B /* AssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsManager.h; sourceTree = "<group>"; };
 		D693E7C51D34F75F003D97A4 /* CAVec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVec4.h; sourceTree = "<group>"; };
 		D693E7C61D34F75F003D97A4 /* CAVec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVec4.cpp; sourceTree = "<group>"; };
 		D69B75C31E4AFE12007D9771 /* CCBatchCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBatchCommand.cpp; sourceTree = "<group>"; };
@@ -1553,6 +1567,7 @@
 		D6596E121E57040B00A55CF9 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				D685DB4525EFC88D00587E6B /* assets-manager */,
 				D6596E131E57040B00A55CF9 /* DownloadManager.cpp */,
 				D6596E141E57040B00A55CF9 /* DownloadManager.h */,
 				D674DCFD1ECC4C2900D25BFC /* HttpCookie.cpp */,
@@ -1624,6 +1639,28 @@
 				D685DAF325EE53AD00587E6B /* split.h */,
 			);
 			path = qrencode;
+			sourceTree = "<group>";
+		};
+		D685DB4525EFC88D00587E6B /* assets-manager */ = {
+			isa = PBXGroup;
+			children = (
+				D685DB4625EFC88D00587E6B /* AssetsManager.cpp */,
+				D685DB4725EFC88D00587E6B /* downloader */,
+				D685DB4D25EFC88D00587E6B /* AssetsManager.h */,
+			);
+			path = "assets-manager";
+			sourceTree = "<group>";
+		};
+		D685DB4725EFC88D00587E6B /* downloader */ = {
+			isa = PBXGroup;
+			children = (
+				D685DB4825EFC88D00587E6B /* Downloader.cpp */,
+				D685DB4925EFC88D00587E6B /* Downloader-curl.cpp */,
+				D685DB4A25EFC88D00587E6B /* Downloader-curl.h */,
+				D685DB4B25EFC88D00587E6B /* Downloader.h */,
+				D685DB4C25EFC88D00587E6B /* IDownloaderImpl.h */,
+			);
+			path = downloader;
 			sourceTree = "<group>";
 		};
 		D69B75C21E4AFE12007D9771 /* renderer */ = {
@@ -1830,6 +1867,7 @@
 				B0A11DAB1AE8C5C500933BF6 /* gif_lib_private.h in Headers */,
 				04EAB0761956D75600198A8E /* CAScheduler.h in Headers */,
 				D69B76631E4B03A9007D9771 /* CAConfiguration.h in Headers */,
+				D685DB5425EFC88D00587E6B /* AssetsManager.h in Headers */,
 				04EAB0791956D75600198A8E /* ccConfig.h in Headers */,
 				04EAB07A1956D75600198A8E /* ccMacros.h in Headers */,
 				D66F52A61ED7CE4500546E5E /* CAData.h in Headers */,
@@ -1868,6 +1906,7 @@
 				D6C72A041EEE748D0094B191 /* CACollectionView.h in Headers */,
 				D673AC041E52E2A0007E7A5B /* CCGL.h in Headers */,
 				D69B76301E4AFE12007D9771 /* CCMaterial.h in Headers */,
+				D685DB5225EFC88D00587E6B /* Downloader.h in Headers */,
 				04EAB0A41956D75600198A8E /* CAViewController.h in Headers */,
 				D673AC091E52E2A0007E7A5B /* EAGLView.h in Headers */,
 				D66BCD4F1D3DC27700587C65 /* CGSpriteFrame.h in Headers */,
@@ -1986,6 +2025,7 @@
 				D685DAF925EE53AD00587E6B /* mmask.h in Headers */,
 				04EABA761956D75A00198A8E /* base64.h in Headers */,
 				D6C72A0C1EEE748D0094B191 /* CAGifView.h in Headers */,
+				D685DB5325EFC88D00587E6B /* IDownloaderImpl.h in Headers */,
 				B074A8B81A722B5200F34F79 /* CAViewAnimation.h in Headers */,
 				D65AFE8C1D3F6ED30067B290 /* CAFileUtils.h in Headers */,
 				D673AC051E52E2A0007E7A5B /* CCPlatformDefine.h in Headers */,
@@ -2010,6 +2050,7 @@
 				B02CE48419AD869600B905FB /* CAPageControl.h in Headers */,
 				D69B76381E4AFE12007D9771 /* CCPrimitiveCommand.h in Headers */,
 				D69B76451E4AFE13007D9771 /* ccShaders.h in Headers */,
+				D685DB5125EFC88D00587E6B /* Downloader-curl.h in Headers */,
 				D69B763F1E4AFE12007D9771 /* CCRenderCommandPool.h in Headers */,
 				D649B2AA1D3CD6A80020414A /* CGAction.h in Headers */,
 				04EABA921956D75B00198A8E /* CAUserDefault.h in Headers */,
@@ -2211,6 +2252,7 @@
 				D69B76601E4B03A9007D9771 /* CACameraBackgroundBrush.cpp in Sources */,
 				D685DAF725EE53AD00587E6B /* bitstream.c in Sources */,
 				D673AC031E52E2A0007E7A5B /* CCFileUtilsMac.mm in Sources */,
+				D685DB5025EFC88D00587E6B /* Downloader-curl.cpp in Sources */,
 				D6596E1D1E57040B00A55CF9 /* HttpClient.cpp in Sources */,
 				D6C729F91EEE748D0094B191 /* CAActivityIndicatorView.cpp in Sources */,
 				E070BB181E5EEA87000746FA /* CAImagePickerController.mm in Sources */,
@@ -2222,6 +2264,7 @@
 				D6C513241E6910C300B0BE19 /* CAColor.cpp in Sources */,
 				D69B762B1E4AFE12007D9771 /* ccGLStateCache.cpp in Sources */,
 				D6596E331E57048600A55CF9 /* CAAlertViewImpl.mm in Sources */,
+				D685DB4F25EFC88D00587E6B /* Downloader.cpp in Sources */,
 				D65AFE8B1D3F6ED30067B290 /* CAFileUtils.cpp in Sources */,
 				E070BB171E5EEA87000746FA /* CADevice.mm in Sources */,
 				D69B76621E4B03A9007D9771 /* CAConfiguration.cpp in Sources */,
@@ -2278,6 +2321,7 @@
 				04EABB441956DD8E00198A8E /* CrossApp.cpp in Sources */,
 				D6C72A191EEE748D0094B191 /* CARenderImage.cpp in Sources */,
 				D6CC2DF51DD9BA8F007E8502 /* CAThemeManager.cpp in Sources */,
+				D685DB4E25EFC88D00587E6B /* AssetsManager.cpp in Sources */,
 				D6C72A071EEE748D0094B191 /* CADrawingPrimitives.cpp in Sources */,
 				D69B762D1E4AFE12007D9771 /* CCGroupCommand.cpp in Sources */,
 				D69B76461E4AFE13007D9771 /* CCTechnique.cpp in Sources */,

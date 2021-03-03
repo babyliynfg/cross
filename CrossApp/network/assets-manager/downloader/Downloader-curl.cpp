@@ -702,7 +702,7 @@ DownloaderCURL::DownloaderCURL(const DownloaderHints& hints)
     _scheduler->schedule(bind(&DownloaderCURL::_onSchedule, this, placeholders::_1),
                          _schedulerKey,
                          this,
-                         0.1f);
+                         1/60.f);
 }
 
 DownloaderCURL::~DownloaderCURL()
