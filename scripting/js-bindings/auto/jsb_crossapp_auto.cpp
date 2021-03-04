@@ -11990,6 +11990,46 @@ void js_register_crossapp_CALabel(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_CrossApp_CAApplication_class;
 JSObject *jsb_CrossApp_CAApplication_prototype;
 
+bool js_crossapp_CAApplication_onReset(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CAApplication* cobj = (CrossApp::CAApplication *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAApplication_onReset : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void ()> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=, &ok]() -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAApplication_onReset : Error processing arguments");
+        cobj->onReset(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAApplication_onReset : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_crossapp_CAApplication_setCrossAppCCLogNotification(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -13573,6 +13613,7 @@ void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global) 
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("onReset", js_crossapp_CAApplication_onReset, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCrossAppCCLogNotification", js_crossapp_CAApplication_setCrossAppCCLogNotification, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStatusBarOrientation", js_crossapp_CAApplication_getStatusBarOrientation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNotificationCenter", js_crossapp_CAApplication_getNotificationCenter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -31020,6 +31061,154 @@ void js_register_crossapp_CAGif(JSContext *cx, JS::HandleObject global) {
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CAQrencode_class;
+JSObject *jsb_CrossApp_CAQrencode_prototype;
+
+bool js_crossapp_CAQrencode_createWithQRString(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 3) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            uint32_t arg1 = 0;
+            ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAColor4B arg2;
+            ok &= jsval_to_cacolor4b(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAImage* ret = CrossApp::CAQrencode::createWithQRString(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 2) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            uint32_t arg1 = 0;
+            ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAImage* ret = CrossApp::CAQrencode::createWithQRString(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 4) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            uint32_t arg1 = 0;
+            ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAColor4B arg2;
+            ok &= jsval_to_cacolor4b(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAColor4B arg3;
+            ok &= jsval_to_cacolor4b(cx, args.get(3), &arg3);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAImage* ret = CrossApp::CAQrencode::createWithQRString(arg0, arg1, arg2, arg3);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_crossapp_CAQrencode_createWithQRString : wrong number of arguments");
+    return false;
+}
+
+extern JSObject *jsb_CrossApp_CAObject_prototype;
+
+void js_CrossApp_CAQrencode_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CAQrencode)", obj);
+}
+void js_register_crossapp_CAQrencode(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CAQrencode_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CAQrencode_class->name = "CAQrencode";
+    jsb_CrossApp_CAQrencode_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CAQrencode_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CAQrencode_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CAQrencode_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CAQrencode_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CAQrencode_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CAQrencode_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CAQrencode_class->finalize = js_CrossApp_CAQrencode_finalize;
+    jsb_CrossApp_CAQrencode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("createWithQRString", js_crossapp_CAQrencode_createWithQRString, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CAQrencode_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_CAObject_prototype),
+        jsb_CrossApp_CAQrencode_class,
+        dummy_constructor<CrossApp::CAQrencode>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CAQrencode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CAQrencode> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CAQrencode_class;
+        p->proto = jsb_CrossApp_CAQrencode_prototype;
+        p->parentProto = jsb_CrossApp_CAObject_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CAGifView_class;
 JSObject *jsb_CrossApp_CAGifView_prototype;
 
@@ -44107,7 +44296,7 @@ bool js_crossapp_CAPickerView_onTitleForRow(JSContext *cx, uint32_t argc, jsval 
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-                auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
+		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = uint32_to_jsval(cx, larg0);
@@ -70339,6 +70528,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAActivityIndicatorView(cx, ns);
     js_register_crossapp_CAImageView(cx, ns);
     js_register_crossapp_CASlider(cx, ns);
+    js_register_crossapp_CAQrencode(cx, ns);
     js_register_crossapp_ToggleVisibility(cx, ns);
     js_register_crossapp_Repeat(cx, ns);
     js_register_crossapp_CASegmentedControl(cx, ns);

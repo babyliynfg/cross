@@ -4716,6 +4716,16 @@ CALabel : function (
 ca.CAApplication = {
 
 /**
+ * @method onReset
+ * @param {function} arg0
+ */
+onReset : function (
+func 
+)
+{
+},
+
+/**
  * @method setCrossAppCCLogNotification
  * @param {bool} arg0
  */
@@ -11763,6 +11773,31 @@ cadata
 CAGif : function (
 )
 {
+},
+
+};
+
+/**
+ * @class CAQrencode
+ */
+ca.CAQrencode = {
+
+/**
+ * @method createWithQRString
+* @param {String|String|String} str
+* @param {unsigned int|unsigned int|unsigned int} int
+* @param {color4b_object|color4b_object} cacolor4b
+* @param {color4b_object} cacolor4b
+* @return {ca.CAImage|ca.CAImage|ca.CAImage}
+*/
+createWithQRString : function(
+str,
+int,
+cacolor4b,
+cacolor4b 
+)
+{
+    return ca.CAImage;
 },
 
 };

@@ -568,6 +568,7 @@ bool js_crossapp_CAApplication_constructor(JSContext *cx, uint32_t argc, jsval *
 void js_crossapp_CAApplication_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAApplication(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAApplication_onReset(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_setCrossAppCCLogNotification(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getStatusBarOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAApplication_getNotificationCenter(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1455,6 +1456,15 @@ bool js_crossapp_CAGif_getPixelsWide(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGif_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGif_createWithData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGif_CAGif(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_CAQrencode_class;
+extern JSObject *jsb_CrossApp_CAQrencode_prototype;
+
+bool js_crossapp_CAQrencode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAQrencode_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAQrencode(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAQrencode_createWithQRString(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAGifView_class;
 extern JSObject *jsb_CrossApp_CAGifView_prototype;
