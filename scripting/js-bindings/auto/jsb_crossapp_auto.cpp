@@ -2113,25 +2113,6 @@ bool js_crossapp_CAImage_getName(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAImage_getName : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_crossapp_CAImage_getGifImageIndex(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_getGifImageIndex : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getGifImageIndex();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAImage_getGifImageIndex : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_crossapp_CAImage_convertDataToFormat(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -2261,25 +2242,6 @@ bool js_crossapp_CAImage_getBitPerPixel(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAImage_getBitPerPixel : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_crossapp_CAImage_getGifImageCounts(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_getGifImageCounts : Invalid Native Object");
-    if (argc == 0) {
-        uint32_t ret = cobj->getGifImageCounts();
-        jsval jsret = JSVAL_NULL;
-        jsret = uint32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAImage_getGifImageCounts : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_crossapp_CAImage_getContentSize(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2687,27 +2649,6 @@ bool js_crossapp_CAImage_isWebp(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAImage_isWebp : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAImage_updateGifImageWithIndex(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_updateGifImageWithIndex : Invalid Native Object");
-    if (argc == 1) {
-        uint32_t arg0 = 0;
-        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_updateGifImageWithIndex : Error processing arguments");
-        cobj->updateGifImageWithIndex(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAImage_updateGifImageWithIndex : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_crossapp_CAImage_copy(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -3005,31 +2946,6 @@ bool js_crossapp_CAImage_isPvr(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_crossapp_CAImage_isPvr : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_crossapp_CAImage_isGif(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_isGif : Invalid Native Object");
-    if (argc == 2) {
-        const unsigned char* arg0 = nullptr;
-        unsigned long arg1 = 0;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = (unsigned char*)arg0_tmp.c_str();
-        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_isGif : Error processing arguments");
-        bool ret = cobj->isGif(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_crossapp_CAImage_isGif : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_crossapp_CAImage_createWithRawData(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3699,13 +3615,10 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
         JS_FN("isTiff", js_crossapp_CAImage_isTiff, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("bitsPerPixelForFormat", js_crossapp_CAImage_bitsPerPixelForFormat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getName", js_crossapp_CAImage_getName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getGifImageIndex", js_crossapp_CAImage_getGifImageIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("convertDataToFormat", js_crossapp_CAImage_convertDataToFormat, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxT", js_crossapp_CAImage_setMaxT, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithImageFile", js_crossapp_CAImage_initWithImageFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawInRect", js_crossapp_CAImage_drawInRect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBitPerPixel", js_crossapp_CAImage_getBitPerPixel, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getGifImageCounts", js_crossapp_CAImage_getGifImageCounts, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentSize", js_crossapp_CAImage_getContentSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getData", js_crossapp_CAImage_getData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("convertRGBA8888ToFormat", js_crossapp_CAImage_convertRGBA8888ToFormat, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -3722,7 +3635,6 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
         JS_FN("hasAlpha", js_crossapp_CAImage_hasAlpha, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isEtc", js_crossapp_CAImage_isEtc, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isWebp", js_crossapp_CAImage_isWebp, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("updateGifImageWithIndex", js_crossapp_CAImage_updateGifImageWithIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("copy", js_crossapp_CAImage_copy, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getImageFileType", js_crossapp_CAImage_getImageFileType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawAtPoint", js_crossapp_CAImage_drawAtPoint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -3735,7 +3647,6 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
         JS_FN("isJpg", js_crossapp_CAImage_isJpg, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("convertRGB888ToFormat", js_crossapp_CAImage_convertRGB888ToFormat, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isPvr", js_crossapp_CAImage_isPvr, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isGif", js_crossapp_CAImage_isGif, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

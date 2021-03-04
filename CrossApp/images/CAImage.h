@@ -19,7 +19,6 @@
 #include "controller/CAFont.h"
 #include "CCGL.h"
 #include "CCStdC.h"
-#include "gif_lib/gif_lib.h"
 #include <list>
 #include <map>
 #include <set>
@@ -50,7 +49,6 @@ public:
     {
         JPG,//! JPEG
         PNG,//! PNG
-        GIF,//! GIF
         TIFF,//! TIFF
         WEBP,//! WebP
         ETC,//! ETC
@@ -202,7 +200,6 @@ public:
     bool isWebp(const unsigned char * data, unsigned long dataLen);
     bool isPvr(const unsigned char * data, unsigned long dataLen);
     bool isEtc(const unsigned char * data, unsigned long dataLen);
-    bool isGif(const unsigned char * data, unsigned long dataLen);
     
     CC_PROPERTY_READONLY_PASS_BY_REF(CAImage::PixelFormat, m_ePixelFormat, PixelFormat)
     
@@ -229,12 +226,6 @@ public:
     void repremultipliedImageData();
     
     void freeName();
-    
-    void updateGifImageWithIndex(unsigned int index);
-
-    unsigned int getGifImageIndex();
-    
-    unsigned int getGifImageCounts();
     
     static void reloadAllImages();
     
@@ -272,7 +263,6 @@ protected:
     
     bool initWithJpgData(const unsigned char *  data, unsigned long dataLen);
     bool initWithPngData(const unsigned char * data, unsigned long dataLen);
-    bool initWithGifData(const unsigned char * data, unsigned long dataLen);
     bool initWithTiffData(const unsigned char * data, unsigned long dataLen);
     bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
     typedef struct sImageTGA tImageTGA;
@@ -310,13 +300,6 @@ protected:
     void convertAI88ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     void convertI8ToRGB888(const unsigned char* data, unsigned long dataLen, unsigned char* outData);
     
-    /*GIF*/
-    void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
-    bool checkIfCover(const SavedImage* target, const SavedImage* covered);
-    bool checkIfWillBeCleared(const SavedImage* frame);
-    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
-    void setGifImageWithIndex(unsigned int index);
-    
 public:
     
     std::wstring m_txt;
@@ -338,11 +321,7 @@ protected:
     bool m_bTextImage;
     
     int  m_nBitsPerComponent;
-    
-    GifFileType* m_pGIF;
-    
-    int m_iGIFIndex;
-        
+                
     static const PixelFormatInfoMap s_pixelFormatInfoTables;
     
 	friend class CAFTRichFont;

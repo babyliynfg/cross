@@ -31,9 +31,6 @@
 #include <tiffio.h>
 #include <decode.h>
 #include "support/image_support/TGAlib.h"
-#include "images/gif_lib/gif_lib.h"
-#include "images/gif_lib/gif_hash.h"
-#include "images/gif_lib/gif_lib_private.h"
 
 NS_CC_BEGIN
 
@@ -1018,15 +1015,6 @@ const std::set<CAImage*>& CAImage::getImagesSet()
     return s_pImages;
 }
 
-
-static int memReadFuncGif(GifFileType* GifFile, GifByteType* buf, int count)
-{
-    char* ptr = (char*)(GifFile->UserData);
-    memcpy(buf, ptr, count);
-    GifFile->UserData = ptr + count;
-    return count;
-}
-
 CAImage::CAImage()
 : m_uPixelsWide(0)
 , m_uPixelsHigh(0)
@@ -1040,8 +1028,6 @@ CAImage::CAImage()
 , m_pData(nullptr)
 , m_nBitsPerComponent(0)
 , m_bPremultiplied(false)
-, m_pGIF(nullptr)
-, m_iGIFIndex(0)
 , m_bTextImage(false)
 {
     s_pImages.insert(this);
@@ -1051,12 +1037,6 @@ CAImage::~CAImage()
 {
     CCLOG("CrossApp: deallocing CAImage %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
-    
-    if (m_pGIF)
-    {
-        int ErrorCode;
-        DGifCloseFile(m_pGIF, &ErrorCode);
-    }
     
     this->freeName();
 
@@ -1098,199 +1078,6 @@ CAImage* CAImage::createWithString(const std::string& text, const CAFont& font, 
 CAImage* CAImage::create(const std::string& file)
 {
     return CAApplication::getApplication()->getImageCache()->addImage(file);
-}
-
-unsigned int CAImage::getGifImageIndex()
-{
-    return m_iGIFIndex;
-}
-
-unsigned int CAImage::getGifImageCounts()
-{
-    return m_pGIF ? m_pGIF->ImageCount : 0;
-}
-
-void CAImage::updateGifImageWithIndex(unsigned int index)
-{
-    this->setGifImageWithIndex(index);
-    this->repremultipliedImageData();
-}
-
-void CAImage::copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width)
-{
-    for (; width > 0; width--, src++, dst+=4)
-    {
-        if (*src != transparent)
-        {
-            const GifColorType& col = cmap->Colors[*src];
-            *dst     = col.Red;
-            *(dst+1) = col.Green;
-            *(dst+2) = col.Blue;
-            *(dst+3) = 0xFF;
-        }
-    }
-}
-
-void CAImage::setGifImageWithIndex(unsigned int index)
-{
-    CC_RETURN_IF(m_pGIF == NULL);
-    index = MIN(index, m_pGIF->ImageCount-1);
-    m_iGIFIndex = index;
-    
-    CAColor4B bgColor;
-    if (m_pGIF->SColorMap != NULL)
-    {
-        const GifColorType& col = m_pGIF->SColorMap->Colors[m_pGIF->SBackGroundColor];
-        bgColor = CAColor4B(col.Red, col.Green, col.Blue, 0xFF);
-    }
-
-    static char paintingColor[4] = {0, 0, 0, 0};
-    
-    const SavedImage* curr = &m_pGIF->SavedImages[index];
-    
-    if (index == 0)
-    {
-        bool trans;
-        int disposal;
-        this->getTransparencyAndDisposalMethod(curr, &trans, &disposal);
-        
-        for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
-        {
-            *(m_pData->getBytes() + i * 4)     = '\0';
-            *(m_pData->getBytes() + i * 4 + 1) = '\0';
-            *(m_pData->getBytes() + i * 4 + 2) = '\0';
-            *(m_pData->getBytes() + i * 4 + 3) = '\0';
-        }
-    }
-    else
-    {
-        const SavedImage* prev = &m_pGIF->SavedImages[index - 1];
-        
-        bool prevTrans;
-        int prevDisposal;
-        this->getTransparencyAndDisposalMethod(prev, &prevTrans, &prevDisposal);
-        
-        bool currTrans;
-        int currDisposal;
-        this->getTransparencyAndDisposalMethod(curr, &currTrans, &currDisposal);
-        
-        
-        if (currTrans || !checkIfCover(curr, prev))
-        {
-            if (prevDisposal == 2)
-            {
-                for (int top = prev->ImageDesc.Top; top < MIN(m_uPixelsHigh, prev->ImageDesc.Top + prev->ImageDesc.Height); top++)
-                {
-                    for(int left = prev->ImageDesc.Left; left < MIN(m_uPixelsWide, prev->ImageDesc.Left + prev->ImageDesc.Width); left++)
-                    {
-                        unsigned char* dst = &m_pData->getBytes()[(top * m_uPixelsWide + left) * 4];
-                        *dst     = paintingColor[0];
-                        *(dst+1) = paintingColor[1];
-                        *(dst+2) = paintingColor[2];
-                        *(dst+3) = paintingColor[3];
-                    }
-                }
-            }
-        }
-    }
-    
-    {
-        int transparent = -1;
-        for (int i = 0; i < curr->ExtensionBlockCount; ++i)
-        {
-            ExtensionBlock* eb = curr->ExtensionBlocks + i;
-            if (eb->Function == GRAPHICS_EXT_FUNC_CODE &&
-                eb->ByteCount == 4)
-            {
-                bool has_transparency = ((eb->Bytes[0] & 1) == 1);
-                if (has_transparency)
-                {
-                    transparent = (unsigned char)eb->Bytes[3];
-                }
-            }
-        }
-        
-        if (curr->ImageDesc.ColorMap != NULL)
-        {
-            GifFreeMapObject(m_pGIF->SColorMap);
-            m_pGIF->SColorMap = GifMakeMapObject(curr->ImageDesc.ColorMap->ColorCount,
-                                                 curr->ImageDesc.ColorMap->Colors);
-        }
-        
-        if (m_pGIF->SColorMap && m_pGIF->SColorMap->ColorCount == (1 << m_pGIF->SColorMap->BitsPerPixel))
-        {
-            unsigned char* src = (unsigned char*)curr->RasterBits;
-            unsigned char* dst = &m_pData->getBytes()[(curr->ImageDesc.Top * m_uPixelsWide + curr->ImageDesc.Left) * 4];
-            
-            GifWord copyWidth = curr->ImageDesc.Width;
-            if (curr->ImageDesc.Left + copyWidth > m_uPixelsWide)
-            {
-                copyWidth = m_uPixelsWide - curr->ImageDesc.Left;
-            }
-            
-            GifWord copyHeight = curr->ImageDesc.Height;
-            if (curr->ImageDesc.Top + copyHeight > m_uPixelsHigh)
-            {
-                copyHeight = m_uPixelsHigh - curr->ImageDesc.Top;
-            }
-            
-            for (; copyHeight > 0; copyHeight--)
-            {
-                copyLine(dst, src, m_pGIF->SColorMap, transparent, copyWidth);
-                src += curr->ImageDesc.Width;
-                dst += m_uPixelsWide*4;
-            }
-        }
-    }
-}
-
-void CAImage::getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal)
-{
-    *trans = false;
-    *disposal = 0;
-    for (int i = 0; i < frame->ExtensionBlockCount; ++i)
-    {
-        ExtensionBlock* eb = frame->ExtensionBlocks + i;
-        if (eb->Function == GRAPHICS_EXT_FUNC_CODE &&
-            eb->ByteCount == 4)
-        {
-            *trans = ((eb->Bytes[0] & 1) == 1);
-            *disposal = ((eb->Bytes[0] >> 2) & 7);
-        }
-    }
-}
-
-bool CAImage::checkIfCover(const SavedImage* target, const SavedImage* covered)
-{
-    if (target->ImageDesc.Left <= covered->ImageDesc.Left
-        && covered->ImageDesc.Left + covered->ImageDesc.Width <=
-        target->ImageDesc.Left + target->ImageDesc.Width
-        && target->ImageDesc.Top <= covered->ImageDesc.Top
-        && covered->ImageDesc.Top + covered->ImageDesc.Height <=
-        target->ImageDesc.Top + target->ImageDesc.Height) {
-        return true;
-    }
-    return false;
-}
-
-
-bool CAImage::checkIfWillBeCleared(const SavedImage* frame)
-{
-    for (int i = 0; i < frame->ExtensionBlockCount; ++i)
-    {
-        ExtensionBlock* eb = frame->ExtensionBlocks + i;
-        if (eb->Function == GRAPHICS_EXT_FUNC_CODE &&
-            eb->ByteCount == 4)
-        {
-            // check disposal method
-            int disposal = ((eb->Bytes[0] >> 2) & 7);
-            if (disposal == 2 || disposal == 3)
-            {
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 CAImage* CAImage::createWithImageDataNoCache(CAData* data)
@@ -1395,9 +1182,6 @@ bool CAImage::initWithImageData(CAData* data, bool isOpenGLThread)
                 break;
             case CAImage::Format::PNG:
                 ret = this->initWithPngData(unpackedData, unpackedLen);
-                break;
-            case CAImage::Format::GIF:
-                ret = this->initWithGifData(unpackedData, unpackedLen);
                 break;
             case CAImage::Format::TIFF:
                 ret = this->initWithTiffData(unpackedData, unpackedLen);
@@ -1692,34 +1476,6 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
     }
     return ret;
-}
-
-bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
-{
-    int error = 0;
-    m_pGIF = DGifOpen((unsigned char *)data, &memReadFuncGif, &error);
-    if (NULL == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
-    {
-        int ErrorCode;
-        DGifCloseFile(m_pGIF, &ErrorCode);
-        m_pGIF = NULL;
-        return false;
-    }
-    
-    m_ePixelFormat = CAImage::PixelFormat::RGBA8888;
-    m_uPixelsWide = m_pGIF->SWidth;
-    m_uPixelsHigh = m_pGIF->SHeight;
-    ssize_t length = m_uPixelsWide * m_uPixelsHigh * 4;
-    unsigned char* pData = (unsigned char*)malloc(sizeof(unsigned char) * (length + 1));
-    pData[length] = '\0';
-    m_bHasPremultipliedAlpha = false;
-    
-    m_pData = new CAData();
-    m_pData->fastSet(pData, length);
-    
-    this->setGifImageWithIndex(0);
-    
-    return true;
 }
 
 bool CAImage::initWithTiffData(const unsigned char * data, unsigned long dataLen)
@@ -2673,9 +2429,6 @@ const char* CAImage::getImageFileType()
         case 0x89:
             text = "png";
             break;
-        case 0x47:
-            text = "gif";
-            break;
         case 0x49:
         case 0x4D:
             text = "tiff";
@@ -2864,10 +2617,6 @@ CAImage::Format CAImage::detectFormat(const unsigned char * data, unsigned long 
     {
         return CAImage::Format::JPG;
     }
-    else if (isGif(data, dataLen))
-    {
-        return CAImage::Format::GIF;
-    }
     else if (isTiff(data, dataLen))
     {
         return CAImage::Format::TIFF;
@@ -2909,22 +2658,6 @@ bool CAImage::isJpg(const unsigned char * data, unsigned long dataLen)
     static const unsigned char JPG_SOI[] = {0xFF, 0xD8};
     
     return memcmp(data, JPG_SOI, 2) == 0;
-}
-
-bool CAImage::isGif(const unsigned char * data, unsigned long dataLen)
-{
-    if (dataLen <= 6)
-    {
-        return false;
-    }
-    
-    static const unsigned char JPG_SOI[] = GIF87_STAMP;
-    static const unsigned char JPG_SOI2[] = GIF89_STAMP;
-    static const unsigned char JPG_SOI3[] = GIF_STAMP;
-
-    return     (memcmp(data, JPG_SOI, 6) == 0)
-            || (memcmp(data, JPG_SOI2, 6) == 0)
-            || (memcmp(data, JPG_SOI3, 6) == 0);
 }
 
 bool CAImage::isEtc(const unsigned char * data, unsigned long dataLen)
