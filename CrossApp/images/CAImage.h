@@ -123,13 +123,15 @@ public:
     static CAImage* createWithRawDataNoCache(CAData* data,
                                              const CAImage::PixelFormat& pixelFormat,
                                              unsigned int pixelsWide,
-                                                 unsigned int pixelsHigh);
+                                             unsigned int pixelsHigh,
+                                             bool hasPremultipliedAlpha = false);
     
     static CAImage* createWithRawData(CAData* data,
                                       const CAImage::PixelFormat& pixelFormat,
                                       unsigned int pixelsWide,
                                       unsigned int pixelsHigh,
-                                      const std::string& key);
+                                      const std::string& key,
+                                      bool hasPremultipliedAlpha = false);
     
     static CAImage* createWithColor4B(const CAColor4B& color);
     
@@ -137,7 +139,7 @@ public:
     
     bool initWithImageData(CAData* data, bool isOpenGLThread = true);
     
-    bool initWithRawData(CAData* data, const CAImage::PixelFormat& pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh);
+    bool initWithRawData(CAData* data, const CAImage::PixelFormat& pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, bool hasPremultipliedAlpha = false);
     
     bool initWithColor4B(const CAColor4B& color);
 

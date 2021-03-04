@@ -290,7 +290,7 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         cross_data->copy(data, length);
         CFRelease(ref);
         
-        ret = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
+        ret = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh, true);
         
     } while (0);
     
@@ -374,7 +374,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         cross_data->copy(data, length);
         CFRelease(ref);
         
-        ret = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
+        ret = CrossApp::CAImage::createWithRawDataNoCache(cross_data, CrossApp::CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh, true);
         
     } while (0);
     

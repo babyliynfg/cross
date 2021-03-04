@@ -178,7 +178,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         
         CAData* data = s_gDataVec.front();
         s_gDataVec.clear();
-        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, s_gDimensions.width, s_gDimensions.height);
+        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, s_gDimensions.width, s_gDimensions.height, true);
         data->release();
     } while (0);
     

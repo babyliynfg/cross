@@ -338,7 +338,7 @@ CAImage* CAFontProcesstor::imageForRichText(const std::vector<CARichLabel::Eleme
         
         CAData* data = new CAData();
         data->fastSet(bytes, length);
-        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
+        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh, true);
         data->release();
         
     } while (0);
@@ -465,7 +465,7 @@ CAImage* CAFontProcesstor::imageForText(const std::string& text, CAFont font, DS
         
         CAData* data = new CAData();
         data->fastSet(bytes, length);
-        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh);
+        ret = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat::RGBA8888, pixelsWide, pixelsHigh, true);
         data->release();
         
     } while (0);

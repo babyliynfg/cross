@@ -1105,10 +1105,11 @@ CAImage* CAImage::createWithImageData(CAData* data, const std::string& key)
 CAImage* CAImage::createWithRawDataNoCache(CAData* data,
                                            const CAImage::PixelFormat& pixelFormat,
                                            unsigned int pixelsWide,
-                                           unsigned int pixelsHigh)
+                                           unsigned int pixelsHigh,
+                                           bool hasPremultipliedAlpha)
 {
     CAImage* image = new CAImage();
-    if (image && image->initWithRawData(data, pixelFormat, pixelsWide, pixelsHigh))
+    if (image && image->initWithRawData(data, pixelFormat, pixelsWide, pixelsHigh, hasPremultipliedAlpha))
     {
         image->autorelease();
         return image;
@@ -1121,9 +1122,10 @@ CAImage* CAImage::createWithRawData(CAData* data,
                                     const CAImage::PixelFormat& pixelFormat,
                                     unsigned int pixelsWide,
                                     unsigned int pixelsHigh,
-                                    const std::string& key)
+                                    const std::string& key,
+                                    bool hasPremultipliedAlpha)
 {
-    CAImage* image = CAImage::createWithRawDataNoCache(data, pixelFormat, pixelsWide, pixelsHigh);
+    CAImage* image = CAImage::createWithRawDataNoCache(data, pixelFormat, pixelsWide, pixelsHigh, hasPremultipliedAlpha);
     if (image)
     {
         CAApplication::getApplication()->getImageCache()->setImageForKey(image, key.c_str());
@@ -1640,7 +1642,8 @@ bool CAImage::initWithTGAData(tImageTGA* tgaData)
 bool CAImage::initWithRawData(CAData* data,
                               const CAImage::PixelFormat& pixelFormat,
                               unsigned int pixelsWide,
-                              unsigned int pixelsHigh)
+                              unsigned int pixelsHigh,
+                              bool hasPremultipliedAlpha)
 {
     CC_SAFE_RETAIN(data);
     CC_SAFE_RELEASE(m_pData);
@@ -1659,7 +1662,7 @@ bool CAImage::initWithRawData(CAData* data,
     m_fMaxT = 1;
     
     m_bHasMipmaps = false;
-    m_bHasPremultipliedAlpha = false;
+    m_bHasPremultipliedAlpha = hasPremultipliedAlpha;
     this->repremultipliedImageData();
     
     return true;
