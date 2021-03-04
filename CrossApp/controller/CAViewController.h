@@ -46,6 +46,8 @@ public:
     
     CC_SYNTHESIZE_READONLY(CATabBarItem*, m_pTabBarItem, TabBarItem);
     
+    CC_SYNTHESIZE_READONLY(CAViewController*, m_pSubViewController, SubViewController);
+
     bool isViewRunning();
     
     void setNavigationBarItem(CANavigationBarItem* item);
@@ -115,6 +117,7 @@ private:
     bool m_bLifeLock;
 
     CAUIEditorParser* m_pParser;
+    
 };
 
 class CC_DLL CANavigationController

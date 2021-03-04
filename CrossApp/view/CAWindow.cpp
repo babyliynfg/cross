@@ -98,7 +98,7 @@ CAViewController* CAWindow::getRootViewController()
 
 void CAWindow::presentModalViewController(CAViewController* controller, bool animated)
 {
-    CC_RETURN_IF(controller == NULL);
+    CC_RETURN_IF(controller == nullptr);
     CC_RETURN_IF(m_pModalViewController);
     CC_SAFE_RETAIN(controller);
     m_pModalViewController = controller;

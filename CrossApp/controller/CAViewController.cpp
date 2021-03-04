@@ -25,6 +25,7 @@ NS_CC_BEGIN
 
 CAViewController::CAViewController()
 :m_pView(nullptr)
+,m_pSubViewController(nullptr)
 ,m_pNavigationController(nullptr)
 ,m_pNavigationBarItem(nullptr)
 ,m_pTabBarController(nullptr)
@@ -293,15 +294,75 @@ void CAViewController::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CAViewController::presentModalViewController(CAViewController* controller, bool animated)
 {
-    CAApplication::getApplication()->getRootWindow()->presentModalViewController(controller, animated);
+    CC_RETURN_IF(m_pSubViewController);
+    CC_SAFE_RETAIN(controller);
+    m_pSubViewController = controller;
+
+    m_pSubViewController->addViewFromSuperview(this->getView());
+    m_pSubViewController->getView()->setZOrder(CAWindowZOrderTop);
+    m_pSubViewController->setViewVisibleTrue();
+    
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    if (animated)
+    {
+        CAView* view = m_pSubViewController->getView();
+        DLayout layout = view->getLayout();
+        float y = this->getView()->getBounds().size.height;
+        layout.vertical = DVerticalLayout_T_B(y, -y);
+        view->setLayout(layout);
+
+        CAViewAnimation::beginAnimations("");
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.1f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
+        CAViewAnimation::setAnimationDidStopSelector([&]()
+        {
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+        });
+        view->setLayout(DLayoutFill);
+        CAViewAnimation::commitAnimations();
+    }
+    else
+    {
+        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    }
 }
 
 
 void CAViewController::dismissModalViewController(bool animated)
 {
-    CAApplication::getApplication()->getRootWindow()->dismissModalViewController(animated);
-}
+    CC_RETURN_IF(m_pSubViewController == nullptr);
+    
+    CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    if (animated)
+    {
+        CAView* view = m_pSubViewController->getView();
 
+        CAViewAnimation::beginAnimations("");
+        CAViewAnimation::setAnimationDuration(0.25f);
+        CAViewAnimation::setAnimationDelay(0.1f);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
+        CAViewAnimation::setAnimationDidStopSelector([&]()
+        {
+            m_pSubViewController->setViewVisibleFalse();
+            m_pSubViewController->removeViewFromSuperview();
+            CC_SAFE_RELEASE_NULL(m_pSubViewController);
+            CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+        });
+        DLayout layout = view->getLayout();
+        float y = m_pSubViewController->getView()->getBounds().size.height;
+        layout.vertical = DVerticalLayout_T_B(y, -y);
+        view->setLayout(layout);
+        CAViewAnimation::commitAnimations();
+    }
+    else
+    {
+        m_pSubViewController->setViewVisibleFalse();
+        m_pSubViewController->removeViewFromSuperview();
+        CC_SAFE_RELEASE_NULL(m_pSubViewController);
+        CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
+    }
+}
 
 int get_top_clearance(CAView* view)
 {
