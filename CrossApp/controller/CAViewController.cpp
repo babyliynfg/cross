@@ -373,13 +373,9 @@ int get_top_clearance(CAView* view)
     {
         auto winSize = CAApplication::getApplication()->getWinSize();
         /****** iphone X ******/
-        if (winSize.equals(DSize(750, 1624)))
+        if (winSize.height / winSize.width > 1.8)
         {
             clearance = 88;
-        }
-        else if (winSize.equals(DSize(1624, 750)))
-        {
-            clearance = 40;
         }
         else
         {
@@ -398,11 +394,11 @@ int get_bottom_clearance(CAView* view)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     auto winSize = CAApplication::getApplication()->getWinSize();
     /****** iphone X ******/
-    if (winSize.equals(DSize(750, 1624)))
+    if (winSize.height / winSize.width > 1.8)
     {
         clearance = 80;
     }
-    else if (winSize.equals(DSize(1624, 750)))
+    else if (winSize.width / winSize.height > 1.8)
     {
         clearance = 80;
     }
