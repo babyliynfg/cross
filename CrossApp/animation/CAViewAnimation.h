@@ -26,20 +26,24 @@ public:
         EaseInOut         // slow at beginning and end
     };
 
+    typedef std::function<float(float t,float b,float c)> CurveCallback;
+
 private:
         struct Module : public CAObject
         {
-            std::string                 animationID;
-            CAMap<CAView*, CAObject*>   animations;
-            float                       duration{0.2f};
-            float                       delay{0.0f};
-            float                       repeatCount{1.0f};
-            bool                        repeatAutoreverses{false};
-            float                       time{0.0f};
-            CAViewAnimation::Curve      curve{CAViewAnimation::Curve::Linear};
-            std::function<void()>       willStartFunction{nullptr};
-            std::function<void()>       didStopFunction{nullptr};
-            bool                        alreadyRunning{false};
+            std::string                     animationID;
+            CAMap<CAView*, CAObject*>       animations;
+            float                           duration{0.2f};
+            float                           delay{0.0f};
+            float                           repeatCount{1.0f};
+            float                           repeatTimes{0.0f};
+            bool                            repeatAutoreverses{false};
+            float                           time{0.0f};
+            CAViewAnimation::Curve          curve{CAViewAnimation::Curve::Linear};
+            CAViewAnimation::CurveCallback  curveFunction{nullptr};
+            std::function<void()>           willStartFunction{nullptr};
+            std::function<void()>           didStopFunction{nullptr};
+            bool                            alreadyRunning{false};
         };
         
 public:
@@ -54,9 +58,11 @@ public:
     
     static void setAnimationCurve(CAViewAnimation::Curve curve);// default(CAViewAnimation::Curve::Linear)
     
+    static void setAnimationCurveCallback(const CAViewAnimation::CurveCallback& function); // t, b, c and return t;
+
     static void setAnimationRepeatCount(float repeatCount);// default(1.0)
     
-    static void setAnimationRepeatAutoreverses(bool repeatAutoreverses);// default(false)
+    static void setAnimationRepeatAutoreverses(bool repeatAutoreverses);// default(false), if true, repeatCount must be greater than 1;
     
     static void setAnimationWillStartSelector(const std::function<void()>& function);
 

@@ -44,8 +44,7 @@ void AVPlayerViewTest::playVideo()
         m_pAvplayer->play();
         return;
     }
-    m_pAvplayer = CAAVPlayer::createWithFilePath("image/3.mp4");
-//    m_pAvplayer = CAAVPlayer::createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
+    m_pAvplayer = CAAVPlayer::createWithUrl("https://vd3.bdstatic.com/mda-kmrjft83jp9e60y3/v1-cae/sc/mda-kmrjft83jp9e60y3.mp4?v_from_s=nj_haokan_4469&auth_key=1615190283-0-0-f8f717c7a86cf702ddc7cbb516b75619&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=");
     
     m_pAvplayer->onDidPlayToEndTime([=]
     {
@@ -129,31 +128,32 @@ void AVPlayerViewTest::playVideo()
     CAActivityIndicatorView* activity = CAActivityIndicatorView::createWithLayout(DLayoutFill);
     playerView->addSubview(activity);
     activity->stopAnimating();
-    
-    m_pAvplayer->play();
+
     m_pAvplayer->onPlayState([=](const CAAVPlayer::PlayState& var)
     {
-       if (var == CAAVPlayer::PlayStatePlaying)
-       {
-          activity->startAnimating();
-       }
-       else if (var == CAAVPlayer::PlayStatePause)
-       {
-          activity->stopAnimating();
-       }
+        CCLog("onPlayState %s", var.c_str());
+        if (var == CAAVPlayer::PlayStatePlaying)
+        {
+        }
+        else if (var == CAAVPlayer::PlayStatePause)
+        {
+        }
     });
     
     m_pAvplayer->onPlayBufferLoadingState([=](const CAAVPlayer::PlayBufferLoadingState& var)
     {
-       if (var == CAAVPlayer::PlaybackBufferEmpty)
-       {
+        CCLog("onPlayBufferLoadingState %s", var.c_str());
+        if (var == CAAVPlayer::PlaybackBufferEmpty)
+        {
            activity->startAnimating();
-       }
-       else if (var == CAAVPlayer::PlaybackLikelyToKeepUp)
-       {
+        }
+        else if (var == CAAVPlayer::PlaybackLikelyToKeepUp)
+        {
            activity->stopAnimating();
-       }
+        }
     });
+    
+    m_pAvplayer->play();
 }
 
 void AVPlayerViewTest::setTextTagAndBackgroundImage(CAButton* btn, const std::string& textTag, const std::string& filePath)

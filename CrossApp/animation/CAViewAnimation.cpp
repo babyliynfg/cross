@@ -305,6 +305,13 @@ void CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve curve)
     animation->m_vWillModules.back()->curve = curve;
 }
 
+void CAViewAnimation::setAnimationCurveCallback(const CAViewAnimation::CurveCallback &function)
+{
+    CAViewAnimation* animation = CAViewAnimation::getInstance();
+    CC_RETURN_IF(animation->m_vWillModules.empty());
+    animation->m_vWillModules.back()->curveFunction = function;
+}
+
 void CAViewAnimation::setAnimationRepeatCount(float repeatCount)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
@@ -441,7 +448,6 @@ void CAViewAnimation::update(float dt)
     m_vModules.clear();
 	for (auto& module : modules)
     {
-        module->time += dt;
         float time = module->time - module->delay;
 
         if (time > -FLT_MIN)
@@ -467,45 +473,55 @@ void CAViewAnimation::update(float dt)
                 module->alreadyRunning = true;
             }
             
-            float times = 0;
-            do
-            {
-                CC_BREAK_IF(time < module->duration);
-                CC_BREAK_IF(time - dt < module->duration);
-                time -= module->duration;
-                times += 1.0f;
-            }
-            while (true);
+            float t = time / module->duration;
+            float b = dt / module->duration;
+            float c = 1;
             
-            bool isReverses = module->repeatAutoreverses ? ((int)times) % 2 == 1 : false;
-            float s = MIN(time / module->duration, 1.0f);
-            times += s;
-            times = module->repeatAutoreverses ? times / 2 : times;
-            s = isReverses ? 1.0f - s : s;
-
-            switch (module->curve)
+            bool isReverses = module->repeatAutoreverses ? ((int)module->repeatTimes) % 2 == 1 : false;
+            if (isReverses)
             {
-                case CAViewAnimation::Curve::EaseOut:
-                {
-                    s = (s + sqrtf(1 - powf(1 - s, 2))) / 2;
-                }
-                    break;
-                case CAViewAnimation::Curve::EaseIn:
-                {
-                    s = (s + 1 - sqrtf(1 - powf(s, 2))) / 2;
-                }
-                    break;
-                case CAViewAnimation::Curve::EaseInOut:
-                {
-                    s = (s < 0.5f)
-                        ? (s + 0.5f - sqrtf(0.25f - powf(s, 2))) / 2
-                        : (s + sqrtf(0.25 - powf(1 - s, 2)) + 0.5f) / 2;
-                }
-                    break;
-                default:
-                    break;
+                t = 1.0f - t;
+                b = -b;
             }
-            
+            CCLog("before: %f", MIN(t+b, 1.0f));
+            if (module->curveFunction != nullptr)
+            {
+                t = module->curveFunction(t, b, c);
+            }
+            else
+            {
+                switch (module->curve)
+                {
+                    case CAViewAnimation::Curve::Linear:
+                    {
+                        t = t + b;
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseOut:
+                    {
+                        t = c * std::sin(t * (M_PI/2)) + b;
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseIn:
+                    {
+                        t = c * (1 - std::cos(t * (M_PI/2))) + b;
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseInOut:
+                    {
+                        float split = 0.8;
+                        if (t < split)
+                            t = c*split * (1 - std::cos(t/split * (M_PI/2))) + b;
+                        else
+                            t = split + c*(1-split) * std::sin((t-split)/(1-split) * (M_PI/2)) + b;
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            t = MIN(t, 1.0f);
+            CCLog("after: %f\n", t);
 
 			CAMap<CAView*, CAObject*>& animations = module->animations;
             CAMap<CAView*, CAObject*>::iterator itr_animation = animations.begin();
@@ -517,66 +533,66 @@ void CAViewAnimation::update(float dt)
                 
                 if (model->bScaleX)
                 {
-                    view->setScaleX(model->startScaleX + model->deltaScaleX * s);
+                    view->setScaleX(model->startScaleX + model->deltaScaleX * t);
                 }
                 if (model->bScaleY)
                 {
-                    view->setScaleY(model->startScaleY + model->deltaScaleY * s);
+                    view->setScaleY(model->startScaleY + model->deltaScaleY * t);
                 }
                 if (model->bPoint)
                 {
-                    view->setPoint(model->startPoint + model->deltaPoint * s);
+                    view->setPoint(model->startPoint + model->deltaPoint * t);
                 }
                 if (model->bContentSize)
                 {
-                    view->setContentSize(model->startContentSize + model->deltaContentSize * s);
+                    view->setContentSize(model->startContentSize + model->deltaContentSize * t);
                 }
                 if (model->bZOrder)
                 {
-                    view->setZOrder(model->startZOrder + model->deltaZOrder * s);
+                    view->setZOrder(model->startZOrder + model->deltaZOrder * t);
                 }
                 if (model->bPointZ)
                 {
-                    view->setPointZ(model->startPointZ + model->deltaPointZ * s);
+                    view->setPointZ(model->startPointZ + model->deltaPointZ * t);
                 }
                 if (model->bSkewX)
                 {
-                    view->setSkewX(model->startSkewX + model->deltaSkewX * s);
+                    view->setSkewX(model->startSkewX + model->deltaSkewX * t);
                 }
                 if (model->bSkewY)
                 {
-                    view->setSkewY(model->startSkewY + model->deltaSkewY * s);
+                    view->setSkewY(model->startSkewY + model->deltaSkewY * t);
                 }
                 if (model->bRotation)
                 {
-                    view->setRotation(model->startRotationZ + model->deltaRotationZ * s);
+                    view->setRotation(model->startRotationZ + model->deltaRotationZ * t);
                 }
                 if (model->bRotationX)
                 {
-                    view->setRotationX(model->startRotationX + model->deltaRotationX * s);
+                    view->setRotationX(model->startRotationX + model->deltaRotationX * t);
                 }
                 if (model->bRotationY)
                 {
-                    view->setRotationY(model->startRotationY + model->deltaRotationY * s);
+                    view->setRotationY(model->startRotationY + model->deltaRotationY * t);
                 }
                 
                 if (model->bColor)
                 {
-                    short r = model->startColor.r + model->deltaColor[0] * s;
-                    short g = model->startColor.g + model->deltaColor[1] * s;
-                    short b = model->startColor.b + model->deltaColor[2] * s;
-                    short a = model->startColor.a + model->deltaColor[3] * s;
+                    short r = model->startColor.r + model->deltaColor[0] * t;
+                    short g = model->startColor.g + model->deltaColor[1] * t;
+                    short b = model->startColor.b + model->deltaColor[2] * t;
+                    short a = model->startColor.a + model->deltaColor[3] * t;
                     view->setColor(CAColor4B(r, g, b, a));
                 }
                 if (model->bAlpha)
                 {
-                    view->setAlpha(model->startAlpha + model->deltaAlpha * s);
+                    view->setAlpha(model->startAlpha + model->deltaAlpha * t);
                 }
                 if (model->bImageRect)
                 {
                     DRect rect;
-                    rect.origin = model->startImageRect.origin + model->deltaImageRect.origin * s;
-                    rect.size = model->startImageRect.size + model->deltaImageRect.size * s;
+                    rect.origin = model->startImageRect.origin + model->deltaImageRect.origin * t;
+                    rect.size = model->startImageRect.size + model->deltaImageRect.size * t;
                     view->setImageRect(rect);
                 }
                 if (time >= module->duration)
@@ -594,7 +610,13 @@ void CAViewAnimation::update(float dt)
                 ++itr_animation;
             }
             
-            if (times >= module->repeatCount && module->repeatCount < 1048576)
+            if (t == 1.0)
+            {
+                module->time = 0;
+                module->repeatTimes += 1.0f;
+            }
+            
+            if (module->repeatTimes >= module->repeatCount && module->repeatCount < 1048576)
             {
                 if (module->didStopFunction)
                 {
@@ -604,6 +626,8 @@ void CAViewAnimation::update(float dt)
                 continue;
             }
         }
+        
+        module->time += dt;
         m_vModules.pushBack(module);
     }
     modules.clear();
