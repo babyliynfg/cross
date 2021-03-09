@@ -101,6 +101,12 @@ public:
     
     static CAViewModel* newModel(CAView* v);
     
+    void viewsAnimation(float t);
+    
+    void viewsAnimationStart();
+
+    void viewsAnimationEnd();
+
     void getReady();
     
     bool bReady;
@@ -142,6 +148,219 @@ CAViewModel::~CAViewModel()
 CAViewModel* CAViewModel::newModel(CAView* v)
 {
     return new CAViewModel(v);
+}
+
+void CAViewModel::viewsAnimation(float t)
+{
+    view->m_bIsAnimation = true;
+    
+    if (this->bScaleX)
+    {
+        view->setScaleX(this->startScaleX + this->deltaScaleX * t);
+    }
+    if (this->bScaleY)
+    {
+        view->setScaleY(this->startScaleY + this->deltaScaleY * t);
+    }
+    if (this->bPoint)
+    {
+        view->setPoint(this->startPoint + this->deltaPoint * t);
+    }
+    if (this->bContentSize)
+    {
+        view->setContentSize(this->startContentSize + this->deltaContentSize * t);
+    }
+    if (this->bZOrder)
+    {
+        view->setZOrder(this->startZOrder + this->deltaZOrder * t);
+    }
+    if (this->bPointZ)
+    {
+        view->setPointZ(this->startPointZ + this->deltaPointZ * t);
+    }
+    if (this->bSkewX)
+    {
+        view->setSkewX(this->startSkewX + this->deltaSkewX * t);
+    }
+    if (this->bSkewY)
+    {
+        view->setSkewY(this->startSkewY + this->deltaSkewY * t);
+    }
+    if (this->bRotation)
+    {
+        view->setRotation(this->startRotationZ + this->deltaRotationZ * t);
+    }
+    if (this->bRotationX)
+    {
+        view->setRotationX(this->startRotationX + this->deltaRotationX * t);
+    }
+    if (this->bRotationY)
+    {
+        view->setRotationY(this->startRotationY + this->deltaRotationY * t);
+    }
+    
+    if (this->bColor)
+    {
+        short r = this->startColor.r + this->deltaColor[0] * t;
+        short g = this->startColor.g + this->deltaColor[1] * t;
+        short b = this->startColor.b + this->deltaColor[2] * t;
+        short a = this->startColor.a + this->deltaColor[3] * t;
+        view->setColor(CAColor4B(r, g, b, a));
+    }
+    if (this->bAlpha)
+    {
+        view->setAlpha(this->startAlpha + this->deltaAlpha * t);
+    }
+    if (this->bImageRect)
+    {
+        DRect rect;
+        rect.origin = this->startImageRect.origin + this->deltaImageRect.origin * t;
+        rect.size = this->startImageRect.size + this->deltaImageRect.size * t;
+        view->setImageRect(rect);
+    }
+    view->m_bIsAnimation = false;
+}
+
+void CAViewModel::viewsAnimationStart()
+{
+    if (this->bScaleX)
+    {
+        view->setScaleX(this->startScaleX);
+    }
+    if (this->bScaleY)
+    {
+        view->setScaleY(this->startScaleY);
+    }
+    if (this->bPoint)
+    {
+        view->setPoint(this->startPoint);
+    }
+    if (this->bContentSize)
+    {
+        view->setContentSize(this->startContentSize);
+    }
+    if (this->bZOrder)
+    {
+        view->setZOrder(this->startZOrder);
+    }
+    if (this->bPointZ)
+    {
+        view->setPointZ(this->startPointZ);
+    }
+    if (this->bSkewX)
+    {
+        view->setSkewX(this->startSkewX);
+    }
+    if (this->bSkewY)
+    {
+        view->setSkewY(this->startSkewY);
+    }
+    if (this->bRotation)
+    {
+        view->setRotation(this->startRotationZ);
+    }
+    if (this->bRotationX)
+    {
+        view->setRotationX(this->startRotationX);
+    }
+    if (this->bRotationY)
+    {
+        view->setRotationY(this->startRotationY);
+    }
+    if (this->bColor)
+    {
+        view->setColor(this->startColor);
+    }
+    if (this->bAlpha)
+    {
+        view->setAlpha(this->startAlpha);
+    }
+    if (this->bImageRect)
+    {
+        DRect rect;
+        rect.origin = this->startImageRect.origin;
+        rect.size = this->startImageRect.size;
+        view->setImageRect(rect);
+    }
+    if (this->bFlipX)
+    {
+        view->setFlipX(this->startFlipX);
+    }
+    if (this->bFlipY)
+    {
+        view->setFlipY(this->startFlipY);
+    }
+}
+
+void CAViewModel::viewsAnimationEnd()
+{
+    if (this->bScaleX)
+    {
+        view->setScaleX(this->endScaleX);
+    }
+    if (this->bScaleY)
+    {
+        view->setScaleY(this->endScaleY);
+    }
+    if (this->bPoint)
+    {
+        view->setPoint(this->endPoint);
+    }
+    if (this->bContentSize)
+    {
+        view->setContentSize(this->endContentSize);
+    }
+    if (this->bZOrder)
+    {
+        view->setZOrder(this->endZOrder);
+    }
+    if (this->bPointZ)
+    {
+        view->setPointZ(this->endPointZ);
+    }
+    if (this->bSkewX)
+    {
+        view->setSkewX(this->endSkewX);
+    }
+    if (this->bSkewY)
+    {
+        view->setSkewY(this->endSkewY);
+    }
+    if (this->bRotation)
+    {
+        view->setRotation(this->endRotationZ);
+    }
+    if (this->bRotationX)
+    {
+        view->setRotationX(this->endRotationX);
+    }
+    if (this->bRotationY)
+    {
+        view->setRotationY(this->endRotationY);
+    }
+    if (this->bColor)
+    {
+        view->setColor(this->endColor);
+    }
+    if (this->bAlpha)
+    {
+        view->setAlpha(this->endAlpha);
+    }
+    if (this->bImageRect)
+    {
+        DRect rect;
+        rect.origin = this->endImageRect.origin;
+        rect.size = this->endImageRect.size;
+        view->setImageRect(rect);
+    }
+    if (this->bFlipX)
+    {
+        view->setFlipX(this->endFlipX);
+    }
+    if (this->bFlipY)
+    {
+        view->setFlipY(this->endFlipY);
+    }
 }
 
 void CAViewModel::getReady()
@@ -230,6 +449,71 @@ void CAViewModel::getReady()
     bReady = true;
 }
 
+namespace CAViewAnimation_Curve {
+
+namespace Sine {
+
+inline float EaseOut(float t,float b,float c)
+{
+    t = c * std::sin(t * (M_PI/2)) + b;
+    return MIN(1.0, t);
+}
+
+inline float EaseIn(float t,float b,float c)
+{
+    t= c * (1 - std::cos(t * (M_PI/2))) + b;
+    return MIN(1.0, t);
+}
+
+inline float EaseInOut(float t,float b,float c)
+{
+    float split = 0.8;
+    if (t < split)
+    {
+        t = c*split * (1 - std::cos(t/split * (M_PI/2))) + b;
+        return MIN(split, t);
+    }
+    else
+    {
+        t = split + c*(1-split) * std::sin((t-split)/(1-split) * (M_PI/2)) + b;
+        return MIN(1, t);
+    }
+}
+
+}
+
+namespace Back {
+
+inline float EaseOut(float t,float b,float c)
+{
+    float s = 1.70158;
+    t=t-1;
+    return c*(t*t*((s+1)*t + s) + 1) + b;
+
+}
+
+inline float EaseIn(float t,float b,float c)
+{
+    float s = 1.70158;
+    return c*t*t*((s+1)*t - s) + b;
+}
+
+inline float EaseInOut(float t,float b,float c)
+{
+    t *= 2;
+    float s = 1.70158;
+    s*=1.525;
+    if (t < 1)
+        return c/2*t*t*((s+1)*t - s) + b;
+    
+    t-=2;
+    return c/2*(t*t*((s+1)*t + s) + 2) + b;
+}
+
+}
+
+}
+
 static CAViewAnimation* _viewAnimation = NULL;
 
 CAViewAnimation* CAViewAnimation::getInstance()
@@ -312,11 +596,11 @@ void CAViewAnimation::setAnimationCurveCallback(const CAViewAnimation::CurveCall
     animation->m_vWillModules.back()->curveFunction = function;
 }
 
-void CAViewAnimation::setAnimationRepeatCount(float repeatCount)
+void CAViewAnimation::setAnimationRepeatCount(unsigned int repeatCount)
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
-    repeatCount = MAX(0.0f, repeatCount);
+    repeatCount = MAX(0, repeatCount);
     animation->m_vWillModules.back()->repeatCount = repeatCount;
 }
 
@@ -473,150 +757,37 @@ void CAViewAnimation::update(float dt)
                 module->alreadyRunning = true;
             }
             
-            float t = time / module->duration;
-            float b = dt / module->duration;
-            float c = 1;
-            
             bool isReverses = module->repeatAutoreverses ? ((int)module->repeatTimes) % 2 == 1 : false;
-            if (isReverses)
+            if (module->time - module->delay >= module->duration)
             {
-                t = 1.0f - t;
-                b = -b;
-            }
-            CCLog("before: %f", MIN(t+b, 1.0f));
-            if (module->curveFunction != nullptr)
-            {
-                t = module->curveFunction(t, b, c);
-            }
-            else
-            {
-                switch (module->curve)
-                {
-                    case CAViewAnimation::Curve::Linear:
-                    {
-                        t = t + b;
-                    }
-                        break;
-                    case CAViewAnimation::Curve::EaseOut:
-                    {
-                        t = c * std::sin(t * (M_PI/2)) + b;
-                    }
-                        break;
-                    case CAViewAnimation::Curve::EaseIn:
-                    {
-                        t = c * (1 - std::cos(t * (M_PI/2))) + b;
-                    }
-                        break;
-                    case CAViewAnimation::Curve::EaseInOut:
-                    {
-                        float split = 0.8;
-                        if (t < split)
-                            t = c*split * (1 - std::cos(t/split * (M_PI/2))) + b;
-                        else
-                            t = split + c*(1-split) * std::sin((t-split)/(1-split) * (M_PI/2)) + b;
-                    }
-                        break;
-                    default:
-                        break;
-                }
-            }
-            t = MIN(t, 1.0f);
-            CCLog("after: %f\n", t);
-
-			CAMap<CAView*, CAObject*>& animations = module->animations;
-            CAMap<CAView*, CAObject*>::iterator itr_animation = animations.begin();
-            while (itr_animation != animations.end())
-            {
-                CAView* view = itr_animation->first;
-                view->m_bIsAnimation = true;
-                CAViewModel* model = (CAViewModel*)(itr_animation->second);
+                module->time = module->delay;
+                module->repeatTimes += 1;
                 
-                if (model->bScaleX)
+                if (isReverses)
                 {
-                    view->setScaleX(model->startScaleX + model->deltaScaleX * t);
-                }
-                if (model->bScaleY)
-                {
-                    view->setScaleY(model->startScaleY + model->deltaScaleY * t);
-                }
-                if (model->bPoint)
-                {
-                    view->setPoint(model->startPoint + model->deltaPoint * t);
-                }
-                if (model->bContentSize)
-                {
-                    view->setContentSize(model->startContentSize + model->deltaContentSize * t);
-                }
-                if (model->bZOrder)
-                {
-                    view->setZOrder(model->startZOrder + model->deltaZOrder * t);
-                }
-                if (model->bPointZ)
-                {
-                    view->setPointZ(model->startPointZ + model->deltaPointZ * t);
-                }
-                if (model->bSkewX)
-                {
-                    view->setSkewX(model->startSkewX + model->deltaSkewX * t);
-                }
-                if (model->bSkewY)
-                {
-                    view->setSkewY(model->startSkewY + model->deltaSkewY * t);
-                }
-                if (model->bRotation)
-                {
-                    view->setRotation(model->startRotationZ + model->deltaRotationZ * t);
-                }
-                if (model->bRotationX)
-                {
-                    view->setRotationX(model->startRotationX + model->deltaRotationX * t);
-                }
-                if (model->bRotationY)
-                {
-                    view->setRotationY(model->startRotationY + model->deltaRotationY * t);
-                }
-                
-                if (model->bColor)
-                {
-                    short r = model->startColor.r + model->deltaColor[0] * t;
-                    short g = model->startColor.g + model->deltaColor[1] * t;
-                    short b = model->startColor.b + model->deltaColor[2] * t;
-                    short a = model->startColor.a + model->deltaColor[3] * t;
-                    view->setColor(CAColor4B(r, g, b, a));
-                }
-                if (model->bAlpha)
-                {
-                    view->setAlpha(model->startAlpha + model->deltaAlpha * t);
-                }
-                if (model->bImageRect)
-                {
-                    DRect rect;
-                    rect.origin = model->startImageRect.origin + model->deltaImageRect.origin * t;
-                    rect.size = model->startImageRect.size + model->deltaImageRect.size * t;
-                    view->setImageRect(rect);
-                }
-                if (time >= module->duration)
-                {
-                    if (model->bFlipX)
+                    CAMap<CAView*, CAObject*>& animations = module->animations;
+                    auto itr_animation = animations.begin();
+                    while (itr_animation != animations.end())
                     {
-                        view->setFlipX(model->endFlipX);
-                    }
-                    if (model->bFlipY)
-                    {
-                        view->setFlipY(model->endFlipY);
+                        CAViewModel* model = (CAViewModel*)(itr_animation->second);
+                        model->viewsAnimationStart();
+                        ++itr_animation;
                     }
                 }
-                view->m_bIsAnimation = false;
-                ++itr_animation;
+                else
+                {
+                    CAMap<CAView*, CAObject*>& animations = module->animations;
+                    auto itr_animation = animations.begin();
+                    while (itr_animation != animations.end())
+                    {
+                        CAViewModel* model = (CAViewModel*)(itr_animation->second);
+                        model->viewsAnimationEnd();
+                        ++itr_animation;
+                    }
+                }
             }
             
-            if (t == 1.0)
-            {
-                module->time = 0;
-                module->repeatTimes += 1.0f;
-            }
-            
-            if (module->repeatTimes >= module->repeatCount && module->repeatCount < 1048576)
+            if (module->repeatTimes >= module->repeatCount && (module->repeatCount > 0 && module->repeatCount < 1048576))
             {
                 if (module->didStopFunction)
                 {
@@ -624,6 +795,76 @@ void CAViewAnimation::update(float dt)
                     module->didStopFunction = nullptr;
                 }
                 continue;
+            }
+            
+            float t_before = time / module->duration;
+            float b = dt / module->duration;
+            float c = 1;
+            
+            if (isReverses)
+            {
+                t_before = 1.0f - t_before;
+                b = -b;
+            }
+            float t_after = 0;
+            CCLog("before: %f", MIN(t_before+b, 1.0f));
+            if (module->curveFunction != nullptr)
+            {
+                t_after = module->curveFunction(t_before, b, c);
+            }
+            else
+            {
+                switch (module->curve)
+                {
+                    case CAViewAnimation::Curve::Linear:
+                    {
+                        t_after = t_before + b;
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseSineOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Sine::EaseOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseSineIn:
+                    {
+                        t_after = CAViewAnimation_Curve::Sine::EaseIn(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseSineInOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Sine::EaseInOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseBackOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Back::EaseOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseBackIn:
+                    {
+                        t_after = CAViewAnimation_Curve::Back::EaseIn(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseBackInOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Back::EaseInOut(t_before, b, c);
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+//            t = MIN(t, 1.0f);
+            CCLog("after: %f\n", t_after);
+
+			CAMap<CAView*, CAObject*>& animations = module->animations;
+            auto itr_animation = animations.begin();
+            while (itr_animation != animations.end())
+            {
+                CAViewModel* model = (CAViewModel*)(itr_animation->second);
+                model->viewsAnimation(t_after);
+                ++itr_animation;
             }
         }
         

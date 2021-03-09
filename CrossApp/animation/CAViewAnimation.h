@@ -14,6 +14,7 @@
 #include "view/CAScale9ImageView.h"
 NS_CC_BEGIN
 
+class CAViewModel;
 class CC_DLL CAViewAnimation: public CAObject
 {
 public:
@@ -21,9 +22,15 @@ public:
     enum class Curve : int
     {
         Linear = 0,
-        EaseOut,          // slow at end
-        EaseIn,           // slow at beginning
-        EaseInOut         // slow at beginning and end
+        EaseSineOut = 1,          // slow at end
+        EaseSineIn = 2,           // slow at beginning
+        EaseSineInOut = 3,         // slow at beginning and end
+        EaseBackOut = 4,          // slow at end
+        EaseBackIn = 5,           // slow at beginning
+        EaseBackInOut = 6,         // slow at beginning and end
+        EaseOut = EaseSineOut,          // slow at end
+        EaseIn = EaseSineIn,           // slow at beginning
+        EaseInOut = EaseSineInOut         // slow at beginning and end
     };
 
     typedef std::function<float(float t,float b,float c)> CurveCallback;
@@ -35,8 +42,8 @@ private:
             CAMap<CAView*, CAObject*>       animations;
             float                           duration{0.2f};
             float                           delay{0.0f};
-            float                           repeatCount{1.0f};
-            float                           repeatTimes{0.0f};
+            unsigned int                    repeatCount{1};
+            unsigned int                    repeatTimes{0};
             bool                            repeatAutoreverses{false};
             float                           time{0.0f};
             CAViewAnimation::Curve          curve{CAViewAnimation::Curve::Linear};
@@ -60,7 +67,7 @@ public:
     
     static void setAnimationCurveCallback(const CAViewAnimation::CurveCallback& function); // t, b, c and return t;
 
-    static void setAnimationRepeatCount(float repeatCount);// default(1.0)
+    static void setAnimationRepeatCount(unsigned int repeatCount);// default(1.0)
     
     static void setAnimationRepeatAutoreverses(bool repeatAutoreverses);// default(false), if true, repeatCount must be greater than 1;
     

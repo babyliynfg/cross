@@ -47,7 +47,7 @@ void ViewAnimationTest::showIndex(ssize_t index)
             
             CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(1.0f);
-            
+            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseSineOut);
             imageView->setLayout(DLayoutFill);
             imageView->setAlpha(1.0f);
             
@@ -71,8 +71,9 @@ void ViewAnimationTest::showIndex(ssize_t index)
             imageView->setRotationY(0);
             
             CAViewAnimation::beginAnimations("");
-            CAViewAnimation::setAnimationDuration(1.0f);
-            
+            CAViewAnimation::setAnimationDuration(1.2f);
+            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseBackInOut);
+
             imageView->setLayout(DLayout(DHorizontalLayout_W_C(270, 0.7f), DVerticalLayout_H_C(480, 0.4f)));
             
             imageView->setRotationY(720);
@@ -105,7 +106,9 @@ void ViewAnimationTest::showIndex(ssize_t index)
             CAViewAnimation::beginAnimations("");
             CAViewAnimation::setAnimationDuration(1.0f);
             CAViewAnimation::setAnimationRepeatAutoreverses(true);
-            
+            CAViewAnimation::setAnimationRepeatCount(2);
+            CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+
             imageView->setLayout(DLayout(DHorizontalLayoutZero, DVerticalLayoutFill));
             imageView->setImageRect(zeroRect);
             

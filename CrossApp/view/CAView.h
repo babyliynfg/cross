@@ -530,6 +530,9 @@ protected:
     friend class                CAScrollView;
     
     friend class                CAViewAnimation;
+    
+    friend class                CAViewModel;
+
 };
 
 class CC_DLL CAContentContainer
