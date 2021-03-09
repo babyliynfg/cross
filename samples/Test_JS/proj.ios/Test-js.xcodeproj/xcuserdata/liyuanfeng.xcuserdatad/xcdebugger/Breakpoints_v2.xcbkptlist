@@ -16,23 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "17094"
             endingLineNumber = "17094"
-            landmarkName = "js_crossapp_CANavigationBar_onPopViewController(cx, argc, vp)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9E604BBD-DE2C-45A9-BBBF-9C05B62FE729"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../scripting/js-bindings/auto/jsb_crossapp_auto.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17750"
-            endingLineNumber = "17750"
-            landmarkName = "js_crossapp_CATabBar_onSelectedItem(cx, argc, vp)"
+            landmarkName = "js_crossapp_CATabBarItem_constructor(cx, argc, vp)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
