@@ -6,11 +6,11 @@
 	<dict>
 		<key>Resources/AppIcon.icns</key>
 		<data>
-		0Q/86QPveQwz5ZIM9NqWVzE8zpE=
+		cUrfhU/B1xRzupUIkcLB6NogrV4=
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		Z5AmYQ6xB4Lrq8k3RtfwTLQvcjM=
+		8aHR1ElNwlIlp8vHodoNVHXKHTg=
 		</data>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
 		<dict>
@@ -25,22 +25,18 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			JbRe50K8c3Ep+SKqoi4ynytgoRc=
+			/XiV195q/zyQgyUo7uooyGuperk=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Resources/script/jsb.js</key>
-		<data>
-		CQs8ppCUizQk1TJCyWgZOUSTaAU=
-		</data>
 		<key>Resources/script/jsb_boot.js</key>
 		<data>
 		lE5A/Wo0gcEbcT+ygwL0soJjXaI=
 		</data>
 		<key>Resources/script/jsb_crossapp.js</key>
 		<data>
-		BswOcXgRhcrQXKtWpMnZhhz/twE=
+		w+ZAsGXr5Uy/yLrqt9zVr5oIVA8=
 		</data>
 		<key>Resources/script/jsb_prepare.js</key>
 		<data>
@@ -53,22 +49,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0Q/86QPveQwz5ZIM9NqWVzE8zpE=
+			cUrfhU/B1xRzupUIkcLB6NogrV4=
 			</data>
 			<key>hash2</key>
 			<data>
-			ykk85thgsYi/yZsEQO9gg6uv1DINCESuOe0N4i7bKqY=
+			v6GC8EvuvtpTlLfGFVmWNuwfvSUczngsZHcVaoX6E6I=
 			</data>
 		</dict>
 		<key>Resources/Assets.car</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Z5AmYQ6xB4Lrq8k3RtfwTLQvcjM=
+			8aHR1ElNwlIlp8vHodoNVHXKHTg=
 			</data>
 			<key>hash2</key>
 			<data>
-			X3uO48lIGfNnNy72bL+MstlPPbca7/zCTDoxqG8cQv4=
+			K/kYSBYT37m3KeBebv0Imo0yhSgNqQPZDJJ6Z4/rads=
 			</data>
 		</dict>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
@@ -88,25 +84,14 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			JbRe50K8c3Ep+SKqoi4ynytgoRc=
+			/XiV195q/zyQgyUo7uooyGuperk=
 			</data>
 			<key>hash2</key>
 			<data>
-			DN3VAzcWG9InoQjNrHAEllEw0lRET6cYTgJyw4Nc8BM=
+			kFfSPQSTfsqhepzCUIkMvVw104XHqNCxm6Nbu7auie8=
 			</data>
 			<key>optional</key>
 			<true/>
-		</dict>
-		<key>Resources/script/jsb.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			CQs8ppCUizQk1TJCyWgZOUSTaAU=
-			</data>
-			<key>hash2</key>
-			<data>
-			fMtHJT7Yp7Xr+LHDhLwmfqRhnkO9zWXvb2wvS332RcQ=
-			</data>
 		</dict>
 		<key>Resources/script/jsb_boot.js</key>
 		<dict>
@@ -123,11 +108,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			BswOcXgRhcrQXKtWpMnZhhz/twE=
+			w+ZAsGXr5Uy/yLrqt9zVr5oIVA8=
 			</data>
 			<key>hash2</key>
 			<data>
-			RKQkDp5kn0mBMLLG+5AG73Q4KqZ6KLjPmBq7AqJr7wI=
+			v0CKfnHYE8MLqxMEhNUIjs7tysVn/flDNKdRkkP+4RA=
 			</data>
 		</dict>
 		<key>Resources/script/jsb_prepare.js</key>

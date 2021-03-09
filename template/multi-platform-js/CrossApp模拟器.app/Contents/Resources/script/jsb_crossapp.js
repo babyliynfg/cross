@@ -162,7 +162,7 @@ ca.CAImageView.ScaleType.FitImageInside = 2;         //显示全部，不变形,
 ca.CAImageView.ScaleType.FitViewByHorizontal = 3;    //显示全部，不变形，横向适应图片
 ca.CAImageView.ScaleType.FitViewByVertical = 4;       //显示全部，不变形，纵横适应图片
 
-ca.CAKeypadDispatcher = {};
+
 ca.CAKeypadDispatcher.KeypadMSGType = {};
 ca.CAKeypadDispatcher.KeypadMSGType.BackClicked = 1;
 ca.CAKeypadDispatcher.KeypadMSGType.MenuClicked = 2;
@@ -262,6 +262,12 @@ ca.CAViewAnimation.Curve.Linear = 0;
 ca.CAViewAnimation.Curve.EaseOut = 1;          // slow at end
 ca.CAViewAnimation.Curve.EaseIn = 2;           // slow at beginning
 ca.CAViewAnimation.Curve.EaseInOut = 3;         // slow at beginning and end
+ca.CAViewAnimation.Curve.EaseSineOut = 1;
+ca.CAViewAnimation.Curve.EaseSineIn = 2;
+ca.CAViewAnimation.Curve.EaseSineInOut = 3;
+ca.CAViewAnimation.Curve.EaseBackOut = 4;
+ca.CAViewAnimation.Curve.EaseBackIn = 5;
+ca.CAViewAnimation.Curve.EaseBackInOut = 6;
 
 ca.CAVerticalTextAlignment = {};
 ca.CAVerticalTextAlignment.Top = 0;

@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		vHSBdzsLk3NLv/NLZE0UhqtUIGA=
+		8aHR1ElNwlIlp8vHodoNVHXKHTg=
 		</data>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
 		<dict>
@@ -25,22 +25,18 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			schvMkY8WeZd5jPkvy2PU4TBSa0=
+			/XiV195q/zyQgyUo7uooyGuperk=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Resources/script/jsb.js</key>
-		<data>
-		CQs8ppCUizQk1TJCyWgZOUSTaAU=
-		</data>
 		<key>Resources/script/jsb_boot.js</key>
 		<data>
 		lE5A/Wo0gcEbcT+ygwL0soJjXaI=
 		</data>
 		<key>Resources/script/jsb_crossapp.js</key>
 		<data>
-		/tyh41+Xz84DSXmT4SMM/IsB2A0=
+		w+ZAsGXr5Uy/yLrqt9zVr5oIVA8=
 		</data>
 		<key>Resources/script/jsb_prepare.js</key>
 		<data>
@@ -64,11 +60,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			vHSBdzsLk3NLv/NLZE0UhqtUIGA=
+			8aHR1ElNwlIlp8vHodoNVHXKHTg=
 			</data>
 			<key>hash2</key>
 			<data>
-			0L2CqjZcCm2vWN1sYpPT7hJ+WIRTy/aeJx6hh17nnm8=
+			K/kYSBYT37m3KeBebv0Imo0yhSgNqQPZDJJ6Z4/rads=
 			</data>
 		</dict>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
@@ -88,25 +84,14 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			schvMkY8WeZd5jPkvy2PU4TBSa0=
+			/XiV195q/zyQgyUo7uooyGuperk=
 			</data>
 			<key>hash2</key>
 			<data>
-			u7slTocoxImj0VXGkfLpgPULFry/Bp0B0ev3TG0oz0c=
+			kFfSPQSTfsqhepzCUIkMvVw104XHqNCxm6Nbu7auie8=
 			</data>
 			<key>optional</key>
 			<true/>
-		</dict>
-		<key>Resources/script/jsb.js</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			CQs8ppCUizQk1TJCyWgZOUSTaAU=
-			</data>
-			<key>hash2</key>
-			<data>
-			fMtHJT7Yp7Xr+LHDhLwmfqRhnkO9zWXvb2wvS332RcQ=
-			</data>
 		</dict>
 		<key>Resources/script/jsb_boot.js</key>
 		<dict>
@@ -123,11 +108,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/tyh41+Xz84DSXmT4SMM/IsB2A0=
+			w+ZAsGXr5Uy/yLrqt9zVr5oIVA8=
 			</data>
 			<key>hash2</key>
 			<data>
-			hlUFqEmAzGPJ7BD29BOrmNTB2l3fX97eHbHVtorRiUQ=
+			v0CKfnHYE8MLqxMEhNUIjs7tysVn/flDNKdRkkP+4RA=
 			</data>
 		</dict>
 		<key>Resources/script/jsb_prepare.js</key>
