@@ -34,7 +34,8 @@ var ViewAnimationTest = ca.CAViewController.extend({
 
                 ca.CAViewAnimation.beginAnimations("");
                 ca.CAViewAnimation.setAnimationDuration(1.0);
-
+                ca.CAViewAnimation.setAnimationCurve(ca.CAViewAnimation.Curve.EaseBackOut);
+                
                 imageView.setLayout(ca.DLayout.fill());
                 imageView.setAlpha(1.0);
 
@@ -59,6 +60,7 @@ var ViewAnimationTest = ca.CAViewController.extend({
 
                 ca.CAViewAnimation.beginAnimations("");
                 ca.CAViewAnimation.setAnimationDuration(1.0);
+                ca.CAViewAnimation.setAnimationCurve(ca.CAViewAnimation.Curve.EaseBackInOut);
 
                 imageView.setLayout(ca.DLayout.set(ca.DHorizontalLayout_W_C(270, 0.7), ca.DVerticalLayout_H_C(480, 0.4)));
                 imageView.setRotationY(720);
@@ -89,6 +91,7 @@ var ViewAnimationTest = ca.CAViewController.extend({
                 ca.CAViewAnimation.beginAnimations("");
                 ca.CAViewAnimation.setAnimationDuration(1.0);
                 ca.CAViewAnimation.setAnimationRepeatAutoreverses(true);
+                ca.CAViewAnimation.setAnimationRepeatCount(4);
 
                 imageView.setLayout(ca.DLayout.set(ca.DHorizontalLayouttZero, ca.DVerticalLayout.fill()));
                 imageView.setImageRect(zeroRect);

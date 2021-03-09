@@ -498,8 +498,9 @@ bool js_crossapp_CAViewAnimation_removeAnimations(JSContext *cx, uint32_t argc, 
 bool js_crossapp_CAViewAnimation_commitAnimations(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewAnimation_setAnimationRepeatAutoreverses(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewAnimation_setAnimationCurve(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAViewAnimation_areBeginAnimations(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewAnimation_setAnimationRepeatCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewAnimation_areBeginAnimations(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewAnimation_setAnimationCurveCallback(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CAControl_class;
 extern JSObject *jsb_CrossApp_CAControl_prototype;
@@ -1039,6 +1040,7 @@ bool js_crossapp_CAViewController_viewSizeDidChanged(JSContext *cx, uint32_t arg
 bool js_crossapp_CAViewController_getNavigationController(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_getTabBarController(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_viewDidUnload(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAViewController_getModalViewController(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAViewController_CAViewController(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_CrossApp_CANavigationController_class;

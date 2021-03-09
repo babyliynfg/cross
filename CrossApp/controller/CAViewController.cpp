@@ -25,7 +25,7 @@ NS_CC_BEGIN
 
 CAViewController::CAViewController()
 :m_pView(nullptr)
-,m_pSubViewController(nullptr)
+,m_pModalViewController(nullptr)
 ,m_pNavigationController(nullptr)
 ,m_pNavigationBarItem(nullptr)
 ,m_pTabBarController(nullptr)
@@ -294,18 +294,18 @@ void CAViewController::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CAViewController::presentModalViewController(CAViewController* controller, bool animated)
 {
-    CC_RETURN_IF(m_pSubViewController);
+    CC_RETURN_IF(m_pModalViewController);
     CC_SAFE_RETAIN(controller);
-    m_pSubViewController = controller;
+    m_pModalViewController = controller;
 
-    m_pSubViewController->addViewFromSuperview(this->getView());
-    m_pSubViewController->getView()->setZOrder(CAWindowZOrderTop);
-    m_pSubViewController->setViewVisibleTrue();
+    m_pModalViewController->addViewFromSuperview(this->getView());
+    m_pModalViewController->getView()->setZOrder(CAWindowZOrderTop);
+    m_pModalViewController->setViewVisibleTrue();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     if (animated)
     {
-        CAView* view = m_pSubViewController->getView();
+        CAView* view = m_pModalViewController->getView();
         DLayout layout = view->getLayout();
         float y = this->getView()->getBounds().size.height;
         layout.vertical = DVerticalLayout_T_B(y, -y);
@@ -331,12 +331,12 @@ void CAViewController::presentModalViewController(CAViewController* controller, 
 
 void CAViewController::dismissModalViewController(bool animated)
 {
-    CC_RETURN_IF(m_pSubViewController == nullptr);
+    CC_RETURN_IF(m_pModalViewController == nullptr);
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     if (animated)
     {
-        CAView* view = m_pSubViewController->getView();
+        CAView* view = m_pModalViewController->getView();
 
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.25f);
@@ -344,22 +344,22 @@ void CAViewController::dismissModalViewController(bool animated)
         CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
         CAViewAnimation::setAnimationDidStopSelector([&]()
         {
-            m_pSubViewController->setViewVisibleFalse();
-            m_pSubViewController->removeViewFromSuperview();
-            CC_SAFE_RELEASE_NULL(m_pSubViewController);
+            m_pModalViewController->setViewVisibleFalse();
+            m_pModalViewController->removeViewFromSuperview();
+            CC_SAFE_RELEASE_NULL(m_pModalViewController);
             CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
         });
         DLayout layout = view->getLayout();
-        float y = m_pSubViewController->getView()->getBounds().size.height;
+        float y = m_pModalViewController->getView()->getBounds().size.height;
         layout.vertical = DVerticalLayout_T_B(y, -y);
         view->setLayout(layout);
         CAViewAnimation::commitAnimations();
     }
     else
     {
-        m_pSubViewController->setViewVisibleFalse();
-        m_pSubViewController->removeViewFromSuperview();
-        CC_SAFE_RELEASE_NULL(m_pSubViewController);
+        m_pModalViewController->setViewVisibleFalse();
+        m_pModalViewController->removeViewFromSuperview();
+        CC_SAFE_RELEASE_NULL(m_pModalViewController);
         CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
     }
 }

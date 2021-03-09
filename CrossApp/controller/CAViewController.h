@@ -46,7 +46,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(CATabBarItem*, m_pTabBarItem, TabBarItem);
     
-    CC_SYNTHESIZE_READONLY(CAViewController*, m_pSubViewController, SubViewController);
+    CC_SYNTHESIZE_READONLY(CAViewController*, m_pModalViewController, ModalViewController);
 
     bool isViewRunning();
     

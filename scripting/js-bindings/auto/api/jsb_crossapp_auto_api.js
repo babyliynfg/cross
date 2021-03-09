@@ -715,16 +715,6 @@ getName : function (
 },
 
 /**
- * @method getGifImageIndex
- * @return {unsigned int}
- */
-getGifImageIndex : function (
-)
-{
-    return 0;
-},
-
-/**
  * @method convertDataToFormat
  * @param {unsigned char} arg0
  * @param {unsigned long} arg1
@@ -785,16 +775,6 @@ drect
  * @return {int}
  */
 getBitPerPixel : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getGifImageCounts
- * @return {unsigned int}
- */
-getGifImageCounts : function (
 )
 {
     return 0;
@@ -999,16 +979,6 @@ long
 },
 
 /**
- * @method updateGifImageWithIndex
- * @param {unsigned int} arg0
- */
-updateGifImageWithIndex : function (
-int 
-)
-{
-},
-
-/**
  * @method copy
  * @return {ca.CAImage}
  */
@@ -1044,13 +1014,15 @@ dpoint
  * @param {ca.CAImage::PixelFormat} arg1
  * @param {unsigned int} arg2
  * @param {unsigned int} arg3
+ * @param {bool} arg4
  * @return {bool}
  */
 initWithRawData : function (
 cadata, 
 pixelformat, 
 int, 
-int 
+int, 
+bool 
 )
 {
     return false;
@@ -1167,26 +1139,13 @@ long
 },
 
 /**
- * @method isGif
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
- * @return {bool}
- */
-isGif : function (
-char, 
-long 
-)
-{
-    return false;
-},
-
-/**
  * @method createWithRawData
  * @param {ca.CAData} arg0
  * @param {ca.CAImage::PixelFormat} arg1
  * @param {unsigned int} arg2
  * @param {unsigned int} arg3
  * @param {String} arg4
+ * @param {bool} arg5
  * @return {ca.CAImage}
  */
 createWithRawData : function (
@@ -1194,7 +1153,8 @@ cadata,
 pixelformat, 
 int, 
 int, 
-str 
+str, 
+bool 
 )
 {
     return ca.CAImage;
@@ -1400,13 +1360,15 @@ purgeCAImage : function (
  * @param {ca.CAImage::PixelFormat} arg1
  * @param {unsigned int} arg2
  * @param {unsigned int} arg3
+ * @param {bool} arg4
  * @return {ca.CAImage}
  */
 createWithRawDataNoCache : function (
 cadata, 
 pixelformat, 
 int, 
-int 
+int, 
+bool 
 )
 {
     return ca.CAImage;
@@ -4285,6 +4247,16 @@ curve
 },
 
 /**
+ * @method setAnimationRepeatCount
+ * @param {unsigned int} arg0
+ */
+setAnimationRepeatCount : function (
+int 
+)
+{
+},
+
+/**
  * @method areBeginAnimations
  * @return {bool}
  */
@@ -4295,11 +4267,11 @@ areBeginAnimations : function (
 },
 
 /**
- * @method setAnimationRepeatCount
- * @param {float} arg0
+ * @method setAnimationCurveCallback
+ * @param {function} arg0
  */
-setAnimationRepeatCount : function (
-float 
+setAnimationCurveCallback : function (
+func 
 )
 {
 },
@@ -8610,6 +8582,16 @@ getTabBarController : function (
 viewDidUnload : function (
 )
 {
+},
+
+/**
+ * @method getModalViewController
+ * @return {ca.CAViewController}
+ */
+getModalViewController : function (
+)
+{
+    return ca.CAViewController;
 },
 
 /**
