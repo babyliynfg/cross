@@ -24,7 +24,7 @@ void CCLog(const char * pszFormat, ...)
     {
         if (application->isCrossAppCCLogNotification() == true)
         {
-            CANotificationCenter::getInstance()->postNotificationWithStringValue(CROSSAPP_CCLOG_NOTIFICATION, szBuf);
+            [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithUTF8String:CROSSAPP_CCLOG_NOTIFICATION] object:[NSString stringWithUTF8String:szBuf]];
         }
     }
 }
