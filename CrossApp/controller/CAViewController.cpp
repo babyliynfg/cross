@@ -31,7 +31,6 @@ CAViewController::CAViewController()
 ,m_pTabBarController(nullptr)
 ,m_pTabBarItem(nullptr)
 ,m_sTitle("The Title")
-,m_bLifeLock(false)
 ,m_pParser(nullptr)
 {
     this->setView(CAView::createWithColor(CAColor4B::WHITE));
@@ -91,15 +90,12 @@ void CAViewController::viewOnEnterTransitionDidFinish()
     
     do
     {
-        CC_BREAK_IF(m_bLifeLock);
-        m_bLifeLock = true;
-
         if(CAScriptEngineManager::getScriptEngineManager())
         {
 #if CC_ENABLE_SCRIPT_BINDING
             if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
             {
-                if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidLoad));
+                CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidLoad);
             }
 #endif
         }
@@ -116,48 +112,35 @@ void CAViewController::viewOnExitTransitionDidStart()
 {
     CAScheduler::getScheduler()->pauseTarget(this);   
 
-    do
+    if(CAScriptEngineManager::getScriptEngineManager())
     {
-        CC_BREAK_IF(m_bLifeLock);
-        m_bLifeLock = true;
-        
-        if(CAScriptEngineManager::getScriptEngineManager())
-        {
 #if CC_ENABLE_SCRIPT_BINDING
-            if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
-            {
-                if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidUnload));
-            }
-#endif
-        }
-        else
+        if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
         {
-            this->viewDidUnload();
+            CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewDidUnload);
         }
-        
-        m_pView->removeAllSubviews();
+#endif
     }
-    while (0);
-    
+    else
+    {
+        this->viewDidUnload();
+    }
 }
 
 void CAViewController::viewOnSizeTransitionDidChanged()
 {
-    if (m_bLifeLock)
+    if(CAScriptEngineManager::getScriptEngineManager())
     {
-        if(CAScriptEngineManager::getScriptEngineManager())
-        {
 #if CC_ENABLE_SCRIPT_BINDING
-            if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
-            {
-                if (CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewSizeDidChanged));
-            }
-#endif
-        }
-        else
+        if (CAScriptEngineManager::getScriptEngineManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
         {
-            this->viewSizeDidChanged();
+            CAScriptEngineManager::sendViewControllerEventToJS(this, script::viewSizeDidChanged);
         }
+#endif
+    }
+    else
+    {
+        this->viewSizeDidChanged();
     }
 }
 
@@ -227,13 +210,11 @@ void CAViewController::setView(CAView* view)
 
 void CAViewController::addViewFromSuperview(CAView* node)
 {
-    m_bLifeLock = false;
     node->addSubview(m_pView);
 }
 
 void CAViewController::removeViewFromSuperview()
 {
-    m_bLifeLock = false;
     m_pView->removeFromSuperview();
 }
 
@@ -610,16 +591,7 @@ void CANavigationController::viewDidLoad()
 
 void CANavigationController::viewDidUnload()
 {
-    for (auto& var : m_pViewControllers)
-    {
-        var->removeViewFromSuperview();
-    }
-    
-    for (auto& var : m_pContainers)
-    {
-        var->removeAllSubviews();
-        var->removeFromSuperview();
-    }
+
 }
 
 void CANavigationController::viewDidAppear()
@@ -1554,11 +1526,7 @@ void CATabBarController::viewDidLoad()
 
 void CATabBarController::viewDidUnload()
 {
-    for (auto& var : m_pViewControllers)
-    {
-        var->removeViewFromSuperview();
-    }
-    this->getView()->removeAllSubviews();
+
 }
 
 void CATabBarController::viewDidAppear()

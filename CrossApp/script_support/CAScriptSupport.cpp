@@ -98,7 +98,7 @@ void CAScriptEngineManager::purgeSharedManager(void)
 
 bool CAScriptEngineManager::sendViewControllerEventToJS(CAViewController* node, int action)
 {
-    /*
+    
     auto scriptEngine = getScriptEngineManager()->getScriptEngine();
     
     if (scriptEngine->isCalledFromScript())
@@ -115,13 +115,13 @@ bool CAScriptEngineManager::sendViewControllerEventToJS(CAViewController* node, 
     }
     
     return false;
-     */
+     
     
-    auto scriptEngine = getScriptEngineManager()->getScriptEngine();
-    BasicScriptData data(node,(void*)&action);
-    ScriptEvent scriptEvent(kViewControllerEvent,(void*)&data);
-    if (scriptEngine->sendEvent(&scriptEvent))
-    return true;
+//    auto scriptEngine = getScriptEngineManager()->getScriptEngine();
+//    BasicScriptData data(node,(void*)&action);
+//    ScriptEvent scriptEvent(kViewControllerEvent,(void*)&data);
+//    if (scriptEngine->sendEvent(&scriptEvent))
+//    return true;
 }
 
 

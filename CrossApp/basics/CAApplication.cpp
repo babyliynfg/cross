@@ -629,7 +629,7 @@ void CAApplication::runWindow(CAWindow *pWindow)
         m_pRootWindow->onExitTransitionDidStart();
         m_pRootWindow->onExit();
         m_pRootWindow->release();
-        m_pRootWindow = NULL;
+        m_pRootWindow = nullptr;
     }
     
     CC_SAFE_RETAIN(pWindow);

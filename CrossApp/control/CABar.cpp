@@ -539,11 +539,6 @@ CATabBar::CATabBar(int clearance, VerticalAlignment alignment)
 
 CATabBar::~CATabBar()
 {
-    std::vector<CATabBarItem*>::iterator itr;
-    for (itr=m_pItems.begin(); itr!=m_pItems.end(); itr++)
-    {
-        (*itr)->autorelease();
-    }
     m_pItems.clear();
     m_pButtons.clear();
     m_pBadgeViews.clear();

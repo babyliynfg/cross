@@ -807,7 +807,7 @@ void CAViewAnimation::update(float dt)
                 b = -b;
             }
             float t_after = 0;
-            CCLog("before: %f", MIN(t_before+b, 1.0f));
+//            CCLog("before: %f", MIN(t_before+b, 1.0f));
             if (module->curveFunction != nullptr)
             {
                 t_after = module->curveFunction(t_before, b, c);
@@ -855,8 +855,7 @@ void CAViewAnimation::update(float dt)
                         break;
                 }
             }
-//            t = MIN(t, 1.0f);
-            CCLog("after: %f\n", t_after);
+//            CCLog("after: %f\n", t_after);
 
 			CAMap<CAView*, CAObject*>& animations = module->animations;
             auto itr_animation = animations.begin();

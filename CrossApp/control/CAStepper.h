@@ -74,8 +74,8 @@ public:
     
 public:
 
-        virtual void onExitTransitionDidStart();
-        virtual void onEnterTransitionDidFinish();
+    virtual void onExitTransitionDidStart();
+    virtual void onEnterTransitionDidFinish();
         
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
     virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);

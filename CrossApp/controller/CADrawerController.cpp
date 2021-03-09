@@ -138,7 +138,6 @@ void CADrawerController::viewDidLoad()
 
 void CADrawerController::viewDidUnload()
 {
-
 }
 
 void CADrawerController::viewDidAppear()
@@ -286,11 +285,13 @@ void CADrawerController::begin()
 void CADrawerController::showEnded()
 {
     m_pContainer[0]->setTouchEnabled(true);
+    m_pContainer[1]->setTouchEnabled(false);
 }
 
 void CADrawerController::hideEnded()
 {
     m_pContainer[0]->setVisible(false);
+    m_pContainer[0]->setTouchEnabled(false);
     m_pContainer[1]->setTouchEnabled(true);
 }
 

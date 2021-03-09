@@ -114,8 +114,6 @@ private:
     
     CAView* m_pView;
     
-    bool m_bLifeLock;
-
     CAUIEditorParser* m_pParser;
     
 };

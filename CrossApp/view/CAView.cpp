@@ -1492,11 +1492,6 @@ void CAView::onEnter()
 
 void CAView::onEnterTransitionDidFinish()
 {
-    if (m_obOnEnterTransitionDidFinishCallback)
-    {
-        m_obOnEnterTransitionDidFinishCallback();
-    }
-    
     if (!m_obSubviews.empty())
     {
         CAVector<CAView*>::iterator itr;
@@ -1508,15 +1503,15 @@ void CAView::onEnterTransitionDidFinish()
     {
         m_pContentContainer->viewOnEnterTransitionDidFinish();
     }
+    
+    if (m_obOnEnterTransitionDidFinishCallback)
+    {
+        m_obOnEnterTransitionDidFinishCallback();
+    }
 }
 
 void CAView::onExitTransitionDidStart()
 {
-    if (m_obOnExitTransitionDidStartCallback)
-    {
-        m_obOnExitTransitionDidStartCallback();
-    }
-    
     for (auto& subview : m_obSubviews)
     {
         subview->onExitTransitionDidStart();
@@ -1525,6 +1520,11 @@ void CAView::onExitTransitionDidStart()
     if (m_pContentContainer)
     {
         m_pContentContainer->viewOnExitTransitionDidStart();
+    }
+    
+    if (m_obOnExitTransitionDidStartCallback)
+    {
+        m_obOnExitTransitionDidStartCallback();
     }
 }
 

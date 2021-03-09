@@ -25,9 +25,9 @@ CAWindow::CAWindow()
 
 CAWindow::~CAWindow()
 {
-    CC_SAFE_RELEASE_NULL(m_pRootViewController);
     CC_SAFE_RELEASE_NULL(m_pModalViewController);
-    
+    CC_SAFE_RELEASE_NULL(m_pRootViewController);
+
 #if CC_ENABLE_SCRIPT_BINDING
 	if (CAScriptEngineManager::getScriptEngineManager())
 	{
@@ -71,7 +71,6 @@ void CAWindow::onEnterTransitionDidFinish()
 void CAWindow::onExitTransitionDidStart()
 {
     CAView::onExitTransitionDidStart();
-    this->setRootViewController(nullptr);
 }
 
 void CAWindow::setRootViewController(CrossApp::CAViewController *var)
