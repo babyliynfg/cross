@@ -46,7 +46,7 @@
 #define TRACE_DEBUGGER_SERVER(...)
 #endif // #if DEBUG
 
-#define BYTE_CODE_FILE_EXT ".jsc"
+#define BYTE_CODE_FILE_EXT ".cross"
 static std::string inData;
 static std::string outData;
 static std::vector<std::string> g_queue;
