@@ -868,7 +868,7 @@ void CAAutoCollectionView::loadCollectionCell()
 			cell->m_nSection = r.section;
 			cell->m_nRow = 0;
 			cell->m_nItem = r.item;
-			cell->updateDisplayedAlpha(this->getAlpha());
+			cell->updateDisplayedAlpha(_realAlpha);
 			this->addSubview(cell);
 			cell->setFrame(cellRect);
 			pair.second = cell;

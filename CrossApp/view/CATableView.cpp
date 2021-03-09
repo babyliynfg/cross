@@ -428,7 +428,7 @@ void CATableView::loadTableCell()
             cell->m_pTarget = this;
             cell->m_nSection = i;
             cell->m_nRow = j;
-            cell->updateDisplayedAlpha(this->getAlpha());
+            cell->updateDisplayedAlpha(_realAlpha);
             cell->setMouseMovedEnabled(m_bPCMode);
             m_pContainer->addSubview(cell);
             cell->setFrame(m_rTableCellRectss[i][j]);

@@ -553,7 +553,7 @@ void CAWaterfallView::loadWaterfallCell()
 		if (cell)
 		{
 			cell->m_nItem = index;
-			cell->updateDisplayedAlpha(this->getAlpha());
+            cell->updateDisplayedAlpha(_realAlpha);
             cell->setFrame(cellRect);
 			this->addSubview(cell);
             m_mpUsedWaterfallCells[index] = cell;

@@ -595,7 +595,7 @@ void CAListView::loadCell()
 		if (cell)
 		{
             cell->m_nIndex = index;
-            cell->updateDisplayedAlpha(this->getAlpha());
+            cell->updateDisplayedAlpha(_realAlpha);
 			this->addSubview(cell);
 			cell->setFrame(cellRect);
             m_mpUsedListCells[index] = cell;
