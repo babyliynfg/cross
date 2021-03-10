@@ -22,15 +22,34 @@ public:
     enum class Curve : int
     {
         Linear = 0,
-        EaseSineOut = 1,          // slow at end
-        EaseSineIn = 2,           // slow at beginning
-        EaseSineInOut = 3,         // slow at beginning and end
-        EaseBackOut = 4,          // slow at end
-        EaseBackIn = 5,           // slow at beginning
-        EaseBackInOut = 6,         // slow at beginning and end
-        EaseOut = EaseSineOut,          // slow at end
-        EaseIn = EaseSineIn,           // slow at beginning
-        EaseInOut = EaseSineInOut         // slow at beginning and end
+        
+        EaseSineOut,
+        EaseSineIn,
+        EaseSineInOut,
+        
+        EaseBackOut,
+        EaseBackIn,
+        EaseBackInOut,
+        
+        EaseQuadOut,
+        EaseQuadIn,
+        EaseQuadInOut,
+        
+        EaseCubicOut,
+        EaseCubicIn,
+        EaseCubicInOut,
+        
+        EaseQuartOut,
+        EaseQuartIn,
+        EaseQuartInOut,
+        
+        EaseExpoOut,
+        EaseExpoIn,
+        EaseExpoInOut,
+        
+        EaseOut = EaseSineOut,              // slow at end
+        EaseIn = EaseSineIn,                // slow at beginning
+        EaseInOut = EaseSineInOut           // slow at beginning and end
     };
 
     typedef std::function<float(float t,float b,float c)> CurveCallback;

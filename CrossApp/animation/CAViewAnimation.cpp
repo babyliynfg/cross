@@ -451,66 +451,197 @@ void CAViewModel::getReady()
 
 namespace CAViewAnimation_Curve {
 
-namespace Sine {
-
-inline float EaseOut(float t,float b,float c)
+namespace Sine
 {
-    t = c * std::sin(t * (M_PI/2)) + b;
-    return MIN(1.0, t);
-}
-
-inline float EaseIn(float t,float b,float c)
-{
-    t= c * (1 - std::cos(t * (M_PI/2))) + b;
-    return MIN(1.0, t);
-}
-
-inline float EaseInOut(float t,float b,float c)
-{
-    float split = 0.8;
-    if (t < split)
+    inline float EaseOut(float t,float b,float c)
     {
-        t = c*split * (1 - std::cos(t/split * (M_PI/2))) + b;
-        return MIN(split, t);
+        t = c * std::sin(t * (M_PI/2)) + b;
+        return MIN(1.0, t);
     }
-    else
+
+    inline float EaseIn(float t,float b,float c)
     {
-        t = split + c*(1-split) * std::sin((t-split)/(1-split) * (M_PI/2)) + b;
-        return MIN(1, t);
+        t= c * (1 - std::cos(t * (M_PI/2))) + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseInOut(float t,float b,float c)
+    {
+        float split = 0.8;
+        if (t < split)
+        {
+            t = c*split * (1 - std::cos(t/split * (M_PI/2))) + b;
+            return MIN(split, t);
+        }
+        else
+        {
+            t = split + c*(1-split) * std::sin((t-split)/(1-split) * (M_PI/2)) + b;
+            return MIN(1.0, t);
+        }
     }
 }
 
-}
-
-namespace Back {
-
-inline float EaseOut(float t,float b,float c)
+namespace Back
 {
-    float s = 1.70158;
-    t=t-1;
-    return c*(t*t*((s+1)*t + s) + 1) + b;
+    inline float EaseOut(float t,float b,float c)
+    {
+        float s = 1.70158;
+        t=t-1;
+        return c*(t*t*((s+1)*t + s) + 1) + b;
 
+    }
+
+    inline float EaseIn(float t,float b,float c)
+    {
+        float s = 1.70158;
+        return c*t*t*((s+1)*t - s) + b;
+    }
+
+    inline float EaseInOut(float t,float b,float c)
+    {
+        t *= 2;
+        float s = 1.70158;
+        s*=1.525;
+        if (t < 1)
+            return c/2*t*t*((s+1)*t - s) + b;
+        
+        t-=2;
+        return c/2*(t*t*((s+1)*t + s) + 2) + b;
+    }
 }
 
-inline float EaseIn(float t,float b,float c)
+namespace Quad
 {
-    float s = 1.70158;
-    return c*t*t*((s+1)*t - s) + b;
+    inline float EaseOut(float t,float b,float c)
+    {
+        t = -c*t*(t-2) + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseIn(float t,float b,float c)
+    {
+        t = c*t*t + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseInOut(float t,float b,float c)
+    {
+        t *= 2;
+        if (t < 1)
+        {
+            t = 0.5*c*t*t + b;
+            return MIN(1.0, t);
+        }
+        else
+        {
+            t -= 1;
+            t = -0.5*c*(t*(t-2)-1) + b;
+            return MIN(1.0, t);
+        }
+    }
 }
 
-inline float EaseInOut(float t,float b,float c)
+namespace Cubic
 {
-    t *= 2;
-    float s = 1.70158;
-    s*=1.525;
-    if (t < 1)
-        return c/2*t*t*((s+1)*t - s) + b;
-    
-    t-=2;
-    return c/2*(t*t*((s+1)*t + s) + 2) + b;
+    inline float EaseOut(float t,float b,float c)
+    {
+        t -= 1;
+        t = c*(t*t*t + 1) + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseIn(float t,float b,float c)
+    {
+        t = c*t*t*t + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseInOut(float t,float b,float c)
+    {
+        t *= 2;
+        if (t < 1)
+        {
+            t = 0.5*c*t*t + b;
+            return MIN(1.0, t);
+        }
+        else
+        {
+            t -= 2;
+            t = 0.5*c*(t*t*t+2) + b;
+            return MIN(1.0, t);
+        }
+    }
 }
 
+namespace Quart
+{
+    inline float EaseOut(float t,float b,float c)
+    {
+        t -= 1;
+        t = -c * (t*t*t*t - 1) + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseIn(float t,float b,float c)
+    {
+        t = c*t*t*t*t + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseInOut(float t,float b,float c)
+    {
+        t *= 2;
+        if (t < 1)
+        {
+            t = 0.5*c*t*t*t*t + b;
+            return MIN(1.0, t);
+        }
+        else
+        {
+            t -= 2;
+            t = -0.5*c*(t*t*t*t-2) + b;
+            return MIN(1.0, t);
+        }
+    }
 }
+
+namespace Expo
+{
+    inline float EaseOut(float t,float b,float c)
+    {
+        t = (t == 1) ? b+c : c * (-std::powf(2, -10 * t) + 1) + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseIn(float t,float b,float c)
+    {
+        t = (t == 0) ? b : c * std::powf(2, 10 * (t - 1)) + b;
+        return MIN(1.0, t);
+    }
+
+    inline float EaseInOut(float t,float b,float c)
+    {
+        if (t == 0)
+        {
+            t = b;
+        }
+        else if (t == 1)
+        {
+            t = b + c;
+        }
+        else if (t < 0.5)
+        {
+            t = 0.5 * c * std::powf(2, 10 * (t - 1)) + b;
+        }
+        else
+        {
+            t -= 1;
+            t = 0.5 * c * (-std::powf(2, -10 * t) + 2) + b;
+        }
+        return MIN(1.0, t);
+    }
+}
+
 
 }
 
@@ -849,6 +980,66 @@ void CAViewAnimation::update(float dt)
                     case CAViewAnimation::Curve::EaseBackInOut:
                     {
                         t_after = CAViewAnimation_Curve::Back::EaseInOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseQuadOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Quad::EaseOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseQuadIn:
+                    {
+                        t_after = CAViewAnimation_Curve::Quad::EaseIn(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseQuadInOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Quad::EaseInOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseCubicOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Cubic::EaseOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseCubicIn:
+                    {
+                        t_after = CAViewAnimation_Curve::Cubic::EaseIn(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseCubicInOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Cubic::EaseInOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseQuartOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Quart::EaseOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseQuartIn:
+                    {
+                        t_after = CAViewAnimation_Curve::Quart::EaseIn(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseQuartInOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Quart::EaseInOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseExpoOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Expo::EaseOut(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseExpoIn:
+                    {
+                        t_after = CAViewAnimation_Curve::Expo::EaseIn(t_before, b, c);
+                    }
+                        break;
+                    case CAViewAnimation::Curve::EaseExpoInOut:
+                    {
+                        t_after = CAViewAnimation_Curve::Expo::EaseInOut(t_before, b, c);
                     }
                         break;
                     default:

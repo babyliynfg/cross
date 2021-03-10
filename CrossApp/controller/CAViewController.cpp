@@ -295,7 +295,7 @@ void CAViewController::presentModalViewController(CAViewController* controller, 
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.1f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         CAViewAnimation::setAnimationDidStopSelector([&]()
         {
             CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
@@ -322,7 +322,7 @@ void CAViewController::dismissModalViewController(bool animated)
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.1f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         CAViewAnimation::setAnimationDidStopSelector([&]()
         {
             m_pModalViewController->setViewVisibleFalse();
@@ -726,9 +726,9 @@ void beginPushAnimation(float width, CAView* last, CAView* new_, const std::func
 {
     CAViewAnimation::beginAnimations("navgationController-push");
     CAViewAnimation::setAnimationDelay(0.1f);
-    CAViewAnimation::setAnimationDuration(0.2f);
+    CAViewAnimation::setAnimationDuration(0.25f);
     CAViewAnimation::setAnimationDelay(1/30.0f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     last->setFrameOrigin(DPoint(-width/3.0f, 0));
     CAViewAnimation::setAnimationDidStopSelector(function);
     new_->setFrameOrigin(DPointZero);
@@ -743,8 +743,8 @@ void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, const st
 
     CAViewAnimation::beginAnimations("navgationController-pop");
     CAViewAnimation::setAnimationDelay(0.1f);
-    CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+    CAViewAnimation::setAnimationDuration(0.25f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
     CAViewAnimation::setAnimationDidStopSelector(function);
     show->setFrameOrigin(DPointZero);
     back->setFrameOrigin(DPoint(bounds.size.width + 10, 0));
@@ -1114,7 +1114,7 @@ void CANavigationController::setNavigationBarHidden(bool hidden, bool animated)
         }, "CANavigationController:" + m_s__StrID, 0.25f);
         
         CAViewAnimation::beginAnimations("");
-        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationWillStartSelector([]()
         {
             CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
@@ -1246,16 +1246,16 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     if (m_bPopViewController)
     {
         CAViewAnimation::beginAnimations("navigation_animation");
-        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.02f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         lastContainer->setFrameOrigin(DPointZero);
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("navigation_animation2");
-        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.03f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         CAViewAnimation::setAnimationDidStopSelector(std::bind(&CANavigationController::popViewControllerFinish, this));
         backContainer->setFrameOrigin(DPoint(x, 0));
         CAViewAnimation::commitAnimations();
@@ -1263,16 +1263,16 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     else
     {
         CAViewAnimation::beginAnimations("navigation_animation");
-        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.03f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         lastContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
         CAViewAnimation::commitAnimations();
         
         CAViewAnimation::beginAnimations("navigation_animation2");
-        CAViewAnimation::setAnimationDuration(0.2f);
+        CAViewAnimation::setAnimationDuration(0.25f);
         CAViewAnimation::setAnimationDelay(0.02f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseInOut);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         CAViewAnimation::setAnimationDidStopSelector(std::bind(&CANavigationController::homingViewControllerFinish, this));
         backContainer->setFrameOrigin(DPointZero);
         CAViewAnimation::commitAnimations();
