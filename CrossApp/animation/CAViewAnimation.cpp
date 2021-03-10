@@ -947,11 +947,6 @@ void CAViewAnimation::update(float dt)
             {
                 switch (module->curve)
                 {
-                    case CAViewAnimation::Curve::Linear:
-                    {
-                        t_after = t_before + b;
-                    }
-                        break;
                     case CAViewAnimation::Curve::EaseSineOut:
                     {
                         t_after = CAViewAnimation_Curve::Sine::EaseOut(t_before, b, c);
@@ -1042,7 +1037,9 @@ void CAViewAnimation::update(float dt)
                         t_after = CAViewAnimation_Curve::Expo::EaseInOut(t_before, b, c);
                     }
                         break;
+                    case CAViewAnimation::Curve::Linear:
                     default:
+                        t_after = t_before + b;
                         break;
                 }
             }
