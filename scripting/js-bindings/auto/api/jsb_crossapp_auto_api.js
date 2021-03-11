@@ -6650,6 +6650,37 @@ CATabBarItem : function (
 };
 
 /**
+ * @class CABar
+ */
+ca.CABar = {
+
+/**
+ * @method get_bottom_clearance
+ * @param {ca.CAView} arg0
+ * @return {int}
+ */
+get_bottom_clearance : function (
+caview 
+)
+{
+    return 0;
+},
+
+/**
+ * @method get_top_clearance
+ * @param {ca.CAView} arg0
+ * @return {int}
+ */
+get_top_clearance : function (
+caview 
+)
+{
+    return 0;
+},
+
+};
+
+/**
  * @class CANavigationBar
  */
 ca.CANavigationBar = {

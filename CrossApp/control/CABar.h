@@ -18,8 +18,18 @@
 
 NS_CC_BEGIN
 
-class CC_DLL CANavigationBar
+class CC_DLL CABar
 : public CAView
+{
+public:
+    
+    static int get_top_clearance(CAView* view);
+    
+    static int get_bottom_clearance(CAView* view);
+};
+
+class CC_DLL CANavigationBar
+: public CABar
 {
 public:
     
@@ -116,7 +126,7 @@ protected:
 };
 
 class CC_DLL CATabBar
-:public CAView
+:public CABar
 {
     
 public:

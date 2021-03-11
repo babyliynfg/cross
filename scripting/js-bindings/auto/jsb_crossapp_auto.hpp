@@ -798,6 +798,16 @@ bool js_crossapp_CATabBarItem_setBadgeValue(JSContext *cx, uint32_t argc, jsval 
 bool js_crossapp_CATabBarItem_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATabBarItem_CATabBarItem(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CABar_class;
+extern JSObject *jsb_CrossApp_CABar_prototype;
+
+bool js_crossapp_CABar_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CABar_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CABar(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CABar_get_bottom_clearance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CABar_get_top_clearance(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CANavigationBar_class;
 extern JSObject *jsb_CrossApp_CANavigationBar_prototype;
 

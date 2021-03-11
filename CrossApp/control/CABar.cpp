@@ -18,6 +18,50 @@
 #include "support/ccUtils.h"
 NS_CC_BEGIN
 
+
+int CABar::get_top_clearance(CAView* view)
+{
+    int clearance = 0;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if (view->convertToWorldSpace(DPointZero).y < 1)
+    {
+        auto winSize = CAApplication::getApplication()->getWinSize();
+        /****** iphone X ******/
+        if (winSize.height / winSize.width > 1.8)
+        {
+            clearance = 88;
+        }
+        else
+        {
+            clearance = 40;
+        }
+    }
+#endif
+    
+    return clearance;
+}
+
+int CABar::get_bottom_clearance(CAView* view)
+{
+    int clearance = 0;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    auto winSize = CAApplication::getApplication()->getWinSize();
+    /****** iphone X ******/
+    if (winSize.height / winSize.width > 1.8)
+    {
+        clearance = 80;
+    }
+    else if (winSize.width / winSize.height > 1.8)
+    {
+        clearance = 80;
+    }
+#endif
+    
+    return clearance;
+}
+
 #pragma CANavigationBar
 
 CANavigationBar::CANavigationBar(int clearance)

@@ -345,48 +345,6 @@ void CAViewController::dismissModalViewController(bool animated)
     }
 }
 
-int get_top_clearance(CAView* view)
-{
-    int clearance = 0;
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (view->convertToWorldSpace(DPointZero).y < 1)
-    {
-        auto winSize = CAApplication::getApplication()->getWinSize();
-        /****** iphone X ******/
-        if (winSize.height / winSize.width > 1.8)
-        {
-            clearance = 88;
-        }
-        else
-        {
-            clearance = 40;
-        }
-    }
-#endif
-    
-    return clearance;
-}
-
-int get_bottom_clearance(CAView* view)
-{
-    int clearance = 0;
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    auto winSize = CAApplication::getApplication()->getWinSize();
-    /****** iphone X ******/
-    if (winSize.height / winSize.width > 1.8)
-    {
-        clearance = 80;
-    }
-    else if (winSize.width / winSize.height > 1.8)
-    {
-        clearance = 80;
-    }
-#endif
-    
-    return clearance;
-}
 #pragma CANavigationController
 
 CANavigationController::CANavigationController()
@@ -613,7 +571,7 @@ void CANavigationController::viewSizeDidChanged()
 
 void CANavigationController::layout()
 {
-    m_iClearance = get_top_clearance(this->getView());
+    m_iClearance = CABar::get_top_clearance(this->getView());
 
     m_iNavigationBarHeight = m_iClearance + 88;
     
@@ -1501,7 +1459,7 @@ void CATabBarController::viewDidLoad()
         view->m_pTabBarController = this;
     }
 
-    m_pTabBar = CATabBar::createWithLayout(m_obTabBarLayout, get_top_clearance(this->getView()), m_eTabBarVerticalAlignment);
+    m_pTabBar = CATabBar::createWithLayout(m_obTabBarLayout, CABar::get_top_clearance(this->getView()), m_eTabBarVerticalAlignment);
     m_pTabBar->setItems(items);
     m_pTabBar->onSelectedItem(CALLBACK_BIND_2(CATabBarController::tabBarSelectedItem, this));
     this->getView()->insertSubview(m_pTabBar, 1);
@@ -1556,12 +1514,12 @@ void CATabBarController::layout()
         
         if (m_eTabBarVerticalAlignment == CATabBar::VerticalAlignment::Top)
         {
-            clearance = get_top_clearance(this->getView());
+            clearance = CABar::get_top_clearance(this->getView());
             m_iTabBarHeight = clearance + 88;
         }
         else
         {
-            clearance = get_bottom_clearance(this->getView());
+            clearance = CABar::get_bottom_clearance(this->getView());
             m_iTabBarHeight = clearance + 98;
         }
         

@@ -17174,6 +17174,120 @@ void js_register_crossapp_CATabBarItem(JSContext *cx, JS::HandleObject global) {
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CABar_class;
+JSObject *jsb_CrossApp_CABar_prototype;
+
+bool js_crossapp_CABar_get_bottom_clearance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CAView* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CABar_get_bottom_clearance : Error processing arguments");
+        int ret = CrossApp::CABar::get_bottom_clearance(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CABar_get_bottom_clearance : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CABar_get_top_clearance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CAView* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAView*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CABar_get_top_clearance : Error processing arguments");
+        int ret = CrossApp::CABar::get_top_clearance(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CABar_get_top_clearance : wrong number of arguments");
+    return false;
+}
+
+extern JSObject *jsb_CrossApp_CAView_prototype;
+
+void js_CrossApp_CABar_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CABar)", obj);
+}
+void js_register_crossapp_CABar(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CABar_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CABar_class->name = "CABar";
+    jsb_CrossApp_CABar_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CABar_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CABar_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CABar_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CABar_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CABar_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CABar_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CABar_class->finalize = js_CrossApp_CABar_finalize;
+    jsb_CrossApp_CABar_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("get_bottom_clearance", js_crossapp_CABar_get_bottom_clearance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("get_top_clearance", js_crossapp_CABar_get_top_clearance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CABar_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_CAView_prototype),
+        jsb_CrossApp_CABar_class,
+        dummy_constructor<CrossApp::CABar>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CABar", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CABar> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CABar_class;
+        p->proto = jsb_CrossApp_CABar_prototype;
+        p->parentProto = jsb_CrossApp_CAView_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CANavigationBar_class;
 JSObject *jsb_CrossApp_CANavigationBar_prototype;
 
@@ -17711,7 +17825,7 @@ bool js_crossapp_CANavigationBar_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 
-extern JSObject *jsb_CrossApp_CAView_prototype;
+extern JSObject *jsb_CrossApp_CABar_prototype;
 
 void js_CrossApp_CANavigationBar_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (CANavigationBar)", obj);
@@ -17776,7 +17890,7 @@ void js_register_crossapp_CANavigationBar(JSContext *cx, JS::HandleObject global
 
     jsb_CrossApp_CANavigationBar_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_CrossApp_CAView_prototype),
+        JS::RootedObject(cx, jsb_CrossApp_CABar_prototype),
         jsb_CrossApp_CANavigationBar_class,
         js_crossapp_CANavigationBar_constructor, 0, // constructor
         properties,
@@ -17797,7 +17911,7 @@ void js_register_crossapp_CANavigationBar(JSContext *cx, JS::HandleObject global
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_CrossApp_CANavigationBar_class;
         p->proto = jsb_CrossApp_CANavigationBar_prototype;
-        p->parentProto = jsb_CrossApp_CAView_prototype;
+        p->parentProto = jsb_CrossApp_CABar_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
@@ -18667,7 +18781,7 @@ bool js_crossapp_CATabBar_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 
-extern JSObject *jsb_CrossApp_CAView_prototype;
+extern JSObject *jsb_CrossApp_CABar_prototype;
 
 void js_CrossApp_CATabBar_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOG("jsbindings: finalizing JS object %p (CATabBar)", obj);
@@ -18743,7 +18857,7 @@ void js_register_crossapp_CATabBar(JSContext *cx, JS::HandleObject global) {
 
     jsb_CrossApp_CATabBar_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_CrossApp_CAView_prototype),
+        JS::RootedObject(cx, jsb_CrossApp_CABar_prototype),
         jsb_CrossApp_CATabBar_class,
         js_crossapp_CATabBar_constructor, 0, // constructor
         properties,
@@ -18764,7 +18878,7 @@ void js_register_crossapp_CATabBar(JSContext *cx, JS::HandleObject global) {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_CrossApp_CATabBar_class;
         p->proto = jsb_CrossApp_CATabBar_prototype;
-        p->parentProto = jsb_CrossApp_CAView_prototype;
+        p->parentProto = jsb_CrossApp_CABar_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
@@ -70517,6 +70631,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_BezierBy(cx, ns);
     js_register_crossapp_BezierTo(cx, ns);
     js_register_crossapp_ActionCamera(cx, ns);
+    js_register_crossapp_CABar(cx, ns);
     js_register_crossapp_CATabBar(cx, ns);
     js_register_crossapp_MoveBy(cx, ns);
     js_register_crossapp_MoveTo(cx, ns);
@@ -70567,6 +70682,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_DelayTime(cx, ns);
     js_register_crossapp_EaseQuarticActionInOut(cx, ns);
     js_register_crossapp_CARenderImage(cx, ns);
+    js_register_crossapp_ScaleTo(cx, ns);
     js_register_crossapp_CANavigationBarItem(cx, ns);
     js_register_crossapp_EaseElasticIn(cx, ns);
     js_register_crossapp_EaseCircleActionInOut(cx, ns);
@@ -70615,7 +70731,6 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_TargetedAction(cx, ns);
     js_register_crossapp_CADrawerController(cx, ns);
     js_register_crossapp_RotateTo(cx, ns);
-    js_register_crossapp_CANotificationCenter(cx, ns);
     js_register_crossapp_CAHttpRequest(cx, ns);
     js_register_crossapp_ActionManager(cx, ns);
     js_register_crossapp_CallFuncN(cx, ns);
@@ -70624,7 +70739,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_EaseQuinticActionInOut(cx, ns);
     js_register_crossapp_CAKeypadDispatcher(cx, ns);
     js_register_crossapp_EaseQuadraticActionInOut(cx, ns);
-    js_register_crossapp_ScaleTo(cx, ns);
+    js_register_crossapp_CANotificationCenter(cx, ns);
     js_register_crossapp_Spawn(cx, ns);
     js_register_crossapp_CAHttpResponse(cx, ns);
     js_register_crossapp_EaseCircleActionOut(cx, ns);
