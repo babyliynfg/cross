@@ -12,7 +12,7 @@
 #import "platform/ios/zbar/ZBarSDK.h"
 #include <string>
 #include <functional>
-@interface CAScanQRcodeView : UIView <ZBarReaderViewDelegate>
+@interface CAScanQRcodeView : UIView <ZBarReaderViewDelegate, CAAnimationDelegate>
 {
     CGRect rect;
     UIView *_QrCodeline;
@@ -25,7 +25,7 @@
     std::function<void(const std::string&)> _block;
 }
 
-- (id)init:(const std::function<void(const std::string&)>&) block;
++ (id)show:(const std::function<void(const std::string&)>&) block;
 
 @end
 

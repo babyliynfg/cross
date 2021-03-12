@@ -11,6 +11,7 @@
 #include "control/CABar.h"
 #include "basics/CAApplication.h"
 #include "view/CAWindow.h"
+#include "EAGLView.h"
 
 #define SCANVIEW_EdgeTop 200.0
 #define SCANVIEW_EdgeLeft 50.0
@@ -20,6 +21,12 @@
 
 @implementation CAScanQRcodeView
 
++ (id)show:(const std::function<void (const std::string &)> &)block
+{
+    CAScanQRcodeView* view = [[[CAScanQRcodeView alloc] init:block] autorelease];
+    [[EAGLView sharedEGLView] addSubview:view];
+    return view;
+}
 
 - (id)init:(const std::function<void(const std::string&)>&) block
 {
@@ -32,10 +39,10 @@
         //初始化扫描界面
         [self setScanView];
         
-        _readerView = [[ZBarReaderView alloc] init];
-        _readerView.frame =CGRectMake(0,0, rect.size.width, rect.size.height);
-        _readerView.tracksSymbols=NO;
-        _readerView.readerDelegate =self;
+        _readerView = [[[ZBarReaderView alloc] init] autorelease];
+        _readerView.frame = CGRectMake(0,0, rect.size.width, rect.size.height);
+        _readerView.tracksSymbols = NO;
+        _readerView.readerDelegate = self;
         [_readerView addSubview:_scanView];
         //关闭闪光灯
         _readerView.torchMode =0;
@@ -49,6 +56,34 @@
         
         UIView *starsBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 88)];
         [self addSubview: starsBarView];
+        
+        //创建动画对象
+            CABasicAnimation *basicAni = [CABasicAnimation animation];
+
+            //设置动画属性
+            basicAni.keyPath = @"position";
+
+            //设置动画的起始位置。也就是动画从哪里到哪里
+            basicAni.fromValue = [NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width, 0)];
+
+            //动画结束后，layer所在的位置
+            basicAni.toValue = [NSValue valueWithCGPoint:CGPointMake(0, 0)];
+
+            //动画持续时间
+            basicAni.duration = 2.5;
+
+            //动画填充模式
+            basicAni.fillMode = kCAFillModeForwards;
+
+            //动画完成不删除
+            basicAni.removedOnCompletion = NO;
+
+            //xcode8.0之后需要遵守代理协议
+            basicAni.delegate = self;
+
+            //把动画添加到要作用的Layer上面
+            [self.layer addAnimation:basicAni forKey:nil];
+        
     }
     return self;
 }

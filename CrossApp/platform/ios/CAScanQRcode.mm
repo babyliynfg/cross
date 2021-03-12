@@ -15,7 +15,6 @@ NS_CC_BEGIN
 
 void CAScanQRcode::showScanQRcode(const std::string& title, const std::function<void(const std::string&)>& callback)
 {
-    CAScanQRcodeView* reader = [[[CAScanQRcodeView alloc] init:callback] autorelease];
-    [[EAGLView sharedEGLView] addSubview:reader];
+    [CAScanQRcodeView show:callback];
 }
 NS_CC_END

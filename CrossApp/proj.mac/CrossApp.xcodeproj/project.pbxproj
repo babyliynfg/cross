@@ -15,6 +15,7 @@
 		040665C41956F45A003E0D62 /* CCEGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */; };
 		04DF7CB01984E6D9007352A8 /* CAIndexPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04DF7CAE1984E6D9007352A8 /* CAIndexPath.cpp */; };
 		04DF7CB11984E6D9007352A8 /* CAIndexPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 04DF7CAF1984E6D9007352A8 /* CAIndexPath.h */; };
+		04E7686925FB876D0011F501 /* CAScanQRcode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E7686825FB876D0011F501 /* CAScanQRcode.mm */; };
 		04EAB0671956D75600198A8E /* CAApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA05E1956D74D00198A8E /* CAApplication.cpp */; };
 		04EAB0681956D75600198A8E /* CAApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA05F1956D74D00198A8E /* CAApplication.h */; };
 		04EAB0691956D75600198A8E /* CAAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04EAA0601956D74D00198A8E /* CAAutoreleasePool.cpp */; };
@@ -466,6 +467,7 @@
 		040665C31956F45A003E0D62 /* CCEGLViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLViewProtocol.h; sourceTree = "<group>"; };
 		04DF7CAE1984E6D9007352A8 /* CAIndexPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAIndexPath.cpp; sourceTree = "<group>"; };
 		04DF7CAF1984E6D9007352A8 /* CAIndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAIndexPath.h; sourceTree = "<group>"; };
+		04E7686825FB876D0011F501 /* CAScanQRcode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAScanQRcode.mm; sourceTree = "<group>"; };
 		04EAA05E1956D74D00198A8E /* CAApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAApplication.cpp; sourceTree = "<group>"; };
 		04EAA05F1956D74D00198A8E /* CAApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAApplication.h; sourceTree = "<group>"; };
 		04EAA0601956D74D00198A8E /* CAAutoreleasePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAutoreleasePool.cpp; sourceTree = "<group>"; };
@@ -1585,6 +1587,7 @@
 		D673AB881E52E2A0007E7A5B /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				04E7686825FB876D0011F501 /* CAScanQRcode.mm */,
 				D69DA6911EE50BA300590961 /* CAFontProcesstor.mm */,
 				D6596E321E57048600A55CF9 /* CAAlertViewImpl.mm */,
 				D673AB8A1E52E2A0007E7A5B /* CAApplicationCaller.h */,
@@ -2165,6 +2168,7 @@
 				D64A8C891D34870B00F75021 /* CAMat4.cpp in Sources */,
 				D69B76421E4AFE12007D9771 /* CCRenderState.cpp in Sources */,
 				D685DB0525EE53AD00587E6B /* mmask.c in Sources */,
+				04E7686925FB876D0011F501 /* CAScanQRcode.mm in Sources */,
 				04EAB08B1956D75600198A8E /* CCSet.cpp in Sources */,
 				D69B76351E4AFE12007D9771 /* CCPrimitive.cpp in Sources */,
 				B047B91619E9181800F24BE6 /* CAScriptSupport.cpp in Sources */,
