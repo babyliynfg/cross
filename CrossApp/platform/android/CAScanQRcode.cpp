@@ -32,15 +32,13 @@ extern "C"
 
 NS_CC_BEGIN
 
-void CAScanQRcode::showScanQRcode(const std::string& title, const std::function<void(const std::string&)>& callback)
+void CAScanQRcode::showScanQRcode(const std::function<void(const std::string&)>& callback)
 {
     JniMethodInfo info;
     bool ret = JniHelper::getStaticMethodInfo(info, "org/CrossApp/lib/CrossAppActivity", "showQRCodeView", "(Ljava/lang/String;)V");
     if (ret)
     {
-        jstring jTitle = info.env->NewStringUTF(title.c_str());
-        info.env->CallStaticVoidMethod(info.classID, info.methodID, jTitle);
-        info.env->DeleteLocalRef(jTitle);
+        info.env->CallStaticVoidMethod(info.classID, info.methodID);
         s_ResultScanning_callback = callback;
     }
     CrossApp::CAApplication::getApplication()->pause();

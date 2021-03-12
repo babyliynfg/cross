@@ -510,12 +510,13 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
     }
 
     // 二维码相关
-    public static void showQRCodeView(final String title) {
+    public static void showQRCodeView() {
 
         final CrossAppActivity context = CrossAppActivity.getContext();
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
                 cameraView = new CameraView(context);
             }
         });

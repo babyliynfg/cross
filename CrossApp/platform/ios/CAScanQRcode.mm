@@ -13,7 +13,7 @@
 
 NS_CC_BEGIN
 
-void CAScanQRcode::showScanQRcode(const std::string& title, const std::function<void(const std::string&)>& callback)
+void CAScanQRcode::showScanQRcode(const std::function<void(const std::string&)>& callback)
 {
     [CAScanQRcodeView show:callback];
 }

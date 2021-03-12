@@ -21,7 +21,7 @@ class CC_DLL CAScanQRcode
 {
 public:
     
-    static void showScanQRcode(const std::string& title, const std::function<void(const std::string&)>& callback);
+    static void showScanQRcode(const std::function<void(const std::string&)>& callback);
 };
 
 NS_CC_END
