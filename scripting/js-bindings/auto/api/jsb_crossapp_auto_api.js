@@ -18838,6 +18838,25 @@ getText : function (
 };
 
 /**
+ * @class CAScanQRcode
+ */
+ca.CAScanQRcode = {
+
+/**
+ * @method showScanQRcode
+ * @param {String} arg0
+ * @param {function} arg1
+ */
+showScanQRcode : function (
+str, 
+func 
+)
+{
+},
+
+};
+
+/**
  * @class CADevice
  */
 ca.CADevice = {

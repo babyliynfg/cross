@@ -1,9 +1,9 @@
 
 
 #include "platform/CASAXParser.h"
-#include <vector> // because its based on windows 8 build :P
 #include "platform/CAFileUtils.h"
 #include "support/tinyxml2/tinyxml2.h"
+#include <vector> // because its based on windows 8 build :P
 
 
 NS_CC_BEGIN

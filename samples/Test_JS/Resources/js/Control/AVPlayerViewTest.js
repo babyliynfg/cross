@@ -33,7 +33,7 @@ var AVPlayerViewTest = ca.CAViewController.extend({
             return;
         }
 
-        this.avplayer = ca.CAAVPlayer.createWithUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
+        this.avplayer = ca.CAAVPlayer.createWithUrl("https://vd3.bdstatic.com/mda-kmrjft83jp9e60y3/v1-cae/sc/mda-kmrjft83jp9e60y3.mp4?v_from_s=nj_haokan_4469&auth_key=1615190283-0-0-f8f717c7a86cf702ddc7cbb516b75619&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=");
         //this.avplayer = ca.CAAVPlayer.createWithUrl("http://download.3g.joy.cn/video/236/60236937/1451280942752_hd.mp4");
 
         this.avplayer.onDidPlayToEndTime(function ()

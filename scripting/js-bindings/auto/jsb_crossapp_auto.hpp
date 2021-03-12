@@ -2360,6 +2360,15 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAClipboard_setText(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAClipboard_getText(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CAScanQRcode_class;
+extern JSObject *jsb_CrossApp_CAScanQRcode_prototype;
+
+bool js_crossapp_CAScanQRcode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAScanQRcode_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAScanQRcode(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAScanQRcode_showScanQRcode(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CADevice_class;
 extern JSObject *jsb_CrossApp_CADevice_prototype;
 

@@ -50776,6 +50776,105 @@ void js_register_crossapp_CAClipboard(JSContext *cx, JS::HandleObject global) {
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CAScanQRcode_class;
+JSObject *jsb_CrossApp_CAScanQRcode_prototype;
+
+bool js_crossapp_CAScanQRcode_showScanQRcode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        std::string arg0;
+        std::function<void (const std::basic_string<char> &)> arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        do {
+		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(1)));
+		        auto lambda = [=, &ok](const std::basic_string<char> & larg0) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[1];
+		            largv[0] = std_string_to_jsval(cx, larg0);
+		            JS::RootedValue rval(cx);
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg1 = lambda;
+		    }
+		    else
+		    {
+		        arg1 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScanQRcode_showScanQRcode : Error processing arguments");
+        CrossApp::CAScanQRcode::showScanQRcode(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAScanQRcode_showScanQRcode : wrong number of arguments");
+    return false;
+}
+
+void js_CrossApp_CAScanQRcode_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOG("jsbindings: finalizing JS object %p (CAScanQRcode)", obj);
+}
+void js_register_crossapp_CAScanQRcode(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CAScanQRcode_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CAScanQRcode_class->name = "CAScanQRcode";
+    jsb_CrossApp_CAScanQRcode_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CAScanQRcode_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CAScanQRcode_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CAScanQRcode_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CAScanQRcode_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CAScanQRcode_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CAScanQRcode_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CAScanQRcode_class->finalize = js_CrossApp_CAScanQRcode_finalize;
+    jsb_CrossApp_CAScanQRcode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("showScanQRcode", js_crossapp_CAScanQRcode_showScanQRcode, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CAScanQRcode_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_CrossApp_CAScanQRcode_class,
+        dummy_constructor<CrossApp::CAScanQRcode>, 0, // no constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CAScanQRcode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CAScanQRcode> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CAScanQRcode_class;
+        p->proto = jsb_CrossApp_CAScanQRcode_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CADevice_class;
 JSObject *jsb_CrossApp_CADevice_prototype;
 
@@ -70699,6 +70798,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CACollectionView(cx, ns);
     js_register_crossapp_RepeatForever(cx, ns);
     js_register_crossapp_CASwitch(cx, ns);
+    js_register_crossapp_CAScanQRcode(cx, ns);
     js_register_crossapp_EaseBounceOut(cx, ns);
     js_register_crossapp_CAUserDefault(cx, ns);
     js_register_crossapp_CAAutoCollectionView(cx, ns);

@@ -182,6 +182,7 @@
 #include "platform/CADensityDpi.h"
 #include "platform/CAFontProcesstor.h"
 #include "platform/CAClipboard.h"
+#include "platform/CAScanQRcode.h"
 
 // device
 #include "device/CADevice.h"

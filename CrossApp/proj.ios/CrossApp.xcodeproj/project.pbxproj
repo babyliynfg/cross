@@ -43,6 +43,8 @@
 		04E7684125FB4ECE0011F501 /* ZBarReaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682A25FB4ECE0011F501 /* ZBarReaderController.m */; };
 		04E7684225FB4ECE0011F501 /* ZBarCVImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682B25FB4ECE0011F501 /* ZBarCVImage.m */; };
 		04E7684325FB4ECE0011F501 /* ZBarHelpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682C25FB4ECE0011F501 /* ZBarHelpController.m */; };
+		04E7684925FB58CD0011F501 /* CAScanQRcode.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7684725FB58CD0011F501 /* CAScanQRcode.h */; };
+		04E7684C25FB59390011F501 /* CAScanQRcode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E7684B25FB59390011F501 /* CAScanQRcode.mm */; };
 		04EAA0241956CE3B00198A8E /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA01F1956CE3800198A8E /* ccConfig.h */; };
 		04EAA0251956CE3B00198A8E /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0201956CE3800198A8E /* ccMacros.h */; };
 		04EAA0261956CE3B00198A8E /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0211956CE3800198A8E /* ccTypeInfo.h */; };
@@ -521,6 +523,8 @@
 		04E7682A25FB4ECE0011F501 /* ZBarReaderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarReaderController.m; sourceTree = "<group>"; };
 		04E7682B25FB4ECE0011F501 /* ZBarCVImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarCVImage.m; sourceTree = "<group>"; };
 		04E7682C25FB4ECE0011F501 /* ZBarHelpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarHelpController.m; sourceTree = "<group>"; };
+		04E7684725FB58CD0011F501 /* CAScanQRcode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAScanQRcode.h; sourceTree = "<group>"; };
+		04E7684B25FB59390011F501 /* CAScanQRcode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAScanQRcode.mm; sourceTree = "<group>"; };
 		04EAA01F1956CE3800198A8E /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
 		04EAA0201956CE3800198A8E /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		04EAA0211956CE3800198A8E /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
@@ -1181,6 +1185,7 @@
 				1551A476158F2ADE00E66CFE /* CCPlatformMacros.h */,
 				1551A4A4158F2ADE00E66CFE /* platform.cpp */,
 				1551A4A5158F2ADE00E66CFE /* platform.h */,
+				04E7684725FB58CD0011F501 /* CAScanQRcode.h */,
 			);
 			path = platform;
 			sourceTree = "<group>";
@@ -1189,6 +1194,7 @@
 			isa = PBXGroup;
 			children = (
 				04E7681525FB4ECE0011F501 /* zbar */,
+				04E7684B25FB59390011F501 /* CAScanQRcode.mm */,
 				D69DA69A1EE54F9B00590961 /* CAFontProcesstor.mm */,
 				D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */,
 				B07E81151C33B36700A39C95 /* CATextView.mm */,
@@ -2063,6 +2069,7 @@
 				D6ADC68F1E56A72800750771 /* DownloadManager.h in Headers */,
 				D6ADC6101E56A72800750771 /* CAResponder.h in Headers */,
 				D6ADC6D61E56A72800750771 /* ccUtils.h in Headers */,
+				04E7684925FB58CD0011F501 /* CAScanQRcode.h in Headers */,
 				D6ADC5F61E56A72800750771 /* CACamera.h in Headers */,
 				D6CA51861E604C4D00317AB9 /* CACheckbox.h in Headers */,
 				0A38727121258DCB0052C2DB /* CrossAppReachability.h in Headers */,
@@ -2270,6 +2277,7 @@
 				D6ADC7091E56A72800750771 /* CAUserDefault.cpp in Sources */,
 				D6ADC6D11E56A72800750771 /* CAUIEditorParser.cpp in Sources */,
 				D6ADC5FF1E56A72800750771 /* CAIndexPath.cpp in Sources */,
+				04E7684C25FB59390011F501 /* CAScanQRcode.mm in Sources */,
 				D6ADC6171E56A72800750771 /* CAThread.cpp in Sources */,
 				D6C729C31EEE74740094B191 /* CAWindow.cpp in Sources */,
 				D6ADC68E1E56A72800750771 /* DownloadManager.cpp in Sources */,

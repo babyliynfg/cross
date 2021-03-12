@@ -2,7 +2,6 @@
 #ifndef __CAFontProcesstor_H__
 #define __CAFontProcesstor_H__
 
-#include "CAFontProcesstor.h"
 #include "CADensityDpi.h"
 #include "view/CARichLabel.h"
 NS_CC_BEGIN
