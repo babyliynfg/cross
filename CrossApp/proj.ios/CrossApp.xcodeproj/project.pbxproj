@@ -19,6 +19,30 @@
 		0460ED2E1957019600D13001 /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0460ED2A1957019600D13001 /* CCApplication.mm */; };
 		0460ED2F1957019600D13001 /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0460ED2B1957019600D13001 /* CCEGLView.h */; };
 		0460ED301957019600D13001 /* CCEGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0460ED2C1957019600D13001 /* CCEGLView.mm */; };
+		04E7680825FB4E9E0011F501 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E7680725FB4E9E0011F501 /* libzbar.a */; };
+		04E7682D25FB4ECE0011F501 /* ZBarCaptureReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7681625FB4ECE0011F501 /* ZBarCaptureReader.h */; };
+		04E7682E25FB4ECE0011F501 /* ZBarImageScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7681725FB4ECE0011F501 /* ZBarImageScanner.m */; };
+		04E7682F25FB4ECE0011F501 /* ZBarSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7681825FB4ECE0011F501 /* ZBarSymbol.m */; };
+		04E7683025FB4ECE0011F501 /* ZBarImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7681925FB4ECE0011F501 /* ZBarImage.h */; };
+		04E7683125FB4ECE0011F501 /* debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7681A25FB4ECE0011F501 /* debug.h */; };
+		04E7683225FB4ECE0011F501 /* ZBarCameraSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7681B25FB4ECE0011F501 /* ZBarCameraSimulator.m */; };
+		04E7683325FB4ECE0011F501 /* ZBarReaderController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7681C25FB4ECE0011F501 /* ZBarReaderController.h */; };
+		04E7683425FB4ECE0011F501 /* ZBarReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7681D25FB4ECE0011F501 /* ZBarReaderViewController.m */; };
+		04E7683525FB4ECE0011F501 /* ZBarReaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7681E25FB4ECE0011F501 /* ZBarReaderView.h */; };
+		04E7683625FB4ECE0011F501 /* ZBarReaderViewImpl_Capture.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7681F25FB4ECE0011F501 /* ZBarReaderViewImpl_Capture.m */; };
+		04E7683725FB4ECE0011F501 /* ZBarHelpController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7682025FB4ECE0011F501 /* ZBarHelpController.h */; };
+		04E7683825FB4ECE0011F501 /* ZBarCVImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7682125FB4ECE0011F501 /* ZBarCVImage.h */; };
+		04E7683925FB4ECE0011F501 /* ZBarCameraSimulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7682225FB4ECE0011F501 /* ZBarCameraSimulator.h */; };
+		04E7683A25FB4ECE0011F501 /* ZBarImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682325FB4ECE0011F501 /* ZBarImage.m */; };
+		04E7683B25FB4ECE0011F501 /* ZBarSymbol.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7682425FB4ECE0011F501 /* ZBarSymbol.h */; };
+		04E7683C25FB4ECE0011F501 /* ZBarCaptureReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682525FB4ECE0011F501 /* ZBarCaptureReader.m */; };
+		04E7683D25FB4ECE0011F501 /* ZBarImageScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7682625FB4ECE0011F501 /* ZBarImageScanner.h */; };
+		04E7683E25FB4ECE0011F501 /* ZBarSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7682725FB4ECE0011F501 /* ZBarSDK.h */; };
+		04E7683F25FB4ECE0011F501 /* ZBarReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682825FB4ECE0011F501 /* ZBarReaderView.m */; };
+		04E7684025FB4ECE0011F501 /* ZBarReaderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7682925FB4ECE0011F501 /* ZBarReaderViewController.h */; };
+		04E7684125FB4ECE0011F501 /* ZBarReaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682A25FB4ECE0011F501 /* ZBarReaderController.m */; };
+		04E7684225FB4ECE0011F501 /* ZBarCVImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682B25FB4ECE0011F501 /* ZBarCVImage.m */; };
+		04E7684325FB4ECE0011F501 /* ZBarHelpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682C25FB4ECE0011F501 /* ZBarHelpController.m */; };
 		04EAA0241956CE3B00198A8E /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA01F1956CE3800198A8E /* ccConfig.h */; };
 		04EAA0251956CE3B00198A8E /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0201956CE3800198A8E /* ccMacros.h */; };
 		04EAA0261956CE3B00198A8E /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0211956CE3800198A8E /* ccTypeInfo.h */; };
@@ -473,6 +497,30 @@
 		0460ED2A1957019600D13001 /* CCApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCApplication.mm; sourceTree = "<group>"; };
 		0460ED2B1957019600D13001 /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLView.h; sourceTree = "<group>"; };
 		0460ED2C1957019600D13001 /* CCEGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEGLView.mm; sourceTree = "<group>"; };
+		04E7680725FB4E9E0011F501 /* libzbar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzbar.a; path = ../the_third_party/zbar/prebuilt/ios/libzbar.a; sourceTree = "<group>"; };
+		04E7681625FB4ECE0011F501 /* ZBarCaptureReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarCaptureReader.h; sourceTree = "<group>"; };
+		04E7681725FB4ECE0011F501 /* ZBarImageScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarImageScanner.m; sourceTree = "<group>"; };
+		04E7681825FB4ECE0011F501 /* ZBarSymbol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarSymbol.m; sourceTree = "<group>"; };
+		04E7681925FB4ECE0011F501 /* ZBarImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarImage.h; sourceTree = "<group>"; };
+		04E7681A25FB4ECE0011F501 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		04E7681B25FB4ECE0011F501 /* ZBarCameraSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarCameraSimulator.m; sourceTree = "<group>"; };
+		04E7681C25FB4ECE0011F501 /* ZBarReaderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarReaderController.h; sourceTree = "<group>"; };
+		04E7681D25FB4ECE0011F501 /* ZBarReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarReaderViewController.m; sourceTree = "<group>"; };
+		04E7681E25FB4ECE0011F501 /* ZBarReaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarReaderView.h; sourceTree = "<group>"; };
+		04E7681F25FB4ECE0011F501 /* ZBarReaderViewImpl_Capture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarReaderViewImpl_Capture.m; sourceTree = "<group>"; };
+		04E7682025FB4ECE0011F501 /* ZBarHelpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarHelpController.h; sourceTree = "<group>"; };
+		04E7682125FB4ECE0011F501 /* ZBarCVImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarCVImage.h; sourceTree = "<group>"; };
+		04E7682225FB4ECE0011F501 /* ZBarCameraSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarCameraSimulator.h; sourceTree = "<group>"; };
+		04E7682325FB4ECE0011F501 /* ZBarImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarImage.m; sourceTree = "<group>"; };
+		04E7682425FB4ECE0011F501 /* ZBarSymbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarSymbol.h; sourceTree = "<group>"; };
+		04E7682525FB4ECE0011F501 /* ZBarCaptureReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarCaptureReader.m; sourceTree = "<group>"; };
+		04E7682625FB4ECE0011F501 /* ZBarImageScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarImageScanner.h; sourceTree = "<group>"; };
+		04E7682725FB4ECE0011F501 /* ZBarSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarSDK.h; sourceTree = "<group>"; };
+		04E7682825FB4ECE0011F501 /* ZBarReaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarReaderView.m; sourceTree = "<group>"; };
+		04E7682925FB4ECE0011F501 /* ZBarReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarReaderViewController.h; sourceTree = "<group>"; };
+		04E7682A25FB4ECE0011F501 /* ZBarReaderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarReaderController.m; sourceTree = "<group>"; };
+		04E7682B25FB4ECE0011F501 /* ZBarCVImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarCVImage.m; sourceTree = "<group>"; };
+		04E7682C25FB4ECE0011F501 /* ZBarHelpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarHelpController.m; sourceTree = "<group>"; };
 		04EAA01F1956CE3800198A8E /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
 		04EAA0201956CE3800198A8E /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		04EAA0211956CE3800198A8E /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
@@ -982,6 +1030,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E7680825FB4E9E0011F501 /* libzbar.a in Frameworks */,
 				D6B12EB31DC9C7D300944576 /* libwebsockets.a in Frameworks */,
 				D6B0368E1D95270200388A90 /* libcrypto.a in Frameworks */,
 				B0621BEC1AC3C1C9005EBCA7 /* libcurl.a in Frameworks */,
@@ -1001,6 +1050,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04E7681525FB4ECE0011F501 /* zbar */ = {
+			isa = PBXGroup;
+			children = (
+				04E7681625FB4ECE0011F501 /* ZBarCaptureReader.h */,
+				04E7681725FB4ECE0011F501 /* ZBarImageScanner.m */,
+				04E7681825FB4ECE0011F501 /* ZBarSymbol.m */,
+				04E7681925FB4ECE0011F501 /* ZBarImage.h */,
+				04E7681A25FB4ECE0011F501 /* debug.h */,
+				04E7681B25FB4ECE0011F501 /* ZBarCameraSimulator.m */,
+				04E7681C25FB4ECE0011F501 /* ZBarReaderController.h */,
+				04E7681D25FB4ECE0011F501 /* ZBarReaderViewController.m */,
+				04E7681E25FB4ECE0011F501 /* ZBarReaderView.h */,
+				04E7681F25FB4ECE0011F501 /* ZBarReaderViewImpl_Capture.m */,
+				04E7682025FB4ECE0011F501 /* ZBarHelpController.h */,
+				04E7682125FB4ECE0011F501 /* ZBarCVImage.h */,
+				04E7682225FB4ECE0011F501 /* ZBarCameraSimulator.h */,
+				04E7682325FB4ECE0011F501 /* ZBarImage.m */,
+				04E7682425FB4ECE0011F501 /* ZBarSymbol.h */,
+				04E7682525FB4ECE0011F501 /* ZBarCaptureReader.m */,
+				04E7682625FB4ECE0011F501 /* ZBarImageScanner.h */,
+				04E7682725FB4ECE0011F501 /* ZBarSDK.h */,
+				04E7682825FB4ECE0011F501 /* ZBarReaderView.m */,
+				04E7682925FB4ECE0011F501 /* ZBarReaderViewController.h */,
+				04E7682A25FB4ECE0011F501 /* ZBarReaderController.m */,
+				04E7682B25FB4ECE0011F501 /* ZBarCVImage.m */,
+				04E7682C25FB4ECE0011F501 /* ZBarHelpController.m */,
+			);
+			path = zbar;
+			sourceTree = "<group>";
+		};
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
@@ -1022,6 +1101,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04E7680725FB4E9E0011F501 /* libzbar.a */,
 				D6B601ED25B7DA1C003F2F6A /* libz.tbd */,
 				D60E2236210AB3B900CDBB44 /* UserNotifications.framework */,
 				D644B3961F19FA1200E90A86 /* CoreMedia.framework */,
@@ -1108,6 +1188,7 @@
 		1551A47B158F2ADE00E66CFE /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				04E7681525FB4ECE0011F501 /* zbar */,
 				D69DA69A1EE54F9B00590961 /* CAFontProcesstor.mm */,
 				D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */,
 				B07E81151C33B36700A39C95 /* CATextView.mm */,
@@ -1875,6 +1956,7 @@
 				D6ADC6381E56A72800750771 /* CADrawerController.h in Headers */,
 				D6ADC7121E56A72800750771 /* unzip.h in Headers */,
 				D644B3931F19F8CB00E90A86 /* CAAVPlayerView.h in Headers */,
+				04E7683025FB4ECE0011F501 /* ZBarImage.h in Headers */,
 				D6ADC6DF1E56A72800750771 /* utlist.h in Headers */,
 				E0FCFF0E1E5C1B5300CCA191 /* CAMotionManager.h in Headers */,
 				D6ADC7041E56A72800750771 /* sqlite3.h in Headers */,
@@ -1886,7 +1968,9 @@
 				D6ADC6991E56A72800750771 /* CCCustomCommand.h in Headers */,
 				0ACE3B74212D494E008CF054 /* NSString+PeopleNameGetLetter.h in Headers */,
 				D685DB3925EE5EAF00587E6B /* CAQrencode.h in Headers */,
+				04E7683825FB4ECE0011F501 /* ZBarCVImage.h in Headers */,
 				D6ADC6201E56A72800750771 /* CCNS.h in Headers */,
+				04E7684025FB4ECE0011F501 /* ZBarReaderViewController.h in Headers */,
 				D6ADC6441E56A72800750771 /* CAProtocols.h in Headers */,
 				B07E81141C33B34800A39C95 /* CATextView.h in Headers */,
 				D6ADC6501E56A72800750771 /* CGActionEase.h in Headers */,
@@ -1919,6 +2003,7 @@
 				D6ADC6DD1E56A72800750771 /* ccCArray.h in Headers */,
 				D6ADC6541E56A72800750771 /* CGActionInterval.h in Headers */,
 				B01F650A196585B2005C14FC /* CADensityDpi.h in Headers */,
+				04E7683E25FB4ECE0011F501 /* ZBarSDK.h in Headers */,
 				D6ADC61A1E56A72800750771 /* CAValue.h in Headers */,
 				D6ADC6141E56A72800750771 /* CASize.h in Headers */,
 				D685DB3825EE5EAF00587E6B /* split.h in Headers */,
@@ -1931,8 +2016,10 @@
 				D6ADC6EF1E56A72800750771 /* reader.h in Headers */,
 				D6C729C21EEE74740094B191 /* CAWebView.h in Headers */,
 				E0FCFF171E5C1F4300CCA191 /* CAImagePickerController.h in Headers */,
+				04E7683325FB4ECE0011F501 /* ZBarReaderController.h in Headers */,
 				E0FCFF231E5C23C400CCA191 /* CAAddressBook.h in Headers */,
 				D6ADC6461E56A72800750771 /* CATouch.h in Headers */,
+				04E7683525FB4ECE0011F501 /* ZBarReaderView.h in Headers */,
 				D6ADC6891E56A72800750771 /* CAQuaternion.h in Headers */,
 				D6ADC63C1E56A72800750771 /* CAViewController.h in Headers */,
 				D6C729BE1EEE74740094B191 /* CAView.h in Headers */,
@@ -1944,6 +2031,7 @@
 				D6ADC5F21E56A72800750771 /* CAApplication.h in Headers */,
 				D6ADC65A1E56A72800750771 /* CGActionTween.h in Headers */,
 				E0FCFF401E5C4D6000CCA191 /* CADevice.h in Headers */,
+				04E7683D25FB4ECE0011F501 /* ZBarImageScanner.h in Headers */,
 				D6C729C41EEE74740094B191 /* CAWindow.h in Headers */,
 				D6ADC6B51E56A72800750771 /* CCQuadCommand.h in Headers */,
 				D6ADC6951E56A72800750771 /* WebSocket.h in Headers */,
@@ -1959,6 +2047,7 @@
 				D6C729B61EEE74740094B191 /* CAScale9ImageView.h in Headers */,
 				D6ADC6811E56A72800750771 /* CAAffineTransform.h in Headers */,
 				D6ADC5FE1E56A72800750771 /* CAFPSImages.h in Headers */,
+				04E7683125FB4ECE0011F501 /* debug.h in Headers */,
 				D6C729941EEE74740094B191 /* CAAlertView.h in Headers */,
 				1551A73E158F2ADE00E66CFE /* EAGLView.h in Headers */,
 				D6C729921EEE74740094B191 /* CAActivityIndicatorView.h in Headers */,
@@ -1984,6 +2073,7 @@
 				D6ADC60A1E56A72800750771 /* CAPoint3D.h in Headers */,
 				D6ADC6DA1E56A72800750771 /* ConvertUTF.h in Headers */,
 				D685DB2625EE5EAF00587E6B /* qrencode_inner.h in Headers */,
+				04E7682D25FB4ECE0011F501 /* ZBarCaptureReader.h in Headers */,
 				D6ADC6001E56A72800750771 /* CAIndexPath.h in Headers */,
 				D69DA6991EE54F4E00590961 /* CAFontProcesstor.h in Headers */,
 				1551A74F158F2ADE00E66CFE /* platform.h in Headers */,
@@ -2014,6 +2104,7 @@
 				D6ADC6CC1E56A72800750771 /* base64.h in Headers */,
 				D6ADC62E1E56A72800750771 /* CASegmentedControl.h in Headers */,
 				D6ADC6F31E56A72800750771 /* LocalStorage.h in Headers */,
+				04E7683B25FB4ECE0011F501 /* ZBarSymbol.h in Headers */,
 				1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */,
 				D6A1235525CD456D00A6E8B8 /* AssetsManager.h in Headers */,
 				D6ADC6601E56A72800750771 /* CGTweenFunction.h in Headers */,
@@ -2057,6 +2148,7 @@
 				D6ADC7081E56A72800750771 /* tinyxml2.h in Headers */,
 				D6ADC6971E56A72800750771 /* CCBatchCommand.h in Headers */,
 				D6ADC6E41E56A72800750771 /* CSContentJsonDictionary.h in Headers */,
+				04E7683725FB4ECE0011F501 /* ZBarHelpController.h in Headers */,
 				D6ADC6521E56A72800750771 /* CGActionInstant.h in Headers */,
 				04EAA0251956CE3B00198A8E /* ccMacros.h in Headers */,
 				D685DB2E25EE5EAF00587E6B /* mqrspec.h in Headers */,
@@ -2076,6 +2168,7 @@
 				D6ADC65E1E56A72800750771 /* CGAnimationCache.h in Headers */,
 				04EAA0281956CE3B00198A8E /* CrossApp.h in Headers */,
 				D6ADC7141E56A72800750771 /* ZipUtils.h in Headers */,
+				04E7683925FB4ECE0011F501 /* ZBarCameraSimulator.h in Headers */,
 				D6ADC6721E56A72800750771 /* CAImageCache.h in Headers */,
 				D6ADC5F01E56A72800750771 /* CAViewAnimation.h in Headers */,
 				D6ADC6A51E56A72800750771 /* ccGLStateCache.h in Headers */,
@@ -2163,12 +2256,16 @@
 				D6C729AD1EEE74740094B191 /* CAPickerView.cpp in Sources */,
 				D6ADC66B1E56A72800750771 /* CGSpriteFrameCache.cpp in Sources */,
 				D6ADC6711E56A72800750771 /* CAImageCache.cpp in Sources */,
+				04E7683F25FB4ECE0011F501 /* ZBarReaderView.m in Sources */,
 				D6ADC6D51E56A72800750771 /* ccUtils.cpp in Sources */,
 				D6ADC6CD1E56A72800750771 /* CAProfiling.cpp in Sources */,
+				04E7684225FB4ECE0011F501 /* ZBarCVImage.m in Sources */,
 				D6ADC5F31E56A72800750771 /* CAAutoreleasePool.cpp in Sources */,
+				04E7682F25FB4ECE0011F501 /* ZBarSymbol.m in Sources */,
 				D6C729B91EEE74740094B191 /* CATableView.cpp in Sources */,
 				D6C729A31EEE74740094B191 /* CAGifView.cpp in Sources */,
 				D6ADC6091E56A72800750771 /* CAPoint3D.cpp in Sources */,
+				04E7684325FB4ECE0011F501 /* ZBarHelpController.m in Sources */,
 				D6ADC6691E56A72800750771 /* CGSpriteFrame.cpp in Sources */,
 				D6ADC7091E56A72800750771 /* CAUserDefault.cpp in Sources */,
 				D6ADC6D11E56A72800750771 /* CAUIEditorParser.cpp in Sources */,
@@ -2184,6 +2281,7 @@
 				D6ADC6A01E56A72800750771 /* CCGLProgramState.cpp in Sources */,
 				D6ADC6C71E56A72800750771 /* CAScriptSupport.cpp in Sources */,
 				1551A730158F2ADE00E66CFE /* CAApplicationCaller.mm in Sources */,
+				04E7683A25FB4ECE0011F501 /* ZBarImage.m in Sources */,
 				D685DB2925EE5EAF00587E6B /* bitstream.c in Sources */,
 				D6C729A91EEE74740094B191 /* CAListView.cpp in Sources */,
 				D6ADC6191E56A72800750771 /* CAValue.cpp in Sources */,
@@ -2215,6 +2313,7 @@
 				D6ADC66D1E56A72800750771 /* CAGif.cpp in Sources */,
 				D6ADC6EB1E56A72800750771 /* json_reader.cpp in Sources */,
 				D6ADC5F51E56A72800750771 /* CACamera.cpp in Sources */,
+				04E7683C25FB4ECE0011F501 /* ZBarCaptureReader.m in Sources */,
 				D6ADC60D1E56A72800750771 /* CARect.cpp in Sources */,
 				D6ADC6FB1E56A72800750771 /* advancing_front.cc in Sources */,
 				D6C729971EEE74740094B191 /* CACell.cpp in Sources */,
@@ -2240,11 +2339,13 @@
 				D6ADC6C11E56A72800750771 /* CCTrianglesCommand.cpp in Sources */,
 				E0FCFF421E5C4E2B00CCA191 /* CADevice.mm in Sources */,
 				1551A74E158F2ADE00E66CFE /* platform.cpp in Sources */,
+				04E7683225FB4ECE0011F501 /* ZBarCameraSimulator.m in Sources */,
 				D6ADC66F1E56A72800750771 /* CAImage.cpp in Sources */,
 				D6C729BB1EEE74740094B191 /* CATextEditHelper.cpp in Sources */,
 				D6ADC6F71E56A72800750771 /* shapes.cc in Sources */,
 				D6ADC7031E56A72800750771 /* sqlite3.c in Sources */,
 				E0FCFF061E5C094A00CCA191 /* CAMotionManager.mm in Sources */,
+				04E7684125FB4ECE0011F501 /* ZBarReaderController.m in Sources */,
 				D6ADC5FD1E56A72800750771 /* CAFPSImages.c in Sources */,
 				D6ADC5EF1E56A72800750771 /* CAViewAnimation.cpp in Sources */,
 				D6ADC65B1E56A72800750771 /* CGAnimation.cpp in Sources */,
@@ -2279,6 +2380,7 @@
 				D644B39F1F1A02F600E90A86 /* CAAVPlayerImpl.mm in Sources */,
 				D685DB2525EE5EAF00587E6B /* CAQrencode.cpp in Sources */,
 				D6ADC5F11E56A72800750771 /* CAApplication.cpp in Sources */,
+				04E7683425FB4ECE0011F501 /* ZBarReaderViewController.m in Sources */,
 				D6ADC6451E56A72800750771 /* CATouch.cpp in Sources */,
 				D6ADC6EE1E56A72800750771 /* json_writer.cpp in Sources */,
 				D6ADC6AA1E56A72800750771 /* CCMeshCommand.cpp in Sources */,
@@ -2297,6 +2399,7 @@
 				D6ADC6C51E56A72800750771 /* CCVertexIndexData.cpp in Sources */,
 				D6CA51851E604C4D00317AB9 /* CACheckbox.cpp in Sources */,
 				D6ADC6231E56A72800750771 /* CABar.cpp in Sources */,
+				04E7683625FB4ECE0011F501 /* ZBarReaderViewImpl_Capture.m in Sources */,
 				B07E81161C33B36700A39C95 /* CATextView.mm in Sources */,
 				D6ADC6E11E56A72800750771 /* TGAlib.cpp in Sources */,
 				D6ADC6C31E56A72800750771 /* CCVertexIndexBuffer.cpp in Sources */,
@@ -2310,6 +2413,7 @@
 				D6C729BD1EEE74740094B191 /* CAView.cpp in Sources */,
 				D6C729A51EEE74740094B191 /* CAImageView.cpp in Sources */,
 				D6ADC5F71E56A72800750771 /* CACameraBackgroundBrush.cpp in Sources */,
+				04E7682E25FB4ECE0011F501 /* ZBarImageScanner.m in Sources */,
 				D6ADC6801E56A72800750771 /* CAAffineTransform.cpp in Sources */,
 				02F19A921D4260E900BE472F /* CASAXParser.cpp in Sources */,
 				022160791C1FAD42009FFCFC /* CATextField.mm in Sources */,
@@ -2451,6 +2555,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/zbar/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/ios\"",
@@ -2459,6 +2564,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/zbar/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;
@@ -2489,6 +2595,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/include/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/ios\"",
+					"\"$(SRCROOT)/../the_third_party/zbar/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/ios\"",
@@ -2497,6 +2604,7 @@
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/ios\"",
+					"\"$(SRCROOT)/../the_third_party/zbar/prebuilt/ios\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CrossApp;

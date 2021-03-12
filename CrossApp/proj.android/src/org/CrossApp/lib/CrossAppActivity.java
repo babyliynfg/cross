@@ -62,6 +62,8 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
     private static FrameLayout frame;
 
+    public static CameraView cameraView = null;
+    
     public static CrossAppTextField _sTextField = null;
 
     public static CrossAppTextView _sTextView = null;
@@ -162,6 +164,10 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
         CrossAppHelper.onPause();
         this.mGLSurfaceView.onPause();
+        
+        if (cameraView != null) {
+            cameraView.back(false);
+        }
     }
 
     @Override
@@ -173,7 +179,12 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
     @Override
     public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
-        return CrossAppGLSurfaceView.getInstance().onKeyDown(pKeyCode, pKeyEvent);
+        if ((keyCode == KeyEvent.KEYCODE_BACK && cameraView != null && cameraView.iShowing())) {
+            cameraView.back(false);
+            return false;
+        } else {
+            return CrossAppGLSurfaceView.getInstance().onKeyDown(pKeyCode, pKeyEvent);
+        }
     }
 
     public void setPasteBoardStr(String sender) {
@@ -498,6 +509,17 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
         setValueNativeCallbackUriArry(null);
     }
 
+    // 二维码相关
+    public static void showQRCodeView(final String title) {
+
+        final CrossAppActivity context = CrossAppActivity.getContext();
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                cameraView = new CameraView(context);
+            }
+        });
+    }
 
     public CrossAppWebViewNative.OnValueCallbackListenner getOnValueNativeCallbackListenner() {
         return onNativeValueCallbackListenner;
