@@ -71,16 +71,8 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
         float y = top / 2 + 20;
         
         UIButton *btn_closed = nil;
-        if (@available(iOS 13.0, *)) {
-            btn_closed = [UIButton buttonWithType:UIButtonTypeClose];
-            [btn_closed setFrame:CGRectMake(30, 80, 20, 20)];
-            [self addSubview: btn_closed];
-            [btn_closed addTarget:self action:@selector(closed) forControlEvents:UIControlEventTouchUpInside];
-
-        } else {
-            btn_closed = [UIButton buttonWithType:UIButtonTypeCustom];
-            [btn_closed setBackgroundImage:[UIImage imageNamed:@"source_material/btn_left_white.png"] forState:UIControlStateNormal];
-        }
+        btn_closed = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn_closed setBackgroundImage:[UIImage imageNamed:@"source_material/btn_left_white.png"] forState:UIControlStateNormal];
         [btn_closed setFrame:CGRectMake(30, y, 24, 24)];
         [self addSubview: btn_closed];
         [btn_closed addTarget:self action:@selector(closed) forControlEvents:UIControlEventTouchUpInside];
