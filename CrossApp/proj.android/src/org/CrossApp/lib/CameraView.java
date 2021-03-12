@@ -1,67 +1,46 @@
 /*
  * Basic no frills app which integrates the ZBar barcode scanner with
  * the camera.
- * 
+ *
  * Created by lisah0 on 2012-02-24
  */
-package com.cross.eggs;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
-import org.CrossApp.lib.CrossAppActivity;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.cross.eggs.R;
+package org.CrossApp.lib;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.ActionBar.LayoutParams;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.SurfaceView;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
-import android.view.Window;
-import android.widget.FrameLayout;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.hardware.Camera;
-import android.hardware.Camera.PreviewCallback;
-import android.hardware.Camera.AutoFocusCallback;
-import android.hardware.Camera.Parameters;
-import android.hardware.Camera.Size;
-import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.ImageFormat;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-/* Import ZBar Class files */
-import net.sourceforge.zbar.ImageScanner;
+import android.hardware.Camera;
+import android.hardware.Camera.AutoFocusCallback;
+import android.hardware.Camera.Parameters;
+import android.hardware.Camera.PreviewCallback;
+import android.hardware.Camera.Size;
+import android.os.Handler;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
+import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
-import net.sourceforge.zbar.Config;
+
+import org.CrossApp.lib.CrossAppActivity;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+/* Import ZBar Class files */
 
 @SuppressLint("NewApi")
 public class CameraView {
@@ -78,7 +57,7 @@ public class CameraView {
 
 	private boolean barcodeScanned = false;
 	private boolean previewing = true;
-	private View view;
+	private RelativeLayout view;
 	private long clickTime = 0;
 
 	public CameraView(Context context) {
@@ -96,7 +75,20 @@ public class CameraView {
 
 		mPreview = new CameraPreview(activity, mCamera, previewCb, autoFocusCB);
 
-		view = activity.getLayoutInflater().inflate(R.layout.main, null);
+//		view = activity.getLayoutInflater().inflate(R.layout.main, null);
+
+		view = new RelativeLayout(activity);
+
+		ImageView ivBack = new ImageView(activity);
+		RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		lp1.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		lp1.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+		// btn1 位于父 View 的顶部，在父 View 中水平居中
+		view.addView(ivBack, lp1 );
+
+
+
+
 
 		final FrameLayout preview = activity.getFrameLayout();
 		mPreview.setVisibility(View.GONE);
@@ -108,7 +100,7 @@ public class CameraView {
 		previewing = true;
 //		mCamera.autoFocus(autoFocusCB);
 		// finder_view = (FinderView) view.findViewById(R.id.finder_view);
-		ImageView ivBack = (ImageView) view.findViewById(R.id.iv_back);
+//		ImageView ivBack = (ImageView) view.findViewById(R.id.iv_back);
 		InputStream input = null;
 		try {
 			input = activity.getResources().getAssets()
@@ -259,7 +251,7 @@ public class CameraView {
 
 	PreviewCallback previewCb = new PreviewCallback() {
 		public void onPreviewFrame(byte[] data, Camera camera) {
-			Camera.Parameters parameters = camera.getParameters();
+			Parameters parameters = camera.getParameters();
 			Size size = parameters.getPreviewSize();
 
 			Image barcode = new Image(size.width, size.height, "Y800");

@@ -250,6 +250,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_tiff_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_webp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
+LOCAL_WHOLE_STATIC_LIBRARIES += zbar_static
 
 
 
@@ -277,3 +278,5 @@ $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
+$(call import-module, zbar/prebuilt/android)
+

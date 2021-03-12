@@ -179,7 +179,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
     @Override
     public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK && cameraView != null && cameraView.iShowing())) {
+        if ((pKeyCode == KeyEvent.KEYCODE_BACK && cameraView != null && cameraView.iShowing())) {
             cameraView.back(false);
             return false;
         } else {

@@ -7,6 +7,7 @@
 //
 
 #include "platform/CAScanQRcode.h"
+#include "basics/CAApplication.h"
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
 
@@ -23,9 +24,9 @@ extern "C"
         env->ReleaseStringUTFChars(value, str);
     }
     // 摄像头关闭
-    void Java_com_cross_eggs_CameraView_cameraClosed(JNIEnv *env, jobject thiz)
+    void Java_org_CrossApp_lib_CameraView_cameraClosed(JNIEnv *env, jobject thiz)
     {
-        CAApplication::getApplication()->resume();
+        CrossApp::CAApplication::getApplication()->resume();
     }
 }
 
@@ -42,7 +43,7 @@ void CAScanQRcode::showScanQRcode(const std::string& title, const std::function<
         info.env->DeleteLocalRef(jTitle);
         s_ResultScanning_callback = callback;
     }
-    CAApplication::getApplication()->pause();
+    CrossApp::CAApplication::getApplication()->pause();
 }
 NS_CC_END
 

@@ -34,7 +34,6 @@ public class ImageScanner
 
     static
     {
-        System.loadLibrary("zbarjni");
         init();
     }
     private static native void init();
