@@ -14,12 +14,12 @@
 #include <functional>
 @interface CAScanQRcodeView : UIView <ZBarReaderViewDelegate, CAAnimationDelegate>
 {
-    CGRect rect;
     UIView *_QrCodeline;
     NSTimer *_timer;
     
     //设置扫描画面
     UIView *_scanView;
+    CGRect _scanViewRect;
     ZBarReaderView *_readerView;
     
     std::function<void(const std::string&)> _block;
