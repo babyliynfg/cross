@@ -45,6 +45,8 @@
 		04E7684325FB4ECE0011F501 /* ZBarHelpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7682C25FB4ECE0011F501 /* ZBarHelpController.m */; };
 		04E7684925FB58CD0011F501 /* CAScanQRcode.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7684725FB58CD0011F501 /* CAScanQRcode.h */; };
 		04E7684C25FB59390011F501 /* CAScanQRcode.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E7684B25FB59390011F501 /* CAScanQRcode.mm */; };
+		04E7686025FB733E0011F501 /* CAScanQRcodeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7685E25FB733E0011F501 /* CAScanQRcodeView.h */; };
+		04E7686125FB733E0011F501 /* CAScanQRcodeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E7685F25FB733E0011F501 /* CAScanQRcodeView.mm */; };
 		04EAA0241956CE3B00198A8E /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA01F1956CE3800198A8E /* ccConfig.h */; };
 		04EAA0251956CE3B00198A8E /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0201956CE3800198A8E /* ccMacros.h */; };
 		04EAA0261956CE3B00198A8E /* ccTypeInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 04EAA0211956CE3800198A8E /* ccTypeInfo.h */; };
@@ -525,6 +527,8 @@
 		04E7682C25FB4ECE0011F501 /* ZBarHelpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarHelpController.m; sourceTree = "<group>"; };
 		04E7684725FB58CD0011F501 /* CAScanQRcode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAScanQRcode.h; sourceTree = "<group>"; };
 		04E7684B25FB59390011F501 /* CAScanQRcode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAScanQRcode.mm; sourceTree = "<group>"; };
+		04E7685E25FB733E0011F501 /* CAScanQRcodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScanQRcodeView.h; sourceTree = "<group>"; };
+		04E7685F25FB733E0011F501 /* CAScanQRcodeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAScanQRcodeView.mm; sourceTree = "<group>"; };
 		04EAA01F1956CE3800198A8E /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
 		04EAA0201956CE3800198A8E /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		04EAA0211956CE3800198A8E /* ccTypeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypeInfo.h; sourceTree = "<group>"; };
@@ -1195,6 +1199,8 @@
 			children = (
 				04E7681525FB4ECE0011F501 /* zbar */,
 				04E7684B25FB59390011F501 /* CAScanQRcode.mm */,
+				04E7685E25FB733E0011F501 /* CAScanQRcodeView.h */,
+				04E7685F25FB733E0011F501 /* CAScanQRcodeView.mm */,
 				D69DA69A1EE54F9B00590961 /* CAFontProcesstor.mm */,
 				D6596E0C1E56D1C200A55CF9 /* CAAlertViewImpl.mm */,
 				B07E81151C33B36700A39C95 /* CATextView.mm */,
@@ -2113,6 +2119,7 @@
 				D6ADC6F31E56A72800750771 /* LocalStorage.h in Headers */,
 				04E7683B25FB4ECE0011F501 /* ZBarSymbol.h in Headers */,
 				1551A874158F2B4700E66CFE /* CrossApp-Prefix.pch in Headers */,
+				04E7686025FB733E0011F501 /* CAScanQRcodeView.h in Headers */,
 				D6A1235525CD456D00A6E8B8 /* AssetsManager.h in Headers */,
 				D6ADC6601E56A72800750771 /* CGTweenFunction.h in Headers */,
 				D6ADC6831E56A72800750771 /* CAMat4.h in Headers */,
@@ -2406,6 +2413,7 @@
 				D6ADC6A41E56A72800750771 /* ccGLStateCache.cpp in Sources */,
 				D6ADC6C51E56A72800750771 /* CCVertexIndexData.cpp in Sources */,
 				D6CA51851E604C4D00317AB9 /* CACheckbox.cpp in Sources */,
+				04E7686125FB733E0011F501 /* CAScanQRcodeView.mm in Sources */,
 				D6ADC6231E56A72800750771 /* CABar.cpp in Sources */,
 				04E7683625FB4ECE0011F501 /* ZBarReaderViewImpl_Capture.m in Sources */,
 				B07E81161C33B36700A39C95 /* CATextView.mm in Sources */,
