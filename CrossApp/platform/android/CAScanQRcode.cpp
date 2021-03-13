@@ -35,7 +35,7 @@ NS_CC_BEGIN
 void CAScanQRcode::showScanQRcode(const std::function<void(const std::string&)>& callback)
 {
     JniMethodInfo info;
-    bool ret = JniHelper::getStaticMethodInfo(info, "org/CrossApp/lib/CrossAppActivity", "showQRCodeView", "(Ljava/lang/String;)V");
+    bool ret = JniHelper::getStaticMethodInfo(info, "org/CrossApp/lib/CrossAppActivity", "showQRCodeView", "()V");
     if (ret)
     {
         info.env->CallStaticVoidMethod(info.classID, info.methodID);

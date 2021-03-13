@@ -278,5 +278,5 @@ $(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
-$(call import-module, zbar/prebuilt/android)
+$(call import-module,zbar/prebuilt/android)
 

@@ -50810,7 +50810,7 @@ bool js_crossapp_CAScanQRcode_showScanQRcode(JSContext *cx, uint32_t argc, jsval
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScanQRcode_showScanQRcode : Error processing arguments");
-        CrossApp::CAScanQRcode::showScanQRcode(arg0, arg1);
+        CrossApp::CAScanQRcode::showScanQRcode(arg1);
         args.rval().setUndefined();
         return true;
     }

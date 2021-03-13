@@ -49,7 +49,7 @@ public class CameraView {
 	private Camera mCamera;
 	private CameraPreview mPreview;
 	private Handler autoFocusHandler;
-	private FinderView finder_view;
+//	private FinderView finder_view;
 	TextView scanText;
 	Button scanButton;
 
