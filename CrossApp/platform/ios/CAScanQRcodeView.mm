@@ -79,7 +79,7 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
                 
         
         [self setCenter:CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 1.5)];
-        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             [self setCenter:CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5)];
         } completion:^(BOOL finished){}];
     }
@@ -89,7 +89,7 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
 - (void) closed
 {
     [self setCenter:CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5)];
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self setCenter:CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 1.5)];
     } completion:^(BOOL finished){
         if (finished == YES)

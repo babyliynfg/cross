@@ -14,8 +14,6 @@
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
 		15C6482B165F3979007D4F18 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482A165F3979007D4F18 /* ApplicationServices.framework */; };
 		15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
-		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
-		15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64830165F39AB007D4F18 /* libxml2.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		15D8B23E168318C3006C7997 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B233168318C3006C7997 /* CDAudioManager.m */; };
 		15D8B23F168318C3006C7997 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B236168318C3006C7997 /* CDOpenALSupport.m */; };
@@ -33,7 +31,6 @@
 		480EDE241D953A3F00C758DA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE231D953A3F00C758DA /* CoreFoundation.framework */; };
 		480EDE261D953A4E00C758DA /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE251D953A4E00C758DA /* VideoDecodeAcceleration.framework */; };
 		480EDE281D953A5B00C758DA /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE271D953A5B00C758DA /* CoreVideo.framework */; };
-		480EDE2A1D953A9B00C758DA /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE291D953A9B00C758DA /* libbz2.1.0.tbd */; };
 		483B3C1F1E9B7BCC00065B02 /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 483B3C1D1E9B7BCC00065B02 /* jsb_websocket.cpp */; };
 		4851EDAF1D81714500863BD1 /* image in Resources */ = {isa = PBXBuildFile; fileRef = 4851EDAD1D81714500863BD1 /* image */; };
 		4851EDB01D81714500863BD1 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = 4851EDAE1D81714500863BD1 /* animation */; };
@@ -46,13 +43,15 @@
 		48E144381CED67980029BABC /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141161CED67970029BABC /* js_manual_conversions.cpp */; };
 		48E144391CED67980029BABC /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141181CED67970029BABC /* ScriptingCore.cpp */; };
 		48E1445D1CED68760029BABC /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E1445C1CED68760029BABC /* libjs_static.a */; };
-		B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0621A561AC3A2FB005EBCA7 /* libcurl.dylib */; };
 		B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0621C281AC3DCB2005EBCA7 /* AppDelegate.cpp */; };
 		B09FC0BC1AD3A25F0009C2D7 /* r in Resources */ = {isa = PBXBuildFile; fileRef = B09FC0BB1AD3A25F0009C2D7 /* r */; };
 		D62815D71FE9168700E93520 /* script in Resources */ = {isa = PBXBuildFile; fileRef = D62815D61FE9168700E93520 /* script */; };
 		D6B1E77C1F204D6200723750 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E77B1F204D6200723750 /* AVFoundation.framework */; };
 		D6B1E77E1F204D6700723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E77D1F204D6700723750 /* CoreMedia.framework */; };
 		D6C72A461EF29BF00094B191 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6C72A451EF29BF00094B191 /* WebKit.framework */; };
+		D6DEE23425FE429500442FDD /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DEE23325FE429500442FDD /* libz.tbd */; };
+		D6DEE23725FE42D300442FDD /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DEE23625FE42D300442FDD /* libcurl.tbd */; };
+		D6DEE23C25FE42E700442FDD /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DEE23B25FE42E700442FDD /* libxml2.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +141,9 @@
 		D6B1E77B1F204D6200723750 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D6B1E77D1F204D6700723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D6C72A451EF29BF00094B191 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D6DEE23325FE429500442FDD /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		D6DEE23625FE42D300442FDD /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
+		D6DEE23B25FE42E700442FDD /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,18 +151,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6DEE23C25FE42E700442FDD /* libxml2.tbd in Frameworks */,
+				D6DEE23725FE42D300442FDD /* libcurl.tbd in Frameworks */,
+				480EDE1E1D953A0900C758DA /* libiconv.tbd in Frameworks */,
+				D6DEE23425FE429500442FDD /* libz.tbd in Frameworks */,
 				D6B1E77E1F204D6700723750 /* CoreMedia.framework in Frameworks */,
 				D6B1E77C1F204D6200723750 /* AVFoundation.framework in Frameworks */,
 				D6C72A461EF29BF00094B191 /* WebKit.framework in Frameworks */,
 				480EDE221D953A3400C758DA /* VideoToolbox.framework in Frameworks */,
 				480EDE201D953A2A00C758DA /* Security.framework in Frameworks */,
-				480EDE1E1D953A0900C758DA /* libiconv.tbd in Frameworks */,
-				480EDE2A1D953A9B00C758DA /* libbz2.1.0.tbd in Frameworks */,
-				B0621A571AC3A2FB005EBCA7 /* libcurl.dylib in Frameworks */,
-				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
-				15C64831165F39AB007D4F18 /* libxml2.dylib in Frameworks */,
-				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
 				15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */,
 				15C6482B165F3979007D4F18 /* ApplicationServices.framework in Frameworks */,
 				15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */,
@@ -170,6 +170,7 @@
 				480EDE241D953A3F00C758DA /* CoreFoundation.framework in Frameworks */,
 				480EDE261D953A4E00C758DA /* VideoDecodeAcceleration.framework in Frameworks */,
 				480EDE281D953A5B00C758DA /* CoreVideo.framework in Frameworks */,
+				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,
 				48E1445D1CED68760029BABC /* libjs_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +260,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6DEE23B25FE42E700442FDD /* libxml2.tbd */,
+				D6DEE23625FE42D300442FDD /* libcurl.tbd */,
+				D6DEE23325FE429500442FDD /* libz.tbd */,
 				D6B1E77D1F204D6700723750 /* CoreMedia.framework */,
 				D6B1E77B1F204D6200723750 /* AVFoundation.framework */,
 				D6C72A451EF29BF00094B191 /* WebKit.framework */,
@@ -543,8 +547,9 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/mac\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CFLAGS = "-O2";
+				PRODUCT_BUNDLE_IDENTIFIER = org.CrossApp.test.js;
 				PRODUCT_NAME = "Test-js";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/include/mac";
@@ -586,7 +591,8 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/prebuilt/mac\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = org.CrossApp.test.js;
 				PRODUCT_NAME = "Test-js";
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../scripting/js-bindings/spidermonkey/include/mac";
