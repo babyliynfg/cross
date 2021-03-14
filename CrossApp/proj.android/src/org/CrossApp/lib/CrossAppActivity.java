@@ -1,6 +1,8 @@
 
 package org.CrossApp.lib;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.CrossApp.lib.CrossAppHelper.CrossAppHelperListener;
@@ -31,12 +33,16 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
+
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
 @SuppressLint("HandlerLeak")
-public abstract class CrossAppActivity extends Activity implements CrossAppHelperListener {
+public abstract class CrossAppActivity extends FragmentActivity implements CrossAppHelperListener {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -63,7 +69,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
     private static FrameLayout frame;
 
     public static CameraView cameraView = null;
-    
+
     public static CrossAppTextField _sTextField = null;
 
     public static CrossAppTextView _sTextView = null;
@@ -164,7 +170,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
         CrossAppHelper.onPause();
         this.mGLSurfaceView.onPause();
-        
+
         if (cameraView != null) {
             cameraView.back(false);
         }
@@ -220,6 +226,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         nativeTool.onActivityResult(requestCode, resultCode, intent);
     }
 
@@ -516,8 +523,16 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                cameraView = new CameraView(context);
+                ArrayList<String> types = new ArrayList<String>();
+                types.add("相机");
+                CAPermissionsManager.request(types, new CAPermissionsManager.CAPermissionsManagerCallBack() {
+                    @Override
+                    public void onCallBack(Boolean isSucess) {
+                        if (isSucess) {
+                            cameraView = new CameraView(context);
+                        }
+                    }
+                });
             }
         });
     }
