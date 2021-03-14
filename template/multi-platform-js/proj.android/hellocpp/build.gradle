@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "28.0.3"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.CrossApp.hellocpp"
+        applicationId "com.CrossApp.hellojs"
         versionCode 1
         versionName "1.0.0"
         minSdkVersion 15
@@ -21,11 +21,6 @@ android {
             moduleName "CrossApp_cpp_shared"
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
     signingConfigs {
         config {
             storeFile file('../../xxx.keystore')
@@ -38,12 +33,10 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-//            signingConfig signingConfigs.config
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-//            signingConfig signingConfigs.config
         }
     }
     lintOptions {
@@ -64,6 +57,10 @@ android {
             assets.srcDirs = ['../../Resources']
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 repositories {
     flatDir {
@@ -73,4 +70,6 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'src/main/libs', include: ['*.aar', '*.jar'], exclude: [])
     implementation project(':proj.android')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

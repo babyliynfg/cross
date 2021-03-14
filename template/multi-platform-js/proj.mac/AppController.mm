@@ -4,7 +4,7 @@
 #import "AppDelegate.h"
 
 #define Screen_Width 750
-#define Screen_Height 1344
+#define Screen_Height 1536
 
 @implementation AppController
 
@@ -20,18 +20,8 @@ static AppDelegate s_sharedApplication;
     NSRect rect = NSMakeRect(200, 100, Screen_Width/2, Screen_Height/2);
     window = [[NSWindow alloc] initWithContentRect:rect
                                          styleMask:( NSClosableWindowMask | NSTitledWindowMask )
-                                           backing:NSBackingStoreBuffered
+                                           backing:NSBackingStoreRetained
                                              defer:YES];
-    // create the contentView
-    contentView = [[NSView alloc]initWithFrame:rect];
-    
-    NSString* title = @"CrossApp";
-    // set window parameters
-    [window becomeFirstResponder];
-    [window setContentView:contentView];
-    [window setTitle:[NSString stringWithFormat:@"%@ (%dx%d)", title, Screen_Width, Screen_Height]];
-    [window makeKeyAndOrderFront:self];
-    [window setAcceptsMouseMovedEvents:NO];
     
     NSOpenGLPixelFormatAttribute attributes[] =
     {
@@ -42,10 +32,18 @@ static AppDelegate s_sharedApplication;
     };
     
     NSOpenGLPixelFormat *pixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
+    
     // allocate our GL view
     // (isn't there already a shared EAGLView?)
-    glView = [[EAGLView alloc] initWithFrame:[contentView bounds] pixelFormat:pixelFormat];
-    [contentView addSubview:glView];
+    glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
+    
+    NSString* title = @"CrossApp";
+    // set window parameters
+    [window becomeFirstResponder];
+    [window setContentView:glView];
+    [window setTitle:[NSString stringWithFormat:@"%@ (%dx%d)", title, Screen_Width, Screen_Height]];
+    [window makeKeyAndOrderFront:self];
+    [window setAcceptsMouseMovedEvents:NO];
     
     CrossApp::CCApplication::sharedApplication()->run();
 }

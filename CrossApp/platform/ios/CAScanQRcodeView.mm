@@ -79,7 +79,7 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
                 
         
         [self setCenter:CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 1.5)];
-        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             [self setCenter:CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5)];
         } completion:^(BOOL finished){}];
     }
@@ -89,7 +89,7 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
 - (void) closed
 {
     [self setCenter:CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5)];
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self setCenter:CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 1.5)];
     } completion:^(BOOL finished){
         if (finished == YES)
@@ -101,53 +101,6 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
         }
     }];
     
-}
-
-- (void)runAnimationFrom:(CGPoint) from to:(CGPoint) to
-{
-    
-    
-    //创建动画对象
-    CABasicAnimation *basicAni = [CABasicAnimation animation];
-
-    //设置动画属性
-    basicAni.keyPath = @"position";
-
-    //设置动画的起始位置。也就是动画从哪里到哪里
-    basicAni.fromValue = [NSValue valueWithCGPoint:from];
-
-    //动画结束后，layer所在的位置
-    basicAni.toValue = [NSValue valueWithCGPoint:to];
-
-    //动画持续时间
-    basicAni.duration = 0.25;
-
-    //动画填充模式
-    basicAni.fillMode = kCAFillModeForwards;
-
-    //动画完成不删除
-    basicAni.removedOnCompletion = NO;
-
-    //xcode8.0之后需要遵守代理协议
-    basicAni.delegate = self;
-
-    //把动画添加到要作用的Layer上面
-    [self.layer addAnimation:basicAni forKey:nil];
-    
-}
-
-- (UIImage *)createImageWithColor:(UIColor *)color
-{
-    //设置长宽
-    CGRect rect = CGRectMake(0.0f, 0.0f, 44.0f, 44.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    UIImage *resultImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return resultImage;
 }
 
 #pragma mark -- ZBarReaderViewDelegate
@@ -167,45 +120,38 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
     _scanView = [[UIView alloc] initWithFrame:_scanViewRect];
     _scanView.backgroundColor = [UIColor clearColor];
     
-    //    //最上部view
-    UIView* upView = [[UIView alloc] initWithFrame:CGRectMake(0,0, _scanViewRect.size.width, SCANVIEW_EdgeTop)];
-    upView.alpha =TINTCOLOR_ALPHA;
+    CGFloat left = SCANVIEW_EdgeLeft;
+    CGFloat top = SCANVIEW_EdgeTop;
+    CGFloat side = _scanViewRect.size.width - 2 * SCANVIEW_EdgeLeft;
+    
+    //最上部view
+    UIView* upView = [[UIView alloc] initWithFrame:CGRectMake(0,0, _scanViewRect.size.width, top)];
+    upView.alpha = TINTCOLOR_ALPHA;
     upView.backgroundColor = [UIColor blackColor];
     [_scanView addSubview:upView];
     
-    //左侧的view
-    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, SCANVIEW_EdgeTop, SCANVIEW_EdgeLeft, _scanViewRect.size.width - 2 * SCANVIEW_EdgeLeft)];
-    leftView.alpha =TINTCOLOR_ALPHA;
-    leftView.backgroundColor = [UIColor blackColor];
-    [_scanView addSubview:leftView];
-    
-    /******************中间扫描区域****************************/
-    UIView *scanCropView = [[UIView alloc] initWithFrame:CGRectMake(SCANVIEW_EdgeLeft, SCANVIEW_EdgeTop, _scanViewRect.size.width - 2 * SCANVIEW_EdgeLeft, _scanViewRect.size.width - 2 * SCANVIEW_EdgeLeft)];
-    
-    scanCropView.layer.borderColor=[UIColor greenColor].CGColor;
-    scanCropView.layer.borderWidth=2.0;
-    
-    scanCropView.backgroundColor=[UIColor clearColor];
-    [_scanView addSubview:scanCropView];
-    
-    
-    //右侧的view
-    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(_scanViewRect.size.width - SCANVIEW_EdgeLeft, SCANVIEW_EdgeTop, SCANVIEW_EdgeLeft, _scanViewRect.size.width - 2 * SCANVIEW_EdgeLeft)];
-    rightView.alpha =TINTCOLOR_ALPHA;
-    rightView.backgroundColor = [UIColor blackColor];
-    [_scanView addSubview:rightView];
-    
-    
     //底部view
-    UIView *downView = [[UIView alloc] initWithFrame:CGRectMake(0, _scanViewRect.size.width - 2 * SCANVIEW_EdgeLeft+SCANVIEW_EdgeTop, _scanViewRect.size.width, _scanViewRect.size.height - (_scanViewRect.size.width-2*SCANVIEW_EdgeLeft+SCANVIEW_EdgeTop))];
+    UIView *downView = [[UIView alloc] initWithFrame:CGRectMake(0, top + side, _scanViewRect.size.width, _scanViewRect.size.height - top - side)];
     //downView.alpha = TINTCOLOR_ALPHA;
     downView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:TINTCOLOR_ALPHA];
     [_scanView addSubview:downView];
     
+    //左侧的view
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, top, left, side)];
+    leftView.alpha = TINTCOLOR_ALPHA;
+    leftView.backgroundColor = [UIColor blackColor];
+    [_scanView addSubview:leftView];
+    
+    //右侧的view
+    UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(left + side, top, left, side)];
+    rightView.alpha =TINTCOLOR_ALPHA;
+    rightView.backgroundColor = [UIColor blackColor];
+    [_scanView addSubview:rightView];
+    
     //用于说明的label
     UILabel *labIntroudction = [[UILabel alloc] init];
     labIntroudction.backgroundColor = [UIColor clearColor];
-    labIntroudction.frame = CGRectMake(0,5, _scanViewRect.size.width,20);
+    labIntroudction.frame = CGRectMake(0,5, _scanViewRect.size.width, 20);
     labIntroudction.numberOfLines = 1;
     labIntroudction.font = [UIFont systemFontOfSize:15.0];
     labIntroudction.textAlignment = NSTextAlignmentCenter;
@@ -213,8 +159,17 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
     labIntroudction.text = @"将二维码对准方框，即可自动扫描";
     [downView addSubview:labIntroudction];
     
+    /******************中间扫描区域****************************/
+    UIView *scanCropView = [[UIView alloc] initWithFrame:CGRectMake(left, top, side, side)];
+    
+    scanCropView.layer.borderColor=[UIColor greenColor].CGColor;
+    scanCropView.layer.borderWidth=2.0;
+    
+    scanCropView.backgroundColor=[UIColor clearColor];
+    [_scanView addSubview:scanCropView];
+    
     //画中间的基准线
-    _QrCodeline = [[UIView alloc] initWithFrame:CGRectMake(SCANVIEW_EdgeLeft, SCANVIEW_EdgeTop, _scanViewRect.size.width - 2 * SCANVIEW_EdgeLeft, 2)];
+    _QrCodeline = [[UIView alloc] initWithFrame:CGRectMake(left, top, side, 2)];
     _QrCodeline.backgroundColor = [UIColor greenColor];
     [_scanView addSubview:_QrCodeline];
 }
@@ -233,21 +188,25 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
 //二维码的横线移动
 - (void)moveUpAndDownLine
 {
-    CGFloat Y=_QrCodeline.frame.origin.y;
-    //CGRectMake(SCANVIEW_EdgeLeft, SCANVIEW_EdgeTop, VIEW_WIDTH-2*SCANVIEW_EdgeLeft, 1)]
-    if (_scanViewRect.size.width-2*SCANVIEW_EdgeLeft+SCANVIEW_EdgeTop == Y)
+    CGFloat left = SCANVIEW_EdgeLeft;
+    CGFloat top = SCANVIEW_EdgeTop;
+    CGFloat side = _scanViewRect.size.width - 2 * SCANVIEW_EdgeLeft;
+    
+    CGFloat Y = _QrCodeline.frame.origin.y;
+    
+    if (side + top == Y)
     {
         
         [UIView beginAnimations:@"moveUpAndDownLine" context:nil];
         [UIView setAnimationDuration:1];
-        _QrCodeline.frame=CGRectMake(SCANVIEW_EdgeLeft, SCANVIEW_EdgeTop, _scanViewRect.size.width-2*SCANVIEW_EdgeLeft,1);
+        _QrCodeline.frame = CGRectMake(left, top, side, 1);
         [UIView commitAnimations];
     }
-    else if(SCANVIEW_EdgeTop == Y)
+    else if(top == Y)
     {
         [UIView beginAnimations:@"moveUpAndDownLine" context:nil];
         [UIView setAnimationDuration:1];
-        _QrCodeline.frame=CGRectMake(SCANVIEW_EdgeLeft, _scanViewRect.size.width-2*SCANVIEW_EdgeLeft+SCANVIEW_EdgeTop, _scanViewRect.size.width-2*SCANVIEW_EdgeLeft,1);
+        _QrCodeline.frame = CGRectMake(left, top + side, side, 1);
         [UIView commitAnimations];
     }
     
