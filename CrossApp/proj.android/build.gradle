@@ -2,10 +2,11 @@ apply plugin: 'com.android.library'
 
 dependencies {
     api fileTree(dir: 'libs', include: '*.jar')
+    implementation 'androidx.fragment:fragment:1.0.0'
+    implementation 'com.github.tbruyelle:rxpermissions:0.12'
 }
-
 android {
-    compileSdkVersion 26
+    compileSdkVersion 30
     defaultConfig {
         minSdkVersion 15
     }
@@ -33,4 +34,9 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
