@@ -18844,11 +18844,9 @@ ca.CAScanQRcode = {
 
 /**
  * @method showScanQRcode
- * @param {String} arg0
- * @param {function} arg1
+ * @param {function} arg0
  */
 showScanQRcode : function (
-str, 
 func 
 )
 {

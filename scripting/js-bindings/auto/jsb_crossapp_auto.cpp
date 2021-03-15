@@ -44485,7 +44485,7 @@ bool js_crossapp_CAPickerView_onTitleForRow(JSContext *cx, uint32_t argc, jsval 
 		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
-		        auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
+                auto lambda = [=, &ok](unsigned int larg0, unsigned int larg1) -> std::basic_string<char> {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = uint32_to_jsval(cx, larg0);
@@ -50783,14 +50783,12 @@ bool js_crossapp_CAScanQRcode_showScanQRcode(JSContext *cx, uint32_t argc, jsval
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 2) {
-        std::string arg0;
-        std::function<void (const std::basic_string<char> &)> arg1;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+    if (argc == 1) {
+        std::function<void (const std::basic_string<char> &)> arg0;
         do {
-		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
 		    {
-		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(1)));
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
 		        auto lambda = [=, &ok](const std::basic_string<char> & larg0) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
@@ -50801,16 +50799,16 @@ bool js_crossapp_CAScanQRcode_showScanQRcode(JSContext *cx, uint32_t argc, jsval
 		                JS_ReportPendingException(cx);
 		            }
 		        };
-		        arg1 = lambda;
+		        arg0 = lambda;
 		    }
 		    else
 		    {
-		        arg1 = nullptr;
+		        arg0 = nullptr;
 		    }
 		} while(0)
 		;
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAScanQRcode_showScanQRcode : Error processing arguments");
-        CrossApp::CAScanQRcode::showScanQRcode(arg1);
+        CrossApp::CAScanQRcode::showScanQRcode(arg0);
         args.rval().setUndefined();
         return true;
     }
@@ -50844,7 +50842,7 @@ void js_register_crossapp_CAScanQRcode(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec st_funcs[] = {
-        JS_FN("showScanQRcode", js_crossapp_CAScanQRcode_showScanQRcode, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("showScanQRcode", js_crossapp_CAScanQRcode_showScanQRcode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
