@@ -46,9 +46,9 @@ for item in ${FILE_ARRAY[*]}
       rm -rf $item
     fi
   done
-
-zip -r ./release/Resources.zip ./release/Resources
-
+cd release
+zip -r ./Resources.zip ./Resources
+cd ..
 
 # # -d dst  -s src -h help
 # while getopts "d:s:h" opt
