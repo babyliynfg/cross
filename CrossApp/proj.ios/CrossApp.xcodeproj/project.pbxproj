@@ -19,6 +19,7 @@
 		0460ED2E1957019600D13001 /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0460ED2A1957019600D13001 /* CCApplication.mm */; };
 		0460ED2F1957019600D13001 /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0460ED2B1957019600D13001 /* CCEGLView.h */; };
 		0460ED301957019600D13001 /* CCEGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0460ED2C1957019600D13001 /* CCEGLView.mm */; };
+		048C082425FF543C00E5F013 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048C082325FF543C00E5F013 /* WebKit.framework */; };
 		04E7680825FB4E9E0011F501 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E7680725FB4E9E0011F501 /* libzbar.a */; };
 		04E7682D25FB4ECE0011F501 /* ZBarCaptureReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 04E7681625FB4ECE0011F501 /* ZBarCaptureReader.h */; };
 		04E7682E25FB4ECE0011F501 /* ZBarImageScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7681725FB4ECE0011F501 /* ZBarImageScanner.m */; };
@@ -501,6 +502,7 @@
 		0460ED2A1957019600D13001 /* CCApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCApplication.mm; sourceTree = "<group>"; };
 		0460ED2B1957019600D13001 /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLView.h; sourceTree = "<group>"; };
 		0460ED2C1957019600D13001 /* CCEGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEGLView.mm; sourceTree = "<group>"; };
+		048C082325FF543C00E5F013 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/iOSSupport/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
 		04E7680725FB4E9E0011F501 /* libzbar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzbar.a; path = ../the_third_party/zbar/prebuilt/ios/libzbar.a; sourceTree = "<group>"; };
 		04E7681625FB4ECE0011F501 /* ZBarCaptureReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBarCaptureReader.h; sourceTree = "<group>"; };
 		04E7681725FB4ECE0011F501 /* ZBarImageScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBarImageScanner.m; sourceTree = "<group>"; };
@@ -1038,6 +1040,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048C082425FF543C00E5F013 /* WebKit.framework in Frameworks */,
 				04E7680825FB4E9E0011F501 /* libzbar.a in Frameworks */,
 				D6B12EB31DC9C7D300944576 /* libwebsockets.a in Frameworks */,
 				D6B0368E1D95270200388A90 /* libcrypto.a in Frameworks */,
@@ -1109,6 +1112,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				048C082325FF543C00E5F013 /* WebKit.framework */,
 				04E7680725FB4E9E0011F501 /* libzbar.a */,
 				D6B601ED25B7DA1C003F2F6A /* libz.tbd */,
 				D60E2236210AB3B900CDBB44 /* UserNotifications.framework */,

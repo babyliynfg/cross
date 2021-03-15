@@ -7,13 +7,14 @@
 #include "platform/CAFileUtils.h"
 #include "platform/CADensityDpi.h"
 #include "support/Json/lib_json/json_lib.h"
+#import <WebKit/WebKit.h>
 
 USING_NS_CC;
 
 #define WebViewWrapper ((UIWebViewWrapper*)m_pWebViewWrapper)
 
-@interface UIWebViewWrapper : NSObject<UIWebViewDelegate>
-@property(nonatomic, retain) UIWebView *uiWebView;
+@interface UIWebViewWrapper : NSObject<WKUIDelegate>
+@property(nonatomic, retain) WKWebView *uiWebView;
 @property(nonatomic, copy) NSString *jsScheme;
 
 @property(nonatomic, readonly, getter=canGoBack) BOOL canGoBack;
@@ -70,7 +71,7 @@ USING_NS_CC;
 
 - (void)dealloc
 {
-    [self.uiWebView setDelegate:nil];
+    [self.uiWebView setUIDelegate:nil];
     [self.uiWebView removeFromSuperview];
     [self.uiWebView loadHTMLString:@"" baseURL:nil];
     [self.uiWebView stopLoading];
@@ -84,9 +85,9 @@ USING_NS_CC;
 {
     if (!self.uiWebView)
     {
-        self.uiWebView = [[UIWebView alloc] init];
-        self.uiWebView.delegate = self;
-        self.uiWebView.scalesPageToFit = YES;
+        self.uiWebView = [[WKWebView alloc] init];
+        [self.uiWebView setUIDelegate:self];
+//        self.uiWebView.scalesPageToFit = YES;
     }
     if (!self.uiWebView.superview)
     {
@@ -160,7 +161,7 @@ USING_NS_CC;
     
     NSURL *url = [NSURL fileURLWithPath:@(filePath.c_str())];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy: NSURLRequestReturnCacheDataElseLoad timeoutInterval:30.0f];
-    [self.uiWebView loadRequest:request];
+    [self.uiWebView loadFileURL:request allowingReadAccessToURL:request];
     [request autorelease];
 }
 
@@ -203,7 +204,7 @@ USING_NS_CC;
 
 - (void)setScalesPageToFit:(const bool)scalesPageToFit
 {
-    self.uiWebView.scalesPageToFit = scalesPageToFit;
+//    self.uiWebView.scalesPageToFit = scalesPageToFit;
 }
 
 #pragma mark - UIWebViewDelegate
