@@ -448,6 +448,7 @@
 		D6CC2DF61DD9BA8F007E8502 /* CAThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */; };
 		D6D8A7821DC2F1EB00A47FC2 /* egif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */; };
 		D6D8A7831DC2F1EB00A47FC2 /* openbsd-reallocarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */; };
+		D6DEE25825FF041900442FDD /* CAScanQRcode.h in Headers */ = {isa = PBXBuildFile; fileRef = D6DEE25725FF041900442FDD /* CAScanQRcode.h */; };
 		E070BAFE1E5EE941000746FA /* CAAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = E070BAEE1E5EE941000746FA /* CAAddressBook.h */; };
 		E070BAFF1E5EE941000746FA /* CADevice.h in Headers */ = {isa = PBXBuildFile; fileRef = E070BAEF1E5EE941000746FA /* CADevice.h */; };
 		E070BB001E5EE941000746FA /* CAImagePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = E070BAF01E5EE941000746FA /* CAImagePickerController.h */; };
@@ -959,6 +960,7 @@
 		D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThemeManager.h; sourceTree = "<group>"; };
 		D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = egif_lib.c; sourceTree = "<group>"; };
 		D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "openbsd-reallocarray.c"; sourceTree = "<group>"; };
+		D6DEE25725FF041900442FDD /* CAScanQRcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAScanQRcode.h; sourceTree = "<group>"; };
 		E070BAEE1E5EE941000746FA /* CAAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAddressBook.h; sourceTree = "<group>"; };
 		E070BAEF1E5EE941000746FA /* CADevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADevice.h; sourceTree = "<group>"; };
 		E070BAF01E5EE941000746FA /* CAImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAImagePickerController.h; sourceTree = "<group>"; };
@@ -1174,6 +1176,7 @@
 			children = (
 				D644B39A1F1A02E500E90A86 /* apple */,
 				D673AB881E52E2A0007E7A5B /* mac */,
+				D6DEE25725FF041900442FDD /* CAScanQRcode.h */,
 				D69DA68B1EE4FB6900590961 /* CAFontProcesstor.h */,
 				D6596E2B1E57044700A55CF9 /* CAAlertViewImpl.h */,
 				D644B37C1F186AA100E90A86 /* CAAVPlayerImpl.h */,
@@ -2006,6 +2009,7 @@
 				D685DB0625EE53AD00587E6B /* split.h in Headers */,
 				D6C72A081EEE748D0094B191 /* CADrawingPrimitives.h in Headers */,
 				D649B2BA1D3CD6A80020414A /* CGActionManager.h in Headers */,
+				D6DEE25825FF041900442FDD /* CAScanQRcode.h in Headers */,
 				D69B76201E4AFE12007D9771 /* CCCustomCommand.h in Headers */,
 				D649B2C81D3CD6A80020414A /* CGTweenFunction.h in Headers */,
 				D65AFE901D3F84A90067B290 /* CGProgressTimer.h in Headers */,
