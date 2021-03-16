@@ -24,18 +24,15 @@ int CABar::get_top_clearance(CAView* view)
     int clearance = 0;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    if (view->convertToWorldSpace(DPointZero).y < 1)
+    auto winSize = CAApplication::getApplication()->getWinSize();
+    /****** iphone X ******/
+    if (winSize.height / winSize.width > 1.8)
     {
-        auto winSize = CAApplication::getApplication()->getWinSize();
-        /****** iphone X ******/
-        if (winSize.height / winSize.width > 1.8)
-        {
-            clearance = 88;
-        }
-        else
-        {
-            clearance = 40;
-        }
+        clearance = 88;
+    }
+    else
+    {
+        clearance = 40;
     }
 #endif
     

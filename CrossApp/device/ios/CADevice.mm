@@ -168,16 +168,22 @@ void CADevice::sendLocalNotification(const char* title, const char* message, int
 
 void CADevice::openUrl(const std::string &url, const std::function<void(bool)>& callback)
 {
-    bool isOpen = false;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    isOpen = [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    isOpen =  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];
-#endif
+    bool isOpen = [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]]];
     if (callback)
     {
         callback(isOpen);
     }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:url.c_str()]] options:@{} completionHandler:^(BOOL success)
+    {
+        if (callback)
+        {
+            callback((success == YES) ? true : false);
+        }
+    }];
+#endif
+    
 }
 
 void CADevice::setIdleTimerDisabled(bool isIdleTimerDisabled)

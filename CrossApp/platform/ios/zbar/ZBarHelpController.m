@@ -243,25 +243,18 @@
         return(YES);
 
     linkURL = [url retain];
-    UIAlertView *alert =
-        [[UIAlertView alloc]
-            initWithTitle: @"Open External Link"
-            message: @"Close this application and open link in Safari?"
-            delegate: nil
-            cancelButtonTitle: @"Cancel"
-            otherButtonTitles: @"OK", nil];
-    alert.delegate = self;
-    [alert show];
-    [alert release];
-    return(NO);
-}
 
-- (void)     alertView: (UIAlertView*) view
-  clickedButtonAtIndex: (NSInteger) idx
-{
-    if(idx)
-        [[UIApplication sharedApplication]
-            openURL: linkURL];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Open External Link" message:@"Close this application and open link in Safari?" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }])];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication] openURL: linkURL options:@{} completionHandler:nil];
+    }])];
+    
+    UIWindow * window = [UIApplication sharedApplication].keyWindow;
+    [window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    
+    return(NO);
 }
 
 @end
