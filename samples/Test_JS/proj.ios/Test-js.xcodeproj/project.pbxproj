@@ -51,6 +51,7 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D62815DA1FE9169900E93520 /* script in Resources */ = {isa = PBXBuildFile; fileRef = D62815D91FE9169900E93520 /* script */; };
+		D64166AA26006AAB00EC4E06 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64166A926006AAB00EC4E06 /* WebKit.framework */; };
 		D6B1E7A61F20B2B800723750 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A51F20B2B800723750 /* CoreImage.framework */; };
 		D6B1E7A81F20B2BD00723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */; };
 		D6E0A747216B462900E592D8 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E0A746216B462900E592D8 /* UserNotifications.framework */; };
@@ -157,6 +158,7 @@
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D4F9F37B12E54555005CA6D2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		D62815D91FE9169900E93520 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
+		D64166A926006AAB00EC4E06 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D6B1E7A51F20B2B800723750 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D6B6268725B9B6CC003F2F6A /* jsb_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_helper.h; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D64166AA26006AAB00EC4E06 /* WebKit.framework in Frameworks */,
 				D6E0A747216B462900E592D8 /* UserNotifications.framework in Frameworks */,
 				D6B1E7A81F20B2BD00723750 /* CoreMedia.framework in Frameworks */,
 				D6B1E7A61F20B2B800723750 /* CoreImage.framework in Frameworks */,
@@ -291,6 +294,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D64166A926006AAB00EC4E06 /* WebKit.framework */,
 				D6E0A746216B462900E592D8 /* UserNotifications.framework */,
 				D6B1E7A71F20B2BD00723750 /* CoreMedia.framework */,
 				D6B1E7A51F20B2B800723750 /* CoreImage.framework */,

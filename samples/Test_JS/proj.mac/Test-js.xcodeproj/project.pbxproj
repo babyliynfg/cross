@@ -50,8 +50,6 @@
 		D6B1E77E1F204D6700723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E77D1F204D6700723750 /* CoreMedia.framework */; };
 		D6C72A461EF29BF00094B191 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6C72A451EF29BF00094B191 /* WebKit.framework */; };
 		D6DEE23425FE429500442FDD /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DEE23325FE429500442FDD /* libz.tbd */; };
-		D6DEE23725FE42D300442FDD /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DEE23625FE42D300442FDD /* libcurl.tbd */; };
-		D6DEE23C25FE42E700442FDD /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6DEE23B25FE42E700442FDD /* libxml2.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,8 +149,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6DEE23C25FE42E700442FDD /* libxml2.tbd in Frameworks */,
-				D6DEE23725FE42D300442FDD /* libcurl.tbd in Frameworks */,
 				480EDE1E1D953A0900C758DA /* libiconv.tbd in Frameworks */,
 				D6DEE23425FE429500442FDD /* libz.tbd in Frameworks */,
 				D6B1E77E1F204D6700723750 /* CoreMedia.framework in Frameworks */,

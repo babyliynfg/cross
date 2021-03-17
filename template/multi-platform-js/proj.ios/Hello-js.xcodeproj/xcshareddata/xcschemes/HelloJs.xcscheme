@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-               BuildableName = "HelloJs.app"
+               BuildableName = "Hello-js.app"
                BlueprintName = "Hello-js"
                ReferencedContainer = "container:Hello-js.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "HelloJs.app"
+            BuildableName = "Hello-js.app"
             BlueprintName = "Hello-js"
             ReferencedContainer = "container:Hello-js.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "HelloJs.app"
+            BuildableName = "Hello-js.app"
             BlueprintName = "Hello-js"
             ReferencedContainer = "container:Hello-js.xcodeproj">
          </BuildableReference>

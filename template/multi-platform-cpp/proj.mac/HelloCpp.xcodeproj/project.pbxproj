@@ -35,7 +35,6 @@
 		D69B76A61E4B08E1007D9771 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A51E4B08E1007D9771 /* libiconv.tbd */; };
 		D6B1E7741F204D0600723750 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B1E7731F204D0600723750 /* CoreMedia.framework */; };
 		D6B601FB25B7DADC003F2F6A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B601FA25B7DADC003F2F6A /* libz.tbd */; };
-		D6B6021925B7E290003F2F6A /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6021825B7E290003F2F6A /* libcurl.tbd */; };
 		D6CBC19A1EE97A590083E8C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CBC1991EE97A590083E8C3 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -132,7 +131,6 @@
 				D69B769A1E4B0897007D9771 /* QuartzCore.framework in Frameworks */,
 				D69B76981E4B0891007D9771 /* OpenAL.framework in Frameworks */,
 				D69B76941E4B0884007D9771 /* AudioToolbox.framework in Frameworks */,
-				D6B6021925B7E290003F2F6A /* libcurl.tbd in Frameworks */,
 				D69B76A61E4B08E1007D9771 /* libiconv.tbd in Frameworks */,
 				D6B601FB25B7DADC003F2F6A /* libz.tbd in Frameworks */,
 				04EAA0421956D15700198A8E /* libCrossApp.a in Frameworks */,

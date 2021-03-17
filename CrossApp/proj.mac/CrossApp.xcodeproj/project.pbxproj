@@ -168,6 +168,9 @@
 		B0DAEED21B256B6D0011E87D /* CAGif.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0DAEECE1B256B6D0011E87D /* CAGif.cpp */; };
 		B0DAEED31B256B6D0011E87D /* CAGif.h in Headers */ = {isa = PBXBuildFile; fileRef = B0DAEECF1B256B6D0011E87D /* CAGif.h */; };
 		B0FCA6791C2BECBB0014CDCF /* CATextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B0FCA6781C2BECBB0014CDCF /* CATextField.h */; };
+		D6321E8026019D7100D52C39 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6020325B7DC5A003F2F6A /* libcurl.a */; };
+		D6321E8326019D7100D52C39 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6321E8126019D7100D52C39 /* libcrypto.a */; };
+		D6321E8426019D7100D52C39 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6321E8226019D7100D52C39 /* libssl.a */; };
 		D644B35E1F17891100E90A86 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76701E4B05BA007D9771 /* QuartzCore.framework */; };
 		D644B3781F18657600E90A86 /* CAAVPlayerView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D644B3761F18657600E90A86 /* CAAVPlayerView.cpp */; };
 		D644B3791F18657600E90A86 /* CAAVPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = D644B3771F18657600E90A86 /* CAAVPlayerView.h */; };
@@ -279,7 +282,6 @@
 		D67ECD761E5EBEC800C9CA49 /* CACheckbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D67ECD741E5EBEC800C9CA49 /* CACheckbox.cpp */; };
 		D67ECD771E5EBEC800C9CA49 /* CACheckbox.h in Headers */ = {isa = PBXBuildFile; fileRef = D67ECD751E5EBEC800C9CA49 /* CACheckbox.h */; };
 		D684C7F425BE72AE004DED1D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6023A25B7E4A9003F2F6A /* libz.tbd */; };
-		D684C7F525BE72B5004DED1D /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D69B76A71E4B091A007D9771 /* libcurl.tbd */; };
 		D684C7F625BE72BC004DED1D /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B6023225B7E461003F2F6A /* libiconv.tbd */; };
 		D685DAF425EE53AD00587E6B /* qrencode_inner.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DAE125EE53AD00587E6B /* qrencode_inner.h */; };
 		D685DAF525EE53AD00587E6B /* mask.h in Headers */ = {isa = PBXBuildFile; fileRef = D685DAE225EE53AD00587E6B /* mask.h */; };
@@ -631,6 +633,8 @@
 		B0DAEECE1B256B6D0011E87D /* CAGif.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAGif.cpp; sourceTree = "<group>"; };
 		B0DAEECF1B256B6D0011E87D /* CAGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGif.h; sourceTree = "<group>"; };
 		B0FCA6781C2BECBB0014CDCF /* CATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CATextField.h; sourceTree = "<group>"; };
+		D6321E8126019D7100D52C39 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../the_third_party/curl/prebuilt/mac/libcrypto.a; sourceTree = "<group>"; };
+		D6321E8226019D7100D52C39 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../the_third_party/curl/prebuilt/mac/libssl.a; sourceTree = "<group>"; };
 		D644B3761F18657600E90A86 /* CAAVPlayerView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAVPlayerView.cpp; sourceTree = "<group>"; };
 		D644B3771F18657600E90A86 /* CAAVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerView.h; sourceTree = "<group>"; };
 		D644B37C1F186AA100E90A86 /* CAAVPlayerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAVPlayerImpl.h; sourceTree = "<group>"; };
@@ -977,8 +981,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D684C7F625BE72BC004DED1D /* libiconv.tbd in Frameworks */,
-				D684C7F525BE72B5004DED1D /* libcurl.tbd in Frameworks */,
 				D684C7F425BE72AE004DED1D /* libz.tbd in Frameworks */,
+				D6321E8326019D7100D52C39 /* libcrypto.a in Frameworks */,
+				D6321E8426019D7100D52C39 /* libssl.a in Frameworks */,
+				D6321E8026019D7100D52C39 /* libcurl.a in Frameworks */,
 				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
 				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
@@ -1308,6 +1314,8 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6321E8126019D7100D52C39 /* libcrypto.a */,
+				D6321E8226019D7100D52C39 /* libssl.a */,
 				D6B6023A25B7E4A9003F2F6A /* libz.tbd */,
 				D6B6023225B7E461003F2F6A /* libiconv.tbd */,
 				D6B6020325B7DC5A003F2F6A /* libcurl.a */,
@@ -2447,6 +2455,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
+					"\"$(SRCROOT)/../the_third_party/curl/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/mac\"",
@@ -2454,6 +2463,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/mac\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2487,6 +2497,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/include/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/include/mac\"",
+					"\"$(SRCROOT)/../the_third_party/curl/include/mac\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../the_third_party/jpeg/prebuilt/mac\"",
@@ -2494,6 +2505,7 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
+					"\"$(SRCROOT)/../the_third_party/curl/prebuilt/mac\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_LDFLAGS = "-ObjC";
