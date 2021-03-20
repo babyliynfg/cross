@@ -162,10 +162,10 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
     /******************中间扫描区域****************************/
     UIView *scanCropView = [[UIView alloc] initWithFrame:CGRectMake(left, top, side, side)];
     
-    scanCropView.layer.borderColor=[UIColor greenColor].CGColor;
-    scanCropView.layer.borderWidth=2.0;
+    scanCropView.layer.borderColor = [UIColor greenColor].CGColor;
+    scanCropView.layer.borderWidth = 2.0;
     
-    scanCropView.backgroundColor=[UIColor clearColor];
+    scanCropView.backgroundColor  =[UIColor clearColor];
     [_scanView addSubview:scanCropView];
     
     //画中间的基准线
