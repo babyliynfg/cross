@@ -937,6 +937,7 @@ void CATextField::setSecureTextEntry(bool var)
     {
         setSecureTextEntryJNI(m_u__ID, 0);
     }
+    this->delayShowImage();
 }
 
 bool CATextField::isSecureTextEntry()

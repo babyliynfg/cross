@@ -839,6 +839,7 @@ void CATextField::setSecureTextEntry(bool var)
 {
     m_bSecureTextEntry = var;
     [textField_iOS setSecureTextEntry:m_bSecureTextEntry];
+    this->delayShowImage();
 }
 
 bool CATextField::isSecureTextEntry()
