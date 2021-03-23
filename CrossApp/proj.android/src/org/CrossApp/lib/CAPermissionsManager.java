@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -147,6 +148,27 @@ public class CAPermissionsManager {
             }
         }
         return str;
+    }
+
+    private static native void imagePickerWriteCallback(int isSucess);
+
+    public static void requestImagePickerWrite() {
+
+        final CrossAppActivity context = CrossAppActivity.getContext();
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> types = new ArrayList<String>();
+                types.add("读取存储卡");
+                types.add("写入存储卡");
+                CAPermissionsManager.request(types, new CAPermissionsManager.CAPermissionsManagerCallBack() {
+                    @Override
+                    public void onCallBack(Boolean isSucess) {
+                        imagePickerWriteCallback(isSucess ? 1 : 0);
+                    }
+                });
+            }
+        });
     }
 }
 
