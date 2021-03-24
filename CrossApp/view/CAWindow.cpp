@@ -118,7 +118,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.3f);
         CAViewAnimation::setAnimationDelay(0.1f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         CAViewAnimation::setAnimationDidStopSelector([&]()
         {
             if (m_pRootViewController)
@@ -157,7 +157,7 @@ void CAWindow::dismissModalViewController(bool animated)
         CAViewAnimation::beginAnimations("");
         CAViewAnimation::setAnimationDuration(0.3f);
         CAViewAnimation::setAnimationDelay(0.1f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::Linear);
+        CAViewAnimation::setAnimationCurve(CAViewAnimation::Curve::EaseOut);
         CAViewAnimation::setAnimationDidStopSelector([&]()
         {
             m_pModalViewController->setViewVisibleFalse();

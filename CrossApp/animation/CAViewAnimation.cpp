@@ -1039,7 +1039,7 @@ void CAViewAnimation::update(float dt)
                         break;
                     case CAViewAnimation::Curve::Linear:
                     default:
-                        t_after = t_before + b;
+                        t_after = MIN(1.0, t_before + b);
                         break;
                 }
             }
