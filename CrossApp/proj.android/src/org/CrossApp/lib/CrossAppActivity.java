@@ -75,6 +75,7 @@ public abstract class CrossAppActivity extends FragmentActivity implements Cross
     public static CrossAppTextView _sTextView = null;
 
     public static CrossAppNativeTool nativeTool;
+    public static CrossAppDevice crossAppDevice;
 
     public static void setSingleTextField(CrossAppTextField text) {
         _sTextField = text;
@@ -112,7 +113,7 @@ public abstract class CrossAppActivity extends FragmentActivity implements Cross
 
         CrossAppAlertView.checkAliveAlertView();
 
-        new CrossAppDevice(this) {
+        crossAppDevice = new CrossAppDevice(this) {
         };
 
         nativeTool = new CrossAppNativeTool(this);
@@ -146,6 +147,10 @@ public abstract class CrossAppActivity extends FragmentActivity implements Cross
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (crossAppDevice != null && crossAppDevice.getCrossAppBattery() != null) {
+            CrossAppBattery battery = crossAppDevice.getCrossAppBattery();
+            this.unregisterReceiver(battery);
+        }
     }
 
     @Override
