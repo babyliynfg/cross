@@ -1,6 +1,10 @@
 #!/bin/bash
 SRC_PATH=""
-JSB_EXEC="../../tools/plugin_jscompile/bin/jsbcc"
+
+
+DIR=$(cd $(dirname $0) && pwd )
+JSB_EXEC="$DIR/../../tools/plugin_jscompile/bin/jsbcc"
+echo  $DIR
 
 function getdir(){
     
@@ -11,7 +15,7 @@ function getdir(){
       then
         getdir $dir_or_file
       else
-        FILE_ARRAY=(${dir_or_file[*]}  ${FILE_ARRAY[*]})   
+        FILE_ARRAY=(${dir_or_file[*]}  ${FILE_ARRAY[*]})
     fi
 done
 }
@@ -24,11 +28,11 @@ function help(){
     "
     exit 0
 }
-rm -rf ./release
-if [ ! -d "./release" ]; then
-  mkdir ./release
-  cp -r ./Resources ./release/Resources
-  SRC_PATH="./release/Resources"
+rm -rf "$DIR/release"
+if [ ! -d "$DIR/release" ]; then
+  mkdir "$DIR/release"
+  cp -r "$DIR/Resources" "$DIR/release/Resources"
+  SRC_PATH="$DIR/release/Resources"
 fi
 
 getdir $SRC_PATH
@@ -41,51 +45,14 @@ for item in ${FILE_ARRAY[*]}
       EXEC_STR=${item/$SRC/$SRC}
       EXEC_STR=${EXEC_STR%.*}
       CMD="$JSB_EXEC $SRC_FILE "$EXEC_STR".cross"
-      
+
       $CMD
       rm -rf $item
     fi
   done
-cd release
-zip -r ./Resources.zip ./Resources
-cd ..
-
-# # -d dst  -s src -h help
-# while getopts "d:s:h" opt
-# do
-#     case $opt in
-#         d)
-#         DST_PATH=$OPTARG
-#         ;;
-#         s)
-#         SRC_PATH=$OPTARG
-#         ;;
-#         h)
-#         help
-#         exit 0
-#         ;;
-#         ?)
-#         help
-#         exit 0
-#         ;;
-#         *)
-#         help
-#         exit 0
-#         ;;
-#     esac
-# done
-
-# if [ x"$SRC_PATH" = x ]; 
-#     then 
-#         help
-#         exit 1
-# fi
-
-# if [ x"$DST_PATH" = x ]; 
-#     then 
-#         help
-#         exit 1
-# fi
+#cd "$DIR/release"
+zip -r "$DIR/release/Resources.zip" "$DIR/release/Resources"
+#cd ..
 
 
 
