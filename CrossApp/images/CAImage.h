@@ -145,17 +145,17 @@ public:
 
     const char* description(void);
     
-    void drawAtPoint(const DPoint& point);
+    virtual void drawAtPoint(const DPoint& point);
     
-    void drawInRect(const DRect& rect);
+    virtual void drawInRect(const DRect& rect);
     
-    void setTexParameters(CAImage::TexParams* texParams);
+    virtual void setTexParameters(CAImage::TexParams* texParams);
     
-    void setAntiAliasTexParameters();
+    virtual void setAntiAliasTexParameters();
     
-    void setAliasTexParameters();
+    virtual void setAliasTexParameters();
     
-    void generateMipmap();
+    virtual void generateMipmap();
     
     const char* stringForFormat();
     

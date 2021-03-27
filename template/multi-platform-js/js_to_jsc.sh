@@ -50,8 +50,9 @@ for item in ${FILE_ARRAY[*]}
       rm -rf $item
     fi
   done
-#cd "$DIR/release"
-zip -r "$DIR/release/Resources.zip" "$DIR/release/Resources"
+cd "$DIR/release"
+#cd $DIR/"
+zip -r "Resources.zip" "./Resources"
 #cd ..
 
 
