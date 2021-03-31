@@ -14,7 +14,7 @@ var RootWindow = ca.CAWindow.extend(
                 controllers.push(new FirstViewController());
             }
 
-            var firstItem = ca.CANavigationBarItem.create("控件展示");
+            var firstItem = ca.CANavigationBarItem.create("控件展示" + "<" + ca.winSize.width + "x" + ca.winSize.height + ">");
             var barButtonItem = ca.CABarButtonItem.create("", ca.CAImage.create("image/ic_category_list.png"), null);
             barButtonItem.setCallbackFunction(function (){
                 this.drawer.showLeftViewController(true);
