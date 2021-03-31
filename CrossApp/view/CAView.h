@@ -490,38 +490,32 @@ protected:
     
     struct Shadow
     {
-        Shadow(CAImage* image, GLProgramState* glProgramState, BlendFunc blendFunc)
-        : image(image)
-        , glProgramState(glProgramState)
-        , blendFunc(blendFunc)
-        {
-            CC_SAFE_RETAIN(glProgramState);
-        }
-        ~Shadow()
-        {
-            CC_SAFE_RELEASE(glProgramState);
-        }
+        Shadow();
+        ~Shadow();
         CAImage*            image;
         ccV3F_C4B_T2F_Quad  quad;
         BlendFunc           blendFunc;
         TrianglesCommand    trianglesCommand;
         GLProgramState*     glProgramState;
+        void updateQuad(CAView* view, GLfloat x1, GLfloat x2, GLfloat y1, GLfloat y2, GLfloat left, GLfloat right, GLfloat top, GLfloat bottom);
     };
     
-    void drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
-    void drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
-    void drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
-    void drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
-    
+    void drawAllShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags);
+
     void drawShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags, CAView::Shadow* shadow);
+    
+    void autoEnabledCornerShadow();
     
     CAView::Shadow*             m_pLeftShadow;
     CAView::Shadow*             m_pRightShadow;
     CAView::Shadow*             m_pTopShadow;
     CAView::Shadow*             m_pBottomShadow;
+    
+    CAView::Shadow*             m_pLeftTopShadow;
+    CAView::Shadow*             m_pRightTopShadow;
+    CAView::Shadow*             m_pLeftBottomShadow;
+    CAView::Shadow*             m_pRightBottomShadow;
+
     
 protected:
     

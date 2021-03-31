@@ -81,6 +81,10 @@ CAView::CAView(void)
 , m_pRightShadow(nullptr)
 , m_pTopShadow(nullptr)
 , m_pBottomShadow(nullptr)
+, m_pLeftTopShadow(nullptr)
+, m_pRightTopShadow(nullptr)
+, m_pLeftBottomShadow(nullptr)
+, m_pRightBottomShadow(nullptr)
 , m_obLayout(DLayoutZero)
 , m_eLayoutType(0)
 , m_iCameraMask(1)
@@ -117,6 +121,10 @@ CAView::~CAView(void)
     CC_SAFE_DELETE(m_pRightShadow);
     CC_SAFE_DELETE(m_pTopShadow);
     CC_SAFE_DELETE(m_pBottomShadow);
+    CC_SAFE_DELETE(m_pLeftTopShadow);
+    CC_SAFE_DELETE(m_pRightTopShadow);
+    CC_SAFE_DELETE(m_pLeftBottomShadow);
+    CC_SAFE_DELETE(m_pRightBottomShadow);
     
     CC_SAFE_RELEASE_NULL(m_pGlProgramState);
     CAScheduler::getScheduler()->pauseTarget(this);
@@ -1328,10 +1336,7 @@ void CAView::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     if (visibleByCamera)
     {
         this->checkInsideBounds(renderer, m_tModelViewTransform, flags);
-        this->drawLeftShadow(renderer, m_tModelViewTransform, flags);
-        this->drawRightShadow(renderer, m_tModelViewTransform, flags);
-        this->drawTopShadow(renderer, m_tModelViewTransform, flags);
-        this->drawBottomShadow(renderer, m_tModelViewTransform, flags);
+        this->drawAllShadow(renderer, m_tModelViewTransform, flags);
     }
 
     m_bScissorRestored = false;
@@ -2216,22 +2221,54 @@ void CAView::setCameraMask(unsigned short mask, bool applyChildren)
     }
 }
 
+CAView::Shadow::Shadow()
+: image(CAImage::CC_SHADOW_IMAGE())
+, glProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP))
+, blendFunc(BlendFunc_alpha_non_premultiplied)
+{
+    CC_SAFE_RETAIN(glProgramState);
+}
+CAView::Shadow::~Shadow()
+{
+    CC_SAFE_RELEASE(glProgramState);
+}
+
+void CAView::Shadow::updateQuad(CAView* view, GLfloat x1, GLfloat x2, GLfloat y1, GLfloat y2, GLfloat left, GLfloat right, GLfloat top, GLfloat bottom)
+{
+    this->quad = view->m_sQuad;
+
+    this->quad.bl.vertices = DPoint3D(x1, y1, view->m_fPointZ);
+    this->quad.br.vertices = DPoint3D(x2, y1, view->m_fPointZ);
+    this->quad.tl.vertices = DPoint3D(x1, y2, view->m_fPointZ);
+    this->quad.tr.vertices = DPoint3D(x2, y2, view->m_fPointZ);
+    
+    this->quad.bl.texCoords.u = left;
+    this->quad.bl.texCoords.v = bottom;
+    this->quad.br.texCoords.u = right;
+    this->quad.br.texCoords.v = bottom;
+    this->quad.tl.texCoords.u = left;
+    this->quad.tl.texCoords.v = top;
+    this->quad.tr.texCoords.u = right;
+    this->quad.tr.texCoords.v = top;
+    
+    this->quad.bl.colors = this->quad.br.colors = this->quad.tl.colors = this->quad.tr.colors = CAColor4B::WHITE;
+}
+
 void CAView::enabledLeftShadow(bool var)
 {
     if (var)
     {
         if (m_pLeftShadow == nullptr)
         {
-            GLProgramState* glProgramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-            m_pLeftShadow = new CAView::Shadow(CAImage::CC_SHADOW_LEFT_IMAGE(),
-                                               glProgramState,
-                                               BlendFunc_alpha_non_premultiplied);
+            m_pLeftShadow = new CAView::Shadow();
         }
     }
     else
     {
         CC_SAFE_DELETE(m_pLeftShadow);
     }
+    
+    this->autoEnabledCornerShadow();
 }
 
 void CAView::enabledRightShadow(bool var)
@@ -2240,16 +2277,15 @@ void CAView::enabledRightShadow(bool var)
     {
         if (m_pRightShadow == nullptr)
         {
-            GLProgramState* glProgramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-            m_pRightShadow = new CAView::Shadow(CAImage::CC_SHADOW_RIGHT_IMAGE(),
-                                               glProgramState,
-                                               BlendFunc_alpha_non_premultiplied);
+            m_pRightShadow = new CAView::Shadow();
         }
     }
     else
     {
         CC_SAFE_DELETE(m_pRightShadow);
     }
+    
+    this->autoEnabledCornerShadow();
 }
 
 void CAView::enabledTopShadow(bool var)
@@ -2258,33 +2294,74 @@ void CAView::enabledTopShadow(bool var)
     {
         if (m_pTopShadow == nullptr)
         {
-            GLProgramState* glProgramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-            m_pTopShadow = new CAView::Shadow(CAImage::CC_SHADOW_TOP_IMAGE(),
-                                                glProgramState,
-                                                BlendFunc_alpha_non_premultiplied);
+            m_pTopShadow = new CAView::Shadow();
         }
     }
     else
     {
         CC_SAFE_DELETE(m_pTopShadow);
     }
+    
+    this->autoEnabledCornerShadow();
 }
 
 void CAView::enabledBottomShadow(bool var)
 {
     if (var)
     {
-        if (m_pBottomShadow== nullptr)
+        if (m_pBottomShadow == nullptr)
         {
-            GLProgramState* glProgramState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-            m_pBottomShadow = new CAView::Shadow(CAImage::CC_SHADOW_BOTTOM_IMAGE(),
-                                              glProgramState,
-                                              BlendFunc_alpha_non_premultiplied);
+            m_pBottomShadow = new CAView::Shadow();
         }
     }
     else
     {
         CC_SAFE_DELETE(m_pBottomShadow);
+    }
+    
+    this->autoEnabledCornerShadow();
+}
+
+void CAView::autoEnabledCornerShadow()
+{
+    if (!m_pLeftTopShadow && m_pLeftShadow && m_pTopShadow)
+    {
+        m_pLeftTopShadow = new CAView::Shadow();
+    }
+    
+    if (m_pLeftTopShadow && (!m_pLeftShadow || !m_pTopShadow))
+    {
+        CC_SAFE_DELETE(m_pLeftTopShadow);
+    }
+    
+    if (!m_pRightTopShadow && m_pRightShadow && m_pTopShadow)
+    {
+        m_pRightTopShadow = new CAView::Shadow();
+    }
+    
+    if (m_pRightTopShadow && (!m_pRightShadow || !m_pTopShadow))
+    {
+        CC_SAFE_DELETE(m_pRightTopShadow);
+    }
+    
+    if (!m_pLeftBottomShadow && m_pLeftShadow && m_pBottomShadow)
+    {
+        m_pLeftBottomShadow = new CAView::Shadow();
+    }
+    
+    if (m_pLeftBottomShadow && (!m_pLeftShadow || !m_pBottomShadow))
+    {
+        CC_SAFE_DELETE(m_pLeftBottomShadow);
+    }
+    
+    if (!m_pRightBottomShadow && m_pRightShadow && m_pBottomShadow)
+    {
+        m_pRightBottomShadow = new CAView::Shadow();
+    }
+    
+    if (m_pRightBottomShadow && (!m_pRightShadow || !m_pBottomShadow))
+    {
+        CC_SAFE_DELETE(m_pRightBottomShadow);
     }
 }
 
@@ -2309,113 +2386,73 @@ void CAView::drawShadow(Renderer* renderer, const Mat4 &transform, uint32_t flag
     renderer->addCommand(trianglesCommand);
 }
 
-void CAView::drawLeftShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
+void CAView::drawAllShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (m_pLeftShadow && m_bInsideBounds)
+    CC_RETURN_IF(m_bInsideBounds == false);
+    
+    GLfloat x0 = -10;
+    GLfloat x1 = 0;
+    GLfloat x2 = m_obContentSize.width;
+    GLfloat x3 = m_obContentSize.width+10;
+
+    GLfloat y0 = -10;
+    GLfloat y1 = 0;
+    GLfloat y2 = m_obContentSize.height;
+    GLfloat y3 = m_obContentSize.height+10;
+
+    GLfloat n0 = 0;
+    GLfloat n1 = 0.2;
+    GLfloat n2 = 0.8;
+    GLfloat n3 = 1.0;
+
+    if (m_pLeftShadow)
     {
-        ccV3F_C4B_T2F_Quad& quad = m_pLeftShadow->quad;
-        quad = m_sQuad;
-        
-        GLfloat x1,x2,y1,y2;
-        x1 = -12;
-        y1 = 0;
-        x2 = 0;
-        y2 = m_obContentSize.height;
-        
-        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
-        
-        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
-        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
-        
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor4B::WHITE;
-        
+        m_pLeftShadow->updateQuad(this, x0, x1, y1, y2, n0, n1, 1-n2, 1-n1);
         this->drawShadow(renderer, transform, flags, m_pLeftShadow);
     }
-}
-
-void CAView::drawRightShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (m_pRightShadow && m_bInsideBounds)
+    
+    if (m_pLeftBottomShadow)
     {
-        ccV3F_C4B_T2F_Quad& quad = m_pRightShadow->quad;
-        quad = m_sQuad;
-        
-        GLfloat x1,x2,y1,y2;
-        x1 = m_obContentSize.width;
-        y1 = 0;
-        x2 = m_obContentSize.width + 12;
-        y2 = m_obContentSize.height;
-        
-        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
-        
-        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
-        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
-        
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor4B::WHITE;
-        
-        this->drawShadow(renderer, transform, flags, m_pRightShadow);
+        m_pLeftBottomShadow->updateQuad(this, x0, x1, y0, y1, n0, n1, 1-n1, 1-n0);
+        this->drawShadow(renderer, transform, flags, m_pLeftBottomShadow);
     }
-}
-
-void CAView::drawTopShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (m_pTopShadow && m_bInsideBounds)
+    
+    if (m_pBottomShadow)
     {
-        ccV3F_C4B_T2F_Quad& quad = m_pTopShadow->quad;
-        quad = m_sQuad;
-        
-        GLfloat x1,x2,y1,y2;
-        x1 = 0;
-        y1 = m_obContentSize.height;
-        x2 = m_obContentSize.width;
-        y2 = m_obContentSize.height + 6;
-        
-        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
-        
-        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
-        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
-        
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor4B::WHITE;
-        
-        this->drawShadow(renderer, transform, flags, m_pTopShadow);
-    }
-}
-
-void CAView::drawBottomShadow(Renderer* renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (m_pBottomShadow && m_bInsideBounds)
-    {
-        ccV3F_C4B_T2F_Quad& quad = m_pBottomShadow->quad;
-        quad = m_sQuad;
-        
-        GLfloat x1,x2,y1,y2;
-        x1 = 0;
-        y1 = -6;
-        x2 = m_obContentSize.width;
-        y2 = 0;
-        
-        quad.bl.vertices = DPoint3D(x1, y1, m_fPointZ);
-        quad.br.vertices = DPoint3D(x2, y1, m_fPointZ);
-        quad.tl.vertices = DPoint3D(x1, y2, m_fPointZ);
-        quad.tr.vertices = DPoint3D(x2, y2, m_fPointZ);
-        
-        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
-        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
-        
-        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor4B::WHITE;
-        
+        m_pBottomShadow->updateQuad(this, x1, x2, y0, y1, n1, n2, 1-n1, 1-n0);
         this->drawShadow(renderer, transform, flags, m_pBottomShadow);
     }
-}
 
+    if (m_pRightBottomShadow)
+    {
+        m_pRightBottomShadow->updateQuad(this, x2, x3, y0, y1, n2, n3, 1-n1, 1-n0);
+        this->drawShadow(renderer, transform, flags, m_pRightBottomShadow);
+    }
+
+    if (m_pRightShadow)
+    {
+        m_pRightShadow->updateQuad(this, x2, x3, y1, y2, n2, n3, 1-n2, 1-n1);
+        this->drawShadow(renderer, transform, flags, m_pRightShadow);
+    }
+
+    if (m_pRightTopShadow)
+    {
+        m_pRightTopShadow->updateQuad(this, x2, x3, y2, y3, n2, n3, 1-n3, 1-n2);
+        this->drawShadow(renderer, transform, flags, m_pRightTopShadow);
+    }
+
+    if (m_pTopShadow)
+    {
+        m_pTopShadow->updateQuad(this, x1, x2, y2, y3, n1, n2, 1-n3, 1-n2);
+        this->drawShadow(renderer, transform, flags, m_pTopShadow);
+    }
+
+    if (m_pLeftTopShadow)
+    {
+        m_pLeftTopShadow->updateQuad(this, x0, x1, y2, y3, n0, n1, 1-n3, 1-n2);
+        this->drawShadow(renderer, transform, flags, m_pLeftTopShadow);
+    }
+
+}
 
 NS_CC_END;

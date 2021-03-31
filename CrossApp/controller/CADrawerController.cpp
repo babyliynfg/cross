@@ -100,6 +100,7 @@ void CADrawerController::setRightViewController(CrossApp::CAViewController *righ
     CC_SAFE_RELEASE(m_pRightViewController);
     m_pRightViewController = rightViewController;
     m_pRightViewController->getView()->enabledTopShadow(true);
+    m_pRightViewController->getView()->enabledLeftShadow(true);
     m_pRightViewController->getView()->enabledBottomShadow(true);
     if (this->isViewRunning())
     {

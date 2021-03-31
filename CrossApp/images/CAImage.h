@@ -193,6 +193,8 @@ public:
     
     static CAImage* CC_SHADOW_BOTTOM_IMAGE();
     
+    static CAImage* CC_SHADOW_IMAGE();
+    
     virtual CAImage* copy();
     
     CAImage::Format detectFormat(const unsigned char * data, unsigned long dataLen);
