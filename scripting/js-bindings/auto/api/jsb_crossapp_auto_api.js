@@ -1139,36 +1139,44 @@ long
 },
 
 /**
- * @method createWithRawData
- * @param {ca.CAData} arg0
- * @param {ca.CAImage::PixelFormat} arg1
- * @param {unsigned int} arg2
- * @param {unsigned int} arg3
- * @param {String} arg4
- * @param {bool} arg5
+ * @method BLACK_IMAGE
  * @return {ca.CAImage}
  */
-createWithRawData : function (
-cadata, 
-pixelformat, 
-int, 
-int, 
-str, 
-bool 
+BLACK_IMAGE : function (
 )
 {
     return ca.CAImage;
 },
 
 /**
- * @method createWithImageData
- * @param {ca.CAData} arg0
- * @param {String} arg1
+ * @method purgeCAImage
+ */
+purgeCAImage : function (
+)
+{
+},
+
+/**
+ * @method WHITE_IMAGE
  * @return {ca.CAImage}
  */
-createWithImageData : function (
-cadata, 
-str 
+WHITE_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method scaleToNewImageWithImage
+* @param {ca.CAImage|ca.CAImage} caimage
+* @param {float|size_object} float
+* @param {float} float
+* @return {ca.CAImage|ca.CAImage}
+*/
+scaleToNewImageWithImage : function(
+caimage,
+float,
+float 
 )
 {
     return ca.CAImage;
@@ -1188,56 +1196,6 @@ str
 )
 {
     return 0;
-},
-
-/**
- * @method CC_SHADOW_TOP_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_TOP_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method CC_SHADOW_RIGHT_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_RIGHT_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method BLACK_IMAGE
- * @return {ca.CAImage}
- */
-BLACK_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method WHITE_IMAGE
- * @return {ca.CAImage}
- */
-WHITE_IMAGE : function (
-)
-{
-    return ca.CAImage;
-},
-
-/**
- * @method CC_SHADOW_LEFT_IMAGE
- * @return {ca.CAImage}
- */
-CC_SHADOW_LEFT_IMAGE : function (
-)
-{
-    return ca.CAImage;
 },
 
 /**
@@ -1267,12 +1225,48 @@ str
 },
 
 /**
+ * @method createWithRawData
+ * @param {ca.CAData} arg0
+ * @param {ca.CAImage::PixelFormat} arg1
+ * @param {unsigned int} arg2
+ * @param {unsigned int} arg3
+ * @param {String} arg4
+ * @param {bool} arg5
+ * @return {ca.CAImage}
+ */
+createWithRawData : function (
+cadata, 
+pixelformat, 
+int, 
+int, 
+str, 
+bool 
+)
+{
+    return ca.CAImage;
+},
+
+/**
  * @method createWithImageDataNoCache
  * @param {ca.CAData} arg0
  * @return {ca.CAImage}
  */
 createWithImageDataNoCache : function (
 cadata 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method createWithImageData
+ * @param {ca.CAData} arg0
+ * @param {String} arg1
+ * @return {ca.CAImage}
+ */
+createWithImageData : function (
+cadata, 
+str 
 )
 {
     return ca.CAImage;
@@ -1301,34 +1295,32 @@ bool
 },
 
 /**
- * @method CC_SHADOW_BOTTOM_IMAGE
+ * @method CLEAR_IMAGE
  * @return {ca.CAImage}
  */
-CC_SHADOW_BOTTOM_IMAGE : function (
+CLEAR_IMAGE : function (
 )
 {
     return ca.CAImage;
 },
 
 /**
- * @method reloadAllImages
+ * @method generateMipmapsWithImage
+ * @param {ca.CAImage} arg0
+ * @return {ca.CAImage}
  */
-reloadAllImages : function (
+generateMipmapsWithImage : function (
+caimage 
 )
 {
+    return ca.CAImage;
 },
 
 /**
- * @method scaleToNewImageWithImage
-* @param {ca.CAImage|ca.CAImage} caimage
-* @param {float|size_object} float
-* @param {float} float
-* @return {ca.CAImage|ca.CAImage}
-*/
-scaleToNewImageWithImage : function(
-caimage,
-float,
-float 
+ * @method CC_SHADOW_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_IMAGE : function (
 )
 {
     return ca.CAImage;
@@ -1344,14 +1336,6 @@ cacolor4b
 )
 {
     return ca.CAImage;
-},
-
-/**
- * @method purgeCAImage
- */
-purgeCAImage : function (
-)
-{
 },
 
 /**
@@ -1375,25 +1359,11 @@ bool
 },
 
 /**
- * @method CLEAR_IMAGE
- * @return {ca.CAImage}
+ * @method reloadAllImages
  */
-CLEAR_IMAGE : function (
+reloadAllImages : function (
 )
 {
-    return ca.CAImage;
-},
-
-/**
- * @method generateMipmapsWithImage
- * @param {ca.CAImage} arg0
- * @return {ca.CAImage}
- */
-generateMipmapsWithImage : function (
-caimage 
-)
-{
-    return ca.CAImage;
 },
 
 /**

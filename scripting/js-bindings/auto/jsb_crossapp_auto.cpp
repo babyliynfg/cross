@@ -2974,6 +2974,193 @@ bool js_crossapp_CAImage_isPvr(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAImage_isPvr : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
+bool js_crossapp_CAImage_BLACK_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::CAImage* ret = CrossApp::CAImage::BLACK_IMAGE();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_BLACK_IMAGE : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAImage_purgeCAImage(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::CAImage::purgeCAImage();
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_purgeCAImage : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAImage_WHITE_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::CAImage* ret = CrossApp::CAImage::WHITE_IMAGE();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_WHITE_IMAGE : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAImage_scaleToNewImageWithImage(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 3) {
+            CrossApp::CAImage* arg0 = nullptr;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            double arg1 = 0;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAImage* ret = CrossApp::CAImage::scaleToNewImageWithImage(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 2) {
+            CrossApp::CAImage* arg0 = nullptr;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            CrossApp::DSize arg1;
+            ok &= jsval_to_dsize(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            CrossApp::CAImage* ret = CrossApp::CAImage::scaleToNewImageWithImage(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_crossapp_CAImage_scaleToNewImageWithImage : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAImage_getStringWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 3) {
+        const char* arg0 = nullptr;
+        double arg1 = 0;
+        std::string arg2;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_getStringWidth : Error processing arguments");
+        int ret = CrossApp::CAImage::getStringWidth(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_getStringWidth : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAImage_getFontHeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        const char* arg0 = nullptr;
+        double arg1 = 0;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_getFontHeight : Error processing arguments");
+        int ret = CrossApp::CAImage::getFontHeight(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_getFontHeight : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAImage_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_create : Error processing arguments");
+        CrossApp::CAImage* ret = CrossApp::CAImage::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_create : wrong number of arguments");
+    return false;
+}
 bool js_crossapp_CAImage_createWithRawData(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -3049,6 +3236,38 @@ bool js_crossapp_CAImage_createWithRawData(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_crossapp_CAImage_createWithRawData : wrong number of arguments");
     return false;
 }
+bool js_crossapp_CAImage_createWithImageDataNoCache(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CAData* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAData*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_createWithImageDataNoCache : Error processing arguments");
+        CrossApp::CAImage* ret = CrossApp::CAImage::createWithImageDataNoCache(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_createWithImageDataNoCache : wrong number of arguments");
+    return false;
+}
 bool js_crossapp_CAImage_createWithImageData(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -3081,202 +3300,6 @@ bool js_crossapp_CAImage_createWithImageData(JSContext *cx, uint32_t argc, jsval
         return true;
     }
     JS_ReportError(cx, "js_crossapp_CAImage_createWithImageData : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_getStringWidth(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 3) {
-        const char* arg0 = nullptr;
-        double arg1 = 0;
-        std::string arg2;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_getStringWidth : Error processing arguments");
-        int ret = CrossApp::CAImage::getStringWidth(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_getStringWidth : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_CC_SHADOW_TOP_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CAImage* ret = CrossApp::CAImage::CC_SHADOW_TOP_IMAGE();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_CC_SHADOW_TOP_IMAGE : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_CC_SHADOW_RIGHT_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CAImage* ret = CrossApp::CAImage::CC_SHADOW_RIGHT_IMAGE();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_CC_SHADOW_RIGHT_IMAGE : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_BLACK_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CAImage* ret = CrossApp::CAImage::BLACK_IMAGE();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_BLACK_IMAGE : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_WHITE_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CAImage* ret = CrossApp::CAImage::WHITE_IMAGE();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_WHITE_IMAGE : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_CC_SHADOW_LEFT_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CAImage* ret = CrossApp::CAImage::CC_SHADOW_LEFT_IMAGE();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_CC_SHADOW_LEFT_IMAGE : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_getFontHeight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 2) {
-        const char* arg0 = nullptr;
-        double arg1 = 0;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_getFontHeight : Error processing arguments");
-        int ret = CrossApp::CAImage::getFontHeight(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_getFontHeight : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_create : Error processing arguments");
-        CrossApp::CAImage* ret = CrossApp::CAImage::create(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_create : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_createWithImageDataNoCache(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        CrossApp::CAData* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAData*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_createWithImageDataNoCache : Error processing arguments");
-        CrossApp::CAImage* ret = CrossApp::CAImage::createWithImageDataNoCache(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_createWithImageDataNoCache : wrong number of arguments");
     return false;
 }
 bool js_crossapp_CAImage_getStringHeight(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3340,11 +3363,11 @@ bool js_crossapp_CAImage_getStringHeight(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_crossapp_CAImage_getStringHeight : wrong number of arguments");
     return false;
 }
-bool js_crossapp_CAImage_CC_SHADOW_BOTTOM_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAImage_CLEAR_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
-        CrossApp::CAImage* ret = CrossApp::CAImage::CC_SHADOW_BOTTOM_IMAGE();
+        CrossApp::CAImage* ret = CrossApp::CAImage::CLEAR_IMAGE();
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -3357,90 +3380,59 @@ bool js_crossapp_CAImage_CC_SHADOW_BOTTOM_IMAGE(JSContext *cx, uint32_t argc, js
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_crossapp_CAImage_CC_SHADOW_BOTTOM_IMAGE : wrong number of arguments");
+    JS_ReportError(cx, "js_crossapp_CAImage_CLEAR_IMAGE : wrong number of arguments");
     return false;
 }
-bool js_crossapp_CAImage_reloadAllImages(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CAImage::reloadAllImages();
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_reloadAllImages : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_scaleToNewImageWithImage(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAImage_generateMipmapsWithImage(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    
-    do {
-        if (argc == 3) {
-            CrossApp::CAImage* arg0 = nullptr;
-            do {
-                if (args.get(0).isNull()) { arg0 = nullptr; break; }
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            double arg1 = 0;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-            if (!ok) { ok = true; break; }
-            double arg2 = 0;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-            if (!ok) { ok = true; break; }
-            CrossApp::CAImage* ret = CrossApp::CAImage::scaleToNewImageWithImage(arg0, arg1, arg2);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
+    if (argc == 1) {
+        CrossApp::CAImage* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_generateMipmapsWithImage : Error processing arguments");
+        CrossApp::CAImage* ret = CrossApp::CAImage::generateMipmapsWithImage(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
         }
     } while (0);
-    
-    do {
-        if (argc == 2) {
-            CrossApp::CAImage* arg0 = nullptr;
-            do {
-                if (args.get(0).isNull()) { arg0 = nullptr; break; }
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            CrossApp::DSize arg1;
-            ok &= jsval_to_dsize(cx, args.get(1), &arg1);
-            if (!ok) { ok = true; break; }
-            CrossApp::CAImage* ret = CrossApp::CAImage::scaleToNewImageWithImage(arg0, arg1);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_generateMipmapsWithImage : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAImage_CC_SHADOW_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        CrossApp::CAImage* ret = CrossApp::CAImage::CC_SHADOW_IMAGE();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
         }
     } while (0);
-    JS_ReportError(cx, "js_crossapp_CAImage_scaleToNewImageWithImage : wrong number of arguments");
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAImage_CC_SHADOW_IMAGE : wrong number of arguments");
     return false;
 }
 bool js_crossapp_CAImage_createWithColor4B(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3465,17 +3457,6 @@ bool js_crossapp_CAImage_createWithColor4B(JSContext *cx, uint32_t argc, jsval *
         return true;
     }
     JS_ReportError(cx, "js_crossapp_CAImage_createWithColor4B : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_purgeCAImage(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        CrossApp::CAImage::purgeCAImage();
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_purgeCAImage : wrong number of arguments");
     return false;
 }
 bool js_crossapp_CAImage_createWithRawDataNoCache(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3549,56 +3530,15 @@ bool js_crossapp_CAImage_createWithRawDataNoCache(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_crossapp_CAImage_createWithRawDataNoCache : wrong number of arguments");
     return false;
 }
-bool js_crossapp_CAImage_CLEAR_IMAGE(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CAImage_reloadAllImages(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
-        CrossApp::CAImage* ret = CrossApp::CAImage::CLEAR_IMAGE();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
+        CrossApp::CAImage::reloadAllImages();
+        args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_crossapp_CAImage_CLEAR_IMAGE : wrong number of arguments");
-    return false;
-}
-bool js_crossapp_CAImage_generateMipmapsWithImage(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        CrossApp::CAImage* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::CAImage*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, 0, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_generateMipmapsWithImage : Error processing arguments");
-        CrossApp::CAImage* ret = CrossApp::CAImage::generateMipmapsWithImage(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CAImage>(cx, (CrossApp::CAImage*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_crossapp_CAImage_generateMipmapsWithImage : wrong number of arguments");
+    JS_ReportError(cx, "js_crossapp_CAImage_reloadAllImages : wrong number of arguments");
     return false;
 }
 bool js_crossapp_CAImage_createWithString(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3746,26 +3686,23 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec st_funcs[] = {
-        JS_FN("createWithRawData", js_crossapp_CAImage_createWithRawData, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithImageData", js_crossapp_CAImage_createWithImageData, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getStringWidth", js_crossapp_CAImage_getStringWidth, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("CC_SHADOW_TOP_IMAGE", js_crossapp_CAImage_CC_SHADOW_TOP_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("CC_SHADOW_RIGHT_IMAGE", js_crossapp_CAImage_CC_SHADOW_RIGHT_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("BLACK_IMAGE", js_crossapp_CAImage_BLACK_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("purgeCAImage", js_crossapp_CAImage_purgeCAImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("WHITE_IMAGE", js_crossapp_CAImage_WHITE_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("CC_SHADOW_LEFT_IMAGE", js_crossapp_CAImage_CC_SHADOW_LEFT_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("scaleToNewImageWithImage", js_crossapp_CAImage_scaleToNewImageWithImage, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getStringWidth", js_crossapp_CAImage_getStringWidth, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFontHeight", js_crossapp_CAImage_getFontHeight, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("create", js_crossapp_CAImage_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithRawData", js_crossapp_CAImage_createWithRawData, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("createWithImageDataNoCache", js_crossapp_CAImage_createWithImageDataNoCache, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithImageData", js_crossapp_CAImage_createWithImageData, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStringHeight", js_crossapp_CAImage_getStringHeight, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("CC_SHADOW_BOTTOM_IMAGE", js_crossapp_CAImage_CC_SHADOW_BOTTOM_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("reloadAllImages", js_crossapp_CAImage_reloadAllImages, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("scaleToNewImageWithImage", js_crossapp_CAImage_scaleToNewImageWithImage, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithColor4B", js_crossapp_CAImage_createWithColor4B, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("purgeCAImage", js_crossapp_CAImage_purgeCAImage, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithRawDataNoCache", js_crossapp_CAImage_createWithRawDataNoCache, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("CLEAR_IMAGE", js_crossapp_CAImage_CLEAR_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("generateMipmapsWithImage", js_crossapp_CAImage_generateMipmapsWithImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("CC_SHADOW_IMAGE", js_crossapp_CAImage_CC_SHADOW_IMAGE, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithColor4B", js_crossapp_CAImage_createWithColor4B, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithRawDataNoCache", js_crossapp_CAImage_createWithRawDataNoCache, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reloadAllImages", js_crossapp_CAImage_reloadAllImages, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("createWithString", js_crossapp_CAImage_createWithString, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
