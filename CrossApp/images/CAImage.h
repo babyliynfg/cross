@@ -185,14 +185,6 @@ public:
 
     static CAImage* CLEAR_IMAGE();
     
-    static CAImage* CC_SHADOW_LEFT_IMAGE();
-    
-    static CAImage* CC_SHADOW_RIGHT_IMAGE();
-    
-    static CAImage* CC_SHADOW_TOP_IMAGE();
-    
-    static CAImage* CC_SHADOW_BOTTOM_IMAGE();
-    
     static CAImage* CC_SHADOW_IMAGE();
     
     virtual CAImage* copy();
