@@ -94,6 +94,11 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
     } completion:^(BOOL finished){
         if (finished == YES)
         {
+            if (_readerView.torchMode == 1) {
+                _readerView.torchMode = 0;
+            }
+            [self  stopTimer];
+            [_readerView stop];
             [self removeFromSuperview];
             _scanQRcodeView = nil;
             CrossApp::CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsTrue();
@@ -172,17 +177,6 @@ static CAScanQRcodeView *_scanQRcodeView = nil;
     _QrCodeline = [[UIView alloc] initWithFrame:CGRectMake(left, top, side, 2)];
     _QrCodeline.backgroundColor = [UIColor greenColor];
     [_scanView addSubview:_QrCodeline];
-}
-
-- (void)viewWillDisappear
-{
-    if (_readerView.torchMode == 1) {
-        _readerView.torchMode = 0;
-    }
-    [self stopTimer];
-    
-    [_readerView stop];
-    
 }
 
 //二维码的横线移动

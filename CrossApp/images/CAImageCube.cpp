@@ -1,8 +1,6 @@
 
 #include "images/CAImageCube.h"
-
 #include "platform/CAFileUtils.h"
-
 #include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN

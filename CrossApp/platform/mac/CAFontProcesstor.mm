@@ -37,16 +37,7 @@ NSRect _calculateStringSize(NSAttributedString *str, id font, CGSize constrainSi
     : CGFLOAT_MAX;
     
     NSRect dim = NSZeroRect;
-#ifdef __MAC_10_11
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
     dim.size = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
-#else
-    dim.size = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-#else
-    dim.size = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-    
     
     dim.size.width = ceilf(dim.size.width);
     dim.size.height = MIN(ceilf(dim.size.height), constrainSize.height) ;
@@ -428,17 +419,8 @@ float CAFontProcesstor::heightForFont(const CAFont& font)
         }
         NSAttributedString* str = [[[NSAttributedString alloc] initWithString:@"A" attributes:tokenAttributesDict] autorelease];
         NSSize textSize = NSMakeSize(CGFLOAT_MAX, 0);
-        NSSize dim;
-#ifdef __MAC_10_11
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
-#else
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-#else
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-        
+        NSSize dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
+
         ret = ceilf((dim.height));
         
     } while (0);
@@ -499,17 +481,8 @@ float CAFontProcesstor::heightForTextAtWidth(const std::string& text, const CAFo
         
         NSAttributedString* str = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
         NSSize textSize = NSMakeSize(width, 0);
-        NSSize dim;
-#ifdef __MAC_10_11
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
-#else
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-#else
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-        
+        NSSize dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
+
         ret = ceilf((dim.height));
         
     } while (0);
@@ -566,17 +539,8 @@ float CAFontProcesstor::widthForTextAtOneLine(const std::string& text, const CAF
         
         NSAttributedString* str = [[[NSAttributedString alloc] initWithString:string attributes:tokenAttributesDict] autorelease];
         NSSize textSize = NSMakeSize(CGFLOAT_MAX, 0);
-        NSSize dim;
-#ifdef __MAC_10_11
-#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_11
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
-#else
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-#else
-        dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin)].size;
-#endif
-        
+        NSSize dim = [str boundingRectWithSize:textSize options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) context:nil].size;
+
         if (font.italics)
         {
             float increase = shrinkFontSize * font.italicsValue * 0.5f;

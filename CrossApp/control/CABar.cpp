@@ -361,7 +361,10 @@ void CANavigationBar::showLeftButton()
                 button->setTitleColorForState(CAControl::State::Highlighted, CAColor4B(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
-            button->addTarget(std::bind(&CANavigationBar::goBack, this), CAButton::Event::TouchUpInSide);
+            button->addTarget([button, this](){
+                button->setControlStateDisabled();
+                this->goBack();
+            }, CAButton::Event::TouchUpInSide);
         }
         else if (item)
         {
