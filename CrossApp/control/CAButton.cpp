@@ -496,7 +496,7 @@ void CAButton::setControlState(CAControl::State var)
         DSize size = m_obContentSize;
         DSize iSize = image->getContentSize();
         float scaleX = size.width / iSize.width * 0.6f;
-        float scaleY = size.height / iSize.height * 0.54f;
+        float scaleY = size.height / iSize.height * 0.45f;
         float scale = MIN(scaleX, scaleY);
         iSize = ccpMult(iSize, scale);
         
@@ -506,7 +506,7 @@ void CAButton::setControlState(CAControl::State var)
         
         labelSize = size.height * 0.2f;
         labelCenter.origin.x = size.width / 2;
-        labelCenter.origin.y = size.height * 0.81f;
+        labelCenter.origin.y = size.height * 0.8f;
     }
     
     

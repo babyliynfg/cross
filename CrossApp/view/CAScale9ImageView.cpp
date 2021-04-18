@@ -298,7 +298,7 @@ void CAScale9ImageView::updateCapInset()
     
     if (m_bAutoCapInsets)
     {
-        m_obCapInsets = DRect(w/3, h/3, w/3, h/3);
+        m_obCapInsets = DRect(w * 0.4, h * 0.4, w * 0.2, h * 0.2);
     }
     
     const float lengthX1 = m_obCapInsets.origin.x;
