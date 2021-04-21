@@ -940,23 +940,14 @@ void CAScrollView::deaccelerateScrolling(float dt)
         }
     }
     
-    if (speed.getLength() < 0.25f)
+    bool isEnded = speed.getLength() < 0.25f;
+    if (isEnded)
     {
         m_tInertia = DPointZero;
         this->getScrollWindowNotOutPoint(point);
         this->setContainerPoint(point);
         this->hideIndicator();
         this->stopDeaccelerateScroll();
-        
-        if (m_obStopMoved)
-        {
-            m_obStopMoved();
-        }
-        else if (m_pScrollViewDelegate)
-        {
-            m_pScrollViewDelegate->scrollViewStopMoved(this);
-        }
-        
     }
     else
     {
@@ -993,9 +984,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
             this->showIndicator();
             this->setContainerPoint(point);
         }
-        
-        this->update(dt);
-        
+                
         if (fabsf(m_tInertia.x) > 16)
         {
             m_tInertia.x = m_tInertia.x * (1 - decelerationRatio(dt));
@@ -1013,14 +1002,28 @@ void CAScrollView::deaccelerateScrolling(float dt)
         {
             m_tInertia.y = MAX((fabsf(m_tInertia.y) - 0.5f), 0) * fabsf(m_tInertia.y) / m_tInertia.y;
         }
-        
-        if (m_obDidMoved)
+    }
+    
+    this->update(dt);
+    
+    if (m_obDidMoved)
+    {
+        m_obDidMoved();
+    }
+    else if (m_pScrollViewDelegate)
+    {
+        m_pScrollViewDelegate->scrollViewDidMoved(this);
+    }
+    
+    if (isEnded)
+    {
+        if (m_obStopMoved)
         {
-            m_obDidMoved();
+            m_obStopMoved();
         }
         else if (m_pScrollViewDelegate)
         {
-            m_pScrollViewDelegate->scrollViewDidMoved(this);
+            m_pScrollViewDelegate->scrollViewStopMoved(this);
         }
     }
 }
