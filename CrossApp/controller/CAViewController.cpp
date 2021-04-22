@@ -1136,15 +1136,17 @@ void CANavigationController::update(float dt)
 bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
     if (m_pViewControllers.size() == 1)
-    {
         return false;
-    }
-    
 
     m_bTouchBeganRange = pTouch->getLocation().x <= 120 ? true : false;
     
-    m_bPopViewController = false;
-    return true;
+    if (m_bTouchBeganRange)
+    {
+        m_bPopViewController = false;
+        return true;
+    }
+    
+    return false;
 }
 
 void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
@@ -1185,9 +1187,6 @@ void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    CC_RETURN_IF(m_bTouchBeganRange == false);
-    CC_RETURN_IF(CAViewAnimation::areBeginAnimationsWithID("navigation_animation"));
-    
     float x = this->getView()->getBounds().size.width;
     size_t index = m_pViewControllers.size() - 2;
     CAViewController* lastViewController = m_pViewControllers.at(index);
@@ -1200,6 +1199,9 @@ void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     backContainer->setTouchEnabled(true);
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
+    
+    CAViewAnimation::removeAnimations("navigation_animation");
+    CAViewAnimation::removeAnimations("navigation_animation2");
     
     if (m_bPopViewController)
     {
