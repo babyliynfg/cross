@@ -116,6 +116,7 @@ private:
     
     CAUIEditorParser* m_pParser;
     
+    CAVector<CATouch*> m_vTouches;
 };
 
 class CC_DLL CANavigationController

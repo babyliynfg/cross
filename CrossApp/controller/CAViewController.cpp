@@ -1138,19 +1138,20 @@ bool CANavigationController::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     if (m_pViewControllers.size() == 1)
         return false;
 
-    m_bTouchBeganRange = pTouch->getLocation().x <= 120 ? true : false;
+    m_vTouches.pushBack(pTouch);
     
-    if (m_bTouchBeganRange)
+    if (m_vTouches.size() == 1)
     {
+        m_bTouchBeganRange = pTouch->getLocation().x <= 120 ? true : false;
         m_bPopViewController = false;
-        return true;
     }
     
-    return false;
+    return true;
 }
 
 void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_vTouches.size() > 1);
     CC_RETURN_IF(m_bTouchBeganRange == false);
     CC_RETURN_IF(m_bTouchMoved == false);
     float offDis = pTouch->getLocation().x - pTouch->getPreviousLocation().x;
@@ -1187,10 +1188,12 @@ void CANavigationController::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CANavigationController::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
+    m_vTouches.eraseObject(pTouch);
+    CC_RETURN_IF(!m_vTouches.empty());
+
     float x = this->getView()->getBounds().size.width;
     size_t index = m_pViewControllers.size() - 2;
-    CAViewController* lastViewController = m_pViewControllers.at(index);
-    
+
     CAView* lastContainer = m_pContainers.at(index);
     lastContainer->setVisible(true);
     lastContainer->setTouchEnabled(true);
